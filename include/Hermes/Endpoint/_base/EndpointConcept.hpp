@@ -3,11 +3,16 @@
 #include <Hermes/_base/WinAPI.hpp>
 
 namespace Hermes {
-    using SocketInfoAddr = std::tuple<sockaddr, size_t, AddressFamilyEnum>;
+    using SocketInfoAddr = std::tuple<sockaddr_storage, size_t, AddressFamilyEnum>;
 
+
+    //! A socket represents one endpoint of a network communication. A connection
+    //! is established between two or more sockets. Each endpoint holds the necessary
+    //! information to identify itself. To extend StreamSocket and DgramSocket,
+    //! you will need a class that satisfies the EndpointConcept.
     template<typename T>
     concept EndpointConcept = requires(T t, SocketInfoAddr socketInfo) {
-        { t.FromSockAddr(socketInfo) } ->std::same_as<ConnectionResultOper>;
+        { T::FromSockAddr(socketInfo) } ->std::same_as<ConnectionResult<T>>;
         { t.ToSockAddr() } ->std::same_as<ConnectionResult<SocketInfoAddr>>;
     };
 } // namespace Hermes

@@ -4,6 +4,7 @@
 #include <experimental/generator>
 #include <algorithm>
 #include <expected>
+#include <ranges>
 #include <sstream>
 
 using std::array;
@@ -52,6 +53,15 @@ namespace Hermes {
     // Connection
     //----------------------------------------------------------------------------------------------------
 
+    static std::byte StrToBytes(char c) {
+        return static_cast<std::byte>(c);
+    }
+    static char BytesToStr(std::byte c) {
+        return static_cast<char>(c);
+    }
+
+
+
     template<EndpointConcept EndpointType, typename T>
     ConnectionResult<T> StreamSocket<EndpointType, T>::Connect(const EndpointType &endpoint) {
         auto addrRes{ endpoint.ToSockAddr() };
@@ -60,8 +70,8 @@ namespace Hermes {
 
         auto [addr, addr_len, addrFamily] = *addrRes;
 
-        SOCKET _socket = socket((int)addrFamily, (int)SocketTypeEnum::STREAM, 0);
-        const int result = connect(_socket, &addr, addr_len);
+        SOCKET _socket = socket(static_cast<int>(addrFamily), static_cast<int>(SocketTypeEnum::STREAM), 0);
+        const int result = connect(_socket, reinterpret_cast<sockaddr*>(&addr), addr_len);
 
         if (result == macroSOCKET_ERROR)
             return unexpected{ ConnectionErrorEnum::CONNECTION_FAILED };
@@ -71,8 +81,9 @@ namespace Hermes {
         return t;
     }
 
+
     template<EndpointConcept EndpointType, typename T>
-    StreamSent StreamSocket<EndpointType, T>::Send(ByteDataSpan data) const {
+    StreamSent StreamSocket<EndpointType, T>::SendRaw(ByteDataSpan data) const {
         if (_socket == macroINVALID_SOCKET)
             return unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
 
@@ -85,33 +96,24 @@ namespace Hermes {
         return sent;
     }
 
-
     template<EndpointConcept EndpointType, typename T>
-    ConnectionResult<ByteData> StreamSocket<EndpointType, T>::ReceiveAll() const {
-        ByteData buffer{};
-        buffer.reserve(0xF000);
-
-        for (auto &&data: Receive()) {
-            if (!data)
-                return std::unexpected{data.error()};
-            buffer.append_range(*data);
-        }
-
-        return buffer;
+    StreamSent StreamSocket<EndpointType, T>::SendStr(string_view data) const {
+        return SendRaw(ByteDataSpan((std::byte*)(char*)data.data(), data.size()));
     }
 
+
     template<EndpointConcept EndpointType, typename T>
-    DataStream StreamSocket<EndpointType, T>::Receive() const {
+    DataStream StreamSocket<EndpointType, T>::ReceiveRaw() const {
         if (_socket == macroINVALID_SOCKET) {
             co_yield std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
             co_return;
         }
 
-        ByteData packageBuffer(0xF000);
+        ByteData bufferRecv(0xF000);
 
         while (true) {
-            const int received{ recv(_socket, reinterpret_cast<char*>(packageBuffer.data()),
-                                      static_cast<int>(packageBuffer.size()), 0) };
+            const int received{ recv(_socket, reinterpret_cast<char*>(bufferRecv.data()),
+                                      static_cast<int>(bufferRecv.size()), 0) };
 
             if (received == macroSOCKET_ERROR) {
                 const int error{ WSAGetLastError() };
@@ -122,8 +124,20 @@ namespace Hermes {
                 co_return;
             }
 
-            co_yield packageBuffer;
+            co_yield bufferRecv;
         }
+    }
+
+    template<EndpointConcept EndpointType, typename T>
+    DataStringStream StreamSocket<EndpointType, T>::ReceiveStr() const {
+
+        static auto toString = [](const ByteData &rec) {
+            return rec | std::views::transform(BytesToStr)
+                    | std::ranges::to<string>();
+        };
+
+        for (ConnectionResult received : ReceiveRaw())
+            co_yield received.transform(toString);
     }
 
     template<EndpointConcept EndpointType, typename T>
@@ -135,5 +149,29 @@ namespace Hermes {
     template<EndpointConcept EndpointType, typename T>
     bool StreamSocket<EndpointType, T>::IsOpen() const {
         return _socket != macroINVALID_SOCKET;
+    }
+
+    template<EndpointConcept EndpointType, typename T>
+    ConnectionResult<ByteData> StreamSocket<EndpointType, T>::ReceiveAllRaw() const {
+        ByteData buffer{};
+        buffer.reserve(0xF000);
+
+        for (auto &&data: ReceiveRaw()) {
+            if (!data)
+                return std::unexpected{data.error()};
+            buffer.append_range(*data);
+        }
+
+        return buffer;
+    }
+
+    template<EndpointConcept EndpointType, typename T>
+    ConnectionResult<std::string> StreamSocket<EndpointType, T>::ReceiveAllStr() const {
+        static auto toString = [](const ByteData &rec) {
+            return rec | std::views::transform(BytesToStr)
+                    | std::ranges::to<string>();
+        };
+
+        return ReceiveAllRaw().transform(toString);
     }
 } // namespace Hermes

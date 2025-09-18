@@ -30,10 +30,8 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
 
 
 // export {
-    /**
-     * User-defined literal for uint8_t.
-     * Usage: '123_uc' creates an uint8_t with value 123.
-     */
+    //! User-defined literal for uint8_t.
+    //! Usage: '123_uc' creates an uint8_t with value 123.
     inline uint8_t operator""_uc(unsigned long long int n) { return static_cast<uint8_t>(n); }
 
     // ----------------------------------------------------------------------------------------------------

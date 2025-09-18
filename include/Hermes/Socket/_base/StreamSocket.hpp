@@ -4,12 +4,12 @@
 #include <experimental/generator>
 
 namespace Hermes {
-    //! @brief Base class of @ref ClientSocket and @ref ListenerSocket.
-    //!
+    //! @brief This class it's just a wrapper to help dealing with stream sockets.
     //! Sockets are dumb, they don't know anything about how to know if all data was sent, received or even
     //! if it needs to be decrypted. They just send raw data and reads raw data as it arrives. This is the
-    //! role of @ref SocketProtocolConcept. This class it's just a wrapper to help dealing with sockets.
-
+    //! role of the protocols that inherit from StreamSocket.
+    //!
+    //! All inherited classes needs to use CRTP.
     template<EndpointConcept EndpointType, typename T>
     struct StreamSocket {
         StreamSocket(StreamSocket&&) noexcept;
@@ -25,11 +25,18 @@ namespace Hermes {
 
         [[nodiscard]] static ConnectionResult<T> Connect(const EndpointType& endpoint);
         //! @return Returns the count of data sent.
-        [[nodiscard]] StreamSent Send(ByteDataSpan data) const;
+        [[nodiscard]] StreamSent SendRaw(ByteDataSpan data) const;
+        //! @return Returns the count of data sent.
+        [[nodiscard]] StreamSent SendStr(std::string_view data) const;
+
         //! @return Returns a generator of each block of data received.
-        [[nodiscard]] DataStream Receive() const;
+        [[nodiscard]] DataStream ReceiveRaw() const;
+        //! @return Returns a generator of each block of data received.
+        [[nodiscard]] DataStringStream ReceiveStr() const;
+
         //! @return Returns all the data blocks until this moment.
-        [[nodiscard]] ConnectionResult<ByteData> ReceiveAll() const;
+        [[nodiscard]] ConnectionResult<ByteData> ReceiveAllRaw() const;
+        [[nodiscard]] ConnectionResult<std::string> ReceiveAllStr() const;
 
         void Close() const;
         [[nodiscard]] bool IsOpen() const;

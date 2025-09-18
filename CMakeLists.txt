@@ -17,11 +17,25 @@ add_library(
         src/Hermes/Socket/Tcp/TcpClientSocket.cpp
 )
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
+target_include_directories(Hermes
+        PUBLIC
+        ${CMAKE_SOURCE_DIR}/include
+)
 
 add_executable(
         HermesApp
         app/main.cpp
 )
 
-target_link_libraries(HermesApp PUBLIC Hermes)
+
+add_executable(
+        Tests
+        tests/_base.hpp
+
+        tests/TcpTests.hpp
+        tests/IpTests.hpp
+        tests/_tests.cpp
+)
+
+target_link_libraries(HermesApp PRIVATE Hermes)
+target_link_libraries(Tests PRIVATE Hermes)

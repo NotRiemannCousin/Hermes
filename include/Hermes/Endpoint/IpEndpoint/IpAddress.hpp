@@ -20,8 +20,6 @@ using std::vector;
 
 namespace Hermes {
     struct IpAddress {
-        enum class IpClassEnum { INVALID, IPV6, A, B, C, D, E };
-
         using IntType = std::uint8_t;
         using IPv4Type = array<IntType, 4>;
         using IPv6Type = array<IntType, 16>;
@@ -33,112 +31,105 @@ namespace Hermes {
         // Construct
         //----------------------------------------------------------------------------------------------------
 
-        /**
-         * Constructor initializing IpAddress with a variant type.
-         * @param d Variant containing either IPv4 or IPv6 address data.
-         */
+
+        //!  Constructor initializing IpAddress with a variant type.
+        //!  @param d Variant containing either IPv4 or IPv6 address data.
         explicit IpAddress(const IpVariant& d);
 
-        /**
-         * Create an empty IpAddress.
-         * @return An empty IpAddress.
-         */
+        //! Create an empty IpAddress.
+        //! @return An empty IpAddress.
         static IpAddress Empty();
 
-        /**
-         * Create an IpAddress from an IPv4Type array.
-         * @param data An array representing an IPv4 address.
-         * @return The corresponding IpAddress instance.
-         */
+
+        //! Create an IpAddress from an IPv4Type array.
+        //! @param data An array representing an IPv4 address.
+        //! @return The corresponding IpAddress instance.
         static IpAddress FromIPv4(const IPv4Type &data);
 
-        /**
-         * Create an IpAddress from an IPv6Type array.
-         * @param data An array representing an IPv6 address.
-         * @return The corresponding IpAddress instance.
-         */
+        //! Create an IpAddress from an IPv6Type array.
+        //! @param data An array representing an IPv6 address.
+        //! @return The corresponding IpAddress instance.
         static IpAddress FromIPv6(const IPv6Type &data);
 
 
-        /**
-         * Try to parse an IpAddress from a string.
-         * @param str A string representing an IPv4 or IPv6 address.
-         * @return The corresponding IpAddress instance or an empty IpAddress if parsing fails.
-         */
+
+        //! Try to parse an IpAddress from a string.
+        //! @param str A string representing an IPv4 or IPv6 address.
+        //! @return The corresponding IpAddress instance or an empty IpAddress if parsing fails.
         static std::optional<IpAddress> TryParse(const string& str);
 
         //----------------------------------------------------------------------------------------------------
         // Info
         //----------------------------------------------------------------------------------------------------
 
-        /**
-         * Get the class of the IP address.
-         * @return The IpClassEnum representing the class of the IP.
-         */
-        [[nodiscard]] IpClassEnum GetClass() const;
 
-        /**
-         * Check if the IpAddress is empty.
-         * @return True if the IpAddress is empty.
-         */
+        //! Seams obvious.
+        bool operator==(const IpAddress &) const;
+
+
+        //! Check if the IpAddress is empty.
+        //! @return True if the IpAddress is empty.
         [[nodiscard]] bool IsEmpty() const;
 
-        /**
-         * Check if the IpAddress is an IPv4 address.
-         * @return True if the IpAddress is IPv4.
-         */
+        //! Check if the IpAddress is an IPv4 address.
+        //! @return True if the IpAddress is IPv4.
         [[nodiscard]] bool IsIPv4() const;
 
-        /**
-         * Check if the IpAddress is an IPv6 address.
-         * @return True if the IpAddress is IPv6.
-         */
+        //!  Check if the IpAddress is an IPv6 address.
+        //!  @return True if the IpAddress is IPv6.
         [[nodiscard]] bool IsIPv6() const;
 
-        /**
-         * Check if the IpAddress is valid (not empty, unspecified and in a valid range).
-         * @return True if the IpAddress is valid.
-         */
+
+
+
+        //! Check if the IpAddress is valid (not empty, unspecified and in a valid range).
+        //! @return True if the IpAddress is valid.
         [[nodiscard]] bool IsValid() const;
 
-        /**
-         * Check if the IpAddress is a public address.
-         * @return True if the IpAddress is public.
-         */
+        //! Check if the IpAddress is a public address.
+        //! @return True if the IpAddress is public.
         [[nodiscard]] bool IsPublic() const;
 
-        /**
-         * Check if the IpAddress is a loopback address.
-         * @return True if the IpAddress is a loopback address.
-         */
+        //! Check if the IpAddress is a private address.
+        //! @return True if the IpAddress is private.
+        [[nodiscard]] bool IsPrivate() const;
+
+
+
+
+        //! Check if the IpAddress is a loopback address.
+        //! @return True if the IpAddress is a loopback address.
         [[nodiscard]] bool IsLoopback() const;
 
-        /**
-         * Check if the IpAddress is a multicast address.
-         * @return True if the IpAddress is multicast.
-         */
+        //! Check if the IpAddress is a multicast address.
+        //! @return True if the IpAddress is multicast.
         [[nodiscard]] bool IsMulticast() const;
 
-        /**
-         * Check if the IpAddress is unspecified.
-         * @return True if the IpAddress is unspecified.
-         */
+        //! Check if the IpAddress is unspecified.
+        //! @return True if the IpAddress is unspecified.
         [[nodiscard]] bool IsUnspecified() const;
 
 
-        /**
-         *
-         * Check if the IpAddress is link-local.
-         * @return True if the IpAddress is link-local.
-         */
+
+
+        //! Check if the IpAddress is link-local.
+        //! @return True if the IpAddress is link-local.
         [[nodiscard]] bool IsLinkLocal() const noexcept;
 
-        /**
-         *
-         * Check if the IpAddress is site-local.
-         * @return True if the IpAddress is site-local.
-         */
+        //! Check if the IpAddress is site-local.
+        //! @return True if the IpAddress is site-local.
         [[nodiscard]] bool IsSiteLocal() const noexcept;
+
+
+
+        //! Check if the IPv6 address is an IPv4-mapped address (::ffff:0:0/96).
+        //! @return True if the IpAddress is IPv4-mapped.
+        [[nodiscard]] bool IsIPv4Mapped() const noexcept;
+
+        //! Check if the IPv6 address is a documentation address (2001:db8::/32).
+        //! @return True if the IpAddress is documentation.
+        [[nodiscard]] bool IsDocumentation() const noexcept;
+
         friend struct std::formatter<IpAddress>;
     };
 
@@ -161,32 +152,28 @@ namespace std {
     //         }, ip.data);
     //     }
     // };
-    // };
 
     template<>
     struct formatter<Hermes::IpAddress> {
         using IpAddress = Hermes::IpAddress;
 
 
-        /**
-         * Parse function for IpAddress.
-         * @param ctx The parse context.
-         * @return Iterator pointing to the end of the parsed input.
-         *
-         * @note If 'f' is specified, it will format the IPv6 address in full format.
-         */
+
+        //! Parse function for IpAddress.
+        //! @param ctx The parse context.
+        //! @return Iterator pointing to the end of the parsed input.
+        //!
+        //! @note If 'f' is specified, it will format the IPv6 address in full format.
         constexpr auto parse(auto &ctx) {
             auto &&it = ctx.begin();
             if(it != ctx.end() && *it == 'f') ipv6Reduced = true, ++it;
             return it;
         }
 
-        /**
-         * Format function for IpAddress.
-         * @param ip The IpAddress object.
-         * @param ctx The format context.
-         * @return Iterator pointing to the end of the formatted output.
-         */
+        //! Format function for IpAddress.
+        //! @param ip The IpAddress object.
+        //! @param ctx The format context.
+        //! @return Iterator pointing to the end of the formatted output.
         auto format(const IpAddress &ip, std::format_context &ctx) const {
             if (ip.IsIPv4()) {
                 const auto &ipv4 = std::get<IpAddress::IPv4Type>(ip.data);
@@ -202,7 +189,6 @@ namespace std {
                         },
                         ipv6);
 
-            // now format in reduced format
             auto segments = ipv6
                     | views::chunk(2) | views::transform([](auto &&seg) {
                         return std::format("{:x}", static_cast<int>(seg[0]) << 8 | seg[1]);

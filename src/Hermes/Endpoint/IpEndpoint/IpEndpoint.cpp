@@ -17,29 +17,31 @@ namespace Hermes {
     IpEndpoint::IpEndpoint(IpAddress ip, int port)
         : ip(ip), port(port) {}
 
-    ConnectionResultOper IpEndpoint::FromSockAddr(SocketInfoAddr infoAddr) {
+    ConnectionResult<IpEndpoint> IpEndpoint::FromSockAddr(SocketInfoAddr infoAddr) {
         auto [addr, _, type] = infoAddr;
 
         if (type == AddressFamilyEnum::INET6) {
-            const auto *in6 = reinterpret_cast<sockaddr_in6*>(&addr);
+            const auto *in6 = reinterpret_cast<const sockaddr_in6*>(&addr);
 
             if (in6->sin6_family != _tus(AddressFamilyEnum::INET6))
                 return unexpected{ ConnectionErrorEnum::UNKNOWN };
 
-            ip = IpAddress::FromIPv6(bit_cast<IpAddress::IPv6Type>(in6->sin6_addr));
+            const IpAddress address{ IpAddress::FromIPv6(bit_cast<IpAddress::IPv6Type>(in6->sin6_addr)) };
+            const int port{ in6->sin6_port };
 
-            return std::monostate{};
+            return IpEndpoint(address, ntohs(port));
         }
 
         if (type == AddressFamilyEnum::INET) {
             const auto *in = reinterpret_cast<sockaddr_in*>(&addr);
 
-            if (in->sin_family != _tus(AddressFamilyEnum::INET6))
+            if (in->sin_family != _tus(AddressFamilyEnum::INET))
                 return unexpected{ ConnectionErrorEnum::UNKNOWN };
 
-            ip = IpAddress::FromIPv4(bit_cast<IpAddress::IPv4Type>(in->sin_addr));
+            const IpAddress address{ IpAddress::FromIPv4(bit_cast<IpAddress::IPv4Type>(in->sin_addr)) };
+            const int port{ in->sin_port };
 
-            return std::monostate{};
+            return IpEndpoint(address, ntohs(port));
         }
 
         return unexpected{ ConnectionErrorEnum::UNKNOWN };
@@ -49,7 +51,7 @@ namespace Hermes {
         if (ip.IsEmpty())
             return unexpected{ ConnectionErrorEnum::UNKNOWN }; // TODO: improve error handling
 
-        sockaddr addr{};
+        sockaddr_storage addr{};
         size_t size{};
         AddressFamilyEnum addressFamily{};
 
@@ -78,41 +80,56 @@ namespace Hermes {
         return SocketInfoAddr{ addr, size, addressFamily };
     }
 
-    optional<IpEndpoint> IpEndpoint::TryResolve(const string& url, const string& service, SocketTypeEnum socketType) {
+
+    ConnectionResult<IpEndpoint> IpEndpoint::TryResolve(const string& url, const string& service, SocketTypeEnum socketType) {
         Network::Initialize();
 
-        const addrinfo hints = {
-            .ai_family = static_cast<int>(AddressFamilyEnum::UNSPEC),
-            .ai_socktype = (int) socketType
-        };
+        addrinfo hints = {};
+        hints.ai_family = AF_UNSPEC;
+        hints.ai_socktype = static_cast<int>(socketType);
 
-        addrinfo *result = nullptr;
-        if (int err = getaddrinfo(string(url).c_str(), service.c_str(), &hints, &result); err != 0)
-            return std::nullopt;
+        addrinfo* result_ptr = nullptr;
+        if (int err_code = getaddrinfo(url.c_str(), service.c_str(), &hints, &result_ptr); err_code != 0) {
+            switch (err_code) {
+                case EAI_NONAME:
+                    return std::unexpected(ConnectionErrorEnum::RESOLVE_HOST_NOT_FOUND);
+                case EAI_SERVICE:
+                    return std::unexpected(ConnectionErrorEnum::RESOLVE_SERVICE_NOT_FOUND);
+                case EAI_AGAIN:
+                    return std::unexpected(ConnectionErrorEnum::RESOLVE_TEMPORARY_FAILURE);
+                default:
+                    return std::unexpected(ConnectionErrorEnum::RESOLVE_FAILED);
+            }
+        }
 
-        if (result == nullptr)
-            return std::nullopt;
 
-        auto addr = result->ai_addr;
-        if (addr == nullptr)
-            return std::nullopt;
+        static auto addrinfo_deleter = [](addrinfo* p) { if (p) freeaddrinfo(p); };
+        std::unique_ptr<addrinfo, decltype(addrinfo_deleter)> result(result_ptr, addrinfo_deleter);
 
-        if (addr->sa_family == (int)AddressFamilyEnum::INET6) {
-            auto ipv6 = reinterpret_cast<sockaddr_in6 *>(addr);
+        if (!result || !result->ai_addr)
+            return std::unexpected(ConnectionErrorEnum::RESOLVE_NO_ADDRESS_FOUND);
+
+        sockaddr* addr = result->ai_addr;
+        if (addr->sa_family == AF_INET6) {
+            const auto* ipv6 = reinterpret_cast<sockaddr_in6*>(addr);
             return IpEndpoint{
                 IpAddress::FromIPv6(std::bit_cast<IpAddress::IPv6Type>(ipv6->sin6_addr)),
                 ntohs(ipv6->sin6_port)
             };
         }
 
-        if (addr->sa_family == (int)AddressFamilyEnum::INET) {
-            auto ipv4 = reinterpret_cast<sockaddr_in *>(addr);
+        if (addr->sa_family == AF_INET) {
+            const auto* ipv4 = reinterpret_cast<sockaddr_in*>(addr);
             return IpEndpoint{
                 IpAddress::FromIPv4(std::bit_cast<IpAddress::IPv4Type>(ipv4->sin_addr)),
                 ntohs(ipv4->sin_port)
             };
         }
 
-        return std::nullopt;
+        return std::unexpected(ConnectionErrorEnum::UNSUPPORTED_ADDRESS_FAMILY);
+    }
+
+    bool IpEndpoint::operator==(const IpEndpoint &endpoint) const {
+        return this->port == endpoint.port && this->ip == endpoint.ip;
     }
 } // namespace Hermes

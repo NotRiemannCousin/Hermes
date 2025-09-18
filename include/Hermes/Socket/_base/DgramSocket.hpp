@@ -3,12 +3,12 @@
 #include <Hermes/_base/WinAPI.hpp>
 
 namespace Hermes {
-    //! @brief Base class of @ref ClientSocket and @ref ListenerSocket.
-    //!
+    //! @brief This class it's just a wrapper to help dealing with dgram sockets.
     //! Sockets are dumb, they don't know anything about how to know if all data was sent, received or even
     //! if it needs to be decrypted. They just send raw data and reads raw data as it arrives. This is the
-    //! role of @ref SocketProtocolConcept. This class it's just a wrapper to help dealing with sockets.
-
+    //! role of the protocols that inherit from DgramSocket.
+    //!
+    //! All inherited classes needs to use CRTP.
     template<EndpointConcept EndpointType>
     struct DgramSocket {
 

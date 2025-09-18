@@ -2,12 +2,12 @@
 #include <experimental/generator>
 #include <expected>
 #include <vector>
+#include <string>
 #include <span>
 
 namespace Hermes {
     using ByteData     = std::vector<std::byte>;
     using ByteDataSpan = std::span<std::byte>;
-
 
     enum class ConnectionErrorEnum {
         UNKNOWN,
@@ -39,6 +39,14 @@ namespace Hermes {
         INVALID_SECURITY_CONTEXT,
 
         INCOMPLETE_MESSAGE,
+
+
+        RESOLVE_HOST_NOT_FOUND,
+        RESOLVE_SERVICE_NOT_FOUND,
+        RESOLVE_TEMPORARY_FAILURE,
+        RESOLVE_FAILED,
+        RESOLVE_NO_ADDRESS_FOUND,
+        UNSUPPORTED_ADDRESS_FAMILY
     };
 
     template<typename T>
@@ -48,4 +56,5 @@ namespace Hermes {
 
     using StreamSent = ConnectionResult<size_t>;
     using DataStream = std::experimental::generator<ConnectionResult<ByteData>>;
+    using DataStringStream = std::experimental::generator<ConnectionResult<std::string>>;
 }

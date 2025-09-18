@@ -43,60 +43,13 @@ namespace Hermes {
         return std::nullopt;
     }
 
-    // std::optional<IpAddress> IpAddress::TryResolve(string_view Uri) {
-    //     Network::Initialize();
-    //
-    //     constexpr static addrinfo hints = {.ai_family = static_cast<int>(AddressFamilyEnum::UNSPEC), .ai_socktype = (int) SocketTypeEnum::STREAM};
-    //
-    //     addrinfo *result = nullptr;
-    //     // string is copied because it mays be not null-terminated
-    //     if (int err = getaddrinfo(string(Uri).data(), nullptr, &hints, &result); err != 0)
-    //         return std::nullopt;
-    //
-    //     if (result == nullptr)
-    //         return std::nullopt;
-    //
-    //     auto addr = result->ai_addr;
-    //     if (addr == nullptr)
-    //         return std::nullopt;
-    //
-    //     if (addr->sa_family == AddressFamilyEnum::INET) {
-    //         auto ipv4 = reinterpret_cast<sockaddr_in *>(addr);
-    //         return FromIPv4(std::bit_cast<IPv4Type>(ipv4->sin_addr));
-    //     }
-    //
-    //     if (addr->sa_family == AddressFamilyEnum::INET6) {
-    //         auto ipv6 = reinterpret_cast<sockaddr_in6 *>(addr);
-    //         return FromIPv6(std::bit_cast<IPv6Type>(ipv6->sin6_addr));
-    //     }
-    //
-    //     return std::nullopt;
-    // }
+    bool IpAddress::operator==(const IpAddress &ip) const {
+        return data == ip.data;
+    }
 
     //----------------------------------------------------------------------------------------------------
     // Getters
     //----------------------------------------------------------------------------------------------------
-
-    IpAddress::IpClassEnum IpAddress::GetClass() const {
-        if (!IsValid())
-            return IpClassEnum::INVALID;
-        if (IsIPv6())
-            return IpClassEnum::IPV6;
-
-        auto &&ipv4 = get<IPv4Type>(data);
-        if ((ipv4[0] & 0x80) == 0x00)
-            return IpClassEnum::A;
-        if ((ipv4[0] & 0xc0) == 0x80)
-            return IpClassEnum::B;
-        if ((ipv4[0] & 0xe0) == 0xc0)
-            return IpClassEnum::C;
-        if ((ipv4[0] & 0xf0) == 0xe0)
-            return IpClassEnum::D;
-        if ((ipv4[0] & 0xf8) == 0xf0)
-            return IpClassEnum::E;
-
-        return IpClassEnum::INVALID;
-    }
 
 
     //----------------------------------------------------------------------------------------------------
@@ -172,9 +125,13 @@ namespace Hermes {
         }
     }
 
+    bool IpAddress::IsPrivate() const {
+        return !IsPublic();
+    }
+
     bool IpAddress::IsLoopback() const {
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
+            const auto& ipv4 = get<IPv4Type>(data);
             return ipv4[0] == 127;
         }
         static constexpr IPv6Type _ipv6Loopback{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
@@ -231,12 +188,34 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
-            return ipv4[0] == 169 && ipv4[1] == 254;
+            auto ipv4 = std::get<IPv4Type>(data);
+            return ipv4[0] == 172 && (ipv4[1] >= 16 && ipv4[1] <= 31);
         } else {
-            auto ipv6 = get<IPv6Type>(data);
+            auto ipv6 = std::get<IPv6Type>(data);
             return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0;
         }
     }
 
+    bool IpAddress::IsIPv4Mapped() const noexcept {
+        if (!std::holds_alternative<IPv6Type>(data))
+            return false;
+
+        const auto& v6 = std::get<IPv6Type>(data);
+
+        for (int i = 0; i < 10; ++i)
+            if (v6[i] != 0) return false;
+
+        return v6[10] == 0xff && v6[11] == 0xff;
+    }
+
+    bool IpAddress::IsDocumentation() const noexcept {
+        if (!std::holds_alternative<IPv6Type>(data))
+            return false;
+
+        const auto& v6 = std::get<IPv6Type>(data);
+        return v6[0] == 0x20
+            && v6[1] == 0x01
+            && v6[2] == 0x0d
+            && v6[3] == 0xb8;
+    }
 } // namespace Hermes

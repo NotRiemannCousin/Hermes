@@ -55,7 +55,7 @@ namespace Hermes {
         return _credHandle;
     }
 
-    inline auto ____init_____ = [] {
+    inline auto ____init____ = [] {
         Network::Initialize();
         return 0;
     }();
