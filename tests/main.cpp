@@ -1,5 +1,4 @@
-#include "IpTests.hpp"
-#include "TcpTests.hpp"
+#include <BaseTests.hpp>
 
 
 int main() {
