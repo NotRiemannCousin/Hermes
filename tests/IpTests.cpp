@@ -1,12 +1,12 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
-#include "_base.hpp"
+#include <BaseTests.hpp>
 
 using Hermes::IpAddress;
 using Hermes::IpEndpoint;
 
 
-inline void IpAddressTests() {
+void IpAddressTests() {
     TestBattery("Ip Tests");
 
     const IpAddress emptyIp       = IpAddress::Empty();
@@ -78,7 +78,7 @@ inline void IpAddressTests() {
 bool TestFromSockAddr();
 bool TestToSockAddr();
 
-inline void IpEndpointTests() {
+void IpEndpointTests() {
     TestBattery("IpEndpoint Tests");
 
     const IpEndpoint emptyEndpoint;
@@ -102,7 +102,7 @@ inline void IpEndpointTests() {
 
 
 
-inline bool TestFromSockAddr() {
+bool TestFromSockAddr() {
     constexpr int port{ 12345 };
 
     sockaddr_in sa4{};
@@ -140,7 +140,7 @@ inline bool TestFromSockAddr() {
     return ipv4Ok && ipv6Ok;
 }
 
-inline bool TestToSockAddr() {
+bool TestToSockAddr() {
     const auto resolvedEndpoint{ IpEndpoint::TryResolve("localhost") };
     if (!resolvedEndpoint)
         return false;

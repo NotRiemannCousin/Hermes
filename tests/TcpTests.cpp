@@ -1,8 +1,9 @@
 #pragma once
 #include <Hermes/Socket/Tcp/TcpClientSocket.hpp>
-#include "_base.hpp"
+#include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
+#include <BaseTests.hpp>
 
-inline void TcpTests() {
+void TcpTests() {
     TestBattery("TCP Tests");
 
     struct {
@@ -15,7 +16,7 @@ inline void TcpTests() {
         "artists/4001234",
     };
 
-    auto endpoint{ IpEndpoint::TryResolve(url.hostname, url.scheme) };
+    auto endpoint{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
     if (!endpoint)
         return Test("Endpoint Resolved", false);
 
