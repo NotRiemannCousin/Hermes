@@ -1,0 +1,56 @@
+{
+	"bmi-installation" : null,
+	"compiler-frontend-variant" : "GNU",
+	"compiler-id" : "GNU",
+	"compiler-simulate-id" : "",
+	"config" : "",
+	"cxx-modules" : {},
+	"database-info" : null,
+	"dir-cur-bld" : "C:/Users/MARCE/CLionProjects/Hermes/build",
+	"dir-cur-src" : "C:/Users/MARCE/CLionProjects/Hermes",
+	"dir-top-bld" : "C:/Users/MARCE/CLionProjects/Hermes/build",
+	"dir-top-src" : "C:/Users/MARCE/CLionProjects/Hermes",
+	"exports" : 
+	[
+		{
+			"cxx-module-info-dir" : "",
+			"destination" : "lib/cmake/Hermes",
+			"export-name" : "Hermes",
+			"export-prefix" : "C:/Users/MARCE/CLionProjects/Hermes/build/CMakeFiles/Export/ad7a122ea4aee16165ee80f513706a43",
+			"filesystem-export-name" : "Hermes",
+			"install" : true,
+			"namespace" : "Hermes::"
+		}
+	],
+	"forward-modules-from-target-dirs" : [],
+	"include-dirs" : 
+	[
+		"C:\\Users\\MARCE\\CLionProjects\\Hermes\\include"
+	],
+	"language" : "CXX",
+	"linked-target-dirs" : [],
+	"module-dir" : "C:/Users/MARCE/CLionProjects/Hermes/build/CMakeFiles/Hermes.dir",
+	"sources" : 
+	{
+		"CMakeFiles/Hermes.dir/src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/MARCE/CLionProjects/Hermes/src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp"
+		},
+		"CMakeFiles/Hermes.dir/src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/MARCE/CLionProjects/Hermes/src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp"
+		},
+		"CMakeFiles/Hermes.dir/src/Hermes/Socket/Tcp/TcpClientSocket.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/MARCE/CLionProjects/Hermes/src/Hermes/Socket/Tcp/TcpClientSocket.cpp"
+		},
+		"CMakeFiles/Hermes.dir/src/Hermes/_base/Network.cpp.obj" : 
+		{
+			"language" : "CXX",
+			"source" : "C:/Users/MARCE/CLionProjects/Hermes/src/Hermes/_base/Network.cpp"
+		}
+	}
+}
