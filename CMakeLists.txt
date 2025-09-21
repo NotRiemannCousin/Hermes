@@ -88,13 +88,22 @@ install(EXPORT HermesTargets
 )
 
 include(CMakePackageConfigHelpers)
+
 write_basic_package_version_file(
         "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
         VERSION ${PROJECT_VERSION_NUMBER}
         COMPATIBILITY AnyNewerVersion
 )
 
+configure_package_config_file(
+        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/HermesConfig.cmake.in"
+        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
+        INSTALL_DESTINATION lib/cmake/Hermes
+)
+
+
 install(FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
         DESTINATION lib/cmake/Hermes
 )
