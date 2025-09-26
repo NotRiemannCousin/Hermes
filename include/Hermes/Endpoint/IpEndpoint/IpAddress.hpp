@@ -138,20 +138,21 @@ namespace Hermes {
 
 
 namespace std {
-    // template<> struct hash<Hermes::IpAddress> {
-    //     size_t operator()(Hermes::IpAddress const& ip) const noexcept {
-    //         if(ip.IsEmpty())
-    //             return 0;
-    //
-    //         return std::visit([](auto const& address) {
-    //             return std::apply([](auto const&... bytes) {
-    //                 size_t hash = 0;
-    //                 ((hash = (hash << 1) | std::hash<uint8_t>{}(bytes)), ...);
-    //                 return hash;
-    //             }, address);
-    //         }, ip.data);
-    //     }
-    // };
+    template<>
+    struct hash<Hermes::IpAddress> {
+        size_t operator()(Hermes::IpAddress const& ip) const noexcept {
+            return std::visit([]<class T>(T const& address) {
+                if constexpr (std::is_same_v<decay_t<T>, std::monostate>)
+                    return hash<std::monostate>{}(address);
+                else
+                    return std::apply([](auto const&... bytes) {
+                        size_t hash{};
+                        ((hash = (hash << 1) | std::hash<uint8_t>{}(bytes)), ...);
+                        return hash;
+                    }, address);
+            }, ip.data);
+        }
+    };
 
     template<>
     struct formatter<Hermes::IpAddress> {

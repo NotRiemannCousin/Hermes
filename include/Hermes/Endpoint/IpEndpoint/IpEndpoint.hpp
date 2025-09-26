@@ -51,13 +51,22 @@ namespace Hermes {
 } // namespace Hermes
 
 
-template<>
-struct std::formatter<Hermes::IpEndpoint> {
-    using Endpoint = Hermes::IpEndpoint;
+namespace std {
+    template<>
+    struct hash<Hermes::IpEndpoint> {
+        size_t operator()(const Hermes::IpEndpoint &endpoint) const noexcept {
+            return std::hash<Hermes::IpAddress>{}(endpoint.ip) ^ (std::hash<int>{}(endpoint.port) << 1);
+        }
+    };
 
-    constexpr auto parse(auto&) { }
+    template<>
+    struct formatter<Hermes::IpEndpoint> {
+        using Endpoint = Hermes::IpEndpoint;
 
-    auto format(const Endpoint &endpoint, std::format_context &ctx) const {
-        return std::format_to(ctx.out(), "{}:{}", endpoint.ip, endpoint.port);
-    }
-};
+        constexpr auto parse(auto&) { }
+
+        auto format(const Endpoint &endpoint, std::format_context &ctx) const {
+            return std::format_to(ctx.out(), "{}:{}", endpoint.ip, endpoint.port);
+        }
+    };
+}
