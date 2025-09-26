@@ -115,6 +115,8 @@ namespace Hermes {
             const int received{ recv(_socket, reinterpret_cast<char*>(bufferRecv.data()),
                                       static_cast<int>(bufferRecv.size()), 0) };
 
+            bufferRecv.resize(received);
+
             if (received == macroSOCKET_ERROR) {
                 const int error{ WSAGetLastError() };
                 if (error == WSAEWOULDBLOCK)
