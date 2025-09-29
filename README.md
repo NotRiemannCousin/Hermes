@@ -14,7 +14,6 @@ Implemented protocols:
 
 - TCP
 - UDP (not implemented yet)
-- QUIC (not implemented yet)
 
 
 
@@ -43,12 +42,23 @@ auto request{
            
 auto _{ socket->SendStr(request) };
    
-for (auto block : socket->ReceiveStr()) {
-    // blocks are `generator<expected<string, ConnectionErrorEnum>>`, process it as
-    // you want. You can use `socket->Receive()` too, to deal with '/0'. It's type is
-    // `generator<expected<vector<byte>, ConnectionErrorEnum>>`
+
+auto socketView{ socket->ReceiveStr() };
+
+if (!rg::starts_with(socketView, "HTTP/1.1 "sv))
+    return std::unexpected{ "Non supported version" };
+
+
+const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 3>>(socketView) };
+const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
+
+const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
+
+if (!headers.has_value())
+    return std::unexpected{ headers.error() };
+
+if (const auto err{ socketView.OptError() }; !err)
+    return std::unexpected{ "Error receiving message" };
     
-    // Sockets don't know when all the data has been sent, this is a role of the application layer.
-    // If you are planning to use it for HTTP check manually for Content-Length/"\r\n\r\n" or use Thoth.
-}
+// ...
 ```

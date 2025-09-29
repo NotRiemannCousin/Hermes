@@ -1,5 +1,6 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
+#include <Hermes/Socket/_base/StreamSocket.hpp>
 
 #include <experimental/generator>
 #include <algorithm>
@@ -25,26 +26,31 @@ namespace Hermes {
     // Construct
     //----------------------------------------------------------------------------------------------------
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSocket<EndpointType, T>::StreamSocket() noexcept = default;
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSocket<EndpointType, InputSocketView, T>::StreamSocket() noexcept = default;
 
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSocket<EndpointType, T>::StreamSocket(StreamSocket &&other) noexcept :
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSocket<EndpointType, InputSocketView, T>::StreamSocket(StreamSocket &&other) noexcept :
         _socket{exchange(other._socket, macroINVALID_SOCKET)} {}
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSocket<EndpointType, T> &StreamSocket<EndpointType, T>::operator=(StreamSocket &&other) noexcept {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSocket<EndpointType, InputSocketView, T> &StreamSocket<EndpointType, InputSocketView, T>::operator=(StreamSocket &&other) noexcept {
         if (this != &other)
             _socket = exchange(other._socket, macroINVALID_SOCKET);
         return *this;
     }
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSocket<EndpointType, T>::~StreamSocket() { Close(); }
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSocket<EndpointType, InputSocketView, T>::~StreamSocket() { Close(); }
 
-    template<EndpointConcept EndpointType, typename T>
-    SOCKET & StreamSocket<EndpointType, T>::UnsafeUnderlyingSocket() {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    SOCKET & StreamSocket<EndpointType, InputSocketView, T>::UnsafeUnderlyingSocket() {
         return _socket;
     }
 
@@ -62,8 +68,9 @@ namespace Hermes {
 
 
 
-    template<EndpointConcept EndpointType, typename T>
-    ConnectionResult<T> StreamSocket<EndpointType, T>::Connect(const EndpointType &endpoint) {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    ConnectionResult<T> StreamSocket<EndpointType, InputSocketView, T>::Connect(const EndpointType &endpoint) {
         auto addrRes{ endpoint.ToSockAddr() };
         if (!addrRes.has_value())
             return unexpected{ ConnectionErrorEnum::UNKNOWN };
@@ -82,8 +89,9 @@ namespace Hermes {
     }
 
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSent StreamSocket<EndpointType, T>::SendRaw(ByteDataSpan data) const {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSent StreamSocket<EndpointType, InputSocketView, T>::SendRaw(ByteDataSpan data) const {
         if (_socket == macroINVALID_SOCKET)
             return unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
 
@@ -96,84 +104,35 @@ namespace Hermes {
         return sent;
     }
 
-    template<EndpointConcept EndpointType, typename T>
-    StreamSent StreamSocket<EndpointType, T>::SendStr(string_view data) const {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    StreamSent StreamSocket<EndpointType, InputSocketView, T>::SendStr(string_view data) const {
         return SendRaw(ByteDataSpan((std::byte*)(char*)data.data(), data.size()));
     }
 
 
-    template<EndpointConcept EndpointType, typename T>
-    DataStream StreamSocket<EndpointType, T>::ReceiveRaw() const {
-        if (_socket == macroINVALID_SOCKET) {
-            co_yield std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
-            co_return;
-        }
-
-        ByteData bufferRecv(0xF000);
-
-        while (true) {
-            const int received{ recv(_socket, reinterpret_cast<char*>(bufferRecv.data()),
-                                      static_cast<int>(bufferRecv.size()), 0) };
-
-            bufferRecv.resize(received);
-
-            if (received == macroSOCKET_ERROR) {
-                const int error{ WSAGetLastError() };
-                if (error == WSAEWOULDBLOCK)
-                    co_yield std::unexpected{ConnectionErrorEnum::CONNECTION_TIMEOUT};
-                else
-                    co_yield std::unexpected{ConnectionErrorEnum::RECEIVE_FAILED};
-                co_return;
-            }
-
-            co_yield bufferRecv;
-        }
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    InputSocketView<std::byte> StreamSocket<EndpointType, InputSocketView, T>::ReceiveRaw() const {
+        return InputSocketView<std::byte>{ _socket };
     }
 
-    template<EndpointConcept EndpointType, typename T>
-    DataStringStream StreamSocket<EndpointType, T>::ReceiveStr() const {
-
-        static auto toString = [](const ByteData &rec) {
-            return rec | std::views::transform(BytesToStr)
-                    | std::ranges::to<string>();
-        };
-
-        for (ConnectionResult received : ReceiveRaw())
-            co_yield received.transform(toString);
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    InputSocketView<char> StreamSocket<EndpointType, InputSocketView, T>::ReceiveStr() const {
+        return InputSocketView<char>{ _socket };
     }
 
-    template<EndpointConcept EndpointType, typename T>
-    void StreamSocket<EndpointType, T>::Close() const {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    void StreamSocket<EndpointType, InputSocketView, T>::Close() const {
         if (_socket != macroINVALID_SOCKET)
             shutdown(_socket, static_cast<int>(SocketShutdownEnum::BOTH));
     }
 
-    template<EndpointConcept EndpointType, typename T>
-    bool StreamSocket<EndpointType, T>::IsOpen() const {
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
+    bool StreamSocket<EndpointType, InputSocketView, T>::IsOpen() const {
         return _socket != macroINVALID_SOCKET;
-    }
-
-    template<EndpointConcept EndpointType, typename T>
-    ConnectionResult<ByteData> StreamSocket<EndpointType, T>::ReceiveAllRaw() const {
-        ByteData buffer{};
-        buffer.reserve(0xF000);
-
-        for (auto &&data: ReceiveRaw()) {
-            if (!data)
-                return std::unexpected{data.error()};
-            buffer.append_range(*data);
-        }
-
-        return buffer;
-    }
-
-    template<EndpointConcept EndpointType, typename T>
-    ConnectionResult<std::string> StreamSocket<EndpointType, T>::ReceiveAllStr() const {
-        static auto toString = [](const ByteData &rec) {
-            return rec | std::views::transform(BytesToStr)
-                    | std::ranges::to<string>();
-        };
-
-        return ReceiveAllRaw().transform(toString);
     }
 } // namespace Hermes

@@ -10,7 +10,7 @@ namespace Hermes {
     //! is established between two or more sockets. Each endpoint holds the necessary
     //! information to identify itself. To extend StreamSocket and DgramSocket,
     //! you will need a class that satisfies the EndpointConcept.
-    template<typename T>
+    template<class T>
     concept EndpointConcept = requires(T t, SocketInfoAddr socketInfo) {
         { T::FromSockAddr(socketInfo) } ->std::same_as<ConnectionResult<T>>;
         { t.ToSockAddr() } ->std::same_as<ConnectionResult<SocketInfoAddr>>;

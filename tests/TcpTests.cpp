@@ -3,6 +3,9 @@
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <BaseTests.hpp>
 
+namespace rg = std::ranges;
+namespace vs = std::views;
+
 void TcpTests() {
     TestBattery("TCP Tests");
 
@@ -42,11 +45,10 @@ void TcpTests() {
 
     Test("Message Sent", true);
 
-    for (auto message : socket->ReceiveStr()) {
-        if (!message || !message->starts_with("HTTP/1.1"))
-            break;
+    auto message{ socket->ReceiveStr() };
+
+    if (rg::starts_with(message, string_view{ "HTTP/1.1" }))
         return Test("Message Received", true);
-    }
 
     Test("Message Received", false);
 }

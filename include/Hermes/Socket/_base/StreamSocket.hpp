@@ -1,7 +1,7 @@
 #pragma once
 #include <Hermes/Endpoint/_base/EndpointConcept.hpp>
+#include <Hermes/Socket/_base/RawInputSocketView.hpp>
 #include <Hermes/_base/WinAPI.hpp>
-#include <experimental/generator>
 
 namespace Hermes {
     //! @brief This class it's just a wrapper to help dealing with stream sockets.
@@ -10,8 +10,11 @@ namespace Hermes {
     //! role of the protocols that inherit from StreamSocket.
     //!
     //! All inherited classes needs to use CRTP.
-    template<EndpointConcept EndpointType, typename T>
+    template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
+        requires InputSocketViewConcept<InputSocketView>
     struct StreamSocket {
+        // TODO: make OutputSocketViewConcept
+
         StreamSocket(StreamSocket&&) noexcept;
         StreamSocket& operator=(StreamSocket&&) noexcept;
         ~StreamSocket();
@@ -29,14 +32,10 @@ namespace Hermes {
         //! @return Returns the count of data sent.
         [[nodiscard]] StreamSent SendStr(std::string_view data) const;
 
-        //! @return Returns a generator of each block of data received.
-        [[nodiscard]] DataStream ReceiveRaw() const;
-        //! @return Returns a generator of each block of data received.
-        [[nodiscard]] DataStringStream ReceiveStr() const;
-
-        //! @return Returns all the data blocks until this moment.
-        [[nodiscard]] ConnectionResult<ByteData> ReceiveAllRaw() const;
-        [[nodiscard]] ConnectionResult<std::string> ReceiveAllStr() const;
+        //! @return Returns a lazy view to the data received by the socket.
+        [[nodiscard]] InputSocketView<std::byte> ReceiveRaw() const;
+        //! @return Same as ReceiveRaw() but returns as char instead of std::byte.
+        [[nodiscard]] InputSocketView<char> ReceiveStr() const;
 
         void Close() const;
         [[nodiscard]] bool IsOpen() const;

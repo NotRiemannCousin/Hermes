@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.29.1)
 project(Hermes LANGUAGES CXX)
 
 set(PROJECT_VERSION_NUMBER 0.1.0)
-set(PROJECT_VERSION_SUFFIX "alpha.1")
+set(PROJECT_VERSION_SUFFIX "alpha.2")
 
 set(PROJECT_VERSION "${PROJECT_VERSION_NUMBER}-${PROJECT_VERSION_SUFFIX}")
 
@@ -23,6 +23,8 @@ add_library(
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
 
         src/Hermes/Socket/Tcp/TcpClientSocket.cpp
+        include/Hermes/Utils/UntilMatch.tpp
+        include/Hermes/Utils/UntilMatch.hpp
 )
 
 target_include_directories(
