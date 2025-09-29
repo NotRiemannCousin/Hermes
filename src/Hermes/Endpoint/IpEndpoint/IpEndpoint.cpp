@@ -55,7 +55,7 @@ namespace Hermes {
         size_t size{};
         AddressFamilyEnum addressFamily{};
 
-        std::visit([&]<typename T>(T &&arg) {
+        std::visit([&]<class T>(T &&arg) {
             using T0 = std::decay_t<T>;
 
             if constexpr (std::is_same_v<T0, IpAddress::IPv6Type>) {

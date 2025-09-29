@@ -1,9 +1,25 @@
+#include <functional>
 #include <Hermes/Socket/Tcp/TcpClientSocket.hpp>
 
 #include <string_view>
 #include <print>
+#include <Hermes/Utils/UntilMatch.hpp>
 
-int main() {
+#include <string_view>
+#include <print>
+
+namespace rg = std::ranges;
+namespace vs = std::views;
+using std::literals::string_view_literals::operator""sv;
+
+// fake method
+std::expected<std::monostate, string> HttpHeaders(auto sla) {
+    std::println("headers:\n\n{}", sla | rg::to<string>());
+
+    return {};
+};
+
+expected<std::monostate, string> MakeRequest() {
     struct {
         std::string scheme;
         std::string hostname;
@@ -16,7 +32,7 @@ int main() {
 
     auto endpoint{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
     if (!endpoint)
-        return 1;
+        return std::unexpected{ "Could not resolve endpoint" };
 
     auto socket{ Hermes::TcpClientSocket::Connect(*endpoint) };
     const auto request{
@@ -27,22 +43,39 @@ int main() {
 
 
     if (!socket)
-        return 1;
+        return std::unexpected{ "Could not connect to endpoint" };
 
     if (const auto err{ socket->SendStr(request) }; !err)
-        return 1;
+        return std::unexpected{ "Could not send to endpoint" };
+
+    auto socketView{ socket->ReceiveStr() };
 
 
-    for (const auto message : socket->ReceiveStr()) {
-        if (!message || !message->starts_with("HTTP/1.1"))
-            return 1;
+    if (!rg::starts_with(socketView, "HTTP/1.1 "sv))
+        return std::unexpected{ "Non supported version" };
 
-        std::print("{}", *message);
 
-        auto sla = message->substr(61000);
+    const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 3>>(socketView) };
+    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
 
-        break; // Don't do this, check manually for Content-Length/"\r\n\r\n" or use Thoth
-    }
+    const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
+
+    if (!headers.has_value())
+        return std::unexpected{ headers.error() };
+
+    if (const auto err{ socketView.OptError() }; !err)
+        return std::unexpected{ "Error receiving message" };
+
+
+    return {};
+}
+
+
+
+
+int main() {
+    if (const auto res{ MakeRequest() }; !res)
+        std::println("\n\n{}", res.error());
 
     return 0;
 }

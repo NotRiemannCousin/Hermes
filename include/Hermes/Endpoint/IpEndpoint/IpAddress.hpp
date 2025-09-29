@@ -185,7 +185,7 @@ namespace std {
 
             if (!ipv6Reduced)
                 return std::apply(
-                        [&]<typename... T0>(T0 &&...args) {
+                        [&]<class... T0>(T0 &&...args) {
                             return std::format_to(ctx.out(), ipv6_fmt, std::forward<T0>(args)...);
                         },
                         ipv6);

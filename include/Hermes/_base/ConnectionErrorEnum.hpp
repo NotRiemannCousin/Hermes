@@ -49,7 +49,7 @@ namespace Hermes {
         UNSUPPORTED_ADDRESS_FAMILY
     };
 
-    template<typename T>
+    template<class T>
     using ConnectionResult = std::expected<T, ConnectionErrorEnum>;
     using ConnectionResultOper = ConnectionResult<std::monostate>;
 
