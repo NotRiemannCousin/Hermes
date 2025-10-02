@@ -76,11 +76,12 @@ namespace Hermes::Utils {
     }
 
 
-    template<class R1, class R2>
-    R1 CopyTo(R2 &&view) {
+    template<rg::range R1, rg::range R2>
+        requires std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
+    R1 CopyTo(const R2 &view) {
         R1 res;
 
-        rg::copy_result(view, res);
+        rg::copy(view, res);
 
         return std::move(res);
     }
