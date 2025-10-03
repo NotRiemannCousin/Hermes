@@ -25,6 +25,7 @@ add_library(
         src/Hermes/Socket/Tcp/TcpClientSocket.cpp
         include/Hermes/Utils/UntilMatch.tpp
         include/Hermes/Utils/UntilMatch.hpp
+        include/Hermes/Socket/_base/_base.hpp
 )
 
 target_include_directories(

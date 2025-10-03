@@ -81,7 +81,7 @@ namespace Hermes::Utils {
     R1 CopyTo(const R2 &view) {
         R1 res;
 
-        rg::copy(view, res);
+        rg::copy_result(view, res);
 
         return std::move(res);
     }

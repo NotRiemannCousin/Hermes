@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/Endpoint/_base/EndpointConcept.hpp>
-#include <Hermes/Socket/_base/RawInputSocketView.hpp>
+#include <Hermes/Socket/_base/RawInputSocketRange.hpp>
 #include <Hermes/_base/WinAPI.hpp>
 
 namespace Hermes {
@@ -11,9 +11,9 @@ namespace Hermes {
     //!
     //! All inherited classes needs to use CRTP.
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     struct StreamSocket {
-        // TODO: make OutputSocketViewConcept
+        // TODO: make OutputSocketRangeConcept
 
         StreamSocket(StreamSocket&&) noexcept;
         StreamSocket& operator=(StreamSocket&&) noexcept;

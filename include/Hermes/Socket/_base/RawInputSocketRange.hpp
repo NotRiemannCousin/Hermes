@@ -1,32 +1,28 @@
 #pragma once
+#include <Hermes/_base/ConnectionErrorEnum.hpp>
+#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/_base/WinAPI.hpp>
+
 #include <chrono>
 #include <array>
-#include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/_base/WinAPI.hpp>
 
 
 namespace Hermes {
-
-    template<template<class> class T>
-    concept InputSocketViewConcept =
-        std::ranges::input_range<T<std::byte>>
-        && std::ranges::input_range<T<char>>;
-
-    template<class Type>
-    struct RawInputSocketView {
+        template<class Type>
+        struct RawInputSocketRange {
         struct Iterator {
             using difference_type  = std::ptrdiff_t;
             using value_type       = Type;
 
-            RawInputSocketView* view = nullptr;
+            RawInputSocketRange* view = nullptr;
 
             [[nodiscard]] value_type operator*() const;
             Iterator& operator++();
-            void operator++(int);
+            Iterator& operator++(int);
             [[nodiscard]] bool operator==(std::default_sentinel_t) const;
         };
 
-        RawInputSocketView(SOCKET socket);
+        explicit RawInputSocketRange(SOCKET socket);
 
         Iterator begin();
         std::default_sentinel_t end();
@@ -43,7 +39,7 @@ namespace Hermes {
     };
 
 
-    static_assert(InputSocketViewConcept<RawInputSocketView>);
+    static_assert(MinimalInputSocketRangeConcept<RawInputSocketRange>);
 }
 
-#include <Hermes/Socket/_base/RawInputSocketView.tpp>
+#include <Hermes/Socket/_base/RawInputSocketRange.tpp>

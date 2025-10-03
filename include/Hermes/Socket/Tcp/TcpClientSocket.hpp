@@ -8,5 +8,5 @@ namespace Hermes {
     //! This class represents the client-side of a TCP connection, using IpEndpoint
     //! for addressing.
 
-    struct TcpClientSocket : StreamSocket<IpEndpoint, RawInputSocketView, TcpClientSocket>{ };
+    struct TcpClientSocket : StreamSocket<IpEndpoint, RawInputSocketRange, TcpClientSocket>{ };
 } // namespace Hermes

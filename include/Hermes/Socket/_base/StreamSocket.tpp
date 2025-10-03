@@ -27,17 +27,17 @@ namespace Hermes {
     //----------------------------------------------------------------------------------------------------
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSocket<EndpointType, InputSocketView, T>::StreamSocket() noexcept = default;
 
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSocket<EndpointType, InputSocketView, T>::StreamSocket(StreamSocket &&other) noexcept :
         _socket{exchange(other._socket, macroINVALID_SOCKET)} {}
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSocket<EndpointType, InputSocketView, T> &StreamSocket<EndpointType, InputSocketView, T>::operator=(StreamSocket &&other) noexcept {
         if (this != &other)
             _socket = exchange(other._socket, macroINVALID_SOCKET);
@@ -45,11 +45,11 @@ namespace Hermes {
     }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSocket<EndpointType, InputSocketView, T>::~StreamSocket() { Close(); }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     SOCKET & StreamSocket<EndpointType, InputSocketView, T>::UnsafeUnderlyingSocket() {
         return _socket;
     }
@@ -69,7 +69,7 @@ namespace Hermes {
 
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     ConnectionResult<T> StreamSocket<EndpointType, InputSocketView, T>::Connect(const EndpointType &endpoint) {
         auto addrRes{ endpoint.ToSockAddr() };
         if (!addrRes.has_value())
@@ -90,7 +90,7 @@ namespace Hermes {
 
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSent StreamSocket<EndpointType, InputSocketView, T>::SendRaw(ByteDataSpan data) const {
         if (_socket == macroINVALID_SOCKET)
             return unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
@@ -105,33 +105,33 @@ namespace Hermes {
     }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     StreamSent StreamSocket<EndpointType, InputSocketView, T>::SendStr(string_view data) const {
         return SendRaw(ByteDataSpan((std::byte*)(char*)data.data(), data.size()));
     }
 
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     InputSocketView<std::byte> StreamSocket<EndpointType, InputSocketView, T>::ReceiveRaw() const {
         return InputSocketView<std::byte>{ _socket };
     }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     InputSocketView<char> StreamSocket<EndpointType, InputSocketView, T>::ReceiveStr() const {
         return InputSocketView<char>{ _socket };
     }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     void StreamSocket<EndpointType, InputSocketView, T>::Close() const {
         if (_socket != macroINVALID_SOCKET)
             shutdown(_socket, static_cast<int>(SocketShutdownEnum::BOTH));
     }
 
     template<EndpointConcept EndpointType, template<class> class InputSocketView, class T>
-        requires InputSocketViewConcept<InputSocketView>
+        requires MinimalInputSocketRangeConcept<InputSocketView>
     bool StreamSocket<EndpointType, InputSocketView, T>::IsOpen() const {
         return _socket != macroINVALID_SOCKET;
     }
