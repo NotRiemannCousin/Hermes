@@ -13,7 +13,7 @@ namespace Hermes {
         std::ranges::input_range<T<std::byte>>;
 
 
-    template<template<class> class T>
+    template<class T>
     concept MinimalOutputSocketRangeConcept =
-        std::ranges::output_range<T<std::byte>, std::byte>;
+        std::ranges::output_range<T, std::byte>;
 }

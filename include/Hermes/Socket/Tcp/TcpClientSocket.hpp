@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/Socket/_base/StreamSocket.hpp>
+#include <../_base/Family/StreamSocket.hpp>
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 
 namespace Hermes {

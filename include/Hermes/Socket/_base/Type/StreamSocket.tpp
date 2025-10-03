@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/Socket/_base/StreamSocket.hpp>
+#include <Family/StreamSocket.hpp>
 
 #include <experimental/generator>
 #include <algorithm>

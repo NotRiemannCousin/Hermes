@@ -8,8 +8,8 @@
 
 
 namespace Hermes {
-        template<class Type>
-        struct RawInputSocketRange {
+    template<ByteLike Type>
+    struct RawInputSocketRange {
         struct Iterator {
             using difference_type  = std::ptrdiff_t;
             using value_type       = Type;
@@ -31,10 +31,12 @@ namespace Hermes {
     private:
         ConnectionResultOper Receive();
 
-        int index{};
-        int size{};
+        static constexpr size_t bufferSize{ 0x0F00 };
+
+        int _index{};
+        int _size{};
         SOCKET _socket{};
-        ConnectionResultOper errorStatus{};
+        ConnectionResultOper _errorStatus{};
         std::array<Type, 0x0F00> _buffer{};
     };
 

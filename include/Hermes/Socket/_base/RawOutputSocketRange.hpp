@@ -8,7 +8,6 @@
 
 
 namespace Hermes {
-    template<class Type>
     struct RawOutputSocketRange {
         struct Iterator {
             using iterator_category = std::output_iterator_tag;
@@ -20,7 +19,10 @@ namespace Hermes {
             Iterator& operator*();
             Iterator& operator++();
             Iterator& operator++(int);
+
+            template<ByteLike Type>
             Iterator& operator=(Type value);
+            [[nodiscard]] bool operator==(std::default_sentinel_t) const;
         };
 
         explicit RawOutputSocketRange(SOCKET socket);
@@ -33,18 +35,16 @@ namespace Hermes {
         [[nodiscard]] ConnectionResultOper OptError() const;
 
     private:
+        static constexpr size_t bufferSize{ 0x0F00 };
+
         int index{};
         SOCKET _socket{};
-        ConnectionResultOper errorStatus{};
-        std::array<Type, 0x0F00> _buffer{};
+        ConnectionResultOper _errorStatus{};
+        std::array<std::byte, 0x0F00> _buffer{};
     };
 
-    template <class I, class T>
-    concept Sla = requires(I __i, T&& __t) {
-        *__i++ = static_cast<T&&>(__t);
-    };
 
-    static_assert(Sla<RawOutputSocketRange<std::byte>::Iterator, std::byte>);
+    static_assert(MinimalOutputSocketRangeConcept<RawOutputSocketRange>);
 }
 
 #include <Hermes/Socket/_base/RawOutputSocketRange.tpp>

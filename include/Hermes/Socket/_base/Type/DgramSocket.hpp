@@ -39,4 +39,4 @@ namespace Hermes {
     };
 } // namespace Hermes
 
-#include <Hermes/Socket/_base/DgramSocket.tpp>
+#include <DgramSocket.tpp>

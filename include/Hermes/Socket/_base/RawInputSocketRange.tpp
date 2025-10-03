@@ -1,66 +1,65 @@
 #pragma once
 
 namespace Hermes {
-    template<class Type>
+    template<ByteLike Type>
     RawInputSocketRange<Type>::RawInputSocketRange(SOCKET socket)
     : _socket(socket) {
-        errorStatus = Receive();
+        _errorStatus = Receive();
     }
 
-    template<class Type>
+    template<ByteLike Type>
     RawInputSocketRange<Type>::Iterator RawInputSocketRange<Type>::begin() {
         return Iterator{this};
     }
 
-    template<class Type>
+    template<ByteLike Type>
     std::default_sentinel_t RawInputSocketRange<Type>::end() {
         return {};
     }
 
-    template<class Type>
-    Type RawInputSocketRange<Type>::Iterator::operator*() const {
-        return view->_buffer[view->index];
+    template<ByteLike Type>
+    RawInputSocketRange<Type>::Iterator::value_type RawInputSocketRange<Type>::Iterator::operator*() const {
+        return view->_buffer[view->_index];
     }
 
-    template<class Type>
+    template<ByteLike Type>
     class RawInputSocketRange<Type>::Iterator& RawInputSocketRange<Type>::Iterator::operator++() {
-        if (++view->index >= view->size)
-            view->errorStatus = view->Receive();
+        if (++view->_index >= view->_size)
+            view->_errorStatus = view->Receive();
         return *this;
     }
 
-    template<class Type>
+    template<ByteLike Type>
     class RawInputSocketRange<Type>::Iterator& RawInputSocketRange<Type>::Iterator::operator++(int) {
         return ++(*this);
     }
 
-    template<class Type>
+    template<ByteLike Type>
     bool RawInputSocketRange<Type>::Iterator::operator==(std::default_sentinel_t) const {
-        return static_cast<bool>(!view->errorStatus);
+        return static_cast<bool>(!view->_errorStatus);
     }
 
-    template<class Type>
+    template<ByteLike Type>
     ConnectionResultOper RawInputSocketRange<Type>::OptError() {
-        return errorStatus;
+        return _errorStatus;
     }
 
 
-    template<class Type>
+    template<ByteLike Type>
     ConnectionResultOper RawInputSocketRange<Type>::Receive() {
         if (_socket == macroINVALID_SOCKET)
-            return errorStatus = std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
+            return _errorStatus = std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
 
         const int received = recv(_socket,
-                                  reinterpret_cast<char*>(_buffer.data()),
-                                  static_cast<int>(_buffer.size()), 0);
+                                  reinterpret_cast<char*>(_buffer.data()), bufferSize, 0);
 
-        size  = received;
-        index = 0;
+        _size = received;
+        _index = 0;
 
         if (received != macroSOCKET_ERROR)
             return {};
 
-        return errorStatus = std::unexpected{
+        return _errorStatus = std::unexpected{
             WSAGetLastError() == WSAEWOULDBLOCK
             ? ConnectionErrorEnum::CONNECTION_TIMEOUT
             : ConnectionErrorEnum::RECEIVE_FAILED
