@@ -15,8 +15,9 @@ namespace Hermes {
 
     template<class Type>
     typename RawOutputSocketRange<Type>::Iterator& RawOutputSocketRange<Type>::Iterator::operator++(int) {
-        ++(*this);
+        return ++(*this);
     }
+
 
     template<class Type>
     typename RawOutputSocketRange<Type>::Iterator& RawOutputSocketRange<Type>::Iterator::operator=(Type value) {

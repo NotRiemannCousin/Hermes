@@ -39,9 +39,12 @@ namespace Hermes {
         std::array<Type, 0x0F00> _buffer{};
     };
 
+    template <class I, class T>
+    concept Sla = requires(I __i, T&& __t) {
+        *__i++ = static_cast<T&&>(__t);
+    };
 
-
-    static_assert(MinimalOutputSocketRangeConcept<RawOutputSocketRange>);
+    static_assert(Sla<RawOutputSocketRange<std::byte>::Iterator, std::byte>);
 }
 
 #include <Hermes/Socket/_base/RawOutputSocketRange.tpp>
