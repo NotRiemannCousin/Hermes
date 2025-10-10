@@ -46,7 +46,6 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         RAW       = SOCK_RAW,           /* raw-protocol interface */
         RDM       = SOCK_RDM,           /* reliably-delivered message */
         SEQPACKET = SOCK_SEQPACKET,     /* sequenced packet stream */
-
     };
 
     

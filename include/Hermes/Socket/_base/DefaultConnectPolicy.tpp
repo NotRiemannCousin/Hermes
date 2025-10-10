@@ -24,7 +24,7 @@ namespace Hermes {
         if (data.socket == macroINVALID_SOCKET) return {};
 
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::BOTH));
-
+        closesocket(data.socket);
 
         data.socket = macroINVALID_SOCKET;
 
