@@ -10,7 +10,6 @@ namespace Hermes {
         static ConnectionResultOper Connect(Data& data);
         static ConnectionResultOper Close(Data& data);
     };
-
 }
 
 #include <Hermes/Socket/_base/DefaultConnectPolicy.tpp>

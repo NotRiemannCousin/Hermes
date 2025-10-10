@@ -43,6 +43,8 @@ namespace Hermes {
 
         bool operator==(const IpEndpoint &) const;
 
+        IpEndpoint& operator=(const IpEndpoint&) noexcept;
+
         IpAddress ip{ IpAddress::Empty() };
         int port{ -1 };
     };

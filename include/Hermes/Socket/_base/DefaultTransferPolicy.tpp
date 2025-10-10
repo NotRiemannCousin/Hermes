@@ -1,72 +1,72 @@
 #pragma once
+#include <print>
 
+#include "DefaultTransferPolicy.hpp"
 
 namespace Hermes {
     template<SocketDataConcept Data>
-    typename DefaultTransferPolicy<Data>::RecvRange::Iterator::value_type DefaultTransferPolicy<Data>::RecvRange::Iterator::operator*() const {
-        return view->_buffer[view->_index];
+    template<ByteLike Byte>
+    DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator::value_type DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator*() const {
+        if (view->_index == view->_size)
+            view->Receive();
+
+        return std::bit_cast<Byte>(view->_buffer[view->_index]);
     }
 
     template<SocketDataConcept Data>
-    typename DefaultTransferPolicy<Data>::RecvRange::Iterator& DefaultTransferPolicy<Data>::RecvRange::Iterator::operator++() {
-        if (++view->_index >= view->_buffer.size())
-            view->_index = 0;
+    template<ByteLike Byte>
+    DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator++() {
+        if (++view->_index >= view->_size)
+            view->Receive();
+
         return *this;
     }
 
     template<SocketDataConcept Data>
-    typename DefaultTransferPolicy<Data>::RecvRange::Iterator& DefaultTransferPolicy<Data>::RecvRange::Iterator::operator++(int) {
+    template<ByteLike Byte>
+    DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator++(int) {
         return ++(*this);
     }
 
     template<SocketDataConcept Data>
-    bool DefaultTransferPolicy<Data>::RecvRange::Iterator::operator==(std::default_sentinel_t) const {
-        return static_cast<bool>(!view->_errorStatus);
+    template<ByteLike Byte>
+    bool DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator==(std::default_sentinel_t) const {
+        return !view->_errorStatus.has_value() || (view->_data.socket == macroINVALID_SOCKET);
     }
 
 
     template<SocketDataConcept Data>
-    DefaultTransferPolicy<Data>::RecvRange::RecvRange(DefaultTransferPolicy& policy) : _policy{ policy } { }
+    template<ByteLike Byte>
+    DefaultTransferPolicy<Data>::RecvRange<Byte>::RecvRange(Data& data, DefaultTransferPolicy&) : _data { data } { }
 
 
 
     template<SocketDataConcept Data>
-    typename DefaultTransferPolicy<Data>::RecvRange::Iterator DefaultTransferPolicy<Data>::RecvRange::begin() {
+    template<ByteLike Byte>
+    DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator DefaultTransferPolicy<Data>::RecvRange<Byte>::begin() {
         return Iterator{this};
     }
 
     template<SocketDataConcept Data>
-    std::default_sentinel_t DefaultTransferPolicy<Data>::RecvRange::end() {
-        return {};
-    }
+    template<ByteLike Byte>
+    std::default_sentinel_t DefaultTransferPolicy<Data>::RecvRange<Byte>::end() { return {}; }
 
-    // template<SocketDataConcept Data>
-    // ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange::Flush() {
-    //     if (socket == macroINVALID_SOCKET)
-    //         return unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
-    //
-    //     const int sent{ send(socket, reinterpret_cast<const char*>(data.data()),
-    //                     static_cast<int>(data.size()), 0) };
-    //
-    //     if (sent == macroSOCKET_ERROR)
-    //         return unexpected{ ConnectionErrorEnum::SEND_FAILED }; TODO: This is disgusting... Improve error handling for send and receive
-    //
-    //     index = 0;
-    // }
-    //
+
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange::OptError() const {
+    template<ByteLike Byte>
+    ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange<Byte>::Error() const {
         return _errorStatus;
     }
 
 
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange::Receive() {
-        if (_policy.socket == macroINVALID_SOCKET)
+    template<ByteLike Byte>
+    ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange<Byte>::Receive() {
+        if (_data.socket == macroINVALID_SOCKET)
             return _errorStatus = std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
 
-        const int received = recv(_policy.socket,
-                                  reinterpret_cast<char*>(_buffer.data()), bufferSize, 0);
+        const int received{ recv(_data.socket,
+                                  reinterpret_cast<char*>(_buffer.data()), bufferSize, 0) };
 
         _size = received;
         _index = 0;
@@ -83,31 +83,45 @@ namespace Hermes {
 
 
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<std::byte> bufferRecv) {
-        if (_socket == macroINVALID_SOCKET)
+    template<ByteLike Byte>
+    StreamByteCount DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+        if (data.socket == macroINVALID_SOCKET)
             return std::unexpected{ConnectionErrorEnum::SOCKET_NOT_OPEN};
 
-        int received = recv(_socket, reinterpret_cast<char*>(bufferRecv.data()), static_cast<int>(bufferRecv.size()), 0);
-        if (received == macroSOCKET_ERROR)
-            return std::unexpected{
-                WSAGetLastError() == WSAEWOULDBLOCK
-                ? ConnectionErrorEnum::CONNECTION_TIMEOUT
-                : ConnectionErrorEnum::RECEIVE_FAILED
-            };
+        size_t total{};
+        while (total < bufferRecv.size()) {
+            int received = recv(data.socket,
+                reinterpret_cast<char*>(bufferRecv.data() + total),
+                static_cast<int>(bufferRecv.size() - total), 0);
 
-        return {};
+            if (received == 0)
+                break;
+            if (received == macroSOCKET_ERROR)
+                return std::unexpected{ConnectionErrorEnum::RECEIVE_FAILED};
+
+            total += received;
+        }
+        return { total };
     }
 
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultTransferPolicy<Data>::Send(Data& data, std::span<const std::byte> bufferSend) {
-        if (_socket == macroINVALID_SOCKET)
-            return std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
+    template<ByteLike Byte>
+    StreamByteCount DefaultTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
+        if (data.socket == macroINVALID_SOCKET)
+            return std::unexpected{ConnectionErrorEnum::SOCKET_NOT_OPEN};
 
-        int sent = send(_socket, reinterpret_cast<const char*>(bufferSend.data()), static_cast<int>(bufferSend.size()), 0);
-        if (sent == macroSOCKET_ERROR)
-            return std::unexpected{ ConnectionErrorEnum::SEND_FAILED };
+        size_t total{};
+        while (total < bufferSend.size()) {
+            int sent = send(data.socket,
+                reinterpret_cast<const char*>(bufferSend.data() + total),
+                static_cast<int>(bufferSend.size() - total), 0);
 
-        return {};
+            if (sent == macroSOCKET_ERROR)
+                return std::unexpected{ConnectionErrorEnum::SEND_FAILED};
+
+            total += sent;
+        }
+        return { total };
     }
 
 }

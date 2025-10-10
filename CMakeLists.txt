@@ -21,10 +21,7 @@ add_library(
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
-
-        src/Hermes/Socket/Tcp/TcpClientSocket.cpp
-        include/Hermes/Utils/UntilMatch.tpp
-        include/Hermes/Socket/_base/DefaultSocketData.hpp
+        include/Hermes/Utils/ToBytes.hpp
 )
 
 target_include_directories(

@@ -132,4 +132,6 @@ namespace Hermes {
     bool IpEndpoint::operator==(const IpEndpoint &endpoint) const {
         return this->port == endpoint.port && this->ip == endpoint.ip;
     }
+
+    IpEndpoint& IpEndpoint::operator=(const IpEndpoint& endpoint) noexcept = default;
 } // namespace Hermes

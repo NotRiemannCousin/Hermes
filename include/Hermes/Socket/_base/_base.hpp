@@ -18,6 +18,8 @@ namespace Hermes {
     //! associated Endpoint type and containing the socket handle and an endpoint instance.
     template<class SocketData>
     concept SocketDataConcept = EndpointConcept<typename SocketData::EndpointType>
+        && std::movable<SocketData>
+        && !std::copyable<SocketData>
         && requires(SocketData data) {
             { SocketData::Family } -> std::same_as<const AddressFamilyEnum&>;
             { SocketData::Type } -> std::same_as<const SocketTypeEnum&>;
@@ -49,11 +51,11 @@ namespace Hermes {
     //! (e.g., reading a length prefix, searching for a delimiter, TLS, etc.).
     template<template <class> class Policy, class SocketData>
     concept TransferPolicyConcept = SocketDataConcept<SocketData>
-        && std::ranges::input_range<typename Policy<SocketData>::RecvRange>
-        && std::same_as<std::ranges::range_value_t<typename Policy<SocketData>::RecvRange>, std::byte>
-        && std::constructible_from<typename Policy<SocketData>::RecvRange, Policy<SocketData>&>
-        && requires(typename Policy<SocketData>::RecvRange& range) {
-             { range.OptError() } -> std::same_as<ConnectionResultOper>;
+        && std::ranges::input_range<typename Policy<SocketData>::template RecvRange<std::byte>>
+        && std::same_as<std::ranges::range_value_t<typename Policy<SocketData>::template RecvRange<std::byte>>, std::byte>
+        && std::constructible_from<typename Policy<SocketData>::template RecvRange<std::byte>, SocketData&, Policy<SocketData>&>
+        && requires(typename Policy<SocketData>::template RecvRange<std::byte>& range) {
+             { range.Error() } -> std::same_as<ConnectionResultOper>;
         }
         && requires(
             Policy<SocketData>& policy,
@@ -61,7 +63,7 @@ namespace Hermes {
             std::span<std::byte> bufferRecv,
             std::span<const std::byte> bufferSend
         ) {
-            { policy.Recv(data, bufferRecv) } -> std::same_as<ConnectionResultOper>;
-            { policy.Send(data, bufferSend) } -> std::same_as<ConnectionResultOper>;
+            { policy.Recv(data, bufferRecv) } -> std::same_as<StreamByteCount>;
+            { policy.Send(data, bufferSend) } -> std::same_as<StreamByteCount>;
         };
 }
