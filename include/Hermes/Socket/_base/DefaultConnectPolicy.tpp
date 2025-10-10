@@ -9,7 +9,7 @@ namespace Hermes {
 
         auto [addr, addr_len, addrFamily] = *addrRes;
 
-        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(SocketTypeEnum::STREAM), 0);
+        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
         const int result{ connect(data.socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };
 
         if (result == macroSOCKET_ERROR)
@@ -21,11 +21,12 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultConnectPolicy<Data>::Close(Data& data) {
-        if (data.socket != macroINVALID_SOCKET) {
-            shutdown(data.socket, static_cast<int>(SocketShutdownEnum::BOTH));
+        if (data.socket == macroINVALID_SOCKET) return {};
 
-            data.socket = macroINVALID_SOCKET;
-        }
+        shutdown(data.socket, static_cast<int>(SocketShutdownEnum::BOTH));
+
+
+        data.socket = macroINVALID_SOCKET;
 
         return {};
     }
