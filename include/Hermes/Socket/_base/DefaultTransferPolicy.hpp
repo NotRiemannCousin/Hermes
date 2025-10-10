@@ -42,6 +42,10 @@ namespace Hermes {
             std::array<std::byte, 0x0F00> _buffer{};
         };
 
+
+        ConnectionResultOper Recv(Data& data, std::span<std::byte> bufferRecv);
+        ConnectionResultOper Send(Data& data, std::span<const std::byte> bufferSend);
+
     private:
         SOCKET _socket{};
     };

@@ -80,4 +80,34 @@ namespace Hermes {
             : ConnectionErrorEnum::RECEIVE_FAILED
         };
     }
+
+
+    template<SocketDataConcept Data>
+    ConnectionResultOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<std::byte> bufferRecv) {
+        if (_socket == macroINVALID_SOCKET)
+            return std::unexpected{ConnectionErrorEnum::SOCKET_NOT_OPEN};
+
+        int received = recv(_socket, reinterpret_cast<char*>(bufferRecv.data()), static_cast<int>(bufferRecv.size()), 0);
+        if (received == macroSOCKET_ERROR)
+            return std::unexpected{
+                WSAGetLastError() == WSAEWOULDBLOCK
+                ? ConnectionErrorEnum::CONNECTION_TIMEOUT
+                : ConnectionErrorEnum::RECEIVE_FAILED
+            };
+
+        return {};
+    }
+
+    template<SocketDataConcept Data>
+    ConnectionResultOper DefaultTransferPolicy<Data>::Send(Data& data, std::span<const std::byte> bufferSend) {
+        if (_socket == macroINVALID_SOCKET)
+            return std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
+
+        int sent = send(_socket, reinterpret_cast<const char*>(bufferSend.data()), static_cast<int>(bufferSend.size()), 0);
+        if (sent == macroSOCKET_ERROR)
+            return std::unexpected{ ConnectionErrorEnum::SEND_FAILED };
+
+        return {};
+    }
+
 }
