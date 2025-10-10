@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 
 namespace Hermes::Utils {
     template<rg::input_range Range, rg::contiguous_range Pattern> requires ComparableRange<Range, Pattern>

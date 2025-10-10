@@ -5,6 +5,7 @@
 
 namespace rg = std::ranges;
 namespace vs = std::views;
+vs::reverse;
 
 void TcpTests() {
     TestBattery("TCP Tests");
