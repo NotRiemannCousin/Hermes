@@ -34,40 +34,40 @@ expected<std::monostate, string> MakeRequest() {
     if (!endpoint)
         return std::unexpected{ "Could not resolve endpoint" };
 
-    auto socket{ Hermes::TcpClientSocket::Connect(*endpoint) };
-    const auto request{
-        format(
-            "GET /{} HTTP/1.1\r\n"
-            "Host: {}\r\n\r\n",
-            url.path, url.hostname) };
-
-
-    if (!socket)
-        return std::unexpected{ "Could not connect to endpoint" };
-
-    if (const auto err{ socket->SendStr(request) }; !err)
-        return std::unexpected{ "Could not send to endpoint" };
-
-    auto socketView{ socket->ReceiveStr() };
-
-
-    if (!rg::starts_with(socketView, "HTTP/1.1 "sv))
-        return std::unexpected{ "Non supported version" };
-
-
-    const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 3>>(socketView) };
-    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
-
-    const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
-
-    if (!headers.has_value())
-        return std::unexpected{ headers.error() };
-
-    if (const auto err{ socketView.OptError() }; !err)
-        return std::unexpected{ "Error receiving message" };
-
-
-    return {};
+    // auto socket{ Hermes::TcpClientSocket::Connect(*endpoint) };
+    // const auto request{
+    //     format(
+    //         "GET /{} HTTP/1.1\r\n"
+    //         "Host: {}\r\n\r\n",
+    //         url.path, url.hostname) };
+    //
+    //
+    // if (!socket)
+    //     return std::unexpected{ "Could not connect to endpoint" };
+    //
+    // if (const auto err{ socket->SendStr(request) }; !err)
+    //     return std::unexpected{ "Could not send to endpoint" };
+    //
+    // auto socketView{ socket->ReceiveStr() };
+    //
+    //
+    // if (!rg::starts_with(socketView, "HTTP/1.1 "sv))
+    //     return std::unexpected{ "Non supported version" };
+    //
+    //
+    // const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 3>>(socketView) };
+    // const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
+    //
+    // const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
+    //
+    // if (!headers.has_value())
+    //     return std::unexpected{ headers.error() };
+    //
+    // // if (const auto err{ socketaView.OptError() }; !err)
+    //     return std::unexpected{ "Error receiving message" };
+    //
+    //
+    // return {};
 }
 
 
@@ -77,5 +77,7 @@ int main() {
     if (const auto res{ MakeRequest() }; !res)
         std::println("\n\n{}", res.error());
 
+    Hermes::DefaultConnectPolicy<> sla;
     return 0;
 }
+
