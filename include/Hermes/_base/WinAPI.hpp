@@ -465,7 +465,7 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
 
 
 
-    inline bool macroSUCCEEDED(auto &&d) { return SUCCEEDED(d); }
+    constexpr bool macroSUCCEEDED(auto &&d) { return SUCCEEDED(d); }
 
-    inline bool macroFAILED(auto &&d) { return FAILED(d); }
+    constexpr bool macroFAILED(auto &&d) { return FAILED(d); }
 // };

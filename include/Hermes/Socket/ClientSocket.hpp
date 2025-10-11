@@ -35,7 +35,7 @@ namespace Hermes {
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         template<ByteLike Byte = std::byte>
-        TransferPolicyType::template RecvRange<Byte> RecvRange() noexcept;
+        typename TransferPolicy<SocketData>::template RecvRange<Byte> RecvRange() noexcept;
 
         void Close() noexcept;
 

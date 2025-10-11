@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(Hermes LANGUAGES CXX)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(PROJECT_VERSION_NUMBER 0.1.0)
 set(PROJECT_VERSION_SUFFIX "alpha.2")
 
@@ -21,7 +23,6 @@ add_library(
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
-        include/Hermes/Utils/ToBytes.hpp
 )
 
 target_include_directories(

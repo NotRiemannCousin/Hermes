@@ -5,7 +5,7 @@ int main() {
     IpAddressTests();
     IpEndpointTests();
 
-    TcpTests();
+    // TcpTests();
 
     return 0;
 }

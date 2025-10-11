@@ -69,7 +69,7 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
+            const auto ipv4{ get<IPv4Type>(data) };
 
             if (ipv4 == IPv4Type{})
                 return false;
@@ -82,7 +82,7 @@ namespace Hermes {
             if (ipv4[0] >= 224)
                 return false;
         } else {
-            auto ipv6 = get<IPv6Type>(data);
+            const auto ipv6{ get<IPv6Type>(data) };
 
             if (ipv6 == IPv6Type{})
                 return false;
@@ -103,7 +103,7 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
+            const auto ipv4{ get<IPv4Type>(data) };
 
             if (ipv4[0] == 10)
                 return false;
@@ -114,15 +114,14 @@ namespace Hermes {
             if (ipv4[0] == 100 && (ipv4[1] >= 64 && ipv4[1] <= 127)) // CGNAT 100.64.0.0/10
                 return false;
             return true;
-        } else {
-            auto ipv6 = get<IPv6Type>(data);
-
-            if ((ipv6[0] & 0xfe) == 0xfc)
-                return false;
-            if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
-                return false;
-            return true;
         }
+        const auto ipv6{ get<IPv6Type>(data) };
+
+        if ((ipv6[0] & 0xfe) == 0xfc)
+            return false;
+        if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
+            return false;
+        return true;
     }
 
     bool IpAddress::IsPrivate() const {
@@ -144,14 +143,14 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
+            const auto ipv4{ get<IPv4Type>(data) };
 
             if (ipv4[0] >= 224 && ipv4[0] <= 239)
                 return true;
             if (ipv4 == IPv4Type{255, 255, 255, 255})
                 return true;
         } else {
-            auto ipv6 = get<IPv6Type>(data);
+            const auto ipv6{ get<IPv6Type>(data) };
 
             if (ipv6[0] == 0xff)
                 return true;
@@ -175,12 +174,12 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = get<IPv4Type>(data);
+            const auto ipv4{ get<IPv4Type>(data) };
             return ipv4[0] == 169 && ipv4[1] == 254;
-        } else {
-            auto ipv6 = get<IPv6Type>(data);
-            return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80;
         }
+
+        const auto ipv6{ get<IPv6Type>(data) };
+        return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80;
     }
 
     bool IpAddress::IsSiteLocal() const noexcept {
@@ -188,12 +187,12 @@ namespace Hermes {
             return false;
 
         if (IsIPv4()) {
-            auto ipv4 = std::get<IPv4Type>(data);
+            const auto ipv4{ std::get<IPv4Type>(data) };
             return ipv4[0] == 172 && (ipv4[1] >= 16 && ipv4[1] <= 31);
-        } else {
-            auto ipv6 = std::get<IPv6Type>(data);
-            return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0;
         }
+
+        const auto ipv6{ std::get<IPv6Type>(data) };
+        return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0;
     }
 
     bool IpAddress::IsIPv4Mapped() const noexcept {

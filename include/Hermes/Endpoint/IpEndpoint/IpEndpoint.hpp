@@ -15,7 +15,7 @@ namespace Hermes {
         IpEndpoint(IpEndpoint&&) noexcept;
         IpEndpoint(const IpEndpoint&) noexcept;
 
-        //!  @brief Construct an IpEndpoint with an port and IP.
+        //!  @brief Construct an IpEndpoint with a port and IP.
         //!  @param ip the IP of the endpoint.
         //!  @param port the port of the endpoint.
         explicit IpEndpoint(IpAddress ip = IpAddress::Empty(), int port = 0);
@@ -65,9 +65,9 @@ namespace std {
     struct formatter<Hermes::IpEndpoint> {
         using Endpoint = Hermes::IpEndpoint;
 
-        constexpr auto parse(auto&) { }
+        static constexpr auto parse(auto&) { }
 
-        auto format(const Endpoint &endpoint, std::format_context &ctx) const {
+        static auto format(const Endpoint &endpoint, std::format_context &ctx) {
             return std::format_to(ctx.out(), "{}:{}", endpoint.ip, endpoint.port);
         }
     };

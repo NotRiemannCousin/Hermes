@@ -16,7 +16,7 @@ namespace Hermes {
         if (_initialized)
             return;
 
-        int result = WSAStartup(macroWINSOCK_VERSION, &_wsaData);
+        const int result{ WSAStartup(macroWINSOCK_VERSION, &_wsaData) };
         if (result != 0)
             throw std::runtime_error("WSAStartup failed");
 

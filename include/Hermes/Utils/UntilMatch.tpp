@@ -57,7 +57,7 @@ namespace Hermes::Utils {
 
     template<rg::input_range Range, rg::contiguous_range Pattern>
         requires ComparableRange<Range, Pattern>
-    std::default_sentinel_t UntilMatchView<Range, Pattern>::end() const {
+    std::default_sentinel_t UntilMatchView<Range, Pattern>::end() {
         return {};
     }
 
@@ -77,12 +77,19 @@ namespace Hermes::Utils {
     }
 
 
-    template<rg::range R1, rg::range R2>
+    template<rg::sized_range R1, rg::range R2>
         requires std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
-    R1 CopyTo(const R2 &view) {
+    R1 CopyTo(R2& view) {
         R1 res;
+        auto it1{ rg::begin(res) };
+        auto it2{ rg::cbegin(view) };
 
-        rg::copy_result(view, res);
+        const auto end1{ rg::end(res) };
+        const auto end2{ rg::cend(view) };
+
+
+        for (; it1 != end1 && it2 != end2; ++it1, ++it2)
+            *it1 = *it2;
 
         return std::move(res);
     }

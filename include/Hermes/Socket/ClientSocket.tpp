@@ -9,9 +9,7 @@ namespace Hermes {
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::ClientSocket(ClientSocket&& other) noexcept
         : socketData(std::move(other.socketData)),
           connectionPolicy(std::move(other.connectionPolicy)),
-          transferPolicy(std::move(other.transferPolicy)) {
-        std::println("");
-    }
+          transferPolicy(std::move(other.transferPolicy)) { }
 
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
@@ -67,9 +65,10 @@ namespace Hermes {
 
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<ByteLike Byte>
-    TransferPolicy<SocketData>::template RecvRange<Byte> ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvRange() noexcept {
-        return TransferPolicyType::template RecvRange<Byte>(socketData, transferPolicy);
+    template<ByteLike Byte> typename TransferPolicy<SocketData>::template RecvRange<Byte>
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvRange() noexcept {
+        // CORRETO
+        return typename TransferPolicy<SocketData>::template RecvRange<Byte>{socketData, transferPolicy};
     }
 
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>

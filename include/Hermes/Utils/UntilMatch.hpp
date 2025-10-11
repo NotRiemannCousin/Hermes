@@ -24,7 +24,7 @@ namespace Hermes::Utils {
             std::deque<Type> _history{};
             bool _matchFound{};
 
-            explicit Iterator(const UntilMatchView* parent, rg::iterator_t<Range> _current);
+            explicit Iterator(const UntilMatchView* parent, rg::iterator_t<Range> current);
 
             [[nodiscard]] value_type operator*() const;
             Iterator& operator++();
@@ -35,7 +35,7 @@ namespace Hermes::Utils {
         UntilMatchView(Range base, Pattern pattern);
 
         Iterator begin();
-        std::default_sentinel_t end() const;
+        static std::default_sentinel_t end();
 
     private:
         Range _view;
@@ -57,9 +57,9 @@ namespace Hermes::Utils {
 
     // TODO: static_assert(rg::input_range<UntilMatchView<RawInputSocketRange<char>, std::string_view>>);
 
-    template<rg::range R1, rg::range R2>
+    template<rg::sized_range R1, rg::range R2>
         requires std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
-    R1 CopyTo(const R2 &view);
+    R1 CopyTo(R2& view);
 }
 
 #include <Hermes/Utils/UntilMatch.tpp>

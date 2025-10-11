@@ -1,11 +1,9 @@
-#include <functional>
 #include <Hermes/Socket/ClientSocket.hpp>
-
-#include <string_view>
-#include <print>
 #include <Hermes/Utils/UntilMatch.hpp>
 
 #include <string_view>
+#include <algorithm>
+#include <ranges>
 #include <print>
 
 namespace rg = std::ranges;
@@ -50,13 +48,16 @@ expected<std::monostate, string> MakeRequest() {
 
     auto socketView{ socket->RecvRange<char>() };
 
-    const auto sla{ Hermes::Utils::CopyTo<std::array<char, 13>>(socketView) };
-
     if (!rg::starts_with(socketView, "HTTP/1.1 "sv))
         return std::unexpected{ "Non supported version" };
 
 
     const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 3>>(socketView) };
+
+    if (!rg::equal(statusCode, "200"sv))
+        return std::unexpected{ std::format("error code: {}{}{}", statusCode[0], statusCode[1], statusCode[2]) };
+
+
     const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
 
     const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
@@ -64,11 +65,10 @@ expected<std::monostate, string> MakeRequest() {
     if (!headers.has_value())
         return std::unexpected{ headers.error() };
 
-    //if (const auto err{ socketaView.Error() }; !err)
-    return std::unexpected{ "Error receiving message" };
+    if (const auto err{ socketView.Error() }; !err)
+        return std::unexpected{ "Error receiving message" };
 
-
-    // return {};
+    return {};
 }
 
 

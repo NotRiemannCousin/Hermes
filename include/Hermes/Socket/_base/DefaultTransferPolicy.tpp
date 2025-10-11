@@ -1,8 +1,6 @@
 #pragma once
 #include <print>
 
-#include "DefaultTransferPolicy.hpp"
-
 namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
@@ -90,9 +88,9 @@ namespace Hermes {
 
         size_t total{};
         while (total < bufferRecv.size()) {
-            int received = recv(data.socket,
+            const int received{ recv(data.socket,
                 reinterpret_cast<char*>(bufferRecv.data() + total),
-                static_cast<int>(bufferRecv.size() - total), 0);
+                static_cast<int>(bufferRecv.size() - total), 0) };
 
             if (received == 0)
                 break;
@@ -112,9 +110,9 @@ namespace Hermes {
 
         size_t total{};
         while (total < bufferSend.size()) {
-            int sent = send(data.socket,
+            const int sent{ send(data.socket,
                 reinterpret_cast<const char*>(bufferSend.data() + total),
-                static_cast<int>(bufferSend.size() - total), 0);
+                static_cast<int>(bufferSend.size() - total), 0) };
 
             if (sent == macroSOCKET_ERROR)
                 return std::unexpected{ConnectionErrorEnum::SEND_FAILED};
