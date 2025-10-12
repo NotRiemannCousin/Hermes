@@ -17,18 +17,8 @@ namespace Hermes {
         DefaultSocketData() = default;
         ~DefaultSocketData() = default;
 
-        DefaultSocketData(DefaultSocketData&& other) noexcept : endpoint(std::move(other.endpoint)),
-                socket(std::exchange(other.socket, macroINVALID_SOCKET)) {}
-
-        DefaultSocketData& operator=(DefaultSocketData&& other) noexcept {
-            // I will not create a tpp just for this
-
-            if (this != &other) {
-                endpoint = std::move(other.endpoint);
-                socket   = std::exchange(other.socket, macroINVALID_SOCKET);
-            }
-            return *this;
-        }
+        DefaultSocketData(DefaultSocketData&& other) noexcept;
+        DefaultSocketData& operator=(DefaultSocketData&& other) noexcept;
 
         Endpoint endpoint{};
         SOCKET   socket{ macroINVALID_SOCKET };
@@ -36,3 +26,5 @@ namespace Hermes {
 
     static_assert(SocketDataConcept<DefaultSocketData<>>);
 }
+
+#include <Hermes/Socket/_base/Data/DefaultSocketData.tpp>

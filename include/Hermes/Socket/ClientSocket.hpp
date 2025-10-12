@@ -1,6 +1,6 @@
 #pragma once
-#include <Hermes/Socket/_base/DefaultConnectPolicy.hpp>
-#include <Hermes/Socket/_base/DefaultTransferPolicy.hpp>
+#include <Hermes/Socket/_base/Connection/DefaultConnectPolicy.hpp>
+#include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.hpp>
 #include <Hermes/Endpoint/_base/EndpointConcept.hpp>
 
 #include <ranges>

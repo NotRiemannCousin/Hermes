@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/_base/DefaultSocketData.hpp>
+#include <Hermes/Socket/_base/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/_base/_base.hpp>
 
 namespace Hermes {
@@ -12,7 +12,7 @@ namespace Hermes {
     };
 }
 
-#include <Hermes/Socket/_base/DefaultConnectPolicy.tpp>
+#include <Hermes/Socket/_base/Connection/DefaultConnectPolicy.tpp>
 
 namespace Hermes {
         static_assert(ConnectionPolicyConcept<DefaultConnectPolicy, DefaultSocketData<>>);

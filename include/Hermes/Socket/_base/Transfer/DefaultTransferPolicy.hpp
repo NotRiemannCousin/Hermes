@@ -1,7 +1,7 @@
 #pragma once
+#include <Hermes/Socket/_base/Data/DefaultSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base/_base.hpp>
-#include <Hermes/Socket/_base/DefaultSocketData.hpp>
 
 #include <chrono>
 #include <array>
@@ -49,7 +49,7 @@ namespace Hermes {
     };
 }
 
-#include <Hermes/Socket/_base/DefaultTransferPolicy.tpp>
+#include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.tpp>
 
 namespace Hermes {
     static_assert(std::ranges::range<DefaultTransferPolicy<>::RecvRange<std::byte>>);
