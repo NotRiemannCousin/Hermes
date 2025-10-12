@@ -1,6 +1,6 @@
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/_base/WinAPI.hpp>
+#include <Hermes/_base/WinApi.hpp>
 
 using std::uint16_t;
 using std::uint8_t;

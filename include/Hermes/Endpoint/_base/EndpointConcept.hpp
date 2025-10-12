@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/_base/WinAPI.hpp>
+#include <Hermes/_base/WinApi.hpp>
 
 namespace Hermes {
     using SocketInfoAddr = std::tuple<sockaddr_storage, size_t, AddressFamilyEnum>;

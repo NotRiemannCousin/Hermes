@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/_base/WinAPI.hpp>
+#include <Hermes/_base/WinApi.hpp>
 
 
 namespace Hermes {

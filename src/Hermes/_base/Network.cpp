@@ -1,5 +1,5 @@
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/_base/WinAPI.hpp>
+#include <Hermes/_base/WinApi.hpp>
 #include <stdexcept>
 
 
