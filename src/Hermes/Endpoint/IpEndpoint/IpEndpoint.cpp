@@ -92,13 +92,13 @@ namespace Hermes {
         if (const int err_code{ getaddrinfo(url.c_str(), service.c_str(), &hints, &result_ptr) }; err_code != 0 ) {
             switch (err_code) {
                 case EAI_NONAME:
-                    return std::unexpected(ConnectionErrorEnum::RESOLVE_HOST_NOT_FOUND);
+                    return std::unexpected{ ConnectionErrorEnum::RESOLVE_HOST_NOT_FOUND };
                 case EAI_SERVICE:
-                    return std::unexpected(ConnectionErrorEnum::RESOLVE_SERVICE_NOT_FOUND);
+                    return std::unexpected{ ConnectionErrorEnum::RESOLVE_SERVICE_NOT_FOUND };
                 case EAI_AGAIN:
-                    return std::unexpected(ConnectionErrorEnum::RESOLVE_TEMPORARY_FAILURE);
+                    return std::unexpected{ ConnectionErrorEnum::RESOLVE_TEMPORARY_FAILURE };
                 default:
-                    return std::unexpected(ConnectionErrorEnum::RESOLVE_FAILED);
+                    return std::unexpected{ ConnectionErrorEnum::RESOLVE_FAILED };
             }
         }
 
@@ -107,7 +107,7 @@ namespace Hermes {
         const std::unique_ptr<addrinfo, decltype(addrinfo_deleter)> result(result_ptr, addrinfo_deleter);
 
         if (!result || !result->ai_addr)
-            return std::unexpected(ConnectionErrorEnum::RESOLVE_NO_ADDRESS_FOUND);
+            return std::unexpected{ ConnectionErrorEnum::RESOLVE_NO_ADDRESS_FOUND };
 
         sockaddr* addr = result->ai_addr;
         if (addr->sa_family == AF_INET6) {
@@ -126,7 +126,7 @@ namespace Hermes {
             };
         }
 
-        return std::unexpected(ConnectionErrorEnum::UNSUPPORTED_ADDRESS_FAMILY);
+        return std::unexpected{ ConnectionErrorEnum::UNSUPPORTED_ADDRESS_FAMILY };
     }
 
     bool IpEndpoint::operator==(const IpEndpoint &endpoint) const {

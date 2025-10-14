@@ -2,78 +2,90 @@
 #include <algorithm>
 
 namespace Hermes::Utils {
-    template<rg::input_range Range, rg::contiguous_range Pattern> requires ComparableRange<Range, Pattern>
-    UntilMatchView<Range, Pattern>::Iterator::Iterator(const UntilMatchView *parent, rg::iterator_t<Range> current)
-        : _view(parent), _current(current) { }
-
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    typename UntilMatchView<Range, Pattern>::Type UntilMatchView<Range, Pattern>::Iterator::operator*() const {
-        return *_current;
+    UntilMatchView<Range, Pattern, Inclusive>::Iterator::Iterator(UntilMatchView *parent)
+        : _view(parent) {
+        if constexpr (!Inclusive)
+            for (const char c : _view->_pattern)
+                _view->_history.push_back(*_view->_current), ++_view->_current;
     }
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    typename UntilMatchView<Range, Pattern>::Iterator& UntilMatchView<Range, Pattern>::Iterator::operator++() {
-        _history.push_back(*_current);
+    typename UntilMatchView<Range, Pattern, Inclusive>::Type UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator*() const {
+        if constexpr (Inclusive)
+            return *_view->_current;
+        else
+            return _view->_history.front();
+    }
 
-        if (_history.size() > rg::size(_view->_pattern)) {
-            _history.pop_front();
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
+        requires ComparableRange<Range, Pattern>
+    typename UntilMatchView<Range, Pattern, Inclusive>::Iterator&
+    UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++() {
+        if (_view->_matchFound) return *this;
+
+        _view->_history.push_back(*_view->_current);
+        ++_view->_current;
+
+        if (_view->_history.size() > rg::size(_view->_pattern)) {
+            _view->_history.pop_front();
         }
 
+        if (_view->_history.size() == rg::size(_view->_pattern)) {
+            if (rg::equal(_view->_history, _view->_pattern)) {
+                _view->_matchFound = true;
+            }
+        }
 
-        if (_history.size() == rg::size(_view->_pattern))
-            if (rg::equal(_history, _view->_pattern))
-                _matchFound = true;
-
-        ++(_current);
         return *this;
     }
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    void UntilMatchView<Range, Pattern>::Iterator::operator++(int) { ++(*this); }
+    void UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++(int) { ++(*this); }
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    bool UntilMatchView<Range, Pattern>::Iterator::operator==(std::default_sentinel_t) const {
-        return _matchFound;
+    bool UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator==(std::default_sentinel_t) const {
+        return _view->_matchFound;
     }
 
 
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    UntilMatchView<Range, Pattern>::UntilMatchView(Range base, Pattern pattern)
-        : _view(std::move(base)),
-          _pattern(pattern) {
+    UntilMatchView<Range, Pattern, Inclusive>::UntilMatchView(Range&& base, Pattern pattern)
+        : _view(base), _pattern(pattern), _current{ rg::begin(base) } { }
+
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
+        requires ComparableRange<Range, Pattern>
+    typename UntilMatchView<Range, Pattern, Inclusive>::Iterator UntilMatchView<Range, Pattern, Inclusive>::begin() {
+        return Iterator{ this };
     }
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    typename UntilMatchView<Range, Pattern>::Iterator UntilMatchView<Range, Pattern>::begin() {
-        return Iterator{ this, rg::begin(_view) };
-    }
-
-    template<rg::input_range Range, rg::contiguous_range Pattern>
-        requires ComparableRange<Range, Pattern>
-    std::default_sentinel_t UntilMatchView<Range, Pattern>::end() {
+    std::default_sentinel_t UntilMatchView<Range, Pattern, Inclusive>::end() {
         return {};
     }
 
 
 
-    template<rg::range Pattern>
-    UntilMatchAdaptor<Pattern>::UntilMatchAdaptor(Pattern p) : pattern(std::move(p)) { }
 
-    template<rg::range Pattern>
-    auto UntilMatch(Pattern &&pattern) {
-        return UntilMatchAdaptor<vs::all_t<Pattern>>(vs::all(std::forward<Pattern>(pattern)));
+    template<rg::range Pattern, bool Inclusive>
+    UntilMatchAdaptor<Pattern, Inclusive>::UntilMatchAdaptor(Pattern p) : pattern(std::move(p)) { }
+
+    template<rg::range Pattern, bool Inclusive>
+    auto UntilMatch(Pattern&& pattern) {
+        return UntilMatchAdaptor<vs::all_t<Pattern>, Inclusive>(vs::all(std::forward<Pattern>(pattern)));
     }
 
-    template<rg::viewable_range Range, rg::range Pattern>
-    auto operator|(Range &&r, const UntilMatchAdaptor<Pattern> &adaptor) {
-        return UntilMatchView(vs::all(std::forward<Range>(r)), adaptor.pattern);
+    template<rg::viewable_range Range, rg::range Pattern, bool Inclusive>
+    auto operator|(Range&& r, const UntilMatchAdaptor<Pattern, Inclusive> &adaptor) {
+        return UntilMatchView<std::remove_cv_t<Range>, Pattern, Inclusive>(
+                std::forward<Range>(r), adaptor.pattern);
     }
 
 
@@ -91,6 +103,6 @@ namespace Hermes::Utils {
         for (; it1 != end1 && it2 != end2; ++it1, ++it2)
             *it1 = *it2;
 
-        return std::move(res);
+        return res;
     }
 }

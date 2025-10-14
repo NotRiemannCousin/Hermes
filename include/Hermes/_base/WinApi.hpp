@@ -26,7 +26,29 @@ constexpr bool IsEnumFlag(){
 }
 
 template<class E>
-concept EnumFlag = requires { requires IsEnumFlag<E>(); };
+concept EnumFlagConcept = requires { requires IsEnumFlag<E>(); };
+
+#define FLAGS_OPERATIONS(TYPE) \
+        static_assert(std::is_enum_v<TYPE>);                                                \
+        constexpr TYPE operator|(TYPE f1, TYPE f2) {                                        \
+            using type = std::underlying_type_t<decltype(f1)>;                              \
+            return static_cast<TYPE>(type(f1) | type(f2));                                  \
+        }                                                                                   \
+                                                                                            \
+        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
+            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);               \
+        }                                                                                   \
+        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
+            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);               \
+        }                                                                                   \
+
+#define ENUM_OPERATIONS(TYPE)\
+        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
+            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);               \
+        }                                                                                   \
+        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
+            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);               \
+        }                                                                                   \
 
 
 // export {
@@ -117,6 +139,8 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         MAXSERV = NI_MAXSERV, /* Max size of a service name */
     };
 
+	FLAGS_OPERATIONS(NameInfoFlags)
+
 
     // ----------------------------------------------------------------------------------------------------
     //                             Error Codes
@@ -148,9 +172,11 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         RESERVED = SECPKG_CRED_RESERVED
     };
 
-    constexpr std::string_view macroUNISP_NAME = UNISP_NAME;
+	FLAGS_OPERATIONS(CredentialFlags)
 
-    enum class SupportedProtocolsEnum : long long {
+    constexpr std::string_view macroUNISP_NAME{ UNISP_NAME };
+
+    enum class SupportedProtocolsFlags : long long {
         PCT1_SERVER = SP_PROT_PCT1_SERVER,
         PCT1_CLIENT = SP_PROT_PCT1_CLIENT,
         PCT1        = SP_PROT_PCT1,
@@ -235,8 +261,9 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         X_CLIENTS = SP_PROT_X_CLIENTS,
         X_SERVERS = SP_PROT_X_SERVERS
     };
+    FLAGS_OPERATIONS(SupportedProtocolsFlags)
 
-    enum InitializeSecurityContextFlags : long long {
+    enum class InitializeSecurityContextFlags : long long {
         DELEGATE               = ISC_REQ_DELEGATE,
         MUTUAL_AUTH            = ISC_REQ_MUTUAL_AUTH,
         REPLAY_DETECT          = ISC_REQ_REPLAY_DETECT,
@@ -275,7 +302,9 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
 
     };
 
-    enum InitializeSecurityContextReturnFlags : long long {
+	FLAGS_OPERATIONS(InitializeSecurityContextFlags)
+
+    enum class InitializeSecurityContextReturnFlags : long long {
         RET_DELEGATE               = ISC_RET_DELEGATE,
         RET_MUTUAL_AUTH            = ISC_RET_MUTUAL_AUTH,
         RET_REPLAY_DETECT          = ISC_RET_REPLAY_DETECT,
@@ -310,10 +339,14 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         RET_NO_POST_HANDSHAKE_AUTH   = ISC_RET_NO_POST_HANDSHAKE_AUTH,
     };
 
+	FLAGS_OPERATIONS(InitializeSecurityContextReturnFlags)
+
     enum class SchannelCredFlags {
         NO_DEFAULT_CREDS       = SCH_CRED_NO_DEFAULT_CREDS,
         MANUAL_CRED_VALIDATION = SCH_CRED_MANUAL_CRED_VALIDATION
     };
+
+	FLAGS_OPERATIONS(SchannelCredFlags)
 
 
     enum class SecurityBufferEnum : long long {
@@ -353,8 +386,9 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
         READONLY               = SECBUFFER_READONLY,              // Buffer is read-only, no checksum
         READONLY_WITH_CHECKSUM = SECBUFFER_READONLY_WITH_CHECKSUM,// Buffer is read-only, and checksummed
         RESERVED               = SECBUFFER_RESERVED,              // Flags reserved to security system
-
     };
+
+    ENUM_OPERATIONS(SecurityBufferEnum)
 
     using ::CredHandle;
     using ::CtxtHandle;
@@ -389,34 +423,24 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
     //----------------------------------------------------------------------------------------------------
 
 
-    template<class T>
-        requires std::is_enum_v<T>
-    long long _tll(T t) {
+    long long _tll(auto t) {
         return static_cast<long long>(t);
     }
 
-    template<class T>
-        requires std::is_enum_v<T>
-    unsigned long long _tull(T t) {
+    unsigned long long _tull(auto t) {
         return static_cast<unsigned long long>(t);
     }
 
-    template<class T>
-        requires std::is_enum_v<T>
-    long _tl(T t) {
+    long _tl(auto t) {
         return static_cast<long>(t);
     }
 
-    template<class T>
-        requires std::is_enum_v<T>
-    unsigned long _tul(T t) {
+    unsigned long _tul(auto t) {
         return static_cast<unsigned long>(t);
     }
 
 
-    template<class T>
-    requires std::is_enum_v<T>
-    unsigned long _tus(T t) {
+    unsigned long _tus(auto t) {
         return static_cast<unsigned short>(t);
     }
 
@@ -446,26 +470,40 @@ concept EnumFlag = requires { requires IsEnumFlag<E>(); };
 
 
     constexpr unsigned long macroSECBUFFER_VERSION = SECBUFFER_VERSION;
-
-    constexpr unsigned long macroSEC_I_CONTINUE_NEEDED       = SEC_I_CONTINUE_NEEDED;
-    constexpr unsigned long macroSEC_I_COMPLETE_NEEDED       = SEC_I_COMPLETE_NEEDED;
-    constexpr unsigned long macroSEC_I_COMPLETE_AND_CONTINUE = SEC_I_COMPLETE_AND_CONTINUE;
     constexpr unsigned long macroSECPKG_ATTR_STREAM_SIZES    = SECPKG_ATTR_STREAM_SIZES;
 
-    enum EncryptStatusEnum {
-        OK                    = SEC_E_OK,
-        BUFFER_TOO_SMALL      = SEC_E_BUFFER_TOO_SMALL,      //The message buffer is too small. Used with the Digest SSP.
-        CRYPTO_SYSTEM_INVALID = SEC_E_CRYPTO_SYSTEM_INVALID, //The cipher chosen for the security context is not supported. Used with the Digest SSP.
-        INCOMPLETE_MESSAGE    = SEC_E_INCOMPLETE_MESSAGE,    //The data in the input buffer is incomplete. The application needs to read more data from the server and call DecryptMessage (Digest) again.
-        INVALID_HANDLE        = SEC_E_INVALID_HANDLE,        //A context handle that is not valid was specified in the phContext parameter. Used with the Digest SSP.
-        MESSAGE_ALTERED       = SEC_E_MESSAGE_ALTERED,       //The message has been altered. Used with the Digest SSP.
-        OUT_OF_SEQUENCE       = SEC_E_OUT_OF_SEQUENCE,       //The message was not received in the correct sequence.
-        QOP_NOT_SUPPORTED     = SEC_E_QOP_NOT_SUPPORTED,     //Neither confidentiality nor integrity are supported by the security context. Used with the Digest SSP.
+    enum class EncryptStatusEnum {
+        ERR_OK                    = SEC_E_OK,
+        ERR_BUFFER_TOO_SMALL      = SEC_E_BUFFER_TOO_SMALL,      //The message buffer is too small. Used with the Digest SSP.
+        ERR_CRYPTO_SYSTEM_INVALID = SEC_E_CRYPTO_SYSTEM_INVALID, //The cipher chosen for the security context is not supported. Used with the Digest SSP.
+        ERR_INCOMPLETE_MESSAGE    = SEC_E_INCOMPLETE_MESSAGE,    //The data in the input buffer is incomplete. The application needs to read more data from the server and call DecryptMessage (Digest) again.
+        ERR_INVALID_HANDLE        = SEC_E_INVALID_HANDLE,        //A context handle that is not valid was specified in the phContext parameter. Used with the Digest SSP.
+        ERR_MESSAGE_ALTERED       = SEC_E_MESSAGE_ALTERED,       //The message has been altered. Used with the Digest SSP.
+        ERR_OUT_OF_SEQUENCE       = SEC_E_OUT_OF_SEQUENCE,       //The message was not received in the correct sequence.
+        ERR_QOP_NOT_SUPPORTED     = SEC_E_QOP_NOT_SUPPORTED,     //Neither confidentiality nor integrity are supported by the security context. Used with the Digest SSP.
+
+
+        INFO_CONTINUE_NEEDED            = SEC_I_CONTINUE_NEEDED,                   // The function completed successfully, but must be called again to complete the context
+        INFO_COMPLETE_NEEDED            = SEC_I_COMPLETE_NEEDED,                   // The function completed successfully, but CompleteToken must be called
+        INFO_COMPLETE_AND_CONTINUE      = SEC_I_COMPLETE_AND_CONTINUE,             // The function completed successfully, but both CompleteToken and this function must be called to complete the context
+        INFO_LOCAL_LOGON                = SEC_I_LOCAL_LOGON,                       // The logon was completed, but no network authority was available. The logon was made using locally known information
+        INFO_GENERIC_EXTENSION_RECEIVED = SEC_I_GENERIC_EXTENSION_RECEIVED,        // Schannel has received a TLS extension the SSPI caller subscribed to.
+        INFO_CONTEXT_EXPIRED            = SEC_I_CONTEXT_EXPIRED,                   // The context has expired and can no longer be used.
+        INFO_INCOMPLETE_CREDENTIALS     = SEC_I_INCOMPLETE_CREDENTIALS,            // The credentials supplied were not complete, and could not be verified. Additional information can be returned from the context.
+        INFO_RENEGOTIATE                = SEC_I_RENEGOTIATE,                       // The context data must be renegotiated with the peer.
+        INFO_NO_LSA_CONTEXT             = SEC_I_NO_LSA_CONTEXT,                    // There is no LSA mode context associated with this context.
+        INFO_SIGNATURE_NEEDED           = SEC_I_SIGNATURE_NEEDED,                  // A signature operation must be performed before the user can authenticate.
+        INFO_NO_RENEGOTIATION           = SEC_I_NO_RENEGOTIATION,                  // The recipient rejected the renegotiation request.
+        INFO_MESSAGE_FRAGMENT           = SEC_I_MESSAGE_FRAGMENT,                  // The returned buffer is only a fragment of the message.  More fragments need to be returned.
+        INFO_CONTINUE_NEEDED_MESSAGE_OK = SEC_I_CONTINUE_NEEDED_MESSAGE_OK,        // The function completed successfully, but must be called again to complete the context.  Early start can be used.
+        INFO_ASYNC_CALL_PENDING         = SEC_I_ASYNC_CALL_PENDING,                // An asynchronous SSPI routine has been called and the work is pending completion.
     };
-
-
+    ENUM_OPERATIONS(EncryptStatusEnum)
 
     constexpr bool macroSUCCEEDED(auto &&d) { return SUCCEEDED(d); }
 
     constexpr bool macroFAILED(auto &&d) { return FAILED(d); }
 // };
+
+#undef FLAGS_OPERATIONS
+#undef ENUM_OPERATIONS

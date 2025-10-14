@@ -9,22 +9,18 @@ namespace Hermes::Utils {
     template<class F, class S>
     concept ComparableRange = std::equality_comparable_with<rg::range_reference_t<F>, rg::range_reference_t<S>>;
 
-    template<rg::input_range Range, rg::contiguous_range Pattern>
+    template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    struct UntilMatchView : std::ranges::view_interface<UntilMatchView<Range, Pattern>> {
+    struct UntilMatchView : std::ranges::view_interface<UntilMatchView<Range, Pattern, Inclusive>> {
         using Type = rg::range_value_t<Range>;
 
         struct Iterator {
             using difference_type  = std::ptrdiff_t;
             using value_type       = Type;
 
-            const UntilMatchView* _view{};
+            UntilMatchView* _view{};
 
-            rg::iterator_t<Range> _current{};
-            std::deque<Type> _history{};
-            bool _matchFound{};
-
-            explicit Iterator(const UntilMatchView* parent, rg::iterator_t<Range> current);
+            explicit Iterator(UntilMatchView* parent);
 
             [[nodiscard]] value_type operator*() const;
             Iterator& operator++();
@@ -32,27 +28,31 @@ namespace Hermes::Utils {
             [[nodiscard]] bool operator==(std::default_sentinel_t) const;
         };
 
-        UntilMatchView(Range base, Pattern pattern);
+        UntilMatchView(Range&& base, Pattern pattern);
 
         Iterator begin();
         static std::default_sentinel_t end();
 
     private:
-        Range _view;
+        rg::iterator_t<Range> _current{};
+        std::deque<Type> _history{};
+        bool _matchFound{};
+
+        Range& _view;
         Pattern _pattern;
     };
 
-    template<rg::range Pattern>
+    template<rg::range Pattern, bool Inclusive>
     struct UntilMatchAdaptor {
         Pattern pattern;
         explicit UntilMatchAdaptor(Pattern p);
     };
 
-    template<rg::range Pattern>
+    template<rg::range Pattern, bool Inclusive = false>
     auto UntilMatch(Pattern&& pattern);
 
-    template<rg::viewable_range Range, rg::range Pattern>
-    auto operator|(Range&& r, const UntilMatchAdaptor<Pattern>& adaptor);
+    template<rg::viewable_range Range, rg::range Pattern, bool Inclusive>
+    auto operator|(Range&& r, const UntilMatchAdaptor<Pattern, Inclusive>& adaptor);
 
 
     // TODO: static_assert(rg::input_range<UntilMatchView<RawInputSocketRange<char>, std::string_view>>);

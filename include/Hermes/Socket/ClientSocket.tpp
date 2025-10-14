@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utility> // std::move, std::exchange
+#include <utility>
 #include <ranges>
 
 namespace Hermes {
@@ -34,8 +34,9 @@ namespace Hermes {
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(const typename SocketData::EndpointType& endpoint) noexcept {
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(const typename SocketData::EndpointType& endpoint, SocketData data) noexcept {
         ClientSocket socket;
+        socket.socketData = std::move(data);
 
         socket.socketData.endpoint = endpoint;
         const auto result = socket.connectionPolicy.Connect(socket.socketData);
@@ -67,7 +68,6 @@ namespace Hermes {
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<ByteLike Byte> typename TransferPolicy<SocketData>::template RecvRange<Byte>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvRange() noexcept {
-        // CORRETO
         return typename TransferPolicy<SocketData>::template RecvRange<Byte>{socketData, transferPolicy};
     }
 

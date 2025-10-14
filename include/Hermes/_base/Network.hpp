@@ -13,6 +13,9 @@ namespace Hermes {
         Network() = delete;
 
         static const CredHandle& GetCredHandle();
+        static const SCHANNEL_CRED& GetSChannelCredData();
+        static bool IsInitialized();
+        static TimeStamp GetExpiry();
     private:
         static WSADATA _wsaData;
         static bool _initialized;

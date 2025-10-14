@@ -14,9 +14,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator++() {
-        if (++view->_index >= view->_size)
-            view->Receive();
-
+        ++view->_index;
         return *this;
     }
 

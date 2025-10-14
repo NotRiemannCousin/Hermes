@@ -18,10 +18,10 @@ namespace Hermes {
 
         const int result{ WSAStartup(macroWINSOCK_VERSION, &_wsaData) };
         if (result != 0)
-            throw std::runtime_error("WSAStartup failed");
+            throw std::runtime_error{ "WSAStartup failed" };
 
         _credData.dwVersion = static_cast<DWORD>(SCHCredEnum::SCHANNEL);
-        _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsEnum::ALL);
+        _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsFlags::TLS1_2_CLIENT | SupportedProtocolsFlags::TLS1_3_CLIENT);
 
         // | Keep in mind to keep macroUNISP_NAME null-terminated.
         const long status = AcquireCredentialsHandleA(
@@ -33,6 +33,7 @@ namespace Hermes {
             nullptr, nullptr,
             &_credHandle,
             &_tsExpiry);
+
 
         if (status != 0) {
             Cleanup();
@@ -51,8 +52,21 @@ namespace Hermes {
 
         _initialized = false;
     }
+
     const CredHandle &Network::GetCredHandle() {
         return _credHandle;
+    }
+
+    const SCHANNEL_CRED & Network::GetSChannelCredData() {
+        return _credData;
+    }
+
+    bool Network::IsInitialized() {
+        return _initialized;
+    }
+
+    TimeStamp Network::GetExpiry() {
+        return _tsExpiry;
     }
 
     inline auto ____init____ = [] {

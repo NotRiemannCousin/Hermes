@@ -1,7 +1,8 @@
 #pragma once
 #include <Hermes/Socket/_base/Connection/DefaultConnectPolicy.hpp>
 #include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.hpp>
-#include <Hermes/Endpoint/_base/EndpointConcept.hpp>
+#include <Hermes/Socket/_base/Connection/TlsConnectPolicy.hpp>
+#include <Hermes/Socket/_base/Transfer/TlsTransferPolicy.hpp>
 
 #include <ranges>
 
@@ -21,7 +22,7 @@ namespace Hermes {
         ClientSocket& operator=(ClientSocket&&) noexcept;
         ~ClientSocket();
 
-        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(const EndpointType& endpoint) noexcept;
+        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(const EndpointType& endpoint, SocketData data = {}) noexcept;
 
         //! @return Returns the count of data sent on success, or an error on failure.
         template<std::ranges::contiguous_range R>
@@ -47,9 +48,9 @@ namespace Hermes {
         TransferPolicyType   transferPolicy{};
     };
 
-    using RawTcpClient = ClientSocket<>;
-    using RawCharTcpClient = ClientSocket<>;
-    using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::DGRAM>>;
+    using RawTcpClient     = ClientSocket<>;
+    using RawTlsClient     = ClientSocket<TlsSocketData<>, TlsConnectPolicy, TlsTransferPolicy>;
+    using RawUdpClient     = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::DGRAM>>;
 }
 
 #include <Hermes/Socket/ClientSocket.tpp>
