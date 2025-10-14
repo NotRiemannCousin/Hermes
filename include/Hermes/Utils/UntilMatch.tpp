@@ -7,8 +7,9 @@ namespace Hermes::Utils {
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::Iterator(UntilMatchView *parent)
         : _view(parent) {
         if constexpr (!Inclusive)
-            for (const char c : _view->_pattern)
-                _view->_history.push_back(*_view->_current), ++_view->_current;
+            if (_view->_history.empty())
+                for (const char c : _view->_pattern)
+                    _view->_history.push_back(*_view->_current), ++_view->_current;
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
