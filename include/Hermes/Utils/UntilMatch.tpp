@@ -27,10 +27,12 @@ namespace Hermes::Utils {
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++() {
         if (_view->_matchFound) return *this;
 
-        _view->_history.push_back(*_view->_current);
-        ++_view->_current;
+        if (_view->_current != _view->end()) {
+            _view->_history.push_back(*_view->_current);
+            ++_view->_current;
+        }
 
-        if (_view->_history.size() > rg::size(_view->_pattern)) {
+        if (_view->_history.size() > rg::size(_view->_pattern) || _view->_current == _view->end()) {
             _view->_history.pop_front();
         }
 
@@ -50,7 +52,7 @@ namespace Hermes::Utils {
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     bool UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator==(std::default_sentinel_t) const {
-        return _view->_matchFound;
+        return _view->_matchFound || (_view->_current == _view->end() && _view->_history.empty());
     }
 
 

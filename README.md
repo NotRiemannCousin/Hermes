@@ -7,10 +7,19 @@ creating and using sockets. The goal of this lib is to use modern C++ features s
 `std::ranges`, `std::generator`, modules and templates. Given that, the target version is C++26.
 
 This lib implements only transport layer protocols, you have to implement application layer protocols by yourself.
-If can follow SocketDataConcept, ConnectionPolicyConcept and TransferPolicyConcept implement you own transport
+If can follow `SocketDataConcept`, `ConnectionPolicyConcept` and `TransferPolicyConcept` implement you own transport
 layer protocols.
 
 ## Features
+
+The main way to read bytes from a socket is by using the `RecvRange` provided by `TransferPolicyConcept`. It 
+automatically receives data from the socket on demand, so you don't need to worry about managing chunks of data
+(keep in mind that this is an <a href="https://en.cppreference.com/w/cpp/ranges/input_range.html">
+input_range</a> so every time you advance the iterator the last byte is lost).
+
+The example on this page shows how this behaviour makes development easier.
+
+Async types will be developed soon.
 
 Implemented protocols:
 
