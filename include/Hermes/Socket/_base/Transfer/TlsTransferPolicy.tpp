@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+// EU ODEIO TLS NAMORAL
 
 namespace Hermes {
     template<SocketDataConcept Data>
@@ -116,26 +117,28 @@ namespace Hermes {
         array<SecBuffer, 4> secBuffers{};
         SecBufferDesc buffDesc = { macroSECBUFFER_VERSION, 4, secBuffers.data() };
 
-
         do {
             if (!extraSpan.empty() && extraSpan.data() != decryptedData.data())
                 memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
 
-            dataSpan = decryptedData.subspan(extraSpan.size()); // pula pra nn sobrescrever o extra
+            dataSpan = decryptedData.subspan(extraSpan.size());
 
-            const int received{ recv(
-                    data.socket,
-                    reinterpret_cast<char*>(dataSpan.data()),
-                static_cast<int>(dataSpan.size()),
-                0
-                ) };
+            if (status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE || extraSpan.empty()) {
+                const int received{ recv(
+                        data.socket,
+                        reinterpret_cast<char*>(dataSpan.data()),
+                    static_cast<int>(dataSpan.size()),
+                    0
+                    ) };
 
-            if (received == 0)
-                return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED} };
-            if (received <= 0)
-                return { 0, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
+                if (received == 0)
+                    return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED} };
+                if (received <= 0)
+                    return { 0, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
 
-            dataSpan = decryptedData.first(extraSpan.size() + received); // data pra ser processada, novo + extra
+                dataSpan = decryptedData.first(extraSpan.size() + received);
+            } else
+                dataSpan = extraSpan;
 
 
             secBuffers[0] = {
@@ -186,7 +189,7 @@ namespace Hermes {
                 dataSpan = dataSpan.subspan(countToCopy);
 
                 if (bufferRecv.empty())
-                    break; // se encher acaba
+                    break;
             }
 
             if (!pExtraBuffer && !pDataBuffer)
