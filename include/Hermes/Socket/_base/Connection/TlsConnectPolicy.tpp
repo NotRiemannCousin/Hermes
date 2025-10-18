@@ -52,7 +52,8 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
         InitializeSecurityContextFlags::STREAM };
 
     DWORD pfContextAttr{};
-    const std::wstring sla{ L"api.discogs.com" };
+    if (data.host.size() >= 255)
+        return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
 
     bool firstPass{ true };
     DWORD receivedBytes{};
@@ -91,10 +92,10 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
             &outBuffers[0]
         };
 
-        status = InitializeSecurityContextW(
+        status = InitializeSecurityContextA(
             const_cast<PCredHandle>(&credHandle),
             firstPass ? nullptr : &data.ctxtHandle,
-            const_cast<SEC_WCHAR*>(sla.c_str()),
+            const_cast<SEC_CHAR*>(data.host.c_str()),
             _tll(dwSspiFlags),
             0, 0,
             pInBufferDesc,
@@ -122,7 +123,7 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
             }
 
 
-            status = QueryContextAttributesW(&data.ctxtHandle,
+            status = QueryContextAttributesA(&data.ctxtHandle,
                                             SECPKG_ATTR_STREAM_SIZES,
                                             &data.contextStreamSizes);
 
@@ -243,7 +244,7 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
                 DWORD dwSSPIOutFlags{};
                 TimeStamp tsExpiry{};
 
-                status = InitializeSecurityContextW(
+                status = InitializeSecurityContextA(
                     nullptr,
                     &data.ctxtHandle,
                     nullptr,

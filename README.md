@@ -37,6 +37,9 @@ expected<std::monostate, string> MakeRequest() {
         std::string hostname;
         std::string path;
     } url {
+        // "https",
+        // "api.jikan.moe",
+        // "v4/anime/57555"
         "https",
         "api.discogs.com",
         "artists/4001234",
@@ -46,20 +49,22 @@ expected<std::monostate, string> MakeRequest() {
     if (!endpoint)
         return std::unexpected{ "Could not resolve endpoint" };
 
-    auto socket{ Hermes::RawTlsClient::Connect(*endpoint, Hermes::TlsSocketData{ url.hostname }) };
+    auto socket{ Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ *endpoint, url.hostname }) };
+    // endpoint + host = minimal socket data to
+    if (!socket)
+        return std::unexpected{ "Could not connect to endpoint" };
+
     const auto request{
         format(
             "GET /{} HTTP/1.1\r\n"
             "Accept-Encoding: identity\r\n"
-            "User-Agent: Hermes/0.1\r\n"
+            "User-Agent: Hermes/0.2\r\n"
             "Host: {}\r\n\r\n",
             url.path, url.hostname) };
 
 
-    if (!socket)
-        return std::unexpected{ "Could not connect to endpoint" };
 
-    if (const auto err{ socket->Send(request) }; !err)
+    if (const auto err{ socket->Send(request) }; !err.second)
         return std::unexpected{ "Could not send to endpoint" };
 
 
@@ -95,9 +100,11 @@ expected<std::monostate, string> MakeRequest() {
     if (!headers.has_value())
         return std::unexpected{ headers.error() };
 
-    auto sla = socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>();
+    auto chunkLength{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
 
     const auto body{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
+    // const auto body{ socketView | rg::to<string>() };
+    // The range automatically stops when the connection ends, but be careful with this.
 
     std::println("body:\n\n{}", body);
 
@@ -106,5 +113,4 @@ expected<std::monostate, string> MakeRequest() {
 
     return {};
 }
-
 ```

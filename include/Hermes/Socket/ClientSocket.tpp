@@ -34,11 +34,10 @@ namespace Hermes {
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(const typename SocketData::EndpointType& endpoint, SocketData data) noexcept {
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data) noexcept {
         ClientSocket socket;
         socket.socketData = std::move(data);
 
-        socket.socketData.endpoint = endpoint;
         const auto result = socket.connectionPolicy.Connect(socket.socketData);
 
         if (!result) return std::unexpected{ result.error() };
@@ -50,7 +49,7 @@ namespace Hermes {
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
     requires ByteLike<std::ranges::range_value_t<R>>
-    StreamByteCount ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Send(R& data) noexcept {
+    StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Send(R& data) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
         return transferPolicy.Send(socketData, buffer);
     }
@@ -59,7 +58,7 @@ namespace Hermes {
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
     requires ByteLike<std::ranges::range_value_t<R>>
-    StreamByteCount ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R& data) noexcept {
+    StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R& data) noexcept {
         std::span<const std::byte> buffer(std::data(data), std::ranges::ssize(data));
         return transferPolicy.Recv(socketData, buffer);
     }

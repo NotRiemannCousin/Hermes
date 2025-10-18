@@ -63,7 +63,7 @@ namespace Hermes {
             std::span<std::byte> bufferRecv,
             std::span<const std::byte> bufferSend
         ) {
-            { policy.Recv(data, bufferRecv) } -> std::same_as<StreamByteCount>;
-            { policy.Send(data, bufferSend) } -> std::same_as<StreamByteCount>;
+            { policy.Recv(data, bufferRecv) } -> std::same_as<StreamByteOper>;
+            { policy.Send(data, bufferSend) } -> std::same_as<StreamByteOper>;
         };
 }

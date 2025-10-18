@@ -15,6 +15,7 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         DefaultSocketData() = default;
+        DefaultSocketData(Endpoint&& other) noexcept;
         ~DefaultSocketData() = default;
 
         DefaultSocketData(DefaultSocketData&& other) noexcept;

@@ -27,7 +27,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     bool DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator==(std::default_sentinel_t) const {
-        return !view->_errorStatus.has_value() || (view->_data.socket == macroINVALID_SOCKET);
+        return !view->_errorStatus && view->_index == view->_size;
     }
 
 
@@ -61,50 +61,64 @@ namespace Hermes {
         if (_data.socket == macroINVALID_SOCKET)
             return _errorStatus = std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
 
-        const int received{ recv(_data.socket,
-                                  reinterpret_cast<char*>(_buffer.data()), bufferSize, 0) };
+        auto [newSize, err]{ DefaultTransferPolicy::RecvHelper<std::byte>(_data, _buffer, true) };
 
-        _size = received;
+        _size = newSize;
         _index = 0;
 
-        if (received != macroSOCKET_ERROR)
+        if (err) return {};
+
+        _errorStatus = std::unexpected{ err.error() };
+
+        if (err.error() == ConnectionErrorEnum::CONNECTION_CLOSED)
             return {};
 
-        return _errorStatus = std::unexpected{
-            WSAGetLastError() == WSAEWOULDBLOCK
-            ? ConnectionErrorEnum::CONNECTION_TIMEOUT
-            : ConnectionErrorEnum::RECEIVE_FAILED
-        };
+        // if (received != macroSOCKET_ERROR) return {};
+
+        return std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED };;
+        // return _errorStatus = std::unexpected{
+        //     WSAGetLastError() == WSAEWOULDBLOCK
+        //     ? ConnectionErrorEnum::CONNECTION_TIMEOUT
+        //     : ConnectionErrorEnum::RECEIVE_FAILED
+        // };
     }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteCount DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+    StreamByteOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+        return DefaultTransferPolicy::RecvHelper(data, bufferRecv, false);
+    }
+    template<SocketDataConcept Data>
+    template<ByteLike Byte>
+    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, bool single) {
         if (data.socket == macroINVALID_SOCKET)
-            return std::unexpected{ConnectionErrorEnum::SOCKET_NOT_OPEN};
+            return {0, std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN } };
 
         size_t total{};
-        while (total < bufferRecv.size()) {
+        do {
             const int received{ recv(data.socket,
                 reinterpret_cast<char*>(bufferRecv.data() + total),
                 static_cast<int>(bufferRecv.size() - total), 0) };
 
-            if (received == 0)
-                break;
+            if (received == 0) {
+                closesocket(std::exchange(data.socket, macroINVALID_SOCKET));
+                return { total, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED } };
+            }
+
             if (received == macroSOCKET_ERROR)
-                return std::unexpected{ConnectionErrorEnum::RECEIVE_FAILED};
+                return { total, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
 
             total += received;
-        }
-        return { total };
+        } while (!single && total < bufferRecv.size());
+        return { total, {} };
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteCount DefaultTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
+    StreamByteOper DefaultTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
         if (data.socket == macroINVALID_SOCKET)
-            return std::unexpected{ConnectionErrorEnum::SOCKET_NOT_OPEN};
+            return { 0, std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN } };
 
         size_t total{};
         while (total < bufferSend.size()) {
@@ -113,11 +127,11 @@ namespace Hermes {
                 static_cast<int>(bufferSend.size() - total), 0) };
 
             if (sent == macroSOCKET_ERROR)
-                return std::unexpected{ConnectionErrorEnum::SEND_FAILED};
+                return { total, std::unexpected{ ConnectionErrorEnum::SEND_FAILED } };
 
             total += sent;
         }
-        return { total };
+        return { total, {} };
     }
 
 }

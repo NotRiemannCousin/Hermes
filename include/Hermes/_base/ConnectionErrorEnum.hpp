@@ -54,7 +54,7 @@ namespace Hermes {
     using ConnectionResultOper = ConnectionResult<std::monostate>;
 
 
-    using StreamByteCount = ConnectionResult<size_t>;
+    using StreamByteOper = std::pair<size_t, ConnectionResultOper>;
     using DataStream = std::experimental::generator<ConnectionResult<ByteData>>;
     using DataStringStream = std::experimental::generator<ConnectionResult<std::string>>;
 }

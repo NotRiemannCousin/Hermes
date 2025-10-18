@@ -15,12 +15,15 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         TlsSocketData() = default;
-        explicit TlsSocketData(std::string host);
+        TlsSocketData(Endpoint endpoint, std::string host);
         ~TlsSocketData() = default;
 
         TlsSocketData(TlsSocketData&& other) noexcept;
         TlsSocketData& operator=(TlsSocketData&& other) noexcept;
 
+        std::string host{};
+
+    // private:
         CtxtHandle ctxtHandle{};
 
 
@@ -33,16 +36,17 @@ namespace Hermes {
         std::array<std::array<std::byte, 0x4000>, 4> buffers{};
         std::array<SecBuffer, 4> secBuffers{};
 
-        std::array<std::byte, 0x11000> encryptedData{};
-        size_t encryptedDataSize{};
+        std::array<std::byte, 0x1000> encryptedData{};
+        std::span<std::byte> encryptedDataSpan{};
+        std::span<std::byte> encryptedExtraSpan{};
 
 
         std::array<std::byte, 0x10000> decryptedData{};
-        size_t decryptedDataSize{};
+        std::span<std::byte> decryptedDataSpan{};
+        std::span<std::byte> decryptedExtraSpan{};
 
         SecPkgContext_StreamSizes contextStreamSizes{};
         size_t decryptedOffset{};
-        std::string host{};
 
         static_assert(SocketType == SocketTypeEnum::STREAM && "DTLS not implemented yet");
     };

@@ -2,7 +2,9 @@
 
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
-    TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(std::string host) : host{ host } {}
+    TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host) :
+        endpoint{endpoint}, host{ host } {
+    }
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(TlsSocketData &&other) noexcept :
@@ -23,6 +25,7 @@ namespace Hermes {
             isServer            = other.isServer;
 
             endpoint            = std::move(other.endpoint);
+            host                = std::move(other.host);
 
             buffers             = std::move(other.buffers);
             secBuffers          = std::move(other.secBuffers);

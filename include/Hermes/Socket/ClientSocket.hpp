@@ -22,17 +22,17 @@ namespace Hermes {
         ClientSocket& operator=(ClientSocket&&) noexcept;
         ~ClientSocket();
 
-        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(const EndpointType& endpoint, SocketData data = {}) noexcept;
+        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data) noexcept;
 
         //! @return Returns the count of data sent on success, or an error on failure.
         template<std::ranges::contiguous_range R>
         requires ByteLike<std::ranges::range_value_t<R>>
-        StreamByteCount Send(R& data) noexcept;
+        StreamByteOper Send(R& data) noexcept;
 
         //! @return Returns the count of data filled on success, or an error on failure.
         template<std::ranges::contiguous_range R>
         requires ByteLike<std::ranges::range_value_t<R>>
-        StreamByteCount Recv(R& data) noexcept;
+        StreamByteOper Recv(R& data) noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         template<ByteLike Byte = std::byte>

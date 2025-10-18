@@ -43,9 +43,12 @@ namespace Hermes {
         };
 
         template<ByteLike Byte>
-        static StreamByteCount Recv(Data& data, std::span<Byte> bufferRecv);
+        static StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv);
         template<ByteLike Byte>
-        static StreamByteCount Send(Data& data, std::span<const Byte> bufferSend);
+        static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
+    private:
+        template<ByteLike Byte>
+        static StreamByteOper RecvHelper(Data& data, std::span<Byte> bufferRecv, bool single);
     };
 }
 
