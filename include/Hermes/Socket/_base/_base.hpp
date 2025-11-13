@@ -19,7 +19,7 @@ namespace Hermes {
     template<class SocketData>
     concept SocketDataConcept = EndpointConcept<typename SocketData::EndpointType>
         && std::movable<SocketData>
-        && !std::copyable<SocketData>
+        && !std::copyable<SocketData> // coping a socket => 💀
         && requires(SocketData data) {
             { SocketData::Family } -> std::same_as<const AddressFamilyEnum&>;
             { SocketData::Type } -> std::same_as<const SocketTypeEnum&>;
