@@ -158,8 +158,6 @@ namespace std {
     struct formatter<Hermes::IpAddress> {
         using IpAddress = Hermes::IpAddress;
 
-
-
         //! Parse function for IpAddress.
         //! @param ctx The parse context.
         //! @return Iterator pointing to the end of the parsed input.

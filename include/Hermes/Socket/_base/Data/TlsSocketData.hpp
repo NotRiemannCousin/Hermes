@@ -1,7 +1,7 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/Socket/_base/_base.hpp>
-#include <Hermes/_base/WinApi.hpp>
+#include <Hermes/_base/WinApi/WinApi.hpp>
 
 namespace Hermes {
     template<

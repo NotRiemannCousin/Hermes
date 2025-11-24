@@ -1,5 +1,5 @@
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/_base/WinApi.hpp>
+#include <Hermes/_base/WinApi/WinApi.hpp>
 #include <stdexcept>
 
 
@@ -20,7 +20,7 @@ namespace Hermes {
         if (result != 0)
             throw std::runtime_error{ "WSAStartup failed" };
 
-        _credData.dwVersion = static_cast<DWORD>(SCHCredEnum::SCHANNEL);
+        _credData.dwVersion = static_cast<DWORD>(SChCredEnum::SCHANNEL);
         _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsFlags::TLS1_2_CLIENT | SupportedProtocolsFlags::TLS1_3_CLIENT);
 
         // | Keep in mind to keep macroUNISP_NAME null-terminated.
