@@ -13,6 +13,7 @@
 
 #include <winsock2.h>
 #include <schannel.h>
+// ReSharper disable once CppUnusedIncludeDirective
 #include <ws2tcpip.h>
 #include <sspi.h>
 
@@ -20,15 +21,6 @@
 #pragma comment(lib, "secur32.lib")
 
 #pragma region Macro Operations
-// template<class E> requires std::is_scoped_enum_v<E>
-// constexpr bool IsEnumFlag(){
-//     return std::string_view(__FUNCSIG__).ends_with("Flags>(void)");
-// }
-//
-// template<class E>
-// concept EnumFlagConcept = requires { requires IsEnumFlag<E>(); };
-
-
 #define FLAGS_OPERATIONS(TYPE)                                                              \
         static_assert(std::is_enum_v<TYPE>);                                                \
         constexpr TYPE operator|(TYPE f1, TYPE f2) {                                        \
@@ -53,6 +45,7 @@
 #pragma endregion
 
 // export {
+// ReSharper disable once CppUnusedIncludeDirective
 #include <Hermes/_base/WinApi/ConversionAndLiterals.hpp>
 #include <Hermes/_base/WinApi/Macros.hpp>
 

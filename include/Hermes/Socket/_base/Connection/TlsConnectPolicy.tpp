@@ -108,7 +108,7 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
 
         firstPass = false;
 
-        if (status == _tl(EncryptStatusEnum::ERR_OK)) {
+        if (status == EncryptStatusEnum::ERR_OK) {
             if (outBuffers[0].cbBuffer > 0 && outBuffers[0].pvBuffer != nullptr) {
                 int sent = send(data.socket,
                                static_cast<const char*>(outBuffers[0].pvBuffer),

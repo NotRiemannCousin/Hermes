@@ -23,7 +23,7 @@ namespace Hermes {
         if (type == AddressFamilyEnum::INET6) {
             const auto *in6 = reinterpret_cast<const sockaddr_in6*>(&addr);
 
-            if (in6->sin6_family != _tus(AddressFamilyEnum::INET6))
+            if (in6->sin6_family != AddressFamilyEnum::INET6)
                 return unexpected{ ConnectionErrorEnum::UNKNOWN };
 
             const IpAddress address{ IpAddress::FromIPv6(bit_cast<IpAddress::IPv6Type>(in6->sin6_addr)) };
@@ -35,7 +35,7 @@ namespace Hermes {
         if (type == AddressFamilyEnum::INET) {
             const auto *in = reinterpret_cast<sockaddr_in*>(&addr);
 
-            if (in->sin_family != _tus(AddressFamilyEnum::INET))
+            if (in->sin_family != AddressFamilyEnum::INET)
                 return unexpected{ ConnectionErrorEnum::UNKNOWN };
 
             const IpAddress address{ IpAddress::FromIPv4(bit_cast<IpAddress::IPv4Type>(in->sin_addr)) };
