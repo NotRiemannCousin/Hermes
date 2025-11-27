@@ -48,9 +48,9 @@ namespace Hermes {
         TransferPolicyType   transferPolicy{};
     };
 
-    using RawTcpClient     = ClientSocket<>;
-    using RawTlsClient     = ClientSocket<TlsSocketData<>, TlsConnectPolicy, TlsTransferPolicy>;
-    using RawUdpClient     = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::DGRAM>>;
+    using RawTcpClient = ClientSocket<>;
+    using RawTlsClient = ClientSocket<TlsSocketData<>, TlsConnectPolicy, TlsTransferPolicy>;
+    using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::DGRAM>>;
 }
 
 #include <Hermes/Socket/ClientSocket.tpp>

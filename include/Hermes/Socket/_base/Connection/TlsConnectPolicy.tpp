@@ -1,7 +1,13 @@
 #pragma once
+#include <iostream>
 #include <Hermes/_base/Network.hpp>
 
 namespace Hermes {
+    static constexpr bool HasData(const SecBuffer buffer) {
+        return buffer.cbBuffer > 0 && buffer.pvBuffer != nullptr;
+    }
+
+
     template<SocketDataConcept Data>
     ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data) {
         auto addrRes{ data.endpoint.ToSockAddr() };
@@ -31,174 +37,184 @@ namespace Hermes {
     }
 
 // I hate TLS so much
-    
-template<SocketDataConcept Data>
-ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
-    const CredHandle& credHandle{ Network::GetCredHandle() };
-    TimeStamp tsExpiry{ Network::GetExpiry() };
 
-    SecBufferDesc outBufferDesc{};
-    SecBufferDesc inBufferDesc{};
-    auto& buffers{ data.buffers };
-    std::span secBuffers{ data.secBuffers };
-    std::span outBuffers{ secBuffers.subspan(0, 2) };
-    std::span inBuffers { secBuffers.subspan(2, 2) };
+    template<SocketDataConcept Data>
+    ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
+        const CredHandle& credHandle{ Network::GetCredHandle() };
+        TimeStamp tsExpiry{ Network::GetExpiry() };
 
-    constexpr auto dwSspiFlags{
-        InitializeSecurityContextFlags::SEQUENCE_DETECT |
-        InitializeSecurityContextFlags::REPLAY_DETECT   |
-        InitializeSecurityContextFlags::CONFIDENTIALITY |
-        InitializeSecurityContextFlags::EXTENDED_ERROR  |
-        InitializeSecurityContextFlags::STREAM };
+        SecBufferDesc outBufferDesc{};
+        SecBufferDesc inBufferDesc{};
 
-    DWORD pfContextAttr{};
-    if (data.host.size() >= 255)
-        return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
+        auto& buffers{ data.buffers };
+        auto& tokenBuffer{ data.secBuffers[0] };
+        auto& extraBuffer{ data.secBuffers[1] };
 
-    bool firstPass{ true };
-    DWORD receivedBytes{};
-    SECURITY_STATUS status{};
+        auto& outBuffer{ data.secBuffers[2] };
+        auto& msgBuffer{ data.secBuffers[3] };
 
-    do {
-        PSecBufferDesc pInBufferDesc = nullptr;
-        if (!firstPass && receivedBytes > 0) {
-            inBuffers[0] = SecBuffer{
-                receivedBytes,
-                _tul(SecurityBufferEnum::TOKEN),
-                data.decryptedData.data()
-            };
-            inBuffers[1] = SecBuffer{
-                0,
-                _tul(SecurityBufferEnum::EMPTY),
-                nullptr
-            };
+        constexpr auto dwSspiFlags{
+            InitializeSecurityContextFlags::SEQUENCE_DETECT |
+            InitializeSecurityContextFlags::REPLAY_DETECT   |
+            InitializeSecurityContextFlags::CONFIDENTIALITY |
+            InitializeSecurityContextFlags::EXTENDED_ERROR  |
+            InitializeSecurityContextFlags::STREAM };
 
-            inBufferDesc = SecBufferDesc{
-                macroSECBUFFER_VERSION,
-                2,
-                &inBuffers[0]
-            };
-            pInBufferDesc = &inBufferDesc;
-        }
+        DWORD pfContextAttr{};
+        if (data.host.size() >= 255)
+            return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
 
-        outBuffers[0] = SecBuffer{
-            _tul(buffers[0].size()),
-            _tul(SecurityBufferEnum::TOKEN),
-            buffers[0].data()
-        };
-        outBufferDesc = SecBufferDesc{
-            macroSECBUFFER_VERSION,
-            1,
-            &outBuffers[0]
-        };
+        bool firstPass{ true };
+        DWORD receivedBytes{};
+        SECURITY_STATUS status{};
 
-        status = InitializeSecurityContextA(
-            const_cast<PCredHandle>(&credHandle),
-            firstPass ? nullptr : &data.ctxtHandle,
-            const_cast<SEC_CHAR*>(data.host.c_str()),
-            _tll(dwSspiFlags),
-            0, 0,
-            pInBufferDesc,
-            0,
-            firstPass ? &data.ctxtHandle : nullptr,
-            &outBufferDesc,
-            &pfContextAttr,
-            &tsExpiry
-        );
-
-        firstPass = false;
-
-        if (status == EncryptStatusEnum::ERR_OK) {
-            if (outBuffers[0].cbBuffer > 0 && outBuffers[0].pvBuffer != nullptr) {
-                int sent = send(data.socket,
-                               static_cast<const char*>(outBuffers[0].pvBuffer),
-                               outBuffers[0].cbBuffer, 0);
-
-                if (sent == macroSOCKET_ERROR || sent != _tl(outBuffers[0].cbBuffer)) {
-                    DeleteSecurityContext(&data.ctxtHandle);
-                    closesocket(data.socket);
-                    data.socket = macroINVALID_SOCKET;
-                    return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-                }
-            }
-
-
-            status = QueryContextAttributesA(&data.ctxtHandle,
-                                            SECPKG_ATTR_STREAM_SIZES,
-                                            &data.contextStreamSizes);
-
-            if (status != EncryptStatusEnum::ERR_OK) {
-                DeleteSecurityContext(&data.ctxtHandle);
-                closesocket(data.socket);
-                data.socket = macroINVALID_SOCKET;
-                return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-            }
-
-            data.isHandshakeComplete = true;
-            data.isServer = false;
-
-            return {};
-        }
-
-
-        if (status != EncryptStatusEnum::INFO_CONTINUE_NEEDED &&
-            status != EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
+        const auto ClearAndExit = [&](ConnectionErrorEnum error = ConnectionErrorEnum::HANDSHAKE_FAILED){
             DeleteSecurityContext(&data.ctxtHandle);
             closesocket(data.socket);
             data.socket = macroINVALID_SOCKET;
-            return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-        }
+            return std::unexpected{ error };
+        };
 
-        if (outBuffers[0].cbBuffer > 0 && outBuffers[0].pvBuffer != nullptr) {
-            int sent = send(data.socket,
-                           static_cast<const char*>(outBuffers[0].pvBuffer),
-                           outBuffers[0].cbBuffer, 0);
+        inBufferDesc  = SecBufferDesc{ macroSECBUFFER_VERSION, 2, &tokenBuffer }; // token, extra
+        outBufferDesc = SecBufferDesc{ macroSECBUFFER_VERSION, 2, &outBuffer };   // out, msg
+        PSecBufferDesc pInBufferDesc{ &inBufferDesc };
 
-            if (sent == macroSOCKET_ERROR || sent != _tl(outBuffers[0].cbBuffer)) {
-                DeleteSecurityContext(&data.ctxtHandle);
-                closesocket(data.socket);
-                data.socket = macroINVALID_SOCKET;
-                return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-            }
-        }
+        do {
+            tokenBuffer = SecBuffer{ receivedBytes, _tul(SecurityBufferEnum::TOKEN), data.decryptedData.data() };
+            extraBuffer = SecBuffer{ 0,             _tul(SecurityBufferEnum::EMPTY), nullptr };
 
-        if (status == EncryptStatusEnum::INFO_CONTINUE_NEEDED ||
-            status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
+            outBuffer = SecBuffer{ _tul(buffers[2].size()), _tul(SecurityBufferEnum::TOKEN), buffers[2].data() };
+            msgBuffer = SecBuffer{ _tul(buffers[3].size()), _tul(SecurityBufferEnum::ALERT), buffers[3].data() };
 
-            const auto offset{ status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE ? receivedBytes : 0ULL };
-            int received = recv(data.socket,
-                               reinterpret_cast<char*>(data.decryptedData.data() + offset),
-                               _tl(data.decryptedData.size() - offset), 0);
+            status = InitializeSecurityContextA(
+                const_cast<PCredHandle>(&credHandle),
+                firstPass ? nullptr : &data.ctxtHandle,
+                const_cast<SEC_CHAR*>(data.host.c_str()),
+                _tll(dwSspiFlags), 0, 0,
+                firstPass ? nullptr : pInBufferDesc, 0,
+                firstPass ? &data.ctxtHandle : nullptr,
+                &outBufferDesc, &pfContextAttr, &tsExpiry
+            );
 
-            if (received <= 0) {
-                DeleteSecurityContext(&data.ctxtHandle);
-                closesocket(data.socket);
-                data.socket = macroINVALID_SOCKET;
-                return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-            }
+            firstPass = false;
 
-            if (status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
-                receivedBytes += received;
-            } else {
-                receivedBytes = received;
-            }
-
-            if (pInBufferDesc && inBuffers[1].BufferType == SecurityBufferEnum::EXTRA) {
+            if (extraBuffer.BufferType == SecurityBufferEnum::EXTRA && extraBuffer.cbBuffer > 0) {
                 std::memmove(data.decryptedData.data(),
-                            data.decryptedData.data() + (receivedBytes - inBuffers[1].cbBuffer),
-                            inBuffers[1].cbBuffer);
-                receivedBytes = inBuffers[1].cbBuffer;
+                            data.decryptedData.data() + receivedBytes - extraBuffer.cbBuffer,
+                            extraBuffer.cbBuffer); // reset buffer
+                receivedBytes = extraBuffer.cbBuffer;
             }
-        }
 
-    } while (status == EncryptStatusEnum::INFO_CONTINUE_NEEDED ||
-             status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE);
+            // All values listed in:
+            // https://learn.microsoft.com/en-us/windows/win32/secauthn/initializesecuritycontext--schannel
+            switch (static_cast<EncryptStatusEnum>(status)) {
+                // ----------------------------------------------------------------------
+                //                  Happy Path
+                // ----------------------------------------------------------------------
 
-    DeleteSecurityContext(&data.ctxtHandle);
-    closesocket(data.socket);
-    data.socket = macroINVALID_SOCKET;
-    return std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED };
-}
+                case EncryptStatusEnum::INFO_COMPLETE_AND_CONTINUE:
+                case EncryptStatusEnum::INFO_COMPLETE_NEEDED:
+
+#pragma region Complete Auth
+                    CompleteAuthToken(&data.ctxtHandle, &outBufferDesc);
+
+                    if (status == EncryptStatusEnum::INFO_COMPLETE_AND_CONTINUE)
+                        continue;
+#pragma endregion
+
+                case EncryptStatusEnum::INFO_CONTINUE_NEEDED:
+
+#pragma region Send More Data
+
+                    if (status != EncryptStatusEnum::INFO_COMPLETE_NEEDED && HasData(outBuffer)) {
+                        int sent{ send(data.socket,
+                                       static_cast<const char*>(outBuffer.pvBuffer),
+                                       outBuffer.cbBuffer, 0) };
+
+                        if (sent == macroSOCKET_ERROR || sent != outBuffer.cbBuffer)
+                            return ClearAndExit(ConnectionErrorEnum::HANDSHAKE_FAILED);
+                    }
+
+                    if (extraBuffer.BufferType != SecurityBufferEnum::EXTRA)
+                        receivedBytes = 0;
+
+#pragma endregion
+
+                case EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE:
+
+#pragma region Receive More Data
+                    {
+                        const int received{ recv(data.socket,
+                                           reinterpret_cast<char*>(data.decryptedData.data() + receivedBytes),
+                                           data.decryptedData.size() - receivedBytes, 0) };
+                        receivedBytes += received;
+
+                        if (received <= 0)
+                            return ClearAndExit();
+
+                        if (status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE)
+                            continue;
+                    }
+
+#pragma endregion
+                    break;
+                case EncryptStatusEnum::ERR_OK: {
+                    if (HasData(outBuffer)) {
+                        int sent{ send(data.socket,
+                                       static_cast<const char*>(outBuffer.pvBuffer),
+                                       outBuffer.cbBuffer, 0) };
+
+                        if (sent == macroSOCKET_ERROR || sent != outBuffer.cbBuffer)
+                            return ClearAndExit();
+                    }
+
+
+                    status = QueryContextAttributesA(&data.ctxtHandle,
+                                                    SECPKG_ATTR_STREAM_SIZES,
+                                                    &data.contextStreamSizes);
+
+                    if (status != EncryptStatusEnum::ERR_OK)
+                        return ClearAndExit();
+
+                    data.isHandshakeComplete = true;
+                    data.isServer = false;
+
+                    return {};
+                }
+
+                case EncryptStatusEnum::ERR_INCOMPLETE_CREDENTIALS:
+                    return ClearAndExit(ConnectionErrorEnum::CERTIFICATE_ERROR);
+
+                // ----------------------------------------------------------------------
+                //                  Errors
+                // ----------------------------------------------------------------------
+
+                case EncryptStatusEnum::ERR_INSUFFICIENT_MEMORY:
+                case EncryptStatusEnum::ERR_INVALID_HANDLE:
+                case EncryptStatusEnum::ERR_INVALID_TOKEN:
+                    printf("Token inválido!");
+                    return ClearAndExit();
+                case EncryptStatusEnum::ERR_LOGON_DENIED:
+                case EncryptStatusEnum::ERR_NO_CREDENTIALS:
+                case EncryptStatusEnum::ERR_NO_AUTHENTICATING_AUTHORITY:
+
+                    return ClearAndExit(ConnectionErrorEnum::CERTIFICATE_ERROR);
+
+                case EncryptStatusEnum::ERR_INTERNAL_ERROR:
+                case EncryptStatusEnum::ERR_WRONG_PRINCIPAL:
+                case EncryptStatusEnum::ERR_TARGET_UNKNOWN:
+                case EncryptStatusEnum::ERR_UNSUPPORTED_FUNCTION:
+                case EncryptStatusEnum::ERR_APPLICATION_PROTOCOL_MISMATCH:
+                default:
+                    return ClearAndExit(ConnectionErrorEnum::UNKNOWN);
+            }
+
+
+        } while (status == EncryptStatusEnum::INFO_CONTINUE_NEEDED ||
+                 status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE);
+
+        return ClearAndExit();
+    }
 
     template<SocketDataConcept Data>
     ConnectionResultOper TlsConnectPolicy<Data>::Close(Data& data) {
@@ -259,7 +275,7 @@ ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
                     &tsExpiry
                 );
 
-                if (status == EncryptStatusEnum::ERR_OK && outBuffer.cbBuffer > 0 && outBuffer.pvBuffer != nullptr)
+                if (status == EncryptStatusEnum::ERR_OK && HasData(outBuffer))
                     send(data.socket, static_cast<const char*>(outBuffer.pvBuffer),
                         outBuffer.cbBuffer, 0);
             }
