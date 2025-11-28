@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <assert.h>
 // EU ODEIO TLS NAMORAL
 
 namespace Hermes {
@@ -93,108 +94,107 @@ namespace Hermes {
         if (!data.isHandshakeComplete)
             return { 0, std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED } };
 
-        const span<byte> decryptedData = data.decryptedData;
+        const span<byte> decryptedData{ data.decryptedData };
 
         span<byte>& dataSpan{ data.decryptedDataSpan };
         span<byte>& extraSpan{ data.decryptedExtraSpan };
 
         size_t initialSize{ bufferRecv.size() };
 
-        if (!dataSpan.empty()) {
-            const size_t countToCopy{ min(bufferRecv.size(), dataSpan.size()) };
-
-            memcpy(bufferRecv.data(), dataSpan.data(), countToCopy);
-            bufferRecv = bufferRecv.subspan(countToCopy);
-
-            dataSpan = dataSpan.subspan(countToCopy);
-            if (bufferRecv.empty())
-                return { countToCopy, {} };
-        }
-
-
         SECURITY_STATUS status{};
 
         array<SecBuffer, 4> secBuffers{};
-        SecBufferDesc buffDesc = { macroSECBUFFER_VERSION, 4, secBuffers.data() };
+        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, secBuffers.data() };
 
         do {
-            if (!extraSpan.empty() && extraSpan.data() != decryptedData.data())
-                memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
+            const bool hasPendingData{ !dataSpan.empty() };
+            const bool hasPendingExtraData{ !extraSpan.empty() };
 
-            dataSpan = decryptedData.subspan(extraSpan.size());
+            if (hasPendingData)
+                status = _tul(EncryptStatusEnum::ERR_OK);
+            else {
+                if (hasPendingExtraData) {
+                    dataSpan = extraSpan;
+                }
+                else {
+                    const int received{ recv(
+                            data.socket,
+                            reinterpret_cast<char*>(decryptedData.data()),
+                        static_cast<int>(decryptedData.size()),
+                        0
+                        ) };
 
-            if (status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE || extraSpan.empty()) {
-                const int received{ recv(
-                        data.socket,
-                        reinterpret_cast<char*>(dataSpan.data()),
-                    static_cast<int>(dataSpan.size()),
-                    0
-                    ) };
+                    if (received == 0)
+                        return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED} };
+                    if (received < 0)
+                        return { 0, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
 
-                if (received == 0)
-                    return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED} };
-                if (received <= 0)
-                    return { 0, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
-
-                dataSpan = decryptedData.first(extraSpan.size() + received);
-            } else
-                dataSpan = extraSpan;
+                    dataSpan = decryptedData.first(extraSpan.size() + received);
+                }
 
 
-            secBuffers[0] = {
-                _tul(dataSpan.size()),
-                SECBUFFER_DATA,
-                dataSpan.data()
-            };
+                secBuffers[0] = { _tul(dataSpan.size()), _tul(SecurityBufferEnum::DATA), dataSpan.data() };
+                secBuffers[1] = secBuffers[2] = secBuffers[3] = { 0, _tul(SecurityBufferEnum::EMPTY), nullptr };
 
-            secBuffers[1] = { 0,SECBUFFER_EMPTY, nullptr };
-            secBuffers[2] = { 0,SECBUFFER_EMPTY, nullptr };
-            secBuffers[3] = { 0,SECBUFFER_EMPTY, nullptr };
-
-            status = DecryptMessage(&data.ctxtHandle, &buffDesc, 0, nullptr);
-
-            if (status == EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
-                extraSpan = dataSpan;
-                continue;
+                status = DecryptMessage(&data.ctxtHandle, &buffDesc, 0, nullptr);
             }
 
-            if (status != EncryptStatusEnum::ERR_OK) {
-                if (status == EncryptStatusEnum::INFO_CONTEXT_EXPIRED)
-                    return { 0, {} };
-                if (status == EncryptStatusEnum::INFO_RENEGOTIATE)
-                    return { 0, std::unexpected{ ConnectionErrorEnum::SEND_FAILED } };
+            // All values listed in
+            // https://learn.microsoft.com/pt-br/windows/win32/api/sspi/nf-sspi-decryptmessage
+            // and
+            // https://learn.microsoft.com/en-us/windows/win32/secauthn/decryptmessage--schannel
+            switch (static_cast<EncryptStatusEnum>(status)) {
+                case EncryptStatusEnum::ERR_OK: {
+                    if (!hasPendingData) {
+                        using std::ranges::find;
+                        const auto dataBuffer {
+                            find(secBuffers, _tul(SecurityBufferEnum::DATA), &SecBuffer::BufferType)
+                        };
+                        const auto extraBuffer{
+                            find(secBuffers, _tul(SecurityBufferEnum::EXTRA), &SecBuffer::BufferType)
+                        };
 
-                return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
-            }
+                        if (dataBuffer == secBuffers.end())
+                            return { 0, std::unexpected{ ConnectionErrorEnum::UNKNOWN } };
 
-            SecBuffer* pDataBuffer  = nullptr;
-            SecBuffer* pExtraBuffer = nullptr;
+                        dataSpan = { static_cast<byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer };
 
-            for (auto& buffer : secBuffers) {
-                if (buffer.BufferType == SecurityBufferEnum::DATA)  pDataBuffer  = &buffer;
-                if (buffer.BufferType == SecurityBufferEnum::EXTRA) pExtraBuffer = &buffer;
-            }
+                        if (extraBuffer != secBuffers.end() && HasData(*extraBuffer))
+                            extraSpan = { static_cast<byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
+                        else
+                            extraSpan = {};
 
-            if (pExtraBuffer && pExtraBuffer->cbBuffer > 0)
-                extraSpan = { static_cast<byte*>(pExtraBuffer->pvBuffer), pExtraBuffer->cbBuffer };
-            else
-                extraSpan = {};
+                        if (!HasData(*dataBuffer))
+                            continue;
+                    }
 
-            if (pDataBuffer && pDataBuffer->cbBuffer > 0) {
-                dataSpan = { static_cast<byte*>(pDataBuffer->pvBuffer), pDataBuffer->cbBuffer };
-                const size_t countToCopy{ min(bufferRecv.size(), pDataBuffer->cbBuffer) };
-                memcpy(bufferRecv.data(), pDataBuffer->pvBuffer, countToCopy);
+                    const size_t countToCopy{ min(bufferRecv.size(), dataSpan.size()) };
+                    std::memcpy(bufferRecv.data(), dataSpan.data(), countToCopy);
 
-                bufferRecv = bufferRecv.subspan(countToCopy);
-                dataSpan = dataSpan.subspan(countToCopy);
+                    bufferRecv = bufferRecv.subspan(countToCopy);
+                    dataSpan   = dataSpan.subspan(countToCopy);
 
-                if (bufferRecv.empty())
+                    if (bufferRecv.empty())
+                        return { initialSize - bufferRecv.size(), {} };
                     break;
+                }
+                case EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE:
+                    continue;
+                case EncryptStatusEnum::INFO_RENEGOTIATE:
+                    continue; // TODO: Make a new Handshake
+                case EncryptStatusEnum::ERR_BUFFER_TOO_SMALL:
+                case EncryptStatusEnum::ERR_CRYPTO_SYSTEM_INVALID:
+                case EncryptStatusEnum::ERR_QOP_NOT_SUPPORTED:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
+                case EncryptStatusEnum::INFO_CONTEXT_EXPIRED:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED } };
+                case EncryptStatusEnum::ERR_INVALID_HANDLE:
+                case EncryptStatusEnum::ERR_INVALID_TOKEN:
+                case EncryptStatusEnum::ERR_MESSAGE_ALTERED:
+                case EncryptStatusEnum::ERR_OUT_OF_SEQUENCE:
+                default:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
             }
-
-            if (!pExtraBuffer && !pDataBuffer)
-                return { initialSize - bufferRecv.size(), std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED } };
-
         } while (!single);
 
         return { initialSize - bufferRecv.size(), {} };

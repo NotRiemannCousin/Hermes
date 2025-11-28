@@ -4,7 +4,7 @@
 
 namespace Hermes {
     static constexpr bool HasData(const SecBuffer buffer) {
-        return buffer.cbBuffer > 0 && buffer.pvBuffer != nullptr;
+        return buffer.cbBuffer > 0;
     }
 
 
@@ -98,7 +98,7 @@ namespace Hermes {
 
             firstPass = false;
 
-            if (extraBuffer.BufferType == SecurityBufferEnum::EXTRA && extraBuffer.cbBuffer > 0) {
+            if (HasData(extraBuffer) && extraBuffer.BufferType == SecurityBufferEnum::EXTRA) {
                 std::memmove(data.decryptedData.data(),
                             data.decryptedData.data() + receivedBytes - extraBuffer.cbBuffer,
                             extraBuffer.cbBuffer); // reset buffer

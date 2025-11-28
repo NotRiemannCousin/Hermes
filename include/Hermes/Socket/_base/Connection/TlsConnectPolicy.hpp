@@ -18,5 +18,5 @@ namespace Hermes {
 #include <Hermes/Socket/_base/Connection/TlsConnectPolicy.tpp>
 
 namespace Hermes {
-        static_assert(ConnectionPolicyConcept<TlsConnectPolicy, TlsSocketData<>>);
+    static_assert(ConnectionPolicyConcept<TlsConnectPolicy, TlsSocketData<>>);
 }
