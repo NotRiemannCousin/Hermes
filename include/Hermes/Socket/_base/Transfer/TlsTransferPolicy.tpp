@@ -1,13 +1,12 @@
 #pragma once
 #include <algorithm>
-#include <assert.h>
 // EU ODEIO TLS NAMORAL
 
 namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     TlsTransferPolicy<Data>::template RecvRange<Byte>::Iterator::value_type TlsTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator*() const {
-        if (view->_index == view->_size)
+        if (view->_index >= view->_size)
             view->Receive();
 
         return std::bit_cast<Byte>(view->_buffer[view->_index]);
@@ -61,10 +60,14 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     ConnectionResultOper TlsTransferPolicy<Data>::RecvRange<Byte>::Receive() {
-        auto [newSize, err]{ TlsTransferPolicy::RecvHelper<std::byte>(_data, _buffer, true) };
+        StreamByteOper::second_type err{};
+        while (_index >= _size && err) {
+            auto [newSize, errOp]{ TlsTransferPolicy::RecvHelper<std::byte>(_data, _buffer, true) };
+            err = errOp;
 
-        _index = 0;
-        _size = newSize;
+            _index -= _size;
+            _size = newSize;
+        }
 
         if (!err.has_value()) {
             _errorStatus = err;
@@ -107,20 +110,22 @@ namespace Hermes {
         SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, secBuffers.data() };
 
         do {
+            GT_TRY_AGAIN:
+
             const bool hasPendingData{ !dataSpan.empty() };
             const bool hasPendingExtraData{ !extraSpan.empty() };
 
             if (hasPendingData)
                 status = _tul(EncryptStatusEnum::ERR_OK);
             else {
-                if (hasPendingExtraData) {
+                if (hasPendingExtraData && status != EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
                     dataSpan = extraSpan;
                 }
                 else {
                     const int received{ recv(
                             data.socket,
-                            reinterpret_cast<char*>(decryptedData.data()),
-                        static_cast<int>(decryptedData.size()),
+                            reinterpret_cast<char*>(decryptedData.data() + extraSpan.size()),
+                        static_cast<int>(decryptedData.size() - extraSpan.size()),
                         0
                         ) };
 
@@ -162,14 +167,17 @@ namespace Hermes {
                         if (extraBuffer != secBuffers.end() && HasData(*extraBuffer))
                             extraSpan = { static_cast<byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
                         else
-                            extraSpan = {};
+                            extraSpan = { decryptedData.data(), 0 };
 
                         if (!HasData(*dataBuffer))
                             continue;
                     }
 
                     const size_t countToCopy{ min(bufferRecv.size(), dataSpan.size()) };
-                    std::memcpy(bufferRecv.data(), dataSpan.data(), countToCopy);
+                    std::memmove(bufferRecv.data(), dataSpan.data(), countToCopy);
+                    std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
+
+                    extraSpan = { decryptedData.data(), extraSpan.size() };
 
                     bufferRecv = bufferRecv.subspan(countToCopy);
                     dataSpan   = dataSpan.subspan(countToCopy);
@@ -178,10 +186,32 @@ namespace Hermes {
                         return { initialSize - bufferRecv.size(), {} };
                     break;
                 }
-                case EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE:
-                    continue;
+                case EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE: {
+                    using std::ranges::find;
+                    const auto extraBuffer{
+                        find(secBuffers, _tul(SecurityBufferEnum::EXTRA), &SecBuffer::BufferType)
+                    };
+                    const auto missingBuffer{
+                        find(secBuffers, _tul(SecurityBufferEnum::MISSING), &SecBuffer::BufferType)
+                    };
+
+                    if (extraBuffer == secBuffers.end()) {
+                        if (missingBuffer == secBuffers.end())
+                            return { 0, std::unexpected{ ConnectionErrorEnum::UNKNOWN } };
+
+                        extraSpan = dataSpan;
+                    } else {
+                        extraSpan = { static_cast<byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
+                    }
+                    std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
+
+                    dataSpan  = {};
+                    extraSpan = decryptedData.first(extraSpan.size());
+                    goto GT_TRY_AGAIN;
+                }
                 case EncryptStatusEnum::INFO_RENEGOTIATE:
-                    continue; // TODO: Make a new Handshake
+                    // TODO: Make a new Handshake
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
                 case EncryptStatusEnum::ERR_BUFFER_TOO_SMALL:
                 case EncryptStatusEnum::ERR_CRYPTO_SYSTEM_INVALID:
                 case EncryptStatusEnum::ERR_QOP_NOT_SUPPORTED:
@@ -192,6 +222,7 @@ namespace Hermes {
                 case EncryptStatusEnum::ERR_INVALID_TOKEN:
                 case EncryptStatusEnum::ERR_MESSAGE_ALTERED:
                 case EncryptStatusEnum::ERR_OUT_OF_SEQUENCE:
+                case EncryptStatusEnum::ERR_DECRYPT_FAILURE:
                 default:
                     return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
             }

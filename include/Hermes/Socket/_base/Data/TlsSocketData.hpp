@@ -23,7 +23,7 @@ namespace Hermes {
 
         std::string host{};
 
-    // private:
+        // private:
         CtxtHandle ctxtHandle{};
 
 
