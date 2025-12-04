@@ -1,28 +1,8 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(Hermes LANGUAGES CXX)
+set(CMAKE_DEBUG_POSTFIX "_d")
 
 add_compile_options(/favor:AMD64)
-
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_compile_options(
-            /permissive-    # without MSVC madness
-            /O2             # Hard Optimization
-            /GL             # Link-time code generation
-            /arch:AVX2      # SIMD
-            /Oi             # Intrinsics
-            /Ot             # Speed
-            /GT             # Thread-safe static init
-            /Gw /Gy         # Delete unused
-            /Zc:inline      # inlining
-            /openmp:llvm    # OpenMP
-    )
-else()
-    add_link_options(
-            /LTCG           # Link-time optimization
-            /OPT:REF        # Delete unused
-            /OPT:ICF        # join equal functions
-    )
-endif()
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -62,35 +42,8 @@ set_target_properties(Hermes PROPERTIES
 )
 
 
-#----------------------------------------------------------------------------------------------------
-#       Examples
-#----------------------------------------------------------------------------------------------------
-add_executable(
-        HermesExample
-        examples/main.cpp
-)
-
-target_link_libraries(HermesExample PRIVATE Hermes)
-
-#----------------------------------------------------------------------------------------------------
-#       Tests
-#----------------------------------------------------------------------------------------------------
-add_executable(
-        Tests
-
-        tests/TcpTests.cpp
-        tests/IpTests.cpp
-        tests/main.cpp
-)
-
-
-target_include_directories(
-        Tests
-        PUBLIC
-        ${CMAKE_SOURCE_DIR}/tests
-)
-target_link_libraries(Tests PRIVATE Hermes)
-
+add_subdirectory(examples)
+add_subdirectory(tests)
 
 
 install(TARGETS Hermes
@@ -108,6 +61,7 @@ install(EXPORT HermesTargets
         FILE HermesTargets.cmake
         NAMESPACE Hermes::
         DESTINATION lib/cmake/Hermes
+        CONFIGURATIONS Debug Release
 )
 
 include(CMakePackageConfigHelpers)
