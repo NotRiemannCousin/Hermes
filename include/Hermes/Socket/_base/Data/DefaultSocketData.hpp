@@ -15,8 +15,7 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         DefaultSocketData() = default;
-        // ReSharper disable once CppFunctionIsNotImplemented
-        DefaultSocketData(Endpoint&& other) noexcept;
+        DefaultSocketData(Endpoint&& other);
         ~DefaultSocketData() = default;
 
         DefaultSocketData(DefaultSocketData&& other) noexcept;

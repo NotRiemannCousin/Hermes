@@ -23,7 +23,7 @@ namespace Hermes {
         using IntType = std::uint8_t;
         using IPv4Type = array<IntType, 4>;
         using IPv6Type = array<IntType, 16>;
-        using IpVariant = std::variant<std::monostate, IPv4Type, IPv6Type>;
+        using IpVariant = std::variant<IPv4Type, IPv6Type>;
 
         IpVariant data;
 
@@ -66,10 +66,6 @@ namespace Hermes {
         //! Seams obvious.
         bool operator==(const IpAddress &) const;
 
-
-        //! Check if the IpAddress is empty.
-        //! @return True if the IpAddress is empty.
-        [[nodiscard]] bool IsEmpty() const;
 
         //! Check if the IpAddress is an IPv4 address.
         //! @return True if the IpAddress is IPv4.

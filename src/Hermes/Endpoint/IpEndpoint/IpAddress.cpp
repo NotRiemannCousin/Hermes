@@ -19,15 +19,15 @@ namespace Hermes {
 
     IpAddress::IpAddress(const IpVariant& d) : data(d) {}
 
-    IpAddress IpAddress::Empty() { return IpAddress(std::monostate{}); }
+    IpAddress IpAddress::Empty() { return IpAddress{ IPv4Type{} }; }
 
-    IpAddress IpAddress::FromIPv4(const IPv4Type &data) { return IpAddress(data); }
+    IpAddress IpAddress::FromIPv4(const IPv4Type &data) { return IpAddress{ data }; }
 
     //----------------------------------------------------------------------------------------------------
     // Construct
     //----------------------------------------------------------------------------------------------------
 
-    IpAddress IpAddress::FromIPv6(const IPv6Type &data) { return IpAddress(data); }
+    IpAddress IpAddress::FromIPv6(const IPv6Type &data) { return IpAddress{ data }; }
 
     std::optional<IpAddress> IpAddress::TryParse(const string& str) {
         Network::Initialize();
@@ -56,8 +56,6 @@ namespace Hermes {
     // Checks
     //----------------------------------------------------------------------------------------------------
 
-    bool IpAddress::IsEmpty() const { return std::holds_alternative<std::monostate>(data); }
-
 
     bool IpAddress::IsIPv4()  const { return std::holds_alternative<IpAddress::IPv4Type>(data); }
 
@@ -65,9 +63,6 @@ namespace Hermes {
 
 
     bool IpAddress::IsValid() const {
-        if (IsEmpty())
-            return false;
-
         if (IsIPv4()) {
             const auto ipv4{ get<IPv4Type>(data) };
 
@@ -139,9 +134,6 @@ namespace Hermes {
 
 
     bool IpAddress::IsMulticast() const {
-        if (IsEmpty())
-            return false;
-
         if (IsIPv4()) {
             const auto ipv4{ get<IPv4Type>(data) };
 
@@ -160,9 +152,6 @@ namespace Hermes {
     }
 
     bool IpAddress::IsUnspecified() const {
-        if (!IsEmpty())
-            return true;
-
         if (IsIPv6())
             return get<IPv4Type>(data) == IPv4Type{};
 
@@ -170,9 +159,6 @@ namespace Hermes {
     }
 
     bool IpAddress::IsLinkLocal() const noexcept {
-        if (IsEmpty())
-            return false;
-
         if (IsIPv4()) {
             const auto ipv4{ get<IPv4Type>(data) };
             return ipv4[0] == 169 && ipv4[1] == 254;
@@ -183,9 +169,6 @@ namespace Hermes {
     }
 
     bool IpAddress::IsSiteLocal() const noexcept {
-        if (IsEmpty())
-            return false;
-
         if (IsIPv4()) {
             const auto ipv4{ std::get<IPv4Type>(data) };
             return ipv4[0] == 172 && (ipv4[1] >= 16 && ipv4[1] <= 31);

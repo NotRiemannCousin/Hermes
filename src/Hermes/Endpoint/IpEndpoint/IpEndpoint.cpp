@@ -48,9 +48,6 @@ namespace Hermes {
     }
 
     ConnectionResult<SocketInfoAddr> IpEndpoint::ToSockAddr() const {
-        if (ip.IsEmpty())
-            return unexpected{ ConnectionErrorEnum::UNKNOWN }; // TODO: improve error handling
-
         sockaddr_storage addr{};
         size_t size{};
         AddressFamilyEnum addressFamily{};

@@ -32,7 +32,6 @@ void IpAddressTests() {
     const auto parsed { IpAddress::TryParse("::ffff:0:0") };
     const auto invalidParsed { IpAddress::TryParse("Certainly not an IP") };
 
-    Test("Construct Default Empty Address",std::holds_alternative<std::monostate>     (emptyIp.data));
     Test("Construct Default IPv4 Address", std::holds_alternative<IpAddress::IPv4Type>(loopbackIpv4.data));
     Test("Construct Default IPv6 Address", std::holds_alternative<IpAddress::IPv6Type>(loopbackIpv6.data));
 
@@ -43,7 +42,6 @@ void IpAddressTests() {
     Test("Loopback IPv6", loopbackIpv6.IsLoopback());
 
 
-    Test("Construct Default Empty Address", std::holds_alternative<std::monostate>(emptyIp.data));
     Test("Construct Default IPv4 Address", std::holds_alternative<IpAddress::IPv4Type>(loopbackIpv4.data));
     Test("Construct Default IPv6 Address", std::holds_alternative<IpAddress::IPv6Type>(loopbackIpv6.data));
 
@@ -86,8 +84,6 @@ void IpEndpointTests() {
     const auto resolvedEndpoint{ IpEndpoint::TryResolve("localhost") };
     const auto invalidResolvedEndpoint{ IpEndpoint::TryResolve("Certainly not an URL")
 };
-
-    Test("Empty Endpoint", emptyEndpoint.ip.IsEmpty() && emptyEndpoint.port == 0);
 
     Test("Resolve Valid Hostname", resolvedEndpoint
         && resolvedEndpoint->ip.IsLoopback()
