@@ -9,7 +9,7 @@ namespace Hermes {
     namespace rg = std::ranges;
 
     template<class Type>
-    concept ByteLike = sizeof(Type) == 1;
+    concept ByteLike = std::same_as<Type, char> || std::same_as<Type, unsigned char> || std::same_as<Type, std::byte>;
 
 
     //! @brief Concept for the data representing a socket's state.
