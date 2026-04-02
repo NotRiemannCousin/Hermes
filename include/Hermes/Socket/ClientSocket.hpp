@@ -50,7 +50,7 @@ namespace Hermes {
 
     using RawTcpClient = ClientSocket<>;
     using RawTlsClient = ClientSocket<TlsSocketData<>, TlsConnectPolicy, TlsTransferPolicy>;
-    using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::DGRAM>>;
+    using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }
 
 #include <Hermes/Socket/ClientSocket.tpp>

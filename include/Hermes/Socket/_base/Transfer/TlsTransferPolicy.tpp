@@ -7,7 +7,7 @@ namespace Hermes {
     template<ByteLike Byte>
     TlsTransferPolicy<Data>::template RecvRange<Byte>::Iterator::value_type TlsTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator*() const {
         if (view->_index >= view->_size)
-            view->Receive();
+            auto _{ view->Receive() };
 
         return std::bit_cast<Byte>(view->_buffer[view->_index]);
     }
@@ -22,7 +22,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     TlsTransferPolicy<Data>::template RecvRange<Byte>::Iterator& TlsTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator++(int) {
-        return ++(*this);
+        return ++*this;
     }
 
     template<SocketDataConcept Data>
@@ -69,24 +69,23 @@ namespace Hermes {
             _size = newSize;
         }
 
-        if (!err.has_value()) {
-            _errorStatus = err;
+        if (err.has_value())
+            return {};
 
-            if (err.error() == ConnectionErrorEnum::CONNECTION_CLOSED) {
-                closesocket(_data.socket);
-                _data.socket = reinterpret_cast<SOCKET>(nullptr);
-            }
+        _errorStatus = err;
 
-            return _errorStatus;
+        if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
+            closesocket(_data.socket);
+            _data.socket = reinterpret_cast<SOCKET>(nullptr);
         }
 
-        return {};
+        return _errorStatus;
     }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper TlsTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, bool single) {
+    StreamByteOper TlsTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const bool single) {
         using std::span;
         using std::byte;
         using std::array;
@@ -95,7 +94,7 @@ namespace Hermes {
 
 
         if (!data.isHandshakeComplete)
-            return { 0, std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED } };
+            return { 0, std::unexpected{ ConnectionErrorEnum::HandshakeFailed } };
 
         const span<byte> decryptedData{ data.decryptedData };
 
@@ -116,9 +115,9 @@ namespace Hermes {
             const bool hasPendingExtraData{ !extraSpan.empty() };
 
             if (hasPendingData)
-                status = _tul(EncryptStatusEnum::ERR_OK);
+                status = _tul(EncryptStatusEnum::ErrOk);
             else {
-                if (hasPendingExtraData && status != EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE) {
+                if (hasPendingExtraData && status != EncryptStatusEnum::ErrIncompleteMessage) {
                     dataSpan = extraSpan;
                 }
                 else {
@@ -130,16 +129,16 @@ namespace Hermes {
                         ) };
 
                     if (received == 0)
-                        return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED} };
+                        return { 0, std::unexpected{ ConnectionErrorEnum::ConnectionClosed} };
                     if (received < 0)
-                        return { 0, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
+                        return { 0, std::unexpected{ ConnectionErrorEnum::ReceiveFailed } };
 
                     dataSpan = decryptedData.first(extraSpan.size() + received);
                 }
 
 
-                secBuffers[0] = { _tul(dataSpan.size()), _tul(SecurityBufferEnum::DATA), dataSpan.data() };
-                secBuffers[1] = secBuffers[2] = secBuffers[3] = { 0, _tul(SecurityBufferEnum::EMPTY), nullptr };
+                secBuffers[0] = { _tul(dataSpan.size()), _tul(SecurityBufferEnum::Data), dataSpan.data() };
+                secBuffers[1] = secBuffers[2] = secBuffers[3] = { 0, _tul(SecurityBufferEnum::Empty), nullptr };
 
                 status = DecryptMessage(&data.ctxtHandle, &buffDesc, 0, nullptr);
             }
@@ -149,18 +148,18 @@ namespace Hermes {
             // and
             // https://learn.microsoft.com/en-us/windows/win32/secauthn/decryptmessage--schannel
             switch (static_cast<EncryptStatusEnum>(status)) {
-                case EncryptStatusEnum::ERR_OK: {
+                case EncryptStatusEnum::ErrOk: {
                     if (!hasPendingData) {
                         using std::ranges::find;
                         const auto dataBuffer {
-                            find(secBuffers, _tul(SecurityBufferEnum::DATA), &SecBuffer::BufferType)
+                            find(secBuffers, _tul(SecurityBufferEnum::Data), &SecBuffer::BufferType)
                         };
                         const auto extraBuffer{
-                            find(secBuffers, _tul(SecurityBufferEnum::EXTRA), &SecBuffer::BufferType)
+                            find(secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType)
                         };
 
                         if (dataBuffer == secBuffers.end())
-                            return { 0, std::unexpected{ ConnectionErrorEnum::UNKNOWN } };
+                            return { 0, std::unexpected{ ConnectionErrorEnum::Unknown } };
 
                         dataSpan = { static_cast<byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer };
 
@@ -186,18 +185,18 @@ namespace Hermes {
                         return { initialSize - bufferRecv.size(), {} };
                     break;
                 }
-                case EncryptStatusEnum::ERR_INCOMPLETE_MESSAGE: {
+                case EncryptStatusEnum::ErrIncompleteMessage: {
                     using std::ranges::find;
                     const auto extraBuffer{
-                        find(secBuffers, _tul(SecurityBufferEnum::EXTRA), &SecBuffer::BufferType)
+                        find(secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType)
                     };
                     const auto missingBuffer{
-                        find(secBuffers, _tul(SecurityBufferEnum::MISSING), &SecBuffer::BufferType)
+                        find(secBuffers, _tul(SecurityBufferEnum::Missing), &SecBuffer::BufferType)
                     };
 
                     if (extraBuffer == secBuffers.end()) {
                         if (missingBuffer == secBuffers.end())
-                            return { 0, std::unexpected{ ConnectionErrorEnum::UNKNOWN } };
+                            return { 0, std::unexpected{ ConnectionErrorEnum::Unknown } };
 
                         extraSpan = dataSpan;
                     } else {
@@ -209,22 +208,22 @@ namespace Hermes {
                     extraSpan = decryptedData.first(extraSpan.size());
                     goto GT_TRY_AGAIN;
                 }
-                case EncryptStatusEnum::INFO_RENEGOTIATE:
+                case EncryptStatusEnum::InfoRenegotiate:
                     // TODO: Make a new Handshake
-                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
-                case EncryptStatusEnum::ERR_BUFFER_TOO_SMALL:
-                case EncryptStatusEnum::ERR_CRYPTO_SYSTEM_INVALID:
-                case EncryptStatusEnum::ERR_QOP_NOT_SUPPORTED:
-                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
-                case EncryptStatusEnum::INFO_CONTEXT_EXPIRED:
-                    return { 0, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED } };
-                case EncryptStatusEnum::ERR_INVALID_HANDLE:
-                case EncryptStatusEnum::ERR_INVALID_TOKEN:
-                case EncryptStatusEnum::ERR_MESSAGE_ALTERED:
-                case EncryptStatusEnum::ERR_OUT_OF_SEQUENCE:
-                case EncryptStatusEnum::ERR_DECRYPT_FAILURE:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DecryptionFailed } };
+                case EncryptStatusEnum::ErrBufferTooSmall:
+                case EncryptStatusEnum::ErrCryptoSystemInvalid:
+                case EncryptStatusEnum::ErrQopNotSupported:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DecryptionFailed } };
+                case EncryptStatusEnum::InfoContextExpired:
+                    return { 0, std::unexpected{ ConnectionErrorEnum::ConnectionClosed } };
+                case EncryptStatusEnum::ErrInvalidHandle:
+                case EncryptStatusEnum::ErrInvalidToken:
+                case EncryptStatusEnum::ErrMessageAltered:
+                case EncryptStatusEnum::ErrOutOfSequence:
+                case EncryptStatusEnum::ErrDecryptFailure:
                 default:
-                    return { 0, std::unexpected{ ConnectionErrorEnum::DECRYPTION_FAILED } };
+                    return { 0, std::unexpected{ ConnectionErrorEnum::DecryptionFailed } };
             }
         } while (!single);
 
@@ -242,16 +241,16 @@ namespace Hermes {
     template<ByteLike Byte>
     StreamByteOper TlsTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
         if (!data.isHandshakeComplete)
-            return { 0, std::unexpected{ ConnectionErrorEnum::HANDSHAKE_FAILED } };
+            return { 0, std::unexpected{ ConnectionErrorEnum::HandshakeFailed } };
 
-        const auto& sizes = data.contextStreamSizes;
-        size_t totalSent = 0;
+        const auto& sizes{ data.contextStreamSizes };
+        size_t totalSent{};
 
 
         while (totalSent < bufferSend.size()) {
             // Calculate chunk size (respecting TLS max message size)
-            const size_t remainingBytes = bufferSend.size() - totalSent;
-            const size_t chunkSize = min(remainingBytes, static_cast<size_t>(sizes.cbMaximumMessage));
+            const size_t remainingBytes{ bufferSend.size() - totalSent };
+            const size_t chunkSize{ min(remainingBytes, static_cast<size_t>(sizes.cbMaximumMessage)) };
 
             // Setup encryption buffers
             SecBuffer buffers[4];
@@ -292,27 +291,27 @@ namespace Hermes {
             };
 
             // Encrypt the message
-            SECURITY_STATUS status = EncryptMessage(&data.ctxtHandle, 0, &buffDesc, 0);
+            // ReSharper disable once CppTooWideScopeInitStatement
+            const SECURITY_STATUS status{ EncryptMessage(&data.ctxtHandle, 0, &buffDesc, 0) };
 
-            if (status != EncryptStatusEnum::ERR_OK) {
-                return { 0, std::unexpected{ ConnectionErrorEnum::SEND_FAILED } };
+            if (status != EncryptStatusEnum::ErrOk) {
+                return { 0, std::unexpected{ ConnectionErrorEnum::SendFailed } };
             }
 
             // Calculate total encrypted size
-            const size_t encryptedSize = buffers[0].cbBuffer +
+            const size_t encryptedSize{ buffers[0].cbBuffer +
                                         buffers[1].cbBuffer +
-                                        buffers[2].cbBuffer;
+                                        buffers[2].cbBuffer };
 
-            size_t sentBytes = 0;
+            size_t sentBytes{};
             while (sentBytes < encryptedSize) {
-                int sent = send(data.socket,
+                const int sent{ send(data.socket,
                               reinterpret_cast<const char*>(data.encryptedData.data() + sentBytes),
                               static_cast<int>(encryptedSize - sentBytes),
-                              0);
+                              0) };
 
-                if (sent <= 0) {
-                    return { totalSent, std::unexpected{ ConnectionErrorEnum::SEND_FAILED } };
-                }
+                if (sent <= 0)
+                    return { totalSent, std::unexpected{ ConnectionErrorEnum::SendFailed } };
 
                 sentBytes += sent;
             }

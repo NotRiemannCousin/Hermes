@@ -16,23 +16,24 @@ namespace Hermes {
         if (_initialized)
             return;
 
+        // ReSharper disable once CppTooWideScopeInitStatement
         const int result{ WSAStartup(macroWINSOCK_VERSION, &_wsaData) };
         if (result != 0)
             throw std::runtime_error{ "WSAStartup failed" };
 
-        _credData.dwVersion = static_cast<DWORD>(SChCredEnum::SCHANNEL);
-        _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsFlags::TLS1_2_CLIENT | SupportedProtocolsFlags::TLS1_3_CLIENT);
+        _credData.dwVersion = static_cast<DWORD>(SChCredEnum::SChannel);
+        _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsFlags::Tls12Client | SupportedProtocolsFlags::Tls13Client);
 
         // | Keep in mind to keep macroUNISP_NAME null-terminated.
-        const long status = AcquireCredentialsHandleA(
+        const long status{ AcquireCredentialsHandleA(
             nullptr,                                                   // Principal
             const_cast<LPSTR>(macroUNISP_NAME.data()),                 // Host
-            static_cast<unsigned long>(CredentialFlags::OUTBOUND),     // Client
+            static_cast<unsigned long>(CredentialFlags::Outbound),     // Client
             nullptr,
             &_credData,
             nullptr, nullptr,
             &_credHandle,
-            &_tsExpiry);
+            &_tsExpiry) };
 
 
         if (status != 0) {
@@ -73,4 +74,4 @@ namespace Hermes {
         Network::Initialize();
         return 0;
     }();
-} // namespace Hermes
+}

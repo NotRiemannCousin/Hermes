@@ -41,7 +41,7 @@ namespace Hermes {
     concept ConnectionPolicyConcept = SocketDataConcept<SocketData>
         && requires (Policy<SocketData> policy, SocketData data) {
             { policy.Connect(data) } -> std::same_as<ConnectionResultOper>;
-            { policy.Close(data)   } -> std::same_as<ConnectionResultOper>;
+            { policy.Close(data)   } -> std::same_as<void>;
         };
 
 

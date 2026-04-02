@@ -21,7 +21,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     DefaultTransferPolicy<Data>::template RecvRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvRange<Byte>::Iterator::operator++(int) {
-        return ++(*this);
+        return ++*this;
     }
 
     template<SocketDataConcept Data>
@@ -59,7 +59,7 @@ namespace Hermes {
     template<ByteLike Byte>
     ConnectionResultOper DefaultTransferPolicy<Data>::RecvRange<Byte>::Receive() {
         if (_data.socket == macroINVALID_SOCKET)
-            return _errorStatus = std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN };
+            return _errorStatus = std::unexpected{ ConnectionErrorEnum::SocketNotOpen };
 
         auto [newSize, err]{ DefaultTransferPolicy::RecvHelper<std::byte>(_data, _buffer, true) };
 
@@ -70,12 +70,12 @@ namespace Hermes {
 
         _errorStatus = std::unexpected{ err.error() };
 
-        if (err.error() == ConnectionErrorEnum::CONNECTION_CLOSED)
+        if (err.error() == ConnectionErrorEnum::ConnectionClosed)
             return {};
 
         // if (received != macroSOCKET_ERROR) return {};
 
-        return std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED };;
+        return std::unexpected{ ConnectionErrorEnum::ReceiveFailed };;
         // return _errorStatus = std::unexpected{
         //     WSAGetLastError() == WSAEWOULDBLOCK
         //     ? ConnectionErrorEnum::CONNECTION_TIMEOUT
@@ -91,9 +91,9 @@ namespace Hermes {
     }
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, bool single) {
+    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const bool single) {
         if (data.socket == macroINVALID_SOCKET)
-            return {0, std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN } };
+            return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
 
         size_t total{};
         do {
@@ -103,11 +103,11 @@ namespace Hermes {
 
             if (received == 0) {
                 closesocket(std::exchange(data.socket, macroINVALID_SOCKET));
-                return { total, std::unexpected{ ConnectionErrorEnum::CONNECTION_CLOSED } };
+                return { total, std::unexpected{ ConnectionErrorEnum::ConnectionClosed } };
             }
 
             if (received == macroSOCKET_ERROR)
-                return { total, std::unexpected{ ConnectionErrorEnum::RECEIVE_FAILED } };
+                return { total, std::unexpected{ ConnectionErrorEnum::ReceiveFailed } };
 
             total += received;
         } while (!single && total < bufferRecv.size());
@@ -118,7 +118,7 @@ namespace Hermes {
     template<ByteLike Byte>
     StreamByteOper DefaultTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
         if (data.socket == macroINVALID_SOCKET)
-            return { 0, std::unexpected{ ConnectionErrorEnum::SOCKET_NOT_OPEN } };
+            return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
 
         size_t total{};
         while (total < bufferSend.size()) {
@@ -127,7 +127,7 @@ namespace Hermes {
                 static_cast<int>(bufferSend.size() - total), 0) };
 
             if (sent == macroSOCKET_ERROR)
-                return { total, std::unexpected{ ConnectionErrorEnum::SEND_FAILED } };
+                return { total, std::unexpected{ ConnectionErrorEnum::SendFailed } };
 
             total += sent;
         }

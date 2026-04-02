@@ -8,12 +8,12 @@ namespace Hermes {
     template<SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultConnectPolicy {
         static ConnectionResultOper Connect(Data& data);
-        static ConnectionResultOper Close(Data& data);
+        static void                 Close(Data& data);
     };
 }
 
 #include <Hermes/Socket/_base/Connection/DefaultConnectPolicy.tpp>
 
 namespace Hermes {
-        static_assert(ConnectionPolicyConcept<DefaultConnectPolicy, DefaultSocketData<>>);
+    static_assert(ConnectionPolicyConcept<DefaultConnectPolicy, DefaultSocketData<>>);
 }

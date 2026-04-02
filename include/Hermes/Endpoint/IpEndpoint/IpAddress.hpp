@@ -1,79 +1,70 @@
 #pragma once
+#include <Hermes/Utils/Hash.hpp>
+
 #include <array>
-#include <string_view>
 #include <string>
 #include <variant>
 #include <optional>
-#include <expected>
 #include <vector>
 #include <format>
-#include <ranges>
-
-using std::array;
-using std::string_view;
-using std::to_string;
-using std::string;
-using std::expected;
-using std::optional;
-using std::vector;
-
 
 namespace Hermes {
     struct IpAddress {
-        using IntType = std::uint8_t;
-        using IPv4Type = array<IntType, 4>;
-        using IPv6Type = array<IntType, 16>;
-        using IpVariant = std::variant<IPv4Type, IPv6Type>;
-
-        IpVariant data;
+        using Ipv4Type = std::array<std::uint8_t, 4>;
+        using Ipv6Type = std::array<std::uint8_t, 16>;
+        using IpVariant = std::variant<Ipv4Type, Ipv6Type>;
 
         //----------------------------------------------------------------------------------------------------
         // Construct
         //----------------------------------------------------------------------------------------------------
 
+        IpAddress() noexcept = default;
 
         //!  Constructor initializing IpAddress with a variant type.
         //!  @param d Variant containing either IPv4 or IPv6 address data.
         explicit IpAddress(const IpVariant& d);
 
-        //! Create an empty IpAddress.
-        //! @return An empty IpAddress.
-        static IpAddress Empty();
+
+        IpAddress(const IpAddress&) noexcept = default;
+        IpAddress& operator=(const IpAddress&) noexcept = default;
 
 
-        //! Create an IpAddress from an IPv4Type array.
+        //! Create an IpAddress from an Ipv4Type array.
         //! @param data An array representing an IPv4 address.
         //! @return The corresponding IpAddress instance.
-        static IpAddress FromIPv4(const IPv4Type &data);
+        static IpAddress FromIpv4(const Ipv4Type &data);
 
-        //! Create an IpAddress from an IPv6Type array.
+        //! Create an IpAddress from an Ipv6Type array.
         //! @param data An array representing an IPv6 address.
         //! @return The corresponding IpAddress instance.
-        static IpAddress FromIPv6(const IPv6Type &data);
+        static IpAddress FromIpv6(const Ipv6Type &data);
 
 
 
         //! Try to parse an IpAddress from a string.
         //! @param str A string representing an IPv4 or IPv6 address.
         //! @return The corresponding IpAddress instance or an empty IpAddress if parsing fails.
-        static std::optional<IpAddress> TryParse(const string& str);
+        static std::optional<IpAddress> TryParse(const std::string& str);
+
+
+        //! Get the IpVariant value.
+        [[nodiscard]] IpVariant GetIp() const;
 
         //----------------------------------------------------------------------------------------------------
         // Info
         //----------------------------------------------------------------------------------------------------
 
 
-        //! Seams obvious.
-        bool operator==(const IpAddress &) const;
+        std::strong_ordering operator<=>(const IpAddress &) const = default;
 
 
         //! Check if the IpAddress is an IPv4 address.
         //! @return True if the IpAddress is IPv4.
-        [[nodiscard]] bool IsIPv4() const;
+        [[nodiscard]] bool IsIpv4() const;
 
         //!  Check if the IpAddress is an IPv6 address.
         //!  @return True if the IpAddress is IPv6.
-        [[nodiscard]] bool IsIPv6() const;
+        [[nodiscard]] bool IsIpv6() const;
 
 
 
@@ -120,113 +111,22 @@ namespace Hermes {
 
         //! Check if the IPv6 address is an IPv4-mapped address (::ffff:0:0/96).
         //! @return True if the IpAddress is IPv4-mapped.
-        [[nodiscard]] bool IsIPv4Mapped() const noexcept;
+        [[nodiscard]] bool IsIpv4Mapped() const noexcept;
 
         //! Check if the IPv6 address is a documentation address (2001:db8::/32).
         //! @return True if the IpAddress is documentation.
         [[nodiscard]] bool IsDocumentation() const noexcept;
 
         friend struct std::formatter<IpAddress>;
-    };
-
-} // namespace Hermes
-
-
-
-namespace std {
-    template<>
-    struct hash<Hermes::IpAddress> {
-        size_t operator()(Hermes::IpAddress const& ip) const noexcept {
-            return std::visit([]<class T>(T const& address) {
-                if constexpr (std::is_same_v<decay_t<T>, std::monostate>)
-                    return hash<std::monostate>{}(address);
-                else
-                    return std::apply([](auto const&... bytes) {
-                        size_t hash{};
-                        ((hash = (hash << 1) | std::hash<uint8_t>{}(bytes)), ...);
-                        return hash;
-                    }, address);
-            }, ip.data);
-        }
-    };
-
-    template<>
-    struct formatter<Hermes::IpAddress> {
-        using IpAddress = Hermes::IpAddress;
-
-        //! Parse function for IpAddress.
-        //! @param ctx The parse context.
-        //! @return Iterator pointing to the end of the parsed input.
-        //!
-        //! @note If 'f' is specified, it will format the IPv6 address in full format.
-        constexpr auto parse(auto &ctx) {
-            auto &&it = ctx.begin();
-            if(it != ctx.end() && *it == 'f') ipv6Reduced = true, ++it;
-            return it;
-        }
-
-        //! Format function for IpAddress.
-        //! @param ip The IpAddress object.
-        //! @param ctx The format context.
-        //! @return Iterator pointing to the end of the formatted output.
-        auto format(const IpAddress &ip, std::format_context &ctx) const {
-            if (ip.IsIPv4()) {
-                const auto &ipv4 = std::get<IpAddress::IPv4Type>(ip.data);
-                return std::format_to(ctx.out(), "{}.{}.{}.{}", ipv4[0], ipv4[1], ipv4[2], ipv4[3]);
-            }
-
-            auto &ipv6 = std::get<IpAddress::IPv6Type>(ip.data);
-
-            if (!ipv6Reduced)
-                return std::apply(
-                        [&]<class... T0>(T0 &&...args) {
-                            return std::format_to(ctx.out(), ipv6_fmt, std::forward<T0>(args)...);
-                        },
-                        ipv6);
-
-            auto segments = ipv6
-                    | views::chunk(2) | views::transform([](auto &&seg) {
-                        return std::format("{:x}", static_cast<int>(seg[0]) << 8 | seg[1]);
-                    }) | ranges::to<std::vector>();
-
-            auto longestRun = 0;
-            auto longestRunStart = 0;
-            auto currentRun = 0;
-            auto currentRunStart = 0;
-
-            for (auto &&seg : segments) {
-                if (seg == "0") {
-                    if (currentRun == 0)
-                        currentRunStart = longestRunStart = &seg - segments.data();
-                    currentRun++;
-                } else {
-                    if (currentRun > longestRun) {
-                        longestRun = currentRun;
-                        longestRunStart = currentRunStart;
-                    }
-                    currentRun = 0;
-                }
-            }
-
-            if (longestRun > 1) {
-                segments[longestRunStart] = (longestRunStart == 0 || longestRunStart + longestRun == segments.size()) ? ":" : "";
-                segments.erase(segments.begin() + longestRunStart + 1, segments.begin() + longestRunStart + longestRun);
-            }
-
-
-                return std::format_to(ctx.out(), "{}", views::join_with(segments, ':') | ranges::to<string>());
-        }
+        friend struct std::hash<IpAddress>;
 
     private:
-        bool ipv6Reduced{};
-
-        static constexpr auto ipv6_fmt_data = [] {
-            array<char, 256> buffer{};
-            string pattern = views::repeat("{:02x}{:02x}"sv, 8) | views::join_with(':') | ranges::to<string>();
-            ranges::copy(pattern, buffer.begin());
-            return buffer;
-        }();
-
-        static constexpr auto ipv6_fmt = string_view(ipv6_fmt_data.data());
+        IpVariant _data{};
     };
-} // namespace std
+
+}
+
+#include <Hermes/Endpoint/IpEndpoint/IpAddress.tpp>
+
+static_assert(std::formattable<Hermes::IpAddress, char>);
+static_assert(Hermes::Utils::Hashable<Hermes::IpAddress>);

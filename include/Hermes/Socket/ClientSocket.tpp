@@ -76,4 +76,4 @@ namespace Hermes {
         connectionPolicy.Close(const_cast<SocketData&>(socketData));
     }
 
-} // namespace Hermes
+}

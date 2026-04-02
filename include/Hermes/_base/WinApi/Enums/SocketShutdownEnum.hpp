@@ -1,8 +1,8 @@
 #pragma once
-#include <winerror.h>
+#include <WinSock2.h>
 
 enum class SocketShutdownEnum : int {
-    RECEIVE = SD_RECEIVE,
-    SEND = SD_SEND,
-    BOTH = SD_BOTH
+    Receive = SD_RECEIVE,
+    Send    = SD_SEND,
+    Both    = SD_BOTH
 };

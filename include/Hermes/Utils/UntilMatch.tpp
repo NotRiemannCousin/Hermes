@@ -8,7 +8,7 @@ namespace Hermes::Utils {
         : _view(parent) {
         if constexpr (!Inclusive)
             if (_view->_history.empty())
-                for (const char c : _view->_pattern)
+                for (const char _ : _view->_pattern)
                     _view->_history.push_back(*_view->_current), ++_view->_current;
     }
 
@@ -47,7 +47,7 @@ namespace Hermes::Utils {
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
-    void UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++(int) { ++(*this); }
+    void UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++(int) { ++*this; }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
@@ -60,7 +60,7 @@ namespace Hermes::Utils {
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     UntilMatchView<Range, Pattern, Inclusive>::UntilMatchView(Range&& base, Pattern pattern)
-        : _view(base), _pattern(pattern), _current{ rg::begin(base) } { }
+        : _current{ rg::begin(base) }, _view{ base }, _pattern{ pattern } { }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>

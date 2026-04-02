@@ -53,7 +53,6 @@
 #include <Hermes/_base/WinApi/Enums/ConditionFunctionEnum.hpp>
 #include <Hermes/_base/WinApi/Enums/EncryptStatusEnum.hpp>
 #include <Hermes/_base/WinApi/Enums/ProtocolBaseTypeEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/ProtocolTypeEnum.hpp>
 #include <Hermes/_base/WinApi/Enums/SChCredEnum.hpp>
 #include <Hermes/_base/WinApi/Enums/SecurityBufferEnum.hpp>
 #include <Hermes/_base/WinApi/Enums/SocketShutdownEnum.hpp>
@@ -63,7 +62,6 @@
 	ENUM_OPERATIONS(ConditionFunctionEnum)
 	ENUM_OPERATIONS(EncryptStatusEnum)
 	ENUM_OPERATIONS(ProtocolBaseTypeEnum)
-	ENUM_OPERATIONS(ProtocolTypeEnum)
 	ENUM_OPERATIONS(SChCredEnum)
 	ENUM_OPERATIONS(SecurityBufferEnum)
 	ENUM_OPERATIONS(SocketShutdownEnum)
@@ -80,7 +78,7 @@
     FLAGS_OPERATIONS(SupportedProtocolsFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextReturnFlags)
-    FLAGS_OPERATIONS(SchannelCredFlags)
+    FLAGS_OPERATIONS(SChannelCredFlags)
 
     using ::CredHandle;
     using ::CtxtHandle;

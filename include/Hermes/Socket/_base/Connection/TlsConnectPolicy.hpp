@@ -8,7 +8,7 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
         static ConnectionResultOper Connect(Data& data);
-        static ConnectionResultOper Close(Data& data);
+        static void                 Close(Data& data);
 
     private:
         static ConnectionResultOper ClientHandshake(Data& data);

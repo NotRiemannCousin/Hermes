@@ -2,15 +2,15 @@
 #include <ws2def.h>
 
 enum class AddressFamilyEnum {
-    UNSPEC    = AF_UNSPEC,
+    Unspec    = AF_UNSPEC,
 
-    IPX       = AF_IPX,
-    APPLETALK = AF_APPLETALK,
-    NETBIOS   = AF_NETBIOS,
+    Ipx       = AF_IPX,
+    Appletalk = AF_APPLETALK,
+    Netbios   = AF_NETBIOS,
 
     // Actual useful stuff
-    INET      = AF_INET,
-    INET6     = AF_INET6,
-    IRDA      = AF_IRDA,
-    BTH       = AF_BTH,
+    Inet      = AF_INET,
+    Inet6     = AF_INET6,
+    Irda      = AF_IRDA,
+    Bth       = AF_BTH,
 };

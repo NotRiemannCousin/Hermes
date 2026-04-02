@@ -2,9 +2,9 @@
 #include <WinSock2.h>
 
 enum class SocketTypeEnum : int {
-    STREAM    = SOCK_STREAM,        /* stream socket */
-    DGRAM     = SOCK_DGRAM,         /* datagram socket */
-    RAW       = SOCK_RAW,           /* raw-protocol interface */
-    RDM       = SOCK_RDM,           /* reliably-delivered message */
-    SEQPACKET = SOCK_SEQPACKET,     /* sequenced packet stream */
+    Stream    = SOCK_STREAM,        /* stream socket */
+    Dgram     = SOCK_DGRAM,         /* datagram socket */
+    Raw       = SOCK_RAW,           /* raw-protocol interface */
+    Rdm       = SOCK_RDM,           /* reliably-delivered message */
+    SeqPacket = SOCK_SEQPACKET,     /* sequenced packet stream */
 };

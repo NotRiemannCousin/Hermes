@@ -5,8 +5,7 @@
 namespace Hermes {
     //! Network is a static utility class used to initializing and access important things like WSA stuff and
     //! credentials.
-    class Network {
-    public:
+    struct Network {
         static void Initialize();
         static void Cleanup();
 
@@ -24,4 +23,4 @@ namespace Hermes {
         static SCHANNEL_CRED _credData;
         static TimeStamp _tsExpiry;
     };
-} // namespace Hermes
+}

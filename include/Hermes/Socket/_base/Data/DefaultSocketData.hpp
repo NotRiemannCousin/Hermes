@@ -6,8 +6,8 @@
 namespace Hermes {
     template<
             EndpointConcept Endpoint = IpEndpoint,
-            SocketTypeEnum SocketType = SocketTypeEnum::STREAM,
-            AddressFamilyEnum SocketFamily = AddressFamilyEnum::INET6>
+            SocketTypeEnum SocketType = SocketTypeEnum::Stream,
+            AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct DefaultSocketData {
         using EndpointType = Endpoint;
 
@@ -15,7 +15,7 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         DefaultSocketData() = default;
-        DefaultSocketData(Endpoint&& other);
+        explicit DefaultSocketData(Endpoint&& other);
         ~DefaultSocketData() = default;
 
         DefaultSocketData(DefaultSocketData&& other) noexcept;

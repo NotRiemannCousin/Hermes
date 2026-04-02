@@ -6,8 +6,8 @@
 namespace Hermes {
     template<
             EndpointConcept Endpoint       = IpEndpoint,
-            SocketTypeEnum SocketType      = SocketTypeEnum::STREAM,
-            AddressFamilyEnum SocketFamily = AddressFamilyEnum::INET6>
+            SocketTypeEnum SocketType      = SocketTypeEnum::Stream,
+            AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct TlsSocketData {
         using EndpointType = Endpoint;
 
@@ -48,7 +48,7 @@ namespace Hermes {
         SecPkgContext_StreamSizes contextStreamSizes{};
         size_t decryptedOffset{};
 
-        static_assert(SocketType == SocketTypeEnum::STREAM && "DTLS not implemented yet");
+        static_assert(SocketType == SocketTypeEnum::Stream && "DTLS not implemented yet");
     };
 
     static_assert(SocketDataConcept<TlsSocketData<>>);

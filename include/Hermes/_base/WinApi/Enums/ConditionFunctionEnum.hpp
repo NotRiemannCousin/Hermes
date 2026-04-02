@@ -1,8 +1,8 @@
 #pragma once
-#include <winerror.h>
+#include <WinSock2.h>
 
 enum class ConditionFunctionEnum : int {
-    ACCEPT = CF_ACCEPT,
-    REJECT = CF_REJECT,
-    DEFER  = CF_DEFER
+    Accept = CF_ACCEPT,
+    Reject = CF_REJECT,
+    Defer  = CF_DEFER
 };

@@ -10,43 +10,43 @@ namespace Hermes {
     using ByteDataSpan = std::span<std::byte>;
 
     enum class ConnectionErrorEnum {
-        UNKNOWN,
+        Unknown,
 
-        INVALID_ROLE,
+        InvalidRole,
 
-        INVALID_ENDPOINT,
-        ADDRESS_IN_USE,
+        InvalidEndpoint,
+        AddressInUse,
 
-        SOCKET_NOT_OPEN,
-        CONNECTION_FAILED,
-        CONNECTION_CLOSED,
-        INTERRUPTED,
+        SocketNotOpen,
+        ConnectionFailed,
+        ConnectionClosed,
+        Interrupted,
 
-        CONNECTION_TIMEOUT,
-        SEND_TIMEOUT,
-        RECEIVE_TIMEOUT,
+        ConnectionTimeout,
+        SendTimeout,
+        ReceiveTimeout,
 
-        LISTEN_FAILED,
+        ListenFailed,
 
-        SEND_FAILED,
+        SendFailed,
 
-        RECEIVE_FAILED,
+        ReceiveFailed,
 
-        HANDSHAKE_FAILED,
-        CERTIFICATE_ERROR,
-        ENCRYPTION_FAILED,
-        DECRYPTION_FAILED,
-        INVALID_SECURITY_CONTEXT,
+        HandshakeFailed,
+        CertificateError,
+        EncryptionFailed,
+        DecryptionFailed,
+        InvalidSecurityContext,
 
-        INCOMPLETE_MESSAGE,
+        IncompleteMessage,
 
 
-        RESOLVE_HOST_NOT_FOUND,
-        RESOLVE_SERVICE_NOT_FOUND,
-        RESOLVE_TEMPORARY_FAILURE,
-        RESOLVE_FAILED,
-        RESOLVE_NO_ADDRESS_FOUND,
-        UNSUPPORTED_ADDRESS_FAMILY
+        ResolveHostNotFound,
+        ResolveServiceNotFound,
+        ResolveTemporaryFailure,
+        ResolveFailed,
+        ResolveNoAddressFound,
+        UnsupportedAddressFamily
     };
 
     template<class T>

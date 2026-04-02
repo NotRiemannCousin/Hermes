@@ -8,16 +8,19 @@
 
 namespace rg = std::ranges;
 namespace vs = std::views;
-using namespace std::literals::string_view_literals;
 
 // fake method
-std::expected<std::monostate, string> HttpHeaders(auto sla) {
-    std::println("headers:\n\n{}", sla | rg::to<string>());
+std::expected<std::monostate, std::string> HttpHeaders(auto sla) {
+
+    std::println("headers:\n\n{}", sla | rg::to<std::string>());
 
     return {};
 };
 
-expected<std::monostate, string> MakeRequest() {
+std::expected<std::monostate, std::string> MakeRequest() {
+    using namespace std::literals::string_view_literals;
+
+
     struct {
         std::string scheme;
         std::string hostname;
@@ -72,7 +75,7 @@ expected<std::monostate, string> MakeRequest() {
         return std::unexpected{ std::format("error code: {}{}{}", statusCode[1], statusCode[2], statusCode[3]) };
 
 
-    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
+    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
     // This range must receive more bytes just when reading with the * operator. receiving when advancing isn't that
     // good because if your protocol uses a terminated sequence you will need more work to stop at the last byte
     // (think about this like vec.end() being outside of the boundaries of the vector itself).
@@ -86,10 +89,10 @@ expected<std::monostate, string> MakeRequest() {
     if (!headers.has_value())
         return std::unexpected{ headers.error() };
 
-    auto chunkLength{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
+    auto chunkLength{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
 
-    const auto body{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
-    // const auto body{ socketView | rg::to<string>() };
+    const auto body{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
+    // const auto body{ socketView | rg::to<std::string>() };
     // The range automatically stops when the connection ends, but be careful with this.
 
     std::println("body:\n\n{}", body);

@@ -5,7 +5,7 @@ namespace Hermes {
     ConnectionResultOper DefaultConnectPolicy<Data>::Connect(Data& data) {
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes.has_value())
-            return std::unexpected{ ConnectionErrorEnum::UNKNOWN };
+            return std::unexpected{ ConnectionErrorEnum::Unknown };
 
         auto [addr, addr_len, addrFamily] = *addrRes;
 
@@ -13,21 +13,19 @@ namespace Hermes {
         const int result{ connect(data.socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };
 
         if (result == macroSOCKET_ERROR)
-            return std::unexpected{ ConnectionErrorEnum::CONNECTION_FAILED };
+            return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
 
         return {};
     }
 
 
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultConnectPolicy<Data>::Close(Data& data) {
-        if (data.socket == macroINVALID_SOCKET) return {};
+    void DefaultConnectPolicy<Data>::Close(Data& data) {
+        if (data.socket == macroINVALID_SOCKET) return;
 
-        shutdown(data.socket, static_cast<int>(SocketShutdownEnum::BOTH));
+        shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Both));
         closesocket(data.socket);
 
         data.socket = macroINVALID_SOCKET;
-
-        return {};
     }
 }

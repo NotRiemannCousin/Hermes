@@ -15,4 +15,4 @@ namespace Hermes {
         { T::FromSockAddr(socketInfo) } ->std::same_as<ConnectionResult<T>>;
         { t.ToSockAddr() } ->std::same_as<ConnectionResult<SocketInfoAddr>>;
     };
-} // namespace Hermes
+}

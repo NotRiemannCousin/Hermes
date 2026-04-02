@@ -1,22 +1,22 @@
 #pragma once
+#include <Hermes/_base/WinApi/Macros.hpp>
 
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host) :
-        endpoint{endpoint}, host{ host } {
-    }
+        host{ std::move(host) }, endpoint{endpoint} { }
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(TlsSocketData &&other) noexcept :
-    socket{ std::exchange(other.socket, macroINVALID_SOCKET) },
         ctxtHandle{std::exchange(other.ctxtHandle, {}) },
         endpoint{ std::move(other.endpoint) },
+        socket{ std::exchange(other.socket, macroINVALID_SOCKET) },
         isHandshakeComplete{ other.isHandshakeComplete },
         isServer{ other.isServer },
         buffers{ std::move(other.buffers) },
         secBuffers{ std::move(other.secBuffers) },
         contextStreamSizes{ other.contextStreamSizes },
-        decryptedOffset{ other.decryptedOffset }, host{} {}
+        decryptedOffset{ other.decryptedOffset } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>& TlsSocketData<Endpoint, SocketType, SocketFamily>::operator=(TlsSocketData &&other) noexcept {
