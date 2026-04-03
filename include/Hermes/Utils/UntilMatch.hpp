@@ -35,23 +35,24 @@ namespace Hermes::Utils {
 
     private:
         rg::iterator_t<Range> _current{};
-        std::deque<Type> _history{};
+        std::vector<Type> _history{};
+        std::size_t _index{};
         bool _matchFound{};
 
         Range& _view;
         Pattern _pattern;
     };
 
-    template<rg::range Pattern, bool Inclusive>
+    template<rg::contiguous_range Pattern, bool Inclusive>
     struct UntilMatchAdaptor {
         Pattern pattern;
         explicit UntilMatchAdaptor(Pattern p);
     };
 
-    template<rg::range Pattern, bool Inclusive = false>
+    template<rg::contiguous_range Pattern, bool Inclusive = false>
     auto UntilMatch(Pattern&& pattern);
 
-    template<rg::viewable_range Range, rg::range Pattern, bool Inclusive>
+    template<rg::viewable_range Range, rg::contiguous_range Pattern, bool Inclusive>
     auto operator|(Range&& r, const UntilMatchAdaptor<Pattern, Inclusive>& adaptor);
 
 

@@ -5,11 +5,11 @@
 #include <ranges>
 
 #include <Hermes/Utils/Overloads.hpp>
-#include <Hermes/Utils/Hash.hpp>
 
 namespace std {
     template<>
     struct hash<Hermes::IpAddress> {
+        // ReSharper disable once CppPassValueParameterByConstReference
         size_t operator()(const Hermes::IpAddress ip) const noexcept {
             return std::visit([](const auto data) {
                 size_t result{};
@@ -46,25 +46,26 @@ namespace std {
         //! @return Iterator pointing to the end of the formatted output.
         template<class FormatContext>
         auto format(const IpAddress &ip, FormatContext &ctx) const {
-            const auto s_formatIpv6 = [&]<auto Fmt>() {
-                return [&](auto... args) {
-                    auto out{ ctx.out() };
 
-                    if (_ipv6Brackets) *out++ = '[';
-                    out = std::format_to(out, Fmt, args...);
-                    if (_ipv6Brackets) *out++ = ']';
+#pragma push_macro("FORMAT_IPV6")
+#define FORMAT_IPV6(fmt) \
+            [&](auto ...args) {                          \
+                auto out{ ctx.out() };                   \
+                                                         \
+                if (_ipv6Brackets) *out++ = '[';         \
+                out = std::format_to(out, fmt, args...); \
+                if (_ipv6Brackets) *out++ = ']';         \
+                                                         \
+                return out;                              \
+            }
 
-                    return out;
-                };
-            };
-
-            std::visit(Hermes::Utils::Overloaded{
+            return std::visit(Hermes::Utils::Overloaded{
                 [&](IpAddress::Ipv4Type ipv4) {
                     return std::format_to(ctx.out(), "{}.{}.{}.{}", ipv4[0], ipv4[1], ipv4[2], ipv4[3]);
                 },
                 [&](IpAddress::Ipv6Type ipv6) {
                     if (!_ipv6Reduced)
-                        return std::apply(s_formatIpv6.template operator()<ipv6Fmt.data()>(), ipv6);
+                        return std::apply(FORMAT_IPV6(ipv6Fmt), ipv6);
 
                     auto segments{ ipv6
                             | views::chunk(2) | views::transform([](auto &&seg) {
@@ -100,10 +101,10 @@ namespace std {
                         segments.erase(segments.begin() + longestRunStart + 1, segments.begin() + longestRunStart + longestRun);
                     }
 
-                    constexpr auto fmt{ "{:s}" };
-                    return s_formatIpv6.template operator()<fmt>()(views::join_with(segments, ':'));
+                    return FORMAT_IPV6("{:s}")(views::join_with(segments, ':'));
                 }
             }, ip._data);
+#undef FORMAT_IPV6
         }
 
     private:

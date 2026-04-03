@@ -9,23 +9,23 @@ inline uint8_t operator""_uc(unsigned long long int n) {
 }
 
 
-long long _tll(auto t) {
+inline long long _tll(auto t) {
     return static_cast<long long>(t);
 }
 
-unsigned long long _tull(auto t) {
+inline unsigned long long _tull(auto t) {
     return static_cast<unsigned long long>(t);
 }
 
-long _tl(auto t) {
+inline long _tl(auto t) {
     return static_cast<long>(t);
 }
 
-unsigned long _tul(auto t) {
+inline unsigned long _tul(auto t) {
     return static_cast<unsigned long>(t);
 }
 
 
-unsigned long _tus(auto t) {
+inline unsigned long _tus(auto t) {
     return static_cast<unsigned short>(t);
 }
