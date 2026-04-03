@@ -71,7 +71,7 @@ namespace Hermes {
 
         //! Check if the IpAddress is valid (not empty, unspecified and in a valid range).
         //! @return True if the IpAddress is valid.
-        [[nodiscard]] bool IsValid() const;
+        [[nodiscard]] bool IsRoutable() const;
 
         //! Check if the IpAddress is a public address.
         //! @return True if the IpAddress is public.

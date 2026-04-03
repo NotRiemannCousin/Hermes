@@ -99,8 +99,8 @@ bool TestFromSockAddr() {
     sockaddr_in sa4{
         .sin_family = AF_INET,
         .sin_port = htons(port),
-        .sin_addr.s_addr = htonl(0x7F000001) // 127.0.0.1
     };
+    sa4.sin_addr.s_addr = htonl(0x7F000001); // 127.0.0.1
 
     using SocketInfoAddr = std::tuple<sockaddr_storage, size_t, AddressFamilyEnum>;
     const SocketInfoAddr infoAddr4{*reinterpret_cast<sockaddr_storage*>(&sa4), sizeof(sa4), AddressFamilyEnum::Inet};

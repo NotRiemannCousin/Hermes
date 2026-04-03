@@ -7,194 +7,204 @@ using std::string;
 using std::string_view;
 using std::optional;
 
-// Most of these things weren't useful to me lol
 
-namespace Hermes {
+using Hermes::IpAddress;
 
-    //----------------------------------------------------------------------------------------------------
-    // Construct
-    //----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+// Construct
+//----------------------------------------------------------------------------------------------------
 
-    IpAddress::IpAddress(const IpVariant& d) : _data(d) {}
+IpAddress::IpAddress(const IpVariant& d) : _data(d) {}
 
-    IpAddress IpAddress::FromIpv4(const Ipv4Type &data) { return IpAddress{ data }; }
+IpAddress IpAddress::FromIpv4(const Ipv4Type &data) { return IpAddress{ data }; }
 
-    //----------------------------------------------------------------------------------------------------
-    // Construct
-    //----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+// Construct
+//----------------------------------------------------------------------------------------------------
 
-    IpAddress IpAddress::FromIpv6(const Ipv6Type &data) { return IpAddress{ data }; }
+IpAddress IpAddress::FromIpv6(const Ipv6Type &data) { return IpAddress{ data }; }
 
-    std::optional<IpAddress> IpAddress::TryParse(const string& str) {
-        Network::Initialize();
+std::optional<IpAddress> IpAddress::TryParse(const string& str) {
+    Network::Initialize();
 
-        // ReSharper disable once CppTooWideScopeInitStatement
-        sockaddr_in6 sa6{};
-        if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet6), str.c_str(), &sa6.sin6_addr) != 0)
-            return FromIpv6(std::bit_cast<Ipv6Type>(sa6.sin6_addr));
+    // ReSharper disable once CppTooWideScopeInitStatement
+    sockaddr_in6 sa6{};
+    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet6), str.c_str(), &sa6.sin6_addr) != 0)
+        return FromIpv6(std::bit_cast<Ipv6Type>(sa6.sin6_addr));
 
-        // ReSharper disable once CppTooWideScopeInitStatement
-        sockaddr_in sa{};
-        if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet), str.c_str(), &sa.sin_addr) != 0)
-            return FromIpv4(std::bit_cast<Ipv4Type>(sa.sin_addr.S_un.S_addr));
+    // ReSharper disable once CppTooWideScopeInitStatement
+    sockaddr_in sa{};
+    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet), str.c_str(), &sa.sin_addr) != 0)
+        return FromIpv4(std::bit_cast<Ipv4Type>(sa.sin_addr));
 
-        return std::nullopt;
-    }
+    return std::nullopt;
+}
 
-    IpAddress::IpVariant IpAddress::GetIp() const {
-        return _data;
-    }
+IpAddress::IpVariant IpAddress::GetIp() const {
+    return _data;
+}
 
-    //----------------------------------------------------------------------------------------------------
-    // Getters
-    //----------------------------------------------------------------------------------------------------
-
-
-    //----------------------------------------------------------------------------------------------------
-    // Checks
-    //----------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------
+// Getters
+//----------------------------------------------------------------------------------------------------
 
 
-    bool IpAddress::IsIpv4()  const { return std::holds_alternative<Ipv4Type>(_data); }
-
-    bool IpAddress::IsIpv6()  const { return std::holds_alternative<Ipv6Type>(_data); }
-
-
-    bool IpAddress::IsValid() const {
-        if (IsIpv4()) {
-            const auto ipv4{ get<Ipv4Type>(_data) };
-
-            if (ipv4 == Ipv4Type{})
-                return false;
-            if (ipv4[0] == 0)
-                return false;
-            if (ipv4[0] == 127)
-                return false;
-            if (ipv4[0] == 169 && ipv4[1] == 254)
-                return false;
-            if (ipv4[0] >= 224)
-                return false;
-        } else {
-            const auto ipv6{ get<Ipv6Type>(_data) };
-
-            if (ipv6 == Ipv6Type{})
-                return false;
-            if ((ipv6[0] & 0xfe) == 0xfc)
-                return false;
-            if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
-                return false;
-            if (ipv6[0] == 0xff)
-                return false;
-        }
-
-        return true;
-    }
+//----------------------------------------------------------------------------------------------------
+// Checks
+//----------------------------------------------------------------------------------------------------
 
 
-    bool IpAddress::IsPublic() const {
-        if (!IsValid())
-            return false;
+bool IpAddress::IsIpv4()  const { return std::holds_alternative<Ipv4Type>(_data); }
 
-        if (IsIpv4()) {
-            const auto ipv4{ get<Ipv4Type>(_data) };
-
-            if (ipv4[0] == 10)
-                return false;
-            if (ipv4[0] == 172 && ipv4[1] == std::clamp(ipv4[1], 16_uc, 31_uc))
-                return false;
-            if (ipv4[0] == 192 && ipv4[1] == 168)
-                return false;
-            if (ipv4[0] == 100 && ipv4[1] >= 64 && ipv4[1] <= 127) // CGNAT 100.64.0.0/10
-                return false;
-            return true;
-        }
-        const auto ipv6{ get<Ipv6Type>(_data) };
-
-        if ((ipv6[0] & 0xfe) == 0xfc)
-            return false;
-        if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
-            return false;
-        return true;
-    }
-
-    bool IpAddress::IsPrivate() const {
-        return !IsPublic();
-    }
-
-    bool IpAddress::IsLoopback() const {
-        if (IsIpv4()) {
-            const auto& ipv4{ get<Ipv4Type>(_data) };
-            return ipv4[0] == 127;
-        }
-        static constexpr Ipv6Type _ipv6Loopback{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1};
-        return _ipv6Loopback == get<Ipv6Type>(_data);
-    }
+bool IpAddress::IsIpv6()  const { return std::holds_alternative<Ipv6Type>(_data); }
 
 
-    bool IpAddress::IsMulticast() const {
-        if (IsIpv4()) {
-            const auto ipv4{ get<Ipv4Type>(_data) };
+bool IpAddress::IsRoutable() const {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                if (ipv4 == Ipv4Type{})
+                    return false;
+                if (ipv4[0] == 0)
+                    return false;
+                if (ipv4[0] == 127)
+                    return false;
+                if (ipv4[0] == 169 && ipv4[1] == 254)
+                    return false;
+                if (ipv4[0] >= 224)
+                    return false;
 
-            if (ipv4[0] >= 224 && ipv4[0] <= 239)
                 return true;
-            if (ipv4 == Ipv4Type{255, 255, 255, 255})
+            },
+            [](const Ipv6Type ipv6) {
+                if (ipv6 == Ipv6Type{})
+                    return false;
+                if ((ipv6[0] & 0xfe) == 0xfc)
+                    return false;
+                if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
+                    return false;
+                if (ipv6[0] == 0xff)
+                    return false;
+
                 return true;
-        } else {
-            // ReSharper disable once CppTooWideScopeInitStatement
-            if (get<Ipv6Type>(_data)[0] == 0xff)
+            }
+        } , _data);
+}
+
+
+bool IpAddress::IsPublic() const {
+    return IsRoutable() && std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                if (ipv4[0] == 10)
+                    return false;
+                if (ipv4[0] == 172 && ipv4[1] >= 16 && ipv4[1] <= 31)
+                    return false;
+                if (ipv4[0] == 192 && ipv4[1] == 168)
+                    return false;
+                if (ipv4[0] == 100 && ipv4[1] >= 64 && ipv4[1] <= 127) // CGNAT 100.64.0.0/10
+                    return false;
                 return true;
-        }
-
-        return false;
+            },
+            [](const Ipv6Type ipv6) {
+                if ((ipv6[0] & 0xfe) == 0xfc)
+                    return false;
+                if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
+                    return false;
+                return true;
+            },
+        }, _data);
     }
 
-    bool IpAddress::IsUnspecified() const {
-        if (IsIpv6())
-            return get<Ipv4Type>(_data) == Ipv4Type{};
+bool IpAddress::IsPrivate() const {
+    return std::visit(Utils::Overloaded{
+        [](const Ipv4Type ipv4) {
+            return ipv4[0] == 10 ||
+                  (ipv4[0] == 172 && ipv4[1] >= 16 && ipv4[1] <= 31) ||
+                  (ipv4[0] == 192 && ipv4[1] == 168);
+        },
+        [](const Ipv6Type ipv6) { return (ipv6[0] & 0xfe) == 0xfc; }
+    }, _data);
+}
 
-        return get<Ipv6Type>(_data) == Ipv6Type{};
-    }
+bool IpAddress::IsLoopback() const {
+    static constexpr Ipv6Type _ipv6Loopback{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
-    bool IpAddress::IsLinkLocal() const noexcept {
-        if (IsIpv4()) {
-            const auto ipv4{ get<Ipv4Type>(_data) };
-            return ipv4[0] == 169 && ipv4[1] == 254;
-        }
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) { return ipv4[0] == 127;        },
+            [](const Ipv6Type ipv6) { return ipv6 == _ipv6Loopback; },
+        }, _data);
+}
 
-        const auto ipv6{ get<Ipv6Type>(_data) };
-        return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80;
-    }
 
-    bool IpAddress::IsSiteLocal() const noexcept {
-        if (IsIpv4()) {
-            const auto ipv4{ std::get<Ipv4Type>(_data) };
-            return ipv4[0] == 172 && ipv4[1] >= 16 && ipv4[1] <= 31;
-        }
+bool IpAddress::IsMulticast() const {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                if (ipv4[0] >= 224 && ipv4[0] <= 239)
+                    return true;
+                if (ipv4 == Ipv4Type{255, 255, 255, 255})
+                    return true;
+                return false;
+            },
+            [](const Ipv6Type ipv6) { return ipv6[0] == 0xff; },
+        }, _data);
+}
 
-        const auto ipv6{ std::get<Ipv6Type>(_data) };
-        return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0;
-    }
+bool IpAddress::IsUnspecified() const {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) { return ipv4 == Ipv4Type{}; },
+            [](const Ipv6Type ipv6) { return ipv6 == Ipv6Type{}; },
+        }, _data);
+}
 
-    bool IpAddress::IsIpv4Mapped() const noexcept {
-        if (!std::holds_alternative<Ipv6Type>(_data))
-            return false;
+bool IpAddress::IsLinkLocal() const noexcept {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) { return ipv4[0] == 169 && ipv4[1] == 254;            },
+            [](const Ipv6Type ipv6) { return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80; }
+        }, _data);
+}
 
-        const auto& v6{ std::get<Ipv6Type>(_data) };
+bool IpAddress::IsSiteLocal() const noexcept {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                if (ipv4[0] == 10) return true;
+                if (ipv4[0] == 172 && ipv4[1] >= 16 && ipv4[1] <= 31) return true;
+                if (ipv4[0] == 192 && ipv4[1] == 168) return true;
+                return false;
+            },
+            [](const Ipv6Type ipv6) { return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0; },
+        }, _data);
+}
 
-        for (int i{}; i < 10; ++i)
-            if (v6[i] != 0) return false;
+bool IpAddress::IsIpv4Mapped() const noexcept {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type _   ) { return false; },
+            [](const Ipv6Type ipv6) {
+                for (int i{}; i < 10; ++i)
+                    if (ipv6[i] != 0) return false;
 
-        return v6[10] == 0xff && v6[11] == 0xff;
-    }
+                return ipv6[10] == 0xff && ipv6[11] == 0xff;
+            },
+        }, _data);
+}
 
-    bool IpAddress::IsDocumentation() const noexcept {
-        if (!std::holds_alternative<Ipv6Type>(_data))
-            return false;
-
-        const auto& v6{ std::get<Ipv6Type>(_data) };
-        return v6[0] == 0x20
-            && v6[1] == 0x01
-            && v6[2] == 0x0d
-            && v6[3] == 0xb8;
-    }
+bool IpAddress::IsDocumentation() const noexcept {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                if (ipv4[0] == 192 && ipv4[1] == 0  && ipv4[2] == 2  ) return true;
+                if (ipv4[0] == 198 && ipv4[1] == 51 && ipv4[2] == 100) return true;
+                if (ipv4[0] == 203 && ipv4[1] == 0  && ipv4[2] == 113) return true;
+                return false;
+            },
+            [](const Ipv6Type ipv6) {
+                return ipv6[0] == 0x20 && ipv6[1] == 0x01 && ipv6[2] == 0x0d && ipv6[3] == 0xb8;
+            },
+        }, _data);
 }
