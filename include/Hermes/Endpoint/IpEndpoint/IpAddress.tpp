@@ -15,7 +15,7 @@ namespace std {
                 size_t result{};
 
                 for (const auto seg : data)
-                    Hermes::Utils::HashCombine(result, seg);
+                    Hermes::Utils::HashCombine(result, std::hash<uint8_t>{}(seg));
 
                 return result;
             }, ip._data);

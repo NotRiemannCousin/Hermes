@@ -6,7 +6,11 @@ namespace std {
     template<>
     struct hash<Hermes::IpEndpoint> {
         size_t operator()(const Hermes::IpEndpoint &endpoint) const noexcept {
-            return std::hash<Hermes::IpAddress>{}(endpoint._ip) ^ (std::hash<int>{}(endpoint._port) << 1);
+            size_t result{ std::hash<Hermes::IpAddress>{}(endpoint._ip) };
+
+            Hermes::Utils::HashCombine(result, std::hash<uint16_t>{}(endpoint._port));;
+
+            return result;
         }
     };
 
