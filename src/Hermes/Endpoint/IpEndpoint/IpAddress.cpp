@@ -63,8 +63,6 @@ bool IpAddress::IsRoutable() const {
     return std::visit(
         Utils::Overloaded{
             [](const Ipv4Type ipv4) {
-                if (ipv4 == Ipv4Type{})
-                    return false;
                 if (ipv4[0] == 0)
                     return false;
                 if (ipv4[0] == 127)
@@ -72,6 +70,10 @@ bool IpAddress::IsRoutable() const {
                 if (ipv4[0] == 169 && ipv4[1] == 254)
                     return false;
                 if (ipv4[0] >= 224)
+                    return false;
+                if (ipv4[0] == 100 && (ipv4[1] & 0xc0) == 64)
+                    return false;
+                if (ipv4[0] == 10)
                     return false;
 
                 return true;
@@ -121,11 +123,15 @@ bool IpAddress::IsPrivate() const {
         [](const Ipv4Type ipv4) {
             return ipv4[0] == 10 ||
                   (ipv4[0] == 172 && ipv4[1] >= 16 && ipv4[1] <= 31) ||
-                  (ipv4[0] == 192 && ipv4[1] == 168);
+                  (ipv4[0] == 192 && ipv4[1] == 168) ||
+                  (ipv4[0] == 100 && (ipv4[1] & 0xc0) == 64);
         },
-        [](const Ipv6Type ipv6) { return (ipv6[0] & 0xfe) == 0xfc; }
+        [](const Ipv6Type ipv6) {
+            return (ipv6[0] & 0xfe) == 0xfc;
+        }
     }, _data);
 }
+
 
 bool IpAddress::IsLoopback() const {
     static constexpr Ipv6Type _ipv6Loopback{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
