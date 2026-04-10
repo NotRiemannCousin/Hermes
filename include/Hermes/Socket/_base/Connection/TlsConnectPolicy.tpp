@@ -6,8 +6,6 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data) {
-        Network::Initialize();
-
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes.has_value())
             return std::unexpected{ ConnectionErrorEnum::Unknown };
@@ -17,6 +15,11 @@ namespace Hermes {
         data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
         if (data.socket == macroINVALID_SOCKET)
             return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
+
+        if constexpr (Data::Family == AddressFamilyEnum::Inet6) {
+            int opt{}; // TODO: FUTURE: Implement a proper way to set options inside of data
+            setsockopt(data.socket, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<char*>(&opt), sizeof(opt));
+        }
 
         // ReSharper disable once CppTooWideScopeInitStatement
         const int result{ connect(data.socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };

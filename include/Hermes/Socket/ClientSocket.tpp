@@ -37,6 +37,8 @@ namespace Hermes {
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data) noexcept {
+        Network::Initialize();
+
         ClientSocket socket;
         socket.socketData = std::move(data);
 

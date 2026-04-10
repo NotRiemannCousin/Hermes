@@ -5,8 +5,6 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultAcceptPolicy<Data>::Listen(Data& data, int backlog) noexcept {
-        Network::Initialize();
-
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes)
             return std::unexpected{ ConnectionErrorEnum::InvalidEndpoint };

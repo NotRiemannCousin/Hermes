@@ -4,8 +4,6 @@
 namespace Hermes {
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultConnectPolicy<Data>::Connect(Data& data) {
-        Network::Initialize();
-
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes.has_value())
             return std::unexpected{ ConnectionErrorEnum::Unknown };

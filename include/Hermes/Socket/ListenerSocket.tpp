@@ -38,6 +38,8 @@ namespace Hermes {
     requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ConnectionResult<ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Listen(SocketData&& data, int backlog) noexcept {
+        Network::Initialize();
+
         ListenerSocket listener;
         listener.socketData = std::move(data);
 
