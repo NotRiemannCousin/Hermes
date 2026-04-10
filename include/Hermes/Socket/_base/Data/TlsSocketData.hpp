@@ -2,6 +2,7 @@
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/Socket/_base/_base.hpp>
 #include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/Credentials.hpp>
 
 namespace Hermes {
     template<
@@ -15,13 +16,20 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         TlsSocketData() = default;
-        TlsSocketData(Endpoint endpoint, std::string host);
+        TlsSocketData(Endpoint endpoint, std::string host, const Credentials* credentials = nullptr);
         ~TlsSocketData() = default;
 
         TlsSocketData(TlsSocketData&& other) noexcept;
         TlsSocketData& operator=(TlsSocketData&& other) noexcept;
 
+        TlsSocketData MakeChild() const;
+
         std::string host{};
+
+        const Credentials* credentials{};
+
+        std::function<ConnectionResultOper(TlsSocketData&)> handshakeCallback{};
+        uint32_t pendingData{};
 
         // private:
         CtxtHandle ctxtHandle{};
@@ -33,17 +41,15 @@ namespace Hermes {
         bool isHandshakeComplete{};
         bool isServer{};
 
-        std::array<std::array<std::byte, 0x4000>, 4> buffers{};
-        std::array<SecBuffer, 4> secBuffers{};
+        struct State {
+            std::array<std::byte, 0x4800>  encryptedData{};
+            std::array<std::byte, 0x10000> decryptedData{};
 
-        std::array<std::byte, 0x1000> encryptedData{};
-        std::span<std::byte> encryptedDataSpan{};
-        std::span<std::byte> encryptedExtraSpan{};
+            std::span<std::byte> decryptedDataSpan{};
+            std::span<std::byte> decryptedExtraSpan{};
+        };
 
-
-        std::array<std::byte, 0x10000> decryptedData{};
-        std::span<std::byte> decryptedDataSpan{};
-        std::span<std::byte> decryptedExtraSpan{};
+        std::unique_ptr<State> state{};
 
         SecPkgContext_StreamSizes contextStreamSizes{};
         size_t decryptedOffset{};

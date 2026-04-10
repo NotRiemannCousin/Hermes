@@ -1,9 +1,9 @@
 #pragma once
-#include <experimental/generator>
 #include <expected>
 #include <vector>
 #include <string>
 #include <span>
+#include <__msvc_ranges_tuple_formatter.hpp>
 
 namespace Hermes {
     using ByteData     = std::vector<std::byte>;
@@ -55,4 +55,10 @@ namespace Hermes {
 
 
     using StreamByteOper = std::pair<size_t, ConnectionResultOper>;
+}
+
+#include <Hermes\_base\ConnectionErrorEnum.tpp>
+
+namespace Hermes {
+    static_assert(std::formattable<ConnectionErrorEnum, char>);
 }

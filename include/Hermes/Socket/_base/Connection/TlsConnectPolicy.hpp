@@ -9,6 +9,7 @@ namespace Hermes {
     struct TlsConnectPolicy {
         static ConnectionResultOper Connect(Data& data);
         static void                 Close(Data& data);
+        static void                 Abort(Data& data);
 
     private:
         static ConnectionResultOper ClientHandshake(Data& data);

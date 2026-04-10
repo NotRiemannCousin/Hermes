@@ -14,9 +14,6 @@ namespace Hermes {
         using Ipv6Type = std::array<std::uint8_t, 16>;
         using IpVariant = std::variant<Ipv4Type, Ipv6Type>;
 
-        //----------------------------------------------------------------------------------------------------
-        // Construct
-        //----------------------------------------------------------------------------------------------------
 
         IpAddress() noexcept = default;
 
@@ -39,7 +36,8 @@ namespace Hermes {
         //! @return The corresponding IpAddress instance.
         static IpAddress FromIpv6(const Ipv6Type &data);
 
-
+        //! @return The ip if it's IPv6 or an IPv4 mapped as IPv6.
+        [[nodiscard]] Ipv6Type AsIpv6() const;
 
         //! Try to parse an IpAddress from a string.
         //! @param str A string representing an IPv4 or IPv6 address.
@@ -49,10 +47,6 @@ namespace Hermes {
 
         //! Get the IpVariant value.
         [[nodiscard]] IpVariant GetIp() const;
-
-        //----------------------------------------------------------------------------------------------------
-        // Info
-        //----------------------------------------------------------------------------------------------------
 
 
         std::strong_ordering operator<=>(const IpAddress &) const = default;

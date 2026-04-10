@@ -2,76 +2,35 @@
 #include <Hermes/_base/WinApi/WinApi.hpp>
 #include <stdexcept>
 
+// TODO: FUTURE: Remove and link
+#pragma comment(lib, "Ws2_32.lib")
+#pragma comment(lib, "secur32.lib")
+#pragma comment(lib, "crypt32.lib")
 
 namespace Hermes {
-    WSADATA Network::_wsaData{};
-    bool Network::_initialized{};
+    namespace Detail {
+        struct WsaLifecycle {
+            WsaLifecycle() {
+                WSADATA wsaData;
+                if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+                    throw std::runtime_error("WSAStartup failed");
+            }
 
-    CredHandle Network::_credHandle{};
-    SCHANNEL_CRED Network::_credData{};
-    TimeStamp Network::_tsExpiry{};
-
+            ~WsaLifecycle() {
+                WSACleanup();
+            }
+        };
+    }
 
     void Network::Initialize() {
-        if (_initialized)
-            return;
-
-        // ReSharper disable once CppTooWideScopeInitStatement
-        const int result{ WSAStartup(macroWINSOCK_VERSION, &_wsaData) };
-        if (result != 0)
-            throw std::runtime_error{ "WSAStartup failed" };
-
-        _credData.dwVersion = static_cast<DWORD>(SChCredEnum::SChannel);
-        _credData.grbitEnabledProtocols = static_cast<DWORD>(SupportedProtocolsFlags::Tls12Client | SupportedProtocolsFlags::Tls13Client);
-
-        // | Keep in mind to keep macroUNISP_NAME null-terminated.
-        const long status{ AcquireCredentialsHandleA(
-            nullptr,                                                   // Principal
-            const_cast<LPSTR>(macroUNISP_NAME.data()),                 // Host
-            static_cast<unsigned long>(CredentialFlags::Outbound),     // Client
-            nullptr,
-            &_credData,
-            nullptr, nullptr,
-            &_credHandle,
-            &_tsExpiry) };
-
-
-        if (status != 0) {
-            Cleanup();
-            throw std::runtime_error("AcquireCredentialsHandle failed");
-        }
-
-        _initialized = true;
+        static Detail::WsaLifecycle globalWsa;
     }
 
-    void Network::Cleanup() {
-        if (!_initialized)
-            return;
+    const Credentials& Network::GetClientCredentials() {
+        Initialize();
+        thread_local Credentials credentials{ Credentials::Client().value() };
 
-        WSACleanup();
-        FreeCredentialsHandle(&_credHandle);
-
-        _initialized = false;
+        return credentials;
     }
 
-    const CredHandle &Network::GetCredHandle() {
-        return _credHandle;
-    }
-
-    const SCHANNEL_CRED & Network::GetSChannelCredData() {
-        return _credData;
-    }
-
-    bool Network::IsInitialized() {
-        return _initialized;
-    }
-
-    TimeStamp Network::GetExpiry() {
-        return _tsExpiry;
-    }
-
-    inline auto ____init____ = [] {
-        Network::Initialize();
-        return 0;
-    }();
 }

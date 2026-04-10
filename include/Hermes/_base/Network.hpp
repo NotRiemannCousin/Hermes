@@ -1,26 +1,14 @@
 #pragma once
-#include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/Credentials.hpp>
 
 
 namespace Hermes {
     //! Network is a static utility class used to initializing and access important things like WSA stuff and
     //! credentials.
     struct Network {
-        static void Initialize();
-        static void Cleanup();
-
         Network() = delete;
 
-        static const CredHandle& GetCredHandle();
-        static const SCHANNEL_CRED& GetSChannelCredData();
-        static bool IsInitialized();
-        static TimeStamp GetExpiry();
-    private:
-        static WSADATA _wsaData;
-        static bool _initialized;
-
-        static CredHandle _credHandle;
-        static SCHANNEL_CRED _credData;
-        static TimeStamp _tsExpiry;
+        static void Initialize();
+        static const Credentials& GetClientCredentials();
     };
 }

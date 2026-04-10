@@ -3,8 +3,8 @@
 
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
-    TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host) :
-        host{ std::move(host) }, endpoint{endpoint} { }
+    TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host,
+        const Credentials* credentials) : host{ std::move(host) }, endpoint{endpoint}, credentials { credentials } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(TlsSocketData &&other) noexcept :
@@ -13,10 +13,12 @@ namespace Hermes {
         socket{ std::exchange(other.socket, macroINVALID_SOCKET) },
         isHandshakeComplete{ other.isHandshakeComplete },
         isServer{ other.isServer },
-        buffers{ std::move(other.buffers) },
-        secBuffers{ std::move(other.secBuffers) },
+        state{ std::move(other.state) },
         contextStreamSizes{ other.contextStreamSizes },
-        decryptedOffset{ other.decryptedOffset } {}
+        decryptedOffset{ other.decryptedOffset },
+        handshakeCallback{ other.handshakeCallback },
+        pendingData{ other.pendingData },
+        credentials{ other.credentials } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>& TlsSocketData<Endpoint, SocketType, SocketFamily>::operator=(TlsSocketData &&other) noexcept {
@@ -27,18 +29,33 @@ namespace Hermes {
             endpoint            = std::move(other.endpoint);
             host                = std::move(other.host);
 
-            buffers             = std::move(other.buffers);
-            secBuffers          = std::move(other.secBuffers);
+            state               = std::move(other.state);
             contextStreamSizes  = other.contextStreamSizes;
             decryptedOffset     = other.decryptedOffset;
 
-            for (int i{}; i < 4; i++)
-                secBuffers[i].pvBuffer = buffers[i].data();
-
             ctxtHandle = std::exchange(other.ctxtHandle, {});
             socket     = std::exchange(other.socket, macroINVALID_SOCKET);
+
+            handshakeCallback = other.handshakeCallback;
+            pendingData       = other.pendingData;
+
+            credentials = other.credentials;
         }
 
         return *this;
+    }
+
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
+    TlsSocketData<Endpoint, SocketType, SocketFamily> TlsSocketData<Endpoint, SocketType, SocketFamily>::
+    MakeChild() const {
+        auto child{ TlsSocketData{} };
+
+        child.handshakeCallback = handshakeCallback;
+        child.pendingData = pendingData;
+
+        child.credentials = credentials;
+        child.isServer    = isServer;
+
+        return child;
     }
 }

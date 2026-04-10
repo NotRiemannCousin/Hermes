@@ -8,17 +8,31 @@
 // with "macro" prefix and similarities. There is also some utilities
 // functions to make things easier.
 
+#define _AMD64_ 1
+
+
+#define SCHANNEL_USE_BLACKLISTS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SECURITY_WIN32
 
-#include <winsock2.h>
-#include <schannel.h>
+
 // ReSharper disable once CppUnusedIncludeDirective
 #include <ws2tcpip.h>
+#include <winsock2.h>
+
+typedef struct _UNICODE_STRING {
+    USHORT Length;
+    USHORT MaximumLength;
+    PWSTR Buffer;
+} UNICODE_STRING, *PUNICODE_STRING;
+
+#include <schannel.h>
 #include <sspi.h>
 
 #pragma comment(lib, "ws2_32.lib")
 #pragma comment(lib, "secur32.lib")
+
+
 
 #pragma region Macro Operations
 #define FLAGS_OPERATIONS(TYPE)                                                              \
@@ -72,12 +86,16 @@
 #include <Hermes/_base/WinApi/Flags/SupportedProtocolsFlags.hpp>
 #include <Hermes/_base/WinApi/Flags/InitializeSecurityContextFlags.hpp>
 #include <Hermes/_base/WinApi/Flags/InitializeSecurityContextReturnFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/SchannelCredFlags.hpp>
+#include <Hermes/_base/WinApi/Flags/AcceptSecurityContextFlags.hpp>
+#include <Hermes/_base/WinApi/Flags/AcceptSecurityContextReturnFlags.hpp>
+#include <Hermes/_base/WinApi/Flags/SChannelCredFlags.hpp>
 
     FLAGS_OPERATIONS(CredentialFlags)
     FLAGS_OPERATIONS(SupportedProtocolsFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextReturnFlags)
+    FLAGS_OPERATIONS(AcceptSecurityContextFlags)
+    FLAGS_OPERATIONS(AcceptSecurityContextReturnFlags)
     FLAGS_OPERATIONS(SChannelCredFlags)
 
     using ::CredHandle;

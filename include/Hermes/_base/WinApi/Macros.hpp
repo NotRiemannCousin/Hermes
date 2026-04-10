@@ -18,26 +18,15 @@ constexpr size_t macroSOL_SOCKET       { SOL_SOCKET };
 constexpr size_t macroSO_PROTOCOL_INFO { SO_PROTOCOL_INFO };
 
 
-// ----------------------------------------------------------------------------------------------------
-//                             Error Codes
-// ----------------------------------------------------------------------------------------------------
-
 
 constexpr SOCKET macroINVALID_SOCKET { INVALID_SOCKET };
 constexpr size_t macroSOCKET_ERROR   { static_cast<size_t>(SOCKET_ERROR) };
 
 
-// ----------------------------------------------------------------------------------------------------
-//                             SSL and TLS
-// ----------------------------------------------------------------------------------------------------
+constexpr size_t macroSCHANNEL_SHUTDOWN { SCHANNEL_SHUTDOWN };
 
 
 constexpr std::string_view macroUNISP_NAME{ UNISP_NAME };
-
-
-// ----------------------------------------------------------------------------------------------------
-//                             Utils
-// ----------------------------------------------------------------------------------------------------
 
 
 constexpr unsigned long macroSECBUFFER_VERSION        { SECBUFFER_VERSION };

@@ -89,6 +89,19 @@ TEST_F(IpAddressTest, TryParse_EmptyString_ReturnsNullopt) {
     EXPECT_FALSE(IpAddress::TryParse("").has_value());
 }
 
+TEST_F(IpAddressTest, TryParse_MatchesFromIpv4) {
+    const auto parsed{ IpAddress::TryParse("10.0.0.1") };
+    ASSERT_TRUE(parsed.has_value());
+    EXPECT_EQ(*parsed, private4);
+}
+
+TEST_F(IpAddressTest, TryParse_MatchesFromIpv6Loopback) {
+    const auto parsed{ IpAddress::TryParse("::1") };
+    ASSERT_TRUE(parsed.has_value());
+    EXPECT_TRUE(parsed->IsLoopback());
+    EXPECT_TRUE(parsed->IsIpv6());
+}
+
 #pragma endregion
 
 #pragma region Loopback
@@ -245,6 +258,92 @@ TEST_F(IpAddressTest, IsDocumentation_Ipv4_ReturnsFalse) {
 
 #pragma endregion
 
+#pragma region AsIpv6
+
+TEST_F(IpAddressTest, AsIpv6_FromIpv6_ReturnsSameBytes) {
+    const IpAddress::Ipv6Type expected{ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 };
+    EXPECT_EQ(loopback6.AsIpv6(), expected);
+}
+
+TEST_F(IpAddressTest, AsIpv6_FromIpv4_HasIpv4MappedPrefix) {
+    const auto result{ loopback4.AsIpv6() };
+    // Bytes [0..9] must be zero
+    for (int i = 0; i < 10; ++i)
+        EXPECT_EQ(result[i], 0) << "byte[" << i << "] should be 0";
+    // Bytes [10..11] must be 0xff (IPv4-mapped marker)
+    EXPECT_EQ(result[10], 0xff);
+    EXPECT_EQ(result[11], 0xff);
+}
+
+TEST_F(IpAddressTest, AsIpv6_FromIpv4_LastFourBytesMatchOctets) {
+    // 127.0.0.1
+    const auto result{ loopback4.AsIpv6() };
+    EXPECT_EQ(result[12], 127);
+    EXPECT_EQ(result[13],   0);
+    EXPECT_EQ(result[14],   0);
+    EXPECT_EQ(result[15],   1);
+}
+
+TEST_F(IpAddressTest, AsIpv6_FromPublicIpv4_LastFourBytesMatchOctets) {
+    // 129.0.0.1
+    const auto result{ public4.AsIpv6() };
+    EXPECT_EQ(result[12], 129);
+    EXPECT_EQ(result[13],   0);
+    EXPECT_EQ(result[14],   0);
+    EXPECT_EQ(result[15],   1);
+}
+
+TEST_F(IpAddressTest, AsIpv6_MappedAddressIsDetectedAsIpv4Mapped) {
+    const IpAddress mapped{ IpAddress::FromIpv6(loopback4.AsIpv6()) };
+    EXPECT_TRUE(mapped.IsIpv4Mapped());
+}
+
+#pragma endregion
+
+#pragma region IsRoutable
+
+TEST_F(IpAddressTest, IsRoutable_PublicIpv4_ReturnsTrue) {
+    EXPECT_TRUE(public4.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_GlobalUnicastIpv6_ReturnsTrue) {
+    EXPECT_TRUE(globalUnicast6.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_Loopback4_ReturnsFalse) {
+    EXPECT_FALSE(loopback4.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_Loopback6_ReturnsFalse) {
+    EXPECT_FALSE(loopback6.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_PrivateIpv4_ReturnsFalse) {
+    EXPECT_FALSE(private4.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_LinkLocal4_ReturnsFalse) {
+    EXPECT_FALSE(linkLocal4.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_UniqueLocalIpv6_ReturnsFalse) {
+    EXPECT_FALSE(uniqueLocal6.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_Unspecified6_ReturnsFalse) {
+    EXPECT_FALSE(unspecified6.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_Multicast4_ReturnsFalse) {
+    EXPECT_FALSE(multicast4.IsRoutable());
+}
+
+TEST_F(IpAddressTest, IsRoutable_Multicast6_ReturnsFalse) {
+    EXPECT_FALSE(multicast6.IsRoutable());
+}
+
+#pragma endregion
+
 #pragma region Comparisons & hashing
 
 TEST_F(IpAddressTest, SpaceshipOperator_EqualAddresses) {
@@ -268,6 +367,10 @@ TEST_F(IpAddressTest, Hash_DifferentAddresses_DifferentHash) {
     EXPECT_NE(std::hash<IpAddress>{}(loopback4), std::hash<IpAddress>{}(public4));
 }
 
+TEST_F(IpAddressTest, Hash_Ipv4VsIpv6_DifferentHash) {
+    EXPECT_NE(std::hash<IpAddress>{}(loopback4), std::hash<IpAddress>{}(loopback6));
+}
+
 #pragma endregion
 
 #pragma region Formatting
@@ -287,6 +390,15 @@ TEST_F(IpAddressTest, Format_Ipv6_Reduced) {
 
 TEST_F(IpAddressTest, Format_Ipv6_Full) {
     EXPECT_EQ(std::format("{}", loopback6), "0000:0000:0000:0000:0000:0000:0000:0001");
+}
+
+TEST_F(IpAddressTest, Format_Ipv6_Reduced_LinkLocal) {
+    // fe80::1
+    EXPECT_EQ(std::format("{:f}", linkLocal6), "fe80::1");
+}
+
+TEST_F(IpAddressTest, Format_Ipv6_Brackets) {
+    EXPECT_EQ(std::format("{:fb}", loopback6), "[::1]");
 }
 
 #pragma endregion

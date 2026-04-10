@@ -28,7 +28,7 @@ namespace Hermes {
             { data.socket   } -> std::same_as<SOCKET&>;
 
             []() constexpr { constexpr auto _ = SocketData::Family; }(); // forcing constexpr
-            []() constexpr { constexpr auto _ = SocketData::Type; }(); // forcing constexpr
+            []() constexpr { constexpr auto _ = SocketData::Type;   }(); // forcing constexpr
         };
 
 
@@ -42,6 +42,7 @@ namespace Hermes {
         && requires (Policy<SocketData> policy, SocketData data) {
             { policy.Connect(data) } -> std::same_as<ConnectionResultOper>;
             { policy.Close(data)   } -> std::same_as<void>;
+            { policy.Abort(data)   } -> std::same_as<void>;
         };
 
 
@@ -51,10 +52,10 @@ namespace Hermes {
     //! (e.g., reading a length prefix, searching for a delimiter, TLS, etc.).
     template<template <class> class Policy, class SocketData>
     concept TransferPolicyConcept = SocketDataConcept<SocketData>
-        && std::ranges::input_range<typename Policy<SocketData>::template RecvRange<std::byte>>
-        && std::same_as<std::ranges::range_value_t<typename Policy<SocketData>::template RecvRange<std::byte>>, std::byte>
-        && std::constructible_from<typename Policy<SocketData>::template RecvRange<std::byte>, SocketData&, Policy<SocketData>&>
-        && requires(typename Policy<SocketData>::template RecvRange<std::byte>& range) {
+        && std::ranges::input_range<typename Policy<SocketData>::template RecvLazyRange<std::byte>>
+        && std::same_as<std::ranges::range_value_t<typename Policy<SocketData>::template RecvLazyRange<std::byte>>, std::byte>
+        && std::constructible_from<typename Policy<SocketData>::template RecvLazyRange<std::byte>, SocketData&, Policy<SocketData>&>
+        && requires(typename Policy<SocketData>::template RecvLazyRange<std::byte>& range) {
              { range.Error() } -> std::same_as<ConnectionResultOper>;
         }
         && requires(
@@ -65,5 +66,28 @@ namespace Hermes {
         ) {
             { policy.Recv(data, bufferRecv) } -> std::same_as<StreamByteOper>;
             { policy.Send(data, bufferSend) } -> std::same_as<StreamByteOper>;
+        };
+
+
+    //! @brief Concept for a policy that manages the server-side accept lifecycle.
+    //!
+    //! @details Separates the listening socket (bind/listen) from the accepted socket,
+    //! allowing customization of the accept flow — e.g. performing a TLS server
+    //! handshake after accept(). Both the listening socket and each accepted connection
+    //! are represented by SocketData; the policy distinguishes them via Close
+    //! vs Close (no TLS alert needed on the listening socket).
+    template<template <class> class Policy, class SocketData>
+    concept AcceptPolicyConcept = SocketDataConcept<SocketData>
+        && requires(Policy<SocketData> policy, SocketData listenData, SocketData acceptedData, int backlog) {
+            //! bind() + listen(); on success, listenData.socket is the listening socket.
+            { policy.Listen(listenData, backlog)       } -> std::same_as<ConnectionResultOper>;
+            //! accept(); on success, acceptedData.socket and acceptedData.endpoint are filled.
+            //! For TLS, also performs the server-side handshake.
+            { policy.Accept(listenData, acceptedData)  } -> std::same_as<ConnectionResultOper>;
+            //! Closes the listening socket (no protocol-level shutdown needed).
+            { policy.Close(listenData)                 } -> std::same_as<void>;
+            //! Closes an accepted connection (sends TLS shutdown alert if applicable).
+            { policy.Close(acceptedData)               } -> std::same_as<void>;
+            { policy.Abort(acceptedData)               } -> std::same_as<void>;
         };
 }

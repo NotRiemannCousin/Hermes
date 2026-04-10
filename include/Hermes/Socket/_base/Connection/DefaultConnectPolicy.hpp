@@ -9,6 +9,7 @@ namespace Hermes {
     struct DefaultConnectPolicy {
         static ConnectionResultOper Connect(Data& data);
         static void                 Close(Data& data);
+        static void                 Abort(Data& data);
     };
 }
 

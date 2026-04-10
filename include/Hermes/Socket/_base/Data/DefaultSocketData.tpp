@@ -2,7 +2,7 @@
 
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
-    DefaultSocketData<Endpoint, SocketType, SocketFamily>::DefaultSocketData(Endpoint &&other) : endpoint{ other } {
+    DefaultSocketData<Endpoint, SocketType, SocketFamily>::DefaultSocketData(Endpoint other) : endpoint{ other } {
     }
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
@@ -17,5 +17,11 @@ namespace Hermes {
         }
 
         return *this;
+    }
+
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
+    DefaultSocketData<Endpoint, SocketType, SocketFamily> DefaultSocketData<Endpoint, SocketType, SocketFamily>::
+    MakeChild() const {
+        return DefaultSocketData{};
     }
 }

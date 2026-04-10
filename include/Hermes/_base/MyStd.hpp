@@ -7,7 +7,7 @@
 //
 // export import <array>;
 // export import <vector>;
-// export import <experimental/generator>;
+// export import <generator>;
 //
 // export import <variant>;
 // export import <optional>;

@@ -1,0 +1,38 @@
+#pragma once
+#include <schannel.h>
+
+enum class SChannelCredFlags {
+    V1                              = SCH_CRED_V1,
+    V2                              = SCH_CRED_V2,
+    V3                              = SCH_CRED_V3,
+    Version                         = SCH_CRED_VERSION,
+    FormatCertContext               = SCH_CRED_FORMAT_CERT_CONTEXT,
+    FormatCertHash                  = SCH_CRED_FORMAT_CERT_HASH,
+    FormatCertHashStore             = SCH_CRED_FORMAT_CERT_HASH_STORE,
+    MaxStoreNameSize                = SCH_CRED_MAX_STORE_NAME_SIZE,
+    MaxSupportedAlgs                = SCH_CRED_MAX_SUPPORTED_ALGS,
+    MaxSupportedCerts               = SCH_CRED_MAX_SUPPORTED_CERTS,
+    NoSystemMapper                  = SCH_CRED_NO_SYSTEM_MAPPER,
+    NoServernameCheck               = SCH_CRED_NO_SERVERNAME_CHECK,
+    ManualCredValidation            = SCH_CRED_MANUAL_CRED_VALIDATION,
+    NoDefaultCreds                  = SCH_CRED_NO_DEFAULT_CREDS,
+    AutoCredValidation              = SCH_CRED_AUTO_CRED_VALIDATION,
+    UseDefaultCreds                 = SCH_CRED_USE_DEFAULT_CREDS,
+    DisableReconnects               = SCH_CRED_DISABLE_RECONNECTS,
+    RevocationCheckEndCert          = SCH_CRED_REVOCATION_CHECK_END_CERT,
+    RevocationCheckChain            = SCH_CRED_REVOCATION_CHECK_CHAIN,
+    RevocationCheckChainExcludeRoot = SCH_CRED_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT,
+    IgnoreNoRevocationCheck         = SCH_CRED_IGNORE_NO_REVOCATION_CHECK,
+    IgnoreRevocationOffline         = SCH_CRED_IGNORE_REVOCATION_OFFLINE,
+    RestrictedRoots                 = SCH_CRED_RESTRICTED_ROOTS,
+    RevocationCheckCacheOnly        = SCH_CRED_REVOCATION_CHECK_CACHE_ONLY,
+    CacheOnlyUrlRetrieval           = SCH_CRED_CACHE_ONLY_URL_RETRIEVAL,
+    MemoryStoreCert                 = SCH_CRED_MEMORY_STORE_CERT,
+    CacheOnlyUrlRetrievalOnCreate   = SCH_CRED_CACHE_ONLY_URL_RETRIEVAL_ON_CREATE,
+    SniCredential                   = SCH_CRED_SNI_CREDENTIAL,
+    SniEnableOcsp                   = SCH_CRED_SNI_ENABLE_OCSP,
+    DeferredCredValidation          = SCH_CRED_DEFERRED_CRED_VALIDATION,
+    X509Certchain                   = SCH_CRED_X509_CERTCHAIN,
+    X509Capi                        = SCH_CRED_X509_CAPI,
+    CertContext                     = SCH_CRED_CERT_CONTEXT
+};

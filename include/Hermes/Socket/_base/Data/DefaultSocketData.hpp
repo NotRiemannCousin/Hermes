@@ -15,14 +15,22 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family = SocketFamily;
 
         DefaultSocketData() = default;
-        explicit DefaultSocketData(Endpoint&& other);
+        explicit DefaultSocketData(Endpoint other);
         ~DefaultSocketData() = default;
 
         DefaultSocketData(DefaultSocketData&& other) noexcept;
         DefaultSocketData& operator=(DefaultSocketData&& other) noexcept;
 
+        DefaultSocketData MakeChild() const;
+
         Endpoint endpoint{};
         SOCKET   socket{ macroINVALID_SOCKET };
+
+        struct State {
+            std::array<std::byte, 0x4000> buffer{};
+        };
+
+        std::unique_ptr<State> state{};
     };
 
     static_assert(SocketDataConcept<DefaultSocketData<>>);

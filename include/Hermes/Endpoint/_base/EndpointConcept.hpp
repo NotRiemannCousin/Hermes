@@ -12,7 +12,7 @@ namespace Hermes {
     //! you will need a class that satisfies the EndpointConcept.
     template<class T>
     concept EndpointConcept = requires(T t, SocketInfoAddr socketInfo) {
-        { T::FromSockAddr(socketInfo) } ->std::same_as<ConnectionResult<T>>;
-        { t.ToSockAddr() } ->std::same_as<ConnectionResult<SocketInfoAddr>>;
+        { T::FromSockAddr(socketInfo) } -> std::same_as<ConnectionResult<T>>;
+        { t.ToSockAddr() } -> std::same_as<ConnectionResult<SocketInfoAddr>>;
     };
 }

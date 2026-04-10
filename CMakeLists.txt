@@ -49,6 +49,7 @@ add_library(
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
+        src/Hermes/_base/Credentials.cpp
 )
 
 target_include_directories(

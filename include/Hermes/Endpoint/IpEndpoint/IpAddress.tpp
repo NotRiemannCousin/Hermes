@@ -111,14 +111,14 @@ namespace std {
         bool _ipv6Reduced{};
         bool _ipv6Brackets{};
 
-        static constexpr auto ipv6FmtData = [] {
+        static constexpr auto s_ipv6FmtData = [] {
             array<char, 256> buffer{};
             string pattern = views::repeat("{:02x}{:02x}"sv, 8) | views::join_with(':') | ranges::to<string>();
             ranges::copy(pattern, buffer.begin());
             return buffer;
         }();
 
-        static constexpr auto ipv6Fmt = string_view{ ipv6FmtData.data() };
+        static constexpr auto ipv6Fmt = string_view{ s_ipv6FmtData.data() };
     };
 }
 

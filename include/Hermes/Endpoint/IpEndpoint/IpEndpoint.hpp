@@ -16,8 +16,8 @@ namespace Hermes {
     };
 
     struct IpEndpoint {
-        IpEndpoint(const IpEndpoint&) noexcept = default;
-        IpEndpoint& operator=(const IpEndpoint&) noexcept = default;
+        IpEndpoint(const IpEndpoint& o) noexcept = default;
+        IpEndpoint& operator=(const IpEndpoint& o) noexcept = default;
 
         //!  @brief Construct an IpEndpoint with a port and IP.
         //!  @param ip the IP of the endpoint.

@@ -1,8 +1,11 @@
 #pragma once
+#include <Hermes/_base/Network.hpp>
 
 namespace Hermes {
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultConnectPolicy<Data>::Connect(Data& data) {
+        Network::Initialize();
+
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes.has_value())
             return std::unexpected{ ConnectionErrorEnum::Unknown };
@@ -21,11 +24,24 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     void DefaultConnectPolicy<Data>::Close(Data& data) {
-        if (data.socket == macroINVALID_SOCKET) return;
-
-        shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Both));
+        shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
         closesocket(data.socket);
+        data.socket = macroINVALID_SOCKET;
+    }
 
+    template<SocketDataConcept Data>
+    void DefaultConnectPolicy<Data>::Abort(Data &data) {
+        constexpr linger lingerOption{ 1, 0 };
+
+        setsockopt(
+            data.socket,
+            SOL_SOCKET,
+            SO_LINGER,
+            reinterpret_cast<const char*>(&lingerOption),
+            sizeof(lingerOption)
+        );
+
+        closesocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 }

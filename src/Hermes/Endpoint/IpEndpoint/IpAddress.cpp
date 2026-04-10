@@ -10,19 +10,30 @@ using std::optional;
 
 using Hermes::IpAddress;
 
-//----------------------------------------------------------------------------------------------------
-// Construct
-//----------------------------------------------------------------------------------------------------
+
 
 IpAddress::IpAddress(const IpVariant& d) : _data(d) {}
 
 IpAddress IpAddress::FromIpv4(const Ipv4Type &data) { return IpAddress{ data }; }
 
-//----------------------------------------------------------------------------------------------------
-// Construct
-//----------------------------------------------------------------------------------------------------
+
 
 IpAddress IpAddress::FromIpv6(const Ipv6Type &data) { return IpAddress{ data }; }
+
+IpAddress::Ipv6Type IpAddress::AsIpv6() const {
+    return std::visit(
+        Utils::Overloaded{
+            [](const Ipv4Type ipv4) {
+                Ipv6Type ipv6{};
+                ipv6[10] = 0xff;
+                ipv6[11] = 0xff;
+                memcpy(&ipv6[12], &ipv4[0], sizeof(Ipv4Type));
+
+                return ipv6;
+            },
+            [](const Ipv6Type ipv6) { return ipv6; }
+        } , _data);
+}
 
 std::optional<IpAddress> IpAddress::TryParse(const string& str) {
     Network::Initialize();
@@ -44,14 +55,8 @@ IpAddress::IpVariant IpAddress::GetIp() const {
     return _data;
 }
 
-//----------------------------------------------------------------------------------------------------
-// Getters
-//----------------------------------------------------------------------------------------------------
 
 
-//----------------------------------------------------------------------------------------------------
-// Checks
-//----------------------------------------------------------------------------------------------------
 
 
 bool IpAddress::IsIpv4()  const { return std::holds_alternative<Ipv4Type>(_data); }
@@ -62,35 +67,37 @@ bool IpAddress::IsIpv6()  const { return std::holds_alternative<Ipv6Type>(_data)
 bool IpAddress::IsRoutable() const {
     return std::visit(
         Utils::Overloaded{
-            [](const Ipv4Type ipv4) {
-                if (ipv4[0] == 0)
+            [](const Ipv4Type& ipv4) {
+                if (ipv4[0] == 0 || ipv4[0] == 10 || ipv4[0] == 127 || ipv4[0] >= 224)
                     return false;
-                if (ipv4[0] == 127)
+                if (ipv4[0] == 100 && (ipv4[1] & 0xc0) == 64)  // CGNAT
                     return false;
-                if (ipv4[0] == 169 && ipv4[1] == 254)
+                if (ipv4[0] == 169 && ipv4[1] == 254)          // Link-local
                     return false;
-                if (ipv4[0] >= 224)
+                if (ipv4[0] == 172 && (ipv4[1] & 0xf0) == 16)  // 172.16.0.0/12
                     return false;
-                if (ipv4[0] == 100 && (ipv4[1] & 0xc0) == 64)
-                    return false;
-                if (ipv4[0] == 10)
+                if (ipv4[0] == 192 && ipv4[1] == 168)          // 192.168.0.0/16
                     return false;
 
                 return true;
             },
-            [](const Ipv6Type ipv6) {
+            [](const Ipv6Type& ipv6) {
                 if (ipv6 == Ipv6Type{})
                     return false;
-                if ((ipv6[0] & 0xfe) == 0xfc)
+
+                if (ipv6 == Ipv6Type{ 0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0, 0, 1 })
                     return false;
-                if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80)
+
+                if ((ipv6[0] & 0xfe) == 0xfc)                  // ULA
                     return false;
-                if (ipv6[0] == 0xff)
+                if (ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80) // Link-local
+                    return false;
+                if (ipv6[0] == 0xff)                           // Multicast
                     return false;
 
                 return true;
             }
-        } , _data);
+        }, _data);
 }
 
 

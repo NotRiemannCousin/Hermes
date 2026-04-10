@@ -16,6 +16,18 @@ add_executable(
 
         IpAddressTests.cpp
         IpEndpointTests.cpp
+        DefaultSocketTests.cpp
+        TlsSocketTests.cpp
+)
+
+add_custom_command(
+        TARGET HermesTests POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+        "$<TARGET_FILE_DIR:HermesTests>/cert.pfx"
+        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+        COMMENT "Copying certificate for TLS tests..."
+        VERBATIM
 )
 
 target_include_directories(
