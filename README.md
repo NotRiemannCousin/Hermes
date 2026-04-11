@@ -1,45 +1,68 @@
 # Hermes
 
-## About
+A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution` (planned), and more — targeting **Windows 10 or newer** with **C++26**.
 
-Hermes is a C++ Socket Wrapper library. It provides a simple, easy-to-use, and secure interface for
-creating and using sockets. The goal of this lib is to use modern C++ features such as `std::expected`,
-`std::ranges`, `std::generator`, modules and templates. Given that, the target version is C++26.
+> **Status:** v0.2 — active development. Async sockets (`std::execution`) are planned once compiler support matures.
 
-This lib implements only transport layer protocols, you have to implement application layer protocols by yourself.
-If can follow `SocketDataConcept`, `ConnectionPolicyConcept` and `TransferPolicyConcept` implement you own transport
-layer protocols.
+---
 
 ## Features
 
-The main way to read bytes from a socket is by using the `RecvRange` provided by `TransferPolicyConcept`. It 
-automatically receives data from the socket on demand, so you don't need to worry about managing chunks of data
-(keep in mind that this is an <a href="https://en.cppreference.com/w/cpp/ranges/input_range.html">
-input_range</a> so every time you advance the iterator the last byte is lost).
+- **TCP** and **TCP over TLS** (via SChannel — no third-party crypto dependency)
+- **Policy-based design** — connection, transfer, and accept behaviors are independently composable via concepts
+- **Lazy receive ranges** — `RecvRange` is an [`input_range`](https://en.cppreference.com/w/cpp/ranges/input_range.html) that fetches bytes on demand, eliminating manual chunk management
+- **`std::expected` throughout** — no exceptions on the hot path
+- Extensible: implement `SocketDataConcept`, `ConnectionPolicyConcept` / `AcceptPolicyConcept`, and `TransferPolicyConcept` to add your own transport layer protocols
 
-The example on this page shows how this behaviour makes development easier.
+Hermes operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.
 
-Async types will be developed soon.
+---
 
-Implemented protocols:
+## Installation
 
-- TCP
-- TCP with TLS
-- UDP (not implemented yet)
-- UDP with DTLS (not implemented yet)
+### pixi
 
+> _Coming soon._
 
-Example:
+### vcpkg
+
+> _Coming soon._
+
+### Manual (CMake)
+
+```cmake
+include(FetchContent)
+
+FetchContent_Declare(
+    Hermes
+    GIT_REPOSITORY https://github.com/your-org/Hermes.git
+    GIT_TAG        v0.2.03
+)
+
+FetchContent_MakeAvailable(Hermes)
+
+target_link_libraries(your_target PRIVATE Hermes)
+```
+
+---
+
+## Example
+
+The following example performs an HTTPS GET request, parsing the response incrementally using `RecvRange`. Notice how `UntilMatch` and range composition keep the parsing logic concise — no manual buffering.
+
 ```cpp
-expected<std::monostate, string> MakeRequest() {
+#include <Hermes/Socket/ClientSocket.hpp>
+#include <Hermes/Utils/UntilMatch.hpp>
+
+namespace rg = std::ranges;
+using namespace std::literals;
+
+std::expected<std::monostate, std::string> MakeRequest() {
     struct {
         std::string scheme;
         std::string hostname;
         std::string path;
     } url {
-        // "https",
-        // "api.jikan.moe",
-        // "v4/anime/57555"
         "https",
         "api.discogs.com",
         "artists/4001234",
@@ -50,67 +73,70 @@ expected<std::monostate, string> MakeRequest() {
         return std::unexpected{ "Could not resolve endpoint" };
 
     auto socket{ Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ *endpoint, url.hostname }) };
-    // endpoint + host = minimal socket data to
     if (!socket)
         return std::unexpected{ "Could not connect to endpoint" };
 
     const auto request{
-        format(
+        std::format(
             "GET /{} HTTP/1.1\r\n"
             "Accept-Encoding: identity\r\n"
             "User-Agent: Hermes/0.2\r\n"
             "Host: {}\r\n\r\n",
-            url.path, url.hostname) };
-
-
+            url.path, url.hostname)
+    };
 
     if (const auto err{ socket->Send(request) }; !err.second)
-        return std::unexpected{ "Could not send to endpoint" };
+        return std::unexpected{ "Could not send request" };
 
-
-
-
+    // RecvRange is an input_range: bytes are fetched on demand when the iterator
+    // is dereferenced. Advancing past a byte discards it — keep this in mind when
+    // doing partial reads. All iterators share the same underlying state
+    // (think: a "global input range"), so advancing one advances all.
     auto socketView{ socket->RecvRange<char>() };
-    // `RecvRange` is an input_range, so it consumes the bytes when you advance the iterator. Advancing an iterator of an
-    // input_range can cause invalidation of other iterators, but the current state is stored in the range so all
-    // iterators are treated equally and represent the current state (Do I need to give a name to this type of range?
-    // sibling{_input}_range? global_{input}_range? Idk). This code shows how it can be useful.
 
     if (!rg::starts_with(socketView, "HTTP/1.1"sv))
-        return std::unexpected{ "Non supported version" };
-
+        return std::unexpected{ "Unsupported HTTP version" };
 
     const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 5>>(socketView) };
 
     if (!rg::equal(statusCode, " 200 "sv))
-        return std::unexpected{ std::format("error code: {}{}{}", statusCode[1], statusCode[2], statusCode[3]) };
+        return std::unexpected{
+            std::format("Unexpected status code: {}{}{}", statusCode[1], statusCode[2], statusCode[3])
+        };
 
-
-    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
-    // This range must receive more bytes just when reading with the * operator. receiving when advancing isn't that
-    // good because if your protocol uses a terminated sequence you will need more work to stop at the last byte
-    // (think about this like vec.end() being outside of the boundaries of the vector itself).
-
-    // e.g.: `UntilMatch("\r\n"sv)` goes until the first occurrence of "\r\n", discard the pattern (exclusive match,
-    // `UntilMatch<true>` is inclusive) and advance the state again to stop at the next byte of EOS.
-
+    // UntilMatch reads until the first occurrence of the pattern and discards it (exclusive).
+    // The range is then positioned at the next byte after the pattern.
+    // Use UntilMatch<true> for inclusive matching.
+    const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
 
     const auto headers{ HttpHeaders(socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv)) };
-
     if (!headers.has_value())
         return std::unexpected{ headers.error() };
 
-    auto chunkLength{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
-
-    const auto body{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<string>() };
-    // const auto body{ socketView | rg::to<string>() };
-    // The range automatically stops when the connection ends, but be careful with this.
+    auto chunkLength{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
+    const auto body   { socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
 
     std::println("body:\n\n{}", body);
 
     if (const auto err{ socketView.Error() }; !err)
-        return std::unexpected{ "Error receiving message" };
+        return std::unexpected{ "Error while receiving message" };
 
     return {};
 }
 ```
+
+---
+
+## Roadmap
+
+- Async sockets via `std::execution` (pending compiler support)
+- UDP sockets
+- pixi and vcpkg packages
+
+---
+
+## Requirements
+
+- Windows 10 or newer
+- MSVC with C++26 support
+- CMake 3.29.1 or newer
