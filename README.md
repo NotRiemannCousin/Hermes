@@ -26,7 +26,7 @@ Hermes operates at the transport layer only. Application-layer protocols (HTTP, 
 
 ### vcpkg
 
-> _Coming soon._
+> _Maybe, someday, who knows._
 
 ### Manual (CMake)
 
