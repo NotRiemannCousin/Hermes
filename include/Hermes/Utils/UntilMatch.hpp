@@ -39,7 +39,7 @@ namespace Hermes::Utils {
         std::size_t _index{};
         bool _matchFound{};
 
-        Range& _view;
+        Range _view;
         Pattern _pattern;
     };
 

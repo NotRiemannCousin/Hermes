@@ -85,7 +85,7 @@ namespace Hermes {
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
             closesocket(_data->socket);
-            _data->socket = 0;
+            _data->socket = macroINVALID_SOCKET;
         }
 
         return state->status;
@@ -142,7 +142,6 @@ namespace Hermes {
                         0
                         ) };
 
-                    auto sla = WSAGetLastError();
 
                     if (received == 0)
                         return { 0, std::unexpected{ ConnectionErrorEnum::ConnectionClosed} };

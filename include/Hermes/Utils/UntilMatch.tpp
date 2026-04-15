@@ -20,7 +20,7 @@ namespace Hermes::Utils {
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++() {
         if (_view->_matchFound) return *this;
 
-        const auto patSize = rg::size(_view->_pattern);
+        const auto patSize{ rg::size(_view->_pattern) };
 
         if (_view->_current != _view->end()) {
             _view->_history[_view->_index] = *_view->_current;

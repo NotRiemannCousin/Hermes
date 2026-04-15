@@ -34,6 +34,8 @@ namespace Hermes {
         // private:
         CtxtHandle ctxtHandle{};
 
+        bool requestClientCertificate{};
+
 
         Endpoint endpoint{};
         SOCKET   socket{ macroINVALID_SOCKET };

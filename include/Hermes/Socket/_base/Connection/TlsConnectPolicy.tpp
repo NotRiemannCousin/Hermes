@@ -5,38 +5,23 @@
 namespace Hermes {
 
     template<SocketDataConcept Data>
-    ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data) {
-        auto addrRes{ data.endpoint.ToSockAddr() };
-        if (!addrRes.has_value())
-            return std::unexpected{ ConnectionErrorEnum::Unknown };
+    ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
+        const auto s_makeHandshake = [&](std::monostate) {
+            data.handshakeCallback = [options](Data& d) {
+                return TlsConnectPolicy::ClientHandshake(d, options);
+            };
 
-        auto [addr, addr_len, addrFamily]{ *addrRes };
+            return TlsConnectPolicy::ClientHandshake(data, std::move(options));
+        };
 
-        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
-        if (data.socket == macroINVALID_SOCKET)
-            return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
-
-        if constexpr (Data::Family == AddressFamilyEnum::Inet6) {
-            int opt{}; // TODO: FUTURE: Implement a proper way to set options inside of data
-            setsockopt(data.socket, IPPROTO_IPV6, IPV6_V6ONLY, reinterpret_cast<char*>(&opt), sizeof(opt));
-        }
-
-        // ReSharper disable once CppTooWideScopeInitStatement
-        const int result{ connect(data.socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };
-        if (result == macroSOCKET_ERROR) {
-            closesocket(data.socket);
-            data.socket = macroINVALID_SOCKET;
-            return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
-        }
-
-        data.handshakeCallback = &TlsConnectPolicy::ClientHandshake;
-        return TlsConnectPolicy::ClientHandshake(data);
+        return DefaultConnectPolicy<Data>::Connect(data, options)
+                .and_then(s_makeHandshake);
     }
 
 // I hate TLS so much
 
     template<SocketDataConcept Data>
-    ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data) {
+    ConnectionResultOper TlsConnectPolicy<Data>::ClientHandshake(Data& data, Options options) {
 #pragma region fast-fail and lambdas
 
         if (data.credentials == nullptr) data.credentials = &Network::GetClientCredentials();
@@ -51,9 +36,16 @@ namespace Hermes {
 
         const auto s_clearAndExit = [&](ConnectionErrorEnum error = ConnectionErrorEnum::HandshakeFailed){
             DeleteSecurityContext(&data.ctxtHandle);
-            closesocket(data.socket);
-            data.socket = macroINVALID_SOCKET;
+            data.ctxtHandle = {};
+
+            Close(data);
             return std::unexpected{ error };
+        };
+
+
+        const auto s_setTimeout = [&](const int value) {
+            setsockopt(data.socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&value), sizeof(value));
+            setsockopt(data.socket, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<const char*>(&value), sizeof(value));
         };
 
 #pragma endregion
@@ -83,12 +75,18 @@ namespace Hermes {
         CredHandle credHandle{ data.credentials->GetCredHandle() };
         TimeStamp tsExpiry{};
 
-        constexpr auto dwSspiFlags{
+        auto dwSspiFlags{
             InitializeSecurityContextFlags::SequenceDetect |
             InitializeSecurityContextFlags::ReplayDetect   |
             InitializeSecurityContextFlags::Confidentiality |
             InitializeSecurityContextFlags::ExtendedError  |
             InitializeSecurityContextFlags::Stream };
+
+        if (options.requestMutualAuth)
+            dwSspiFlags |= InitializeSecurityContextFlags::MutualAuth;
+
+        if (options.ignoreCertificateErrors)
+            dwSspiFlags |= InitializeSecurityContextFlags::ManualCredValidation;
 
 
         DWORD pfContextAttr{};
@@ -99,6 +97,10 @@ namespace Hermes {
 
         DWORD receivedBytes{ data.pendingData };
         data.pendingData = 0;
+
+
+        if (options.handshakeTimeout.count() != 0)
+            s_setTimeout(options.handshakeTimeout.count());
 
 #pragma endregion
 
@@ -206,6 +208,8 @@ namespace Hermes {
                     data.isHandshakeComplete = true;
                     data.isServer            = false;
 
+                    s_setTimeout({});
+
                     return {};
                 }
 
@@ -257,7 +261,7 @@ namespace Hermes {
             SecBuffer outBuffer{
                 sizeof(dwType),
                 _tul(SecurityBufferEnum::Token),
-                outBuffer.pvBuffer = &dwType
+                &dwType
             };
 
             SecBufferDesc outBufferDesc{
@@ -272,9 +276,9 @@ namespace Hermes {
                 outBuffer     = SecBuffer{ 0, _tul(SecurityBufferEnum::Token), nullptr };
                 outBufferDesc = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &outBuffer };
 
-                constexpr auto dwSSPIFlags{
-                    InitializeSecurityContextFlags::SequenceDetect |
-                    InitializeSecurityContextFlags::ReplayDetect   |
+                constexpr auto dwSspiFlags{
+                    InitializeSecurityContextFlags::SequenceDetect  |
+                    InitializeSecurityContextFlags::ReplayDetect    |
                     InitializeSecurityContextFlags::Confidentiality |
                     InitializeSecurityContextFlags::Stream
                 };
@@ -286,7 +290,7 @@ namespace Hermes {
                     nullptr,
                     &data.ctxtHandle,
                     nullptr,
-                    _tl(dwSSPIFlags),
+                    _tl(dwSspiFlags),
                     0,
                     0,
                     nullptr,

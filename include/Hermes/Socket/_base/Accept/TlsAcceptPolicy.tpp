@@ -1,5 +1,4 @@
 #pragma once
-#include <Hermes/_base/Network.hpp>
 #include <Hermes/_base/WinApi/Macros.hpp>
 
 // I hate TLS so much (server edition)
@@ -7,61 +6,26 @@
 namespace Hermes {
 
     template<SocketDataConcept Data>
-    ConnectionResultOper TlsAcceptPolicy<Data>::Listen(Data& data, const int backlog) noexcept {
-        auto addrRes{ data.endpoint.ToSockAddr() };
-        if (!addrRes)
-            return std::unexpected{ ConnectionErrorEnum::InvalidEndpoint };
-
-        auto [addr, addr_len, addrFamily]{ *addrRes };
-
-        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
-        if (data.socket == macroINVALID_SOCKET)
-            return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
-
-        if (bind(data.socket, reinterpret_cast<sockaddr*>(&addr), static_cast<int>(addr_len)) == macroSOCKET_ERROR) {
-            closesocket(data.socket);
-            data.socket = macroINVALID_SOCKET;
-            return std::unexpected{ ConnectionErrorEnum::AddressInUse };
-        }
-
-        if (listen(data.socket, backlog) == macroSOCKET_ERROR) {
-            closesocket(data.socket);
-            data.socket = macroINVALID_SOCKET;
-            return std::unexpected{ ConnectionErrorEnum::ListenFailed };
-        }
-
-        return {};
+    ConnectionResultOper TlsAcceptPolicy<Data>::Listen(Data& data, const int backlog, ListenOptions options) noexcept {
+        return DefaultAcceptPolicy<Data>::Listen(data, backlog, options);
     }
 
 
     template<SocketDataConcept Data>
-    ConnectionResultOper TlsAcceptPolicy<Data>::Accept(Data& data, Data& outData) noexcept {
-        sockaddr_storage clientAddr{};
-        int clientAddrLen{ sizeof(clientAddr) };
+    ConnectionResultOper TlsAcceptPolicy<Data>::Accept(Data& data, Data& outData, AcceptOptions options) noexcept {
+        const auto s_makeHandshake = [&](std::monostate) {
+            outData.handshakeCallback = [options](Data& d) {
+                return TlsAcceptPolicy::ServerHandshake(d, options);
+            };
 
-        outData.socket = accept(data.socket,
-            reinterpret_cast<sockaddr*>(&clientAddr), &clientAddrLen);
+            return TlsAcceptPolicy::ServerHandshake(outData, std::move(options));
+        };
 
-        if (outData.socket == macroINVALID_SOCKET)
-            return std::unexpected{ ConnectionErrorEnum::ConnectionFailed };
-
-        auto endpointRes{ Data::EndpointType::FromSockAddr(
-            SocketInfoAddr{ clientAddr, static_cast<size_t>(clientAddrLen), Data::Family }) };
-
-        if (!endpointRes) {
-            closesocket(outData.socket);
-            outData.socket = macroINVALID_SOCKET;
-            return std::unexpected{ ConnectionErrorEnum::InvalidEndpoint };
-        }
-
-        outData.endpoint = std::move(*endpointRes);
-
-        data.handshakeCallback = &TlsAcceptPolicy::ServerHandshake;
-        return ServerHandshake(outData);
+        return DefaultAcceptPolicy<Data>::Accept(data, outData, options)
+                .and_then(s_makeHandshake);
     }
-
     template<SocketDataConcept Data>
-    ConnectionResultOper TlsAcceptPolicy<Data>::ServerHandshake(Data& data) noexcept {
+    ConnectionResultOper TlsAcceptPolicy<Data>::ServerHandshake(Data& data, AcceptOptions options) noexcept {
 #pragma region fast-fail and lambdas
 
         if (data.credentials == nullptr) return std::unexpected{ ConnectionErrorEnum::CertificateError };
@@ -77,6 +41,11 @@ namespace Hermes {
             closesocket(data.socket);
             data.socket = macroINVALID_SOCKET;
             return std::unexpected{ error };
+        };
+
+        const auto s_setTimeout = [&](const int value) {
+            setsockopt(data.socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&value), sizeof(value));
+            setsockopt(data.socket, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<const char*>(&value), sizeof(value));
         };
 
 #pragma endregion
@@ -106,11 +75,12 @@ namespace Hermes {
         TimeStamp tsExpiry{};
 
         constexpr auto dwSspiFlags{
-            AcceptSecurityContextFlags::SequenceDetect |
-            AcceptSecurityContextFlags::ReplayDetect |
+            AcceptSecurityContextFlags::SequenceDetect  |
+            AcceptSecurityContextFlags::ReplayDetect    |
             AcceptSecurityContextFlags::Confidentiality |
-            AcceptSecurityContextFlags::ExtendedError |
-            AcceptSecurityContextFlags::Stream };
+            AcceptSecurityContextFlags::ExtendedError   |
+            AcceptSecurityContextFlags::Stream
+        };
 
 
         DWORD pfContextAttr{};
@@ -120,6 +90,10 @@ namespace Hermes {
         bool firstPass{ !isRenegotiation };;
 
         DWORD receivedBytes{};
+
+
+        if (options.handshakeTimeout.count() != 0)
+            s_setTimeout(options.handshakeTimeout.count());
 
         if (data.pendingData > 0) {
             receivedBytes = data.pendingData;
@@ -219,8 +193,12 @@ namespace Hermes {
                     if (status != EncryptStatusEnum::ErrOk)
                         return s_clearAndExit();
 
-                    data.isHandshakeComplete = true;
-                    data.isServer            = true;
+                    data.requestClientCertificate = options.requestClientCertificate;
+                    data.isHandshakeComplete      = true;
+                    data.isServer                 = true;
+
+                    s_setTimeout({});
+
 
                     return {};
                 }
@@ -277,12 +255,15 @@ namespace Hermes {
                 outBuffer     = SecBuffer{ 0, _tul(SecurityBufferEnum::Token), nullptr };
                 outBufferDesc = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &outBuffer };
 
-                constexpr auto dwSspiFlags{
-                    AcceptSecurityContextFlags::SequenceDetect |
-                    AcceptSecurityContextFlags::ReplayDetect |
+                auto dwSspiFlags{
+                    AcceptSecurityContextFlags::SequenceDetect  |
+                    AcceptSecurityContextFlags::ReplayDetect    |
                     AcceptSecurityContextFlags::Confidentiality |
                     AcceptSecurityContextFlags::Stream
                 };
+
+                if (data.requestClientCertificate)
+                    dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
 
                 DWORD dwSSPIOutFlags{};
                 CredHandle credHandle{ data.credentials->GetCredHandle() };

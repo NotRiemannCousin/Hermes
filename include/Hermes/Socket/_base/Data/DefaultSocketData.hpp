@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 
+#include <chrono>
 #include <Hermes/Socket/_base/_base.hpp>
 
 namespace Hermes {
@@ -23,14 +24,24 @@ namespace Hermes {
 
         DefaultSocketData MakeChild() const;
 
-        Endpoint endpoint{};
-        SOCKET   socket{ macroINVALID_SOCKET };
+
+        struct SocketOptions {
+            // I can't do `using std::chrono_literals::...` thing here, aff
+            std::chrono::milliseconds connectTimeout{ std::chrono::seconds{ 30 } };
+            std::chrono::milliseconds sendTimeout{ std::chrono::seconds{ 10 } };
+            std::chrono::milliseconds recvTimeout{ std::chrono::seconds{ 10 } };
+        };
 
         struct State {
             std::array<std::byte, 0x4000> buffer{};
         };
 
+
+        Endpoint endpoint{};
+        SOCKET   socket{ macroINVALID_SOCKET };
+
         std::unique_ptr<State> state{};
+        SocketOptions options{};
     };
 
     static_assert(SocketDataConcept<DefaultSocketData<>>);

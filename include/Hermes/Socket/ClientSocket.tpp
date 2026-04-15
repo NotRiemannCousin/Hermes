@@ -35,14 +35,24 @@ namespace Hermes {
 
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+    template<class>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data) noexcept {
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData &&data) noexcept
+        requires std::default_initializable<typename ConnectionPolicyType::Options> {
+        return Connect(std::move(data), {});
+    }
+
+
+    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+        requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+    ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data, ConnectionPolicyType::Options opt) noexcept {
         Network::Initialize();
 
         ClientSocket socket;
         socket.socketData = std::move(data);
 
-        const auto result = socket.connectionPolicy.Connect(socket.socketData);
+        const auto result{ socket.connectionPolicy.Connect(socket.socketData, opt) };
 
         if (!result) return std::unexpected{ result.error() };
 
@@ -79,7 +89,7 @@ namespace Hermes {
 
     template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class
         TransferPolicy>
-        requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy,
+    requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy,
         SocketData>
     template<ByteLike Byte>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>

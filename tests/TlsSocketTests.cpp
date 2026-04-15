@@ -1,3 +1,4 @@
+// ReSharper disable CppPassValueParameterByConstReference
 #include <gtest/gtest.h>
 #include <Hermes/Socket/ClientSocket.hpp>
 #include <Hermes/Socket/ListenerSocket.hpp>
@@ -50,12 +51,12 @@ static Hermes::Credentials* GetClientAuth() {
 
 static constexpr std::string_view kTlsHost{ "localhost" };
 
-Hermes::ConnectionResult<RawTlsListener> MakeListenSocket(uint16_t port) {
-    return RawTlsListener::Listen({ MakeEndpoint(port), std::string{ kTlsHost }, GetServerAuth() });
+Hermes::ConnectionResult<RawTlsListener> MakeListenSocket(uint16_t port, Hermes::TlsAcceptPolicy<>::ListenOptions options = {}) {
+    return RawTlsListener::Listen({ MakeEndpoint(port), std::string{ kTlsHost }, GetServerAuth() }, options);
 }
 
-Hermes::ConnectionResult<RawTlsClient> MakeClientSocket(uint16_t port) {
-    return RawTlsClient::Connect({ MakeEndpoint(port), std::string{ kTlsHost }, GetClientAuth() });
+Hermes::ConnectionResult<RawTlsClient> MakeClientSocket(uint16_t port, Hermes::TlsConnectPolicy<>::Options options = {}) {
+    return RawTlsClient::Connect({ MakeEndpoint(port), std::string{ kTlsHost }, GetClientAuth() }, options);
 }
 
 #pragma endregion
@@ -71,7 +72,7 @@ TEST_F(TlsListenerSocketTest, Listen_ValidLoopbackEndpoint_Succeeds) {
 
 TEST_F(TlsListenerSocketTest, Listen_PortAlreadyBound_ReturnsAddressInUse) {
     const uint16_t port{ GetNextPort() };
-    auto first{ MakeListenSocket(port) };
+    auto first{ MakeListenSocket(port, {{ .reuseAddress = false }}) };
     ASSERT_TRUE(first.has_value());
 
     const auto second{ MakeListenSocket(port) };
@@ -359,6 +360,68 @@ TEST_F(TlsSocketBridgeTest, ClientClose_ServerRecv_HandlesGracefully) {
     } else {
         EXPECT_EQ(recvErr.error(), ConnectionErrorEnum::ConnectionClosed);
     }
+}
+
+#pragma endregion
+
+
+#pragma region Timeouts
+
+using namespace std::chrono;
+using namespace std::chrono_literals;
+
+TEST_F(TlsClientSocketTest, Connect_ConnectionTimeout_AbortsTcpEarly) {
+    // 192.0.2.1 is reserved (TEST-NET-1), it's a blackhole (causes packet drop)
+    const IpEndpoint blackhole{ IpAddress::FromIpv4({ 192, 0, 2, 1 }), 443 };
+
+    const auto start{ steady_clock::now() };
+    const auto result{ RawTlsClient::Connect({ blackhole, std::string{ kTlsHost }, GetClientAuth() }, {{
+            .connectionTimeout = 100ms
+        }}) };
+    const auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
+
+    EXPECT_FALSE(result.has_value());
+    EXPECT_EQ(result.error(), ConnectionErrorEnum::ConnectionFailed);
+
+    EXPECT_LT(elapsed, 1s);
+}
+
+TEST_F(TlsClientSocketTest, Connect_HandshakeTimeout_AbortsTlsEarly) {
+    const uint16_t port{ GetNextPort() };
+
+    auto tcpListener{ Hermes::RawTcpListener::Listen(Hermes::DefaultSocketData<>{ MakeEndpoint(port) }) };
+    ASSERT_TRUE(tcpListener.has_value());
+
+    std::jthread tarpit{ [&]() {
+        if (auto client{ tcpListener->AcceptOne() }) {
+            std::this_thread::sleep_for(milliseconds{ 500 });
+        }
+    }};
+
+    auto start{ steady_clock::now() };
+    const auto result{ MakeClientSocket(port, { .handshakeTimeout = 50ms }) };
+    auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
+
+    EXPECT_FALSE(result.has_value());
+    EXPECT_LT(elapsed, 400ms);
+}
+
+TEST_F(TlsListenerSocketTest, AcceptOne_HandshakeTimeout_AbortsTlsEarly) {
+    const uint16_t port{ GetNextPort() };
+    auto listener{ MakeListenSocket(port) };
+    ASSERT_TRUE(listener.has_value());
+
+    std::jthread tarpit{ [&]() {
+        auto tcpClient{ Hermes::RawTcpClient::Connect(Hermes::DefaultSocketData<>{ MakeEndpoint(port) }) };
+        std::this_thread::sleep_for(500ms);
+    }};
+
+    auto start{ steady_clock::now() };
+    const auto result{ listener->AcceptOne({ .handshakeTimeout = 50ms }) };
+    auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
+
+    EXPECT_FALSE(result.has_value());
+    EXPECT_LT(elapsed, 400ms);
 }
 
 #pragma endregion

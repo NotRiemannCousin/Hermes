@@ -7,7 +7,7 @@ namespace std {
         bool isVerbose = false;
 
         constexpr auto parse(std::format_parse_context& ctx) {
-            auto it = ctx.begin();
+            auto it{ ctx.begin() };
             if (it != ctx.end() && *it == 'v') {
                 isVerbose = true;
                 ++it;

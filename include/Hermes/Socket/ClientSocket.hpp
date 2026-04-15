@@ -22,7 +22,12 @@ namespace Hermes {
         ClientSocket& operator=(ClientSocket&&) noexcept;
         ~ClientSocket();
 
-        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data) noexcept;
+
+        template<class = void>
+        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data) noexcept
+            requires std::default_initializable<typename ConnectionPolicyType::Options>;
+
+        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data, ConnectionPolicyType::Options opt) noexcept;
 
         //! @return Returns the count of data sent on success, or an error on failure.
         template<std::ranges::contiguous_range R>

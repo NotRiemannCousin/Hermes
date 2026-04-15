@@ -37,9 +37,14 @@ typedef struct _UNICODE_STRING {
 #pragma region Macro Operations
 #define FLAGS_OPERATIONS(TYPE)                                                              \
         static_assert(std::is_enum_v<TYPE>);                                                \
-        constexpr TYPE operator|(TYPE f1, TYPE f2) {                                        \
+        constexpr TYPE operator|(TYPE f1, TYPE f2) noexcept {                               \
             using type = std::underlying_type_t<decltype(f1)>;                              \
             return static_cast<TYPE>(type(f1) | type(f2));                                  \
+        }                                                                                   \
+        constexpr TYPE& operator|=(TYPE& f1, TYPE f2) noexcept {                            \
+            using T = std::underlying_type_t<TYPE>;                                         \
+            f1 = static_cast<TYPE>(static_cast<T>(f1) | static_cast<T>(f2));                \
+            return f1;                                                                      \
         }                                                                                   \
                                                                                             \
         constexpr bool operator!=(auto a, TYPE b) noexcept {                                \

@@ -80,7 +80,7 @@ TEST_F(ListenerSocketTest, Listen_ValidLoopbackEndpoint_Succeeds) {
 
 TEST_F(ListenerSocketTest, Listen_PortAlreadyBound_ReturnsAddressInUse) {
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(19101) };
-    auto first{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };
+    auto first{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }, { .reuseAddress = false }) };
     ASSERT_TRUE(first.has_value());
 
     const auto second{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };

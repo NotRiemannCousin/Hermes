@@ -268,7 +268,7 @@ TEST_F(IpAddressTest, AsIpv6_FromIpv6_ReturnsSameBytes) {
 TEST_F(IpAddressTest, AsIpv6_FromIpv4_HasIpv4MappedPrefix) {
     const auto result{ loopback4.AsIpv6() };
     // Bytes [0..9] must be zero
-    for (int i = 0; i < 10; ++i)
+    for (int i{}; i < 10; ++i)
         EXPECT_EQ(result[i], 0) << "byte[" << i << "] should be 0";
     // Bytes [10..11] must be 0xff (IPv4-mapped marker)
     EXPECT_EQ(result[10], 0xff);
