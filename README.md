@@ -1,5 +1,7 @@
 # Hermes
 
+![Hermes](Hermes-logo.webp "Hermes, the Greek god of messengers and trade")
+
 A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution` (planned), and more — targeting **Windows 10 or newer** with **C++26**.
 
 > **Status:** v0.2 — active development. Async sockets (`std::execution`) are planned once compiler support matures.
