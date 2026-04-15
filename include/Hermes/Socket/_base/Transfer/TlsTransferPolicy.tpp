@@ -1,5 +1,6 @@
 #pragma once
 #include <algorithm>
+#include <iostream>
 // EU ODEIO TLS NAMORAL
 
 namespace Hermes {
@@ -122,8 +123,10 @@ namespace Hermes {
         array<SecBuffer, 4> secBuffers{};
         SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, secBuffers.data() };
 
+        std::vector<EncryptStatusEnum> encryptedStatuses{ };
         do {
             GT_TRY_AGAIN:
+            encryptedStatuses.push_back((EncryptStatusEnum)status);
 
             const bool hasPendingData{ !dataSpan.empty() };
             const bool hasPendingExtraData{ !extraSpan.empty() };
@@ -135,7 +138,7 @@ namespace Hermes {
                     dataSpan = extraSpan;
                 }
                 else {
-                    const int received{ recv(
+                    const int received{ recv( // fica parado aqui!!!!!
                             data.socket,
                             reinterpret_cast<char*>(decryptedData.data() + extraSpan.size()),
                         static_cast<int>(decryptedData.size() - extraSpan.size()),
@@ -144,11 +147,12 @@ namespace Hermes {
 
 
                     if (received == 0)
-                        return { 0, std::unexpected{ ConnectionErrorEnum::ConnectionClosed} };
+                        return { 0, std::unexpected{ ConnectionErrorEnum::ConnectionClosed } };
                     if (received < 0)
                         return { 0, std::unexpected{ ConnectionErrorEnum::ReceiveFailed } };
 
                     dataSpan = decryptedData.first(extraSpan.size() + received);
+                    extraSpan = {};
                 }
 
 
@@ -188,12 +192,14 @@ namespace Hermes {
 
                     const size_t countToCopy{ min(bufferRecv.size(), dataSpan.size()) };
                     std::memmove(bufferRecv.data(), dataSpan.data(), countToCopy);
-                    std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
-
-                    extraSpan = { decryptedData.data(), extraSpan.size() };
 
                     bufferRecv = bufferRecv.subspan(countToCopy);
                     dataSpan   = dataSpan.subspan(countToCopy);
+
+                    if (dataSpan.empty() && !extraSpan.empty()) {
+                        std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
+                        extraSpan = { decryptedData.data(), extraSpan.size() };
+                    }
 
                     if (bufferRecv.empty())
                         return { initialSize - bufferRecv.size(), {} };
@@ -224,23 +230,21 @@ namespace Hermes {
                 case EncryptStatusEnum::InfoRenegotiate: {
                     data.isHandshakeComplete = false;
 
-                    // 1. Procurar por dados extras (SECBUFFER_EXTRA) deixados pelo DecryptMessage
+
                     const auto extraBuffer{
                         find(secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType)
                     };
 
-                    if (extraBuffer != secBuffers.end() && s_hasData(*extraBuffer)) {
+                    if (extraBuffer != secBuffers.end() && s_hasData(*extraBuffer))
                         extraSpan = { static_cast<std::byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
-                    } else {
-                        extraSpan = {}; // O SSPI consumiu tudo, não sobrou nada
-                    }
+                    else
+                        extraSpan = {};
 
-                    // 2. Move os dados residuais para o início (se existirem)
                     if (!extraSpan.empty()) {
                         std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
+                        extraSpan = { decryptedData.data(), extraSpan.size() };
                     }
 
-                    // 3. Avisa o Handshake
                     data.pendingData = static_cast<uint32_t>(extraSpan.size());
 
                     if (!data.handshakeCallback)
@@ -278,18 +282,22 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+        size_t totalReceived{};
+
         if (_state != nullptr) {
-            const auto size{ min(_state->size - _state->index, bufferRecv.size()) };
-
+            const auto size{ min(static_cast<size_t>(_state->size - _state->index), bufferRecv.size()) };
             std::memcpy(bufferRecv.data(), _state->buffer.data() + _state->index, size);
-            _state->index += size;
 
-            bufferRecv = bufferRecv.subspan(size);
+            _state->index += size;
+            totalReceived += size;
+            bufferRecv     = bufferRecv.subspan(size);
+
             if (bufferRecv.empty())
-                return { size, {} };
+                return { totalReceived, {} };
         }
 
-        return TlsTransferPolicy::RecvHelper(data, bufferRecv, false);
+        auto [recvd, err] = TlsTransferPolicy::RecvHelper(data, bufferRecv, false);
+        return { totalReceived + recvd, err };
     }
 
     template<SocketDataConcept Data>
