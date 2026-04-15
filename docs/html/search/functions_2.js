@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['begin_0',['begin',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_lazy_range.html#abbc0825a6e3593bf83b46a38da24a24e',1,'Hermes::DefaultTransferPolicy::RecvLazyRange::begin()'],['../struct_hermes_1_1_tls_transfer_policy_1_1_recv_lazy_range.html#ad25dbbfb65166c479efb84886ab83b56',1,'Hermes::TlsTransferPolicy::RecvLazyRange::begin()'],['../struct_hermes_1_1_utils_1_1_drop_last_view.html#ae21989b3dd85458120fab4f35a349e8f',1,'Hermes::Utils::DropLastView::begin()'],['../struct_hermes_1_1_utils_1_1_until_match_view.html#ad318a3298374613027c00d5b2a6bbbe7',1,'Hermes::Utils::UntilMatchView::begin()']]],
-  ['both_1',['Both',['../struct_hermes_1_1_credentials.html#a372a62f384fd171a5251097565f084a8',1,'Hermes::Credentials::Both(const std::filesystem::path &amp;certPath, SChannelCredFlags sChannelFlags={}, const wchar_t *password=L&quot;&quot;) noexcept'],['../struct_hermes_1_1_credentials.html#aae7b2f49f779ec37f85a49fc3cc1a25f',1,'Hermes::Credentials::Both(std::span&lt; const std::byte &gt; certBuffer, SChannelCredFlags sChannelFlags={}, const wchar_t *password=L&quot;&quot;) noexcept']]],
-  ['build_2',['Build',['../struct_hermes_1_1_ip_endpoint.html#ab854121550e85fefbd701a508c9db4ad',1,'Hermes::IpEndpoint']]]
-];

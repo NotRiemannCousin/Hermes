@@ -1,6 +1,0 @@
-var searchData=
-[
-  ['listen_0',['Listen',['../struct_hermes_1_1_default_accept_policy.html#a4447f1392d9a1cd60ba1cab982dcd156',1,'Hermes::DefaultAcceptPolicy::Listen()'],['../struct_hermes_1_1_tls_accept_policy.html#a696f9a2b61c586a7fc982ac1c84c4e7c',1,'Hermes::TlsAcceptPolicy::Listen()'],['../struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c',1,'Hermes::ListenerSocket::Listen(SocketDataType &amp;&amp;data, int backlog=SOMAXCONN) noexcept'],['../struct_hermes_1_1_listener_socket.html#af848ece8f3ac170c1b12d1dee7efb6b1',1,'Hermes::ListenerSocket::Listen(SocketDataType &amp;&amp;data, AcceptPolicyType&lt; SocketDataType &gt;::ListenOptions opt, int backlog=SOMAXCONN) noexcept']]],
-  ['listenersocket_1',['ListenerSocket',['../struct_hermes_1_1_listener_socket.html#ac24902798f672a23eb564ea08d91a396',1,'Hermes::ListenerSocket']]],
-  ['listenone_2',['ListenOne',['../struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0',1,'Hermes::ListenerSocket::ListenOne(SocketDataType &amp;&amp;data) noexcept'],['../struct_hermes_1_1_listener_socket.html#a3ba04dad8621ead17fbcc9557eb88657',1,'Hermes::ListenerSocket::ListenOne(SocketDataType &amp;&amp;data, AcceptPolicyType&lt; SocketDataType &gt;::ListenOptions opt) noexcept']]]
-];
