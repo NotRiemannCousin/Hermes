@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['raw_0',['Raw',['../_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005a65e65c8ab0d8609ce12fc68a03cb8e00',1,'SocketTypeEnum.hpp']]],
+  ['rdm_1',['Rdm',['../_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005a9a445c0052afc6b891014121d90c05f1',1,'SocketTypeEnum.hpp']]],
+  ['readonly_2',['Readonly',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba060d84e58c348e44da6637e57e2e9201',1,'SecurityBufferEnum.hpp']]],
+  ['readonlywithchecksum_3',['ReadonlyWithChecksum',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba7953d34b408742922b52168d081615f2',1,'SecurityBufferEnum.hpp']]],
+  ['reauthentication_4',['Reauthentication',['../_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caddd4a952fc5997e83e82eb3624d56969',1,'InitializeSecurityContextReturnFlags.hpp']]],
+  ['receive_5',['Receive',['../_socket_shutdown_enum_8hpp.html#a0cb2366718e1b46ebf561d3e51be0ddea5639d3df5aea3d9e78027b843ee3cbb2',1,'SocketShutdownEnum.hpp']]],
+  ['receivefailed_6',['ReceiveFailed',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf0dc5b8dbf46673b612bb962a4b05a83',1,'Hermes']]],
+  ['receivetimeout_7',['ReceiveTimeout',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c',1,'Hermes']]],
+  ['reject_8',['Reject',['../_condition_function_enum_8hpp.html#aaf750a351d3e6ab5c91bfd1ba10d5c9bad98ac12774fca5c3cbaffe276840c55f',1,'ConditionFunctionEnum.hpp']]],
+  ['replaydetect_9',['replaydetect',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8ae6e385c9b8fca9f68615a341f56b10fd',1,'ReplayDetect:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60ae6e385c9b8fca9f68615a341f56b10fd',1,'ReplayDetect:&#160;AcceptSecurityContextReturnFlags.hpp'],['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceae6e385c9b8fca9f68615a341f56b10fd',1,'ReplayDetect:&#160;InitializeSecurityContextFlags.hpp'],['../_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cae6e385c9b8fca9f68615a341f56b10fd',1,'ReplayDetect:&#160;InitializeSecurityContextReturnFlags.hpp']]],
+  ['reserved_10',['reserved',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba942d4e37dd5607ab68e54755540d4a47',1,'Reserved:&#160;SecurityBufferEnum.hpp'],['../_credential_flags_8hpp.html#a41552f2f6afbcacfdd05f31fcc4fb50ca942d4e37dd5607ab68e54755540d4a47',1,'Reserved:&#160;CredentialFlags.hpp']]],
+  ['reserved1_11',['reserved1',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea93876cb309016fa725517b046474c44b',1,'Reserved1:&#160;InitializeSecurityContextFlags.hpp'],['../_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca93876cb309016fa725517b046474c44b',1,'Reserved1:&#160;InitializeSecurityContextReturnFlags.hpp']]],
+  ['resolvefailed_12',['ResolveFailed',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc',1,'Hermes']]],
+  ['resolvehostnotfound_13',['ResolveHostNotFound',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa1ed9e36e248aeea0060815c583a3956b',1,'Hermes']]],
+  ['resolvenoaddressfound_14',['ResolveNoAddressFound',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95',1,'Hermes']]],
+  ['resolveservicenotfound_15',['ResolveServiceNotFound',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541',1,'Hermes']]],
+  ['resolvetemporaryfailure_16',['ResolveTemporaryFailure',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf4fcb52d03ef5e444191c8cb34c20ec2',1,'Hermes']]],
+  ['restrictedroots_17',['RestrictedRoots',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a80ee1bc097772e2054705b80d9a58c0a',1,'SChannelCredFlags.hpp']]],
+  ['revocationcheckcacheonly_18',['RevocationCheckCacheOnly',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a2105e14c7058cc1f563f334aba975c31',1,'SChannelCredFlags.hpp']]],
+  ['revocationcheckchain_19',['RevocationCheckChain',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a970a7b72cd3fa6fc922a2744749fc9aa',1,'SChannelCredFlags.hpp']]],
+  ['revocationcheckchainexcluderoot_20',['RevocationCheckChainExcludeRoot',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a84810841949bf9be8e4f850efdd3ea72',1,'SChannelCredFlags.hpp']]],
+  ['revocationcheckendcert_21',['RevocationCheckEndCert',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada1c6c35c7bfc66eda9e7984d96dc754',1,'SChannelCredFlags.hpp']]]
+];

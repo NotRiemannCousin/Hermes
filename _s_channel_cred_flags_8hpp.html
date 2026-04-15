@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: include/Hermes/_base/WinApi/Flags/SChannelCredFlags.hpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_s_channel_cred_flags_8hpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">SChannelCredFlags.hpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;schannel.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for SChannelCredFlags.hpp:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="_s_channel_cred_flags_8hpp__incl.svg" width="280" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="_s_channel_cred_flags_8hpp__dep__incl.svg" width="1166" height="784"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="_s_channel_cred_flags_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a691929b5459ea08f8e4b8264c8807800" id="r_a691929b5459ea08f8e4b8264c8807800"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800">SChannelCredFlags</a> { <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ab4daca084ad9eabfc8de231929477ed6">V1</a> = SCH_CRED_V1
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aec765f1adc3b4253f2d3b131a4a8618f">V2</a> = SCH_CRED_V2
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ad5b50b8cf96bcc8aba90f306f5e6189c">V3</a> = SCH_CRED_V3
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a34b6cd75171affba6957e308dcbd92be">Version</a> = SCH_CRED_VERSION
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aacfb1697c7b31c2db9614331527e7002">FormatCertContext</a> = SCH_CRED_FORMAT_CERT_CONTEXT
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a741044e3e10f09b86977b13751e496c8">FormatCertHash</a> = SCH_CRED_FORMAT_CERT_HASH
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a973bcff706d61513066f0df7faeea6e2">FormatCertHashStore</a> = SCH_CRED_FORMAT_CERT_HASH_STORE
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a8711e7be8b680288931d7b533c6f21f6">MaxStoreNameSize</a> = SCH_CRED_MAX_STORE_NAME_SIZE
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a3732587cd35248e5eabd77a6c3267f38">MaxSupportedAlgs</a> = SCH_CRED_MAX_SUPPORTED_ALGS
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac895c239bcf6e5bacab21be84d8c5b40">MaxSupportedCerts</a> = SCH_CRED_MAX_SUPPORTED_CERTS
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a783ad1ed96ea036dc5911246ad889381">NoSystemMapper</a> = SCH_CRED_NO_SYSTEM_MAPPER
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800adbea823d86c476460b1d2d5646bd73d1">NoServernameCheck</a> = SCH_CRED_NO_SERVERNAME_CHECK
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b">ManualCredValidation</a> = SCH_CRED_MANUAL_CRED_VALIDATION
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a32d2972736a37036a59009e2369b8e86">NoDefaultCreds</a> = SCH_CRED_NO_DEFAULT_CREDS
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a60e029055d0b5451cc5a2fa9acffbd8a">AutoCredValidation</a> = SCH_CRED_AUTO_CRED_VALIDATION
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a2d5a07686a9a4b99fd5a9b09cfe71f95">UseDefaultCreds</a> = SCH_CRED_USE_DEFAULT_CREDS
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a65a72e5a783a8af81ceb4d974fd3aebb">DisableReconnects</a> = SCH_CRED_DISABLE_RECONNECTS
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada1c6c35c7bfc66eda9e7984d96dc754">RevocationCheckEndCert</a> = SCH_CRED_REVOCATION_CHECK_END_CERT
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a970a7b72cd3fa6fc922a2744749fc9aa">RevocationCheckChain</a> = SCH_CRED_REVOCATION_CHECK_CHAIN
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a84810841949bf9be8e4f850efdd3ea72">RevocationCheckChainExcludeRoot</a> = SCH_CRED_REVOCATION_CHECK_CHAIN_EXCLUDE_ROOT
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aa2eb1f2bb2875e5f0fbd22833937970d">IgnoreNoRevocationCheck</a> = SCH_CRED_IGNORE_NO_REVOCATION_CHECK
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ad14557d0a0c14462bcacd5456919b755">IgnoreRevocationOffline</a> = SCH_CRED_IGNORE_REVOCATION_OFFLINE
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a80ee1bc097772e2054705b80d9a58c0a">RestrictedRoots</a> = SCH_CRED_RESTRICTED_ROOTS
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a2105e14c7058cc1f563f334aba975c31">RevocationCheckCacheOnly</a> = SCH_CRED_REVOCATION_CHECK_CACHE_ONLY
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac2b21856fd2fbadd3dfac625c44b2dc7">CacheOnlyUrlRetrieval</a> = SCH_CRED_CACHE_ONLY_URL_RETRIEVAL
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac65752f9c29a185651706de25d82af0e">MemoryStoreCert</a> = SCH_CRED_MEMORY_STORE_CERT
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a749fdf19aeaaa1700c5f81353788aea1">CacheOnlyUrlRetrievalOnCreate</a> = SCH_CRED_CACHE_ONLY_URL_RETRIEVAL_ON_CREATE
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ae0c159bc3ea69a90b0c0b041bc07d1dc">SniCredential</a> = SCH_CRED_SNI_CREDENTIAL
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a41a8e7bb0ea47d1a86d8a507603d1298">SniEnableOcsp</a> = SCH_CRED_SNI_ENABLE_OCSP
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a3f5b0039305e0ff381734cc52625b648">DeferredCredValidation</a> = SCH_CRED_DEFERRED_CRED_VALIDATION
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a5d1dac3484cf47a8a1e5a557eeeb51d9">X509Certchain</a> = SCH_CRED_X509_CERTCHAIN
+, <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada3ba214953a677b3ec8bccb0a6e9d16">X509Capi</a> = SCH_CRED_X509_CAPI
+, <br />
+&#160;&#160;<a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aa984fa4db850f78ede280e20baf178bd">CertContext</a> = SCH_CRED_CERT_CONTEXT
+<br />
+ }</td></tr>
+<tr class="separator:a691929b5459ea08f8e4b8264c8807800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="a691929b5459ea08f8e4b8264c8807800" name="a691929b5459ea08f8e4b8264c8807800"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a691929b5459ea08f8e4b8264c8807800">&#9670;&#160;</a></span>SChannelCredFlags</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800">SChannelCredFlags</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ab4daca084ad9eabfc8de231929477ed6" name="a691929b5459ea08f8e4b8264c8807800ab4daca084ad9eabfc8de231929477ed6"></a>V1&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800aec765f1adc3b4253f2d3b131a4a8618f" name="a691929b5459ea08f8e4b8264c8807800aec765f1adc3b4253f2d3b131a4a8618f"></a>V2&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ad5b50b8cf96bcc8aba90f306f5e6189c" name="a691929b5459ea08f8e4b8264c8807800ad5b50b8cf96bcc8aba90f306f5e6189c"></a>V3&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a34b6cd75171affba6957e308dcbd92be" name="a691929b5459ea08f8e4b8264c8807800a34b6cd75171affba6957e308dcbd92be"></a>Version&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800aacfb1697c7b31c2db9614331527e7002" name="a691929b5459ea08f8e4b8264c8807800aacfb1697c7b31c2db9614331527e7002"></a>FormatCertContext&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a741044e3e10f09b86977b13751e496c8" name="a691929b5459ea08f8e4b8264c8807800a741044e3e10f09b86977b13751e496c8"></a>FormatCertHash&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a973bcff706d61513066f0df7faeea6e2" name="a691929b5459ea08f8e4b8264c8807800a973bcff706d61513066f0df7faeea6e2"></a>FormatCertHashStore&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a8711e7be8b680288931d7b533c6f21f6" name="a691929b5459ea08f8e4b8264c8807800a8711e7be8b680288931d7b533c6f21f6"></a>MaxStoreNameSize&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a3732587cd35248e5eabd77a6c3267f38" name="a691929b5459ea08f8e4b8264c8807800a3732587cd35248e5eabd77a6c3267f38"></a>MaxSupportedAlgs&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ac895c239bcf6e5bacab21be84d8c5b40" name="a691929b5459ea08f8e4b8264c8807800ac895c239bcf6e5bacab21be84d8c5b40"></a>MaxSupportedCerts&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a783ad1ed96ea036dc5911246ad889381" name="a691929b5459ea08f8e4b8264c8807800a783ad1ed96ea036dc5911246ad889381"></a>NoSystemMapper&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800adbea823d86c476460b1d2d5646bd73d1" name="a691929b5459ea08f8e4b8264c8807800adbea823d86c476460b1d2d5646bd73d1"></a>NoServernameCheck&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b" name="a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b"></a>ManualCredValidation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a32d2972736a37036a59009e2369b8e86" name="a691929b5459ea08f8e4b8264c8807800a32d2972736a37036a59009e2369b8e86"></a>NoDefaultCreds&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a60e029055d0b5451cc5a2fa9acffbd8a" name="a691929b5459ea08f8e4b8264c8807800a60e029055d0b5451cc5a2fa9acffbd8a"></a>AutoCredValidation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a2d5a07686a9a4b99fd5a9b09cfe71f95" name="a691929b5459ea08f8e4b8264c8807800a2d5a07686a9a4b99fd5a9b09cfe71f95"></a>UseDefaultCreds&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a65a72e5a783a8af81ceb4d974fd3aebb" name="a691929b5459ea08f8e4b8264c8807800a65a72e5a783a8af81ceb4d974fd3aebb"></a>DisableReconnects&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ada1c6c35c7bfc66eda9e7984d96dc754" name="a691929b5459ea08f8e4b8264c8807800ada1c6c35c7bfc66eda9e7984d96dc754"></a>RevocationCheckEndCert&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a970a7b72cd3fa6fc922a2744749fc9aa" name="a691929b5459ea08f8e4b8264c8807800a970a7b72cd3fa6fc922a2744749fc9aa"></a>RevocationCheckChain&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a84810841949bf9be8e4f850efdd3ea72" name="a691929b5459ea08f8e4b8264c8807800a84810841949bf9be8e4f850efdd3ea72"></a>RevocationCheckChainExcludeRoot&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800aa2eb1f2bb2875e5f0fbd22833937970d" name="a691929b5459ea08f8e4b8264c8807800aa2eb1f2bb2875e5f0fbd22833937970d"></a>IgnoreNoRevocationCheck&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ad14557d0a0c14462bcacd5456919b755" name="a691929b5459ea08f8e4b8264c8807800ad14557d0a0c14462bcacd5456919b755"></a>IgnoreRevocationOffline&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a80ee1bc097772e2054705b80d9a58c0a" name="a691929b5459ea08f8e4b8264c8807800a80ee1bc097772e2054705b80d9a58c0a"></a>RestrictedRoots&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a2105e14c7058cc1f563f334aba975c31" name="a691929b5459ea08f8e4b8264c8807800a2105e14c7058cc1f563f334aba975c31"></a>RevocationCheckCacheOnly&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ac2b21856fd2fbadd3dfac625c44b2dc7" name="a691929b5459ea08f8e4b8264c8807800ac2b21856fd2fbadd3dfac625c44b2dc7"></a>CacheOnlyUrlRetrieval&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ac65752f9c29a185651706de25d82af0e" name="a691929b5459ea08f8e4b8264c8807800ac65752f9c29a185651706de25d82af0e"></a>MemoryStoreCert&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a749fdf19aeaaa1700c5f81353788aea1" name="a691929b5459ea08f8e4b8264c8807800a749fdf19aeaaa1700c5f81353788aea1"></a>CacheOnlyUrlRetrievalOnCreate&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ae0c159bc3ea69a90b0c0b041bc07d1dc" name="a691929b5459ea08f8e4b8264c8807800ae0c159bc3ea69a90b0c0b041bc07d1dc"></a>SniCredential&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a41a8e7bb0ea47d1a86d8a507603d1298" name="a691929b5459ea08f8e4b8264c8807800a41a8e7bb0ea47d1a86d8a507603d1298"></a>SniEnableOcsp&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a3f5b0039305e0ff381734cc52625b648" name="a691929b5459ea08f8e4b8264c8807800a3f5b0039305e0ff381734cc52625b648"></a>DeferredCredValidation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800a5d1dac3484cf47a8a1e5a557eeeb51d9" name="a691929b5459ea08f8e4b8264c8807800a5d1dac3484cf47a8a1e5a557eeeb51d9"></a>X509Certchain&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800ada3ba214953a677b3ec8bccb0a6e9d16" name="a691929b5459ea08f8e4b8264c8807800ada3ba214953a677b3ec8bccb0a6e9d16"></a>X509Capi&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a691929b5459ea08f8e4b8264c8807800aa984fa4db850f78ede280e20baf178bd" name="a691929b5459ea08f8e4b8264c8807800aa984fa4db850f78ede280e20baf178bd"></a>CertContext&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_2b3d271d5966c522c8b24b964939946d.html">WinApi</a></li><li class="navelem"><a class="el" href="dir_3ea201b115e9f8a60b61920d953ffd6d.html">Flags</a></li><li class="navelem"><a class="el" href="_s_channel_cred_flags_8hpp.html">SChannelCredFlags.hpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

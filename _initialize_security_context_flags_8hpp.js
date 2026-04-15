@@ -1,0 +1,35 @@
+var _initialize_security_context_flags_8hpp =
+[
+    [ "InitializeSecurityContextFlags", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ce", [
+      [ "Delegate", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea26545d7107c7489959a37bd671181fca", null ],
+      [ "MutualAuth", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea76c10e0b6fd0372e7b7fc8a9deae022b", null ],
+      [ "ReplayDetect", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceae6e385c9b8fca9f68615a341f56b10fd", null ],
+      [ "SequenceDetect", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea4fc8a8e24d09999f741e4463dab2d340", null ],
+      [ "Confidentiality", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea7310289d42f662613510d4520b3fe67c", null ],
+      [ "UseSessionKey", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cead536d7dc59308d82b20f59daca509cc7", null ],
+      [ "PromptForCreds", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea252216c68b137eadd3b859f5eaba1836", null ],
+      [ "UseSuppliedCreds", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea5b4eb2f816ba8b832ea1c24693a952fb", null ],
+      [ "AllocateMemory", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea14ed491b2429e2ebde9d1e83fae2bb89", null ],
+      [ "UseDceStyle", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea3c7943822238825372a532254e8d8ad2", null ],
+      [ "Datagram", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea640931067618ca3bc723805cb196e22f", null ],
+      [ "Connection", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceac2cc7082a89c1ad6631a2f66af5f00c0", null ],
+      [ "CallLevel", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceaee3913ca35a42b1d586b93e52fae852e", null ],
+      [ "FragmentSupplied", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceaebd5fdb9586b40d8c66317def2e7e125", null ],
+      [ "ExtendedError", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceae0d6e121bc9a40e79a20f71adc2c65fc", null ],
+      [ "Stream", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceaeae835e83c0494a376229f254f7d3392", null ],
+      [ "Integrity", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceaf3f97de67c80480904f958df15b8a57b", null ],
+      [ "Identify", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea907396997c77fece588eefb3b45bfa54", null ],
+      [ "NullSession", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceaffb544aeb80d0d9c1bd28aa5cc6dc220", null ],
+      [ "ManualCredValidation", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea0ebbd2ab36ddf1ee926d2b7fc354a45b", null ],
+      [ "Reserved1", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea93876cb309016fa725517b046474c44b", null ],
+      [ "FragmentToFit", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea0100b43228b7a44c6e30e03d2ada74db", null ],
+      [ "ForwardCredentials", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea5a1224b4cfb84b0def0a98ee787cb8c6", null ],
+      [ "NoIntegrity", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceae192aa24b84d692a5e0eb08b71237032", null ],
+      [ "UseHttpStyle", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cead5331061a5c181b3c6208bca71435b49", null ],
+      [ "UnverifiedTargetName", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea88a297602257002d0f59e56d38b1a8bc", null ],
+      [ "ConfidentialityOnly", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea0b6bf28eaeea8546071712a83146facb", null ],
+      [ "Messages", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea41de6d6cfb8953c021bbe4ba0701c8a1", null ],
+      [ "DeferredCredValidation", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea3f5b0039305e0ff381734cc52625b648", null ],
+      [ "NoPostHandshakeAuth", "_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34ceab0bf538cf0f0995b3edfd0a41090f80d", null ]
+    ] ]
+];

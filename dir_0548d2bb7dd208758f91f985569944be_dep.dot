@@ -1,0 +1,16 @@
+digraph "include/Thoth/NJson"
+{
+ // LATEX_PDF_SIZE
+  bgcolor="transparent";
+  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
+  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
+  compound=true
+  subgraph clusterdir_c6a74f695d865e6872ff805f8280c9af {
+    graph [ bgcolor="#daedff", pencolor="grey50", label="Thoth", fontname=Helvetica,fontsize=10 style="filled,dashed", URL="dir_c6a74f695d865e6872ff805f8280c9af.html",tooltip=""]
+  dir_3c6a022a7e9432f24aa2201eb84947de [label="Dsa", fillcolor="#4ea9ff", color="grey25", style="filled", URL="dir_3c6a022a7e9432f24aa2201eb84947de.html",tooltip=""];
+  dir_41cc9e0bb4f1115e1fe2e2758d2bc168 [label="Http", fillcolor="#4ea9ff", color="red", style="filled", URL="dir_41cc9e0bb4f1115e1fe2e2758d2bc168.html",tooltip=""];
+  dir_0548d2bb7dd208758f91f985569944be [label="NJson", fillcolor="#daedff", color="grey25", style="filled,bold", URL="dir_0548d2bb7dd208758f91f985569944be.html",tooltip=""];
+  }
+  dir_0548d2bb7dd208758f91f985569944be->dir_3c6a022a7e9432f24aa2201eb84947de [headlabel="2", labeldistance=1.5 headhref="dir_000009_000002.html" href="dir_000009_000002.html" color="steelblue1" fontcolor="steelblue1"];
+  dir_0548d2bb7dd208758f91f985569944be->dir_41cc9e0bb4f1115e1fe2e2758d2bc168 [headlabel="1", labeldistance=1.5 headhref="dir_000009_000005.html" href="dir_000009_000005.html" color="steelblue1" fontcolor="steelblue1"];
+}

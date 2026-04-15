@@ -1,0 +1,303 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: include/Hermes/_base/WinApi/Flags/SupportedProtocolsFlags.hpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_supported_protocols_flags_8hpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">SupportedProtocolsFlags.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_supported_protocols_flags_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;schannel.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459">    4</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459">SupportedProtocolsFlags</a> : <span class="keywordtype">long</span> <span class="keywordtype">long</span> {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a9617a5abd8071db95944d8f1f466e5fd">Pct1Server</a> = SP_PROT_PCT1_SERVER,</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459afcb04277f5136f5b2c18ac013b73cf11">Pct1Client</a> = SP_PROT_PCT1_CLIENT,</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac4f6bc8cde3227673bf48308239a52b5">Pct1</a>       = SP_PROT_PCT1,</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a73c55c9e92aaf591043d02a5c34da28d">Ssl2Server</a> = SP_PROT_SSL2_SERVER,</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a7081128df5a70b640bce2101b584f4ee">Ssl2Client</a> = SP_PROT_SSL2_CLIENT,</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4fe6ac799b64b0bb983fa88a319f51e1">Ssl2</a>       = SP_PROT_SSL2,</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac6fccca2c3d6f60588dbf1cd950adaf9">Ssl3Server</a> = SP_PROT_SSL3_SERVER,</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad5e13c7cbed0a5059f3700ee5433efdf">Ssl3Client</a> = SP_PROT_SSL3_CLIENT,</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4985600a674b20428982584735290641">Ssl3</a>       = SP_PROT_SSL3,</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a61c21ddd2c48f00463ca06c51e95cfe9">Tls1Server</a> = SP_PROT_TLS1_SERVER,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a66b9cf8bb59d1f6271d30e668162aa2e">Tls1Client</a> = SP_PROT_TLS1_CLIENT,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a37a0ae80c8b5a4bca823b4f19cb45144">Tls1</a>       = SP_PROT_TLS1,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459abf1fdce68866ce5409b0599e4a4741ff">Ssl3Tls1Clients</a> = SP_PROT_SSL3TLS1_CLIENTS,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4b18a39e87ba28163ed85b32b63e6329">Ssl3Tls1Servers</a> = SP_PROT_SSL3TLS1_SERVERS,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a3bbfacd24dd36b89899e292efdef45bb">Ssl3Tls1</a>        = SP_PROT_SSL3TLS1,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a756cc65869cb6403fbb597f399d7b998">UniServer</a> = SP_PROT_UNI_SERVER,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459abf131675846c121476d19d6558b47e20">UniClient</a> = SP_PROT_UNI_CLIENT,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a232f1e5bc421f7e709f0259e63c56532">Uni</a>       = SP_PROT_UNI,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab1c94ca2fbc3e78fc30069c8d0f01680">All</a>     = SP_PROT_ALL,</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a6adf97f83acf6453d4a6a4b1070f3754">None</a>    = SP_PROT_NONE,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a0f558243fbf45f1cd840fff01957f57b">Clients</a> = SP_PROT_CLIENTS,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aac659513b2353187192e88c5d1988228">Servers</a> = SP_PROT_SERVERS,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab0fefdda5e94edd5aadc060e0104d290">Tls10Server</a> = SP_PROT_TLS1_0_SERVER,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad8659a798cf45d04b4973e0938eaa5ed">Tls10Client</a> = SP_PROT_TLS1_0_CLIENT,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a2d1f547adf50c86a4398b39143b86a11">Tls10</a>       = SP_PROT_TLS1_0,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aa048a3cdd8859be4da87685fcc4490d6">Tls11Server</a> = SP_PROT_TLS1_1_SERVER,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a178561b411b09c1c80361df1f142fa3c">Tls11Client</a> = SP_PROT_TLS1_1_CLIENT,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a0b317af4b4a273b4b5f1fba7129d7646">Tls11</a>       = SP_PROT_TLS1_1,</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aefa4e6432ba5a3f5a7578d0c0367dd67">Tls12Server</a> = SP_PROT_TLS1_2_SERVER,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac2bc8abb75c405730b97ebae791a23e2">Tls12Client</a> = SP_PROT_TLS1_2_CLIENT,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad524b22d0cd60454e29e18b36f6588d7">Tls12</a>       = SP_PROT_TLS1_2,</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad1ccc27a4876bf046b715c7fb3b97ccc">Tls13Server</a> = SP_PROT_TLS1_3_SERVER,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a775c76a8faa64a7835bc57ab235b0113">Tls13Client</a> = SP_PROT_TLS1_3_CLIENT,</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a42fa94ce23958cb797852ba8d005bcc7">Tls13</a>       = SP_PROT_TLS1_3,</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a5869dd9e3bb39fe4eca1ac8b13c78668">DtlsServer</a>  = SP_PROT_DTLS_SERVER,</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459af5f73240a969708984592da8707d6770">DtlsClient</a>  = SP_PROT_DTLS_CLIENT,</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459afe64508608eb1509fa54bf6b08bbe4a0">Dtls</a>        = SP_PROT_DTLS,</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a35262a68da537198d03f52dde92122ad">Dtls1_0Server</a> = SP_PROT_DTLS1_0_SERVER,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1d72d0ac566857bb3d1759e91534467b">Dtls1_0Client</a> = SP_PROT_DTLS1_0_CLIENT,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a862896549fe71bda744eed463927174b">Dtls1_0</a>       = SP_PROT_DTLS1_0,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac708af13386de7572a5670a78d4e4aed">Dtls1_2Server</a> = SP_PROT_DTLS1_2_SERVER,</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a2085335bdfdec058bba833fbd84de2c3">Dtls1_2Client</a> = SP_PROT_DTLS1_2_CLIENT,</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1450df3cb5383070c4db38bbcd3ac42b">Dtls1_2</a>       = SP_PROT_DTLS1_2,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acc371f248e12bfc407633b266d2a6074">Dtls1XServer</a> = SP_PROT_DTLS1_X_SERVER,</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a85cbeb3280b2433620a31cbc5e8b10cc">Dtls1XClient</a> = SP_PROT_DTLS1_X_CLIENT,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aaa0d007e782921fe743991791b0586ee">Dtls1X</a> = SP_PROT_DTLS1_X,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ae295d4666bb7b2f68fb2efb1ebb28b17">Tls11PlusServer</a> = SP_PROT_TLS1_1PLUS_SERVER,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ae0340ee7912417d2e58189726ea5812a">Tls11PlusClient</a> = SP_PROT_TLS1_1PLUS_CLIENT,</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac228b2f5d937706e2680fccef0943a84">Tls11Plus</a> = SP_PROT_TLS1_1PLUS,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acb3499168229c5528f1de44815c146a2">Tls13PlusServer</a> = SP_PROT_TLS1_3PLUS_SERVER,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acbe5eed366dde4ee9b24886e5c77691d">Tls13PlusClient</a> = SP_PROT_TLS1_3PLUS_CLIENT,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459af2a1c8c4d22e0a45a0f15669e83e5345">Tls13Plus</a>       = SP_PROT_TLS1_3PLUS,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac21d53a8ba1c6b90dacf59385d460df8">Tls1XServer</a> = SP_PROT_TLS1_X_SERVER,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab3dda26af02c77bfb96024d025a9e67e">Tls1XClient</a> = SP_PROT_TLS1_X_CLIENT,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a71d7f59f918214a279953cdd6c03a46a">Tls1X</a>       = SP_PROT_TLS1_X,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a553365024ee2295f97a08ac7cf43fe27">Ssl3Tls1XClients</a> = SP_PROT_SSL3TLS1_X_CLIENTS,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a055addf7516f5cbe93336440425826da">Ssl3Tls1XServers</a> = SP_PROT_SSL3TLS1_X_SERVERS,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acc4885f70c270fe85fd43837cef36c83">Ssl3Tls1X</a>        = SP_PROT_SSL3TLS1_X,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a7c654ce83e512d58668b970b08463c3c">XClients</a> = SP_PROT_X_CLIENTS,</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_enumvalue" href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1a5db63873f812ffe1ac464cd28c4c7c">XServers</a> = SP_PROT_X_SERVERS</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>};</div>
+</div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459">SupportedProtocolsFlags</a></div><div class="ttdeci">SupportedProtocolsFlags</div><div class="ttdef"><b>Definition</b> SupportedProtocolsFlags.hpp:4</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a055addf7516f5cbe93336440425826da"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a055addf7516f5cbe93336440425826da">SupportedProtocolsFlags::Ssl3Tls1XServers</a></div><div class="ttdeci">@ Ssl3Tls1XServers</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a0b317af4b4a273b4b5f1fba7129d7646"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a0b317af4b4a273b4b5f1fba7129d7646">SupportedProtocolsFlags::Tls11</a></div><div class="ttdeci">@ Tls11</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a0f558243fbf45f1cd840fff01957f57b"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a0f558243fbf45f1cd840fff01957f57b">SupportedProtocolsFlags::Clients</a></div><div class="ttdeci">@ Clients</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a1450df3cb5383070c4db38bbcd3ac42b"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1450df3cb5383070c4db38bbcd3ac42b">SupportedProtocolsFlags::Dtls1_2</a></div><div class="ttdeci">@ Dtls1_2</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a178561b411b09c1c80361df1f142fa3c"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a178561b411b09c1c80361df1f142fa3c">SupportedProtocolsFlags::Tls11Client</a></div><div class="ttdeci">@ Tls11Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a1a5db63873f812ffe1ac464cd28c4c7c"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1a5db63873f812ffe1ac464cd28c4c7c">SupportedProtocolsFlags::XServers</a></div><div class="ttdeci">@ XServers</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a1d72d0ac566857bb3d1759e91534467b"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a1d72d0ac566857bb3d1759e91534467b">SupportedProtocolsFlags::Dtls1_0Client</a></div><div class="ttdeci">@ Dtls1_0Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a2085335bdfdec058bba833fbd84de2c3"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a2085335bdfdec058bba833fbd84de2c3">SupportedProtocolsFlags::Dtls1_2Client</a></div><div class="ttdeci">@ Dtls1_2Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a232f1e5bc421f7e709f0259e63c56532"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a232f1e5bc421f7e709f0259e63c56532">SupportedProtocolsFlags::Uni</a></div><div class="ttdeci">@ Uni</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a2d1f547adf50c86a4398b39143b86a11"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a2d1f547adf50c86a4398b39143b86a11">SupportedProtocolsFlags::Tls10</a></div><div class="ttdeci">@ Tls10</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a35262a68da537198d03f52dde92122ad"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a35262a68da537198d03f52dde92122ad">SupportedProtocolsFlags::Dtls1_0Server</a></div><div class="ttdeci">@ Dtls1_0Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a37a0ae80c8b5a4bca823b4f19cb45144"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a37a0ae80c8b5a4bca823b4f19cb45144">SupportedProtocolsFlags::Tls1</a></div><div class="ttdeci">@ Tls1</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a3bbfacd24dd36b89899e292efdef45bb"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a3bbfacd24dd36b89899e292efdef45bb">SupportedProtocolsFlags::Ssl3Tls1</a></div><div class="ttdeci">@ Ssl3Tls1</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a42fa94ce23958cb797852ba8d005bcc7"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a42fa94ce23958cb797852ba8d005bcc7">SupportedProtocolsFlags::Tls13</a></div><div class="ttdeci">@ Tls13</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a4985600a674b20428982584735290641"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4985600a674b20428982584735290641">SupportedProtocolsFlags::Ssl3</a></div><div class="ttdeci">@ Ssl3</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a4b18a39e87ba28163ed85b32b63e6329"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4b18a39e87ba28163ed85b32b63e6329">SupportedProtocolsFlags::Ssl3Tls1Servers</a></div><div class="ttdeci">@ Ssl3Tls1Servers</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a4fe6ac799b64b0bb983fa88a319f51e1"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a4fe6ac799b64b0bb983fa88a319f51e1">SupportedProtocolsFlags::Ssl2</a></div><div class="ttdeci">@ Ssl2</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a553365024ee2295f97a08ac7cf43fe27"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a553365024ee2295f97a08ac7cf43fe27">SupportedProtocolsFlags::Ssl3Tls1XClients</a></div><div class="ttdeci">@ Ssl3Tls1XClients</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a5869dd9e3bb39fe4eca1ac8b13c78668"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a5869dd9e3bb39fe4eca1ac8b13c78668">SupportedProtocolsFlags::DtlsServer</a></div><div class="ttdeci">@ DtlsServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a61c21ddd2c48f00463ca06c51e95cfe9"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a61c21ddd2c48f00463ca06c51e95cfe9">SupportedProtocolsFlags::Tls1Server</a></div><div class="ttdeci">@ Tls1Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a66b9cf8bb59d1f6271d30e668162aa2e"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a66b9cf8bb59d1f6271d30e668162aa2e">SupportedProtocolsFlags::Tls1Client</a></div><div class="ttdeci">@ Tls1Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a6adf97f83acf6453d4a6a4b1070f3754"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a6adf97f83acf6453d4a6a4b1070f3754">SupportedProtocolsFlags::None</a></div><div class="ttdeci">@ None</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a7081128df5a70b640bce2101b584f4ee"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a7081128df5a70b640bce2101b584f4ee">SupportedProtocolsFlags::Ssl2Client</a></div><div class="ttdeci">@ Ssl2Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a71d7f59f918214a279953cdd6c03a46a"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a71d7f59f918214a279953cdd6c03a46a">SupportedProtocolsFlags::Tls1X</a></div><div class="ttdeci">@ Tls1X</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a73c55c9e92aaf591043d02a5c34da28d"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a73c55c9e92aaf591043d02a5c34da28d">SupportedProtocolsFlags::Ssl2Server</a></div><div class="ttdeci">@ Ssl2Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a756cc65869cb6403fbb597f399d7b998"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a756cc65869cb6403fbb597f399d7b998">SupportedProtocolsFlags::UniServer</a></div><div class="ttdeci">@ UniServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a775c76a8faa64a7835bc57ab235b0113"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a775c76a8faa64a7835bc57ab235b0113">SupportedProtocolsFlags::Tls13Client</a></div><div class="ttdeci">@ Tls13Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a7c654ce83e512d58668b970b08463c3c"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a7c654ce83e512d58668b970b08463c3c">SupportedProtocolsFlags::XClients</a></div><div class="ttdeci">@ XClients</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a85cbeb3280b2433620a31cbc5e8b10cc"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a85cbeb3280b2433620a31cbc5e8b10cc">SupportedProtocolsFlags::Dtls1XClient</a></div><div class="ttdeci">@ Dtls1XClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a862896549fe71bda744eed463927174b"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a862896549fe71bda744eed463927174b">SupportedProtocolsFlags::Dtls1_0</a></div><div class="ttdeci">@ Dtls1_0</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459a9617a5abd8071db95944d8f1f466e5fd"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a9617a5abd8071db95944d8f1f466e5fd">SupportedProtocolsFlags::Pct1Server</a></div><div class="ttdeci">@ Pct1Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459aa048a3cdd8859be4da87685fcc4490d6"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aa048a3cdd8859be4da87685fcc4490d6">SupportedProtocolsFlags::Tls11Server</a></div><div class="ttdeci">@ Tls11Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459aaa0d007e782921fe743991791b0586ee"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aaa0d007e782921fe743991791b0586ee">SupportedProtocolsFlags::Dtls1X</a></div><div class="ttdeci">@ Dtls1X</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459aac659513b2353187192e88c5d1988228"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aac659513b2353187192e88c5d1988228">SupportedProtocolsFlags::Servers</a></div><div class="ttdeci">@ Servers</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ab0fefdda5e94edd5aadc060e0104d290"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab0fefdda5e94edd5aadc060e0104d290">SupportedProtocolsFlags::Tls10Server</a></div><div class="ttdeci">@ Tls10Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ab1c94ca2fbc3e78fc30069c8d0f01680"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab1c94ca2fbc3e78fc30069c8d0f01680">SupportedProtocolsFlags::All</a></div><div class="ttdeci">@ All</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ab3dda26af02c77bfb96024d025a9e67e"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ab3dda26af02c77bfb96024d025a9e67e">SupportedProtocolsFlags::Tls1XClient</a></div><div class="ttdeci">@ Tls1XClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459abf131675846c121476d19d6558b47e20"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459abf131675846c121476d19d6558b47e20">SupportedProtocolsFlags::UniClient</a></div><div class="ttdeci">@ UniClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459abf1fdce68866ce5409b0599e4a4741ff"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459abf1fdce68866ce5409b0599e4a4741ff">SupportedProtocolsFlags::Ssl3Tls1Clients</a></div><div class="ttdeci">@ Ssl3Tls1Clients</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac21d53a8ba1c6b90dacf59385d460df8"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac21d53a8ba1c6b90dacf59385d460df8">SupportedProtocolsFlags::Tls1XServer</a></div><div class="ttdeci">@ Tls1XServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac228b2f5d937706e2680fccef0943a84"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac228b2f5d937706e2680fccef0943a84">SupportedProtocolsFlags::Tls11Plus</a></div><div class="ttdeci">@ Tls11Plus</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac2bc8abb75c405730b97ebae791a23e2"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac2bc8abb75c405730b97ebae791a23e2">SupportedProtocolsFlags::Tls12Client</a></div><div class="ttdeci">@ Tls12Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac4f6bc8cde3227673bf48308239a52b5"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac4f6bc8cde3227673bf48308239a52b5">SupportedProtocolsFlags::Pct1</a></div><div class="ttdeci">@ Pct1</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac6fccca2c3d6f60588dbf1cd950adaf9"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac6fccca2c3d6f60588dbf1cd950adaf9">SupportedProtocolsFlags::Ssl3Server</a></div><div class="ttdeci">@ Ssl3Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ac708af13386de7572a5670a78d4e4aed"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac708af13386de7572a5670a78d4e4aed">SupportedProtocolsFlags::Dtls1_2Server</a></div><div class="ttdeci">@ Dtls1_2Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459acb3499168229c5528f1de44815c146a2"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acb3499168229c5528f1de44815c146a2">SupportedProtocolsFlags::Tls13PlusServer</a></div><div class="ttdeci">@ Tls13PlusServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459acbe5eed366dde4ee9b24886e5c77691d"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acbe5eed366dde4ee9b24886e5c77691d">SupportedProtocolsFlags::Tls13PlusClient</a></div><div class="ttdeci">@ Tls13PlusClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459acc371f248e12bfc407633b266d2a6074"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acc371f248e12bfc407633b266d2a6074">SupportedProtocolsFlags::Dtls1XServer</a></div><div class="ttdeci">@ Dtls1XServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459acc4885f70c270fe85fd43837cef36c83"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459acc4885f70c270fe85fd43837cef36c83">SupportedProtocolsFlags::Ssl3Tls1X</a></div><div class="ttdeci">@ Ssl3Tls1X</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ad1ccc27a4876bf046b715c7fb3b97ccc"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad1ccc27a4876bf046b715c7fb3b97ccc">SupportedProtocolsFlags::Tls13Server</a></div><div class="ttdeci">@ Tls13Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ad524b22d0cd60454e29e18b36f6588d7"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad524b22d0cd60454e29e18b36f6588d7">SupportedProtocolsFlags::Tls12</a></div><div class="ttdeci">@ Tls12</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ad5e13c7cbed0a5059f3700ee5433efdf"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad5e13c7cbed0a5059f3700ee5433efdf">SupportedProtocolsFlags::Ssl3Client</a></div><div class="ttdeci">@ Ssl3Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ad8659a798cf45d04b4973e0938eaa5ed"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ad8659a798cf45d04b4973e0938eaa5ed">SupportedProtocolsFlags::Tls10Client</a></div><div class="ttdeci">@ Tls10Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ae0340ee7912417d2e58189726ea5812a"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ae0340ee7912417d2e58189726ea5812a">SupportedProtocolsFlags::Tls11PlusClient</a></div><div class="ttdeci">@ Tls11PlusClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459ae295d4666bb7b2f68fb2efb1ebb28b17"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ae295d4666bb7b2f68fb2efb1ebb28b17">SupportedProtocolsFlags::Tls11PlusServer</a></div><div class="ttdeci">@ Tls11PlusServer</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459aefa4e6432ba5a3f5a7578d0c0367dd67"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459aefa4e6432ba5a3f5a7578d0c0367dd67">SupportedProtocolsFlags::Tls12Server</a></div><div class="ttdeci">@ Tls12Server</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459af2a1c8c4d22e0a45a0f15669e83e5345"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459af2a1c8c4d22e0a45a0f15669e83e5345">SupportedProtocolsFlags::Tls13Plus</a></div><div class="ttdeci">@ Tls13Plus</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459af5f73240a969708984592da8707d6770"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459af5f73240a969708984592da8707d6770">SupportedProtocolsFlags::DtlsClient</a></div><div class="ttdeci">@ DtlsClient</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459afcb04277f5136f5b2c18ac013b73cf11"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459afcb04277f5136f5b2c18ac013b73cf11">SupportedProtocolsFlags::Pct1Client</a></div><div class="ttdeci">@ Pct1Client</div></div>
+<div class="ttc" id="a_supported_protocols_flags_8hpp_html_a4b496d78b08344230815b162b746b459afe64508608eb1509fa54bf6b08bbe4a0"><div class="ttname"><a href="_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459afe64508608eb1509fa54bf6b08bbe4a0">SupportedProtocolsFlags::Dtls</a></div><div class="ttdeci">@ Dtls</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_2b3d271d5966c522c8b24b964939946d.html">WinApi</a></li><li class="navelem"><a class="el" href="dir_3ea201b115e9f8a60b61920d953ffd6d.html">Flags</a></li><li class="navelem"><a class="el" href="_supported_protocols_flags_8hpp.html">SupportedProtocolsFlags.hpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

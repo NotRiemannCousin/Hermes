@@ -1,0 +1,4 @@
+var struct_hermes_1_1__details_1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4 =
+[
+    [ "onlyIpv6", "struct_hermes_1_1__details_1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html#a59a1dfc9851e10e32d9f2c0aa633c25c", null ]
+];

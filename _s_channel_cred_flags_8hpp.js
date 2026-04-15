@@ -1,0 +1,38 @@
+var _s_channel_cred_flags_8hpp =
+[
+    [ "SChannelCredFlags", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800", [
+      [ "V1", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ab4daca084ad9eabfc8de231929477ed6", null ],
+      [ "V2", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aec765f1adc3b4253f2d3b131a4a8618f", null ],
+      [ "V3", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ad5b50b8cf96bcc8aba90f306f5e6189c", null ],
+      [ "Version", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a34b6cd75171affba6957e308dcbd92be", null ],
+      [ "FormatCertContext", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aacfb1697c7b31c2db9614331527e7002", null ],
+      [ "FormatCertHash", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a741044e3e10f09b86977b13751e496c8", null ],
+      [ "FormatCertHashStore", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a973bcff706d61513066f0df7faeea6e2", null ],
+      [ "MaxStoreNameSize", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a8711e7be8b680288931d7b533c6f21f6", null ],
+      [ "MaxSupportedAlgs", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a3732587cd35248e5eabd77a6c3267f38", null ],
+      [ "MaxSupportedCerts", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac895c239bcf6e5bacab21be84d8c5b40", null ],
+      [ "NoSystemMapper", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a783ad1ed96ea036dc5911246ad889381", null ],
+      [ "NoServernameCheck", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800adbea823d86c476460b1d2d5646bd73d1", null ],
+      [ "ManualCredValidation", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b", null ],
+      [ "NoDefaultCreds", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a32d2972736a37036a59009e2369b8e86", null ],
+      [ "AutoCredValidation", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a60e029055d0b5451cc5a2fa9acffbd8a", null ],
+      [ "UseDefaultCreds", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a2d5a07686a9a4b99fd5a9b09cfe71f95", null ],
+      [ "DisableReconnects", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a65a72e5a783a8af81ceb4d974fd3aebb", null ],
+      [ "RevocationCheckEndCert", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada1c6c35c7bfc66eda9e7984d96dc754", null ],
+      [ "RevocationCheckChain", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a970a7b72cd3fa6fc922a2744749fc9aa", null ],
+      [ "RevocationCheckChainExcludeRoot", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a84810841949bf9be8e4f850efdd3ea72", null ],
+      [ "IgnoreNoRevocationCheck", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aa2eb1f2bb2875e5f0fbd22833937970d", null ],
+      [ "IgnoreRevocationOffline", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ad14557d0a0c14462bcacd5456919b755", null ],
+      [ "RestrictedRoots", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a80ee1bc097772e2054705b80d9a58c0a", null ],
+      [ "RevocationCheckCacheOnly", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a2105e14c7058cc1f563f334aba975c31", null ],
+      [ "CacheOnlyUrlRetrieval", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac2b21856fd2fbadd3dfac625c44b2dc7", null ],
+      [ "MemoryStoreCert", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ac65752f9c29a185651706de25d82af0e", null ],
+      [ "CacheOnlyUrlRetrievalOnCreate", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a749fdf19aeaaa1700c5f81353788aea1", null ],
+      [ "SniCredential", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ae0c159bc3ea69a90b0c0b041bc07d1dc", null ],
+      [ "SniEnableOcsp", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a41a8e7bb0ea47d1a86d8a507603d1298", null ],
+      [ "DeferredCredValidation", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a3f5b0039305e0ff381734cc52625b648", null ],
+      [ "X509Certchain", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a5d1dac3484cf47a8a1e5a557eeeb51d9", null ],
+      [ "X509Capi", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada3ba214953a677b3ec8bccb0a6e9d16", null ],
+      [ "CertContext", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aa984fa4db850f78ede280e20baf178bd", null ]
+    ] ]
+];

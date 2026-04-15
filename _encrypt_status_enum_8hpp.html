@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: include/Hermes/_base/WinApi/Enums/EncryptStatusEnum.hpp File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_encrypt_status_enum_8hpp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">EncryptStatusEnum.hpp File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><code>#include &lt;winerror.h&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for EncryptStatusEnum.hpp:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="_encrypt_status_enum_8hpp__incl.svg" width="226" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+This graph shows which files directly or indirectly include this file:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="_encrypt_status_enum_8hpp__dep__incl.svg" width="1166" height="799"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="_encrypt_status_enum_8hpp_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:ae89e3b848aee64b8bad977ffd5bc5973" id="r_ae89e3b848aee64b8bad977ffd5bc5973"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973">EncryptStatusEnum</a> { <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a131ff20bac22b71a0d8dff8f5e2849c7">ErrOk</a> = SEC_E_OK
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aeea704f2247978db90b8881802b82095">ErrInsufficientMemory</a> = SEC_E_INSUFFICIENT_MEMORY
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a3ae00675e203a413518ad56689446cb8">ErrInvalidHandle</a> = SEC_E_INVALID_HANDLE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a48711540a0e8fa631933ffe4be4c52e1">ErrUnsupportedFunction</a> = SEC_E_UNSUPPORTED_FUNCTION
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973afea180fd6786424eab5433825973fc18">ErrTargetUnknown</a> = SEC_E_TARGET_UNKNOWN
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae0bbb5a1f647ad2da9dc506ed96ffe8c">ErrInternalError</a> = SEC_E_INTERNAL_ERROR
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a9c16ccaa81b07eed6475d61938180ebb">ErrSecpkgNotFound</a> = SEC_E_SECPKG_NOT_FOUND
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae69c8821f654c91d511dce010d6163a3">ErrNotOwner</a> = SEC_E_NOT_OWNER
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2507afbb1404ac9f8e581dd48704452f">ErrCannotInstall</a> = SEC_E_CANNOT_INSTALL
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2266b09f0fa2e1c3fad977850ddce588">ErrInvalidToken</a> = SEC_E_INVALID_TOKEN
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a78de956c866d89ccd809248716a71758">ErrCannotPack</a> = SEC_E_CANNOT_PACK
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aedb0c0b6b748fdb14e4721b9bcea2aae">ErrQopNotSupported</a> = SEC_E_QOP_NOT_SUPPORTED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ace3058446d3fbcaf07e0a7c79d294d1e">ErrNoImpersonation</a> = SEC_E_NO_IMPERSONATION
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a336371c56af44e3ba2bdc612db2d2318">ErrLogonDenied</a> = SEC_E_LOGON_DENIED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a4a4d6a23bedc7b3210437bd39d7da433">ErrUnknownCredentials</a> = SEC_E_UNKNOWN_CREDENTIALS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a9a4d454321d12838a8694f1df13eabfa">ErrNoCredentials</a> = SEC_E_NO_CREDENTIALS
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a0507b31238a5016d3340dde301566fb2">ErrMessageAltered</a> = SEC_E_MESSAGE_ALTERED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa387723629a0eef5ba155c6e38fce3c2">ErrOutOfSequence</a> = SEC_E_OUT_OF_SEQUENCE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a33362cc11fe51de3f89bb441df2e16b7">ErrNoAuthenticatingAuthority</a> = SEC_E_NO_AUTHENTICATING_AUTHORITY
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a4d04c186aef8a941c5b7fd6d9639158b">ErrBadPkgid</a> = SEC_E_BAD_PKGID
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a1ea30f12af99affea66ee4a18abb132b">ErrContextExpired</a> = SEC_E_CONTEXT_EXPIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac728cf2d8e76f944e48bc7482c4f0009">ErrIncompleteMessage</a> = SEC_E_INCOMPLETE_MESSAGE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a862c0c36027321699f2a88d14462cced">ErrIncompleteCredentials</a> = SEC_E_INCOMPLETE_CREDENTIALS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac69d795640a29c05f831b5f1b2ee4a1c">ErrBufferTooSmall</a> = SEC_E_BUFFER_TOO_SMALL
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a64de619914bb423274116a1a335aca8a">ErrWrongPrincipal</a> = SEC_E_WRONG_PRINCIPAL
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a0f9ed521bc5b77ac24b3210b61d1282d">ErrTimeSkew</a> = SEC_E_TIME_SKEW
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2d45722a1fb1fec7a2f5e8f0ddef6d62">ErrUntrustedRoot</a> = SEC_E_UNTRUSTED_ROOT
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a60e998f0012ffca098f9332c4993d97a">ErrIllegalMessage</a> = SEC_E_ILLEGAL_MESSAGE
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a231af7ac4df8f80a3464984aa913a756">ErrCertUnknown</a> = SEC_E_CERT_UNKNOWN
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a75a4fa935572323de3fdf5a77a87f15b">ErrCertExpired</a> = SEC_E_CERT_EXPIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a44bcca506d084bf48b9f77ea108ceab6">ErrEncryptFailure</a> = SEC_E_ENCRYPT_FAILURE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aec855dcfc02afedf15d882f0bfcb1e18">ErrDecryptFailure</a> = SEC_E_DECRYPT_FAILURE
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a34a9b72317b9ddf8cfce253dab73e020">ErrAlgorithmMismatch</a> = SEC_E_ALGORITHM_MISMATCH
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aed0bcf8d4712ee8272bab50646d09f9d">ErrSecurityQosFailed</a> = SEC_E_SECURITY_QOS_FAILED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae22a7e8c7ce78e4ef5f0d567020fee53">ErrUnfinishedContextDeleted</a> = SEC_E_UNFINISHED_CONTEXT_DELETED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a44970efe34e11ae0dd4b01b17c66f5f8">ErrNoTgtReply</a> = SEC_E_NO_TGT_REPLY
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac83f00a98ddf12814264a0d151f1c4bc">ErrNoIpAddresses</a> = SEC_E_NO_IP_ADDRESSES
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a1e631b35eacef7e23016a3e5e0d1372f">ErrWrongCredentialHandle</a> = SEC_E_WRONG_CREDENTIAL_HANDLE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a8c9610f3444874f8984ce923c0862c17">ErrCryptoSystemInvalid</a> = SEC_E_CRYPTO_SYSTEM_INVALID
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973abdb8e43b01c3b35e28c7daacfd19cfb2">ErrMaxReferralsExceeded</a> = SEC_E_MAX_REFERRALS_EXCEEDED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a5316524dd41159daf1d8e0796c23dfc7">ErrMustBeKdc</a> = SEC_E_MUST_BE_KDC
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a28672b4b121126bb85e7f51ca4f25c1e">ErrStrongCryptoNotSupported</a> = SEC_E_STRONG_CRYPTO_NOT_SUPPORTED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab430d2ea405c65a98bcc35faab222889">ErrTooManyPrincipals</a> = SEC_E_TOO_MANY_PRINCIPALS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a26f70d9f3826cb9ec291b3199b727b26">ErrNoPaData</a> = SEC_E_NO_PA_DATA
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973afe5fc7194f286385ac4818f687756ddb">ErrPkinitNameMismatch</a> = SEC_E_PKINIT_NAME_MISMATCH
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a60df6b860c81af76fbd82d451bb22ef2">ErrSmartcardLogonRequired</a> = SEC_E_SMARTCARD_LOGON_REQUIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a8ef5ff9926fb3180f1157f60a9689be2">ErrShutdownInProgress</a> = SEC_E_SHUTDOWN_IN_PROGRESS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ad40a04c18186a0429311d2df32d761e2">ErrKdcInvalidRequest</a> = SEC_E_KDC_INVALID_REQUEST
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2fa1a24f06f62e9a110f4372753b7e80">ErrKdcUnableToRefer</a> = SEC_E_KDC_UNABLE_TO_REFER
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a1a949d431fce12ac6eaeb2b170d5c122">ErrKdcUnknownEtype</a> = SEC_E_KDC_UNKNOWN_ETYPE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae375e0fd8b2b3ea9bec323b137420888">ErrUnsupportedPreauth</a> = SEC_E_UNSUPPORTED_PREAUTH
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac074d1f7a149d60c372867d4e4921a07">ErrDelegationRequired</a> = SEC_E_DELEGATION_REQUIRED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac4b0f2cc37250d67f0edd09eefcab04b">ErrBadBindings</a> = SEC_E_BAD_BINDINGS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a6c9d467145312a404d870bc48aeedcb0">ErrMultipleAccounts</a> = SEC_E_MULTIPLE_ACCOUNTS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ad3f4a5cdd53b0fb23939d0280d2cb3de">ErrNoKerbKey</a> = SEC_E_NO_KERB_KEY
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa5c264fe5ed2b8a9332c42a7c8049126">ErrCertWrongUsage</a> = SEC_E_CERT_WRONG_USAGE
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab016524060e0d87f24e1959e3d1b0b3d">ErrDowngradeDetected</a> = SEC_E_DOWNGRADE_DETECTED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab5a2947b1666babb3f6dcc9c5a30257d">ErrSmartcardCertRevoked</a> = SEC_E_SMARTCARD_CERT_REVOKED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa57ac49eec182e2916d814b16dcf7194">ErrIssuingCaUntrusted</a> = SEC_E_ISSUING_CA_UNTRUSTED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973adea49d3b202527363024a3e95bdb09ef">ErrRevocationOfflineC</a> = SEC_E_REVOCATION_OFFLINE_C
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a4186d933777b7843ada624b3f7ff1e77">ErrPkinitClientFailure</a> = SEC_E_PKINIT_CLIENT_FAILURE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a0873a107d3d9a8d2eb8faf4254fe0e57">ErrSmartcardCertExpired</a> = SEC_E_SMARTCARD_CERT_EXPIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a7e806e70ad71587e04119981f47bda85">ErrNoS4UProtSupport</a> = SEC_E_NO_S4U_PROT_SUPPORT
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a26bc1fe23364665fb28c7c75c67f7aed">ErrCrossrealmDelegationFailure</a> = SEC_E_CROSSREALM_DELEGATION_FAILURE
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab7f929e050a421ecc6dd22c2552f7150">ErrRevocationOfflineKdc</a> = SEC_E_REVOCATION_OFFLINE_KDC
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2383f08207780a5f6fbb300fcfa3fcd9">ErrIssuingCaUntrustedKdc</a> = SEC_E_ISSUING_CA_UNTRUSTED_KDC
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ad5a76e948e7703bd50c53ec50f2c215c">ErrKdcCertExpired</a> = SEC_E_KDC_CERT_EXPIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973adfa952db31c04637da369bf81ea73f97">ErrKdcCertRevoked</a> = SEC_E_KDC_CERT_REVOKED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae2a2b0279768dd9cbca3a2de33e6ca7c">ErrInvalidParameter</a> = SEC_E_INVALID_PARAMETER
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ac140df6b2a69860a380f47d1f399810a">ErrDelegationPolicy</a> = SEC_E_DELEGATION_POLICY
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae579664544f83a2806506e2252a67646">ErrPolicyNltmOnly</a> = SEC_E_POLICY_NLTM_ONLY
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa6259bf84188fb377339c7ebbb54a191">ErrNoContext</a> = SEC_E_NO_CONTEXT
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a277ac520074e33dc63e020be3eb529e6">ErrPku2UCertFailure</a> = SEC_E_PKU2U_CERT_FAILURE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a5d44c005fd604fa58306c9a748a3aa4a">ErrMutualAuthFailed</a> = SEC_E_MUTUAL_AUTH_FAILED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a88d6e682b4d4180a62e476486119eb93">ErrOnlyHttpsAllowed</a> = SEC_E_ONLY_HTTPS_ALLOWED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a64be5122b920f90f19b8ad0798437e00">ErrApplicationProtocolMismatch</a> = SEC_E_APPLICATION_PROTOCOL_MISMATCH
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ad8a626bc13d9428741589e3bf4398ab2">ErrInvalidUpnName</a> = SEC_E_INVALID_UPN_NAME
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa2e202928b283c95056732f858dbf9c4">ErrExtBufferTooSmall</a> = SEC_E_EXT_BUFFER_TOO_SMALL
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a165b71ec0cbbb7b655c304c7e8af47dc">ErrInsufficientBuffers</a> = SEC_E_INSUFFICIENT_BUFFERS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a7d480654444d38ab0790959e1da87783">InfoContinueNeeded</a> = SEC_I_CONTINUE_NEEDED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a94cd0d795174b4a746f0c98f7d8d4395">InfoCompleteNeeded</a> = SEC_I_COMPLETE_NEEDED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aaa9fcbed081f4f8ed3a26867c09979a6">InfoCompleteAndContinue</a> = SEC_I_COMPLETE_AND_CONTINUE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa3bf4d6d1b95056d6f7fdbe58b52bf50">InfoLocalLogon</a> = SEC_I_LOCAL_LOGON
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a8eec08697eddd565028131a5fe52bc71">InfoGenericExtensionReceived</a> = SEC_I_GENERIC_EXTENSION_RECEIVED
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a2dd551bbaebf58a02352b6eeee415733">InfoContextExpired</a> = SEC_I_CONTEXT_EXPIRED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a3513165a506c6057d7812e71b00932b4">InfoIncompleteCredentials</a> = SEC_I_INCOMPLETE_CREDENTIALS
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a54ce2a1c7d936fa950bd3ed72e7cba24">InfoRenegotiate</a> = SEC_I_RENEGOTIATE
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a00bff2017f77340ad1cdfe1ade0c370f">InfoNoLsaContext</a> = SEC_I_NO_LSA_CONTEXT
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973af6c21c87e7bb10ad0295bb7151767910">InfoSignatureNeeded</a> = SEC_I_SIGNATURE_NEEDED
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a4d041fcc5bb0a0b95a197fd727cf0b30">InfoNoRenegotiation</a> = SEC_I_NO_RENEGOTIATION
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a6c16d0d1cd3dd94753dfe209fa3b9bf6">InfoMessageFragment</a> = SEC_I_MESSAGE_FRAGMENT
+, <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa97b1c9a26552a9a1a0a91c44a09180e">InfoContinueNeededMessageOk</a> = SEC_I_CONTINUE_NEEDED_MESSAGE_OK
+, <br />
+&#160;&#160;<a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973a3d91c1e39c65cb630293ab68c95f13e8">InfoAsyncCallPending</a> = SEC_I_ASYNC_CALL_PENDING
+<br />
+ }</td></tr>
+<tr class="separator:ae89e3b848aee64b8bad977ffd5bc5973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="ae89e3b848aee64b8bad977ffd5bc5973" name="ae89e3b848aee64b8bad977ffd5bc5973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae89e3b848aee64b8bad977ffd5bc5973">&#9670;&#160;</a></span>EncryptStatusEnum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973">EncryptStatusEnum</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a131ff20bac22b71a0d8dff8f5e2849c7" name="ae89e3b848aee64b8bad977ffd5bc5973a131ff20bac22b71a0d8dff8f5e2849c7"></a>ErrOk&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aeea704f2247978db90b8881802b82095" name="ae89e3b848aee64b8bad977ffd5bc5973aeea704f2247978db90b8881802b82095"></a>ErrInsufficientMemory&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a3ae00675e203a413518ad56689446cb8" name="ae89e3b848aee64b8bad977ffd5bc5973a3ae00675e203a413518ad56689446cb8"></a>ErrInvalidHandle&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a48711540a0e8fa631933ffe4be4c52e1" name="ae89e3b848aee64b8bad977ffd5bc5973a48711540a0e8fa631933ffe4be4c52e1"></a>ErrUnsupportedFunction&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973afea180fd6786424eab5433825973fc18" name="ae89e3b848aee64b8bad977ffd5bc5973afea180fd6786424eab5433825973fc18"></a>ErrTargetUnknown&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae0bbb5a1f647ad2da9dc506ed96ffe8c" name="ae89e3b848aee64b8bad977ffd5bc5973ae0bbb5a1f647ad2da9dc506ed96ffe8c"></a>ErrInternalError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a9c16ccaa81b07eed6475d61938180ebb" name="ae89e3b848aee64b8bad977ffd5bc5973a9c16ccaa81b07eed6475d61938180ebb"></a>ErrSecpkgNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae69c8821f654c91d511dce010d6163a3" name="ae89e3b848aee64b8bad977ffd5bc5973ae69c8821f654c91d511dce010d6163a3"></a>ErrNotOwner&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2507afbb1404ac9f8e581dd48704452f" name="ae89e3b848aee64b8bad977ffd5bc5973a2507afbb1404ac9f8e581dd48704452f"></a>ErrCannotInstall&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2266b09f0fa2e1c3fad977850ddce588" name="ae89e3b848aee64b8bad977ffd5bc5973a2266b09f0fa2e1c3fad977850ddce588"></a>ErrInvalidToken&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a78de956c866d89ccd809248716a71758" name="ae89e3b848aee64b8bad977ffd5bc5973a78de956c866d89ccd809248716a71758"></a>ErrCannotPack&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aedb0c0b6b748fdb14e4721b9bcea2aae" name="ae89e3b848aee64b8bad977ffd5bc5973aedb0c0b6b748fdb14e4721b9bcea2aae"></a>ErrQopNotSupported&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ace3058446d3fbcaf07e0a7c79d294d1e" name="ae89e3b848aee64b8bad977ffd5bc5973ace3058446d3fbcaf07e0a7c79d294d1e"></a>ErrNoImpersonation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a336371c56af44e3ba2bdc612db2d2318" name="ae89e3b848aee64b8bad977ffd5bc5973a336371c56af44e3ba2bdc612db2d2318"></a>ErrLogonDenied&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a4a4d6a23bedc7b3210437bd39d7da433" name="ae89e3b848aee64b8bad977ffd5bc5973a4a4d6a23bedc7b3210437bd39d7da433"></a>ErrUnknownCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a9a4d454321d12838a8694f1df13eabfa" name="ae89e3b848aee64b8bad977ffd5bc5973a9a4d454321d12838a8694f1df13eabfa"></a>ErrNoCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a0507b31238a5016d3340dde301566fb2" name="ae89e3b848aee64b8bad977ffd5bc5973a0507b31238a5016d3340dde301566fb2"></a>ErrMessageAltered&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa387723629a0eef5ba155c6e38fce3c2" name="ae89e3b848aee64b8bad977ffd5bc5973aa387723629a0eef5ba155c6e38fce3c2"></a>ErrOutOfSequence&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a33362cc11fe51de3f89bb441df2e16b7" name="ae89e3b848aee64b8bad977ffd5bc5973a33362cc11fe51de3f89bb441df2e16b7"></a>ErrNoAuthenticatingAuthority&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a4d04c186aef8a941c5b7fd6d9639158b" name="ae89e3b848aee64b8bad977ffd5bc5973a4d04c186aef8a941c5b7fd6d9639158b"></a>ErrBadPkgid&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a1ea30f12af99affea66ee4a18abb132b" name="ae89e3b848aee64b8bad977ffd5bc5973a1ea30f12af99affea66ee4a18abb132b"></a>ErrContextExpired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac728cf2d8e76f944e48bc7482c4f0009" name="ae89e3b848aee64b8bad977ffd5bc5973ac728cf2d8e76f944e48bc7482c4f0009"></a>ErrIncompleteMessage&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a862c0c36027321699f2a88d14462cced" name="ae89e3b848aee64b8bad977ffd5bc5973a862c0c36027321699f2a88d14462cced"></a>ErrIncompleteCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac69d795640a29c05f831b5f1b2ee4a1c" name="ae89e3b848aee64b8bad977ffd5bc5973ac69d795640a29c05f831b5f1b2ee4a1c"></a>ErrBufferTooSmall&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a64de619914bb423274116a1a335aca8a" name="ae89e3b848aee64b8bad977ffd5bc5973a64de619914bb423274116a1a335aca8a"></a>ErrWrongPrincipal&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a0f9ed521bc5b77ac24b3210b61d1282d" name="ae89e3b848aee64b8bad977ffd5bc5973a0f9ed521bc5b77ac24b3210b61d1282d"></a>ErrTimeSkew&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2d45722a1fb1fec7a2f5e8f0ddef6d62" name="ae89e3b848aee64b8bad977ffd5bc5973a2d45722a1fb1fec7a2f5e8f0ddef6d62"></a>ErrUntrustedRoot&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a60e998f0012ffca098f9332c4993d97a" name="ae89e3b848aee64b8bad977ffd5bc5973a60e998f0012ffca098f9332c4993d97a"></a>ErrIllegalMessage&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a231af7ac4df8f80a3464984aa913a756" name="ae89e3b848aee64b8bad977ffd5bc5973a231af7ac4df8f80a3464984aa913a756"></a>ErrCertUnknown&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a75a4fa935572323de3fdf5a77a87f15b" name="ae89e3b848aee64b8bad977ffd5bc5973a75a4fa935572323de3fdf5a77a87f15b"></a>ErrCertExpired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a44bcca506d084bf48b9f77ea108ceab6" name="ae89e3b848aee64b8bad977ffd5bc5973a44bcca506d084bf48b9f77ea108ceab6"></a>ErrEncryptFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aec855dcfc02afedf15d882f0bfcb1e18" name="ae89e3b848aee64b8bad977ffd5bc5973aec855dcfc02afedf15d882f0bfcb1e18"></a>ErrDecryptFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a34a9b72317b9ddf8cfce253dab73e020" name="ae89e3b848aee64b8bad977ffd5bc5973a34a9b72317b9ddf8cfce253dab73e020"></a>ErrAlgorithmMismatch&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aed0bcf8d4712ee8272bab50646d09f9d" name="ae89e3b848aee64b8bad977ffd5bc5973aed0bcf8d4712ee8272bab50646d09f9d"></a>ErrSecurityQosFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae22a7e8c7ce78e4ef5f0d567020fee53" name="ae89e3b848aee64b8bad977ffd5bc5973ae22a7e8c7ce78e4ef5f0d567020fee53"></a>ErrUnfinishedContextDeleted&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a44970efe34e11ae0dd4b01b17c66f5f8" name="ae89e3b848aee64b8bad977ffd5bc5973a44970efe34e11ae0dd4b01b17c66f5f8"></a>ErrNoTgtReply&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac83f00a98ddf12814264a0d151f1c4bc" name="ae89e3b848aee64b8bad977ffd5bc5973ac83f00a98ddf12814264a0d151f1c4bc"></a>ErrNoIpAddresses&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a1e631b35eacef7e23016a3e5e0d1372f" name="ae89e3b848aee64b8bad977ffd5bc5973a1e631b35eacef7e23016a3e5e0d1372f"></a>ErrWrongCredentialHandle&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a8c9610f3444874f8984ce923c0862c17" name="ae89e3b848aee64b8bad977ffd5bc5973a8c9610f3444874f8984ce923c0862c17"></a>ErrCryptoSystemInvalid&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973abdb8e43b01c3b35e28c7daacfd19cfb2" name="ae89e3b848aee64b8bad977ffd5bc5973abdb8e43b01c3b35e28c7daacfd19cfb2"></a>ErrMaxReferralsExceeded&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a5316524dd41159daf1d8e0796c23dfc7" name="ae89e3b848aee64b8bad977ffd5bc5973a5316524dd41159daf1d8e0796c23dfc7"></a>ErrMustBeKdc&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a28672b4b121126bb85e7f51ca4f25c1e" name="ae89e3b848aee64b8bad977ffd5bc5973a28672b4b121126bb85e7f51ca4f25c1e"></a>ErrStrongCryptoNotSupported&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ab430d2ea405c65a98bcc35faab222889" name="ae89e3b848aee64b8bad977ffd5bc5973ab430d2ea405c65a98bcc35faab222889"></a>ErrTooManyPrincipals&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a26f70d9f3826cb9ec291b3199b727b26" name="ae89e3b848aee64b8bad977ffd5bc5973a26f70d9f3826cb9ec291b3199b727b26"></a>ErrNoPaData&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973afe5fc7194f286385ac4818f687756ddb" name="ae89e3b848aee64b8bad977ffd5bc5973afe5fc7194f286385ac4818f687756ddb"></a>ErrPkinitNameMismatch&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a60df6b860c81af76fbd82d451bb22ef2" name="ae89e3b848aee64b8bad977ffd5bc5973a60df6b860c81af76fbd82d451bb22ef2"></a>ErrSmartcardLogonRequired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a8ef5ff9926fb3180f1157f60a9689be2" name="ae89e3b848aee64b8bad977ffd5bc5973a8ef5ff9926fb3180f1157f60a9689be2"></a>ErrShutdownInProgress&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ad40a04c18186a0429311d2df32d761e2" name="ae89e3b848aee64b8bad977ffd5bc5973ad40a04c18186a0429311d2df32d761e2"></a>ErrKdcInvalidRequest&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2fa1a24f06f62e9a110f4372753b7e80" name="ae89e3b848aee64b8bad977ffd5bc5973a2fa1a24f06f62e9a110f4372753b7e80"></a>ErrKdcUnableToRefer&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a1a949d431fce12ac6eaeb2b170d5c122" name="ae89e3b848aee64b8bad977ffd5bc5973a1a949d431fce12ac6eaeb2b170d5c122"></a>ErrKdcUnknownEtype&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae375e0fd8b2b3ea9bec323b137420888" name="ae89e3b848aee64b8bad977ffd5bc5973ae375e0fd8b2b3ea9bec323b137420888"></a>ErrUnsupportedPreauth&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac074d1f7a149d60c372867d4e4921a07" name="ae89e3b848aee64b8bad977ffd5bc5973ac074d1f7a149d60c372867d4e4921a07"></a>ErrDelegationRequired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac4b0f2cc37250d67f0edd09eefcab04b" name="ae89e3b848aee64b8bad977ffd5bc5973ac4b0f2cc37250d67f0edd09eefcab04b"></a>ErrBadBindings&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a6c9d467145312a404d870bc48aeedcb0" name="ae89e3b848aee64b8bad977ffd5bc5973a6c9d467145312a404d870bc48aeedcb0"></a>ErrMultipleAccounts&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ad3f4a5cdd53b0fb23939d0280d2cb3de" name="ae89e3b848aee64b8bad977ffd5bc5973ad3f4a5cdd53b0fb23939d0280d2cb3de"></a>ErrNoKerbKey&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa5c264fe5ed2b8a9332c42a7c8049126" name="ae89e3b848aee64b8bad977ffd5bc5973aa5c264fe5ed2b8a9332c42a7c8049126"></a>ErrCertWrongUsage&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ab016524060e0d87f24e1959e3d1b0b3d" name="ae89e3b848aee64b8bad977ffd5bc5973ab016524060e0d87f24e1959e3d1b0b3d"></a>ErrDowngradeDetected&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ab5a2947b1666babb3f6dcc9c5a30257d" name="ae89e3b848aee64b8bad977ffd5bc5973ab5a2947b1666babb3f6dcc9c5a30257d"></a>ErrSmartcardCertRevoked&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa57ac49eec182e2916d814b16dcf7194" name="ae89e3b848aee64b8bad977ffd5bc5973aa57ac49eec182e2916d814b16dcf7194"></a>ErrIssuingCaUntrusted&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973adea49d3b202527363024a3e95bdb09ef" name="ae89e3b848aee64b8bad977ffd5bc5973adea49d3b202527363024a3e95bdb09ef"></a>ErrRevocationOfflineC&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a4186d933777b7843ada624b3f7ff1e77" name="ae89e3b848aee64b8bad977ffd5bc5973a4186d933777b7843ada624b3f7ff1e77"></a>ErrPkinitClientFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a0873a107d3d9a8d2eb8faf4254fe0e57" name="ae89e3b848aee64b8bad977ffd5bc5973a0873a107d3d9a8d2eb8faf4254fe0e57"></a>ErrSmartcardCertExpired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a7e806e70ad71587e04119981f47bda85" name="ae89e3b848aee64b8bad977ffd5bc5973a7e806e70ad71587e04119981f47bda85"></a>ErrNoS4UProtSupport&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a26bc1fe23364665fb28c7c75c67f7aed" name="ae89e3b848aee64b8bad977ffd5bc5973a26bc1fe23364665fb28c7c75c67f7aed"></a>ErrCrossrealmDelegationFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ab7f929e050a421ecc6dd22c2552f7150" name="ae89e3b848aee64b8bad977ffd5bc5973ab7f929e050a421ecc6dd22c2552f7150"></a>ErrRevocationOfflineKdc&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2383f08207780a5f6fbb300fcfa3fcd9" name="ae89e3b848aee64b8bad977ffd5bc5973a2383f08207780a5f6fbb300fcfa3fcd9"></a>ErrIssuingCaUntrustedKdc&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ad5a76e948e7703bd50c53ec50f2c215c" name="ae89e3b848aee64b8bad977ffd5bc5973ad5a76e948e7703bd50c53ec50f2c215c"></a>ErrKdcCertExpired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973adfa952db31c04637da369bf81ea73f97" name="ae89e3b848aee64b8bad977ffd5bc5973adfa952db31c04637da369bf81ea73f97"></a>ErrKdcCertRevoked&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae2a2b0279768dd9cbca3a2de33e6ca7c" name="ae89e3b848aee64b8bad977ffd5bc5973ae2a2b0279768dd9cbca3a2de33e6ca7c"></a>ErrInvalidParameter&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ac140df6b2a69860a380f47d1f399810a" name="ae89e3b848aee64b8bad977ffd5bc5973ac140df6b2a69860a380f47d1f399810a"></a>ErrDelegationPolicy&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ae579664544f83a2806506e2252a67646" name="ae89e3b848aee64b8bad977ffd5bc5973ae579664544f83a2806506e2252a67646"></a>ErrPolicyNltmOnly&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa6259bf84188fb377339c7ebbb54a191" name="ae89e3b848aee64b8bad977ffd5bc5973aa6259bf84188fb377339c7ebbb54a191"></a>ErrNoContext&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a277ac520074e33dc63e020be3eb529e6" name="ae89e3b848aee64b8bad977ffd5bc5973a277ac520074e33dc63e020be3eb529e6"></a>ErrPku2UCertFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a5d44c005fd604fa58306c9a748a3aa4a" name="ae89e3b848aee64b8bad977ffd5bc5973a5d44c005fd604fa58306c9a748a3aa4a"></a>ErrMutualAuthFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a88d6e682b4d4180a62e476486119eb93" name="ae89e3b848aee64b8bad977ffd5bc5973a88d6e682b4d4180a62e476486119eb93"></a>ErrOnlyHttpsAllowed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a64be5122b920f90f19b8ad0798437e00" name="ae89e3b848aee64b8bad977ffd5bc5973a64be5122b920f90f19b8ad0798437e00"></a>ErrApplicationProtocolMismatch&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973ad8a626bc13d9428741589e3bf4398ab2" name="ae89e3b848aee64b8bad977ffd5bc5973ad8a626bc13d9428741589e3bf4398ab2"></a>ErrInvalidUpnName&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa2e202928b283c95056732f858dbf9c4" name="ae89e3b848aee64b8bad977ffd5bc5973aa2e202928b283c95056732f858dbf9c4"></a>ErrExtBufferTooSmall&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a165b71ec0cbbb7b655c304c7e8af47dc" name="ae89e3b848aee64b8bad977ffd5bc5973a165b71ec0cbbb7b655c304c7e8af47dc"></a>ErrInsufficientBuffers&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a7d480654444d38ab0790959e1da87783" name="ae89e3b848aee64b8bad977ffd5bc5973a7d480654444d38ab0790959e1da87783"></a>InfoContinueNeeded&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a94cd0d795174b4a746f0c98f7d8d4395" name="ae89e3b848aee64b8bad977ffd5bc5973a94cd0d795174b4a746f0c98f7d8d4395"></a>InfoCompleteNeeded&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aaa9fcbed081f4f8ed3a26867c09979a6" name="ae89e3b848aee64b8bad977ffd5bc5973aaa9fcbed081f4f8ed3a26867c09979a6"></a>InfoCompleteAndContinue&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa3bf4d6d1b95056d6f7fdbe58b52bf50" name="ae89e3b848aee64b8bad977ffd5bc5973aa3bf4d6d1b95056d6f7fdbe58b52bf50"></a>InfoLocalLogon&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a8eec08697eddd565028131a5fe52bc71" name="ae89e3b848aee64b8bad977ffd5bc5973a8eec08697eddd565028131a5fe52bc71"></a>InfoGenericExtensionReceived&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a2dd551bbaebf58a02352b6eeee415733" name="ae89e3b848aee64b8bad977ffd5bc5973a2dd551bbaebf58a02352b6eeee415733"></a>InfoContextExpired&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a3513165a506c6057d7812e71b00932b4" name="ae89e3b848aee64b8bad977ffd5bc5973a3513165a506c6057d7812e71b00932b4"></a>InfoIncompleteCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a54ce2a1c7d936fa950bd3ed72e7cba24" name="ae89e3b848aee64b8bad977ffd5bc5973a54ce2a1c7d936fa950bd3ed72e7cba24"></a>InfoRenegotiate&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a00bff2017f77340ad1cdfe1ade0c370f" name="ae89e3b848aee64b8bad977ffd5bc5973a00bff2017f77340ad1cdfe1ade0c370f"></a>InfoNoLsaContext&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973af6c21c87e7bb10ad0295bb7151767910" name="ae89e3b848aee64b8bad977ffd5bc5973af6c21c87e7bb10ad0295bb7151767910"></a>InfoSignatureNeeded&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a4d041fcc5bb0a0b95a197fd727cf0b30" name="ae89e3b848aee64b8bad977ffd5bc5973a4d041fcc5bb0a0b95a197fd727cf0b30"></a>InfoNoRenegotiation&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a6c16d0d1cd3dd94753dfe209fa3b9bf6" name="ae89e3b848aee64b8bad977ffd5bc5973a6c16d0d1cd3dd94753dfe209fa3b9bf6"></a>InfoMessageFragment&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973aa97b1c9a26552a9a1a0a91c44a09180e" name="ae89e3b848aee64b8bad977ffd5bc5973aa97b1c9a26552a9a1a0a91c44a09180e"></a>InfoContinueNeededMessageOk&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="ae89e3b848aee64b8bad977ffd5bc5973a3d91c1e39c65cb630293ab68c95f13e8" name="ae89e3b848aee64b8bad977ffd5bc5973a3d91c1e39c65cb630293ab68c95f13e8"></a>InfoAsyncCallPending&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_2b3d271d5966c522c8b24b964939946d.html">WinApi</a></li><li class="navelem"><a class="el" href="dir_a484fbceb7539a225a05991fd6935b1a.html">Enums</a></li><li class="navelem"><a class="el" href="_encrypt_status_enum_8hpp.html">EncryptStatusEnum.hpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

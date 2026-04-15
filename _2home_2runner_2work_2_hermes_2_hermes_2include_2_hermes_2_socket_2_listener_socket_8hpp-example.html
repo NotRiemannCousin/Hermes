@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: /home/runner/work/Hermes/Hermes/include/Hermes/Socket/ListenerSocket.hpp</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_listener_socket_8hpp-example.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">/home/runner/work/Hermes/Hermes/include/Hermes/Socket/ListenerSocket.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<p>Coroutine generator that yields a ServerSocket for each accepted client. Runs until Close() is called or a non-recoverable error occurs.</p>
+<p>for (auto&amp;&amp; result : listener.AcceptAll()) { if (!result) { /* log error *&zwj;/ continue; } handle(std::move(*result)); }.</p>
+<p>Coroutine generator that yields a ServerSocket for each accepted client. Runs until Close() is called or a non-recoverable error occurs.</p>
+<p>for (auto&amp;&amp; result : listener.AcceptAll()) { if (!result) { /* log error *&zwj;/ continue; } handle(std::move(*result)); }</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#pragma once</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_server_socket_8hpp.html">Hermes/Socket/ServerSocket.hpp</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;generator&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">template</span>&lt;</div>
+<div class="line">        SocketDataConcept SocketDataType             = DefaultSocketData&lt;&gt;,</div>
+<div class="line">        <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>AcceptPolicyType      = DefaultAcceptPolicy,</div>
+<div class="line">        <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>TransferPolicyType    = DefaultTransferPolicy&gt;</div>
+<div class="line">    <span class="keyword">requires</span> AcceptPolicyConcept&lt;AcceptPolicyType, SocketDataType&gt; &amp;&amp; TransferPolicyConcept&lt;TransferPolicyType, SocketDataType&gt;</div>
+<div class="line">    <span class="keyword">struct </span>ListenerSocket {</div>
+<div class="line">        <span class="keyword">using </span><a id="a0" name="a0"></a><a class="code hl_typedef" href="struct_hermes_1_1_listener_socket.html#a4591e75d8b1dfb29a7e8c5de7dd469de">ServerSocketType</a> = ServerSocket&lt;SocketDataType, AcceptPolicyType, TransferPolicyType&gt;;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">        ListenerSocket(ListenerSocket&amp;&amp;) <span class="keyword">noexcept</span>;</div>
+<div class="line">        ListenerSocket&amp; <a id="a1" name="a1"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a2bd96f8d78ce33ec8a8c06ece8a0958a">operator=</a>(ListenerSocket&amp;&amp;) <span class="keyword">noexcept</span>;</div>
+<div class="line">        <a id="a2" name="a2"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a86ccfaae5d1b1b92ed4173b1eace7c2f">~ListenerSocket</a>();</div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
+<div class="line">            <a id="a3" name="a3"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Listen</a>(SocketDataType&amp;&amp; data, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Listen</a>(SocketDataType&amp;&amp; data, AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions opt, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
+<div class="line">            <a id="a4" name="a4"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">ListenOne</a>(SocketDataType&amp;&amp; data) <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">ListenOne</a>(SocketDataType&amp;&amp; data, AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a5" name="a5"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">AcceptOne</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a6" name="a6"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a8779e7a7e234d18b2aa514c2280c7b60">AcceptOneConnection</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">AcceptOne</a>(AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="line">        [[nodiscard]] std::generator&lt;ConnectionResult&lt;ServerSocketType&gt;&gt;</div>
+<div class="line">            <a id="a7" name="a7"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">AcceptAll</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">        [[nodiscard]] std::generator&lt;ConnectionResult&lt;ServerSocketType&gt;&gt;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">AcceptAll</a>(AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordtype">void</span> <a id="a8" name="a8"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a4d5929a4be508cda72dabcd9e3fc3930">Close</a>() <span class="keyword">noexcept</span>;</div>
+<div class="line">        <span class="keywordtype">void</span> <a id="a9" name="a9"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#abbde0638a0d30257371a0334b1bf1e5b">Abort</a>() <span class="keyword">noexcept</span>;</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">private</span>:</div>
+<div class="line">        ListenerSocket() = <span class="keywordflow">default</span>;</div>
+<div class="line"> </div>
+<div class="line">        SocketDataType                   socketData{};</div>
+<div class="line">        AcceptPolicyType&lt;SocketDataType&gt; acceptPolicy{};</div>
+<div class="line">    };</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">using </span><a id="a10" name="a10"></a><a class="code hl_typedef" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">RawTcpListener</a> = ListenerSocket&lt;&gt;;</div>
+<div class="line">    <span class="keyword">using </span><a id="a11" name="a11"></a><a class="code hl_typedef" href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">RawTlsListener</a> = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy, TlsTransferPolicy&gt;;</div>
+<div class="line"> </div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="preprocessor">#include &lt;Hermes/Socket/ListenerSocket.tpp&gt;</span></div>
+<div class="ttc" id="a_server_socket_8hpp_html"><div class="ttname"><a href="_server_socket_8hpp.html">ServerSocket.hpp</a></div></div>
+<div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:6</div></div>
+<div class="ttc" id="anamespace_hermes_html_a0fa765db9251cbd7dc79d930989810c7"><div class="ttname"><a href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">Hermes::RawTlsListener</a></div><div class="ttdeci">ListenerSocket&lt; TlsSocketData&lt;&gt;, TlsAcceptPolicy, TlsTransferPolicy &gt; RawTlsListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:92</div></div>
+<div class="ttc" id="anamespace_hermes_html_a10af606e98c70fcda458f4a610867a04"><div class="ttname"><a href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">Hermes::RawTcpListener</a></div><div class="ttdeci">ListenerSocket&lt;&gt; RawTcpListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:91</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a295f035aa6abbfcba1b6a65f0f05884c"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Hermes::ListenerSocket::Listen</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; Listen(SocketDataType &amp;&amp;data, int backlog=SOMAXCONN) noexcept</div><div class="ttdoc">Creates the listener: socket() + bind() + listen().</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a2bd96f8d78ce33ec8a8c06ece8a0958a"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a2bd96f8d78ce33ec8a8c06ece8a0958a">Hermes::ListenerSocket::operator=</a></div><div class="ttdeci">ListenerSocket &amp; operator=(ListenerSocket &amp;&amp;) noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a4591e75d8b1dfb29a7e8c5de7dd469de"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a4591e75d8b1dfb29a7e8c5de7dd469de">Hermes::ListenerSocket::ServerSocketType</a></div><div class="ttdeci">ServerSocket&lt; SocketDataType, AcceptPolicyType, TransferPolicyType &gt; ServerSocketType</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:21</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a4d5929a4be508cda72dabcd9e3fc3930"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a4d5929a4be508cda72dabcd9e3fc3930">Hermes::ListenerSocket::Close</a></div><div class="ttdeci">void Close() noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a65a900544f450c0c0951df4a42c1325a"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">Hermes::ListenerSocket::AcceptOne</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOne() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a86ccfaae5d1b1b92ed4173b1eace7c2f"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a86ccfaae5d1b1b92ed4173b1eace7c2f">Hermes::ListenerSocket::~ListenerSocket</a></div><div class="ttdeci">~ListenerSocket()</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a8779e7a7e234d18b2aa514c2280c7b60"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a8779e7a7e234d18b2aa514c2280c7b60">Hermes::ListenerSocket::AcceptOneConnection</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOneConnection() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_ab72e049541f8577cdd5f1f6e11da0de0"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">Hermes::ListenerSocket::ListenOne</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; ListenOne(SocketDataType &amp;&amp;data) noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_abbde0638a0d30257371a0334b1bf1e5b"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#abbde0638a0d30257371a0334b1bf1e5b">Hermes::ListenerSocket::Abort</a></div><div class="ttdeci">void Abort() noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_adc8e4cfc1d7e45c69a2b3fcb6e5f98d1"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">Hermes::ListenerSocket::AcceptAll</a></div><div class="ttdeci">std::generator&lt; ConnectionResult&lt; ServerSocketType &gt; &gt; AcceptAll() noexcept</div></div>
+</div><!-- fragment --> </div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

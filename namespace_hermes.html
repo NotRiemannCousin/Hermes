@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: Hermes Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespace_hermes.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
+  <div class="headertitle"><div class="title">Hermes Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespace_hermes_1_1__details" id="r_namespace_hermes_1_1__details"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html">_details</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_hermes_1_1_utils" id="r_namespace_hermes_1_1_utils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html">Utils</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html">DefaultAcceptPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_connect_policy.html">DefaultConnectPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_transfer_policy.html">DefaultTransferPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocking listener socket. Owns the listening SOCKET handle and produces <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> instances via <a class="el" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a" title="Blocks until one client connects, then returns a ready ServerSocket.">AcceptOne()</a> / <a class="el" href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">AcceptAll()</a>.  <a href="struct_hermes_1_1_listener_socket.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_network.html">Network</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A connected socket produced by <a class="el" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a" title="Blocks until one client connects, then returns a ready ServerSocket.">ListenerSocket::AcceptOne</a> / AcceptAll.  <a href="struct_hermes_1_1_server_socket.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_connect_policy.html">TlsConnectPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_endpoint_concept.html">EndpointConcept</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_byte_like.html">ByteLike</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_socket_data_concept.html">SocketDataConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for the data representing a socket's state. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_connection_policy_concept.html">ConnectionPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages the client-side connection lifecycle. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_transfer_policy_concept.html">TransferPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages data transfer operations. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_accept_policy_concept.html">AcceptPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages the server-side accept lifecycle. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a0832e30628cac84f3f31a6d76a3b29ce" id="r_a0832e30628cac84f3f31a6d76a3b29ce"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a0832e30628cac84f3f31a6d76a3b29ce">ByteData</a> = std::vector&lt; std::byte &gt;</td></tr>
+<tr class="separator:a0832e30628cac84f3f31a6d76a3b29ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e66d0f22a3ac87a8f45f45cce8ad1bd" id="r_a2e66d0f22a3ac87a8f45f45cce8ad1bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd">ByteDataSpan</a> = std::span&lt; std::byte &gt;</td></tr>
+<tr class="separator:a2e66d0f22a3ac87a8f45f45cce8ad1bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea60127b207d39fb5d05a863ade851a9" id="r_aea60127b207d39fb5d05a863ade851a9"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">T</a> &gt; </td></tr>
+<tr class="memitem:aea60127b207d39fb5d05a863ade851a9"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a> = std::expected&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">T</a>, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a> &gt;</td></tr>
+<tr class="separator:aea60127b207d39fb5d05a863ade851a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4c2bc87d8b3921bd110920bba542091" id="r_aa4c2bc87d8b3921bd110920bba542091"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> = <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; std::monostate &gt;</td></tr>
+<tr class="separator:aa4c2bc87d8b3921bd110920bba542091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39bdfbf4b858f9fb7654cf2aadf2098b" id="r_a39bdfbf4b858f9fb7654cf2aadf2098b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> = std::pair&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> &gt;</td></tr>
+<tr class="separator:a39bdfbf4b858f9fb7654cf2aadf2098b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae387a226251b2771a996781de8eb3247" id="r_ae387a226251b2771a996781de8eb3247"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">SocketInfoAddr</a> = std::tuple&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">sockaddr_storage</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> &gt;</td></tr>
+<tr class="separator:ae387a226251b2771a996781de8eb3247"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a07c1d7f39955400d235a2da6433d0ed4" id="r_a07c1d7f39955400d235a2da6433d0ed4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a07c1d7f39955400d235a2da6433d0ed4">RawTcpClient</a> = <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;&gt;</td></tr>
+<tr class="separator:a07c1d7f39955400d235a2da6433d0ed4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff9b2b8730c483214f316805a65b4d05" id="r_aff9b2b8730c483214f316805a65b4d05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#aff9b2b8730c483214f316805a65b4d05">RawTlsClient</a> = <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt; <a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_connect_policy.html">TlsConnectPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a> &gt;</td></tr>
+<tr class="separator:aff9b2b8730c483214f316805a65b4d05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee836237b322a73054884a34505993b6" id="r_aee836237b322a73054884a34505993b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#aee836237b322a73054884a34505993b6">RawUdpClient</a> = <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData</a>&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a>, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005ac3177658ef36637801bea6fd4f1a1e92">SocketTypeEnum::Dgram</a> &gt; &gt;</td></tr>
+<tr class="separator:aee836237b322a73054884a34505993b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10af606e98c70fcda458f4a610867a04" id="r_a10af606e98c70fcda458f4a610867a04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">RawTcpListener</a> = <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;&gt;</td></tr>
+<tr class="separator:a10af606e98c70fcda458f4a610867a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0fa765db9251cbd7dc79d930989810c7" id="r_a0fa765db9251cbd7dc79d930989810c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">RawTlsListener</a> = <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a> &gt;</td></tr>
+<tr class="separator:a0fa765db9251cbd7dc79d930989810c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3a1ee0cb148ad5dd2773d754bf3d462" id="r_ae3a1ee0cb148ad5dd2773d754bf3d462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462">RawTcpServer</a> = <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;&gt;</td></tr>
+<tr class="separator:ae3a1ee0cb148ad5dd2773d754bf3d462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c5c7c1c73ec5139e2695d504feea770" id="r_a0c5c7c1c73ec5139e2695d504feea770"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a0c5c7c1c73ec5139e2695d504feea770">RawTlsServer</a> = <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a> &gt;</td></tr>
+<tr class="separator:a0c5c7c1c73ec5139e2695d504feea770"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:abcdc7039ff863f7958fab5478142dfba" id="r_abcdc7039ff863f7958fab5478142dfba"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a> { <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e">InvalidRole</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa38cc5fce04e6e996f51f70982b97f482">InvalidEndpoint</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf05e778bc960135cd2482522a98db05e">AddressInUse</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa04a5d66da5997f2f05c1c8c2398ee520">SocketNotOpen</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaaf98071f760be899f4fcf1d53a29ba17">ConnectionFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa318ec526e76502a583acd94f49817cf2">ConnectionClosed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa12c37c4278b8c0db6c2f65052569cd80">Interrupted</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa10682640c96d005f79a5662874e893b7">ConnectionTimeout</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaeac52237c445c20365345eae513aa317">SendTimeout</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c">ReceiveTimeout</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa5826f39232ecf25ee28b57753aa25e1b">ListenFailed</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa0c17cd2d71728d61693ae3bbedbd202d">SendFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf0dc5b8dbf46673b612bb962a4b05a83">ReceiveFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa5d611b5f4d4f6be340b5f36683c20170">HandshakeFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa7a779cc702629f3a2eec07b3932d2f8e">CertificateError</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf8bf95b659f617159eb42c2099352a26">EncryptionFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaad1fc762e8f39e812667213e92037bc08">DecryptionFailed</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa924ac3ba131a712d1ebeba6175565bfa">InvalidSecurityContext</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa2c0a3080aa90de74c6815d193147b2ea">IncompleteMessage</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa1ed9e36e248aeea0060815c583a3956b">ResolveHostNotFound</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541">ResolveServiceNotFound</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf4fcb52d03ef5e444191c8cb34c20ec2">ResolveTemporaryFailure</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc">ResolveFailed</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95">ResolveNoAddressFound</a>
+, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba">UnsupportedAddressFamily</a>
+<br />
+ }</td></tr>
+<tr class="separator:abcdc7039ff863f7958fab5478142dfba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85eaa753a61e7a8453b3f7e9bb5dbfbc" id="r_a85eaa753a61e7a8453b3f7e9bb5dbfbc"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbc">CredentialErrorEnum</a> : unsigned long { <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754">None</a> = 0
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878">FileReadFailed</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6">InvalidPassword</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0">BadCertificateFormat</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a">CertificateNotFound</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00">MissingPrivateKey</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5">SecurityPackageNotFound</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22">UnknownCredentials</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9">NoCredentials</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e">InsufficientMemory</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5">InternalError</a>
+, <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a">UnsupportedFunction</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>
+<br />
+ }</td></tr>
+<tr class="separator:a85eaa753a61e7a8453b3f7e9bb5dbfbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="a0832e30628cac84f3f31a6d76a3b29ce" name="a0832e30628cac84f3f31a6d76a3b29ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0832e30628cac84f3f31a6d76a3b29ce">&#9670;&#160;</a></span>ByteData</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a0832e30628cac84f3f31a6d76a3b29ce">Hermes::ByteData</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> std::vector&lt;std::byte&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a2e66d0f22a3ac87a8f45f45cce8ad1bd" name="a2e66d0f22a3ac87a8f45f45cce8ad1bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e66d0f22a3ac87a8f45f45cce8ad1bd">&#9670;&#160;</a></span>ByteDataSpan</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd">Hermes::ByteDataSpan</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> std::span&lt;std::byte&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea60127b207d39fb5d05a863ade851a9" name="aea60127b207d39fb5d05a863ade851a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea60127b207d39fb5d05a863ade851a9">&#9670;&#160;</a></span>ConnectionResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">T</a> &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">Hermes::ConnectionResult</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> std::expected&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">T</a>, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa4c2bc87d8b3921bd110920bba542091" name="aa4c2bc87d8b3921bd110920bba542091"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4c2bc87d8b3921bd110920bba542091">&#9670;&#160;</a></span>ConnectionResultOper</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt;std::monostate&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a07c1d7f39955400d235a2da6433d0ed4" name="a07c1d7f39955400d235a2da6433d0ed4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a07c1d7f39955400d235a2da6433d0ed4">&#9670;&#160;</a></span>RawTcpClient</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a07c1d7f39955400d235a2da6433d0ed4">Hermes::RawTcpClient</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10af606e98c70fcda458f4a610867a04" name="a10af606e98c70fcda458f4a610867a04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10af606e98c70fcda458f4a610867a04">&#9670;&#160;</a></span>RawTcpListener</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">Hermes::RawTcpListener</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_listener_socket_8hpp-example.html#a10">/home/runner/work/Hermes/Hermes/include/Hermes/Socket/ListenerSocket.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="ae3a1ee0cb148ad5dd2773d754bf3d462" name="ae3a1ee0cb148ad5dd2773d754bf3d462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3a1ee0cb148ad5dd2773d754bf3d462">&#9670;&#160;</a></span>RawTcpServer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462">Hermes::RawTcpServer</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aff9b2b8730c483214f316805a65b4d05" name="aff9b2b8730c483214f316805a65b4d05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff9b2b8730c483214f316805a65b4d05">&#9670;&#160;</a></span>RawTlsClient</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#aff9b2b8730c483214f316805a65b4d05">Hermes::RawTlsClient</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_connect_policy.html">TlsConnectPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0fa765db9251cbd7dc79d930989810c7" name="a0fa765db9251cbd7dc79d930989810c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0fa765db9251cbd7dc79d930989810c7">&#9670;&#160;</a></span>RawTlsListener</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">Hermes::RawTlsListener</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_listener_socket_8hpp-example.html#a11">/home/runner/work/Hermes/Hermes/include/Hermes/Socket/ListenerSocket.hpp</a>.</dd>
+</dl>
+
+</div>
+</div>
+<a id="a0c5c7c1c73ec5139e2695d504feea770" name="a0c5c7c1c73ec5139e2695d504feea770"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c5c7c1c73ec5139e2695d504feea770">&#9670;&#160;</a></span>RawTlsServer</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a0c5c7c1c73ec5139e2695d504feea770">Hermes::RawTlsServer</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aee836237b322a73054884a34505993b6" name="aee836237b322a73054884a34505993b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee836237b322a73054884a34505993b6">&#9670;&#160;</a></span>RawUdpClient</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#aee836237b322a73054884a34505993b6">Hermes::RawUdpClient</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData</a>&lt;<a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a>, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005ac3177658ef36637801bea6fd4f1a1e92">SocketTypeEnum::Dgram</a>&gt; &gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae387a226251b2771a996781de8eb3247" name="ae387a226251b2771a996781de8eb3247"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae387a226251b2771a996781de8eb3247">&#9670;&#160;</a></span>SocketInfoAddr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">Hermes::SocketInfoAddr</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> std::tuple&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">sockaddr_storage</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a39bdfbf4b858f9fb7654cf2aadf2098b" name="a39bdfbf4b858f9fb7654cf2aadf2098b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39bdfbf4b858f9fb7654cf2aadf2098b">&#9670;&#160;</a></span>StreamByteOper</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">Hermes::StreamByteOper</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> std::pair&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="abcdc7039ff863f7958fab5478142dfba" name="abcdc7039ff863f7958fab5478142dfba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcdc7039ff863f7958fab5478142dfba">&#9670;&#160;</a></span>ConnectionErrorEnum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e" name="abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e"></a>Unknown&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e" name="abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e"></a>InvalidRole&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa38cc5fce04e6e996f51f70982b97f482" name="abcdc7039ff863f7958fab5478142dfbaa38cc5fce04e6e996f51f70982b97f482"></a>InvalidEndpoint&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaf05e778bc960135cd2482522a98db05e" name="abcdc7039ff863f7958fab5478142dfbaaf05e778bc960135cd2482522a98db05e"></a>AddressInUse&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa04a5d66da5997f2f05c1c8c2398ee520" name="abcdc7039ff863f7958fab5478142dfbaa04a5d66da5997f2f05c1c8c2398ee520"></a>SocketNotOpen&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaaf98071f760be899f4fcf1d53a29ba17" name="abcdc7039ff863f7958fab5478142dfbaaaf98071f760be899f4fcf1d53a29ba17"></a>ConnectionFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa318ec526e76502a583acd94f49817cf2" name="abcdc7039ff863f7958fab5478142dfbaa318ec526e76502a583acd94f49817cf2"></a>ConnectionClosed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa12c37c4278b8c0db6c2f65052569cd80" name="abcdc7039ff863f7958fab5478142dfbaa12c37c4278b8c0db6c2f65052569cd80"></a>Interrupted&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa10682640c96d005f79a5662874e893b7" name="abcdc7039ff863f7958fab5478142dfbaa10682640c96d005f79a5662874e893b7"></a>ConnectionTimeout&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaeac52237c445c20365345eae513aa317" name="abcdc7039ff863f7958fab5478142dfbaaeac52237c445c20365345eae513aa317"></a>SendTimeout&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c" name="abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c"></a>ReceiveTimeout&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa5826f39232ecf25ee28b57753aa25e1b" name="abcdc7039ff863f7958fab5478142dfbaa5826f39232ecf25ee28b57753aa25e1b"></a>ListenFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa0c17cd2d71728d61693ae3bbedbd202d" name="abcdc7039ff863f7958fab5478142dfbaa0c17cd2d71728d61693ae3bbedbd202d"></a>SendFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaf0dc5b8dbf46673b612bb962a4b05a83" name="abcdc7039ff863f7958fab5478142dfbaaf0dc5b8dbf46673b612bb962a4b05a83"></a>ReceiveFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa5d611b5f4d4f6be340b5f36683c20170" name="abcdc7039ff863f7958fab5478142dfbaa5d611b5f4d4f6be340b5f36683c20170"></a>HandshakeFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa7a779cc702629f3a2eec07b3932d2f8e" name="abcdc7039ff863f7958fab5478142dfbaa7a779cc702629f3a2eec07b3932d2f8e"></a>CertificateError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaf8bf95b659f617159eb42c2099352a26" name="abcdc7039ff863f7958fab5478142dfbaaf8bf95b659f617159eb42c2099352a26"></a>EncryptionFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaad1fc762e8f39e812667213e92037bc08" name="abcdc7039ff863f7958fab5478142dfbaad1fc762e8f39e812667213e92037bc08"></a>DecryptionFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa924ac3ba131a712d1ebeba6175565bfa" name="abcdc7039ff863f7958fab5478142dfbaa924ac3ba131a712d1ebeba6175565bfa"></a>InvalidSecurityContext&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa2c0a3080aa90de74c6815d193147b2ea" name="abcdc7039ff863f7958fab5478142dfbaa2c0a3080aa90de74c6815d193147b2ea"></a>IncompleteMessage&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa1ed9e36e248aeea0060815c583a3956b" name="abcdc7039ff863f7958fab5478142dfbaa1ed9e36e248aeea0060815c583a3956b"></a>ResolveHostNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541" name="abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541"></a>ResolveServiceNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaf4fcb52d03ef5e444191c8cb34c20ec2" name="abcdc7039ff863f7958fab5478142dfbaaf4fcb52d03ef5e444191c8cb34c20ec2"></a>ResolveTemporaryFailure&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc" name="abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc"></a>ResolveFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95" name="abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95"></a>ResolveNoAddressFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba" name="abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba"></a>UnsupportedAddressFamily&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a85eaa753a61e7a8453b3f7e9bb5dbfbc" name="a85eaa753a61e7a8453b3f7e9bb5dbfbc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85eaa753a61e7a8453b3f7e9bb5dbfbc">&#9670;&#160;</a></span>CredentialErrorEnum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbc">Hermes::CredentialErrorEnum</a> : <a class="el" href="struct_hermes_1_1_default_socket_data.html">unsigned</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">long</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878"></a>FileReadFailed&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6"></a>InvalidPassword&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0"></a>BadCertificateFormat&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a"></a>CertificateNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00"></a>MissingPrivateKey&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5"></a>SecurityPackageNotFound&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22"></a>UnknownCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9"></a>NoCredentials&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e"></a>InsufficientMemory&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5"></a>InternalError&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a"></a>UnsupportedFunction&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e"></a>Unknown&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_hermes.html">Hermes</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

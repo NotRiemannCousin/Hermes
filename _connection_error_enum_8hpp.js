@@ -1,0 +1,36 @@
+var _connection_error_enum_8hpp =
+[
+    [ "ByteData", "_connection_error_enum_8hpp.html#a0832e30628cac84f3f31a6d76a3b29ce", null ],
+    [ "ByteDataSpan", "_connection_error_enum_8hpp.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd", null ],
+    [ "ConnectionResult", "_connection_error_enum_8hpp.html#aea60127b207d39fb5d05a863ade851a9", null ],
+    [ "ConnectionResultOper", "_connection_error_enum_8hpp.html#aa4c2bc87d8b3921bd110920bba542091", null ],
+    [ "StreamByteOper", "_connection_error_enum_8hpp.html#a39bdfbf4b858f9fb7654cf2aadf2098b", null ],
+    [ "ConnectionErrorEnum", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfba", [
+      [ "Unknown", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e", null ],
+      [ "InvalidRole", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e", null ],
+      [ "InvalidEndpoint", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa38cc5fce04e6e996f51f70982b97f482", null ],
+      [ "AddressInUse", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaf05e778bc960135cd2482522a98db05e", null ],
+      [ "SocketNotOpen", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa04a5d66da5997f2f05c1c8c2398ee520", null ],
+      [ "ConnectionFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaaf98071f760be899f4fcf1d53a29ba17", null ],
+      [ "ConnectionClosed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa318ec526e76502a583acd94f49817cf2", null ],
+      [ "Interrupted", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa12c37c4278b8c0db6c2f65052569cd80", null ],
+      [ "ConnectionTimeout", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa10682640c96d005f79a5662874e893b7", null ],
+      [ "SendTimeout", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaeac52237c445c20365345eae513aa317", null ],
+      [ "ReceiveTimeout", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c", null ],
+      [ "ListenFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa5826f39232ecf25ee28b57753aa25e1b", null ],
+      [ "SendFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa0c17cd2d71728d61693ae3bbedbd202d", null ],
+      [ "ReceiveFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaf0dc5b8dbf46673b612bb962a4b05a83", null ],
+      [ "HandshakeFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa5d611b5f4d4f6be340b5f36683c20170", null ],
+      [ "CertificateError", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa7a779cc702629f3a2eec07b3932d2f8e", null ],
+      [ "EncryptionFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaf8bf95b659f617159eb42c2099352a26", null ],
+      [ "DecryptionFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaad1fc762e8f39e812667213e92037bc08", null ],
+      [ "InvalidSecurityContext", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa924ac3ba131a712d1ebeba6175565bfa", null ],
+      [ "IncompleteMessage", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa2c0a3080aa90de74c6815d193147b2ea", null ],
+      [ "ResolveHostNotFound", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa1ed9e36e248aeea0060815c583a3956b", null ],
+      [ "ResolveServiceNotFound", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541", null ],
+      [ "ResolveTemporaryFailure", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaf4fcb52d03ef5e444191c8cb34c20ec2", null ],
+      [ "ResolveFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc", null ],
+      [ "ResolveNoAddressFound", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95", null ],
+      [ "UnsupportedAddressFamily", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ]
+    ] ]
+];

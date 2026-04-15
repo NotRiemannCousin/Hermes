@@ -1,0 +1,247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Thoth" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Thoth/blob/master/images/Thoth-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 webdev library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Thoth/blob/master/images/Thoth-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Thoth" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 webdev library" />
+<!-- END twitter metadata -->
+<title>Thoth: include/Thoth/Http/Response/Response.hpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Thoth" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="Thoth-logo.webp"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Thoth
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 webdev library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Search',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('_response_8hpp_source.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Response.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_response_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="_response_head_8hpp.html">Thoth/Http/Response/ResponseHead.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;<a class="code" href="_post_method_8hpp.html">Thoth/Http/Methods/PostMethod.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="_get_method_8hpp.html">Thoth/Http/Methods/GetMethod.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="_json_8hpp.html">Thoth/NJson/Json.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="_file_output_range_8hpp.html">Thoth/Dsa/FileOutputRange.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_thoth_1_1_http.html">Thoth::Http</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_thoth_1_1_http_1_1_request_error.html">RequestError</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="concept_thoth_1_1_http_1_1_response_body_concept.html">   13</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concept_thoth_1_1_http_1_1_response_body_concept.html">ResponseBodyConcept</a> =</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>            std::ranges::output_range&lt;T, char&gt; ||</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>            std::ranges::output_range&lt;T, unsigned char&gt; ||</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            std::ranges::output_range&lt;T, std::byte&gt;;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span>&lt;ResponseBodyConcept Body&gt;</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a5379080d14ac2dfa264229cc182c7dc1">   20</a></span>    <span class="keyword">auto</span> <a class="code hl_function" href="namespace_thoth_1_1_http.html#a5379080d14ac2dfa264229cc182c7dc1">GetInserterIterator</a>(Body&amp; body);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">template</span>&lt;MethodConcept Method = GetMethod, ResponseBodyConcept Body = std::<span class="keywordtype">string</span>&gt;</div>
+<div class="foldopen" id="foldopen00024" data-start="{" data-end="};">
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html">   24</a></span>    <span class="keyword">struct </span>Response {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a24cc6edc625de354f099a4900b19b799">   25</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="struct_thoth_1_1_http_1_1_response.html#a24cc6edc625de354f099a4900b19b799">MethodType</a> = Method;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#abd186c458a0c8410f5397002d870a37a">   27</a></span>        <a class="code hl_enumeration" href="namespace_thoth_1_1_http.html#aafd3ae972536eae8c855e484175fa0db">VersionEnum</a> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#abd186c458a0c8410f5397002d870a37a">version</a>{};</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a7edc64d21fccf47575d53bba4b5b639f">   28</a></span>        <a class="code hl_enumeration" href="namespace_thoth_1_1_http.html#a6a0a61c5077e5cb3aaa952aba4b824c7">StatusCodeEnum</a> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a7edc64d21fccf47575d53bba4b5b639f">status</a>{};</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a80cb5cf54565c3233b67b2e5e8301ae4">   29</a></span>        <span class="keywordtype">string</span> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a80cb5cf54565c3233b67b2e5e8301ae4">statusMessage</a>{};</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a0e5fcce1e05c13a8a33dff57866f6edf">   30</a></span>        <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_headers.html">Headers</a> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a0e5fcce1e05c13a8a33dff57866f6edf">headers</a>{};</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#ae32b14d3e677ba1c88924c2765bc767d">   31</a></span>        Body <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#ae32b14d3e677ba1c88924c2765bc767d">body</a>;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a9bee35b146080ab7239cc8aff02333c3">   33</a></span>        <span class="keyword">friend</span> <span class="keyword">struct </span><a class="code hl_friend" href="struct_thoth_1_1_http_1_1_response.html#a9bee35b146080ab7239cc8aff02333c3">Client</a>; <span class="comment">// who construct it</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keyword">requires</span> std::same_as&lt;Body, string&gt;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#abbf051b2f34b4e54f2aa59c9ad316dd8">   37</a></span>        [[nodiscard]] std::expected&lt;NJson::Json, RequestError&gt; <a class="code hl_function" href="struct_thoth_1_1_http_1_1_response.html#abbf051b2f34b4e54f2aa59c9ad316dd8">AsJson</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#a5dc84f1dc95a19a8c9e0ee0716fef62b">   40</a></span>        [[nodiscard]] <span class="keywordtype">bool</span> <a class="code hl_function" href="struct_thoth_1_1_http_1_1_response.html#a5dc84f1dc95a19a8c9e0ee0716fef62b">Successful</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="struct_thoth_1_1_http_1_1_response.html#aa24a60d3fa71bff58660486cffb8e16a">   44</a></span>        [[nodiscard]] Body <a class="code hl_function" href="struct_thoth_1_1_http_1_1_response.html#aa24a60d3fa71bff58660486cffb8e16a">MoveBody</a>() &amp;&amp;;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        Response(<a class="code hl_enumeration" href="namespace_thoth_1_1_http.html#aafd3ae972536eae8c855e484175fa0db">VersionEnum</a> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#abd186c458a0c8410f5397002d870a37a">version</a>, <a class="code hl_enumeration" href="namespace_thoth_1_1_http.html#a6a0a61c5077e5cb3aaa952aba4b824c7">StatusCodeEnum</a> <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a7edc64d21fccf47575d53bba4b5b639f">status</a>,</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordtype">string</span>&amp;&amp; <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a80cb5cf54565c3233b67b2e5e8301ae4">statusMessage</a>, <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_headers.html">Headers</a>&amp;&amp; <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#a0e5fcce1e05c13a8a33dff57866f6edf">headers</a>, Body&amp;&amp; <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#ae32b14d3e677ba1c88924c2765bc767d">body</a>);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        Response(<a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response_head.html">ResponseHead</a>&amp;&amp; head, Body&amp;&amp; <a class="code hl_variable" href="struct_thoth_1_1_http_1_1_response.html#ae32b14d3e677ba1c88924c2765bc767d">body</a>);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a751fd40f9427cdaf49cf73299039168c">   53</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#a751fd40f9427cdaf49cf73299039168c">GetResponse</a>  = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;&gt;</a>;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a406725da08567057c843e7aca9772dd7">   54</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#a406725da08567057c843e7aca9772dd7">PostResponse</a> = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;PostMethod&gt;</a>;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a7756a97a64b5a4effbe881daa67ad5a2">   56</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#a7756a97a64b5a4effbe881daa67ad5a2">GetBinResponse</a>  = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;GetMethod, vector&lt;std::byte&gt;</a>&gt;;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#abd413bfd3d2e962edb91bb347259cb54">   57</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#abd413bfd3d2e962edb91bb347259cb54">PostBinResponse</a> = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;PostMethod, vector&lt;std::byte&gt;</a>&gt;;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a89cafead9e28447c71d458a53be6419e">   59</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#a89cafead9e28447c71d458a53be6419e">GetFileResponse</a>  = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;GetMethod, Dsa::TextFileOutputRange&gt;</a>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#abbc435da6152754f918ab209154301a7">   60</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#abbc435da6152754f918ab209154301a7">PostFileResponse</a> = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;PostMethod, Dsa::TextFileOutputRange&gt;</a>;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#aca37b775fcc7988526ec0643f689b321">   62</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#aca37b775fcc7988526ec0643f689b321">GetFileBinResponse</a>  = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;GetMethod, vector&lt;std::byte&gt;</a>&gt;;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespace_thoth_1_1_http.html#a02cc4238a57955fb2cbc3f88a97a00d3">   63</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_thoth_1_1_http.html#a02cc4238a57955fb2cbc3f88a97a00d3">PostFileBinResponse</a> = <a class="code hl_struct" href="struct_thoth_1_1_http_1_1_response.html">Response&lt;PostMethod, vector&lt;std::byte&gt;</a>&gt;;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &lt;Thoth/Http/Response/Response.tpp&gt;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="ttc" id="a_file_output_range_8hpp_html"><div class="ttname"><a href="_file_output_range_8hpp.html">FileOutputRange.hpp</a></div></div>
+<div class="ttc" id="a_get_method_8hpp_html"><div class="ttname"><a href="_get_method_8hpp.html">GetMethod.hpp</a></div></div>
+<div class="ttc" id="a_json_8hpp_html"><div class="ttname"><a href="_json_8hpp.html">Json.hpp</a></div></div>
+<div class="ttc" id="a_post_method_8hpp_html"><div class="ttname"><a href="_post_method_8hpp.html">PostMethod.hpp</a></div></div>
+<div class="ttc" id="a_response_head_8hpp_html"><div class="ttname"><a href="_response_head_8hpp.html">ResponseHead.hpp</a></div></div>
+<div class="ttc" id="aconcept_thoth_1_1_http_1_1_response_body_concept_html"><div class="ttname"><a href="concept_thoth_1_1_http_1_1_response_body_concept.html">Thoth::Http::ResponseBodyConcept</a></div><div class="ttdef"><b>Definition</b> Response.hpp:13</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html"><div class="ttname"><a href="namespace_thoth_1_1_http.html">Thoth::Http</a></div><div class="ttdef"><b>Definition</b> Client.hpp:12</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a02cc4238a57955fb2cbc3f88a97a00d3"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a02cc4238a57955fb2cbc3f88a97a00d3">Thoth::Http::PostFileBinResponse</a></div><div class="ttdeci">Response&lt; PostMethod, vector&lt; std::byte &gt; &gt; PostFileBinResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:63</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a406725da08567057c843e7aca9772dd7"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a406725da08567057c843e7aca9772dd7">Thoth::Http::PostResponse</a></div><div class="ttdeci">Response&lt; PostMethod &gt; PostResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:54</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a5379080d14ac2dfa264229cc182c7dc1"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a5379080d14ac2dfa264229cc182c7dc1">Thoth::Http::GetInserterIterator</a></div><div class="ttdeci">auto GetInserterIterator(Body &amp;body)</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a6a0a61c5077e5cb3aaa952aba4b824c7"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a6a0a61c5077e5cb3aaa952aba4b824c7">Thoth::Http::StatusCodeEnum</a></div><div class="ttdeci">StatusCodeEnum</div><div class="ttdef"><b>Definition</b> StatusCodeEnum.hpp:7</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a751fd40f9427cdaf49cf73299039168c"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a751fd40f9427cdaf49cf73299039168c">Thoth::Http::GetResponse</a></div><div class="ttdeci">Response&lt;&gt; GetResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:53</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a7756a97a64b5a4effbe881daa67ad5a2"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a7756a97a64b5a4effbe881daa67ad5a2">Thoth::Http::GetBinResponse</a></div><div class="ttdeci">Response&lt; GetMethod, vector&lt; std::byte &gt; &gt; GetBinResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:56</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_a89cafead9e28447c71d458a53be6419e"><div class="ttname"><a href="namespace_thoth_1_1_http.html#a89cafead9e28447c71d458a53be6419e">Thoth::Http::GetFileResponse</a></div><div class="ttdeci">Response&lt; GetMethod, Dsa::TextFileOutputRange &gt; GetFileResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:59</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_aafd3ae972536eae8c855e484175fa0db"><div class="ttname"><a href="namespace_thoth_1_1_http.html#aafd3ae972536eae8c855e484175fa0db">Thoth::Http::VersionEnum</a></div><div class="ttdeci">VersionEnum</div><div class="ttdef"><b>Definition</b> Request.hpp:9</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_abbc435da6152754f918ab209154301a7"><div class="ttname"><a href="namespace_thoth_1_1_http.html#abbc435da6152754f918ab209154301a7">Thoth::Http::PostFileResponse</a></div><div class="ttdeci">Response&lt; PostMethod, Dsa::TextFileOutputRange &gt; PostFileResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:60</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_abd413bfd3d2e962edb91bb347259cb54"><div class="ttname"><a href="namespace_thoth_1_1_http.html#abd413bfd3d2e962edb91bb347259cb54">Thoth::Http::PostBinResponse</a></div><div class="ttdeci">Response&lt; PostMethod, vector&lt; std::byte &gt; &gt; PostBinResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:57</div></div>
+<div class="ttc" id="anamespace_thoth_1_1_http_html_aca37b775fcc7988526ec0643f689b321"><div class="ttname"><a href="namespace_thoth_1_1_http.html#aca37b775fcc7988526ec0643f689b321">Thoth::Http::GetFileBinResponse</a></div><div class="ttdeci">Response&lt; GetMethod, vector&lt; std::byte &gt; &gt; GetFileBinResponse</div><div class="ttdef"><b>Definition</b> Response.hpp:62</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_headers_html"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_headers.html">Thoth::Http::Headers</a></div><div class="ttdoc">This class stores the headers from HTTP.</div><div class="ttdef"><b>Definition</b> Headers.hpp:32</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_request_error_html"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_request_error.html">Thoth::Http::RequestError</a></div><div class="ttdef"><b>Definition</b> RequestError.hpp:71</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_head_html"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response_head.html">Thoth::Http::ResponseHead</a></div><div class="ttdef"><b>Definition</b> ResponseHead.hpp:9</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html">Thoth::Http::Response</a></div><div class="ttdef"><b>Definition</b> Response.hpp:24</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a0e5fcce1e05c13a8a33dff57866f6edf"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a0e5fcce1e05c13a8a33dff57866f6edf">Thoth::Http::Response&lt; PostMethod &gt;::headers</a></div><div class="ttdeci">Headers headers</div><div class="ttdef"><b>Definition</b> Response.hpp:30</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a24cc6edc625de354f099a4900b19b799"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a24cc6edc625de354f099a4900b19b799">Thoth::Http::Response::MethodType</a></div><div class="ttdeci">Method MethodType</div><div class="ttdef"><b>Definition</b> Response.hpp:25</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a5dc84f1dc95a19a8c9e0ee0716fef62b"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a5dc84f1dc95a19a8c9e0ee0716fef62b">Thoth::Http::Response::Successful</a></div><div class="ttdeci">bool Successful() const</div><div class="ttdoc">Returns if the response is 2XX.</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a7edc64d21fccf47575d53bba4b5b639f"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a7edc64d21fccf47575d53bba4b5b639f">Thoth::Http::Response&lt; PostMethod &gt;::status</a></div><div class="ttdeci">StatusCodeEnum status</div><div class="ttdef"><b>Definition</b> Response.hpp:28</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a80cb5cf54565c3233b67b2e5e8301ae4"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a80cb5cf54565c3233b67b2e5e8301ae4">Thoth::Http::Response&lt; PostMethod &gt;::statusMessage</a></div><div class="ttdeci">string statusMessage</div><div class="ttdef"><b>Definition</b> Response.hpp:29</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_a9bee35b146080ab7239cc8aff02333c3"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#a9bee35b146080ab7239cc8aff02333c3">Thoth::Http::Response&lt; PostMethod &gt;::Client</a></div><div class="ttdeci">friend struct Client</div><div class="ttdef"><b>Definition</b> Response.hpp:33</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_aa24a60d3fa71bff58660486cffb8e16a"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#aa24a60d3fa71bff58660486cffb8e16a">Thoth::Http::Response::MoveBody</a></div><div class="ttdeci">Body MoveBody() &amp;&amp;</div><div class="ttdoc">Monad friendly move of the body, discarding the rest of the response. Recommended check for Successfu...</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_abbf051b2f34b4e54f2aa59c9ad316dd8"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#abbf051b2f34b4e54f2aa59c9ad316dd8">Thoth::Http::Response::AsJson</a></div><div class="ttdeci">std::expected&lt; NJson::Json, RequestError &gt; AsJson() const</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_abd186c458a0c8410f5397002d870a37a"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#abd186c458a0c8410f5397002d870a37a">Thoth::Http::Response&lt; PostMethod &gt;::version</a></div><div class="ttdeci">VersionEnum version</div><div class="ttdef"><b>Definition</b> Response.hpp:27</div></div>
+<div class="ttc" id="astruct_thoth_1_1_http_1_1_response_html_ae32b14d3e677ba1c88924c2765bc767d"><div class="ttname"><a href="struct_thoth_1_1_http_1_1_response.html#ae32b14d3e677ba1c88924c2765bc767d">Thoth::Http::Response&lt; PostMethod &gt;::body</a></div><div class="ttdeci">std::string body</div><div class="ttdef"><b>Definition</b> Response.hpp:31</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a href="dir_c6a74f695d865e6872ff805f8280c9af.html">Thoth</a></li><li class="navelem"><a href="dir_41cc9e0bb4f1115e1fe2e2758d2bc168.html">Http</a></li><li class="navelem"><a href="dir_2b930848939edf81047ea3b73a2c6d36.html">Response</a></li><li class="navelem"><a href="_response_8hpp.html">Response.hpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

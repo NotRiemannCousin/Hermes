@@ -1,0 +1,4 @@
+var struct_hermes_1_1__details_1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4 =
+[
+    [ "tcpNoDelay", "struct_hermes_1_1__details_1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html#a594501ed1d515f70ee5703908dd3d45a", null ]
+];

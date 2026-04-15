@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: include/Hermes/_base/WinApi/Flags/InitializeSecurityContextReturnFlags.hpp Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_initialize_security_context_return_flags_8hpp_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">InitializeSecurityContextReturnFlags.hpp</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_initialize_security_context_return_flags_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;sspi.h&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1c">    4</a></span><span class="keyword">enum class</span> <a class="code hl_enumeration" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1c">InitializeSecurityContextReturnFlags</a> : <span class="keywordtype">long</span> <span class="keywordtype">long</span> {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca26545d7107c7489959a37bd671181fca">Delegate</a>             = ISC_RET_DELEGATE,</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca76c10e0b6fd0372e7b7fc8a9deae022b">MutualAuth</a>           = ISC_RET_MUTUAL_AUTH,</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cae6e385c9b8fca9f68615a341f56b10fd">ReplayDetect</a>         = ISC_RET_REPLAY_DETECT,</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca4fc8a8e24d09999f741e4463dab2d340">SequenceDetect</a>       = ISC_RET_SEQUENCE_DETECT,</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca7310289d42f662613510d4520b3fe67c">Confidentiality</a>      = ISC_RET_CONFIDENTIALITY,</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cad536d7dc59308d82b20f59daca509cc7">UseSessionKey</a>        = ISC_RET_USE_SESSION_KEY,</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca6d6e1d0572a42e5916ee7a6383aed13a">UsedCollectedCreds</a>   = ISC_RET_USED_COLLECTED_CREDS,</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cadfda37b789be73470deca548da9bbcc8">UsedSuppliedCreds</a>    = ISC_RET_USED_SUPPLIED_CREDS,</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0cdb14d35612ac4b3e9108f95b939e9d">AllocatedMemory</a>      = ISC_RET_ALLOCATED_MEMORY,</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caad9a16f86e3c95015236c34b75230701">UsedDceStyle</a>         = ISC_RET_USED_DCE_STYLE,</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca640931067618ca3bc723805cb196e22f">Datagram</a>             = ISC_RET_DATAGRAM,</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cac2cc7082a89c1ad6631a2f66af5f00c0">Connection</a>           = ISC_RET_CONNECTION,</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0f61a647fdbdfa7f0692192f8bd5d568">IntermediateReturn</a>   = ISC_RET_INTERMEDIATE_RETURN,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caee3913ca35a42b1d586b93e52fae852e">CallLevel</a>            = ISC_RET_CALL_LEVEL,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cae0d6e121bc9a40e79a20f71adc2c65fc">ExtendedError</a>        = ISC_RET_EXTENDED_ERROR,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caeae835e83c0494a376229f254f7d3392">Stream</a>               = ISC_RET_STREAM,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caf3f97de67c80480904f958df15b8a57b">Integrity</a>            = ISC_RET_INTEGRITY,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca907396997c77fece588eefb3b45bfa54">Identify</a>             = ISC_RET_IDENTIFY,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caffb544aeb80d0d9c1bd28aa5cc6dc220">NullSession</a>          = ISC_RET_NULL_SESSION,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0ebbd2ab36ddf1ee926d2b7fc354a45b">ManualCredValidation</a> = ISC_RET_MANUAL_CRED_VALIDATION,</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca93876cb309016fa725517b046474c44b">Reserved1</a>            = ISC_RET_RESERVED1,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3aa79556ee74ef5244a7731787707bf8">FragmentOnly</a>         = ISC_RET_FRAGMENT_ONLY,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="comment">// This exists only in Windows Vista and greater</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca5a1224b4cfb84b0def0a98ee787cb8c6">ForwardCredentials</a>   = ISC_RET_FORWARD_CREDENTIALS,</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cad8a530328e3279f585306d624bd20c95">UsedHttpStyle</a>          = ISC_RET_USED_HTTP_STYLE,</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3acdfa1ff51b615fdb01b485ac742b0c">NoAdditionalToken</a>      = ISC_RET_NO_ADDITIONAL_TOKEN,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caddd4a952fc5997e83e82eb3624d56969">Reauthentication</a>       = ISC_RET_REAUTHENTICATION,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0b6bf28eaeea8546071712a83146facb">ConfidentialityOnly</a>    = ISC_RET_CONFIDENTIALITY_ONLY,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca41de6d6cfb8953c021bbe4ba0701c8a1">Messages</a>               = ISC_RET_MESSAGES,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3f5b0039305e0ff381734cc52625b648">DeferredCredValidation</a> = ISC_RET_DEFERRED_CRED_VALIDATION,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_enumvalue" href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cab0bf538cf0f0995b3edfd0a41090f80d">NoPostHandshakeAuth</a>    = ISC_RET_NO_POST_HANDSHAKE_AUTH,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>};</div>
+</div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1c"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1c">InitializeSecurityContextReturnFlags</a></div><div class="ttdeci">InitializeSecurityContextReturnFlags</div><div class="ttdef"><b>Definition</b> InitializeSecurityContextReturnFlags.hpp:4</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca0b6bf28eaeea8546071712a83146facb"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0b6bf28eaeea8546071712a83146facb">InitializeSecurityContextReturnFlags::ConfidentialityOnly</a></div><div class="ttdeci">@ ConfidentialityOnly</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca0cdb14d35612ac4b3e9108f95b939e9d"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0cdb14d35612ac4b3e9108f95b939e9d">InitializeSecurityContextReturnFlags::AllocatedMemory</a></div><div class="ttdeci">@ AllocatedMemory</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca0ebbd2ab36ddf1ee926d2b7fc354a45b"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0ebbd2ab36ddf1ee926d2b7fc354a45b">InitializeSecurityContextReturnFlags::ManualCredValidation</a></div><div class="ttdeci">@ ManualCredValidation</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca0f61a647fdbdfa7f0692192f8bd5d568"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0f61a647fdbdfa7f0692192f8bd5d568">InitializeSecurityContextReturnFlags::IntermediateReturn</a></div><div class="ttdeci">@ IntermediateReturn</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca26545d7107c7489959a37bd671181fca"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca26545d7107c7489959a37bd671181fca">InitializeSecurityContextReturnFlags::Delegate</a></div><div class="ttdeci">@ Delegate</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca3aa79556ee74ef5244a7731787707bf8"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3aa79556ee74ef5244a7731787707bf8">InitializeSecurityContextReturnFlags::FragmentOnly</a></div><div class="ttdeci">@ FragmentOnly</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca3acdfa1ff51b615fdb01b485ac742b0c"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3acdfa1ff51b615fdb01b485ac742b0c">InitializeSecurityContextReturnFlags::NoAdditionalToken</a></div><div class="ttdeci">@ NoAdditionalToken</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca3f5b0039305e0ff381734cc52625b648"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca3f5b0039305e0ff381734cc52625b648">InitializeSecurityContextReturnFlags::DeferredCredValidation</a></div><div class="ttdeci">@ DeferredCredValidation</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca41de6d6cfb8953c021bbe4ba0701c8a1"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca41de6d6cfb8953c021bbe4ba0701c8a1">InitializeSecurityContextReturnFlags::Messages</a></div><div class="ttdeci">@ Messages</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca4fc8a8e24d09999f741e4463dab2d340"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca4fc8a8e24d09999f741e4463dab2d340">InitializeSecurityContextReturnFlags::SequenceDetect</a></div><div class="ttdeci">@ SequenceDetect</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca5a1224b4cfb84b0def0a98ee787cb8c6"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca5a1224b4cfb84b0def0a98ee787cb8c6">InitializeSecurityContextReturnFlags::ForwardCredentials</a></div><div class="ttdeci">@ ForwardCredentials</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca640931067618ca3bc723805cb196e22f"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca640931067618ca3bc723805cb196e22f">InitializeSecurityContextReturnFlags::Datagram</a></div><div class="ttdeci">@ Datagram</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca6d6e1d0572a42e5916ee7a6383aed13a"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca6d6e1d0572a42e5916ee7a6383aed13a">InitializeSecurityContextReturnFlags::UsedCollectedCreds</a></div><div class="ttdeci">@ UsedCollectedCreds</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca7310289d42f662613510d4520b3fe67c"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca7310289d42f662613510d4520b3fe67c">InitializeSecurityContextReturnFlags::Confidentiality</a></div><div class="ttdeci">@ Confidentiality</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca76c10e0b6fd0372e7b7fc8a9deae022b"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca76c10e0b6fd0372e7b7fc8a9deae022b">InitializeSecurityContextReturnFlags::MutualAuth</a></div><div class="ttdeci">@ MutualAuth</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca907396997c77fece588eefb3b45bfa54"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca907396997c77fece588eefb3b45bfa54">InitializeSecurityContextReturnFlags::Identify</a></div><div class="ttdeci">@ Identify</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1ca93876cb309016fa725517b046474c44b"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca93876cb309016fa725517b046474c44b">InitializeSecurityContextReturnFlags::Reserved1</a></div><div class="ttdeci">@ Reserved1</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caad9a16f86e3c95015236c34b75230701"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caad9a16f86e3c95015236c34b75230701">InitializeSecurityContextReturnFlags::UsedDceStyle</a></div><div class="ttdeci">@ UsedDceStyle</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cab0bf538cf0f0995b3edfd0a41090f80d"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cab0bf538cf0f0995b3edfd0a41090f80d">InitializeSecurityContextReturnFlags::NoPostHandshakeAuth</a></div><div class="ttdeci">@ NoPostHandshakeAuth</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cac2cc7082a89c1ad6631a2f66af5f00c0"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cac2cc7082a89c1ad6631a2f66af5f00c0">InitializeSecurityContextReturnFlags::Connection</a></div><div class="ttdeci">@ Connection</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cad536d7dc59308d82b20f59daca509cc7"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cad536d7dc59308d82b20f59daca509cc7">InitializeSecurityContextReturnFlags::UseSessionKey</a></div><div class="ttdeci">@ UseSessionKey</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cad8a530328e3279f585306d624bd20c95"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cad8a530328e3279f585306d624bd20c95">InitializeSecurityContextReturnFlags::UsedHttpStyle</a></div><div class="ttdeci">@ UsedHttpStyle</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caddd4a952fc5997e83e82eb3624d56969"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caddd4a952fc5997e83e82eb3624d56969">InitializeSecurityContextReturnFlags::Reauthentication</a></div><div class="ttdeci">@ Reauthentication</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cadfda37b789be73470deca548da9bbcc8"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cadfda37b789be73470deca548da9bbcc8">InitializeSecurityContextReturnFlags::UsedSuppliedCreds</a></div><div class="ttdeci">@ UsedSuppliedCreds</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cae0d6e121bc9a40e79a20f71adc2c65fc"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cae0d6e121bc9a40e79a20f71adc2c65fc">InitializeSecurityContextReturnFlags::ExtendedError</a></div><div class="ttdeci">@ ExtendedError</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1cae6e385c9b8fca9f68615a341f56b10fd"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1cae6e385c9b8fca9f68615a341f56b10fd">InitializeSecurityContextReturnFlags::ReplayDetect</a></div><div class="ttdeci">@ ReplayDetect</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caeae835e83c0494a376229f254f7d3392"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caeae835e83c0494a376229f254f7d3392">InitializeSecurityContextReturnFlags::Stream</a></div><div class="ttdeci">@ Stream</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caee3913ca35a42b1d586b93e52fae852e"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caee3913ca35a42b1d586b93e52fae852e">InitializeSecurityContextReturnFlags::CallLevel</a></div><div class="ttdeci">@ CallLevel</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caf3f97de67c80480904f958df15b8a57b"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caf3f97de67c80480904f958df15b8a57b">InitializeSecurityContextReturnFlags::Integrity</a></div><div class="ttdeci">@ Integrity</div></div>
+<div class="ttc" id="a_initialize_security_context_return_flags_8hpp_html_a98ea01e0e6ea490b06ee26aa25eaeb1caffb544aeb80d0d9c1bd28aa5cc6dc220"><div class="ttname"><a href="_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1caffb544aeb80d0d9c1bd28aa5cc6dc220">InitializeSecurityContextReturnFlags::NullSession</a></div><div class="ttdeci">@ NullSession</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_2b3d271d5966c522c8b24b964939946d.html">WinApi</a></li><li class="navelem"><a class="el" href="dir_3ea201b115e9f8a60b61920d953ffd6d.html">Flags</a></li><li class="navelem"><a class="el" href="_initialize_security_context_return_flags_8hpp.html">InitializeSecurityContextReturnFlags.hpp</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

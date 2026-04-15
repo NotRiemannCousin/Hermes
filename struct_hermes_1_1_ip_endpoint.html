@@ -1,0 +1,552 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: Hermes::IpEndpoint Struct Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('struct_hermes_1_1_ip_endpoint.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="struct_hermes_1_1_ip_endpoint-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Hermes::IpEndpoint Struct Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_ip_endpoint_8hpp_source.html">IpEndpoint.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a79234d6d38bda14867321fcd51e59046" id="r_a79234d6d38bda14867321fcd51e59046"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">o</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">default</a></td></tr>
+<tr class="separator:a79234d6d38bda14867321fcd51e59046"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf233a72d64c74d0e5879cb621322c9f" id="r_acf233a72d64c74d0e5879cb621322c9f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#acf233a72d64c74d0e5879cb621322c9f">operator=</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">o</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">default</a></td></tr>
+<tr class="separator:acf233a72d64c74d0e5879cb621322c9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4333c8705ca6340cff137d88f535b4f6" id="r_a4333c8705ca6340cff137d88f535b4f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a4333c8705ca6340cff137d88f535b4f6">IpEndpoint</a> (<a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> ip={}, std::uint16_t port=0)</td></tr>
+<tr class="memdesc:a4333c8705ca6340cff137d88f535b4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> with a port and IP.  <br /></td></tr>
+<tr class="separator:a4333c8705ca6340cff137d88f535b4f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b4755d04904bd3a408375b68a749452" id="r_a5b4755d04904bd3a408375b68a749452"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">SocketInfoAddr</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a5b4755d04904bd3a408375b68a749452">ToSockAddr</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a></td></tr>
+<tr class="memdesc:a5b4755d04904bd3a408375b68a749452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to construct low-level socket information from this endpoint.  <br /></td></tr>
+<tr class="separator:a5b4755d04904bd3a408375b68a749452"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ccdddc2106b9a273578e0becfa867dd" id="r_a7ccdddc2106b9a273578e0becfa867dd"><td class="memItemLeft" align="right" valign="top">std::strong_ordering&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a7ccdddc2106b9a273578e0becfa867dd">operator&lt;=&gt;</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;) <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> =<a class="el" href="struct_hermes_1_1_default_socket_data.html">default</a></td></tr>
+<tr class="separator:a7ccdddc2106b9a273578e0becfa867dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42680fd27c3cf04c0361211761afec30" id="r_a42680fd27c3cf04c0361211761afec30"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a42680fd27c3cf04c0361211761afec30">GetIp</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a42680fd27c3cf04c0361211761afec30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01410515a442b5f7c12d4bc6467d95d1" id="r_a01410515a442b5f7c12d4bc6467d95d1"><td class="memItemLeft" align="right" valign="top">std::uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a01410515a442b5f7c12d4bc6467d95d1">GetPort</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a01410515a442b5f7c12d4bc6467d95d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:ab854121550e85fefbd701a508c9db4ad" id="r_ab854121550e85fefbd701a508c9db4ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#ab854121550e85fefbd701a508c9db4ad">Build</a> (<a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">params</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:ab854121550e85fefbd701a508c9db4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> from <a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a>.  <br /></td></tr>
+<tr class="separator:ab854121550e85fefbd701a508c9db4ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51d43d81922ffeefceabaa49e58fd67d" id="r_a51d43d81922ffeefceabaa49e58fd67d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a51d43d81922ffeefceabaa49e58fd67d">FromSockAddr</a> (<a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">SocketInfoAddr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">infoAddr</a>)</td></tr>
+<tr class="memdesc:a51d43d81922ffeefceabaa49e58fd67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to construct an Endpoint from low-level socket information.  <br /></td></tr>
+<tr class="separator:a51d43d81922ffeefceabaa49e58fd67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d226f8b82d93f4516092cdbaa50df4a" id="r_a5d226f8b82d93f4516092cdbaa50df4a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">TryResolve</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::string &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">url</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::string &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">service</a>=&quot;&quot;, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">socketType</a>=<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005aeae835e83c0494a376229f254f7d3392">SocketTypeEnum::Stream</a>)</td></tr>
+<tr class="memdesc:a5d226f8b82d93f4516092cdbaa50df4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to resolve a hostname and service into an IP endpoint.  <br /></td></tr>
+<tr class="separator:a5d226f8b82d93f4516092cdbaa50df4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a4378257788ed4583f889a6b5dad73d37" id="r_a4378257788ed4583f889a6b5dad73d37"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a4378257788ed4583f889a6b5dad73d37">std::formatter&lt; IpEndpoint &gt;</a></td></tr>
+<tr class="separator:a4378257788ed4583f889a6b5dad73d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1489886760aa0aa1aa443ce24ab0dc24" id="r_a1489886760aa0aa1aa443ce24ab0dc24"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint.html#a1489886760aa0aa1aa443ce24ab0dc24">std::hash&lt; IpEndpoint &gt;</a></td></tr>
+<tr class="separator:a1489886760aa0aa1aa443ce24ab0dc24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a79234d6d38bda14867321fcd51e59046" name="a79234d6d38bda14867321fcd51e59046"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79234d6d38bda14867321fcd51e59046">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::IpEndpoint::IpEndpoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a4333c8705ca6340cff137d88f535b4f6" name="a4333c8705ca6340cff137d88f535b4f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4333c8705ca6340cff137d88f535b4f6">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::IpEndpoint::IpEndpoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a>&#160;</td>
+          <td class="paramname"><em>ip</em> = <code>{}</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::uint16_t&#160;</td>
+          <td class="paramname"><em>port</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> with a port and IP. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ip</td><td>the IP of the endpoint. </td></tr>
+    <tr><td class="paramname">port</td><td>the port of the endpoint. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab854121550e85fefbd701a508c9db4ad" name="ab854121550e85fefbd701a508c9db4ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab854121550e85fefbd701a508c9db4ad">&#9670;&#160;</a></span>Build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> Hermes::IpEndpoint::Build </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a>&#160;</td>
+          <td class="paramname"><em>params</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> from <a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a>. </p>
+
+</div>
+</div>
+<a id="a51d43d81922ffeefceabaa49e58fd67d" name="a51d43d81922ffeefceabaa49e58fd67d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51d43d81922ffeefceabaa49e58fd67d">&#9670;&#160;</a></span>FromSockAddr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt; Hermes::IpEndpoint::FromSockAddr </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">SocketInfoAddr</a>&#160;</td>
+          <td class="paramname"><em>infoAddr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tries to construct an Endpoint from low-level socket information. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">infoAddr</td><td>The socket information used to construct the endpoint. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> on success, or an ConnectionErrorEnum on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a42680fd27c3cf04c0361211761afec30" name="a42680fd27c3cf04c0361211761afec30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42680fd27c3cf04c0361211761afec30">&#9670;&#160;</a></span>GetIp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> Hermes::IpEndpoint::GetIp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a01410515a442b5f7c12d4bc6467d95d1" name="a01410515a442b5f7c12d4bc6467d95d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01410515a442b5f7c12d4bc6467d95d1">&#9670;&#160;</a></span>GetPort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint16_t Hermes::IpEndpoint::GetPort </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7ccdddc2106b9a273578e0becfa867dd" name="a7ccdddc2106b9a273578e0becfa867dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ccdddc2106b9a273578e0becfa867dd">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::strong_ordering Hermes::IpEndpoint::operator&lt;=&gt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acf233a72d64c74d0e5879cb621322c9f" name="acf233a72d64c74d0e5879cb621322c9f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf233a72d64c74d0e5879cb621322c9f">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp; Hermes::IpEndpoint::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &amp;&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5b4755d04904bd3a408375b68a749452" name="a5b4755d04904bd3a408375b68a749452"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b4755d04904bd3a408375b68a749452">&#9670;&#160;</a></span>ToSockAddr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="namespace_hermes.html#ae387a226251b2771a996781de8eb3247">SocketInfoAddr</a> &gt; Hermes::IpEndpoint::ToSockAddr </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Tries to construct low-level socket information from this endpoint. </p>
+<dl class="section return"><dt>Returns</dt><dd>An SocketInfoAddr on success, or an ConnectionErrorEnum on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a5d226f8b82d93f4516092cdbaa50df4a" name="a5d226f8b82d93f4516092cdbaa50df4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d226f8b82d93f4516092cdbaa50df4a">&#9670;&#160;</a></span>TryResolve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt; Hermes::IpEndpoint::TryResolve </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::string &amp;&#160;</td>
+          <td class="paramname"><em>url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::string &amp;&#160;</td>
+          <td class="paramname"><em>service</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a>&#160;</td>
+          <td class="paramname"><em>socketType</em> = <code><a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005aeae835e83c0494a376229f254f7d3392">SocketTypeEnum::Stream</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tries to resolve a hostname and service into an IP endpoint. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">url</td><td>The hostname or IP address string to resolve (e.g., "google.com"). </td></tr>
+    <tr><td class="paramname">service</td><td>The service name (e.g., "http") or port number as a string (e.g., "80"). </td></tr>
+    <tr><td class="paramname">socketType</td><td>The desired socket type for the resolution (e.g., STREAM for TCP). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> on success, or a ConnectionErrorEnum on failure. </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="a4378257788ed4583f889a6b5dad73d37" name="a4378257788ed4583f889a6b5dad73d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4378257788ed4583f889a6b5dad73d37">&#9670;&#160;</a></span>std::formatter&lt; IpEndpoint &gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">friend</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a> std::formatter&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a1489886760aa0aa1aa443ce24ab0dc24" name="a1489886760aa0aa1aa443ce24ab0dc24"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1489886760aa0aa1aa443ce24ab0dc24">&#9670;&#160;</a></span>std::hash&lt; IpEndpoint &gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">friend</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a> std::hash&lt; <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/Hermes/Endpoint/IpEndpoint/<a class="el" href="_ip_endpoint_8hpp_source.html">IpEndpoint.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_hermes.html">Hermes</a></li><li class="navelem"><a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>
