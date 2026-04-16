@@ -46,5 +46,5 @@ var searchData=
   ['tryparse_43',['TryParse',['../struct_hermes_1_1_ip_address.html#ab3efe79845ade5812e2b6b957e1d8223',1,'Hermes::IpAddress']]],
   ['tryresolve_44',['TryResolve',['../struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a',1,'Hermes::IpEndpoint']]],
   ['type_45',['type',['../struct_hermes_1_1_default_socket_data.html#a55ea98566f8b7036df7ea8d25b5ad01e',1,'Hermes::DefaultSocketData::Type'],['../struct_hermes_1_1_utils_1_1_drop_last_view.html#aa8ddc94ebd4e8a82df98d996cca65c33',1,'Hermes::Utils::DropLastView::Type'],['../struct_hermes_1_1_utils_1_1_until_match_view.html#a21f1615f346e97745cbf1145901ffa7c',1,'Hermes::Utils::UntilMatchView::Type'],['../struct_hermes_1_1_tls_socket_data.html#a3972382468018e4a0ddf1891470870b0',1,'Hermes::TlsSocketData::Type']]],
-  ['type_20requirements_46',['Type Requirements',['../concept_hermes_1_1_socket_data_concept.html#autotoc_md0',1,'']]]
+  ['type_20requirements_46',['Type Requirements',['../concept_hermes_1_1_socket_data_concept.html#autotoc_md14',1,'']]]
 ];

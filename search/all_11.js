@@ -49,7 +49,7 @@ var searchData=
   ['ssl3tls1xclients_46',['Ssl3Tls1XClients',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a553365024ee2295f97a08ac7cf43fe27',1,'SupportedProtocolsFlags.hpp']]],
   ['ssl3tls1xservers_47',['Ssl3Tls1XServers',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a055addf7516f5cbe93336440425826da',1,'SupportedProtocolsFlags.hpp']]],
   ['state_48',['state',['../struct_hermes_1_1_default_socket_data_1_1_state.html',1,'Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State'],['../struct_hermes_1_1_tls_socket_data_1_1_state.html',1,'Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State'],['../struct_hermes_1_1_default_socket_data.html#a1dd2b158ed35f0a52ff4e367f30b942a',1,'Hermes::DefaultSocketData::state'],['../struct_hermes_1_1_tls_socket_data.html#a6502d63aafdc2f6d1d6fc040f8805ad5',1,'Hermes::TlsSocketData::state']]],
-  ['static_20metadata_49',['Static Metadata',['../concept_hermes_1_1_socket_data_concept.html#autotoc_md1',1,'']]],
+  ['static_20metadata_49',['Static Metadata',['../concept_hermes_1_1_socket_data_concept.html#autotoc_md15',1,'']]],
   ['std_3a_3aformatter_3c_20ipaddress_20_3e_50',['formatter&lt; IpAddress &gt;',['../struct_hermes_1_1_ip_address.html#aacf46e65c4c867e62a11196fc73b2816',1,'Hermes::IpAddress']]],
   ['std_3a_3aformatter_3c_20ipendpoint_20_3e_51',['formatter&lt; IpEndpoint &gt;',['../struct_hermes_1_1_ip_endpoint.html#a4378257788ed4583f889a6b5dad73d37',1,'Hermes::IpEndpoint']]],
   ['std_3a_3ahash_3c_20ipaddress_20_3e_52',['hash&lt; IpAddress &gt;',['../struct_hermes_1_1_ip_address.html#a9825819e1f89bdee3d6f4a7ce7524fc5',1,'Hermes::IpAddress']]],

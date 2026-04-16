@@ -159,19 +159,19 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for the data representing a socket's state. </p>
 <p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, and static metadata (Family/Type). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs and state corruption.</p>
-<h3><a class="anchor" id="autotoc_md0"></a>
+<h3><a class="anchor" id="autotoc_md14"></a>
 Type Requirements</h3>
 <ul>
 <li>Must define <code>EndpointType</code> which satisfies <code>EndpointConcept</code>.</li>
 <li>Must be <code>std::movable</code> and strictly <b>not</b> <code>std::copyable</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md1"></a>
+<h3><a class="anchor" id="autotoc_md15"></a>
 Static Metadata</h3>
 <div class="fragment"><div class="line">SocketData::Family </div>
 </div><!-- fragment --><p> A <code>constexpr AddressFamilyEnum</code> representing the address family (e.g., IPv4, IPv6).</p>
 <div class="fragment"><div class="line">SocketData::Type </div>
 </div><!-- fragment --><p> A <code>constexpr SocketTypeEnum</code> representing the socket type (e.g., Stream, Datagram).</p>
-<h3><a class="anchor" id="autotoc_md2"></a>
+<h3><a class="anchor" id="autotoc_md16"></a>
 Instance Members</h3>
 <div class="fragment"><div class="line">data.socket </div>
 </div><!-- fragment --><p> The underlying OS <code>SOCKET</code> handle.</p>

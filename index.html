@@ -140,9 +140,9 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <blockquote class="doxtable">
 <p>&zwj;<b>Status:</b> v0.2 — active development. Async sockets (<code>std::execution</code>) are planned once compiler support matures. </p>
 </blockquote>
-<h1><a class="anchor" id="autotoc_md13"></a>
+<h1><a class="anchor" id="autotoc_md1"></a>
 &lt;/blockquote&gt;</h1>
-<h1><a class="anchor" id="autotoc_md14"></a>
+<h1><a class="anchor" id="autotoc_md2"></a>
 Features</h1>
 <ul>
 <li><b>TCP</b> and <b>TCP over TLS</b> (via SChannel — no third-party crypto dependency)</li>
@@ -153,33 +153,33 @@ Features</h1>
 </ul>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md16"></a>
+<h1><a class="anchor" id="autotoc_md4"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md17"></a>
+<h2><a class="anchor" id="autotoc_md5"></a>
 pixi</h2>
 <blockquote class="doxtable">
 <p>&zwj;<em>Coming soon.</em> </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md18"></a>
+<h2><a class="anchor" id="autotoc_md6"></a>
 vcpkg</h2>
 <blockquote class="doxtable">
 <p>&zwj;<em>Maybe, someday, who knows.</em> </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md19"></a>
+<h2><a class="anchor" id="autotoc_md7"></a>
 Manual (CMake)</h2>
 <div class="fragment"><div class="line">include(FetchContent)</div>
 <div class="line"> </div>
 <div class="line">FetchContent_Declare(</div>
 <div class="line">    Hermes</div>
 <div class="line">    GIT_REPOSITORY https://github.com/NotRiemannCousin/Hermes.git</div>
-<div class="line">    GIT_TAG        v0.3.01</div>
+<div class="line">    GIT_TAG        v0.3.02</div>
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line">FetchContent_MakeAvailable(Hermes)</div>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Example</h1>
 <p>The following example performs an HTTPS GET request, parsing the response incrementally using <code>RecvRange</code>. Notice how <code>UntilMatch</code> and range composition keep the parsing logic concise — no manual buffering.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/ClientSocket.hpp</a>&gt;</span></div>
@@ -304,7 +304,7 @@ Example</h1>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a></div><div class="ttdef"><b>Definition</b> IpEndpoint.hpp:18</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a5d226f8b82d93f4516092cdbaa50df4a"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a></div><div class="ttdeci">static ConnectionResult&lt; IpEndpoint &gt; TryResolve(const std::string &amp;url, const std::string &amp;service=&quot;&quot;, SocketTypeEnum socketType=SocketTypeEnum::Stream)</div><div class="ttdoc">Tries to resolve a hostname and service into an IP endpoint.</div></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md11"></a>
 Roadmap</h1>
 <ul>
 <li>Async sockets via <code>std::execution</code> (pending compiler support)</li>
@@ -312,7 +312,7 @@ Roadmap</h1>
 <li>pixi and vcpkg packages</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md25"></a>
+<h1><a class="anchor" id="autotoc_md13"></a>
 Requirements</h1>
 <ul>
 <li>Windows 10 or newer</li>
