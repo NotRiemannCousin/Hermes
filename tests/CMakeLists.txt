@@ -18,6 +18,7 @@ add_executable(
         IpEndpointTests.cpp
         DefaultSocketTests.cpp
         TlsSocketTests.cpp
+        UtilsTests.cpp
 )
 
 add_custom_command(
