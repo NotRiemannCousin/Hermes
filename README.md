@@ -38,7 +38,7 @@ include(FetchContent)
 FetchContent_Declare(
     Hermes
     GIT_REPOSITORY https://github.com/NotRiemannCousin/Hermes.git
-    GIT_TAG        v0.3.01
+    GIT_TAG        v0.3.02
 )
 
 FetchContent_MakeAvailable(Hermes)
