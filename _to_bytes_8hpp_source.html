@@ -145,12 +145,12 @@ $(document).ready(function(){initNavTree('_to_bytes_8hpp_source.html',''); initR
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base/_base.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes_1_1_utils.html">Hermes::Utils</a> {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keyword">template</span>&lt;std::ranges::view R&gt;</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">requires</span> ByteLike&lt;std::ranges::range_value_t&lt;R&gt;&gt;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keyword">template</span>&lt;std::ranges::viewable_range R&gt;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>        <span class="keyword">requires</span> ByteLike&lt;std::ranges::range_value_t&lt;R&gt;&gt;</div>
 <div class="foldopen" id="foldopen00008" data-start="{" data-end="}">
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1_utils.html#ab7f0af003b080130d1c9985872875e7f">    8</a></span>    std::span&lt;const std::byte&gt; <a class="code hl_function" href="namespace_hermes_1_1_utils.html#ab7f0af003b080130d1c9985872875e7f">ToBytes</a>(<span class="keyword">const</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">R</a>&amp; <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">r</a>) {</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <span class="keywordflow">return</span> std::span&lt;const std::byte&gt;(</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>            <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::byte*<span class="keyword">&gt;</span>(std::data(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">r</a>)),</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>            <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span>std::byte*<span class="keyword">&gt;</span>(std::ranges::data(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">r</a>)),</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>            std::ranges::size(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">r</a>)</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        );</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    }</div>

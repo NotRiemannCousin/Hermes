@@ -50,7 +50,7 @@ var hierarchy =
     [ "Hermes::TlsConnectPolicy< Data >", "struct_hermes_1_1_tls_connect_policy.html", null ],
     [ "Hermes::TlsSocketData< Endpoint, SocketType, SocketFamily >", "struct_hermes_1_1_tls_socket_data.html", null ],
     [ "Hermes::TlsTransferPolicy< Data >", "struct_hermes_1_1_tls_transfer_policy.html", null ],
-    [ "Hermes::Utils::UntilMatchAdaptor< Pattern, Inclusive >", "struct_hermes_1_1_utils_1_1_until_match_adaptor.html", null ],
+    [ "Hermes::Utils::UntilMatchAdaptor< Inclusive, Pattern >", "struct_hermes_1_1_utils_1_1_until_match_adaptor.html", null ],
     [ "std::ranges::view_interface", null, [
       [ "Hermes::DefaultTransferPolicy< Data >::RecvLazyRange< Byte >", "struct_hermes_1_1_default_transfer_policy_1_1_recv_lazy_range.html", null ],
       [ "Hermes::TlsTransferPolicy< Data >::RecvLazyRange< Byte >", "struct_hermes_1_1_tls_transfer_policy_1_1_recv_lazy_range.html", null ],

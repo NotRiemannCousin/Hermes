@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('_until_match_8hpp.html',''); initResiz
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;ranges&gt;</code><br />
-<code>#include &lt;deque&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;Hermes/Utils/UntilMatch.tpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for UntilMatch.hpp:</div>
@@ -157,7 +157,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html">Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;::Iterator</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">Hermes::Utils::UntilMatchAdaptor&lt; Pattern, Inclusive &gt;</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">Hermes::Utils::UntilMatchAdaptor&lt; Inclusive, Pattern &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
@@ -174,12 +174,18 @@ Concepts</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48" id="r_a9813b3d181c410db40297a5cdb7e7f48"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Inclusive = false&gt; </td></tr>
+<tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48" id="r_a9813b3d181c410db40297a5cdb7e7f48"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Inclusive = false, rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
 <tr class="separator:a9813b3d181c410db40297a5cdb7e7f48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbb3096d5871878310c92fcfa472b170" id="r_abbb3096d5871878310c92fcfa472b170"><td class="memTemplParams" colspan="2">template&lt;rg::viewable_range Range, rg::contiguous_range Pattern, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Inclusive&gt; </td></tr>
-<tr class="memitem:abbb3096d5871878310c92fcfa472b170"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#abbb3096d5871878310c92fcfa472b170">Hermes::Utils::operator|</a> (Range &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">r</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">UntilMatchAdaptor</a>&lt; Pattern, <a class="el" href="struct_hermes_1_1_default_socket_data.html">Inclusive</a> &gt; &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">adaptor</a>)</td></tr>
-<tr class="separator:abbb3096d5871878310c92fcfa472b170"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0339faa9e600efff6611c316af3c2782" id="r_a0339faa9e600efff6611c316af3c2782"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
+<tr class="memitem:a0339faa9e600efff6611c316af3c2782"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#a0339faa9e600efff6611c316af3c2782">Hermes::Utils::InclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="separator:a0339faa9e600efff6611c316af3c2782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa45741ea0263909df8ab44b8d53cc988" id="r_aa45741ea0263909df8ab44b8d53cc988"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
+<tr class="memitem:aa45741ea0263909df8ab44b8d53cc988"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#aa45741ea0263909df8ab44b8d53cc988">Hermes::Utils::ExclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="separator:aa45741ea0263909df8ab44b8d53cc988"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59945c45a2268868d47c8706fadc6e15" id="r_a59945c45a2268868d47c8706fadc6e15"><td class="memTemplParams" colspan="2">template&lt;rg::viewable_range Range, rg::contiguous_range Pattern, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Inclusive&gt; </td></tr>
+<tr class="memitem:a59945c45a2268868d47c8706fadc6e15"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#a59945c45a2268868d47c8706fadc6e15">Hermes::Utils::operator|</a> (Range &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">r</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">UntilMatchAdaptor</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Inclusive</a>, Pattern &gt; &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">adaptor</a>)</td></tr>
+<tr class="separator:a59945c45a2268868d47c8706fadc6e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3f0c1b06e8b95f79f740e251c225a9c" id="r_ae3f0c1b06e8b95f79f740e251c225a9c"><td class="memTemplParams" colspan="2">template&lt;rg::sized_range R1, rg::range R2&gt; <br />
 requires std::indirectly_copyable&lt;rg::iterator_t&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R2</a>&gt;, std::back_insert_iterator&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R1</a>&gt;&gt;</td></tr>
 <tr class="memitem:ae3f0c1b06e8b95f79f740e251c225a9c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">R1</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1_utils.html#ae3f0c1b06e8b95f79f740e251c225a9c">Hermes::Utils::CopyTo</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">R2</a> &amp;view)</td></tr>
