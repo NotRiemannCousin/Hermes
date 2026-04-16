@@ -210,12 +210,17 @@ namespace Hermes {
 
                     s_setTimeout({});
 
-                    if (s_hasData(extraBuffer) && extraBuffer.BufferType == SecurityBufferEnum::Extra) {
-                        data.state->decryptedExtraSpan = std::span<std::byte>{
-                            data.state->decryptedData.data(),
-                            extraBuffer.cbBuffer
-                        };
-                    }
+
+                    std::size_t extraBufferSize{
+                        s_hasData(extraBuffer) && extraBuffer.BufferType == SecurityBufferEnum::Extra
+                            ? extraBuffer.cbBuffer
+                            : 0
+                    };
+
+                    data.state->decryptedExtraSpan = std::span<std::byte>{
+                        data.state->decryptedData.data(),
+                        extraBufferSize
+                    };
 
                     return {};
                 }
