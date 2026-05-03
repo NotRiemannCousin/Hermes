@@ -1,7 +1,5 @@
 var dir_0b5ff7c741697c8eb7741053aebed106 =
 [
-    [ "_base", "dir_c121d3193a09b0381037e0156068a995.html", "dir_c121d3193a09b0381037e0156068a995" ],
-    [ "ClientSocket.hpp", "_client_socket_8hpp.html", "_client_socket_8hpp" ],
-    [ "ListenerSocket.hpp", "_listener_socket_8hpp.html", "_listener_socket_8hpp" ],
-    [ "ServerSocket.hpp", "_server_socket_8hpp.html", "_server_socket_8hpp" ]
+    [ "Sync", "dir_0ee8d01c818a6381a98a3d57ad9512e1.html", "dir_0ee8d01c818a6381a98a3d57ad9512e1" ],
+    [ "_base.hpp", "__base_8hpp.html", "__base_8hpp" ]
 ];

@@ -180,7 +180,7 @@ Manual (CMake)</h2>
 <h1><a class="anchor" id="autotoc_md21"></a>
 Example</h1>
 <p>The following example performs an HTTPS GET request, parsing the response incrementally using <code>RecvRange</code>. Notice how <code>UntilMatch</code> and range composition keep the parsing logic concise — no manual buffering.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/ClientSocket.hpp</a>&gt;</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Hermes/Socket/ClientSocket.hpp&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_until_match_8hpp.html">Hermes/Utils/UntilMatch.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>rg = std::ranges;</div>
@@ -294,7 +294,6 @@ Example</h1>
 <div class="line">            .and_then(s_getResponse)</div>
 <div class="line">            .transform(s_processData);</div>
 <div class="line">}</div>
-<div class="ttc" id="a_client_socket_8hpp_html"><div class="ttname"><a href="_client_socket_8hpp.html">ClientSocket.hpp</a></div></div>
 <div class="ttc" id="a_until_match_8hpp_html"><div class="ttname"><a href="_until_match_8hpp.html">UntilMatch.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div></div>
 <div class="ttc" id="anamespace_hermes_html_abcdc7039ff863f7958fab5478142dfba"><div class="ttname"><a href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></div><div class="ttdeci">ConnectionErrorEnum</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:10</div></div>

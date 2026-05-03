@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: include/Hermes/Socket/_base/Transfer/TlsTransferPolicy.hpp Source File</title>
+<title>Hermes: include/Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -141,9 +141,9 @@ $(document).ready(function(){initNavTree('_tls_transfer_policy_8hpp_source.html'
 </div><!--header-->
 <div class="contents">
 <a href="_tls_transfer_policy_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_socket_data_8hpp.html">Hermes/Socket/_base/Data/TlsSocketData.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_socket_data_8hpp.html">Hermes/Socket/Sync/_base/Data/TlsSocketData.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;<a class="code" href="_connection_error_enum_8hpp.html">Hermes/_base/ConnectionErrorEnum.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base/_base.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
@@ -207,7 +207,7 @@ $(document).ready(function(){initNavTree('_tls_transfer_policy_8hpp_source.html'
 </div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &lt;Hermes/Socket/_base/Transfer/TlsTransferPolicy.tpp&gt;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &lt;Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.tpp&gt;</span></div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">static_assert</span>(std::ranges::viewable_range&lt;TlsTransferPolicy&lt;&gt;::RecvLazyRange&lt;std::byte&gt;&gt;);</div>
@@ -241,7 +241,7 @@ $(document).ready(function(){initNavTree('_tls_transfer_policy_8hpp_source.html'
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_0b5ff7c741697c8eb7741053aebed106.html">Socket</a></li><li class="navelem"><a class="el" href="dir_c121d3193a09b0381037e0156068a995.html">_base</a></li><li class="navelem"><a class="el" href="dir_1f26bd99bb0cf5a70565fa117abc1809.html">Transfer</a></li><li class="navelem"><a class="el" href="_tls_transfer_policy_8hpp.html">TlsTransferPolicy.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_0b5ff7c741697c8eb7741053aebed106.html">Socket</a></li><li class="navelem"><a class="el" href="dir_0ee8d01c818a6381a98a3d57ad9512e1.html">Sync</a></li><li class="navelem"><a class="el" href="dir_6c65d6b76d253c9224cf49be08fab4e8.html">_base</a></li><li class="navelem"><a class="el" href="dir_f08b9429a747e7265fc669d93e024fc1.html">Transfer</a></li><li class="navelem"><a class="el" href="_tls_transfer_policy_8hpp.html">TlsTransferPolicy.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>
