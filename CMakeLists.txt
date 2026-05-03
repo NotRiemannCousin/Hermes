@@ -29,7 +29,7 @@ CPMFindPackage(
         GIT_TAG main
 )
 
-add_library(Hermes
+add_library(Hermes SHARED
         src/Hermes/_base/Network.cpp
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
