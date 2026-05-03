@@ -1,7 +1,7 @@
 var searchData=
 [
   ['family_0',['family',['../struct_hermes_1_1_tls_socket_data.html#ab593bc55f825b3d37825f2233157b52c',1,'Hermes::TlsSocketData::Family'],['../struct_hermes_1_1_default_socket_data.html#a3ae7516dc9aed2a5eabaa9711280c25f',1,'Hermes::DefaultSocketData::Family']]],
-  ['features_1',['Features',['../index.html#autotoc_md2',1,'']]],
+  ['features_1',['Features',['../index.html#autotoc_md14',1,'']]],
   ['filereadfailed_2',['FileReadFailed',['../namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878',1,'Hermes']]],
   ['flags_3',['Flags',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba4ea7801f17a4e5485e8b050c052fb443',1,'SecurityBufferEnum.hpp']]],
   ['flags_5foperations_4',['FLAGS_OPERATIONS',['../_win_api_8hpp.html#acb3dcf3a15e143c1375cf85f12af9d2c',1,'WinApi.hpp']]],

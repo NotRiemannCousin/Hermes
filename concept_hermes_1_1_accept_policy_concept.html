@@ -161,20 +161,20 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_accept_policy_conce
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages the server-side accept lifecycle. </p>
 <p>Separates the listening socket from the accepted socket, allowing custom accept flows (e.g., performing a TLS server handshake.</p>
-<h3><a class="anchor" id="autotoc_md22"></a>
+<h3><a class="anchor" id="autotoc_md8"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy&lt;SocketData&gt;::Options </div>
 </div><!-- fragment --><p> A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE). This settings will be used to modify Listen() behavior.</p>
-<h3><a class="anchor" id="autotoc_md23"></a>
+<h3><a class="anchor" id="autotoc_md9"></a>
 Initialization</h3>
 <div class="fragment"><div class="line">policy.Listen(data, backlog, opt) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:52</div></div>
 </div><!-- fragment --><p> Binds and listens.</p>
-<h3><a class="anchor" id="autotoc_md24"></a>
+<h3><a class="anchor" id="autotoc_md10"></a>
 Connection</h3>
 <div class="fragment"><div class="line">policy.Accept(data, acceptedData) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
 </div><!-- fragment --><p> Accepts a connection. <code>acceptedData</code> it's a model used to construct the new socket returned (via <code>MakeChild()</code>). <code>acceptedData.socket</code> and <code>endpoint</code> will be filled. Handles specific behaviors like server-side handshakes or versioning.</p>
-<h3><a class="anchor" id="autotoc_md25"></a>
+<h3><a class="anchor" id="autotoc_md11"></a>
 Cleanup</h3>
 <div class="fragment"><div class="line">policy.Close(data) -&gt; <span class="keywordtype">void</span> </div>
 </div><!-- fragment --><p> Stops listening and (gracefuly) closes the server socket.</p>

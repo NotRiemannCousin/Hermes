@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['lazy_20range_20based_20receive_0',['Lazy Range-Based Receive',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md20',1,'']]],
+  ['lazy_20range_20based_20receive_0',['Lazy Range-Based Receive',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md6',1,'']]],
   ['length_1',['Length',['../struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html#a3ebb6a85103954fd7fc325ba30c54008',1,'_UNICODE_STRING']]],
   ['licensing_2',['licensing',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a0b9c6eef4e3d3a222eb04e910d252339',1,'Licensing:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a0b9c6eef4e3d3a222eb04e910d252339',1,'Licensing:&#160;AcceptSecurityContextReturnFlags.hpp']]],
   ['listen_3',['listen',['../struct_hermes_1_1_default_accept_policy.html#a4447f1392d9a1cd60ba1cab982dcd156',1,'Hermes::DefaultAcceptPolicy::Listen()'],['../struct_hermes_1_1_tls_accept_policy.html#a696f9a2b61c586a7fc982ac1c84c4e7c',1,'Hermes::TlsAcceptPolicy::Listen()'],['../struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c',1,'Hermes::ListenerSocket::Listen(SocketDataType &amp;&amp;data, int backlog=SOMAXCONN) noexcept'],['../struct_hermes_1_1_listener_socket.html#af848ece8f3ac170c1b12d1dee7efb6b1',1,'Hermes::ListenerSocket::Listen(SocketDataType &amp;&amp;data, AcceptPolicyType&lt; SocketDataType &gt;::ListenOptions opt, int backlog=SOMAXCONN) noexcept']]],

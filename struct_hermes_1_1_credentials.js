@@ -8,6 +8,7 @@ var struct_hermes_1_1_credentials =
     [ "GetProtocolFlags", "struct_hermes_1_1_credentials.html#aaffb1d95c8682e9202219917e4da69e1", null ],
     [ "GetTsExpiry", "struct_hermes_1_1_credentials.html#a33cf96b7822b6b4cc19b0d144a4b101b", null ],
     [ "HasPrivateKey", "struct_hermes_1_1_credentials.html#a67ace0ea8b7780a004827fecb2f6088d", null ],
+    [ "IsExpired", "struct_hermes_1_1_credentials.html#a7222f0485640dbe0f7ce8f669f977e04", null ],
     [ "operator=", "struct_hermes_1_1_credentials.html#a53802194f5b8b4000c45f78b48e402d5", null ],
     [ "operator=", "struct_hermes_1_1_credentials.html#aaeea8940688c19fb9b0f0a3454dc370a", null ]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['o_0',['Buffer-Based I/O',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md21',1,'']]],
+  ['o_0',['Buffer-Based I/O',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md7',1,'']]],
   ['onlyipv6_1',['onlyipv6',['../struct_hermes_1_1__details_1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html#a8c009daee7e53a882e403f07168841d1',1,'Hermes::_details::AcceptOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;::onlyIpv6'],['../struct_hermes_1_1__details_1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html#a59a1dfc9851e10e32d9f2c0aa633c25c',1,'Hermes::_details::ConnectOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;::onlyIpv6']]],
   ['operator_22_22_5fuc_2',['operator&quot;&quot;_uc',['../_conversion_and_literals_8hpp.html#a90739e571e20eae49dd126ba48c1a463',1,'ConversionAndLiterals.hpp']]],
   ['operator_28_29_3',['operator()',['../struct_hermes_1_1_utils_1_1_drop_last_adaptor.html#a2ed4bb8a9fa12d89693fde86379b94d9',1,'Hermes::Utils::DropLastAdaptor']]],

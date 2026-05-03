@@ -162,14 +162,14 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_con
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages data transfer operations. </p>
 <p>Defines how data is received and sent over the socket. It supports both modern, lazy, range-based reading and traditional buffer-based I/O. This allows encapsulation of specific protocols, such as reading length-prefixed messages, searching for delimiters, or handling TLS encryption transparently.</p>
-<h3><a class="anchor" id="autotoc_md20"></a>
+<h3><a class="anchor" id="autotoc_md6"></a>
 Lazy Range-Based Receive</h3>
 <div class="fragment"><div class="line">_details::RecvLazyRangeT&lt;Policy&lt;SocketData&gt;&gt; </div>
 </div><!-- fragment --><p> Must be constructible from <code>SocketData</code> and <code>Policy</code>, and satisfy <code>std::ranges::input_range</code>. It iteratively yields <code>std::byte</code> elements.</p>
 <div class="fragment"><div class="line">range.Error() -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:52</div></div>
 </div><!-- fragment --><p> A custom method on the range to check for underlying socket or protocol errors that may occur during the iteration process.</p>
-<h3><a class="anchor" id="autotoc_md21"></a>
+<h3><a class="anchor" id="autotoc_md7"></a>
 Buffer-Based I/O</h3>
 <div class="fragment"><div class="line">policy.Recv(data, bufferRecv) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_a39bdfbf4b858f9fb7654cf2aadf2098b"><div class="ttname"><a href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">Hermes::StreamByteOper</a></div><div class="ttdeci">std::pair&lt; size_t, ConnectionResultOper &gt; StreamByteOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:55</div></div>
