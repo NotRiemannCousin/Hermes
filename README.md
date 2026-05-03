@@ -33,15 +33,13 @@ Hermes operates at the transport layer only. Application-layer protocols (HTTP, 
 ### Manual (CMake)
 
 ```cmake
-include(FetchContent)
+include(CPM.cmake)
 
-FetchContent_Declare(
-    Hermes
-    GIT_REPOSITORY https://github.com/NotRiemannCousin/Hermes.git
-    GIT_TAG        v0.3.02
+CPMAddPackage(
+        NAME Hermes
+        GITHUB_REPOSITORY NotRiemannCousin/Hermes
+        GIT_TAG v0.3.02
 )
-
-FetchContent_MakeAvailable(Hermes)
 
 target_link_libraries(your_target PRIVATE Hermes)
 ```

@@ -64,6 +64,7 @@ namespace Hermes {
         SupportedProtocolsFlags GetProtocolFlags() const noexcept;
         CredentialFlags GetCredentialFlags() const noexcept;
         TimeStamp GetTsExpiry() const noexcept;
+        bool IsExpired() const noexcept;
         bool HasPrivateKey() const noexcept;
 
     private:

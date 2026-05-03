@@ -1,13 +1,8 @@
-include(FetchContent)
-
-FetchContent_Declare(
-        googletest
-        URL https://github.com/google/googletest/archive/refs/tags/v1.17.0.zip
-        DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+CPMFindPackage(
+        NAME googletest
+        GITHUB_REPOSITORY google/googletest
+        GIT_TAG v1.17.0
 )
-
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
 
 include(GoogleTest)
 
@@ -25,8 +20,7 @@ add_custom_command(
         TARGET HermesTests POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
         "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
-        "$<TARGET_FILE_DIR:HermesTests>/cert.pfx"
-        DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+        "$<TARGET_FILE_DIR:HermesTests>/"
         COMMENT "Copying certificate for TLS tests..."
         VERBATIM
 )

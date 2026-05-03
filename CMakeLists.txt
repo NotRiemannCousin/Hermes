@@ -1,50 +1,35 @@
 cmake_minimum_required(VERSION 3.29.1)
-project(Hermes LANGUAGES CXX)
-set(CMAKE_DEBUG_POSTFIX "_d")
+project(
+        Hermes
+        VERSION 0.4
+        DESCRIPTION "A simple functional-based socket wrapper library"
+        LANGUAGES CXX
+)
 
-add_compile_options(/favor:AMD64)
-
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-
-set(PROJECT_VERSION_NUMBER 0.3.02)
 set(PROJECT_VERSION_SUFFIX "")
+set(FULL_PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
-set(PROJECT_VERSION "${PROJECT_VERSION_NUMBER}-${PROJECT_VERSION_SUFFIX}")
 
-set(CMAKE_CXX_STANDARD 23) # TODO: change to 26 when annotations arrive
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
-if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    add_compile_options(
-            /permissive-    # without MSVC madness
-            /O2             # Hard Optimization
-            /GL             # Link-time code generation
-            /arch:AVX2      # SIMD
-            /Oi             # Intrinsics
-            /Ot             # Speed
-            /GT             # Thread-safe static init
-            /Gw /Gy         # Delete unused
-            /Zc:inline      # inlining
-            /openmp:llvm    # OpenMP
-    )
-else()
-    add_link_options(
-            #            /LTCG           # Link-time optimization
-            #            /OPT:REF        # Delete unused
-            #            /OPT:ICF        # join equal functions
-    )
-endif()
-
-
+set(CMAKE_DEBUG_POSTFIX "_d")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #----------------------------------------------------------------------------------------------------
 #       Hermes
 #----------------------------------------------------------------------------------------------------
 
-add_library(
-        Hermes
+include(cmake/get_cpm.cmake)
 
+# TODO: Remove when it arives at STL.
+CPMFindPackage(
+        NAME stdexec
+        GITHUB_REPOSITORY NVIDIA/stdexec
+        GIT_TAG main
+)
+
+add_library(Hermes
         src/Hermes/_base/Network.cpp
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
@@ -52,13 +37,39 @@ add_library(
         src/Hermes/_base/Credentials.cpp
 )
 
-target_include_directories(
-        Hermes
-        PUBLIC
-
+target_include_directories(Hermes PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
 )
+
+
+target_compile_options(Hermes PRIVATE
+        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:
+        /permissive- /GL /arch:AVX2 /GT /Gw /Gy /Zc:inline /openmp:llvm
+        >
+
+        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
+        -Wall -Wextra -pedantic
+        -flto
+        -mavx2
+        -fopenmp
+        -ffunction-sections
+        -fdata-sections
+        >
+)
+
+target_link_options(Hermes PRIVATE
+        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
+        -flto
+
+        $<$<PLATFORM_ID:Darwin>:-Wl,-dead_strip>
+        $<$<NOT:$<PLATFORM_ID:Darwin>>:-Wl,--gc-sections>
+        >
+)
+
+
+target_link_libraries(Hermes PRIVATE stdexec)
+
 
 set_target_properties(Hermes PROPERTIES
         WINDOWS_EXPORT_ALL_SYMBOLS ON
@@ -92,7 +103,7 @@ include(CMakePackageConfigHelpers)
 
 write_basic_package_version_file(
         "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
-        VERSION ${PROJECT_VERSION_NUMBER}
+        VERSION ${PROJECT_VERSION}
         COMPATIBILITY AnyNewerVersion
 )
 

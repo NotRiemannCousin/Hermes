@@ -235,6 +235,22 @@ namespace Hermes {
     SupportedProtocolsFlags Credentials::GetProtocolFlags() const noexcept { return _protocolFlags; }
     CredentialFlags Credentials::GetCredentialFlags() const noexcept { return _credentialFlags; }
     TimeStamp Credentials::GetTsExpiry() const noexcept { return _tsExpiry; }
+
+    bool Credentials::IsExpired() const noexcept {
+        ULARGE_INTEGER now, exp;
+
+        FILETIME ftNow;
+        GetSystemTimeAsFileTime(&ftNow);
+
+        now.LowPart = ftNow.dwLowDateTime;
+        now.HighPart = ftNow.dwHighDateTime;
+
+        exp.LowPart = _tsExpiry.LowPart;
+        exp.HighPart = _tsExpiry.HighPart;
+
+        return now.QuadPart >= exp.QuadPart;
+    }
+
     bool Credentials::HasPrivateKey() const noexcept { return _hasPrivateKey; }
 
 }
