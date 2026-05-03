@@ -1,8 +1,8 @@
 #pragma once
-#include <Hermes/Socket/_base/Accept/DefaultAcceptPolicy.hpp>
-#include <Hermes/Socket/_base/Accept/TlsAcceptPolicy.hpp>
-#include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.hpp>
-#include <Hermes/Socket/_base/Transfer/TlsTransferPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
 
 #include <ranges>
 
@@ -85,4 +85,4 @@ namespace Hermes {
     using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy, TlsTransferPolicy>;
 }
 
-#include <Hermes/Socket/ServerSocket.tpp>
+#include <Hermes/Socket/Sync/ServerSocket.tpp>

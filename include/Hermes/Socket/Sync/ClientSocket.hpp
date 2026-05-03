@@ -1,8 +1,8 @@
 #pragma once
-#include <Hermes/Socket/_base/Connection/DefaultConnectPolicy.hpp>
-#include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.hpp>
-#include <Hermes/Socket/_base/Connection/TlsConnectPolicy.hpp>
-#include <Hermes/Socket/_base/Transfer/TlsTransferPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
+#include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
 
 #include <ranges>
 
@@ -75,4 +75,4 @@ namespace Hermes {
     using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }
 
-#include <Hermes/Socket/ClientSocket.tpp>
+#include <Hermes/Socket/Sync/ClientSocket.tpp>

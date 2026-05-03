@@ -1,5 +1,5 @@
 // ReSharper disable CppPassValueParameterByConstReference
-#include <Hermes/Socket/ClientSocket.hpp>
+#include <../include/Hermes/Socket/Sync/ClientSocket.hpp>
 #include <Hermes/Utils/UntilMatch.hpp>
 
 #include <string_view>

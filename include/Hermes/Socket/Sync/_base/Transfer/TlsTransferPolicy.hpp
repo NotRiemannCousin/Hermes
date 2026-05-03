@@ -1,15 +1,14 @@
 #pragma once
-#include <Hermes/Socket/_base/Data/DefaultSocketData.hpp>
+#include <Hermes/Socket/Sync/_base/Data/TlsSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/_base.hpp>
 
-#include <chrono>
 #include <array>
 
 
 namespace Hermes {
-    template<SocketDataConcept Data = DefaultSocketData<>>
-    struct DefaultTransferPolicy {
+    template<SocketDataConcept Data = TlsSocketData<>>
+    struct TlsTransferPolicy {
         template<ByteLike Byte>
         struct RecvLazyRange : std::ranges::view_interface<RecvLazyRange<Byte>> {
             struct Iterator {
@@ -24,7 +23,7 @@ namespace Hermes {
                 [[nodiscard]] bool operator==(std::default_sentinel_t) const;
             };
 
-            explicit RecvLazyRange(Data& data, DefaultTransferPolicy& policy);
+            explicit RecvLazyRange(Data& data, TlsTransferPolicy& policy);
 
             Iterator begin();
             static std::default_sentinel_t end();
@@ -33,14 +32,15 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            Data* _data;
-            DefaultTransferPolicy* _policy;
+            Data*              _data;
+            TlsTransferPolicy* _policy;
         };
 
         template<ByteLike Byte>
         StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv);
         template<ByteLike Byte>
         static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
+
     private:
         struct State {
             static constexpr size_t bufferSize{ 0x4000 };
@@ -59,9 +59,9 @@ namespace Hermes {
     };
 }
 
-#include <Hermes/Socket/_base/Transfer/DefaultTransferPolicy.tpp>
+#include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(std::ranges::viewable_range<DefaultTransferPolicy<>::RecvLazyRange<std::byte>>);
-    static_assert(TransferPolicyConcept<DefaultTransferPolicy, DefaultSocketData<>>);
+    static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvLazyRange<std::byte>>);
+    static_assert(TransferPolicyConcept<TlsTransferPolicy, TlsSocketData<>>);
 }

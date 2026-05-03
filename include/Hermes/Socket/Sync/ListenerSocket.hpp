@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/Socket/ServerSocket.hpp>
+#include <Hermes/Socket/Sync/ServerSocket.hpp>
 
 #include <generator>
 
@@ -93,4 +93,4 @@ namespace Hermes {
 
 }
 
-#include <Hermes/Socket/ListenerSocket.tpp>
+#include <Hermes/Socket/Sync/ListenerSocket.tpp>

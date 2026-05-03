@@ -1,6 +1,6 @@
 #pragma once
 #include <span>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 namespace Hermes::Utils {
     template<std::ranges::viewable_range R>

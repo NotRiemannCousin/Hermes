@@ -1,7 +1,7 @@
 #pragma once
-#include <Hermes/Socket/_base/Data/DefaultSocketData.hpp>
+#include <Hermes/Socket/Sync/_base/Data/DefaultSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
     namespace _details {
@@ -49,7 +49,7 @@ namespace Hermes {
 
 }
 
-#include <Hermes/Socket/_base/Accept/DefaultAcceptPolicy.tpp>
+#include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.tpp>
 
 namespace Hermes {
     static_assert(AcceptPolicyConcept<DefaultAcceptPolicy, DefaultSocketData<>>);

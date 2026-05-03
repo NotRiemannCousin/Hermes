@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/_base.hpp>
 #include <Hermes/_base/WinApi/WinApi.hpp>
 #include <Hermes/_base/Credentials.hpp>
 
@@ -62,4 +62,4 @@ namespace Hermes {
     static_assert(SocketDataConcept<TlsSocketData<>>);
 }
 
-#include <Hermes/Socket/_base/Data/TlsSocketData.tpp>
+#include <Hermes/Socket/Sync/_base/Data/TlsSocketData.tpp>

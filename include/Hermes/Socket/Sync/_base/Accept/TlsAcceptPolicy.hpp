@@ -1,8 +1,8 @@
 #pragma once
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/_base/Data/TlsSocketData.hpp>
-#include <Hermes/Socket/_base/Accept/DefaultAcceptPolicy.hpp>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/Sync/_base/Data/TlsSocketData.hpp>
+#include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
 
@@ -41,7 +41,7 @@ namespace Hermes {
 
 }
 
-#include <Hermes/Socket/_base/Accept/TlsAcceptPolicy.tpp>
+#include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.tpp>
 
 namespace Hermes {
     static_assert(AcceptPolicyConcept<TlsAcceptPolicy, TlsSocketData<>>);

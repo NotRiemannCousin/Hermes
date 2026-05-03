@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <Hermes/Socket/ClientSocket.hpp>
-#include <Hermes/Socket/ListenerSocket.hpp>
-#include <Hermes/Socket/ServerSocket.hpp>
+#include <../include/Hermes/Socket/Sync/ClientSocket.hpp>
+#include <../include/Hermes/Socket/Sync/ListenerSocket.hpp>
+#include <../include/Hermes/Socket/Sync/ServerSocket.hpp>
 
 #include <algorithm>
 #include <string>

@@ -2,7 +2,7 @@
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 
 #include <chrono>
-#include <Hermes/Socket/_base/_base.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
     template<
@@ -47,4 +47,4 @@ namespace Hermes {
     static_assert(SocketDataConcept<DefaultSocketData<>>);
 }
 
-#include <Hermes/Socket/_base/Data/DefaultSocketData.tpp>
+#include <Hermes/Socket/Sync/_base/Data/DefaultSocketData.tpp>
