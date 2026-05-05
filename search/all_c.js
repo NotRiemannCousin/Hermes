@@ -16,7 +16,7 @@ var searchData=
   ['macrounisp_5fname_13',['macroUNISP_NAME',['../_macros_8hpp.html#aabf296f4a48a1f7d4859bda6fedfa644',1,'Macros.hpp']]],
   ['macrowinsock_5fversion_14',['macroWINSOCK_VERSION',['../_macros_8hpp.html#ac4f710aaf65615e63a6e4ada00c47cef',1,'Macros.hpp']]],
   ['makechild_15',['makechild',['../struct_hermes_1_1_tls_socket_data.html#a8a70bc5ccf3c699c08b2806c2512bf66',1,'Hermes::TlsSocketData::MakeChild()'],['../struct_hermes_1_1_default_socket_data.html#a4dc0d7d23d9343754d0a80c0705bf4a2',1,'Hermes::DefaultSocketData::MakeChild()']]],
-  ['manual_20cmake_16',['Manual (CMake)',['../index.html#autotoc_md19',1,'']]],
+  ['manual_20cmake_16',['Manual (CMake)',['../index.html#autotoc_md27',1,'']]],
   ['manualcredvalidation_17',['manualcredvalidation',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;InitializeSecurityContextFlags.hpp'],['../_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;InitializeSecurityContextReturnFlags.hpp'],['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;SChannelCredFlags.hpp']]],
   ['maxhost_18',['MaxHost',['../_name_info_flags_8hpp.html#a3e00866f7ee47dd045ce0760f4ffdd76ace215f28da5ebd63759b4c1ab60fed7d',1,'NameInfoFlags.hpp']]],
   ['maximumlength_19',['MaximumLength',['../struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html#ae0487ecc173e55918bcee834bd3d107b',1,'_UNICODE_STRING']]],

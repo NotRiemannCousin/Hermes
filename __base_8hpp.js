@@ -1,9 +1,9 @@
 var __base_8hpp =
 [
     [ "Hermes::ByteLike", "concept_hermes_1_1_byte_like.html", null ],
-    [ "Hermes::SocketDataConcept", "concept_hermes_1_1_socket_data_concept.html", null ],
-    [ "Hermes::ConnectionPolicyConcept", "concept_hermes_1_1_connection_policy_concept.html", null ],
-    [ "Hermes::TransferPolicyConcept", "concept_hermes_1_1_transfer_policy_concept.html", null ],
-    [ "Hermes::AcceptPolicyConcept", "concept_hermes_1_1_accept_policy_concept.html", null ],
-    [ "RecvLazyRangeT", "__base_8hpp.html#a18363b45f217b3620f591feb1f141bc2", null ]
+    [ "RecvStreamT", "__base_8hpp.html#a19f1b40aa507418128b3780b63bac359", null ],
+    [ "RecvModeEnum", "__base_8hpp.html#a3a2d0c44eefa9602c58fc10569c84338", [
+      [ "Any", "__base_8hpp.html#a3a2d0c44eefa9602c58fc10569c84338aed36a1ef76a59ee3f15180e0441188ad", null ],
+      [ "All", "__base_8hpp.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680", null ]
+    ] ]
 ];

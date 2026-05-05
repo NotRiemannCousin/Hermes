@@ -9,7 +9,7 @@ var struct_hermes_1_1_client_socket =
     [ "Close", "struct_hermes_1_1_client_socket.html#a4707e9a497ddeb6497a7e95413fd50e3", null ],
     [ "operator=", "struct_hermes_1_1_client_socket.html#ae717dcc195469839fca75fb4ed5698ce", null ],
     [ "Recv", "struct_hermes_1_1_client_socket.html#a05e19f51bb190c381530c14e7cbe574b", null ],
-    [ "RecvLazyRange", "struct_hermes_1_1_client_socket.html#a5b7b9d7ba448974b883af875f737b276", null ],
     [ "RecvRange", "struct_hermes_1_1_client_socket.html#ab3206a41a92e9fd211fe1e84c7150815", null ],
+    [ "RecvStream", "struct_hermes_1_1_client_socket.html#a93b550b1621747d69f3134cce0ab5d35", null ],
     [ "Send", "struct_hermes_1_1_client_socket.html#a17c65da43ee739d25f9a6871450d61fc", null ]
 ];

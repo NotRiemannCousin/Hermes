@@ -135,23 +135,26 @@ $(document).ready(function(){initNavTree('__base_8hpp.html',''); initResizable()
   <div class="summary">
 <a href="#namespaces">Namespaces</a> &#124;
 <a href="#concepts">Concepts</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a>  </div>
   <div class="headertitle"><div class="title">_base.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_endpoint_concept_8hpp_source.html">Hermes/Endpoint/_base/EndpointConcept.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_connection_error_enum_8hpp_source.html">Hermes/_base/ConnectionErrorEnum.hpp</a>&gt;</code><br />
+<code>#include &lt;stdexec/execution.hpp&gt;</code><br />
 <code>#include &lt;concepts&gt;</code><br />
+<code>#include &lt;generator&gt;</code><br />
 <code>#include &lt;ranges&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for _base.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="__base_8hpp__incl.svg" width="4958" height="403"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="__base_8hpp__incl.svg" width="5352" height="403"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="__base_8hpp__dep__incl.svg" width="1126" height="535"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="__base_8hpp__dep__incl.svg" width="1735" height="638"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="__base_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -179,12 +182,29 @@ Concepts</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_accept_policy_concept.html">Hermes::AcceptPolicyConcept</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages the server-side accept lifecycle. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_connection_policy_concept.html">Hermes::AsyncConnectionPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages the client-side connection lifecycle asynchronously. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_transfer_policy_concept.html">Hermes::AsyncTransferPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages data transfer operations asynchronously. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_accept_policy_concept.html">Hermes::AsyncAcceptPolicyConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concept for a policy that manages the server-side accept lifecycle asynchronously. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a18363b45f217b3620f591feb1f141bc2" id="r_a18363b45f217b3620f591feb1f141bc2"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Policy</a> &gt; </td></tr>
-<tr class="memitem:a18363b45f217b3620f591feb1f141bc2"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#a18363b45f217b3620f591feb1f141bc2">Hermes::_details::RecvLazyRangeT</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Policy::template RecvLazyRange&lt; std::byte &gt;</td></tr>
-<tr class="separator:a18363b45f217b3620f591feb1f141bc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19f1b40aa507418128b3780b63bac359" id="r_a19f1b40aa507418128b3780b63bac359"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Policy</a> &gt; </td></tr>
+<tr class="memitem:a19f1b40aa507418128b3780b63bac359"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359">Hermes::_details::RecvStreamT</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Policy::template RecvStream&lt; std::byte &gt;</td></tr>
+<tr class="separator:a19f1b40aa507418128b3780b63bac359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a3a2d0c44eefa9602c58fc10569c84338" id="r_a3a2d0c44eefa9602c58fc10569c84338"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a> : std::uint8_t { <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338aed36a1ef76a59ee3f15180e0441188ad">Hermes::Any</a>
+, <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">Hermes::All</a>
+ }</td></tr>
+<tr class="memdesc:a3a2d0c44eefa9602c58fc10569c84338"><td class="mdescLeft">&#160;</td><td class="mdescRight">With <code>All</code>, the entire span will be filled, with <code>Any</code> the function will stop at the block received.  <a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">More...</a><br /></td></tr>
+<tr class="separator:a3a2d0c44eefa9602c58fc10569c84338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

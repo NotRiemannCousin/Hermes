@@ -1,10 +1,16 @@
 var _connection_error_enum_8hpp =
 [
+    [ "Hermes::TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ],
+    [ "Hermes::SenderCanFailWithConcept", "concept_hermes_1_1_sender_can_fail_with_concept.html", null ],
+    [ "Hermes::AsyncConnectionResultConcept", "concept_hermes_1_1_async_connection_result_concept.html", null ],
+    [ "Hermes::AsyncConnectionResultOperConcept", "concept_hermes_1_1_async_connection_result_oper_concept.html", null ],
+    [ "Hermes::AsyncTransferResultConcept", "concept_hermes_1_1_async_transfer_result_concept.html", null ],
     [ "ByteData", "_connection_error_enum_8hpp.html#a0832e30628cac84f3f31a6d76a3b29ce", null ],
     [ "ByteDataSpan", "_connection_error_enum_8hpp.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd", null ],
     [ "ConnectionResult", "_connection_error_enum_8hpp.html#aea60127b207d39fb5d05a863ade851a9", null ],
     [ "ConnectionResultOper", "_connection_error_enum_8hpp.html#aa4c2bc87d8b3921bd110920bba542091", null ],
     [ "StreamByteOper", "_connection_error_enum_8hpp.html#a39bdfbf4b858f9fb7654cf2aadf2098b", null ],
+    [ "TransferResult", "_connection_error_enum_8hpp.html#a073b1d0bd62c2052491b24b3082fc2fe", null ],
     [ "ConnectionErrorEnum", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfba", [
       [ "Unknown", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e", null ],
       [ "InvalidRole", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e", null ],
@@ -32,5 +38,6 @@ var _connection_error_enum_8hpp =
       [ "ResolveFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc", null ],
       [ "ResolveNoAddressFound", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95", null ],
       [ "UnsupportedAddressFamily", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ]
-    ] ]
+    ] ],
+    [ "InVariant", "_connection_error_enum_8hpp.html#ac5421955ea0e0885cc2b87cfd9e8c2cf", null ]
 ];

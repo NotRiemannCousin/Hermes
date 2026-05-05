@@ -133,32 +133,53 @@ $(document).ready(function(){initNavTree('_connection_error_enum_8hpp.html','');
 
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#namespaces">Namespaces</a> &#124;
+<a href="#concepts">Concepts</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
-<a href="#enum-members">Enumerations</a>  </div>
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">ConnectionErrorEnum.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;expected&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 <code>#include &lt;span&gt;</code><br />
-<code>#include &lt;Hermes\_base\ConnectionErrorEnum.tpp&gt;</code><br />
+<code>#include &lt;stdexec/execution.hpp&gt;</code><br />
+<code>#include &lt;exec/any_sender_of.hpp&gt;</code><br />
+<code>#include &lt;Hermes/_base/ConnectionErrorEnum.tpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ConnectionErrorEnum.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_connection_error_enum_8hpp__incl.svg" width="506" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_connection_error_enum_8hpp__incl.svg" width="902" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_connection_error_enum_8hpp__dep__incl.svg" width="1288" height="711"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_connection_error_enum_8hpp__dep__incl.svg" width="1855" height="814"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_connection_error_enum_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_transfer_error.html">Hermes::TransferError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_hermes" id="r_namespace_hermes"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html">Hermes</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_sender_can_fail_with_concept.html">Hermes::SenderCanFailWithConcept</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_connection_result_concept.html">Hermes::AsyncConnectionResultConcept</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_connection_result_oper_concept.html">Hermes::AsyncConnectionResultOperConcept</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">concept &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="concept_hermes_1_1_async_transfer_result_concept.html">Hermes::AsyncTransferResultConcept</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -172,6 +193,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:aea60127b207d39fb5d05a863ade851a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa4c2bc87d8b3921bd110920bba542091" id="r_aa4c2bc87d8b3921bd110920bba542091"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a> = <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; std::monostate &gt;</td></tr>
 <tr class="separator:aa4c2bc87d8b3921bd110920bba542091"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a073b1d0bd62c2052491b24b3082fc2fe" id="r_a073b1d0bd62c2052491b24b3082fc2fe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a073b1d0bd62c2052491b24b3082fc2fe">Hermes::TransferResult</a> = std::expected&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="struct_hermes_1_1_transfer_error.html">TransferError</a> &gt;</td></tr>
+<tr class="separator:a073b1d0bd62c2052491b24b3082fc2fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39bdfbf4b858f9fb7654cf2aadf2098b" id="r_a39bdfbf4b858f9fb7654cf2aadf2098b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">Hermes::StreamByteOper</a> = std::pair&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">size_t</a>, <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> &gt;</td></tr>
 <tr class="separator:a39bdfbf4b858f9fb7654cf2aadf2098b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -213,6 +236,12 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:abcdc7039ff863f7958fab5478142dfba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac5421955ea0e0885cc2b87cfd9e8c2cf" id="r_ac5421955ea0e0885cc2b87cfd9e8c2cf"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">T</a> , <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Variant</a> &gt; </td></tr>
+<tr class="memitem:ac5421955ea0e0885cc2b87cfd9e8c2cf"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#ac5421955ea0e0885cc2b87cfd9e8c2cf">Hermes::InVariant</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">false</a></td></tr>
+<tr class="separator:ac5421955ea0e0885cc2b87cfd9e8c2cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

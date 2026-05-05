@@ -142,6 +142,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <h3><a id="index_b" name="index_b"></a>- b -</h3><ul>
 <li>Buffer&#160;:&#160;<a class="el" href="struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html#afbc2ba2b7be88d0118e683a2eb289795">_UNICODE_STRING</a></li>
 <li>buffer&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data_1_1_state.html#aa1f67bd32ffc84c768a7022fb312ca19">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State</a></li>
+<li>bytesTransferred&#160;:&#160;<a class="el" href="struct_hermes_1_1_transfer_error.html#a17710af5872ad600ef7089affa7eabc6">Hermes::TransferError</a></li>
 </ul>
 
 
@@ -165,6 +166,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 <h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
 <li>encryptedData&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_socket_data_1_1_state.html#a37947f7c1d79c307d3133625ee10aeab">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State</a></li>
 <li>endpoint&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a>, <a class="el" href="struct_hermes_1_1_tls_socket_data.html#ae4d5631d20226a94591d03929c079774">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
+<li>error&#160;:&#160;<a class="el" href="struct_hermes_1_1_transfer_error.html#a86ec5b6600b87b1c907dabb5318d53c9">Hermes::TransferError</a></li>
 </ul>
 
 
@@ -181,7 +183,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 
 <h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
-<li>ignoreCertificateErrors&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_connect_policy_1_1_options.html#a8e6ae4b70a3dbbb3a52bad0cc7b0d17a">Hermes::TlsConnectPolicy&lt; Data &gt;::Options</a></li>
+<li>ignoreCertificateErrors&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_async_connect_policy_1_1_options.html#a0db7124d78cc8a07b8b480c1b645e1e2">Hermes::TlsAsyncConnectPolicy&lt; Data &gt;::Options</a>, <a class="el" href="struct_hermes_1_1_tls_connect_policy_1_1_options.html#a8e6ae4b70a3dbbb3a52bad0cc7b0d17a">Hermes::TlsConnectPolicy&lt; Data &gt;::Options</a></li>
 <li>ip&#160;:&#160;<a class="el" href="struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71">Hermes::IpEndpointParams</a></li>
 <li>isHandshakeComplete&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_socket_data.html#ad711cf48b3882c512338948f105c2c7f">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
 <li>isServer&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_socket_data.html#a1b925e7235ca0fa93c40efb3d5f62a8f">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
@@ -189,7 +191,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 
 <h3><a id="index_k" name="index_k"></a>- k -</h3><ul>
-<li>keepAlive&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#ac03165801920ba9096f170db5bea6dc2">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#adc3cda2c7536be39649d29a5fe54167d">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
+<li>keepAlive&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#ac03165801920ba9096f170db5bea6dc2">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a18ff5bf5b2b059729d5d985638529bc1">Hermes::DefaultAsyncConnectPolicy&lt; Data &gt;::Options</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#adc3cda2c7536be39649d29a5fe54167d">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
 </ul>
 
 
@@ -217,17 +219,17 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 
 <h3><a id="index_r" name="index_r"></a>- r -</h3><ul>
-<li>recvBufferSize&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a306834215177f17117d782dd3a26f8f1">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a6e65560fca6eaf63b054da2ad911308e">Hermes::DefaultAcceptPolicy&lt; Data &gt;::ListenOptions</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#ab3d5aa64c0b79821750e30d0a8f87b00">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
+<li>recvBufferSize&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a306834215177f17117d782dd3a26f8f1">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a6e65560fca6eaf63b054da2ad911308e">Hermes::DefaultAcceptPolicy&lt; Data &gt;::ListenOptions</a>, <a class="el" href="struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a36b4e7ea32f223d8e76f24bd6fabdfd9">Hermes::DefaultAsyncConnectPolicy&lt; Data &gt;::Options</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#ab3d5aa64c0b79821750e30d0a8f87b00">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
 <li>recvTimeout&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html#a2cecfa5867070b78e27cb71259fb2040">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::SocketOptions</a></li>
 <li>requestClientCertificate&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_accept_policy_1_1_accept_options.html#a2029994256922006d1eefce891ffc8a8">Hermes::TlsAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_tls_socket_data.html#a5872baad0a1ad75f7100e7ae262e8ea9">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
-<li>requestMutualAuth&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_connect_policy_1_1_options.html#a5b3a7a57f1efd7cd1fdcbef4eac7e337">Hermes::TlsConnectPolicy&lt; Data &gt;::Options</a></li>
+<li>requestMutualAuth&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_async_connect_policy_1_1_options.html#a11f747260eeca023870e0ad783993707">Hermes::TlsAsyncConnectPolicy&lt; Data &gt;::Options</a>, <a class="el" href="struct_hermes_1_1_tls_connect_policy_1_1_options.html#a5b3a7a57f1efd7cd1fdcbef4eac7e337">Hermes::TlsConnectPolicy&lt; Data &gt;::Options</a></li>
 <li>requireValidClientCertificate&#160;:&#160;<a class="el" href="struct_hermes_1_1_tls_accept_policy_1_1_listen_options.html#a677bf203b448e80a258e6fde72a66ca8">Hermes::TlsAcceptPolicy&lt; Data &gt;::ListenOptions</a></li>
 <li>reuseAddress&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#aa9618c24bb9296845ed224ce7465fc89">Hermes::DefaultAcceptPolicy&lt; Data &gt;::ListenOptions</a></li>
 </ul>
 
 
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
-<li>sendBufferSize&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a6f9ad65064d548c35bac7b3b334bdd02">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#aa1cdf8c8293d5074a5f35e432a62d9b0">Hermes::DefaultAcceptPolicy&lt; Data &gt;::ListenOptions</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#a23fb7eefd76f88371d942c0749f7bdb2">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
+<li>sendBufferSize&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a6f9ad65064d548c35bac7b3b334bdd02">Hermes::DefaultAcceptPolicy&lt; Data &gt;::AcceptOptions</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#aa1cdf8c8293d5074a5f35e432a62d9b0">Hermes::DefaultAcceptPolicy&lt; Data &gt;::ListenOptions</a>, <a class="el" href="struct_hermes_1_1_default_async_connect_policy_1_1_options.html#ab30c854a20f9de7864cbe2ae5eeffec9">Hermes::DefaultAsyncConnectPolicy&lt; Data &gt;::Options</a>, <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#a23fb7eefd76f88371d942c0749f7bdb2">Hermes::DefaultConnectPolicy&lt; Data &gt;::Options</a></li>
 <li>sendTimeout&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html#a92895c4fdce73e727a8a540e88728c96">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::SocketOptions</a></li>
 <li>socket&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data.html#a939d7a9ba97abc70805f88d9f31c56f6">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a>, <a class="el" href="struct_hermes_1_1_tls_socket_data.html#a8d1830f359ad799b3bc763f40960b165">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
 <li>state&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_socket_data.html#a1dd2b158ed35f0a52ff4e367f30b942a">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a>, <a class="el" href="struct_hermes_1_1_tls_socket_data.html#a6502d63aafdc2f6d1d6fc040f8805ad5">Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;</a></li>
@@ -241,7 +243,7 @@ $(document).ready(function(){initNavTree('functions_vars.html',''); initResizabl
 
 
 <h3><a id="index_v" name="index_v"></a>- v -</h3><ul>
-<li>view&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_lazy_range_1_1_iterator.html#aefbcc9384cd9c71742472f33188109c9">Hermes::DefaultTransferPolicy&lt; Data &gt;::RecvLazyRange&lt; Byte &gt;::Iterator</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy_1_1_recv_lazy_range_1_1_iterator.html#a1a82a8a7bdf1776e80cdc52b5da2510b">Hermes::TlsTransferPolicy&lt; Data &gt;::RecvLazyRange&lt; Byte &gt;::Iterator</a></li>
+<li>view&#160;:&#160;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#a3cf6b86f6fd0afecbf2f2c1e55f1a1e5">Hermes::DefaultTransferPolicy&lt; Data &gt;::RecvStream&lt; Byte &gt;::Iterator</a>, <a class="el" href="struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream_1_1_iterator.html#adc941f91843090d773e2d56c6a06cdae">Hermes::TlsTransferPolicy&lt; Data &gt;::RecvStream&lt; Byte &gt;::Iterator</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

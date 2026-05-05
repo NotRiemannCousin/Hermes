@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_connection_policy_c
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Hermes::ConnectionPolicyConcept Concept Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::ConnectionPolicyConcept Concept Reference<div class="ingroups"><a class="el" href="group___sync_socket_concepts.html">SyncSocketConcepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -144,13 +144,13 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_connection_policy_c
 <div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">template</span>&lt; <span class="keyword">class</span> &gt; <span class="keyword">class </span>Policy, <span class="keyword">class </span>SocketData&gt;</div>
 <div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concept_hermes_1_1_connection_policy_concept.html">Hermes::ConnectionPolicyConcept</a> =  <a class="code hl_concept" href="concept_hermes_1_1_socket_data_concept.html">SocketDataConcept&lt;SocketData&gt;</a></div>
 <div class="line">        &amp;&amp; <span class="keyword">requires</span> () { <span class="keyword">typename</span> Policy&lt;SocketData&gt;::Options; }</div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span> (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy&lt;SocketData&gt;</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">SocketData</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <span class="keyword">typename</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy&lt;SocketData&gt;::Options</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) {</div>
+<div class="line">        &amp;&amp; <span class="keyword">requires</span> (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy&lt;SocketData&gt;</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>, SocketData <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <span class="keyword">typename</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy&lt;SocketData&gt;::Options</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) {</div>
 <div class="line">            { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>.Connect(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
 <div class="line">            { policy.Close(data)        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">            { policy.Abort(data)        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">        }</div>
-<div class="ttc" id="aconcept_hermes_1_1_connection_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_connection_policy_concept.html">Hermes::ConnectionPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages the client-side connection lifecycle.</div><div class="ttdef"><b>Definition</b> _base.hpp:77</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the data representing a socket's state.</div><div class="ttdef"><b>Definition</b> _base.hpp:40</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_connection_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_connection_policy_concept.html">Hermes::ConnectionPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages the client-side connection lifecycle.</div><div class="ttdef"><b>Definition</b> _base.hpp:100</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the data representing a socket's state.</div><div class="ttdef"><b>Definition</b> _base.hpp:52</div></div>
 <div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages the client-side connection lifecycle. </p>
@@ -161,8 +161,8 @@ Configuration</h3>
 </div><!-- fragment --><p> A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE). These settings will be used to modify the Connect() behavior.</p>
 <h3><a class="anchor" id="autotoc_md4"></a>
 Connection</h3>
-<div class="fragment"><div class="line">policy.Connect(data) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
-<div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:52</div></div>
+<div class="fragment"><div class="line">policy.Connect(data, opt) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
+<div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:54</div></div>
 </div><!-- fragment --><p> Initiates a connection to a remote endpoint. Handles specific behaviors like client-side handshakes (e.g., TLS) or proxy negotiations.</p>
 <h3><a class="anchor" id="autotoc_md5"></a>
 Cleanup</h3>

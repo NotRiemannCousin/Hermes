@@ -16,9 +16,14 @@ var annotated_dup =
         [ "UntilMatchAdaptor", "struct_hermes_1_1_utils_1_1_until_match_adaptor.html", "struct_hermes_1_1_utils_1_1_until_match_adaptor" ],
         [ "UntilMatchView", "struct_hermes_1_1_utils_1_1_until_match_view.html", "struct_hermes_1_1_utils_1_1_until_match_view" ]
       ] ],
+      [ "AsyncClientSocket", "struct_hermes_1_1_async_client_socket.html", "struct_hermes_1_1_async_client_socket" ],
+      [ "AsyncListenerSocket", "struct_hermes_1_1_async_listener_socket.html", "struct_hermes_1_1_async_listener_socket" ],
+      [ "AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html", "struct_hermes_1_1_async_server_socket" ],
       [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
       [ "Credentials", "struct_hermes_1_1_credentials.html", "struct_hermes_1_1_credentials" ],
       [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
+      [ "DefaultAsyncConnectPolicy", "struct_hermes_1_1_default_async_connect_policy.html", "struct_hermes_1_1_default_async_connect_policy" ],
+      [ "DefaultAsyncTransferPolicy", "struct_hermes_1_1_default_async_transfer_policy.html", "struct_hermes_1_1_default_async_transfer_policy" ],
       [ "DefaultConnectPolicy", "struct_hermes_1_1_default_connect_policy.html", "struct_hermes_1_1_default_connect_policy" ],
       [ "DefaultSocketData", "struct_hermes_1_1_default_socket_data.html", "struct_hermes_1_1_default_socket_data" ],
       [ "DefaultTransferPolicy", "struct_hermes_1_1_default_transfer_policy.html", "struct_hermes_1_1_default_transfer_policy" ],
@@ -29,9 +34,12 @@ var annotated_dup =
       [ "Network", "struct_hermes_1_1_network.html", "struct_hermes_1_1_network" ],
       [ "ServerSocket", "struct_hermes_1_1_server_socket.html", "struct_hermes_1_1_server_socket" ],
       [ "TlsAcceptPolicy", "struct_hermes_1_1_tls_accept_policy.html", "struct_hermes_1_1_tls_accept_policy" ],
+      [ "TlsAsyncConnectPolicy", "struct_hermes_1_1_tls_async_connect_policy.html", "struct_hermes_1_1_tls_async_connect_policy" ],
+      [ "TlsAsyncTransferPolicy", "struct_hermes_1_1_tls_async_transfer_policy.html", "struct_hermes_1_1_tls_async_transfer_policy" ],
       [ "TlsConnectPolicy", "struct_hermes_1_1_tls_connect_policy.html", "struct_hermes_1_1_tls_connect_policy" ],
       [ "TlsSocketData", "struct_hermes_1_1_tls_socket_data.html", "struct_hermes_1_1_tls_socket_data" ],
-      [ "TlsTransferPolicy", "struct_hermes_1_1_tls_transfer_policy.html", "struct_hermes_1_1_tls_transfer_policy" ]
+      [ "TlsTransferPolicy", "struct_hermes_1_1_tls_transfer_policy.html", "struct_hermes_1_1_tls_transfer_policy" ],
+      [ "TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ]
     ] ],
     [ "_UNICODE_STRING", "struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html", "struct___u_n_i_c_o_d_e___s_t_r_i_n_g" ]
 ];

@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Hermes::SocketDataConcept Concept Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::SocketDataConcept Concept Reference<div class="ingroups"><a class="el" href="group___socket_data.html">SocketData</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -155,7 +155,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 <div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Type;   }(); </div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_endpoint_concept_html"><div class="ttname"><a href="concept_hermes_1_1_endpoint_concept.html">Hermes::EndpointConcept</a></div><div class="ttdef"><b>Definition</b> EndpointConcept.hpp:14</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the data representing a socket's state.</div><div class="ttdef"><b>Definition</b> _base.hpp:40</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the data representing a socket's state.</div><div class="ttdef"><b>Definition</b> _base.hpp:52</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for the data representing a socket's state. </p>
 <p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, and static metadata (Family/Type). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs and state corruption.</p>

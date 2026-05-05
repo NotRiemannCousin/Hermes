@@ -25,16 +25,17 @@
 var NAVTREE =
 [
   [ "Hermes", "index.html", [
-    [ "</blockquote>", "index.html#autotoc_md13", null ],
-    [ "Features", "index.html#autotoc_md14", null ],
-    [ "Installation", "index.html#autotoc_md16", [
-      [ "pixi", "index.html#autotoc_md17", null ],
-      [ "vcpkg", "index.html#autotoc_md18", null ],
-      [ "Manual (CMake)", "index.html#autotoc_md19", null ]
+    [ "</blockquote>", "index.html#autotoc_md21", null ],
+    [ "Features", "index.html#autotoc_md22", null ],
+    [ "Installation", "index.html#autotoc_md24", [
+      [ "pixi", "index.html#autotoc_md25", null ],
+      [ "vcpkg", "index.html#autotoc_md26", null ],
+      [ "Manual (CMake)", "index.html#autotoc_md27", null ]
     ] ],
-    [ "Example", "index.html#autotoc_md21", null ],
-    [ "Roadmap", "index.html#autotoc_md23", null ],
-    [ "Requirements", "index.html#autotoc_md25", null ],
+    [ "Example", "index.html#autotoc_md29", null ],
+    [ "Roadmap", "index.html#autotoc_md31", null ],
+    [ "Requirements", "index.html#autotoc_md33", null ],
+    [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
       [ "Namespace Members", "namespacemembers.html", [
@@ -76,10 +77,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_sync_2_listener_socket_8hpp-example.html",
-"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ae579664544f83a2806506e2252a67646",
-"_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a66b9cf8bb59d1f6271d30e668162aa2e",
-"struct_hermes_1_1_client_socket.html#a05e19f51bb190c381530c14e7cbe574b",
-"struct_hermes_1_1_server_socket.html"
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa97b1c9a26552a9a1a0a91c44a09180e",
+"_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005aeae835e83c0494a376229f254f7d3392",
+"namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaf79ec1a07d3a730494d56adb6d71d541",
+"struct_hermes_1_1_default_socket_data_1_1_state.html#aa1f67bd32ffc84c768a7022fb312ca19",
+"struct_hermes_1_1_tls_socket_data_1_1_state.html#ac8d9354a9bf76a3b7402bf50cc8ffabb"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
