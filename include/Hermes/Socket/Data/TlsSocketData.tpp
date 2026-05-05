@@ -18,6 +18,7 @@ namespace Hermes {
         decryptedOffset{ other.decryptedOffset },
         handshakeCallback{ other.handshakeCallback },
         pendingData{ other.pendingData },
+        host{ std::move(other.host) },
         credentials{ other.credentials } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
