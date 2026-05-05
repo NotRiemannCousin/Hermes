@@ -73,16 +73,16 @@ namespace Hermes {
     template<SocketDataConcept SocketData, template <class> class AcceptPolicy, template <class> class TransferPolicy>
         requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<ByteLike Byte>
-    typename TransferPolicy<SocketData>::template RecvLazyRange<Byte>
-    ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvLazyRange() noexcept {
-        return typename TransferPolicy<SocketData>::template RecvLazyRange<Byte>{ socketData, transferPolicy };
+    typename TransferPolicy<SocketData>::template RecvStream<Byte>
+    ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept {
+        return typename TransferPolicy<SocketData>::template RecvStream<Byte>{ socketData, transferPolicy };
     }
 
     template<SocketDataConcept SocketData, template <class> class AcceptPolicy, template <class> class TransferPolicy>
         requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange() noexcept {
-        return RecvLazyRange<Byte>() | Utils::dropLast;
+        return RecvStream<Byte>() | Utils::dropLast;
     }
 
 

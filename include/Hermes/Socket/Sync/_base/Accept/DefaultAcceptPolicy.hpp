@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/Socket/Sync/_base/Data/DefaultSocketData.hpp>
+#include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base.hpp>
 

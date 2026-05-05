@@ -4,7 +4,7 @@
 namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator::value_type DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator*() const {
+    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator::value_type DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator*() const {
         if (view->_policy->_state->index >= view->_policy->_state->size)
             auto _{ view->Receive() };
 
@@ -13,20 +13,20 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator++() {
+    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++() {
         ++view->_policy->_state->index;
         return *this;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator++(int) {
+    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++(int) {
         return ++*this;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    bool DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator==(std::default_sentinel_t) const {
+    bool DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
         return (!view->_policy->_state->status && view->_policy->_state->index >= view->_policy->_state->size)
                 || view->_data->socket == macroINVALID_SOCKET;
     }
@@ -34,7 +34,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::RecvLazyRange(Data& data, DefaultTransferPolicy& policy)
+    DefaultTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, DefaultTransferPolicy& policy)
         : _data { &data }, _policy{ &policy } {
         if (policy._state == nullptr)
             policy._state = std::make_unique<State>();
@@ -44,30 +44,30 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::begin() {
+    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator DefaultTransferPolicy<Data>::RecvStream<Byte>::begin() {
         return Iterator{ this };
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    std::default_sentinel_t DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::end() { return {}; }
+    std::default_sentinel_t DefaultTransferPolicy<Data>::RecvStream<Byte>::end() { return {}; }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Error() const {
+    ConnectionResultOper DefaultTransferPolicy<Data>::RecvStream<Byte>::Error() const {
         return _policy->_state->status;
     }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvLazyRange<Byte>::Receive() {
+    ConnectionResultOper DefaultTransferPolicy<Data>::RecvStream<Byte>::Receive() {
         StreamByteOper::second_type err{};
         auto& state{ _policy->_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper<std::byte>(*_data, state->buffer, true) };
+            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper<std::byte>(*_data, state->buffer, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -91,7 +91,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+    StreamByteOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
         if (_state != nullptr) {
             const auto size{ min(_state->size - _state->index, bufferRecv.size()) };
 
@@ -103,11 +103,11 @@ namespace Hermes {
                 return { size, {} };
         }
 
-        return DefaultTransferPolicy::RecvHelper(data, bufferRecv, false);
+        return DefaultTransferPolicy::RecvHelper(data, bufferRecv, recvMode);
     }
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const bool single) {
+    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
         if (data.socket == macroINVALID_SOCKET)
             return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
 
@@ -126,7 +126,9 @@ namespace Hermes {
                 return { total, std::unexpected{ ConnectionErrorEnum::ReceiveFailed } };
 
             total += received;
-        } while (!single && total < bufferRecv.size());
+
+            if (recvMode == RecvModeEnum::Any) break;
+        } while (total < bufferRecv.size());
         return { total, {} };
     }
 

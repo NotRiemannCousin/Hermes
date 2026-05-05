@@ -8,8 +8,6 @@
 // with "macro" prefix and similarities. There is also some utilities
 // functions to make things easier.
 
-#define _AMD64_ 1
-
 
 #define SCHANNEL_USE_BLACKLISTS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS

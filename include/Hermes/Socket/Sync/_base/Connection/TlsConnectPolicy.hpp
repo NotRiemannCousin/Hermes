@@ -1,10 +1,13 @@
 #pragma once
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/Sync/_base/Data/TLSSocketData.hpp>
+#include <Hermes/Socket/Data/TLSSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
+
+    template<SocketDataConcept Data>
+    struct TlsAsyncConnectPolicy;
 
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
@@ -24,6 +27,9 @@ namespace Hermes {
 
     private:
         static ConnectionResultOper ClientHandshake(Data& data, Options options);
+
+
+        friend struct TlsAsyncConnectPolicy<Data>;
     };
 }
 

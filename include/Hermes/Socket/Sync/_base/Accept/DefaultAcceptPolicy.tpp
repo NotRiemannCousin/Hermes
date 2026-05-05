@@ -17,7 +17,7 @@ namespace Hermes {
 
 #pragma region Listen Options
 
-        const auto s_applyOpt = [&](int level, int optName, auto value) {
+        const auto s_applyOpt = [&](const int level, const int optName, auto value) {
             setsockopt(data.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
         };
 

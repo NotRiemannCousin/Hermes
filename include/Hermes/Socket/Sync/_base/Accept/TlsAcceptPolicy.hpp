@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/Sync/_base/Data/TlsSocketData.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
 

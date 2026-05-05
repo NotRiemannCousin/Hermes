@@ -1,8 +1,8 @@
 // ReSharper disable CppPassValueParameterByConstReference
 #include <gtest/gtest.h>
-#include <../include/Hermes/Socket/Sync/ClientSocket.hpp>
-#include <../include/Hermes/Socket/Sync/ListenerSocket.hpp>
-#include <../include/Hermes/Socket/Sync/ServerSocket.hpp>
+#include <Hermes/Socket/Sync/ClientSocket.hpp>
+#include <Hermes/Socket/Sync/ListenerSocket.hpp>
+#include <Hermes/Socket/Sync/ServerSocket.hpp>
 
 #include <algorithm>
 #include <string>

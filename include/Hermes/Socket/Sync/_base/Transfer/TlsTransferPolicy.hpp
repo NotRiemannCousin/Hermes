@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/Socket/Sync/_base/Data/TlsSocketData.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base.hpp>
 
@@ -10,12 +10,12 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsTransferPolicy {
         template<ByteLike Byte>
-        struct RecvLazyRange : std::ranges::view_interface<RecvLazyRange<Byte>> {
+        struct RecvStream : std::ranges::view_interface<RecvStream<Byte>> {
             struct Iterator {
                 using difference_type  = std::ptrdiff_t;
                 using value_type       = Byte;
 
-                RecvLazyRange* view = nullptr;
+                RecvStream* view = nullptr;
 
                 [[nodiscard]] value_type operator*() const;
                 Iterator& operator++();
@@ -23,7 +23,7 @@ namespace Hermes {
                 [[nodiscard]] bool operator==(std::default_sentinel_t) const;
             };
 
-            explicit RecvLazyRange(Data& data, TlsTransferPolicy& policy);
+            explicit RecvStream(Data& data, TlsTransferPolicy& policy);
 
             Iterator begin();
             static std::default_sentinel_t end();
@@ -37,7 +37,7 @@ namespace Hermes {
         };
 
         template<ByteLike Byte>
-        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv);
+        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
         template<ByteLike Byte>
         static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
 
@@ -55,13 +55,13 @@ namespace Hermes {
         std::unique_ptr<State> _state{ nullptr };
 
         template<ByteLike Byte>
-        static StreamByteOper RecvHelper(Data& data, std::span<Byte> bufferRecv, bool single);
+        static StreamByteOper RecvHelper(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode);
     };
 }
 
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvLazyRange<std::byte>>);
+    static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvStream<std::byte>>);
     static_assert(TransferPolicyConcept<TlsTransferPolicy, TlsSocketData<>>);
 }

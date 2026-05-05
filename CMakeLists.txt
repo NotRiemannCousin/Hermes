@@ -27,6 +27,9 @@ CPMFindPackage(
         NAME stdexec
         GITHUB_REPOSITORY NVIDIA/stdexec
         GIT_TAG main
+        OPTIONS
+        "STDEXEC_BUILD_EXAMPLES OFF"
+        "STDEXEC_BUILD_TESTS OFF"
 )
 
 add_library(Hermes
@@ -40,6 +43,7 @@ add_library(Hermes
 target_include_directories(Hermes PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
+        $<BUILD_INTERFACE:${stdexec_SOURCE_DIR}/include>
 )
 
 
@@ -68,7 +72,9 @@ target_link_options(Hermes PRIVATE
 )
 
 
-target_link_libraries(Hermes PRIVATE stdexec)
+target_link_libraries(Hermes PUBLIC
+        $<BUILD_INTERFACE:stdexec>
+)
 
 
 set_target_properties(Hermes PROPERTIES
@@ -77,9 +83,23 @@ set_target_properties(Hermes PROPERTIES
 )
 
 
-add_subdirectory(examples)
-add_subdirectory(tests)
+if(PROJECT_IS_TOP_LEVEL)
+    set(DEFAULT_BUILD_OPTS ON)
+else()
+    set(DEFAULT_BUILD_OPTS OFF)
+endif()
 
+option(HERMES_BUILD_EXAMPLES "Build project examples" ${DEFAULT_BUILD_OPTS})
+option(HERMES_BUILD_TESTS "Build project tests" ${DEFAULT_BUILD_OPTS})
+
+if(HERMES_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+
+if(HERMES_BUILD_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
 
 install(TARGETS Hermes
         EXPORT HermesTargets

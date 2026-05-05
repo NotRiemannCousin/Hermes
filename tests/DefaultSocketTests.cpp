@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
-#include <../include/Hermes/Socket/Sync/ClientSocket.hpp>
-#include <../include/Hermes/Socket/Sync/ListenerSocket.hpp>
-#include <../include/Hermes/Socket/Sync/ServerSocket.hpp>
+#include <Hermes/Socket/Sync/ClientSocket.hpp>
+#include <Hermes/Socket/Sync/ListenerSocket.hpp>
+#include <Hermes/Socket/Sync/ServerSocket.hpp>
 
 #include <algorithm>
 #include <string>
@@ -317,7 +317,7 @@ TEST_F(SocketBridgeTest, Send_LargePayload_AllBytesReceived) {
     EXPECT_EQ(inBuf, outBuf);
 }
 
-TEST_F(SocketBridgeTest, RecvLazyRange_ClientSend_ServerIterates) {
+TEST_F(SocketBridgeTest, RecvStream_ClientSend_ServerIterates) {
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(kBasePort + 4) };
     auto listener{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };
     ASSERT_TRUE(listener.has_value());

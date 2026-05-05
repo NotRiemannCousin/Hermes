@@ -6,7 +6,7 @@
 namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator::value_type TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator*() const {
+    TlsTransferPolicy<Data>::template RecvStream<Byte>::Iterator::value_type TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator*() const {
         if (view->_policy->_state->index >= view->_policy->_state->size)
             auto _{ view->Receive() };
 
@@ -15,20 +15,20 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator& TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator++() {
+    TlsTransferPolicy<Data>::template RecvStream<Byte>::Iterator& TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++() {
         ++view->_policy->_state->index;
         return *this;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator& TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator++(int) {
+    TlsTransferPolicy<Data>::template RecvStream<Byte>::Iterator& TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++(int) {
         return ++*this;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    bool TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Iterator::operator==(std::default_sentinel_t) const {
+    bool TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
         const auto& state{ view->_policy->_state };
 
         return (!state->status && state->index >= state->size)
@@ -38,7 +38,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::RecvLazyRange<Byte>::RecvLazyRange(Data& data, TlsTransferPolicy& policy)
+    TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, TlsTransferPolicy& policy)
         : _data{ &data }, _policy{ &policy } {
         if (policy._state == nullptr)
             policy._state = std::make_unique<State>();
@@ -48,30 +48,30 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::template RecvLazyRange<Byte>::Iterator TlsTransferPolicy<Data>::RecvLazyRange<Byte>::begin() {
+    TlsTransferPolicy<Data>::template RecvStream<Byte>::Iterator TlsTransferPolicy<Data>::RecvStream<Byte>::begin() {
         return Iterator{ this };
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    std::default_sentinel_t TlsTransferPolicy<Data>::RecvLazyRange<Byte>::end() { return {}; }
+    std::default_sentinel_t TlsTransferPolicy<Data>::RecvStream<Byte>::end() { return {}; }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    ConnectionResultOper TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Error() const {
+    ConnectionResultOper TlsTransferPolicy<Data>::RecvStream<Byte>::Error() const {
         return _policy->_state->status;
     }
 
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    ConnectionResultOper TlsTransferPolicy<Data>::RecvLazyRange<Byte>::Receive() {
+    ConnectionResultOper TlsTransferPolicy<Data>::RecvStream<Byte>::Receive() {
         StreamByteOper::second_type err{};
         auto& state{ _policy->_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ TlsTransferPolicy::RecvHelper<std::byte>(*_data, state->buffer, true) };
+            auto [newSize, errOp]{ TlsTransferPolicy::RecvHelper<std::byte>(*_data, state->buffer, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -95,7 +95,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper TlsTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const bool single) {
+    StreamByteOper TlsTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
         static constexpr auto s_hasData = [](const SecBuffer buffer) {
             return buffer.cbBuffer > 0;
         };
@@ -273,7 +273,7 @@ namespace Hermes {
                 default:
                     return { 0, std::unexpected{ ConnectionErrorEnum::DecryptionFailed } };
             }
-        } while (!single);
+        } while (recvMode == RecvModeEnum::All);
 
         return { initialSize - bufferRecv.size(), {} };
     }
@@ -281,7 +281,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv) {
+    StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
         size_t totalReceived{};
 
         if (_state != nullptr) {
@@ -296,7 +296,7 @@ namespace Hermes {
                 return { totalReceived, {} };
         }
 
-        auto [recvd, err] = TlsTransferPolicy::RecvHelper(data, bufferRecv, false);
+        auto [recvd, err] = TlsTransferPolicy::RecvHelper(data, bufferRecv, recvMode);
         return { totalReceived + recvd, err };
     }
 

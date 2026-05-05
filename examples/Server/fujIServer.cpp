@@ -1,4 +1,4 @@
-#include <../include/Hermes/Socket/Sync/ListenerSocket.hpp>
+#include <Hermes/Socket/Sync/ListenerSocket.hpp>
 #include <Hermes/Utils/UntilMatch.hpp>
 
 #include <string_view>
@@ -17,7 +17,7 @@ std::expected<std::monostate, std::string> RunServer() {
     using Hermes::RawTcpListener;
     using Hermes::RawTcpServer;
 
-    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
+    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({ 127, 0, 0, 1 }), 8080 };
 
     static constexpr auto s_log = [](std::string message) {
         return [message = std::move(message)]<class T>(T&& obj) -> T {
@@ -26,7 +26,7 @@ std::expected<std::monostate, std::string> RunServer() {
         };
     };
     static constexpr auto s_sendRequest = [](RawTcpServer&& socket) -> Hermes::ConnectionResultOper {
-        auto socketView{ socket.RecvLazyRange<char>() };
+        auto socketView{ socket.RecvStream<char>() };
 
         const auto requestLine{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
         std::println("Request Line:\n{}", requestLine);

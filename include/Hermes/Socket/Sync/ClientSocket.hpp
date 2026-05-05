@@ -46,11 +46,11 @@ namespace Hermes {
         //! will discover that the transmission ended while trying to get a new value, so a 0x04 char
         //! (end of transmission) will be added as the last char.
         template<ByteLike Byte = std::byte>
-        typename TransferPolicy<SocketData>::template RecvLazyRange<Byte> RecvLazyRange() noexcept;
+        typename TransferPolicy<SocketData>::template RecvStream<Byte> RecvStream() noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
-        //! It delays the char retrieved from RecvLazyRange() by 1 and discards the last char (0x04
+        //! It delays the char retrieved from RecvStream() by 1 and discards the last char (0x04
         //! end of transmission in cause of exhaustive read), working similar to what you get in
         //! other languages (retrieving the data on ++).
         //!
