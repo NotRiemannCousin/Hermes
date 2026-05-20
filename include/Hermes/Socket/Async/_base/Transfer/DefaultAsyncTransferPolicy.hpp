@@ -9,6 +9,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultAsyncTransferPolicy {
+        static constexpr auto Type{ Data::Type };
 
         template<ByteLike Byte>
         auto AsyncRecv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode = RecvModeEnum::All) noexcept;
@@ -30,5 +31,5 @@ namespace Hermes {
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(AsyncTransferPolicyConcept<DefaultAsyncTransferPolicy, DefaultSocketData<>>);
+    static_assert(AsyncTransferPolicyConcept<DefaultAsyncTransferPolicy<>, DefaultSocketData<>>);
 }

@@ -18,7 +18,7 @@ namespace vs = std::views;
 // structures (like `ClientState` using `std::shared_ptr`) because local variables safely
 // outlive the suspension points (`co_await`).
 
-exec::task<std::expected<std::string, std::string>> MakeRequestAsync() {
+exec::task<std::expected<std::string, std::string>> MakeRequestAsync(Hermes::FastIoLoop& ioLoop) {
     using namespace std::literals::string_view_literals;
 
     try {
@@ -32,7 +32,7 @@ exec::task<std::expected<std::string, std::string>> MakeRequestAsync() {
         // The coroutine suspends here until the TCP handshake and TLS negotiation are complete.
         auto client{ co_await Hermes::RawTlsAsyncClient::AsyncConnect(
             Hermes::TlsSocketData<>{ endpoint, url.hostname },
-            {{ .recvBufferSize = 8192 }}
+            {{ .recvBufferSize = 8192, .scheduler = &ioLoop }}
         ) };
 
         // 3. Format and send the HTTP request.
@@ -97,13 +97,16 @@ exec::task<std::expected<std::string, std::string>> MakeRequestAsync() {
         co_return std::unexpected{ MapHermesError(e) };
     }
     catch (const Hermes::TransferError& e) {
-        co_return std::unexpected{ std::format("{}", e.error) };
+        co_return std::unexpected{ std::format("Transfer error: {}, {} sent/received", e.error, e.bytesTransferred) };
     }
     catch (const std::string& s) {
         co_return std::unexpected{ s };
     }
     catch (const char* s) {
         co_return std::unexpected{ s };
+    }
+    catch (const std::exception& e) {
+        co_return std::unexpected{ e.what() };
     }
     catch (...) {
         co_return std::unexpected{ "unknown exception" };
@@ -112,6 +115,9 @@ exec::task<std::expected<std::string, std::string>> MakeRequestAsync() {
 
 std::expected<std::string, std::string> MakeRequest() {
     // Synchronize and extract the value from the tuple returned by stdexec::sync_wait.
-    auto [result]{ stdexec::sync_wait(MakeRequestAsync()).value() };
+
+    Hermes::FastIoLoop loop{ 1 };
+
+    auto [result]{ stdexec::sync_wait(MakeRequestAsync(loop)).value() };
     return result;
 }

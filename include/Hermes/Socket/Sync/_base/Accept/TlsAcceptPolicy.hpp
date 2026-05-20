@@ -6,37 +6,32 @@
 
 namespace Hermes {
 
+    template<SocketDataConcept Data>
+    struct TlsAsyncAcceptPolicy;
+
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAcceptPolicy {
-        struct ListenOptions : DefaultAcceptPolicy<Data>::ListenOptions {
-            // std::vector<std::string> alpnProtocols;
-            
+        static constexpr auto Family{ Data::Family };
+        static constexpr auto Type{ Data::Type };
+        using EndpointType = typename Data::EndpointType;
+
+        struct ListenOptions : DefaultAcceptPolicy<EndpointType, SocketTypeEnum::Stream, Family>::ListenOptions {
             bool requireValidClientCertificate{ true };
         };
-        struct AcceptOptions : DefaultAcceptPolicy<Data>::AcceptOptions {
+        struct AcceptOptions : DefaultAcceptPolicy<EndpointType, SocketTypeEnum::Stream, Family>::AcceptOptions {
             std::chrono::milliseconds handshakeTimeout{};
             bool requestClientCertificate{};
         };
 
-
-        //! @brief Creates the listening socket: socket() + bind() + listen().
-        //! Identical to DefaultAcceptPolicy::Listen — TLS operates per-connection,
-        //! not on the listening socket itself.
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options) noexcept;
-
-        //! @brief Accepts one incoming connection and performs the TLS server handshake.
-        //! Fills outData.socket, outData.endpoint, and all SChannel context fields.
-        //! Sets outData.isServer = true on success.
         static ConnectionResultOper Accept(Data& data, Data& outData, AcceptOptions options) noexcept;
-
-        //! @brief Sends the TLS close_notify alert and closes the accepted connection.
         static void Close(Data& data) noexcept;
-
-        //! @brief Closes the listening socket. No TLS alert needed.
         static void Abort(Data& data) noexcept;
 
     private:
         static ConnectionResultOper ServerHandshake(Data& data, AcceptOptions options) noexcept;
+
+        friend struct TlsAsyncAcceptPolicy<Data>;
     };
 
 }
@@ -44,5 +39,5 @@ namespace Hermes {
 #include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.tpp>
 
 namespace Hermes {
-    static_assert(AcceptPolicyConcept<TlsAcceptPolicy, TlsSocketData<>>);
+    static_assert(AcceptPolicyConcept<TlsAcceptPolicy<>, TlsSocketData<>>);
 }

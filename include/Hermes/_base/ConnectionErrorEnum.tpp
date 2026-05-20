@@ -1,6 +1,16 @@
 #pragma once
 #include <format>
 
+namespace Hermes {
+    inline TransferError TransferError::Accumulate(const TransferError other) const noexcept {
+        return { bytesTransferred + other.bytesTransferred, other.error };
+    }
+
+    inline TransferError TransferError::Substitute(const ConnectionErrorEnum err) const noexcept {
+        return { bytesTransferred, err };
+    }
+}
+
 namespace std {
     template <>
     struct formatter<Hermes::ConnectionErrorEnum> {

@@ -2,15 +2,16 @@
 #include <Hermes/_base/Network.hpp>
 
 namespace Hermes {
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
+    ConnectionResultOper DefaultConnectPolicy<Endpoint, SocketType, SocketFamily>::Connect(Data& data, Options options) noexcept {
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes.has_value())
             return std::unexpected{ ConnectionErrorEnum::Unknown };
 
         auto [addr, addr_len, addrFamily]{ *addrRes };
 
-        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
+        data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(SocketType), 0);
 
         if (data.socket < 0)
             return std::unexpected{ ConnectionErrorEnum::Unknown };
@@ -21,10 +22,10 @@ namespace Hermes {
             setsockopt(data.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
         };
 
-        if constexpr (Data::Family == AddressFamilyEnum::Inet6)
+        if constexpr (SocketFamily == AddressFamilyEnum::Inet6)
             s_applyOpt(IPPROTO_IPV6, IPV6_V6ONLY, int{ options.onlyIpv6 });
 
-        if constexpr (Data::Type == SocketTypeEnum::Stream)
+        if constexpr (SocketType == SocketTypeEnum::Stream)
             if (options.tcpNoDelay) s_applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
 
         if (options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
@@ -104,15 +105,18 @@ namespace Hermes {
     }
 
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    void DefaultConnectPolicy<Data>::Close(Data& data) {
+    void DefaultConnectPolicy<Endpoint, SocketType, SocketFamily>::Close(Data& data) {
+
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
         closesocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    void DefaultConnectPolicy<Data>::Abort(Data &data) {
+    void DefaultConnectPolicy<Endpoint, SocketType, SocketFamily>::Abort(Data& data) {
         constexpr linger lingerOption{ 1, 0 };
 
         setsockopt(

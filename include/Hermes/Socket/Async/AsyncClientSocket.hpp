@@ -6,18 +6,16 @@
 
 #include <stdexec/execution.hpp>
 #include <ranges>
+#include <exec/task.hpp>
 
 namespace Hermes {
     template<
-        SocketDataConcept SocketData                 = DefaultSocketData<>,
-        template <class> class AsyncConnectionPolicy = DefaultAsyncConnectPolicy,
-        template <class> class AsyncTransferPolicy   = DefaultAsyncTransferPolicy>
-        requires AsyncConnectionPolicyConcept<AsyncConnectionPolicy, SocketData> && AsyncTransferPolicyConcept<AsyncTransferPolicy, SocketData>
+        SocketDataConcept SocketData = DefaultSocketData<>,
+        class ConnectionPolicy       = DefaultAsyncConnectPolicy<>,
+        class TransferPolicy         = DefaultAsyncTransferPolicy<>>
+        requires AsyncConnectionPolicyConcept<ConnectionPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     struct AsyncClientSocket {
-        using EndpointType         = typename SocketData::EndpointType;
-        using ConnectionPolicyType = AsyncConnectionPolicy<SocketData>;
-        using TransferPolicyType   = AsyncTransferPolicy<SocketData>;
-
+        using EndpointType = typename SocketData::EndpointType;
 
         AsyncClientSocket(AsyncClientSocket&&) noexcept;
         AsyncClientSocket& operator=(AsyncClientSocket&&) noexcept;
@@ -25,9 +23,9 @@ namespace Hermes {
 
         template<class = void>
         [[nodiscard]] static auto AsyncConnect(SocketData&& data) noexcept
-            requires std::default_initializable<typename ConnectionPolicyType::Options>;
+            requires std::default_initializable<typename ConnectionPolicy::Options>;
 
-        [[nodiscard]] static auto AsyncConnect(SocketData&& data, ConnectionPolicyType::Options opt) noexcept;
+        [[nodiscard]] static auto AsyncConnect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
 
         //! @brief Asynchronously writes data to the socket.
         //! @return A sender that yields the number of bytes sent or a TransferError on failure.
@@ -54,14 +52,16 @@ namespace Hermes {
     private:
         AsyncClientSocket() = default;
 
-        SocketData           socketData{};
-        ConnectionPolicyType connectionPolicy{};
-        TransferPolicyType   transferPolicy{};
+        SocketData       socketData{};
+        ConnectionPolicy connectionPolicy{};
+        TransferPolicy   transferPolicy{};
     };
 
+
+
     using RawTcpAsyncClient = AsyncClientSocket<>;
-    using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy, TlsAsyncTransferPolicy>;
-    using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
+    using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+    // using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }
 
 #include <Hermes/Socket/Async/AsyncClientSocket.tpp>

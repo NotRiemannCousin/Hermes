@@ -6,14 +6,14 @@
 #include <ranges>
 
 namespace Hermes {
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::ClientSocket(ClientSocket&& other) noexcept
         : socketData(std::move(other.socketData)),
           connectionPolicy(std::move(other.connectionPolicy)),
           transferPolicy(std::move(other.transferPolicy)) { }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>&
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::operator=(ClientSocket&& other) noexcept {
@@ -27,26 +27,26 @@ namespace Hermes {
         return *this;
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::~ClientSocket() {
         Close();
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<class>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData &&data) noexcept
-        requires std::default_initializable<typename ConnectionPolicyType::Options> {
+        requires std::default_initializable<typename ConnectionPolicy::Options> {
         return Connect(std::move(data), {});
     }
 
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data, ConnectionPolicyType::Options opt) noexcept {
+    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data, typename ConnectionPolicy::Options opt) noexcept {
         Network::Initialize();
 
         ClientSocket socket;
@@ -59,7 +59,7 @@ namespace Hermes {
         return socket;
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
         requires ByteLike<std::ranges::range_value_t<R>>
@@ -70,24 +70,23 @@ namespace Hermes {
         return transferPolicy.Send(socketData, buffer);
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
         requires ByteLike<std::ranges::range_value_t<R>>
-    StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R&& data) noexcept {
+    StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Recv(socketData, buffer);
+        return transferPolicy.Recv(socketData, buffer, mode);
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<ByteLike Byte> typename TransferPolicy<SocketData>::template RecvStream<Byte>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvStream() noexcept {
-        return typename TransferPolicy<SocketData>::template RecvStream<Byte>{ socketData, transferPolicy };
+    template<ByteLike Byte> auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvStream() noexcept {
+        return typename TransferPolicy::template RecvStream<Byte>{ socketData, transferPolicy };
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class
         TransferPolicy>
     requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy,
         SocketData>
@@ -97,7 +96,7 @@ namespace Hermes {
         return RecvStream<Byte>() | Utils::dropLast;
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     void ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Close() noexcept {
         if (socketData.socket == macroINVALID_SOCKET) return;
@@ -105,7 +104,7 @@ namespace Hermes {
         connectionPolicy.Close(const_cast<SocketData&>(socketData));
     }
 
-    template<SocketDataConcept SocketData, template <class> class ConnectionPolicy, template <class> class
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class
         TransferPolicy>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy,
         SocketData>

@@ -3,8 +3,9 @@
 
 namespace Hermes {
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultAcceptPolicy<Data>::Listen(Data& data, int backlog, ListenOptions options) noexcept {
+    ConnectionResultOper DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Listen(Data& data, int backlog, ListenOptions options) noexcept {
         auto addrRes{ data.endpoint.ToSockAddr() };
         if (!addrRes)
             return std::unexpected{ ConnectionErrorEnum::InvalidEndpoint };
@@ -46,8 +47,9 @@ namespace Hermes {
     }
 
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultAcceptPolicy<Data>::Accept(Data& listenData, Data& outData, AcceptOptions options) noexcept {
+    ConnectionResultOper DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Accept(Data& listenData, Data& outData, AcceptOptions options) noexcept {
         sockaddr_storage clientAddr{};
         int clientAddrLen{ sizeof(clientAddr) };
 
@@ -85,15 +87,17 @@ namespace Hermes {
     }
 
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    void DefaultAcceptPolicy<Data>::Close(Data& data) noexcept {
+    void DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Close(Data& data) noexcept {
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
         closesocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 
+    template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>
-    void DefaultAcceptPolicy<Data>::Abort(Data &data) noexcept {
+    void DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Abort(Data &data) noexcept {
         constexpr linger lingerOption{ 1, 0 };
 
         setsockopt(

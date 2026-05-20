@@ -30,6 +30,8 @@ struct ClientState {
 std::expected<std::string, std::string> MakeRequest() {
     using namespace std::literals::string_view_literals;
 
+    Hermes::FastIoLoop ioLoop{ 1 };
+
 #pragma region Lambdas
 
     const auto s_resolveEndpoint{ [hostname{ url.hostname }, scheme{ url.scheme }]() {
@@ -39,7 +41,7 @@ std::expected<std::string, std::string> MakeRequest() {
     } };
 
     const auto s_makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
-        return Hermes::RawTlsAsyncClient::AsyncConnect(Hermes::TlsSocketData<>{ endpoint, url.hostname }, {{ .recvBufferSize = 8192 }});
+        return Hermes::RawTlsAsyncClient::AsyncConnect(Hermes::TlsSocketData<>{ endpoint, url.hostname }, {{ .recvBufferSize = 8192, .scheduler = &ioLoop }});
     } };
 
     const auto s_makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {
@@ -114,7 +116,7 @@ std::expected<std::string, std::string> MakeRequest() {
 
         if constexpr (std::is_same_v<ErrorType, Hermes::ConnectionErrorEnum>) {
             errStr = MapHermesError(error);
-        } else if constexpr (std::is_same_v<ErrorType, Hermes::TransferError>) {
+        } else if constexpr (std::is_same_v<ErrorType, Hermes::StreamByteOper>) {
             errStr = std::format("{}", error.error);
         } else if constexpr (std::is_same_v<ErrorType, std::exception_ptr>) {
             try { std::rethrow_exception(error); }
@@ -134,6 +136,7 @@ std::expected<std::string, std::string> MakeRequest() {
     } };
 
 #pragma endregion
+
 
     // The execution pipeline definition. Notice how `stdexec::just()` kickstarts the lazy evaluation.
     // `let_value` is used to chain asynchronous operations, while `then` is used for synchronous transformations.

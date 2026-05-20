@@ -3,6 +3,16 @@
 #include <Hermes/Socket/_base.hpp>
 #include <Hermes/_base/WinApi/WinApi.hpp>
 #include <Hermes/_base/Credentials.hpp>
+#include <memory>
+
+namespace Hermes::_details {
+    template<typename Data>
+    struct ITlsConnectStateMachine;
+    template<typename Data>
+    struct ITlsTransferStateMachine;
+    template<typename Data>
+    struct ITlsAcceptStateMachine;
+}
 
 namespace Hermes {
     template<
@@ -10,6 +20,7 @@ namespace Hermes {
             SocketTypeEnum SocketType      = SocketTypeEnum::Stream,
             AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct TlsSocketData {
+        using DataType = TlsSocketData<Endpoint, SocketType, SocketFamily>;
         using EndpointType = Endpoint;
 
         static constexpr SocketTypeEnum Type = SocketType;
@@ -17,7 +28,7 @@ namespace Hermes {
 
         TlsSocketData() = default;
         TlsSocketData(Endpoint endpoint, std::string host, const Credentials* credentials = nullptr);
-        ~TlsSocketData() = default;
+        ~TlsSocketData();
 
         TlsSocketData(TlsSocketData&& other) noexcept;
         TlsSocketData& operator=(TlsSocketData&& other) noexcept;
@@ -28,7 +39,10 @@ namespace Hermes {
 
         const Credentials* credentials{};
 
-        std::function<ConnectionResultOper(TlsSocketData&)> handshakeCallback{};
+        std::unique_ptr<_details::ITlsConnectStateMachine<DataType>> connectStateMachine;
+        std::unique_ptr<_details::ITlsTransferStateMachine<DataType>> transferStateMachine;
+        std::unique_ptr<_details::ITlsAcceptStateMachine<DataType>> acceptStateMachine;
+
         uint32_t pendingData{};
 
         // private:

@@ -9,6 +9,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncTransferPolicy {
+        static constexpr auto Type{ Data::Type };
 
         template<ByteLike Byte>
         auto AsyncRecv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
@@ -16,14 +17,15 @@ namespace Hermes {
         template<ByteLike Byte>
         auto AsyncSend(Data& data, std::span<const Byte> bufferSend) noexcept;
 
+        enum class ActionEnum : std::uint8_t { Recv, Send };
     private:
-        template<ByteLike Byte> struct RecvSender;
-        template<ByteLike Byte> struct SendSender;
+
+        template<ByteLike Byte> struct TransferSender;
     };
 }
 
 #include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy, TlsSocketData<>>);
+    static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy<>, TlsSocketData<>>);
 }

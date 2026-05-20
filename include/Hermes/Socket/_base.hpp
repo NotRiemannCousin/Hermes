@@ -5,7 +5,6 @@
 #include <stdexec/execution.hpp>
 
 #include <concepts>
-#include <generator>
 #include <ranges>
 
 namespace Hermes {
@@ -24,12 +23,12 @@ namespace Hermes {
     //! @addtogroup SocketData
     //! @{
 
-    //! @brief Concept for the data representing a socket's state.
+    //! @brief Concept for the context representing a socket's state and cross-policy coordination.
     //!
     //! @details A self-contained struct that aggregates the raw socket handle,
-    //! its corresponding endpoint, and static metadata (Family/Type). Enforces
-    //! move-only semantics, as copying an underlying OS socket descriptor leads
-    //! to double-close bugs and state corruption.
+    //! its corresponding endpoint, static metadata (Family/Type), and any required
+    //! cross-policy state (e.g., renegotiation callbacks). Enforces move-only
+    //! semantics, as copying an underlying OS socket descriptor leads to double-close bugs.
     //!
     //! ### Type Requirements
     //! - Must define `EndpointType` which satisfies `EndpointConcept`.
@@ -81,7 +80,7 @@ namespace Hermes {
     //! timeouts, or performing client-side TLS handshakes.
     //!
     //! ### Configuration
-    //! @code{.cpp} typename Policy<SocketData>::Options @endcode
+    //! @code{.cpp} typename Policy::Options @endcode
     //! A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE).
     //! These settings will be used to modify the Connect() behavior.
     //!
@@ -96,10 +95,15 @@ namespace Hermes {
     //!
     //! @code{.cpp} policy.Abort(data) -> void @endcode
     //! Terminates the connection abruptly.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept ConnectionPolicyConcept = SocketDataConcept<SocketData>
-        && requires () { typename Policy<SocketData>::Options; }
-        && requires (Policy<SocketData> policy, SocketData data, typename Policy<SocketData>::Options opt) {
+        && Policy::Family == SocketData::Family
+        && Policy::Type   == SocketData::Type
+
+        && std::same_as<typename Policy::EndpointType, typename SocketData::EndpointType>
+
+        && requires () { typename Policy::Options; }
+        && requires (Policy policy, SocketData& data, typename Policy::Options opt) {
             { policy.Connect(data, opt) } -> std::same_as<ConnectionResultOper>;
             { policy.Close(data)        } -> std::same_as<void>;
             { policy.Abort(data)        } -> std::same_as<void>;
@@ -123,7 +127,7 @@ namespace Hermes {
     //! messages, searching for delimiters, or handling TLS encryption transparently.
     //!
     //! ### Lazy Range-Based Receive
-    //! @code{.cpp} _details::RecvStreamT<Policy<SocketData>> @endcode
+    //! @code{.cpp} _details::RecvStreamT<Policy, SocketData> @endcode
     //! Must be constructible from `SocketData` and `Policy`, and satisfy `std::ranges::input_range`.
     //! It iteratively yields `std::byte` elements.
     //!
@@ -137,17 +141,19 @@ namespace Hermes {
     //!
     //! @code{.cpp} policy.Send(data, bufferSend) -> StreamByteOper @endcode
     //! Writes data to the socket directly from the provided `std::span<const std::byte>`.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept TransferPolicyConcept = SocketDataConcept<SocketData>
-        && requires(SocketData& data, Policy<SocketData>& policy) {
-            { _details::RecvStreamT<Policy<SocketData>>{ data, policy } } -> std::ranges::input_range;
+        && Policy::Type == SocketData::Type
+
+        && requires(SocketData& data, Policy& policy) {
+            { _details::RecvStreamT<Policy>{ data, policy } } -> std::ranges::input_range;
         }
-        && requires(_details::RecvStreamT<Policy<SocketData>>& range) {
+        && requires(_details::RecvStreamT<Policy>& range) {
             { *range.begin() } -> std::same_as<std::byte>;
             { range.Error()  } -> std::same_as<ConnectionResultOper>;
         }
         && requires(
-            Policy<SocketData>& policy     , SocketData& data,
+            Policy& policy     , SocketData& data,
             std::span<std::byte> bufferRecv, std::span<const std::byte> bufferSend,
             RecvModeEnum recvMode
         ) {
@@ -167,7 +173,7 @@ namespace Hermes {
     //! custom accept flows (e.g., performing a TLS server handshake.
     //!
     //! ### Configuration
-    //! @code{.cpp} typename Policy<SocketData>::Options @endcode
+    //! @code{.cpp} typename Policy::Options @endcode
     //! A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE).
     //! This settings will be used to modify Listen() behavior.
     //!
@@ -187,18 +193,34 @@ namespace Hermes {
     //!
     //! @code{.cpp} policy.Abort(data) -> void @endcode
     //! Terminates abruptly an accepted connection.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept AcceptPolicyConcept = SocketDataConcept<SocketData>
-        && requires () { typename Policy<SocketData>::ListenOptions; }
-        && requires () { typename Policy<SocketData>::AcceptOptions; }
-        && requires(Policy<SocketData> policy, SocketData data, int backlog, typename Policy<SocketData>::ListenOptions opt) {
+        && Policy::Family == SocketData::Family
+        && Policy::Type   == SocketData::Type
+
+        && requires () { typename Policy::ListenOptions; }
+        && requires () { typename Policy::AcceptOptions; }
+        && requires(Policy policy, SocketData& data, int backlog, typename Policy::ListenOptions opt) {
             { policy.Listen(data, backlog, opt) } -> std::same_as<ConnectionResultOper>;
         }
-        && requires(Policy<SocketData> policy, SocketData data, typename Policy<SocketData>::AcceptOptions opt) {
+        && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
             { policy.Accept(data, data, opt) } -> std::same_as<ConnectionResultOper>;
             { policy.Close(data)             } -> std::same_as<void>;
             { policy.Abort(data)             } -> std::same_as<void>;
         };
+
+#pragma endregion
+
+
+#pragma region Socket
+
+    template<class SocketData, class ConnectionPolicy, class TransferPolicy>
+    concept ClientSocketConcept = SocketDataConcept<SocketData> && ConnectionPolicyConcept<ConnectionPolicy, SocketData>
+            && TransferPolicyConcept<TransferPolicy, SocketData>;
+
+    template<class SocketData, class AcceptPolicy, class TransferPolicy>
+    concept ServerSocketConcept = SocketDataConcept<SocketData> && AcceptPolicyConcept<AcceptPolicy, SocketData>
+            && TransferPolicyConcept<TransferPolicy, SocketData>;
 
 #pragma endregion
 
@@ -210,7 +232,7 @@ namespace Hermes {
 #pragma region Async
 
     //! @addtogroup AsyncSocketConcepts
-    //! @{
+//! @{
 
 #pragma region AsyncConnectionPolicyConcept
 
@@ -222,7 +244,7 @@ namespace Hermes {
     //! release must be immediate and unconditional.
     //!
     //! ### Configuration
-    //! @code{.cpp} typename Policy<SocketData>::Options @endcode
+    //! @code{.cpp} typename Policy::Options @endcode
     //! A struct defining settings to configure the socket.
     //!
     //! ### Connection
@@ -242,12 +264,19 @@ namespace Hermes {
     //! @code{.cpp} policy.Abort(data) -> void @endcode
     //! Terminates the connection abruptly (e.g., triggering a TCP RST).
     //! Synchronous and immediate.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept AsyncConnectionPolicyConcept = SocketDataConcept<SocketData>
-        && requires () { typename Policy<SocketData>::Options; }
-        && requires (Policy<SocketData> policy, SocketData data, typename Policy<SocketData>::Options opt) {
-            { policy.AsyncConnect(data, opt) } -> AsyncConnectionResultOperConcept;
-            { policy.AsyncShutdown(data)     } -> AsyncConnectionResultOperConcept;
+        && Policy::Family == SocketData::Family
+        && Policy::Type == SocketData::Type
+    
+        && std::same_as<typename Policy::EndpointType, typename SocketData::EndpointType>
+
+        && requires () { typename Policy::Options; }
+        && requires (Policy policy, SocketData& data, typename Policy::Options opt) {
+            { opt.scheduler                 };
+
+            { policy.AsyncConnect(data, opt) }; // -> AsyncConnectionResultOperConcept;
+            { policy.AsyncShutdown(data)     }; // -> AsyncConnectionResultOperConcept;
             { policy.Close(data)             } -> std::same_as<void>;
             { policy.Abort(data)             } -> std::same_as<void>;
         };
@@ -271,25 +300,17 @@ namespace Hermes {
     //! @code{.cpp} policy.AsyncSend(data, bufferSend) -> AsyncConnectionResultConcept @endcode
     //! Writes data to the socket from the provided `std::span<const std::byte>` asynchronously.
     //! Delivers `StreamByteOper` through the sender's value channel on completion.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept AsyncTransferPolicyConcept = SocketDataConcept<SocketData>
+        && Policy::Type == SocketData::Type
+
         && requires(
-            Policy<SocketData>& policy          , SocketData& data,
+            Policy& policy          , SocketData& data,
             std::span<std::byte> bufferRecv     , std::span<const std::byte> bufferSend,
             RecvModeEnum recvMode
         ) {
         { policy.AsyncRecv(data, bufferRecv, recvMode) };
         { policy.AsyncSend(data, bufferSend)           };
-        // { policy.AsyncRecv(data, bufferRecv, recvMode) } -> stdexec::sender_of<
-        //         stdexec::set_value_t(size_t),
-        //         stdexec::set_error_t(TransferError),
-        //         stdexec::set_stopped_t()
-        //     >;
-        // { policy.AsyncSend(data, bufferSend)           } -> stdexec::sender_of<
-        //         stdexec::set_value_t(size_t),
-        //         stdexec::set_error_t(TransferError),
-        //         stdexec::set_stopped_t()
-        //     >;
         };
 
 #pragma endregion
@@ -305,11 +326,11 @@ namespace Hermes {
     //! as `bind` and `listen` are non-blocking OS calls that complete instantly.
     //!
     //! ### Configuration
-    //! @code{.cpp} typename Policy<SocketData>::ListenOptions @endcode
+    //! @code{.cpp} typename Policy::ListenOptions @endcode
     //! A struct defining settings for the listening socket (e.g., REUSE_ADDRESS, buffer sizes).
     //! Used to modify `Listen()` behavior.
     //!
-    //! @code{.cpp} typename Policy<SocketData>::AcceptOptions @endcode
+    //! @code{.cpp} typename Policy::AcceptOptions @endcode
     //! A struct defining per-connection settings (e.g., TCP_NODELAY, handshake timeout).
     //! Must also expose a `scheduler` field to select the execution context for `AsyncAccept()`.
     //!
@@ -333,24 +354,58 @@ namespace Hermes {
     //! @code{.cpp} policy.Abort(data) -> void @endcode
     //! Terminates an accepted connection abruptly.
     //! Synchronous — must not schedule work or block on a sender.
-    template<template <class> class Policy, class SocketData>
+    template<class Policy, class SocketData>
     concept AsyncAcceptPolicyConcept = SocketDataConcept<SocketData>
-        && requires () { typename Policy<SocketData>::ListenOptions; }
-        && requires () { typename Policy<SocketData>::AcceptOptions; }
-        && requires(Policy<SocketData> policy, SocketData data, int backlog, typename Policy<SocketData>::ListenOptions opt) {
+        && Policy::Family == SocketData::Family
+        && Policy::Type   == SocketData::Type
+
+        && requires () { typename Policy::ListenOptions; }
+        && requires () { typename Policy::AcceptOptions; }
+        && requires(Policy policy, SocketData& data, int backlog, typename Policy::ListenOptions opt) {
             { policy.Listen(data, backlog, opt) } -> std::same_as<ConnectionResultOper>;
         }
-        && requires(Policy<SocketData> policy, SocketData data, typename Policy<SocketData>::AcceptOptions opt) {
-            { policy.AsyncAccept(data, data, opt) } -> AsyncConnectionResultOperConcept;
-            { policy.AsyncShutdown(data)          } -> AsyncConnectionResultOperConcept;
+        && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
+            { opt.scheduler                    };
+
+            { policy.AsyncAccept(data, data, opt) };// -> AsyncConnectionResultOperConcept;
+            { policy.AsyncShutdown(data)          };// -> AsyncConnectionResultOperConcept;
             { policy.Close(data)                  } -> std::same_as<void>;
             { policy.Abort(data)                  } -> std::same_as<void>;
         };
 
 #pragma endregion
 
+
+#pragma region Async Socket
+
+    template<class SocketData, class ConnectionPolicy, class TransferPolicy>
+    concept AsyncClientSocketConcept = SocketDataConcept<SocketData> && AsyncConnectionPolicyConcept<ConnectionPolicy, SocketData>
+            && AsyncTransferPolicyConcept<TransferPolicy, SocketData>;
+
+    template<class SocketData, class AcceptPolicy, class TransferPolicy>
+    concept AsyncServerSocketConcept = SocketDataConcept<SocketData> && AsyncAcceptPolicyConcept<AcceptPolicy, SocketData>
+            && AsyncTransferPolicyConcept<TransferPolicy, SocketData>;
+
+#pragma endregion
+
     //! @}
 
 #pragma endregion
+
+
+    namespace _details {
+        inline void SetTimeout(const SOCKET socket, const int time) {
+#if defined(_WIN32) || defined(_WIN64)
+            setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&time), sizeof(time));
+            setsockopt(socket, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<const char*>(&time), sizeof(time));
+#else
+            struct timeval tv;
+            tv.tv_sec = time / 1000;
+            tv.tv_usec = (time % 1000) * 1000;
+            setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&tv), sizeof(tv));
+            setsockopt(socket, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<const char*>(&tv), sizeof(tv));
+#endif
+        }
+    }
 
 }

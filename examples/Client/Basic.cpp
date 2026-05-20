@@ -23,15 +23,13 @@ std::expected<std::string, std::string> MakeRequest() {
 
     // 1. Resolve the endpoint.
     auto endpointRes{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
-    if (!endpointRes) {
+    if (!endpointRes)
         return std::unexpected{ MapHermesError(endpointRes.error()) };
-    }
 
     // 2. Connect the socket.
     auto clientRes{ Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ *endpointRes, url.hostname }) };
-    if (!clientRes) {
+    if (!clientRes)
         return std::unexpected{ MapHermesError(clientRes.error()) };
-    }
 
     auto client{ std::move(*clientRes) };
 
@@ -47,16 +45,14 @@ std::expected<std::string, std::string> MakeRequest() {
     // Advancing an iterator of an input_range can cause invalidation of other iterators, but the
     // current state is stored in the range itself, so all iterators represent the current stream state.
 
-    if (!rg::starts_with(socketView, "HTTP/1.1"sv)) {
+    if (!rg::starts_with(socketView, "HTTP/1.1"sv))
         return std::unexpected{ "Non supported version" };
-    }
 
     // Copying exact bytes bypasses the need for string manipulation on fixed-size fields.
     const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 5>>(socketView) };
 
-    if (!rg::equal(statusCode, " 200 "sv)) {
+    if (!rg::equal(statusCode, " 200 "sv))
         return std::unexpected{ std::format("error code: {:s}", statusCode) };
-    }
 
     const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
 
@@ -72,9 +68,10 @@ std::expected<std::string, std::string> MakeRequest() {
 
     // The stream inherently handles errors internally. Checking the state post-extraction
     // guarantees that our string generation wasn't interrupted by a TCP failure.
-    if (const auto err{ socketView.Error() }; !err) {
+
+    static constexpr auto ConnClose{ Hermes::ConnectionErrorEnum::ConnectionClosed };
+    if (socketView.Error().error_or(ConnClose) != ConnClose)
         return std::unexpected{ "Error receiving message" };
-    }
 
     return body;
 }

@@ -8,14 +8,12 @@
 
 namespace Hermes {
     template<
-        SocketDataConcept SocketData            = DefaultSocketData<>,
-        template <class> class ConnectionPolicy = DefaultConnectPolicy,
-        template <class> class TransferPolicy   = DefaultTransferPolicy>
+        SocketDataConcept SocketData = DefaultSocketData<>,
+        class ConnectionPolicy       = DefaultConnectPolicy<>,
+        class TransferPolicy         = DefaultTransferPolicy<>>
         requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     struct ClientSocket {
         using EndpointType         = typename SocketData::EndpointType;
-        using ConnectionPolicyType = ConnectionPolicy<SocketData>;
-        using TransferPolicyType   = TransferPolicy<SocketData>;
 
 
         ClientSocket(ClientSocket&&) noexcept;
@@ -25,9 +23,9 @@ namespace Hermes {
 
         template<class = void>
         [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data) noexcept
-            requires std::default_initializable<typename ConnectionPolicyType::Options>;
+            requires std::default_initializable<typename ConnectionPolicy::Options>;
 
-        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data, ConnectionPolicyType::Options opt) noexcept;
+        [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
 
         //! @return Returns the count of data sent on success, or an error on failure.
         template<std::ranges::contiguous_range R>
@@ -37,7 +35,7 @@ namespace Hermes {
         //! @return Returns the count of data filled on success, or an error on failure.
         template<std::ranges::contiguous_range R>
             requires ByteLike<std::ranges::range_value_t<R>>
-        StreamByteOper Recv(R&& data) noexcept;
+        StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
@@ -46,7 +44,7 @@ namespace Hermes {
         //! will discover that the transmission ended while trying to get a new value, so a 0x04 char
         //! (end of transmission) will be added as the last char.
         template<ByteLike Byte = std::byte>
-        typename TransferPolicy<SocketData>::template RecvStream<Byte> RecvStream() noexcept;
+        auto RecvStream() noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
@@ -65,14 +63,18 @@ namespace Hermes {
     private:
         ClientSocket() = default;
 
-        SocketData           socketData{};
-        ConnectionPolicyType connectionPolicy{};
-        TransferPolicyType   transferPolicy{};
+        SocketData       socketData{};
+        ConnectionPolicy connectionPolicy{};
+        TransferPolicy   transferPolicy{};
     };
 
     using RawTcpClient = ClientSocket<>;
-    using RawTlsClient = ClientSocket<TlsSocketData<>, TlsConnectPolicy, TlsTransferPolicy>;
-    using RawUdpClient = ClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
+    using RawTlsClient = ClientSocket<TlsSocketData<>, TlsConnectPolicy<>, TlsTransferPolicy<>>;
+    // using RawUdpClient = ClientSocket<
+    //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,
+    //     DefaultConnectPolicy<IpEndpoint, SocketTypeEnum::Dgram>,
+    //     DefaultTransferPolicy<SocketTypeEnum::Dgram>
+    // >;
 }
 
 #include <Hermes/Socket/Sync/ClientSocket.tpp>

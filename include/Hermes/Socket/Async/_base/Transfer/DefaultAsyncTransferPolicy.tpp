@@ -72,8 +72,7 @@ namespace Hermes {
         >;
 
         Data* _data;
-        std::span<const Byte> _buffer; // Const garantido por design
-        // Sem variável inútil de modo aqui!
+        std::span<const Byte> _buffer;
 
         template<class Receiver>
         struct OperationState {
@@ -100,7 +99,6 @@ namespace Hermes {
                     }
 
                     total += res;
-                    // Send é sempre ALL, loop roda até o fim incondicionalmente
                 }
 
                 stdexec::set_value(std::move(self._receiver), total);
@@ -128,5 +126,4 @@ namespace Hermes {
     auto DefaultAsyncTransferPolicy<Data>::AsyncSend(Data& data, std::span<const Byte> bufferSend) noexcept {
         return SendSender<Byte>{ &data, bufferSend };
     }
-
 }

@@ -71,10 +71,11 @@ std::expected<std::string, std::string> MakeRequest() {
         const auto body    { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
 
         // Ok, this is unsafe because I'm being lazy here, but you can process and check this data properly.
-        // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easely limit the size.
+        // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easily limit the size.
         // The range automatically stops when the connection ends, so you don't need to worry.
 
-        if (const auto err{ socketView.Error() }; !err)
+        static constexpr auto ConnClose{ Hermes::ConnectionErrorEnum::ConnectionClosed };
+        if (socketView.Error().error_or(ConnClose) != ConnClose)
             return std::unexpected{ "Error receiving message" };
 
         return body;

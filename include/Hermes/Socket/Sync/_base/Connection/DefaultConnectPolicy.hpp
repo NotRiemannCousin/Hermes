@@ -1,7 +1,8 @@
 #pragma once
+#include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
+#include <Hermes/Socket/Data/DefaultSocketData.hpp>
 
 namespace Hermes {
     namespace _details {
@@ -23,9 +24,16 @@ namespace Hermes {
     }
 
 
-    template<SocketDataConcept Data = DefaultSocketData<>>
+    template<
+        EndpointConcept   Endpoint     = IpEndpoint,
+        SocketTypeEnum    SocketType   = SocketTypeEnum::Stream,
+        AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct DefaultConnectPolicy {
-        struct Options : _details::ConnectOptionsIpv6Base<Data::Family>, _details::OptionsTcpNoDelayBase<Data::Type> {
+        static constexpr auto Family{ SocketFamily };
+        static constexpr auto Type{ SocketType };
+        using EndpointType = Endpoint;
+
+        struct Options : _details::ConnectOptionsIpv6Base<SocketFamily>, _details::OptionsTcpNoDelayBase<SocketType> {
             std::chrono::milliseconds connectionTimeout{};
 
             bool keepAlive{};
@@ -34,9 +42,13 @@ namespace Hermes {
             int sendBufferSize{};
         };
 
+        template<SocketDataConcept Data>
         static ConnectionResultOper Connect(Data& data, Options options) noexcept;
 
+        template<SocketDataConcept Data>
         static void Close(Data& data);
+
+        template<SocketDataConcept Data>
         static void Abort(Data& data);
     };
 }
@@ -44,5 +56,5 @@ namespace Hermes {
 #include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.tpp>
 
 namespace Hermes {
-    static_assert(ConnectionPolicyConcept<DefaultConnectPolicy, DefaultSocketData<>>);
+    static_assert(ConnectionPolicyConcept<DefaultConnectPolicy<>, DefaultSocketData<>>);
 }

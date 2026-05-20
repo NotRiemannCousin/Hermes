@@ -1,0 +1,248 @@
+direction: down
+
+vars: {
+  d2-config: {
+    layout-engine: ELK
+  }
+}
+
+classes: {
+  group: {
+    style.fill: "#777777"
+    shape: diamond
+    width: 20
+    height: 20
+  }
+  choice: {
+    shape: diamond
+    width: 120
+    height: 60
+  }
+  pin: {
+    shape: circle
+  }
+  async: {
+    style.fill: "#73deff"
+  }
+}
+
+title: |md
+  ### TLS State Machines
+| {
+  near: top-right
+  style.font-size: 50
+}
+
+Setup: Setup {
+  tooltip: Initialize variables (constructor)
+}
+
+InitializeContext: Initialize Context {
+  tooltip: Clean buffers and calls InitializeSecurityContext
+}
+
+InitializeContextChoice: "" {class: choice}
+
+Errors: {
+  label.near: top-right
+  direction: left
+
+  HandshakeFailed: Handshake Failed {
+    tooltip: Fail with HandshakeFailed
+  }
+  IncompleteCred: Incomplete Credentials {
+    tooltip: Fail with CertificateError
+  }
+  InvalidCert: Invalid Certificate {
+    tooltip: Fail with CertificateError
+  }
+  Unknown: Unknown Error {
+    tooltip: Fail with Unknown
+  }
+
+  _.Errors -> IncompleteCred: "[status = ErrIncompleteCredentials]"
+  _.Errors -> HandshakeFailed: "[status = ErrInsufficientMemory\nor ErrInvalidHandle\nor ErrInvalidToken]"
+  _.Errors -> InvalidCert: "[status = ErrLogonDenied\nor ErrNoCredentials\nor ErrUntrustedRoot\nor ErrNoAuthenticatingAuthority]"
+  _.Errors -> Unknown: "[default]"
+
+  IncompleteCred -> _.Errors
+  HandshakeFailed -> _.Errors
+  InvalidCert -> _.Errors
+  Unknown -> _.Errors
+}
+
+
+Incomplete: {
+  height: 200
+  label.near: top-right
+
+  CompleteAuth: Complete Auth {
+    tooltip: calls CompleteAuthToken
+  }
+  SendData: Send {
+    class: async
+    tooltip: Send the outBuffer data to the server
+  }
+  RecvData: Recv {
+    class: async
+    tooltip: Request the server for more data
+  }
+
+  _.Incomplete -> CompleteAuth: "[status = InfoCompleteAndContinue\nor InfoCompleteNeeded]"
+  _.Incomplete -> SendData:    "[status = InfoContinueNeeded]"
+  _.Incomplete -> RecvData:    "[status = ErrIncompleteMessage]"
+
+  CompleteAuth -> SendData: "[status != InfoCompleteNeeded\n&& s_hasData(outBuffer)]"
+  CompleteAuth -> RecvData: "[status = InfoCompleteNeeded\nor !s_hasData(outBuffer)]"
+  SendData -> RecvData
+
+  CompleteAuth -> _.Incomplete: "[status = InfoCompleteAndContinue]"
+  SendData -> HandshakeFailed: "[sent == SOCKET_ERROR\n|| sent != outBuffer.cbBuffer]"
+  SendData -> _.Incomplete:    "[receivedBytes > 0]"
+  RecvData -> HandshakeFailed: "[received <= 0]"
+  RecvData -> _.Incomplete:    "[received > 0]"
+
+  HandshakeFailed -> _.CleanupError
+}
+
+
+# ── ErrOk path ──────────────────────────────────────────────────────────────
+Complete: {
+  label.near: top-right
+
+  SendFinal: Send Final {
+    class: async
+    tooltip: Send remaining handshake token if outBuffer has data
+  }
+  QueryStreamSizes: Query Stream Sizes {
+    tooltip: QueryContextAttributesA(SECPKG_ATTR_STREAM_SIZES)
+  }
+  HandshakeDone: Handshake Complete {
+    tooltip: "isHandshakeComplete = true | isServer = false | timeout reset"
+  }
+
+  _.Complete -> SendFinal:       "[s_hasData(outBuffer)]"
+  _.Complete -> QueryStreamSizes: "[!s_hasData(outBuffer)]"
+
+  SendFinal -> _.CleanupError:   "[sent == SOCKET_ERROR\n|| sent != outBuffer.cbBuffer]"
+  SendFinal -> QueryStreamSizes
+
+  QueryStreamSizes -> _.CleanupError: "[status != ErrOk]"
+  QueryStreamSizes -> HandshakeDone
+
+  HandshakeDone -> _.END
+}
+
+
+# ── Shared error exit ────────────────────────────────────────────────────────
+CleanupError: Cleanup Error {
+  tooltip: DeleteSecurityContext + clear ctxHandle
+}
+
+
+# ── Close lifecycle ──────────────────────────────────────────────────────────
+Close: {
+  label.near: top-right
+
+  InvalidSocketCheck: "socket == INVALID_SOCKET?" { class: choice }
+
+  HandshakeCheck: "isHandshakeComplete?" { class: choice }
+
+  ApplyControl: Apply Control Token {
+    tooltip: "ApplyControlToken(&ctxtHandle, {SCHANNEL_SHUTDOWN})"
+  }
+  GenShutdownToken: InitializeSecurityContext {
+    tooltip: Generate TLS close_notify shutdown token (pInput = null)
+  }
+  SendShutdown: Send close_notify {
+    class: async
+    tooltip: Sends the TLS alert_level=warning, close_notify to the peer
+  }
+  DeleteCtx: Delete Security Context {
+    tooltip: "DeleteSecurityContext + ctxtHandle = {} + isHandshakeComplete = false"
+  }
+
+  TcpShutdown: shutdown(SD_SEND) {
+    tooltip: Graceful TCP half-close — peer receives FIN
+  }
+  CloseSocket: closesocket {
+    tooltip: socket = INVALID_SOCKET
+  }
+
+  _.Close -> InvalidSocketCheck
+
+  InvalidSocketCheck -> _.END:        "[yes — no-op]"
+  InvalidSocketCheck -> HandshakeCheck: "[no]"
+
+  HandshakeCheck -> ApplyControl: "[yes]"
+  HandshakeCheck -> TcpShutdown:  "[no]"
+
+  ApplyControl -> GenShutdownToken: "[OK]"
+  ApplyControl -> DeleteCtx:        "[error — skip token]"
+
+  GenShutdownToken -> SendShutdown: "[OK && hasData(outBuffer)]"
+  GenShutdownToken -> DeleteCtx:    "[error or !hasData]"
+
+  SendShutdown -> DeleteCtx
+
+  DeleteCtx -> TcpShutdown
+  TcpShutdown -> CloseSocket
+  CloseSocket -> _.END
+}
+
+
+# ── Abort lifecycle ──────────────────────────────────────────────────────────
+# Called externally — does NOT send TLS close_notify, does NOT call DeleteSecurityContext.
+# Forces an immediate TCP RST (no TIME_WAIT, no graceful drain).
+Abort: {
+  label.near: top-right
+
+  SetLinger: "SO_LINGER {l_onoff=1, l_linger=0}" {
+    tooltip: "Any unsent data is discarded — TCP sends RST instead of FIN"
+  }
+  CloseSocket: closesocket {
+    tooltip: Immediate RST. socket = INVALID_SOCKET
+  }
+
+  _.Abort -> SetLinger -> CloseSocket -> _.END
+}
+
+
+# ── Start / End nodes ────────────────────────────────────────────────────────
+START: "" {
+  shape: circle
+  width: 15
+  style.fill: black
+}
+
+START_ABORT: "" {
+  shape: circle
+  width: 15
+  style.fill: "#ff6b6b"
+  tooltip: External forced-disconnect entry point
+}
+
+END: "" {
+  shape: circle
+  width: 15
+  style.stroke-width: 4
+}
+
+
+# ── Main flow ────────────────────────────────────────────────────────────────
+START -> Setup
+Setup -> InitializeContext -> InitializeContextChoice
+
+InitializeContextChoice -> Complete:  "[status = ErrOk]"
+InitializeContextChoice -> Incomplete: "[status = InfoCompleteAndContinue\nor InfoCompleteNeeded\nor InfoContinueNeeded\nor ErrIncompleteMessage]"
+InitializeContextChoice -> Errors:    "[status = error]"
+
+Incomplete -> InitializeContext
+
+Errors -> CleanupError
+CleanupError -> Close
+
+# ── Abort as independent external operation ──────────────────────────────────
+START_ABORT -> Abort: "Abort()" {
+  style.stroke-dash: 4
+}

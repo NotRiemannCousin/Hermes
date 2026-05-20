@@ -9,21 +9,27 @@
 namespace Hermes {
 
     template<
-        SocketDataConcept SocketData             = DefaultSocketData<>,
-        template <class> class AsyncAcceptPolicy   = DefaultAsyncAcceptPolicy,
-        template <class> class AsyncTransferPolicy = DefaultAsyncTransferPolicy>
-        requires AsyncAcceptPolicyConcept<AsyncAcceptPolicy, SocketData> && AsyncTransferPolicyConcept<AsyncTransferPolicy, SocketData>
+        SocketDataConcept SocketData = DefaultSocketData<>,
+        class AcceptPolicy           = DefaultAsyncAcceptPolicy<>,
+        class TransferPolicy         = DefaultAsyncTransferPolicy<>>
+        requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     struct AsyncServerSocket {
-        using EndpointType       = SocketData::EndpointType;
-        using AcceptPolicyType   = AsyncAcceptPolicy<SocketData>;
-        using TransferPolicyType = AsyncTransferPolicy<SocketData>;
-
+        using EndpointType   = SocketData::EndpointType;
 
         AsyncServerSocket(AsyncServerSocket&&) noexcept;
         AsyncServerSocket& operator=(AsyncServerSocket&&) noexcept;
         ~AsyncServerSocket();
 
-        [[nodiscard]] static ConnectionResult<AsyncServerSocket> FromAccepted(SocketData&& data) noexcept;
+        /**
+         * @brief Creates a server socket from already accepted socket data.
+         * @param data The socket data, typically from a listener.
+         * @return A new AsyncServerSocket instance.
+         */
+        [[nodiscard]] static AsyncServerSocket FromAccepted(SocketData&& data) noexcept;
+
+        [[nodiscard]] EndpointType& GetEndpoint() noexcept { return socketData.endpoint; }
+        [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
+        [[nodiscard]] SocketData& GetSocketData() noexcept { return socketData; }
 
         template<std::ranges::contiguous_range R>
             requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
@@ -40,13 +46,13 @@ namespace Hermes {
     private:
         AsyncServerSocket() = default;
 
-        SocketData         socketData{};
-        AcceptPolicyType   acceptPolicy{};
-        TransferPolicyType transferPolicy{};
+        SocketData     socketData{};
+        AcceptPolicy   acceptPolicy{};
+        TransferPolicy transferPolicy{};
     };
 
     using RawTcpAsyncServer = AsyncServerSocket<>;
-    using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy, TlsAsyncTransferPolicy>;
+    using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 }
 
 #include <Hermes/Socket/Async/AsyncServerSocket.tpp>

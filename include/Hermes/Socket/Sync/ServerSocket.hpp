@@ -17,14 +17,12 @@ namespace Hermes {
     //!   - Close() must follow the same protocol-level teardown as the accept side
     //!     (e.g. sending a TLS close_notify alert for TlsAcceptPolicy).
     template<
-        SocketDataConcept SocketData             = DefaultSocketData<>,
-        template <class> class AcceptPolicy      = DefaultAcceptPolicy,
-        template <class> class TransferPolicy    = DefaultTransferPolicy>
+        SocketDataConcept SocketData = DefaultSocketData<>,
+        class AcceptPolicy           = DefaultAcceptPolicy<>,
+        class TransferPolicy         = DefaultTransferPolicy<>>
         requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
     struct ServerSocket {
-        using EndpointType       = SocketData::EndpointType;
-        using AcceptPolicyType   = AcceptPolicy<SocketData>;
-        using TransferPolicyType = TransferPolicy<SocketData>;
+        using EndpointType = SocketData::EndpointType;
 
 
         ServerSocket(ServerSocket&&) noexcept;
@@ -43,7 +41,7 @@ namespace Hermes {
         //! @return Returns the count of data filled on success, or an error on failure.
         template<std::ranges::contiguous_range R>
             requires ByteLike<std::ranges::range_value_t<R>>
-        StreamByteOper Recv(R&& data) noexcept;
+        StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
         // //! @return Returns a seamless input_range over bytes received by the socket.
         // template<ByteLike Byte = std::byte>
@@ -57,7 +55,7 @@ namespace Hermes {
         //! will discover that the transmission ended while trying to get a new value, so a 0x04 char
         //! (end of transmission) will be added as the last char.
         template<ByteLike Byte = std::byte>
-        typename TransferPolicy<SocketData>::template RecvStream<Byte> RecvStream() noexcept;
+        typename TransferPolicy::template RecvStream<Byte> RecvStream() noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
@@ -76,13 +74,19 @@ namespace Hermes {
     private:
         ServerSocket() = default;
 
-        SocketData         socketData{};
-        AcceptPolicyType   acceptPolicy{};
-        TransferPolicyType transferPolicy{};
+        SocketData     socketData{};
+        AcceptPolicy   acceptPolicy{};
+        TransferPolicy transferPolicy{};
     };
 
+
     using RawTcpServer = ServerSocket<>;
-    using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy, TlsTransferPolicy>;
+    using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
+    // using RawUdpServer = ServerSocket<
+    //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,
+    //     DefaultAcceptPolicy<IpEndpoint, SocketTypeEnum::Dgram>,
+    //     DefaultTransferPolicy<SocketTypeEnum::Dgram>
+    // >;
 }
 
 #include <Hermes/Socket/Sync/ServerSocket.tpp>

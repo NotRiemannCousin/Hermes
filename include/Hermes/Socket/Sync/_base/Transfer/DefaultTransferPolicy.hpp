@@ -3,13 +3,15 @@
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base.hpp>
 
-#include <chrono>
 #include <array>
 
-
 namespace Hermes {
-    template<SocketDataConcept Data = DefaultSocketData<>>
+    template<SocketTypeEnum SocketType = SocketTypeEnum::Stream>
     struct DefaultTransferPolicy {
+        static constexpr auto Type = SocketType;
+
+        static_assert(SocketType != SocketTypeEnum::Dgram, "UDP not supported yet");
+
         template<ByteLike Byte>
         struct RecvStream : std::ranges::view_interface<RecvStream<Byte>> {
             struct Iterator {
@@ -24,6 +26,7 @@ namespace Hermes {
                 [[nodiscard]] bool operator==(std::default_sentinel_t) const;
             };
 
+            template<SocketDataConcept Data>
             explicit RecvStream(Data& data, DefaultTransferPolicy& policy);
 
             Iterator begin();
@@ -33,13 +36,13 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            Data* _data;
+            SOCKET* _socket;
             DefaultTransferPolicy* _policy;
         };
 
-        template<ByteLike Byte>
+        template<SocketDataConcept Data, ByteLike Byte>
         StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
-        template<ByteLike Byte>
+        template<SocketDataConcept Data, ByteLike Byte>
         static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
     private:
         struct State {
@@ -55,7 +58,7 @@ namespace Hermes {
         std::unique_ptr<State> _state{ nullptr };
 
         template<ByteLike Byte>
-        static StreamByteOper RecvHelper(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode);
+        static StreamByteOper RecvHelper(SOCKET& socket, std::span<Byte> bufferRecv, RecvModeEnum recvMode);
     };
 }
 
@@ -63,5 +66,5 @@ namespace Hermes {
 
 namespace Hermes {
     static_assert(std::ranges::viewable_range<DefaultTransferPolicy<>::RecvStream<std::byte>>);
-    static_assert(TransferPolicyConcept<DefaultTransferPolicy, DefaultSocketData<>>);
+    static_assert(TransferPolicyConcept<DefaultTransferPolicy<>, DefaultSocketData<>>);
 }

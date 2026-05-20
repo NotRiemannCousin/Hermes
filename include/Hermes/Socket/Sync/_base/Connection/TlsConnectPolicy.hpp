@@ -1,6 +1,7 @@
 #pragma once
+#include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
-#include <Hermes/Socket/Data/TLSSocketData.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
 
@@ -11,7 +12,15 @@ namespace Hermes {
 
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
-        struct Options : DefaultConnectPolicy<Data>::Options {
+        static constexpr auto Family{ Data::Family };
+        static constexpr auto Type{ Data::Type };
+        using EndpointType = typename Data::EndpointType;
+
+        static constexpr bool IsServer{ false };
+
+        using DataType = TlsSocketData<EndpointType, Type, Family>;
+
+        struct Options : DefaultConnectPolicy<EndpointType, SocketTypeEnum::Stream, Family>::Options {
             std::chrono::milliseconds handshakeTimeout{}; // std::chrono::seconds{ 10 }
 
             bool ignoreCertificateErrors{};
@@ -21,20 +30,27 @@ namespace Hermes {
             // std::span<const std::string_view> alpnProtocols{};
         };
 
-        static ConnectionResultOper Connect(Data& data, Options options) noexcept;
-        static void                 Close(Data& data);
-        static void                 Abort(Data& data);
+        ConnectionResultOper Connect(Data& data, Options options) noexcept;
+
+        void Close(Data& data);
+
+        void Abort(Data& data);
+
+        ConnectionResultOper Renegotiate(Data& data);
+
+        TlsConnectPolicy() noexcept = default;
+        TlsConnectPolicy(TlsConnectPolicy&&) noexcept = default;
 
     private:
-        static ConnectionResultOper ClientHandshake(Data& data, Options options);
-
+        ConnectionResultOper ClientHandshake(Data& data);
 
         friend struct TlsAsyncConnectPolicy<Data>;
+
     };
 }
 
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.tpp>
 
 namespace Hermes {
-    static_assert(ConnectionPolicyConcept<TlsConnectPolicy, TlsSocketData<>>);
+    static_assert(ConnectionPolicyConcept<TlsConnectPolicy<>, TlsSocketData<>>);
 }

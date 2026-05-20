@@ -2,72 +2,72 @@
 #include <print>
 
 namespace Hermes {
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator::value_type DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator*() const {
+    Byte DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator*() const {
         if (view->_policy->_state->index >= view->_policy->_state->size)
             auto _{ view->Receive() };
-
         return std::bit_cast<Byte>(view->_policy->_state->buffer[view->_policy->_state->index]);
     }
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++() {
+    auto DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator++() -> Iterator& {
         ++view->_policy->_state->index;
         return *this;
     }
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator& DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++(int) {
+    auto DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator++(int) -> Iterator& {
         return ++*this;
     }
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    bool DefaultTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
+    bool DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
         return (!view->_policy->_state->status && view->_policy->_state->index >= view->_policy->_state->size)
-                || view->_data->socket == macroINVALID_SOCKET;
+                || *view->_socket == macroINVALID_SOCKET;
     }
 
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, DefaultTransferPolicy& policy)
-        : _data { &data }, _policy{ &policy } {
+    template<SocketDataConcept Data>
+    DefaultTransferPolicy<SocketType>::RecvStream<Byte>::RecvStream(Data& data, DefaultTransferPolicy& policy)
+        : _socket{ &data.socket }, _policy{ &policy } {
         if (policy._state == nullptr)
             policy._state = std::make_unique<State>();
     }
 
 
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    DefaultTransferPolicy<Data>::template RecvStream<Byte>::Iterator DefaultTransferPolicy<Data>::RecvStream<Byte>::begin() {
+    auto DefaultTransferPolicy<SocketType>::RecvStream<Byte>::begin() -> Iterator {
         return Iterator{ this };
     }
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    std::default_sentinel_t DefaultTransferPolicy<Data>::RecvStream<Byte>::end() { return {}; }
+    std::default_sentinel_t DefaultTransferPolicy<SocketType>::RecvStream<Byte>::end() { return {}; }
 
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvStream<Byte>::Error() const {
+    ConnectionResultOper DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Error() const {
         return _policy->_state->status;
     }
 
 
-    template<SocketDataConcept Data>
+    template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
-    ConnectionResultOper DefaultTransferPolicy<Data>::RecvStream<Byte>::Receive() {
+    ConnectionResultOper DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Receive() {
         StreamByteOper::second_type err{};
         auto& state{ _policy->_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper<std::byte>(*_data, state->buffer, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper<std::byte>(*_socket, state->buffer, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -76,25 +76,23 @@ namespace Hermes {
 
         if (err.has_value())
             return {};
-
         state->status = err;
         state->buffer[state->size++] = {};
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
-            closesocket(_data->socket);
-            _data->socket = macroINVALID_SOCKET;
+            closesocket(*_socket);
+            *_socket = macroINVALID_SOCKET;
         }
 
         return state->status;
     }
 
 
-    template<SocketDataConcept Data>
-    template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
+    template<SocketTypeEnum SocketType>
+    template<SocketDataConcept Data, ByteLike Byte>
+    StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
         if (_state != nullptr) {
             const auto size{ min(_state->size - _state->index, bufferRecv.size()) };
-
             std::memcpy(bufferRecv.data(), _state->buffer.data() + _state->index, size);
             _state->index += size;
 
@@ -103,28 +101,26 @@ namespace Hermes {
                 return { size, {} };
         }
 
-        return DefaultTransferPolicy::RecvHelper(data, bufferRecv, recvMode);
+        return DefaultTransferPolicy::RecvHelper(data.socket, bufferRecv, recvMode);
     }
-    template<SocketDataConcept Data>
-    template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::RecvHelper(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
-        if (data.socket == macroINVALID_SOCKET)
-            return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
 
+    template<SocketTypeEnum SocketType>
+    template<ByteLike Byte>
+    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SOCKET& socket, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
+        if (socket == macroINVALID_SOCKET)
+            return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
         do {
-            const int received{ recv(data.socket,
+            const int received{ recv(socket,
                 reinterpret_cast<char*>(bufferRecv.data() + total),
                 static_cast<int>(bufferRecv.size() - total), 0) };
-
             if (received == 0) {
-                closesocket(std::exchange(data.socket, macroINVALID_SOCKET));
+                closesocket(std::exchange(socket, macroINVALID_SOCKET));
                 return { total, std::unexpected{ ConnectionErrorEnum::ConnectionClosed } };
             }
 
             if (received == macroSOCKET_ERROR)
                 return { total, std::unexpected{ ConnectionErrorEnum::ReceiveFailed } };
-
             total += received;
 
             if (recvMode == RecvModeEnum::Any) break;
@@ -132,21 +128,18 @@ namespace Hermes {
         return { total, {} };
     }
 
-    template<SocketDataConcept Data>
-    template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) {
+    template<SocketTypeEnum SocketType>
+    template<SocketDataConcept Data, ByteLike Byte>
+    StreamByteOper DefaultTransferPolicy<SocketType>::Send(Data& data, std::span<const Byte> bufferSend) {
         if (data.socket == macroINVALID_SOCKET)
             return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
-
         size_t total{};
         while (total < bufferSend.size()) {
             const int sent{ send(data.socket,
                 reinterpret_cast<const char*>(bufferSend.data() + total),
                 static_cast<int>(bufferSend.size() - total), 0) };
-
             if (sent == macroSOCKET_ERROR)
                 return { total, std::unexpected{ ConnectionErrorEnum::SendFailed } };
-
             total += sent;
         }
         return { total, {} };

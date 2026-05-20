@@ -1,26 +1,27 @@
 #pragma once
-#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
-
-#include <array>
-
+#include <memory>
+#include <span>
 
 namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsTransferPolicy {
+        static constexpr auto Type{ Data::Type };
+
         template<ByteLike Byte>
         struct RecvStream : std::ranges::view_interface<RecvStream<Byte>> {
             struct Iterator {
-                using difference_type  = std::ptrdiff_t;
-                using value_type       = Byte;
+                using difference_type = std::ptrdiff_t;
+                using value_type      = Byte;
 
-                RecvStream* view = nullptr;
+                RecvStream* view{ nullptr };
 
                 [[nodiscard]] value_type operator*() const;
                 Iterator& operator++();
                 Iterator& operator++(int);
-                [[nodiscard]] bool operator==(std::default_sentinel_t) const;
+                bool operator==(std::default_sentinel_t) const;
             };
 
             explicit RecvStream(Data& data, TlsTransferPolicy& policy);
@@ -32,36 +33,32 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            Data*              _data;
+            Data* _data;
             TlsTransferPolicy* _policy;
         };
 
         template<ByteLike Byte>
-        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
+        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
+
         template<ByteLike Byte>
-        static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
+        StreamByteOper Send(Data& data, std::span<const Byte> bufferSend) noexcept;
 
     private:
-        struct State {
-            static constexpr size_t bufferSize{ 0x4000 };
-
-            int index{};
-            int size{};
-
+        struct StreamState {
+            size_t index{};
+            size_t size{};
+            std::array<std::byte, 4096> buffer{};
             ConnectionResultOper status{};
-            std::array<std::byte, bufferSize> buffer{};
         };
 
-        std::unique_ptr<State> _state{ nullptr };
+        std::unique_ptr<StreamState> _streamState{ nullptr };
 
-        template<ByteLike Byte>
-        static StreamByteOper RecvHelper(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode);
+        template<ByteLike Byte> friend struct RecvStream;
     };
 }
 
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvStream<std::byte>>);
-    static_assert(TransferPolicyConcept<TlsTransferPolicy, TlsSocketData<>>);
+    static_assert(TransferPolicyConcept<TlsTransferPolicy<>, TlsSocketData<>>);
 }
