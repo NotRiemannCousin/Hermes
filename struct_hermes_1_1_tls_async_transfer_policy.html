@@ -134,7 +134,9 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_tls_async_transfer_p
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="struct_hermes_1_1_tls_async_transfer_policy-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Hermes::TlsAsyncTransferPolicy&lt; Data &gt; Struct Template Reference</div></div>
 </div><!--header-->
@@ -142,6 +144,13 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_tls_async_transfer_p
 
 <p><code>#include &lt;<a class="el" href="_tls_async_transfer_policy_8hpp_source.html">TlsAsyncTransferPolicy.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a0d4d3f72fe2c836a4124c5a526eadf2d" id="r_a0d4d3f72fe2c836a4124c5a526eadf2d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#a0d4d3f72fe2c836a4124c5a526eadf2d">ActionEnum</a> : std::uint8_t { <a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#a0d4d3f72fe2c836a4124c5a526eadf2daf847fa133f30ecb64731e5ddddc38530">Recv</a>
+, <a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#a0d4d3f72fe2c836a4124c5a526eadf2da94966d90747b97d1f0f206c98a8b1ac3">Send</a>
+ }</td></tr>
+<tr class="separator:a0d4d3f72fe2c836a4124c5a526eadf2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a903868de9938e572c7152b99c5a85504" id="r_a903868de9938e572c7152b99c5a85504"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte&gt; </td></tr>
@@ -150,7 +159,41 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ac3399fc457abf9e27ed1ef9b6d4cf9a6" id="r_ac3399fc457abf9e27ed1ef9b6d4cf9a6"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte&gt; </td></tr>
 <tr class="memitem:ac3399fc457abf9e27ed1ef9b6d4cf9a6"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#ac3399fc457abf9e27ed1ef9b6d4cf9a6">AsyncSend</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, std::span&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">bufferSend</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:ac3399fc457abf9e27ed1ef9b6d4cf9a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:afea6d4432ef700595440549921bc66de" id="r_afea6d4432ef700595440549921bc66de"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#afea6d4432ef700595440549921bc66de">Type</a> { Data::Type }</td></tr>
+<tr class="separator:afea6d4432ef700595440549921bc66de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Enumeration Documentation</h2>
+<a id="a0d4d3f72fe2c836a4124c5a526eadf2d" name="a0d4d3f72fe2c836a4124c5a526eadf2d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d4d3f72fe2c836a4124c5a526eadf2d">&#9670;&#160;</a></span>ActionEnum</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html#a0d4d3f72fe2c836a4124c5a526eadf2d">Hermes::TlsAsyncTransferPolicy::ActionEnum</a> : std::uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0d4d3f72fe2c836a4124c5a526eadf2daf847fa133f30ecb64731e5ddddc38530" name="a0d4d3f72fe2c836a4124c5a526eadf2daf847fa133f30ecb64731e5ddddc38530"></a>Recv&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a0d4d3f72fe2c836a4124c5a526eadf2da94966d90747b97d1f0f206c98a8b1ac3" name="a0d4d3f72fe2c836a4124c5a526eadf2da94966d90747b97d1f0f206c98a8b1ac3"></a>Send&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="a903868de9938e572c7152b99c5a85504" name="a903868de9938e572c7152b99c5a85504"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a903868de9938e572c7152b99c5a85504">&#9670;&#160;</a></span>AsyncRecv()</h2>
@@ -232,6 +275,31 @@ template&lt;ByteLike Byte&gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="afea6d4432ef700595440549921bc66de" name="afea6d4432ef700595440549921bc66de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afea6d4432ef700595440549921bc66de">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_tls_async_transfer_policy.html">Hermes::TlsAsyncTransferPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Type { Data::Type }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

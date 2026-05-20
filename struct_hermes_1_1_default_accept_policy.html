@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: Hermes::DefaultAcceptPolicy&lt; Data &gt; Struct Template Reference</title>
+<title>Hermes: Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -134,9 +134,11 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_default_accept_polic
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="struct_hermes_1_1_default_accept_policy-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Hermes::DefaultAcceptPolicy&lt; Data &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -149,35 +151,70 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html">ListenOptions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a734240f0ffc1e802ef5d39394c43be58" id="r_a734240f0ffc1e802ef5d39394c43be58"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a734240f0ffc1e802ef5d39394c43be58">EndpointType</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a></td></tr>
+<tr class="separator:a734240f0ffc1e802ef5d39394c43be58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a4447f1392d9a1cd60ba1cab982dcd156" id="r_a4447f1392d9a1cd60ba1cab982dcd156"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a4447f1392d9a1cd60ba1cab982dcd156">Listen</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html">ListenOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a4447f1392d9a1cd60ba1cab982dcd156"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listening socket handle.  <br /></td></tr>
-<tr class="separator:a4447f1392d9a1cd60ba1cab982dcd156"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abc100532392ff5be42f8167210c52740" id="r_abc100532392ff5be42f8167210c52740"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#abc100532392ff5be42f8167210c52740">Accept</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">listenData</a>, <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">outData</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html">AcceptOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:abc100532392ff5be42f8167210c52740"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts one incoming connection into outData. Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address.  <br /></td></tr>
-<tr class="separator:abc100532392ff5be42f8167210c52740"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1bed9b9a5dabb3ea7ecbb34bd6028190" id="r_a1bed9b9a5dabb3ea7ecbb34bd6028190"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a1bed9b9a5dabb3ea7ecbb34bd6028190">Close</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a1bed9b9a5dabb3ea7ecbb34bd6028190"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes an accepted connection with a proper TCP shutdown.  <br /></td></tr>
-<tr class="separator:a1bed9b9a5dabb3ea7ecbb34bd6028190"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0bfcca058a62b204619b965ac6c0acd9" id="r_a0bfcca058a62b204619b965ac6c0acd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a0bfcca058a62b204619b965ac6c0acd9">Abort</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a0bfcca058a62b204619b965ac6c0acd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the listening socket. No protocol-level shutdown required.  <br /></td></tr>
-<tr class="separator:a0bfcca058a62b204619b965ac6c0acd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31017e91c815f46e8ffd6226b86178d5" id="r_a31017e91c815f46e8ffd6226b86178d5"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
+<tr class="memitem:a31017e91c815f46e8ffd6226b86178d5"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a31017e91c815f46e8ffd6226b86178d5">Listen</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html">ListenOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a31017e91c815f46e8ffd6226b86178d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listening socket handle.  <br /></td></tr>
+<tr class="separator:a31017e91c815f46e8ffd6226b86178d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a512190b044769700f41aa860f5177d15" id="r_a512190b044769700f41aa860f5177d15"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
+<tr class="memitem:a512190b044769700f41aa860f5177d15"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a512190b044769700f41aa860f5177d15">Accept</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">listenData</a>, <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">outData</a>, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html">AcceptOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a512190b044769700f41aa860f5177d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts one incoming connection into outData. Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address.  <br /></td></tr>
+<tr class="separator:a512190b044769700f41aa860f5177d15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fdef2357b0f624b1de537f2d98e3aca" id="r_a4fdef2357b0f624b1de537f2d98e3aca"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
+<tr class="memitem:a4fdef2357b0f624b1de537f2d98e3aca"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a4fdef2357b0f624b1de537f2d98e3aca">Close</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a4fdef2357b0f624b1de537f2d98e3aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes an accepted connection with a proper TCP shutdown.  <br /></td></tr>
+<tr class="separator:a4fdef2357b0f624b1de537f2d98e3aca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f02f413c6d941594af097531a4df996" id="r_a3f02f413c6d941594af097531a4df996"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
+<tr class="memitem:a3f02f413c6d941594af097531a4df996"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a3f02f413c6d941594af097531a4df996">Abort</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a3f02f413c6d941594af097531a4df996"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the listening socket. No protocol-level shutdown required.  <br /></td></tr>
+<tr class="separator:a3f02f413c6d941594af097531a4df996"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a08bb744353cabfc9ed08e357b3387323" id="r_a08bb744353cabfc9ed08e357b3387323"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#a08bb744353cabfc9ed08e357b3387323">Family</a> { <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> }</td></tr>
+<tr class="separator:a08bb744353cabfc9ed08e357b3387323"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac80f1d7197089b5254958ee101459725" id="r_ac80f1d7197089b5254958ee101459725"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_accept_policy.html#ac80f1d7197089b5254958ee101459725">Type</a> { <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> }</td></tr>
+<tr class="separator:ac80f1d7197089b5254958ee101459725"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0bfcca058a62b204619b965ac6c0acd9" name="a0bfcca058a62b204619b965ac6c0acd9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0bfcca058a62b204619b965ac6c0acd9">&#9670;&#160;</a></span>Abort()</h2>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a734240f0ffc1e802ef5d39394c43be58" name="a734240f0ffc1e802ef5d39394c43be58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a734240f0ffc1e802ef5d39394c43be58">&#9670;&#160;</a></span>EndpointType</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::EndpointType =  <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3f02f413c6d941594af097531a4df996" name="a3f02f413c6d941594af097531a4df996"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f02f413c6d941594af097531a4df996">&#9670;&#160;</a></span>Abort()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<div class="memtemplate">
+template&lt;SocketDataConcept Data&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Abort </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Abort </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -195,19 +232,21 @@ template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
 
 </div>
 </div>
-<a id="abc100532392ff5be42f8167210c52740" name="abc100532392ff5be42f8167210c52740"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abc100532392ff5be42f8167210c52740">&#9670;&#160;</a></span>Accept()</h2>
+<a id="a512190b044769700f41aa860f5177d15" name="a512190b044769700f41aa860f5177d15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a512190b044769700f41aa860f5177d15">&#9670;&#160;</a></span>Accept()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<div class="memtemplate">
+template&lt;SocketDataConcept Data&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Accept </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Accept </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;&#160;</td>
           <td class="paramname"><em>listenData</em>, </td>
@@ -241,19 +280,21 @@ template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a1bed9b9a5dabb3ea7ecbb34bd6028190" name="a1bed9b9a5dabb3ea7ecbb34bd6028190"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1bed9b9a5dabb3ea7ecbb34bd6028190">&#9670;&#160;</a></span>Close()</h2>
+<a id="a4fdef2357b0f624b1de537f2d98e3aca" name="a4fdef2357b0f624b1de537f2d98e3aca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fdef2357b0f624b1de537f2d98e3aca">&#9670;&#160;</a></span>Close()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<div class="memtemplate">
+template&lt;SocketDataConcept Data&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Close </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Close </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
@@ -271,19 +312,21 @@ template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
 
 </div>
 </div>
-<a id="a4447f1392d9a1cd60ba1cab982dcd156" name="a4447f1392d9a1cd60ba1cab982dcd156"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4447f1392d9a1cd60ba1cab982dcd156">&#9670;&#160;</a></span>Listen()</h2>
+<a id="a31017e91c815f46e8ffd6226b86178d5" name="a31017e91c815f46e8ffd6226b86178d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31017e91c815f46e8ffd6226b86178d5">&#9670;&#160;</a></span>Listen()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<div class="memtemplate">
+template&lt;SocketDataConcept Data&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Listen </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Listen </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
@@ -314,6 +357,55 @@ template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
 </div><div class="memdoc">
 
 <p>Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listening socket handle. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a08bb744353cabfc9ed08e357b3387323" name="a08bb744353cabfc9ed08e357b3387323"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08bb744353cabfc9ed08e357b3387323">&#9670;&#160;</a></span>Family</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Family { <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac80f1d7197089b5254958ee101459725" name="ac80f1d7197089b5254958ee101459725"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac80f1d7197089b5254958ee101459725">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85e">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_default_accept_policy.html">Hermes::DefaultAcceptPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Endpoint</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketFamily</a> &gt;::Type { <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>

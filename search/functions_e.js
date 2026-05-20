@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['recv_0',['recv',['../struct_hermes_1_1_default_transfer_policy.html#ac8c130e2afc45aaafa4f3a4152b0106e',1,'Hermes::DefaultTransferPolicy::Recv()'],['../struct_hermes_1_1_tls_transfer_policy.html#a9385fb6c8a45624e57bbf3ced9e7cd25',1,'Hermes::TlsTransferPolicy::Recv()'],['../struct_hermes_1_1_client_socket.html#a05e19f51bb190c381530c14e7cbe574b',1,'Hermes::ClientSocket::Recv()'],['../struct_hermes_1_1_server_socket.html#a4e2e79e2d9fe2c3ddd78f73587a559f0',1,'Hermes::ServerSocket::Recv()']]],
-  ['recvrange_1',['recvrange',['../struct_hermes_1_1_client_socket.html#ab3206a41a92e9fd211fe1e84c7150815',1,'Hermes::ClientSocket::RecvRange()'],['../struct_hermes_1_1_server_socket.html#a79e2cfe5365c6978a97e7d5675d357ed',1,'Hermes::ServerSocket::RecvRange()']]],
-  ['recvstream_2',['recvstream',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a5d60938cf668a5b0ef1c2039a1cf0fd2',1,'Hermes::DefaultTransferPolicy::RecvStream::RecvStream()'],['../struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream.html#a1562f6530f36bbbb2d95835977fcc436',1,'Hermes::TlsTransferPolicy::RecvStream::RecvStream()'],['../struct_hermes_1_1_client_socket.html#a93b550b1621747d69f3134cce0ab5d35',1,'Hermes::ClientSocket::RecvStream()'],['../struct_hermes_1_1_server_socket.html#a768a6064ed801cd988032bfaf4e00392',1,'Hermes::ServerSocket::RecvStream()']]]
+  ['postwork_0',['PostWork',['../class_hermes_1_1_fast_io_loop.html#ab94b3d97f612108a974698b7e2d13052',1,'Hermes::FastIoLoop']]]
 ];

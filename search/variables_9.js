@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['length_0',['Length',['../struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html#a3ebb6a85103954fd7fc325ba30c54008',1,'_UNICODE_STRING']]]
+  ['keepalive_0',['keepalive',['../struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a18ff5bf5b2b059729d5d985638529bc1',1,'Hermes::DefaultAsyncConnectPolicy::Options::keepAlive'],['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a38282a930c0a7bada7c845511596408f',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::keepAlive'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a883ce6cf706185c44f37a74315f722e5',1,'Hermes::DefaultConnectPolicy::Options::keepAlive']]]
 ];

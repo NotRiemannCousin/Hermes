@@ -1,10 +1,6 @@
 var searchData=
 [
-  ['tlsacceptpolicy_0',['TlsAcceptPolicy',['../struct_hermes_1_1_tls_accept_policy.html',1,'Hermes']]],
-  ['tlsasyncconnectpolicy_1',['TlsAsyncConnectPolicy',['../struct_hermes_1_1_tls_async_connect_policy.html',1,'Hermes']]],
-  ['tlsasynctransferpolicy_2',['TlsAsyncTransferPolicy',['../struct_hermes_1_1_tls_async_transfer_policy.html',1,'Hermes']]],
-  ['tlsconnectpolicy_3',['TlsConnectPolicy',['../struct_hermes_1_1_tls_connect_policy.html',1,'Hermes']]],
-  ['tlssocketdata_4',['TlsSocketData',['../struct_hermes_1_1_tls_socket_data.html',1,'Hermes']]],
-  ['tlstransferpolicy_5',['TlsTransferPolicy',['../struct_hermes_1_1_tls_transfer_policy.html',1,'Hermes']]],
-  ['transfererror_6',['TransferError',['../struct_hermes_1_1_transfer_error.html',1,'Hermes']]]
+  ['serversocket_0',['ServerSocket',['../struct_hermes_1_1_server_socket.html',1,'Hermes']]],
+  ['socketoptions_1',['SocketOptions',['../struct_hermes_1_1_default_socket_data_1_1_socket_options.html',1,'Hermes::DefaultSocketData']]],
+  ['state_2',['state',['../struct_hermes_1_1_default_socket_data_1_1_state.html',1,'Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State'],['../struct_hermes_1_1_tls_socket_data_1_1_state.html',1,'Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State']]]
 ];

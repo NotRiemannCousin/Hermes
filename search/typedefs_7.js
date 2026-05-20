@@ -6,13 +6,11 @@ var searchData=
   ['rawtcpclient_3',['RawTcpClient',['../namespace_hermes.html#a07c1d7f39955400d235a2da6433d0ed4',1,'Hermes']]],
   ['rawtcplistener_4',['RawTcpListener',['../namespace_hermes.html#a10af606e98c70fcda458f4a610867a04',1,'Hermes']]],
   ['rawtcpserver_5',['RawTcpServer',['../namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462',1,'Hermes']]],
-  ['rawtlsasyncclient_6',['RawTlsAsyncClient',['../namespace_hermes.html#ae01645a0fd3eadf9b7f53c1d5a825df6',1,'Hermes']]],
-  ['rawtlsasynclistener_7',['RawTlsAsyncListener',['../namespace_hermes.html#a3c880a464e3190edc2a48f002aee2510',1,'Hermes']]],
-  ['rawtlsasyncserver_8',['RawTlsAsyncServer',['../namespace_hermes.html#a669e5b40dec4167b1bc1af989185839e',1,'Hermes']]],
-  ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#aff9b2b8730c483214f316805a65b4d05',1,'Hermes']]],
-  ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7',1,'Hermes']]],
-  ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a0c5c7c1c73ec5139e2695d504feea770',1,'Hermes']]],
-  ['rawudpasyncclient_12',['RawUdpAsyncClient',['../namespace_hermes.html#ad13c069a76ece5273052f7d2f54be874',1,'Hermes']]],
-  ['rawudpclient_13',['RawUdpClient',['../namespace_hermes.html#aee836237b322a73054884a34505993b6',1,'Hermes']]],
-  ['recvstreamt_14',['RecvStreamT',['../namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359',1,'Hermes::_details']]]
+  ['rawtlsasyncclient_6',['RawTlsAsyncClient',['../namespace_hermes.html#ae71bc293e8544c06b0de3ab3dc4cfca8',1,'Hermes']]],
+  ['rawtlsasynclistener_7',['RawTlsAsyncListener',['../namespace_hermes.html#aa44cb60a2fb3679e4c2604b14c0e8706',1,'Hermes']]],
+  ['rawtlsasyncserver_8',['RawTlsAsyncServer',['../namespace_hermes.html#aaa02852435aa754487fccc181f0c1e26',1,'Hermes']]],
+  ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232',1,'Hermes']]],
+  ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b',1,'Hermes']]],
+  ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a2f5ad774015f851569d57545778e2d92',1,'Hermes']]],
+  ['recvstreamt_12',['RecvStreamT',['../namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359',1,'Hermes::_details']]]
 ];

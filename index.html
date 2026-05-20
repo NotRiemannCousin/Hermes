@@ -212,7 +212,7 @@ Example</h1>
 <div class="line">    };</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> s_mapError = [](<span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a> error) -&gt; std::string {</div>
-<div class="line">        <span class="keyword">using </span>Error = <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a>;</div>
+<div class="line">        <span class="keyword">using </span><a class="code hl_enumvalue" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd">Error</a> = <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a>;</div>
 <div class="line">        <span class="keywordflow">switch</span> (error) {</div>
 <div class="line">            <span class="keywordflow">case</span> Error::ResolveHostNotFound:</div>
 <div class="line">            <span class="keywordflow">case</span> Error::ResolveServiceNotFound:</div>
@@ -295,8 +295,9 @@ Example</h1>
 <div class="line">            .transform(s_processData);</div>
 <div class="line">}</div>
 <div class="ttc" id="a_until_match_8hpp_html"><div class="ttname"><a href="_until_match_8hpp.html">UntilMatch.hpp</a></div></div>
+<div class="ttc" id="anamespace_hermes_1_1__details_html_acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd">Hermes::_details::AcceptStateOpResult::Error</a></div><div class="ttdeci">@ Error</div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div></div>
-<div class="ttc" id="anamespace_hermes_html_abcdc7039ff863f7958fab5478142dfba"><div class="ttname"><a href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></div><div class="ttdeci">ConnectionErrorEnum</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:12</div></div>
+<div class="ttc" id="anamespace_hermes_html_abcdc7039ff863f7958fab5478142dfba"><div class="ttname"><a href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></div><div class="ttdeci">ConnectionErrorEnum</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:13</div></div>
 <div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a></div><div class="ttdef"><b>Definition</b> IpEndpoint.hpp:18</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a5d226f8b82d93f4516092cdbaa50df4a"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a></div><div class="ttdeci">static ConnectionResult&lt; IpEndpoint &gt; TryResolve(const std::string &amp;url, const std::string &amp;service=&quot;&quot;, SocketTypeEnum socketType=SocketTypeEnum::Stream)</div><div class="ttdoc">Tries to resolve a hostname and service into an IP endpoint.</div></div>

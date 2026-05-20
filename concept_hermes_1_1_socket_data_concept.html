@@ -136,7 +136,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 </div><!--header-->
 <div class="contents">
 
-<p>Concept for the data representing a socket's state.  
+<p>Concept for the context representing a socket's state and cross-policy coordination.  
 <a href="concept_hermes_1_1_socket_data_concept.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="__base_8hpp_source.html">_base.hpp</a>&gt;</code></p>
@@ -155,10 +155,10 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 <div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Type;   }(); </div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_endpoint_concept_html"><div class="ttname"><a href="concept_hermes_1_1_endpoint_concept.html">Hermes::EndpointConcept</a></div><div class="ttdef"><b>Definition</b> EndpointConcept.hpp:14</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the data representing a socket's state.</div><div class="ttdef"><b>Definition</b> _base.hpp:52</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:51</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Concept for the data representing a socket's state. </p>
-<p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, and static metadata (Family/Type). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs and state corruption.</p>
+<div class="textblock"><p>Concept for the context representing a socket's state and cross-policy coordination. </p>
+<p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, static metadata (Family/Type), and any required cross-policy state (e.g., renegotiation callbacks). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs.</p>
 <h3><a class="anchor" id="autotoc_md0"></a>
 Type Requirements</h3>
 <ul>

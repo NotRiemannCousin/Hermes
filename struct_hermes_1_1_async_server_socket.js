@@ -1,14 +1,15 @@
 var struct_hermes_1_1_async_server_socket =
 [
-    [ "AcceptPolicyType", "struct_hermes_1_1_async_server_socket.html#a0459456e991df005fd25820860e81f9b", null ],
-    [ "EndpointType", "struct_hermes_1_1_async_server_socket.html#a07b51d2acd41b60d4050c836a9428280", null ],
-    [ "TransferPolicyType", "struct_hermes_1_1_async_server_socket.html#ab1849a1b236347a7a97cf4f026354ed4", null ],
-    [ "AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html#a4cf9d288791202a5ff0d56a835c00647", null ],
-    [ "~AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html#a90e23f12471429ee8be82238481b41ec", null ],
-    [ "Abort", "struct_hermes_1_1_async_server_socket.html#afb3fe2e3823cf1b51e3f6545659fae3a", null ],
-    [ "AsyncRecv", "struct_hermes_1_1_async_server_socket.html#a6142c85e09b38eae3e9c739c43806c52", null ],
-    [ "AsyncSend", "struct_hermes_1_1_async_server_socket.html#a1592e7211deb0f7d852d19bb9dddb193", null ],
-    [ "AsyncShutdown", "struct_hermes_1_1_async_server_socket.html#a19f3107b58b06a78afca353056bfedaf", null ],
-    [ "Close", "struct_hermes_1_1_async_server_socket.html#ab70f7697c0a8d6f750200525c75c3185", null ],
-    [ "operator=", "struct_hermes_1_1_async_server_socket.html#ab88eeff1e3e432b1288329c41ef74d66", null ]
+    [ "EndpointType", "struct_hermes_1_1_async_server_socket.html#ad4b4ffe80d8bd1b1c14645af46648b30", null ],
+    [ "AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html#a57cc964ce1781c9a75621e02c66fab24", null ],
+    [ "~AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html#abe5973acecde72a879c4beeb540d00f0", null ],
+    [ "Abort", "struct_hermes_1_1_async_server_socket.html#af62fdac70cd3b4d984243d4b6b31c6c2", null ],
+    [ "AsyncRecv", "struct_hermes_1_1_async_server_socket.html#afdbd6fec2d01c079d80198703dd4383f", null ],
+    [ "AsyncSend", "struct_hermes_1_1_async_server_socket.html#a38dfed68fe3f4f2e15d22e569f99b872", null ],
+    [ "AsyncShutdown", "struct_hermes_1_1_async_server_socket.html#a9f2efc123972459088533292a093d8f5", null ],
+    [ "Close", "struct_hermes_1_1_async_server_socket.html#a19d0bfca9e99efdb4e7063046aa86d2a", null ],
+    [ "GetEndpoint", "struct_hermes_1_1_async_server_socket.html#a17d82cba6683fb7e0bf6d54d7ad3244a", null ],
+    [ "GetEndpoint", "struct_hermes_1_1_async_server_socket.html#ab210f62d95f8c9e03c4c84568df9a8bc", null ],
+    [ "GetSocketData", "struct_hermes_1_1_async_server_socket.html#a6a13b33578eacf854933850f7c51094d", null ],
+    [ "operator=", "struct_hermes_1_1_async_server_socket.html#ad9a81b8084661c20c13f039dc4572214", null ]
 ];

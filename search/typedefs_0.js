@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['acceptpolicytype_0',['acceptpolicytype',['../struct_hermes_1_1_async_server_socket.html#a0459456e991df005fd25820860e81f9b',1,'Hermes::AsyncServerSocket::AcceptPolicyType'],['../struct_hermes_1_1_server_socket.html#abf60a38ddf1c7227703d1bde5d42f0b9',1,'Hermes::ServerSocket::AcceptPolicyType']]]
+  ['bytedata_0',['ByteData',['../namespace_hermes.html#a0832e30628cac84f3f31a6d76a3b29ce',1,'Hermes']]],
+  ['bytedataspan_1',['ByteDataSpan',['../namespace_hermes.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd',1,'Hermes']]]
 ];

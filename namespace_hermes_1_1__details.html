@@ -134,7 +134,9 @@ $(document).ready(function(){initNavTree('namespace_hermes_1_1__details.html',''
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#typedef-members">Typedefs</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Hermes::_details Namespace Reference<div class="ingroups"><a class="el" href="group___sync_socket_concepts.html">SyncSocketConcepts</a></div></div></div>
 </div><!--header-->
 <div class="contents">
@@ -149,9 +151,21 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html">ConnectOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_i_tls_accept_state_machine.html">ITlsAcceptStateMachine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_i_tls_connect_state_machine.html">ITlsConnectStateMachine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_i_tls_transfer_state_machine.html">ITlsTransferStateMachine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_options_tcp_no_delay_base.html">OptionsTcpNoDelayBase</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html">OptionsTcpNoDelayBase&lt; SocketTypeEnum::Stream &gt;</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_accept_state_machine.html">TlsAcceptStateMachine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_connect_state_machine.html">TlsConnectStateMachine</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_transfer_state_machine.html">TlsTransferStateMachine</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
@@ -159,6 +173,42 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a19f1b40aa507418128b3780b63bac359" id="r_a19f1b40aa507418128b3780b63bac359"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Policy</a> &gt; </td></tr>
 <tr class="memitem:a19f1b40aa507418128b3780b63bac359"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359">RecvStreamT</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Policy::template RecvStream&lt; std::byte &gt;</td></tr>
 <tr class="separator:a19f1b40aa507418128b3780b63bac359"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:acabdad96039482c899b5c1465785cb0d" id="r_acabdad96039482c899b5c1465785cb0d"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0d">AcceptStateOpResult</a> : std::uint8_t { <br />
+&#160;&#160;<a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0daf847fa133f30ecb64731e5ddddc38530">Recv</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da94966d90747b97d1f0f206c98a8b1ac3">Send</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0dad3d2e617335f08df83599665eef8a418">Close</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd">Error</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0daf92965e2c8a7afb3c1b9a5c09a263636">Done</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da03f4a47830f97377a35321051685071e">Closed</a>
+<br />
+ }</td></tr>
+<tr class="separator:acabdad96039482c899b5c1465785cb0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c9f616334710668cb142113205157ef" id="r_a2c9f616334710668cb142113205157ef"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157ef">ConnectStateOpResult</a> : std::uint8_t { <br />
+&#160;&#160;<a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efaf847fa133f30ecb64731e5ddddc38530">Recv</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efa94966d90747b97d1f0f206c98a8b1ac3">Send</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efad3d2e617335f08df83599665eef8a418">Close</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efa902b0d55fddef6f8d651fe1035b7d4bd">Error</a>
+, <br />
+&#160;&#160;<a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efaf92965e2c8a7afb3c1b9a5c09a263636">Done</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157efa03f4a47830f97377a35321051685071e">Closed</a>
+<br />
+ }</td></tr>
+<tr class="separator:a2c9f616334710668cb142113205157ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a1c3b936b9fa27d220f0a21d82021cc" id="r_a9a1c3b936b9fa27d220f0a21d82021cc"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021cc">TransferStateOpResult</a> : std::uint8_t { <a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021ccaf847fa133f30ecb64731e5ddddc38530">Recv</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021cca94966d90747b97d1f0f206c98a8b1ac3">Send</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021cca902b0d55fddef6f8d651fe1035b7d4bd">Error</a>
+, <a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021ccaf92965e2c8a7afb3c1b9a5c09a263636">Done</a>
+ }</td></tr>
+<tr class="separator:a9a1c3b936b9fa27d220f0a21d82021cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab3ef50da682cfabbe334f3479133af5d" id="r_ab3ef50da682cfabbe334f3479133af5d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes_1_1__details.html#ab3ef50da682cfabbe334f3479133af5d">SetTimeout</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">SOCKET</a> socket, <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">time</a>)</td></tr>
+<tr class="separator:ab3ef50da682cfabbe334f3479133af5d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="a19f1b40aa507418128b3780b63bac359" name="a19f1b40aa507418128b3780b63bac359"></a>
@@ -173,6 +223,132 @@ template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clas
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359">Hermes::_details::RecvStreamT</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Policy::template RecvStream&lt;std::byte&gt;</td>
         </tr>
       </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="acabdad96039482c899b5c1465785cb0d" name="acabdad96039482c899b5c1465785cb0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acabdad96039482c899b5c1465785cb0d">&#9670;&#160;</a></span>AcceptStateOpResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0d">Hermes::_details::AcceptStateOpResult</a> : std::uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0daf847fa133f30ecb64731e5ddddc38530" name="acabdad96039482c899b5c1465785cb0daf847fa133f30ecb64731e5ddddc38530"></a>Recv&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0da94966d90747b97d1f0f206c98a8b1ac3" name="acabdad96039482c899b5c1465785cb0da94966d90747b97d1f0f206c98a8b1ac3"></a>Send&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0dad3d2e617335f08df83599665eef8a418" name="acabdad96039482c899b5c1465785cb0dad3d2e617335f08df83599665eef8a418"></a>Close&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd" name="acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0daf92965e2c8a7afb3c1b9a5c09a263636" name="acabdad96039482c899b5c1465785cb0daf92965e2c8a7afb3c1b9a5c09a263636"></a>Done&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="acabdad96039482c899b5c1465785cb0da03f4a47830f97377a35321051685071e" name="acabdad96039482c899b5c1465785cb0da03f4a47830f97377a35321051685071e"></a>Closed&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a2c9f616334710668cb142113205157ef" name="a2c9f616334710668cb142113205157ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c9f616334710668cb142113205157ef">&#9670;&#160;</a></span>ConnectStateOpResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="namespace_hermes_1_1__details.html#a2c9f616334710668cb142113205157ef">Hermes::_details::ConnectStateOpResult</a> : std::uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efaf847fa133f30ecb64731e5ddddc38530" name="a2c9f616334710668cb142113205157efaf847fa133f30ecb64731e5ddddc38530"></a>Recv&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efa94966d90747b97d1f0f206c98a8b1ac3" name="a2c9f616334710668cb142113205157efa94966d90747b97d1f0f206c98a8b1ac3"></a>Send&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efad3d2e617335f08df83599665eef8a418" name="a2c9f616334710668cb142113205157efad3d2e617335f08df83599665eef8a418"></a>Close&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efa902b0d55fddef6f8d651fe1035b7d4bd" name="a2c9f616334710668cb142113205157efa902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efaf92965e2c8a7afb3c1b9a5c09a263636" name="a2c9f616334710668cb142113205157efaf92965e2c8a7afb3c1b9a5c09a263636"></a>Done&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a2c9f616334710668cb142113205157efa03f4a47830f97377a35321051685071e" name="a2c9f616334710668cb142113205157efa03f4a47830f97377a35321051685071e"></a>Closed&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<a id="a9a1c3b936b9fa27d220f0a21d82021cc" name="a9a1c3b936b9fa27d220f0a21d82021cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a1c3b936b9fa27d220f0a21d82021cc">&#9670;&#160;</a></span>TransferStateOpResult</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">enum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021cc">Hermes::_details::TransferStateOpResult</a> : std::uint8_t</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9a1c3b936b9fa27d220f0a21d82021ccaf847fa133f30ecb64731e5ddddc38530" name="a9a1c3b936b9fa27d220f0a21d82021ccaf847fa133f30ecb64731e5ddddc38530"></a>Recv&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a9a1c3b936b9fa27d220f0a21d82021cca94966d90747b97d1f0f206c98a8b1ac3" name="a9a1c3b936b9fa27d220f0a21d82021cca94966d90747b97d1f0f206c98a8b1ac3"></a>Send&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a9a1c3b936b9fa27d220f0a21d82021cca902b0d55fddef6f8d651fe1035b7d4bd" name="a9a1c3b936b9fa27d220f0a21d82021cca902b0d55fddef6f8d651fe1035b7d4bd"></a>Error&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a9a1c3b936b9fa27d220f0a21d82021ccaf92965e2c8a7afb3c1b9a5c09a263636" name="a9a1c3b936b9fa27d220f0a21d82021ccaf92965e2c8a7afb3c1b9a5c09a263636"></a>Done&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a id="ab3ef50da682cfabbe334f3479133af5d" name="ab3ef50da682cfabbe334f3479133af5d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3ef50da682cfabbe334f3479133af5d">&#9670;&#160;</a></span>SetTimeout()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> Hermes::_details::SetTimeout </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">SOCKET</a>&#160;</td>
+          <td class="paramname"><em>socket</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a>&#160;</td>
+          <td class="paramname"><em>time</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 </div>

@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: Hermes::AsyncListenerSocket&lt; SocketDataType, AsyncAcceptPolicyType, AsyncTransferPolicyType &gt; Struct Template Reference</title>
+<title>Hermes: Hermes::AsyncListenerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -137,7 +137,7 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_async_listener_socke
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="struct_hermes_1_1_async_listener_socket-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Hermes::AsyncListenerSocket&lt; SocketDataType, AsyncAcceptPolicyType, AsyncTransferPolicyType &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::AsyncListenerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -145,56 +145,76 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_async_listener_socke
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a75f8ad086605e0190f3d37c6eec34dfa" id="r_a75f8ad086605e0190f3d37c6eec34dfa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a75f8ad086605e0190f3d37c6eec34dfa">ServerSocketType</a> = <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;</td></tr>
-<tr class="separator:a75f8ad086605e0190f3d37c6eec34dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa173a7b416a05c093dbfebeec4ff2161" id="r_aa173a7b416a05c093dbfebeec4ff2161"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#aa173a7b416a05c093dbfebeec4ff2161">ServerSocketType</a> = <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;</td></tr>
+<tr class="separator:aa173a7b416a05c093dbfebeec4ff2161"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4544e9b08f74a68289b465700946897" id="r_ae4544e9b08f74a68289b465700946897"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ae4544e9b08f74a68289b465700946897">EndpointType</a> = SocketData::EndpointType</td></tr>
+<tr class="separator:ae4544e9b08f74a68289b465700946897"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ac032aa6d9177f43c874d7e3419515381" id="r_ac032aa6d9177f43c874d7e3419515381"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ac032aa6d9177f43c874d7e3419515381">AsyncListenerSocket</a> (<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&amp;) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:ac032aa6d9177f43c874d7e3419515381"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adb7f2ec7060cf3744531dafd28c879f2" id="r_adb7f2ec7060cf3744531dafd28c879f2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#adb7f2ec7060cf3744531dafd28c879f2">operator=</a> (<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&amp;) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:adb7f2ec7060cf3744531dafd28c879f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54060bb292c36d3fb484b38b246c266b" id="r_a54060bb292c36d3fb484b38b246c266b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a54060bb292c36d3fb484b38b246c266b">~AsyncListenerSocket</a> ()</td></tr>
-<tr class="separator:a54060bb292c36d3fb484b38b246c266b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9a4d4081a0532678ebe4f2483354326c" id="r_a9a4d4081a0532678ebe4f2483354326c"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::AcceptOptions&gt;</td></tr>
-<tr class="memitem:a9a4d4081a0532678ebe4f2483354326c"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a9a4d4081a0532678ebe4f2483354326c">AsyncAcceptOne</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a9a4d4081a0532678ebe4f2483354326c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection.  <br /></td></tr>
-<tr class="separator:a9a4d4081a0532678ebe4f2483354326c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ca276e30b54204bc9b9d842fbcc5ce5" id="r_a3ca276e30b54204bc9b9d842fbcc5ce5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a3ca276e30b54204bc9b9d842fbcc5ce5">AsyncAcceptOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a3ca276e30b54204bc9b9d842fbcc5ce5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection.    <br /></td></tr>
-<tr class="separator:a3ca276e30b54204bc9b9d842fbcc5ce5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2841ee7256e85323b4862829fcc362a6" id="r_a2841ee7256e85323b4862829fcc362a6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a2841ee7256e85323b4862829fcc362a6">Close</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a2841ee7256e85323b4862829fcc362a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0edc2482060b442d9ff30457655c8c0d" id="r_a0edc2482060b442d9ff30457655c8c0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a0edc2482060b442d9ff30457655c8c0d">Abort</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a0edc2482060b442d9ff30457655c8c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a395562565b77e1c11ba0dc6031ecd655" id="r_a395562565b77e1c11ba0dc6031ecd655"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a395562565b77e1c11ba0dc6031ecd655">AsyncListenerSocket</a> (<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&amp;) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a395562565b77e1c11ba0dc6031ecd655"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a733360c8482bdb9fe7882aa8957ebfc0" id="r_a733360c8482bdb9fe7882aa8957ebfc0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a733360c8482bdb9fe7882aa8957ebfc0">operator=</a> (<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp;&amp;) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a733360c8482bdb9fe7882aa8957ebfc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3073c34d9595c937f7bb5bb91c1577ee" id="r_a3073c34d9595c937f7bb5bb91c1577ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a3073c34d9595c937f7bb5bb91c1577ee">~AsyncListenerSocket</a> ()</td></tr>
+<tr class="separator:a3073c34d9595c937f7bb5bb91c1577ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825a8d29b744f69de0e37562186556d0" id="r_a825a8d29b744f69de0e37562186556d0"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</td></tr>
+<tr class="memitem:a825a8d29b744f69de0e37562186556d0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a825a8d29b744f69de0e37562186556d0">AsyncAcceptOne</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a825a8d29b744f69de0e37562186556d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection.  <br /></td></tr>
+<tr class="separator:a825a8d29b744f69de0e37562186556d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac559a95888e700167c2e89ad6aed1286" id="r_ac559a95888e700167c2e89ad6aed1286"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ac559a95888e700167c2e89ad6aed1286">AsyncAcceptOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:ac559a95888e700167c2e89ad6aed1286"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection.    <br /></td></tr>
+<tr class="separator:ac559a95888e700167c2e89ad6aed1286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67817e40474c766df65eedf55fe8031d" id="r_a67817e40474c766df65eedf55fe8031d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#ae4544e9b08f74a68289b465700946897">EndpointType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a67817e40474c766df65eedf55fe8031d">GetEndpoint</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a67817e40474c766df65eedf55fe8031d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d72c477e308c506148cdece25f6a25d" id="r_a4d72c477e308c506148cdece25f6a25d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a4d72c477e308c506148cdece25f6a25d">Close</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a4d72c477e308c506148cdece25f6a25d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac08db05af99435142f41d708bbaf82ad" id="r_ac08db05af99435142f41d708bbaf82ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ac08db05af99435142f41d708bbaf82ad">Abort</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:ac08db05af99435142f41d708bbaf82ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a003c8b622b0a216cbf170827acd59762" id="r_a003c8b622b0a216cbf170827acd59762"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::ListenOptions&gt;</td></tr>
-<tr class="memitem:a003c8b622b0a216cbf170827acd59762"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a003c8b622b0a216cbf170827acd59762">Listen</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a003c8b622b0a216cbf170827acd59762"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a798680e41cfe0640ee9820181425b3fd" id="r_a798680e41cfe0640ee9820181425b3fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a798680e41cfe0640ee9820181425b3fd">Listen</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a798680e41cfe0640ee9820181425b3fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5670c6698a68fbc1dbebeb30d455f8ca" id="r_a5670c6698a68fbc1dbebeb30d455f8ca"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::ListenOptions&gt;</td></tr>
-<tr class="memitem:a5670c6698a68fbc1dbebeb30d455f8ca"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a5670c6698a68fbc1dbebeb30d455f8ca">ListenOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a5670c6698a68fbc1dbebeb30d455f8ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a675c871e42c3168a050f2482c54f6b3a" id="r_a675c871e42c3168a050f2482c54f6b3a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a675c871e42c3168a050f2482c54f6b3a">ListenOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a675c871e42c3168a050f2482c54f6b3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7180c25994473ca990b1f3c7c4632dd" id="r_aa7180c25994473ca990b1f3c7c4632dd"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</td></tr>
+<tr class="memitem:aa7180c25994473ca990b1f3c7c4632dd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#aa7180c25994473ca990b1f3c7c4632dd">Listen</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:aa7180c25994473ca990b1f3c7c4632dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a334c93388a877d31804a1ebd1461768d" id="r_a334c93388a877d31804a1ebd1461768d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a334c93388a877d31804a1ebd1461768d">Listen</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a334c93388a877d31804a1ebd1461768d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae54034791293450fc2f020286235123a" id="r_ae54034791293450fc2f020286235123a"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</td></tr>
+<tr class="memitem:ae54034791293450fc2f020286235123a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ae54034791293450fc2f020286235123a">ListenOne</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:ae54034791293450fc2f020286235123a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8c2fc1ef82e1baafa936fd4c49bd555" id="r_ab8c2fc1ef82e1baafa936fd4c49bd555"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ab8c2fc1ef82e1baafa936fd4c49bd555">ListenOne</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:ab8c2fc1ef82e1baafa936fd4c49bd555"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a75f8ad086605e0190f3d37c6eec34dfa" name="a75f8ad086605e0190f3d37c6eec34dfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a75f8ad086605e0190f3d37c6eec34dfa">&#9670;&#160;</a></span>ServerSocketType</h2>
+<a id="ae4544e9b08f74a68289b465700946897" name="ae4544e9b08f74a68289b465700946897"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4544e9b08f74a68289b465700946897">&#9670;&#160;</a></span>EndpointType</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::ServerSocketType =  <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a>&gt;</td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::EndpointType =  SocketData::EndpointType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa173a7b416a05c093dbfebeec4ff2161" name="aa173a7b416a05c093dbfebeec4ff2161"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa173a7b416a05c093dbfebeec4ff2161">&#9670;&#160;</a></span>ServerSocketType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::ServerSocketType =  <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a>&lt;SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -202,21 +222,21 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac032aa6d9177f43c874d7e3419515381" name="ac032aa6d9177f43c874d7e3419515381"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac032aa6d9177f43c874d7e3419515381">&#9670;&#160;</a></span>AsyncListenerSocket()</h2>
+<a id="a395562565b77e1c11ba0dc6031ecd655" name="a395562565b77e1c11ba0dc6031ecd655"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a395562565b77e1c11ba0dc6031ecd655">&#9670;&#160;</a></span>AsyncListenerSocket()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::AsyncListenerSocket </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AsyncListenerSocket </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt; &amp;&amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -230,16 +250,16 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="a54060bb292c36d3fb484b38b246c266b" name="a54060bb292c36d3fb484b38b246c266b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54060bb292c36d3fb484b38b246c266b">&#9670;&#160;</a></span>~AsyncListenerSocket()</h2>
+<a id="a3073c34d9595c937f7bb5bb91c1577ee" name="a3073c34d9595c937f7bb5bb91c1577ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3073c34d9595c937f7bb5bb91c1577ee">&#9670;&#160;</a></span>~AsyncListenerSocket()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::~<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::~<a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -250,19 +270,19 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a0edc2482060b442d9ff30457655c8c0d" name="a0edc2482060b442d9ff30457655c8c0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0edc2482060b442d9ff30457655c8c0d">&#9670;&#160;</a></span>Abort()</h2>
+<a id="ac08db05af99435142f41d708bbaf82ad" name="ac08db05af99435142f41d708bbaf82ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac08db05af99435142f41d708bbaf82ad">&#9670;&#160;</a></span>Abort()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::Abort </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::Abort </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -277,22 +297,22 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="a9a4d4081a0532678ebe4f2483354326c" name="a9a4d4081a0532678ebe4f2483354326c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9a4d4081a0532678ebe4f2483354326c">&#9670;&#160;</a></span>AsyncAcceptOne() <span class="overload">[1/2]</span></h2>
+<a id="a825a8d29b744f69de0e37562186556d0" name="a825a8d29b744f69de0e37562186556d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a825a8d29b744f69de0e37562186556d0">&#9670;&#160;</a></span>AsyncAcceptOne() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::AcceptOptions&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::AsyncAcceptOne </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AsyncAcceptOne </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -310,21 +330,21 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 
 </div>
 </div>
-<a id="a3ca276e30b54204bc9b9d842fbcc5ce5" name="a3ca276e30b54204bc9b9d842fbcc5ce5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ca276e30b54204bc9b9d842fbcc5ce5">&#9670;&#160;</a></span>AsyncAcceptOne() <span class="overload">[2/2]</span></h2>
+<a id="ac559a95888e700167c2e89ad6aed1286" name="ac559a95888e700167c2e89ad6aed1286"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac559a95888e700167c2e89ad6aed1286">&#9670;&#160;</a></span>AsyncAcceptOne() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::AsyncAcceptOne </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AsyncAcceptOne </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::AcceptOptions&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&#160;</td>
           <td class="paramname"><em>opt</em></td><td>)</td>
           <td></td>
         </tr>
@@ -341,19 +361,19 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="a2841ee7256e85323b4862829fcc362a6" name="a2841ee7256e85323b4862829fcc362a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2841ee7256e85323b4862829fcc362a6">&#9670;&#160;</a></span>Close()</h2>
+<a id="a4d72c477e308c506148cdece25f6a25d" name="a4d72c477e308c506148cdece25f6a25d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d72c477e308c506148cdece25f6a25d">&#9670;&#160;</a></span>Close()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::Close </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::Close </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -368,27 +388,95 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="a798680e41cfe0640ee9820181425b3fd" name="a798680e41cfe0640ee9820181425b3fd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a798680e41cfe0640ee9820181425b3fd">&#9670;&#160;</a></span>Listen() <span class="overload">[1/2]</span></h2>
+<a id="a67817e40474c766df65eedf55fe8031d" name="a67817e40474c766df65eedf55fe8031d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67817e40474c766df65eedf55fe8031d">&#9670;&#160;</a></span>GetEndpoint()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::Listen </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#ae4544e9b08f74a68289b465700946897">EndpointType</a> &amp; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::GetEndpoint </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa7180c25994473ca990b1f3c7c4632dd" name="aa7180c25994473ca990b1f3c7c4632dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7180c25994473ca990b1f3c7c4632dd">&#9670;&#160;</a></span>Listen() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::Listen </td>
+          <td>(</td>
+          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::ListenOptions&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a>&#160;</td>
+          <td class="paramname"><em>backlog</em> = <code><a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a334c93388a877d31804a1ebd1461768d" name="a334c93388a877d31804a1ebd1461768d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a334c93388a877d31804a1ebd1461768d">&#9670;&#160;</a></span>Listen() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::Listen </td>
+          <td>(</td>
+          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&#160;</td>
           <td class="paramname"><em>opt</em>, </td>
         </tr>
         <tr>
@@ -412,65 +500,24 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="a003c8b622b0a216cbf170827acd59762" name="a003c8b622b0a216cbf170827acd59762"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a003c8b622b0a216cbf170827acd59762">&#9670;&#160;</a></span>Listen() <span class="overload">[2/2]</span></h2>
+<a id="ae54034791293450fc2f020286235123a" name="ae54034791293450fc2f020286235123a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae54034791293450fc2f020286235123a">&#9670;&#160;</a></span>ListenOne() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::ListenOptions&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::Listen </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::ListenOne </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a>&#160;</td>
-          <td class="paramname"><em>backlog</em> = <code><a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a></code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5670c6698a68fbc1dbebeb30d455f8ca" name="a5670c6698a68fbc1dbebeb30d455f8ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5670c6698a68fbc1dbebeb30d455f8ca">&#9670;&#160;</a></span>ListenOne() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
-<div class="memtemplate">
-template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>&gt;::ListenOptions&gt;</div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::ListenOne </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;&#160;</td>
+          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
           <td class="paramname"><em>data</em></td><td>)</td>
           <td></td>
         </tr>
@@ -484,27 +531,27 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 
 </div>
 </div>
-<a id="a675c871e42c3168a050f2482c54f6b3a" name="a675c871e42c3168a050f2482c54f6b3a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a675c871e42c3168a050f2482c54f6b3a">&#9670;&#160;</a></span>ListenOne() <span class="overload">[2/2]</span></h2>
+<a id="ab8c2fc1ef82e1baafa936fd4c49bd555" name="ab8c2fc1ef82e1baafa936fd4c49bd555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8c2fc1ef82e1baafa936fd4c49bd555">&#9670;&#160;</a></span>ListenOne() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::ListenOne </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &gt; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::ListenOne </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &amp;&amp;&#160;</td>
+          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
           <td class="paramname"><em>data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a> &gt;::ListenOptions&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&#160;</td>
           <td class="paramname"><em>opt</em>&#160;</td>
         </tr>
         <tr>
@@ -522,21 +569,21 @@ template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a cla
 
 </div>
 </div>
-<a id="adb7f2ec7060cf3744531dafd28c879f2" name="adb7f2ec7060cf3744531dafd28c879f2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adb7f2ec7060cf3744531dafd28c879f2">&#9670;&#160;</a></span>operator=()</h2>
+<a id="a733360c8482bdb9fe7882aa8957ebfc0" name="a733360c8482bdb9fe7882aa8957ebfc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a733360c8482bdb9fe7882aa8957ebfc0">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketDataType = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncAcceptPolicyType = DefaultAsyncAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AsyncTransferPolicyType = DefaultAsyncTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt;::operator= </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> &amp; <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketDataType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncAcceptPolicyType</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AsyncTransferPolicyType</a> &gt; &amp;&amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt; &amp;&amp;&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>

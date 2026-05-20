@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['connectionpolicytype_0',['connectionpolicytype',['../struct_hermes_1_1_async_client_socket.html#ae34699ffd09de3b7851d47cc064a4ad9',1,'Hermes::AsyncClientSocket::ConnectionPolicyType'],['../struct_hermes_1_1_client_socket.html#a27609ca6cfac4915a05e2efbdbf74ca9',1,'Hermes::ClientSocket::ConnectionPolicyType']]],
-  ['connectionresult_1',['ConnectionResult',['../namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9',1,'Hermes']]],
-  ['connectionresultoper_2',['ConnectionResultOper',['../namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091',1,'Hermes']]]
+  ['datatype_0',['datatype',['../struct_hermes_1_1_tls_socket_data.html#a6ce17562e93b50462ee94c19dca67fc2',1,'Hermes::TlsSocketData::DataType'],['../struct_hermes_1_1_tls_connect_policy.html#ad54b382c6f2666107d4c5ea7410f726c',1,'Hermes::TlsConnectPolicy::DataType']]],
+  ['difference_5ftype_1',['difference_type',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#a1efba85fde0e1e49c8ee8aaa3d784ccc',1,'Hermes::DefaultTransferPolicy::RecvStream::Iterator::difference_type'],['../struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream_1_1_iterator.html#abf3462a3422abeefc35617bafb770d14',1,'Hermes::TlsTransferPolicy::RecvStream::Iterator::difference_type'],['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#ad1a595947c928c3c0835fd11d0d13526',1,'Hermes::Utils::DropLastView::Iterator::difference_type'],['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a7857bade64d2beab8ca857d2a6381420',1,'Hermes::Utils::UntilMatchView::Iterator::difference_type']]]
 ];

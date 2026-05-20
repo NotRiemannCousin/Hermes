@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_server_socket.html',
 </div><!--header-->
 <div class="contents">
 
-<p>A connected socket produced by <a class="el" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a" title="Blocks until one client connects, then returns a ready ServerSocket.">ListenerSocket::AcceptOne</a> / AcceptAll.  
+<p>A connected socket produced by <a class="el" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e" title="Blocks until one client connects, then returns a ready ServerSocket.">ListenerSocket::AcceptOne</a> / AcceptAll.  
  <a href="struct_hermes_1_1_server_socket.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_server_socket_8hpp_source.html">ServerSocket.hpp</a>&gt;</code></p>
@@ -150,10 +150,6 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_server_socket.html',
 Public Types</h2></td></tr>
 <tr class="memitem:af1bca639070d2711368679f598fcf2ff" id="r_af1bca639070d2711368679f598fcf2ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#af1bca639070d2711368679f598fcf2ff">EndpointType</a> = SocketData::EndpointType</td></tr>
 <tr class="separator:af1bca639070d2711368679f598fcf2ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf60a38ddf1c7227703d1bde5d42f0b9" id="r_abf60a38ddf1c7227703d1bde5d42f0b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#abf60a38ddf1c7227703d1bde5d42f0b9">AcceptPolicyType</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>&lt; SocketData &gt;</td></tr>
-<tr class="separator:abf60a38ddf1c7227703d1bde5d42f0b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae69636a375ece23c67680ebc71a4c6d0" id="r_ae69636a375ece23c67680ebc71a4c6d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#ae69636a375ece23c67680ebc71a4c6d0">TransferPolicyType</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>&lt; SocketData &gt;</td></tr>
-<tr class="separator:ae69636a375ece23c67680ebc71a4c6d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -167,13 +163,13 @@ Public Member Functions</h2></td></tr>
 requires ByteLike&lt;std::remove_cv_t&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a>&gt;&gt;&gt;</td></tr>
 <tr class="memitem:a8965f20c2414de551ca8712ffcce79f3"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a8965f20c2414de551ca8712ffcce79f3">Send</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:a8965f20c2414de551ca8712ffcce79f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4e2e79e2d9fe2c3ddd78f73587a559f0" id="r_a4e2e79e2d9fe2c3ddd78f73587a559f0"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range R&gt; <br />
+<tr class="memitem:a08b5473acfb9a295bb202db56d7c10d7" id="r_a08b5473acfb9a295bb202db56d7c10d7"><td class="memTemplParams" colspan="2">template&lt;std::ranges::contiguous_range R&gt; <br />
 requires ByteLike&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a>&gt;&gt;</td></tr>
-<tr class="memitem:a4e2e79e2d9fe2c3ddd78f73587a559f0"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a4e2e79e2d9fe2c3ddd78f73587a559f0">Recv</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a4e2e79e2d9fe2c3ddd78f73587a559f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a768a6064ed801cd988032bfaf4e00392" id="r_a768a6064ed801cd988032bfaf4e00392"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; </td></tr>
-<tr class="memitem:a768a6064ed801cd988032bfaf4e00392"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>&lt; SocketData &gt;::template RecvStream&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a768a6064ed801cd988032bfaf4e00392">RecvStream</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="separator:a768a6064ed801cd988032bfaf4e00392"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08b5473acfb9a295bb202db56d7c10d7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a08b5473acfb9a295bb202db56d7c10d7">Recv</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">mode</a>=<a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">RecvModeEnum::All</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a08b5473acfb9a295bb202db56d7c10d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a844ecba99e9e056900a1938e64aa2ff2" id="r_a844ecba99e9e056900a1938e64aa2ff2"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; </td></tr>
+<tr class="memitem:a844ecba99e9e056900a1938e64aa2ff2"><td class="memTemplItemLeft" align="right" valign="top">TransferPolicy::template RecvStream&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a844ecba99e9e056900a1938e64aa2ff2">RecvStream</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a844ecba99e9e056900a1938e64aa2ff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a79e2cfe5365c6978a97e7d5675d357ed" id="r_a79e2cfe5365c6978a97e7d5675d357ed"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; </td></tr>
 <tr class="memitem:a79e2cfe5365c6978a97e7d5675d357ed"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_server_socket.html#a79e2cfe5365c6978a97e7d5675d357ed">RecvRange</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:a79e2cfe5365c6978a97e7d5675d357ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -189,56 +185,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:ac5e9730f49863945b80deb2f09f43141"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a> = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> = DefaultTransferPolicy&lt;&gt;&gt;<br />
 requires AcceptPolicyConcept&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, SocketData&gt; &amp;&amp; TransferPolicyConcept&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>, SocketData&gt;<br />
-struct Hermes::ServerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt;</div><p>A connected socket produced by <a class="el" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a" title="Blocks until one client connects, then returns a ready ServerSocket.">ListenerSocket::AcceptOne</a> / AcceptAll. </p>
+struct Hermes::ServerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt;</div><p>A connected socket produced by <a class="el" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e" title="Blocks until one client connects, then returns a ready ServerSocket.">ListenerSocket::AcceptOne</a> / AcceptAll. </p>
 <p>Structurally identical to <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a> in terms of data transfer (Send / Recv / RecvRange / Close), but carries AcceptPolicy instead of ConnectionPolicy because:</p><ul>
 <li>It never calls Connect() — the connection was established by accept().</li>
 <li><a class="el" href="struct_hermes_1_1_server_socket.html#a026e66764c8e03c2a3d5adf12714441f">Close()</a> must follow the same protocol-level teardown as the accept side (e.g. sending a TLS close_notify alert for <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>). </li>
 </ul>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="abf60a38ddf1c7227703d1bde5d42f0b9" name="abf60a38ddf1c7227703d1bde5d42f0b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf60a38ddf1c7227703d1bde5d42f0b9">&#9670;&#160;</a></span>AcceptPolicyType</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AcceptPolicyType =  <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>&lt;SocketData&gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="af1bca639070d2711368679f598fcf2ff" name="af1bca639070d2711368679f598fcf2ff"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1bca639070d2711368679f598fcf2ff">&#9670;&#160;</a></span>EndpointType</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::EndpointType =  SocketData::EndpointType</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae69636a375ece23c67680ebc71a4c6d0" name="ae69636a375ece23c67680ebc71a4c6d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae69636a375ece23c67680ebc71a4c6d0">&#9670;&#160;</a></span>TransferPolicyType</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::TransferPolicyType =  <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>&lt;SocketData&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -252,7 +216,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -280,7 +244,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::~<a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a> </td>
@@ -300,7 +264,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -327,7 +291,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -354,7 +318,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -384,7 +348,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -406,13 +370,13 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 
 </div>
 </div>
-<a id="a4e2e79e2d9fe2c3ddd78f73587a559f0" name="a4e2e79e2d9fe2c3ddd78f73587a559f0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e2e79e2d9fe2c3ddd78f73587a559f0">&#9670;&#160;</a></span>Recv()</h2>
+<a id="a08b5473acfb9a295bb202db56d7c10d7" name="a08b5473acfb9a295bb202db56d7c10d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08b5473acfb9a295bb202db56d7c10d7">&#9670;&#160;</a></span>Recv()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;std::ranges::contiguous_range R&gt; <br />
 requires ByteLike&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a>&gt;&gt;</div>
@@ -424,8 +388,18 @@ requires ByteLike&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_he
           <td class="memname"><a class="el" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::Recv </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a> &amp;&amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
+          <td class="paramname"><em>data</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a>&#160;</td>
+          <td class="paramname"><em>mode</em> = <code><a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">RecvModeEnum::All</a></code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
   </td>
@@ -444,7 +418,7 @@ requires ByteLike&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_he
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ByteLike Byte = std::byte&gt; </div>
 <table class="mlabels">
@@ -465,18 +439,18 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
 </table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd>Returns a seamlessly input_range to the data received by the socket.</dd></dl>
-<p>It delays the char retrieved from <a class="el" href="struct_hermes_1_1_server_socket.html#a768a6064ed801cd988032bfaf4e00392">RecvStream()</a> by 1 and discards the last char (0x04 end of transmission in cause of exhaustive read), working similar to what you get in other languages (retrieving the data on ++).</p>
+<p>It delays the char retrieved from <a class="el" href="struct_hermes_1_1_server_socket.html#a844ecba99e9e056900a1938e64aa2ff2">RecvStream()</a> by 1 and discards the last char (0x04 end of transmission in cause of exhaustive read), working similar to what you get in other languages (retrieving the data on ++).</p>
 <dl class="section note"><dt>Note</dt><dd>If it isn't an exhaustive read, the next char that you was expecting will be discarded anyway so keep you aware of this. </dd></dl>
 
 </div>
 </div>
-<a id="a768a6064ed801cd988032bfaf4e00392" name="a768a6064ed801cd988032bfaf4e00392"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a768a6064ed801cd988032bfaf4e00392">&#9670;&#160;</a></span>RecvStream()</h2>
+<a id="a844ecba99e9e056900a1938e64aa2ff2" name="a844ecba99e9e056900a1938e64aa2ff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a844ecba99e9e056900a1938e64aa2ff2">&#9670;&#160;</a></span>RecvStream()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ByteLike Byte = std::byte&gt; </div>
 <table class="mlabels">
@@ -484,7 +458,7 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>&lt; SocketData &gt;::template RecvStream&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt; <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::RecvStream </td>
+          <td class="memname">TransferPolicy::template RecvStream&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt; <a class="el" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::RecvStream </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -507,7 +481,7 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> AcceptPolicy = DefaultAcceptPolicy, <a class="el" href="struct_hermes_1_1_default_socket_data.html">template</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> TransferPolicy = DefaultTransferPolicy&gt; </div>
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;std::ranges::contiguous_range R&gt; <br />
 requires ByteLike&lt;std::remove_cv_t&lt;std::ranges::range_value_t&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">R</a>&gt;&gt;&gt;</div>

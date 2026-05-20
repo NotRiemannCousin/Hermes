@@ -147,82 +147,82 @@ $(document).ready(function(){initNavTree('_2home_2runner_2work_2_hermes_2_hermes
 <div class="line"><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">template</span>&lt;</div>
-<div class="line">        SocketDataConcept SocketDataType             = DefaultSocketData&lt;&gt;,</div>
-<div class="line">        <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>AcceptPolicyType      = DefaultAcceptPolicy,</div>
-<div class="line">        <span class="keyword">template</span> &lt;<span class="keyword">class</span>&gt; <span class="keyword">class </span>TransferPolicyType    = DefaultTransferPolicy&gt;</div>
-<div class="line">    <span class="keyword">requires</span> AcceptPolicyConcept&lt;AcceptPolicyType, SocketDataType&gt; &amp;&amp; TransferPolicyConcept&lt;TransferPolicyType, SocketDataType&gt;</div>
+<div class="line">        SocketDataConcept SocketData = DefaultSocketData&lt;&gt;,</div>
+<div class="line">        <span class="keyword">class </span>AcceptPolicy           = DefaultAcceptPolicy&lt;&gt;,</div>
+<div class="line">        <span class="keyword">class </span>TransferPolicy         = DefaultTransferPolicy&lt;&gt;&gt;</div>
+<div class="line">    <span class="keyword">requires</span> AcceptPolicyConcept&lt;AcceptPolicy, SocketData&gt; &amp;&amp; TransferPolicyConcept&lt;TransferPolicy, SocketData&gt;</div>
 <div class="line">    <span class="keyword">struct </span>ListenerSocket {</div>
-<div class="line">        <span class="keyword">using </span><a id="a0" name="a0"></a><a class="code hl_typedef" href="struct_hermes_1_1_listener_socket.html#a4591e75d8b1dfb29a7e8c5de7dd469de">ServerSocketType</a> = ServerSocket&lt;SocketDataType, AcceptPolicyType, TransferPolicyType&gt;;</div>
+<div class="line">        <span class="keyword">using </span><a id="a0" name="a0"></a><a class="code hl_typedef" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> = ServerSocket&lt;SocketData, AcceptPolicy, TransferPolicy&gt;;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">        ListenerSocket(ListenerSocket&amp;&amp;) <span class="keyword">noexcept</span>;</div>
-<div class="line">        ListenerSocket&amp; <a id="a1" name="a1"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a2bd96f8d78ce33ec8a8c06ece8a0958a">operator=</a>(ListenerSocket&amp;&amp;) <span class="keyword">noexcept</span>;</div>
-<div class="line">        <a id="a2" name="a2"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a86ccfaae5d1b1b92ed4173b1eace7c2f">~ListenerSocket</a>();</div>
+<div class="line">        ListenerSocket&amp; <a id="a1" name="a1"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ae99795f8af3841bdc205f2ae4d16c295">operator=</a>(ListenerSocket&amp;&amp;) <span class="keyword">noexcept</span>;</div>
+<div class="line">        <a id="a2" name="a2"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64">~ListenerSocket</a>();</div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
 <div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
-<div class="line">            <a id="a3" name="a3"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Listen</a>(SocketDataType&amp;&amp; data, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span></div>
-<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions&gt;;</div>
+<div class="line">            <a id="a3" name="a3"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a74996bb727dc930eebaed6d4f9e1a89b">Listen</a>(SocketData&amp;&amp; data, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicy::ListenOptions&gt;;</div>
 <div class="line"> </div>
 <div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
-<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Listen</a>(SocketDataType&amp;&amp; data, AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions opt, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span>;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a74996bb727dc930eebaed6d4f9e1a89b">Listen</a>(SocketData&amp;&amp; data, AcceptPolicy::ListenOptions opt, <span class="keywordtype">int</span> backlog = SOMAXCONN) <span class="keyword">noexcept</span>;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
 <div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
-<div class="line">            <a id="a4" name="a4"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">ListenOne</a>(SocketDataType&amp;&amp; data) <span class="keyword">noexcept</span></div>
-<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions&gt;;</div>
+<div class="line">            <a id="a4" name="a4"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a06bfbaa1436de9e47a192105b722e756">ListenOne</a>(SocketData&amp;&amp; data) <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicy::ListenOptions&gt;;</div>
 <div class="line"> </div>
 <div class="line">        [[nodiscard]] <span class="keyword">static</span> ConnectionResult&lt;ListenerSocket&gt;</div>
-<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">ListenOne</a>(SocketDataType&amp;&amp; data, AcceptPolicyType&lt;SocketDataType&gt;::ListenOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a06bfbaa1436de9e47a192105b722e756">ListenOne</a>(SocketData&amp;&amp; data, AcceptPolicy::ListenOptions opt) <span class="keyword">noexcept</span>;</div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
-<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a5" name="a5"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">AcceptOne</a>() <span class="keyword">noexcept</span></div>
-<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a5" name="a5"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e">AcceptOne</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicy::AcceptOptions&gt;;</div>
 <div class="line"> </div>
-<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a6" name="a6"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a8779e7a7e234d18b2aa514c2280c7b60">AcceptOneConnection</a>() <span class="keyword">noexcept</span></div>
-<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a id="a6" name="a6"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ab863373b13bcf36f6f74a333d08ab77d">AcceptOneConnection</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicy::AcceptOptions&gt;;</div>
 <div class="line"> </div>
-<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">AcceptOne</a>(AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line">        [[nodiscard]] ConnectionResult&lt;ServerSocketType&gt; <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e">AcceptOne</a>(AcceptPolicy::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
 <div class="line"> </div>
 <div class="line"> </div>
 <div class="line">        <span class="keyword">template</span>&lt;<span class="keyword">class</span> = <span class="keywordtype">void</span>&gt;</div>
 <div class="line">        [[nodiscard]] std::generator&lt;ConnectionResult&lt;ServerSocketType&gt;&gt;</div>
-<div class="line">            <a id="a7" name="a7"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">AcceptAll</a>() <span class="keyword">noexcept</span></div>
-<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions&gt;;</div>
+<div class="line">            <a id="a7" name="a7"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">AcceptAll</a>() <span class="keyword">noexcept</span></div>
+<div class="line">            <span class="keyword">requires</span> std::default_initializable&lt;typename AcceptPolicy::AcceptOptions&gt;;</div>
 <div class="line"> </div>
 <div class="line">        [[nodiscard]] std::generator&lt;ConnectionResult&lt;ServerSocketType&gt;&gt;</div>
-<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">AcceptAll</a>(AcceptPolicyType&lt;SocketDataType&gt;::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
+<div class="line">            <a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">AcceptAll</a>(AcceptPolicy::AcceptOptions opt) <span class="keyword">noexcept</span>;</div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordtype">void</span> <a id="a8" name="a8"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#a4d5929a4be508cda72dabcd9e3fc3930">Close</a>() <span class="keyword">noexcept</span>;</div>
-<div class="line">        <span class="keywordtype">void</span> <a id="a9" name="a9"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#abbde0638a0d30257371a0334b1bf1e5b">Abort</a>() <span class="keyword">noexcept</span>;</div>
+<div class="line">        <span class="keywordtype">void</span> <a id="a8" name="a8"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#ae017ea0444e0f9d916a0126e576ae4ea">Close</a>() <span class="keyword">noexcept</span>;</div>
+<div class="line">        <span class="keywordtype">void</span> <a id="a9" name="a9"></a><a class="code hl_function" href="struct_hermes_1_1_listener_socket.html#adf16b1ee03e8a25d4729653e532cc975">Abort</a>() <span class="keyword">noexcept</span>;</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">private</span>:</div>
 <div class="line">        ListenerSocket() = <span class="keywordflow">default</span>;</div>
 <div class="line"> </div>
-<div class="line">        SocketDataType                   socketData{};</div>
-<div class="line">        AcceptPolicyType&lt;SocketDataType&gt; acceptPolicy{};</div>
+<div class="line">        SocketData   socketData{};</div>
+<div class="line">        AcceptPolicy acceptPolicy{};</div>
 <div class="line">    };</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">using </span><a id="a10" name="a10"></a><a class="code hl_typedef" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">RawTcpListener</a> = ListenerSocket&lt;&gt;;</div>
-<div class="line">    <span class="keyword">using </span><a id="a11" name="a11"></a><a class="code hl_typedef" href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">RawTlsListener</a> = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy, TlsTransferPolicy&gt;;</div>
+<div class="line">    <span class="keyword">using </span><a id="a11" name="a11"></a><a class="code hl_typedef" href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">RawTlsListener</a> = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"> </div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;Hermes/Socket/Sync/ListenerSocket.tpp&gt;</span></div>
 <div class="ttc" id="a_server_socket_8hpp_html"><div class="ttname"><a href="_server_socket_8hpp.html">ServerSocket.hpp</a></div></div>
-<div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
-<div class="ttc" id="anamespace_hermes_html_a0fa765db9251cbd7dc79d930989810c7"><div class="ttname"><a href="namespace_hermes.html#a0fa765db9251cbd7dc79d930989810c7">Hermes::RawTlsListener</a></div><div class="ttdeci">ListenerSocket&lt; TlsSocketData&lt;&gt;, TlsAcceptPolicy, TlsTransferPolicy &gt; RawTlsListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:92</div></div>
+<div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:9</div></div>
 <div class="ttc" id="anamespace_hermes_html_a10af606e98c70fcda458f4a610867a04"><div class="ttname"><a href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">Hermes::RawTcpListener</a></div><div class="ttdeci">ListenerSocket&lt;&gt; RawTcpListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:91</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a295f035aa6abbfcba1b6a65f0f05884c"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a295f035aa6abbfcba1b6a65f0f05884c">Hermes::ListenerSocket::Listen</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; Listen(SocketDataType &amp;&amp;data, int backlog=SOMAXCONN) noexcept</div><div class="ttdoc">Creates the listener: socket() + bind() + listen().</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a2bd96f8d78ce33ec8a8c06ece8a0958a"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a2bd96f8d78ce33ec8a8c06ece8a0958a">Hermes::ListenerSocket::operator=</a></div><div class="ttdeci">ListenerSocket &amp; operator=(ListenerSocket &amp;&amp;) noexcept</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a4591e75d8b1dfb29a7e8c5de7dd469de"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a4591e75d8b1dfb29a7e8c5de7dd469de">Hermes::ListenerSocket::ServerSocketType</a></div><div class="ttdeci">ServerSocket&lt; SocketDataType, AcceptPolicyType, TransferPolicyType &gt; ServerSocketType</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:21</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a4d5929a4be508cda72dabcd9e3fc3930"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a4d5929a4be508cda72dabcd9e3fc3930">Hermes::ListenerSocket::Close</a></div><div class="ttdeci">void Close() noexcept</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a65a900544f450c0c0951df4a42c1325a"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a65a900544f450c0c0951df4a42c1325a">Hermes::ListenerSocket::AcceptOne</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOne() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a86ccfaae5d1b1b92ed4173b1eace7c2f"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a86ccfaae5d1b1b92ed4173b1eace7c2f">Hermes::ListenerSocket::~ListenerSocket</a></div><div class="ttdeci">~ListenerSocket()</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a8779e7a7e234d18b2aa514c2280c7b60"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a8779e7a7e234d18b2aa514c2280c7b60">Hermes::ListenerSocket::AcceptOneConnection</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOneConnection() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_ab72e049541f8577cdd5f1f6e11da0de0"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#ab72e049541f8577cdd5f1f6e11da0de0">Hermes::ListenerSocket::ListenOne</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; ListenOne(SocketDataType &amp;&amp;data) noexcept</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_abbde0638a0d30257371a0334b1bf1e5b"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#abbde0638a0d30257371a0334b1bf1e5b">Hermes::ListenerSocket::Abort</a></div><div class="ttdeci">void Abort() noexcept</div></div>
-<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_adc8e4cfc1d7e45c69a2b3fcb6e5f98d1"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#adc8e4cfc1d7e45c69a2b3fcb6e5f98d1">Hermes::ListenerSocket::AcceptAll</a></div><div class="ttdeci">std::generator&lt; ConnectionResult&lt; ServerSocketType &gt; &gt; AcceptAll() noexcept</div></div>
+<div class="ttc" id="anamespace_hermes_html_ae401023cfb21220a1a3fde29593bf48b"><div class="ttname"><a href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">Hermes::RawTlsListener</a></div><div class="ttdeci">ListenerSocket&lt; TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt; &gt; RawTlsListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:92</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a06bfbaa1436de9e47a192105b722e756"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a06bfbaa1436de9e47a192105b722e756">Hermes::ListenerSocket::ListenOne</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; ListenOne(SocketData &amp;&amp;data) noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a74996bb727dc930eebaed6d4f9e1a89b"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a74996bb727dc930eebaed6d4f9e1a89b">Hermes::ListenerSocket::Listen</a></div><div class="ttdeci">static ConnectionResult&lt; ListenerSocket &gt; Listen(SocketData &amp;&amp;data, int backlog=SOMAXCONN) noexcept</div><div class="ttdoc">Creates the listener: socket() + bind() + listen().</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a83a43d469badac3ea8ec0ddad92ecb64"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64">Hermes::ListenerSocket::~ListenerSocket</a></div><div class="ttdeci">~ListenerSocket()</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a84daf85af7ddc68e19bd3a1df23790e6"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">Hermes::ListenerSocket::ServerSocketType</a></div><div class="ttdeci">ServerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt; ServerSocketType</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:21</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_ab863373b13bcf36f6f74a333d08ab77d"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#ab863373b13bcf36f6f74a333d08ab77d">Hermes::ListenerSocket::AcceptOneConnection</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOneConnection() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_adf16b1ee03e8a25d4729653e532cc975"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#adf16b1ee03e8a25d4729653e532cc975">Hermes::ListenerSocket::Abort</a></div><div class="ttdeci">void Abort() noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_ae017ea0444e0f9d916a0126e576ae4ea"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#ae017ea0444e0f9d916a0126e576ae4ea">Hermes::ListenerSocket::Close</a></div><div class="ttdeci">void Close() noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_ae99795f8af3841bdc205f2ae4d16c295"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#ae99795f8af3841bdc205f2ae4d16c295">Hermes::ListenerSocket::operator=</a></div><div class="ttdeci">ListenerSocket &amp; operator=(ListenerSocket &amp;&amp;) noexcept</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_af04452e43d9e0af9b0de54f486975f2e"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e">Hermes::ListenerSocket::AcceptOne</a></div><div class="ttdeci">ConnectionResult&lt; ServerSocketType &gt; AcceptOne() noexcept</div><div class="ttdoc">Blocks until one client connects, then returns a ready ServerSocket.</div></div>
+<div class="ttc" id="astruct_hermes_1_1_listener_socket_html_afadee9467fada0be2dea9497f55d5c4f"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">Hermes::ListenerSocket::AcceptAll</a></div><div class="ttdeci">std::generator&lt; ConnectionResult&lt; ServerSocketType &gt; &gt; AcceptAll() noexcept</div></div>
 </div><!-- fragment --> </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

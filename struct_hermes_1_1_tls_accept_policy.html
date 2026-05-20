@@ -134,7 +134,10 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_tls_accept_policy.ht
 <div class="header">
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#friends">Friends</a> &#124;
 <a href="struct_hermes_1_1_tls_accept_policy-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Hermes::TlsAcceptPolicy&lt; Data &gt; Struct Template Reference</div></div>
 </div><!--header-->
@@ -149,21 +152,51 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy_1_1_listen_options.html">ListenOptions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:ac5077988c534b1fe7f5b10900d6b272b" id="r_ac5077988c534b1fe7f5b10900d6b272b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#ac5077988c534b1fe7f5b10900d6b272b">EndpointType</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Data::EndpointType</td></tr>
+<tr class="separator:ac5077988c534b1fe7f5b10900d6b272b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a696f9a2b61c586a7fc982ac1c84c4e7c" id="r_a696f9a2b61c586a7fc982ac1c84c4e7c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#a696f9a2b61c586a7fc982ac1c84c4e7c">Listen</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>, <a class="el" href="struct_hermes_1_1_tls_accept_policy_1_1_listen_options.html">ListenOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a696f9a2b61c586a7fc982ac1c84c4e7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the listening socket: socket() + bind() + listen(). Identical to <a class="el" href="struct_hermes_1_1_default_accept_policy.html#a4447f1392d9a1cd60ba1cab982dcd156" title="Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listeni...">DefaultAcceptPolicy::Listen</a> — TLS operates per-connection, not on the listening socket itself.  <br /></td></tr>
 <tr class="separator:a696f9a2b61c586a7fc982ac1c84c4e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2f1be232537cd4aa01f975d21886db4f" id="r_a2f1be232537cd4aa01f975d21886db4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#a2f1be232537cd4aa01f975d21886db4f">Accept</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">outData</a>, <a class="el" href="struct_hermes_1_1_tls_accept_policy_1_1_accept_options.html">AcceptOptions</a> options) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a2f1be232537cd4aa01f975d21886db4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts one incoming connection and performs the TLS server handshake. Fills outData.socket, outData.endpoint, and all SChannel context fields. Sets outData.isServer = true on success.  <br /></td></tr>
 <tr class="separator:a2f1be232537cd4aa01f975d21886db4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0e0ea1aa0ca59e63af52d9a88cb80802" id="r_a0e0ea1aa0ca59e63af52d9a88cb80802"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#a0e0ea1aa0ca59e63af52d9a88cb80802">Close</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:a0e0ea1aa0ca59e63af52d9a88cb80802"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends the TLS close_notify alert and closes the accepted connection.  <br /></td></tr>
 <tr class="separator:a0e0ea1aa0ca59e63af52d9a88cb80802"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb381f94e3847c9657c966d9d5d29c84" id="r_acb381f94e3847c9657c966d9d5d29c84"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#acb381f94e3847c9657c966d9d5d29c84">Abort</a> (<a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
-<tr class="memdesc:acb381f94e3847c9657c966d9d5d29c84"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the listening socket. No TLS alert needed.  <br /></td></tr>
 <tr class="separator:acb381f94e3847c9657c966d9d5d29c84"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a6a907a50d3d7c2197efe0a8516236925" id="r_a6a907a50d3d7c2197efe0a8516236925"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#a6a907a50d3d7c2197efe0a8516236925">Family</a> { Data::Family }</td></tr>
+<tr class="separator:a6a907a50d3d7c2197efe0a8516236925"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd12505473f5fba7e8657e452165955e" id="r_abd12505473f5fba7e8657e452165955e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#abd12505473f5fba7e8657e452165955e">Type</a> { Data::Type }</td></tr>
+<tr class="separator:abd12505473f5fba7e8657e452165955e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:afa4f4c26e88ad8747619d59e37d0f89f" id="r_afa4f4c26e88ad8747619d59e37d0f89f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_accept_policy.html#afa4f4c26e88ad8747619d59e37d0f89f">TlsAsyncAcceptPolicy&lt; Data &gt;</a></td></tr>
+<tr class="separator:afa4f4c26e88ad8747619d59e37d0f89f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="ac5077988c534b1fe7f5b10900d6b272b" name="ac5077988c534b1fe7f5b10900d6b272b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5077988c534b1fe7f5b10900d6b272b">&#9670;&#160;</a></span>EndpointType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">Hermes::TlsAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::EndpointType =  <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> Data::EndpointType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a id="acb381f94e3847c9657c966d9d5d29c84" name="acb381f94e3847c9657c966d9d5d29c84"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acb381f94e3847c9657c966d9d5d29c84">&#9670;&#160;</a></span>Abort()</h2>
@@ -190,8 +223,6 @@ template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Closes the listening socket. No TLS alert needed. </p>
 
 </div>
 </div>
@@ -237,8 +268,6 @@ template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Accepts one incoming connection and performs the TLS server handshake. Fills outData.socket, outData.endpoint, and all SChannel context fields. Sets outData.isServer = true on success. </p>
-
 </div>
 </div>
 <a id="a0e0ea1aa0ca59e63af52d9a88cb80802" name="a0e0ea1aa0ca59e63af52d9a88cb80802"></a>
@@ -266,8 +295,6 @@ template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-
-<p>Sends the TLS close_notify alert and closes the accepted connection. </p>
 
 </div>
 </div>
@@ -313,7 +340,79 @@ template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates the listening socket: socket() + bind() + listen(). Identical to <a class="el" href="struct_hermes_1_1_default_accept_policy.html#a4447f1392d9a1cd60ba1cab982dcd156" title="Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listeni...">DefaultAcceptPolicy::Listen</a> — TLS operates per-connection, not on the listening socket itself. </p>
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="afa4f4c26e88ad8747619d59e37d0f89f" name="afa4f4c26e88ad8747619d59e37d0f89f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa4f4c26e88ad8747619d59e37d0f89f">&#9670;&#160;</a></span>TlsAsyncAcceptPolicy&lt; Data &gt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">friend</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">struct</a> <a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html">TlsAsyncAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a6a907a50d3d7c2197efe0a8516236925" name="a6a907a50d3d7c2197efe0a8516236925"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a907a50d3d7c2197efe0a8516236925">&#9670;&#160;</a></span>Family</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">Hermes::TlsAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Family { Data::Family }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abd12505473f5fba7e8657e452165955e" name="abd12505473f5fba7e8657e452165955e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd12505473f5fba7e8657e452165955e">&#9670;&#160;</a></span>Type</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">Hermes::TlsAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Type { Data::Type }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
