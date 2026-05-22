@@ -148,6 +148,8 @@ $(document).ready(function(){initNavTree('struct_hermes_1_1_default_async_accept
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html">AcceptOptions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy_1_1_listener_extensions.html">ListenerExtensions</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy_1_1_listen_options.html">ListenOptions</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -175,6 +177,10 @@ Static Public Attributes</h2></td></tr>
 <tr class="separator:ab5371d546708ca9fbbfcdc6ce1142dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae7c5a112b63bc6ce515826d7e4eb6fe9" id="r_ae7c5a112b63bc6ce515826d7e4eb6fe9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">constexpr</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy.html#ae7c5a112b63bc6ce515826d7e4eb6fe9">Type</a> { Data::Type }</td></tr>
 <tr class="separator:ae7c5a112b63bc6ce515826d7e4eb6fe9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a614f906ee1ded6036e3dee66b2b89f7a" id="r_a614f906ee1ded6036e3dee66b2b89f7a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> std::mutex&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy.html#a614f906ee1ded6036e3dee66b2b89f7a">s_listenerExtensionsMutex</a></td></tr>
+<tr class="separator:a614f906ee1ded6036e3dee66b2b89f7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1e98dacdbe71bed3d6b46ff030444ff" id="r_aa1e98dacdbe71bed3d6b46ff030444ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> std::unordered_map&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SOCKET</a>, <a class="el" href="struct_hermes_1_1_default_async_accept_policy_1_1_listener_extensions.html">ListenerExtensions</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_async_accept_policy.html#aa1e98dacdbe71bed3d6b46ff030444ff">s_listenerExtensions</a></td></tr>
+<tr class="separator:aa1e98dacdbe71bed3d6b46ff030444ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Typedef Documentation</h2>
 <a id="a3dc36e98cd230ea2787059781cf3eae3" name="a3dc36e98cd230ea2787059781cf3eae3"></a>
@@ -379,6 +385,54 @@ template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
   </td>
   <td class="mlabels-right">
 <span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa1e98dacdbe71bed3d6b46ff030444ff" name="aa1e98dacdbe71bed3d6b46ff030444ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1e98dacdbe71bed3d6b46ff030444ff">&#9670;&#160;</a></span>s_listenerExtensions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOCKET</a>, <a class="el" href="struct_hermes_1_1_default_async_accept_policy_1_1_listener_extensions.html">ListenerExtensions</a>&gt; <a class="el" href="struct_hermes_1_1_default_async_accept_policy.html">Hermes::DefaultAsyncAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::s_listenerExtensions</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a614f906ee1ded6036e3dee66b2b89f7a" name="a614f906ee1ded6036e3dee66b2b89f7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a614f906ee1ded6036e3dee66b2b89f7a">&#9670;&#160;</a></span>s_listenerExtensionsMutex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = DefaultSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::mutex <a class="el" href="struct_hermes_1_1_default_async_accept_policy.html">Hermes::DefaultAsyncAcceptPolicy</a>&lt; <a class="el" href="_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::s_listenerExtensionsMutex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">

@@ -61,6 +61,7 @@ var hierarchy =
     [ "Hermes::_details::ITlsTransferStateMachine< Data >", "struct_hermes_1_1__details_1_1_i_tls_transfer_state_machine.html", [
       [ "Hermes::_details::TlsTransferStateMachine< Data, TransferPolicy >", "struct_hermes_1_1__details_1_1_tls_transfer_state_machine.html", null ]
     ] ],
+    [ "Hermes::DefaultAsyncAcceptPolicy< Data >::ListenerExtensions", "struct_hermes_1_1_default_async_accept_policy_1_1_listener_extensions.html", null ],
     [ "Hermes::ListenerSocket< SocketData, AcceptPolicy, TransferPolicy >", "struct_hermes_1_1_listener_socket.html", null ],
     [ "Hermes::Network", "struct_hermes_1_1_network.html", null ],
     [ "Hermes::FastIoScheduleSender::OperationState< Receiver >", "struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html", null ],

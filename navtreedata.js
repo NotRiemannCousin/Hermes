@@ -82,8 +82,8 @@ var NAVTREEINDEX =
 "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbae72ed1a5338bf740f526f2a9a77db770",
 "group___async_socket_concepts.html",
 "struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#a57e9188a3aa8102d1f85bff833a71d18",
-"struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7",
-"struct_hermes_1_1_tls_async_connect_policy.html#a1607d5dbd1c94ac10e3f901e2bd271fe"
+"struct_hermes_1_1_default_socket_data.html",
+"struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html#ad5f0d5b2143d9affb57f5e4ea9a0649f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

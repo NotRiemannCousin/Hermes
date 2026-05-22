@@ -184,14 +184,6 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 <tr class="memitem:ac6c05da53f759e76f0386087bebaf2e8" id="r_ac6c05da53f759e76f0386087bebaf2e8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7">ListenSender</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#ac6c05da53f759e76f0386087bebaf2e8">Listen</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">backlog</a>=<a class="el" href="struct_hermes_1_1_default_socket_data.html">SOMAXCONN</a>)</td></tr>
 <tr class="memdesc:ac6c05da53f759e76f0386087bebaf2e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a listener socket. This is a synchronous operation.  <br /></td></tr>
 <tr class="separator:ac6c05da53f759e76f0386087bebaf2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a288dd96371ec9c1a1fa87295005d9a62" id="r_a288dd96371ec9c1a1fa87295005d9a62"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</td></tr>
-<tr class="memitem:a288dd96371ec9c1a1fa87295005d9a62"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7">ListenSender</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a288dd96371ec9c1a1fa87295005d9a62">ListenOne</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>)</td></tr>
-<tr class="memdesc:a288dd96371ec9c1a1fa87295005d9a62"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a listener socket with a backlog of 1. This is a synchronous operation.  <br /></td></tr>
-<tr class="separator:a288dd96371ec9c1a1fa87295005d9a62"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8b1bf0ec99cdce21a9b9e3d94f69f3c8" id="r_a8b1bf0ec99cdce21a9b9e3d94f69f3c8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7">ListenSender</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a8b1bf0ec99cdce21a9b9e3d94f69f3c8">ListenOne</a> (SocketData &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>)</td></tr>
-<tr class="memdesc:a8b1bf0ec99cdce21a9b9e3d94f69f3c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a listener socket with a backlog of 1. This is a synchronous operation.  <br /></td></tr>
-<tr class="separator:a8b1bf0ec99cdce21a9b9e3d94f69f3c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -496,81 +488,6 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 </div><div class="memdoc">
 
 <p>Creates a listener socket. This is a synchronous operation. </p>
-<dl class="section return"><dt>Returns</dt><dd>A sender that yields an <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> on success. </dd></dl>
-
-</div>
-</div>
-<a id="a288dd96371ec9c1a1fa87295005d9a62" name="a288dd96371ec9c1a1fa87295005d9a62"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a288dd96371ec9c1a1fa87295005d9a62">&#9670;&#160;</a></span>ListenOne() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
-<div class="memtemplate">
-template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&gt;</div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7">ListenSender</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::ListenOne </td>
-          <td>(</td>
-          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
-          <td class="paramname"><em>data</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a listener socket with a backlog of 1. This is a synchronous operation. </p>
-<dl class="section return"><dt>Returns</dt><dd>A sender that yields an <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> on success. </dd></dl>
-
-</div>
-</div>
-<a id="a8b1bf0ec99cdce21a9b9e3d94f69f3c8" name="a8b1bf0ec99cdce21a9b9e3d94f69f3c8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8b1bf0ec99cdce21a9b9e3d94f69f3c8">&#9670;&#160;</a></span>ListenOne() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAsyncAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultAsyncTransferPolicy&lt;&gt;&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">static</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7">ListenSender</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html">Hermes::AsyncListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::ListenOne </td>
-          <td>(</td>
-          <td class="paramtype">SocketData &amp;&amp;&#160;</td>
-          <td class="paramname"><em>data</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::ListenOptions&#160;</td>
-          <td class="paramname"><em>opt</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Creates a listener socket with a backlog of 1. This is a synchronous operation. </p>
 <dl class="section return"><dt>Returns</dt><dd>A sender that yields an <a class="el" href="struct_hermes_1_1_async_listener_socket.html">AsyncListenerSocket</a> on success. </dd></dl>
 
 </div>
