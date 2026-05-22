@@ -1,5 +1,7 @@
 #pragma once
 #include <Hermes/Socket/Async/AsyncServerSocket.hpp>
+#include <Hermes/Socket/_base.hpp>
+#include <stdexec/execution.hpp>
 
 namespace Hermes {
 
@@ -9,6 +11,8 @@ namespace Hermes {
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
     requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     struct AsyncListenerSocket {
+    public:
+        struct ListenSender;
         using ServerSocketType = AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>;
         using EndpointType = SocketData::EndpointType;
 
@@ -16,48 +20,63 @@ namespace Hermes {
         AsyncListenerSocket& operator=(AsyncListenerSocket&&) noexcept;
         ~AsyncListenerSocket();
 
+        /**
+         * @brief Creates a listener socket. This is a synchronous operation.
+         * @return A sender that yields an AsyncListenerSocket on success.
+         */
         template<class = void>
-        [[nodiscard]] static ConnectionResult<AsyncListenerSocket>
-            Listen(SocketData&& data, int backlog = SOMAXCONN) noexcept
+        [[nodiscard]] static ListenSender Listen(SocketData&& data, int backlog = SOMAXCONN)
             requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
 
-        [[nodiscard]] static ConnectionResult<AsyncListenerSocket>
-            Listen(SocketData&& data, typename AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN) noexcept;
+        /**
+         * @brief Creates a listener socket. This is a synchronous operation.
+         * @return A sender that yields an AsyncListenerSocket on success.
+         */
+        [[nodiscard]] static ListenSender Listen(SocketData&& data, typename AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN);
 
+        /**
+         * @brief Creates a listener socket with a backlog of 1. This is a synchronous operation.
+         * @return A sender that yields an AsyncListenerSocket on success.
+         */
         template<class = void>
-        [[nodiscard]] static ConnectionResult<AsyncListenerSocket>
-            ListenOne(SocketData&& data) noexcept
+        [[nodiscard]] static ListenSender ListenOne(SocketData&& data)
             requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
 
-        [[nodiscard]] static ConnectionResult<AsyncListenerSocket>
-            ListenOne(SocketData&& data, typename AcceptPolicy::ListenOptions opt) noexcept;
+        /**
+         * @brief Creates a listener socket with a backlog of 1. This is a synchronous operation.
+         * @return A sender that yields an AsyncListenerSocket on success.
+         */
+        [[nodiscard]] static ListenSender ListenOne(SocketData&& data, typename AcceptPolicy::ListenOptions opt);
 
         //! @brief Asynchronously accepts a new client connection.
         //! @return A sender that yields an AsyncServerSocket on success.
         template<class = void>
-        [[nodiscard]] auto AsyncAcceptOne() noexcept
+        [[nodiscard]] auto AsyncAcceptOne()
             requires std::default_initializable<typename AcceptPolicy::AcceptOptions>;
 
         //! @copydoc AsyncAcceptOne
-        [[nodiscard]] auto AsyncAcceptOne(typename AcceptPolicy::AcceptOptions opt) noexcept;
+        [[nodiscard]] auto AsyncAcceptOne(typename AcceptPolicy::AcceptOptions opt);
 
         [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
-
-        // Note: AsyncAcceptAll() generator is intentionally omitted as std::async_generator
-        // is not yet in the C++ standard. Use `repeat_effect` or `while` inside coroutines.
 
         void Close() noexcept;
         void Abort() noexcept;
 
     private:
+        friend struct ListenSender;
         AsyncListenerSocket() = default;
+
+        static ConnectionResult<AsyncListenerSocket> InternalCreateAndListen(
+            SocketData&& data,
+            typename AcceptPolicy::ListenOptions opt,
+            int backlog) noexcept;
 
         SocketData   socketData{};
         AcceptPolicy acceptPolicy{};
     };
 
     using RawTcpAsyncListener = AsyncListenerSocket<>;
-    using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    // using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 
 }
 

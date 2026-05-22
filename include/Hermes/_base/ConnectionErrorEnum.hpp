@@ -49,7 +49,9 @@ namespace Hermes {
         ResolveNoAddressFound,
         UnsupportedAddressFamily,
 
-        RenegotiationRequired
+        RenegotiationRequired,
+
+        NoScheduler
     };
 
     template<class T>

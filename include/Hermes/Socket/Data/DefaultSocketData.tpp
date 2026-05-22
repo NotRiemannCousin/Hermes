@@ -7,7 +7,8 @@ namespace Hermes {
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     DefaultSocketData<Endpoint, SocketType, SocketFamily>::DefaultSocketData(DefaultSocketData &&other) noexcept :
-                socket{std::exchange(other.socket, macroINVALID_SOCKET)} {}
+                socket{std::exchange(other.socket, macroINVALID_SOCKET)},
+                endpoint{ other.endpoint } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     DefaultSocketData<Endpoint, SocketType, SocketFamily>& DefaultSocketData<Endpoint, SocketType, SocketFamily>::operator=(DefaultSocketData &&other) noexcept {

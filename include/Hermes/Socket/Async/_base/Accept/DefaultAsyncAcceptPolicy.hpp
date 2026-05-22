@@ -13,15 +13,17 @@ namespace Hermes {
         static constexpr auto Type{ Data::Type };
         using EndpointType = typename Data::EndpointType;
 
-        struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {};
-
-        struct AcceptOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions {
-            FastIoLoop* scheduler{};
+        struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {
+            FastIoLoop* scheduler;
         };
 
-        static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options) noexcept;
-        static auto AsyncAccept(Data& listenData, Data& clientData, AcceptOptions options) noexcept;
-        static auto AsyncShutdown(Data& data) noexcept;
+        struct AcceptOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions {
+            FastIoLoop* scheduler;
+        };
+
+        static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
+        static auto AsyncAccept(Data& listenData, AcceptOptions options);
+        static auto AsyncShutdown(Data& data);
 
         static void Close(Data& data) noexcept;
         static void Abort(Data& data) noexcept;

@@ -2,109 +2,116 @@
 #include <Hermes/Socket/Async/AsyncListenerSocket.hpp>
 #include <Hermes/Utils/UntilMatch.hpp>
 
+#include <exec/start_detached.hpp>
 #include <stdexec/execution.hpp>
-#include <exec/task.hpp>
+#include <exec/repeat_until.hpp>
 
 #include <string_view>
 #include <string>
 #include <array>
 #include <print>
 #include <format>
-#include <expected>
+#include <iostream>
 #include <memory>
 #include <thread>
+#include <stdexcept>
 
 namespace rg = std::ranges;
 namespace vs = std::views;
 
-// Handle a single client connection natively within its own execution frame
-static exec::task<void> S_HandleClientAsync(std::shared_ptr<Hermes::RawTcpAsyncServer> client_ptr) {
+struct ClientState {
+    Hermes::RawTcpAsyncServer client;
+    std::array<char, 8192> buffer{};
+    std::string socketView{};
+    std::string response{};
+};
+
+static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
     using namespace std::literals::string_view_literals;
-    auto& client = *client_ptr;
 
-    try {
-        std::array<char, 8192> buffer{};
-        std::string socketView{};
+    auto s_onSendComplete = [state](const auto&...) {
+        return state->client.AsyncShutdown();
+    };
 
-        const size_t bytesReceived{ co_await client.AsyncRecv(buffer, Hermes::RecvModeEnum::Any) };
-
+    auto s_onRecv = [state, s_onSendComplete](const size_t bytesReceived) {
         if (bytesReceived == 0) {
             std::println("Connection gracefully closed by peer.");
-            co_return;
+            throw std::runtime_error("Closed");
         }
 
-        socketView.append(buffer.data(), bytesReceived);
+        state->socketView.append(state->buffer.data(), bytesReceived);
 
-        const auto headerEnd{ socketView.find("\r\n\r\n") };
+        const auto headerEnd{ state->socketView.find("\r\n\r\n") };
         if (headerEnd == std::string::npos) {
             std::println(stderr, "Incomplete headers received.");
-            co_return;
+            throw std::runtime_error("Incomplete");
         }
 
-        const auto requestLine{ socketView.substr(0, socketView.find("\r\n")) };
+        const auto requestLine{ state->socketView.substr(0, state->socketView.find("\r\n")) };
         std::println("Request Line:\n{}", requestLine);
 
-        constexpr auto body{ "<h1>Hello Async World!</h1>"sv };
-        const auto response{
-            std::format(
-                "HTTP/1.1 200 OK\r\n"
-                "Server: Hermes/0.2 (Async)\r\n"
-                "Content-Type: text/html\r\n"
-                "Content-Length: {}\r\n"
-                "Connection: close\r\n\r\n"
-                "{}",
-                body.size(), body) };
+        constexpr auto body{ "<h1>Hello Monadic Async World!</h1>"sv };
+        state->response = std::format(
+            "HTTP/1.1 200 OK\r\n"
+            "Server: Hermes/0.2 (Async)\r\n"
+            "Content-Type: text/html\r\n"
+            "Content-Length: {}\r\n"
+            "Connection: close\r\n\r\n"
+            "{}",
+            body.size(), body);
 
-        co_await client.AsyncSend(response);
-        co_await client.AsyncShutdown();
-    }
-    catch (const std::exception& e) {
-        std::println(stderr, "Exception in client handler: {}", e.what());
-    }
-    catch (...) {
-        std::println(stderr, "Unknown exception in client handler.");
-    }
+        return state->client.AsyncSend(state->response)
+             | stdexec::let_value(s_onSendComplete);
+    };
+
+    return state->client.AsyncRecv(state->buffer, Hermes::RecvModeEnum::Any)
+         | stdexec::let_value(s_onRecv);
 }
 
-static exec::task<void> S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
+static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
-    auto listenerRes{ Hermes::RawTcpAsyncListener::ListenOne(Hermes::DefaultSocketData<>{endpoint}) };
-    if (!listenerRes) {
-        std::println(stderr, "Failed to bind/listen.");
-        co_return;
-    }
 
-    auto listener{ std::move(*listenerRes) };
-    std::println("Listening asynchronously on http://{}:{}...", listener.GetEndpoint().GetIp(), listener.GetEndpoint().GetPort());
+    static constexpr auto s_makeResponse = [](auto&& clientSocket) {
+        std::println("Accepted from: {}", clientSocket.GetEndpoint());
+        std::cout.flush();
 
-    while (true) {
-        try {
-            // co_await on a sender unpacks the value or throws on error.
-            // The result is the client socket object itself.
-            auto client{ co_await listener.AsyncAcceptOne({ .scheduler = &ioLoop }) };
-            std::println("Accepted connection from {}:{}.", client.GetEndpoint().GetIp(), client.GetEndpoint().GetPort());
+        auto state{ std::make_shared<ClientState>(ClientState{ std::move(clientSocket) }) };
 
-            // Spawns and detaches the handler. Runs in parallel without suspending the accept loop.
-            // Using a detached thread as a diagnostic step.
-            std::jthread([](Hermes::RawTcpAsyncServer client_socket) {
-                stdexec::sync_wait(S_HandleClientAsync(std::make_shared<Hermes::RawTcpAsyncServer>(std::move(client_socket))));
-            }, std::move(client)).detach();
-        }
-        catch (const std::exception& e) {
-            // Errors sent via set_error by co_await become throws and are caught here.
-            std::println(stderr, "Exception while accepting client: {}", e.what());
-        }
-        catch (...) {
-            std::println(stderr, "Unknown exception thrown during accept.");
-        }
-    }
+        exec::start_detached(
+            S_HandleClientAsync(std::move(state))
+                    | stdexec::let_error([](auto&&) { return stdexec::just(); })
+        );
+        // start_detached is fire-and-forget, we didn't wait the connection end
+        // because the other threads (of FastIoLoop) will deal with this for us.
+        // start_detached calls terminate() on error, so I'm removing this channel.
+
+        return stdexec::just();
+    };
+
+    auto s_acceptConn = [&ioLoop](auto& listener) {
+        std::println("listening at: {}", listener.GetEndpoint());
+        std::cout.flush();
+
+        return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
+                | stdexec::let_value(s_makeResponse)
+                | exec::repeat_effect();
+    };
+
+    auto serve{ Hermes::RawTcpAsyncListener::ListenOne(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
+            | stdexec::let_value(s_acceptConn)
+            | stdexec::upon_error([](auto...){ return 3.1416; }) };
+    // repeat_effect leaves no value channel, so I'm redirecting the error channel
+    // so that sync_wait can have areturn type.
+
+
+    if (!stdexec::sync_wait(std::move(serve)))
+        std::println("Failed to initialize listener or handle client.");
 }
 
 int main() {
     Hermes::FastIoLoop loop{ std::thread::hardware_concurrency() };
 
-    // This will run the server loop until an unrecoverable error occurs or the program is stopped.
-    stdexec::sync_wait(S_RunServerAsync(loop));
+    S_RunServerAsync(loop);
 
     std::println("\n\nServer has been shut down.");
 

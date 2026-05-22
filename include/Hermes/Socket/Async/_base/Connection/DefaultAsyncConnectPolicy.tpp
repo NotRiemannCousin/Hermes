@@ -61,7 +61,12 @@ namespace Hermes {
                 };
 
                 s_setNonBlocking(self._data->socket);
-                self._options.scheduler->RegisterHandle(reinterpret_cast<HANDLE>(self._data->socket));
+
+                auto& sched{ self._options.scheduler };
+                if (!sched || !sched->RegisterHandle(reinterpret_cast<HANDLE>(self._data->socket))) {
+                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::NoScheduler);
+                    return;
+                }
 
                 const int res{ connect(self._data->socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };
 

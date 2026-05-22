@@ -8,7 +8,7 @@ namespace Hermes {
     inline FastIoLoop::FastIoLoop(const unsigned int threadCount) {
         _iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, threadCount);
         if (!_iocpHandle) {
-            throw std::runtime_error(std::format("Falha ao criar IOCP. GetLastError: {}", GetLastError()));
+            throw std::runtime_error(std::format("Not able to create IOCP. GetLastError: {}", GetLastError()));
         }
 
         _isRunning.store(true, std::memory_order_release);
@@ -23,13 +23,12 @@ namespace Hermes {
         Stop();
     }
 
-    inline void FastIoLoop::RegisterHandle(const HANDLE handle) const {
-        if (CreateIoCompletionPort(handle, _iocpHandle, 0, 0) == nullptr)
-            throw std::runtime_error(std::format("Falha ao registrar handle no IOCP. GetLastError: {}", GetLastError()));
+    inline bool FastIoLoop::RegisterHandle(const HANDLE handle) const noexcept {
+        return CreateIoCompletionPort(handle, _iocpHandle, 0, 0) != nullptr;
     }
 
-    inline void FastIoLoop::PostWork(TransferOperStatus* status) const {
-        PostQueuedCompletionStatus(_iocpHandle, 0, 0, status);
+    inline bool FastIoLoop::PostWork(TransferOperStatus* status) const noexcept {
+        return PostQueuedCompletionStatus(_iocpHandle, 0, 0, status);
     }
 
     inline void FastIoLoop::Stop() noexcept {
@@ -50,7 +49,7 @@ namespace Hermes {
         return FastIoScheduler{ this };
     }
 
-    inline void FastIoLoop::WorkerLoop() const {
+    inline void FastIoLoop::WorkerLoop() const noexcept {
         while (_isRunning.load(std::memory_order_relaxed)) {
             DWORD bytesTransferred{};
             ULONG_PTR completionKey{};
@@ -61,14 +60,15 @@ namespace Hermes {
             if (!overlapped) continue;
 
             auto* status{ static_cast<TransferOperStatus*>(overlapped) };
-            if (status && status->callback) {
-                try {
-                    status->callback(status->context, bytesTransferred, success);
-                } catch (const std::exception& e) {
-                    std::println(stderr, "Exception in FastIoLoop Worker: {}", e.what());
-                } catch (...) {
-                    std::println(stderr, "Unknown exception in FastIoLoop Worker");
-                }
+            if (!status || !status->callback)
+                continue;
+
+            try {
+                status->callback(status->context, bytesTransferred, success);
+            } catch (const std::exception& e) {
+                std::println(stderr, "Exception in FastIoLoop Worker: {}", e.what());
+            } catch (...) {
+                std::println(stderr, "Unknown exception in FastIoLoop Worker");
             }
         }
     }
@@ -78,11 +78,11 @@ namespace Hermes {
     }
 
     template <class Receiver>
-    FastIoScheduleSender::OperationState<Receiver>::OperationState(const FastIoLoop* loop, Receiver r) noexcept
+    FastIoScheduleSender::OperationState<Receiver>::OperationState(const FastIoLoop* loop, Receiver r)
         : _loop{ loop }, _receiver{ std::move(r) } {}
 
     template <class Receiver>
-    void FastIoScheduleSender::OperationState<Receiver>::S_Callback(void* context, DWORD /*bytesTransferred*/, bool success) noexcept {
+    void FastIoScheduleSender::OperationState<Receiver>::S_Callback(void* context, DWORD /*bytesTransferred*/, bool success) {
         auto* self = static_cast<OperationState*>(context);
 
         if (success)

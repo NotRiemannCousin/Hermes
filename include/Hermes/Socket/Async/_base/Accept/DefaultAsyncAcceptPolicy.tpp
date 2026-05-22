@@ -3,58 +3,77 @@
 #include <print>
 #include <MSWSock.h>
 
+
+#pragma push_macro("SAFE_CHECK_ERR")
+#pragma push_macro("SAFE_CHECK_ERR_H")
+#pragma push_macro("CHECK_ERR")
+#pragma push_macro("CHECK_ERROR_H")
+
+#undef SUCCESS_WITH
+#undef SUCCESS_WITH_H
+#undef CHECK_ERR
+#undef CHECK_ERROR_H
+
+
+#define REF ->
+#define SAFE_CHECK_ERR(COND, ERROR)                                                   \
+if (COND) {                                                                           \
+    DefaultAsyncAcceptPolicy::Close(self REF _clientData);                           \
+    stdexec::set_error(std::move(self REF _receiver), ConnectionErrorEnum::ERROR);    \
+    return;                                                                           \
+}
+#define CHECK_ERR(COND, ERROR)                                                        \
+if (COND) {                                                                           \
+    stdexec::set_error(std::move(self REF _receiver), ConnectionErrorEnum::ERROR);    \
+    return;                                                                           \
+}
+
+
 namespace Hermes {
 
     template<SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy<Data>::AcceptSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
-            stdexec::set_value_t(),
+            stdexec::set_value_t(Data),
             stdexec::set_error_t(ConnectionErrorEnum)
         >;
 
         Data* _listenData;
-        Data* _clientData;
         AcceptOptions _options;
 
         template<class Receiver>
         struct OperationState {
             Data* _listenData;
-            Data* _clientData;
+            Data _clientData;
             AcceptOptions _options;
             Receiver _receiver;
             TransferOperStatus _status{};
             std::byte _buffer[2 * (sizeof(sockaddr_storage) + 16)]{};
 
-            OperationState(Data* listenData, Data* clientData, AcceptOptions options, Receiver receiver) noexcept :
-                _listenData{ listenData }, _clientData{ clientData }, _options{ options }, _receiver{ std::move(receiver) } {}
+            OperationState(Data* listenData, AcceptOptions options, Receiver receiver) :
+                _listenData{ listenData }, _options{ options }, _receiver{ std::move(receiver) }, _clientData{ listenData->MakeChild() } {}
 
-            static void IoCallback(void* context, DWORD bytesTransferred, bool success) noexcept {
-                auto* self = static_cast<OperationState*>(context);
+            static void IoCallback(void* context, DWORD _, bool success) noexcept {
+                auto* self{ static_cast<OperationState*>(context) };
 
-                if (!success) {
-                    DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                    stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::ConnectionFailed);
-                    return;
-                }
+                SAFE_CHECK_ERR(!success, ConnectionFailed);
 
                 try {
-                    // 1. Update the accept context so setsockopt/getsockname work
-                    if (setsockopt(self->_clientData->socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT,
-                        reinterpret_cast<char*>(&self->_listenData->socket), sizeof(self->_listenData->socket)) == macroSOCKET_ERROR) {
-                        DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                        stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
-                        return;
-                    }
+                    auto acceptCtx{ setsockopt(self->_clientData.socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT,
+                        reinterpret_cast<char*>(&self->_listenData->socket), sizeof(self->_listenData->socket)) };
 
-                    // 2. Register the new socket with the IOCP scheduler
-                    if (self->_options.scheduler) {
-                        self->_options.scheduler->RegisterHandle(reinterpret_cast<HANDLE>(self->_clientData->socket));
-                    }
+                    SAFE_CHECK_ERR(acceptCtx == macroSOCKET_ERROR, Unknown);
 
-                    // 3. Apply socket options
+
+                    auto& sched{ self->_options.scheduler };
+                    SAFE_CHECK_ERR(!sched
+                        || !sched->RegisterHandle(reinterpret_cast<HANDLE>(self->_clientData.socket)), NoScheduler);
+
+#pragma region Options
+
                     const auto s_applyOpt = [&](const int level, const int optName, auto value) {
-                        setsockopt(self->_clientData->socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
+                        setsockopt(self->_clientData.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
                     };
 
                     if constexpr (Data::Type == SocketTypeEnum::Stream) {
@@ -62,22 +81,21 @@ namespace Hermes {
                     }
 
                     if (self->_options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
-                    if (self->_options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, self._options.recvBufferSize);
-                    if (self->_options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self._options.sendBufferSize);
+                    if (self->_options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, self->_options.recvBufferSize);
+                    if (self->_options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self->_options.sendBufferSize);
 
-                    // 4. Extract remote address
+#pragma endregion
+
                     LPFN_GETACCEPTEXSOCKADDRS getAcceptExSockaddrs{ nullptr };
-                    GUID guidGetAcceptExSockaddrs{ WSAID_GETACCEPTEXSOCKADDRS };
+                    auto guidGetAcceptExSockaddrs{ GUID(WSAID_GETACCEPTEXSOCKADDRS) };
                     DWORD bytes{};
 
-                    if (WSAIoctl(self->_listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
+                    const auto funcPointerErr{ WSAIoctl(self->_listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
                         &guidGetAcceptExSockaddrs, sizeof(guidGetAcceptExSockaddrs),
                         &getAcceptExSockaddrs, sizeof(getAcceptExSockaddrs),
-                        &bytes, nullptr, nullptr) == macroSOCKET_ERROR) {
-                        DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                        stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
-                        return;
-                    }
+                        &bytes, nullptr, nullptr) };
+
+                    SAFE_CHECK_ERR(funcPointerErr == macroSOCKET_ERROR, Unknown);
 
                     sockaddr* localAddr{ nullptr };
                     sockaddr* remoteAddr{ nullptr };
@@ -92,85 +110,84 @@ namespace Hermes {
                         auto endpointRes{ Data::EndpointType::FromSockAddr(
                             SocketInfoAddr{ *reinterpret_cast<sockaddr_storage*>(remoteAddr), static_cast<size_t>(remoteLen), AddressFamilyEnum{ remoteAddr->sa_family } }) };
 
-                        if (endpointRes) {
-                            self->_clientData->endpoint = std::move(*endpointRes);
-                        } else {
-                            DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                            stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::InvalidEndpoint);
-                            return;
-                        }
+                        SAFE_CHECK_ERR(!endpointRes, InvalidEndpoint);
+
+                        self->_clientData.endpoint = std::move(*endpointRes);
                     }
 
-                    stdexec::set_value(std::move(self->_receiver));
+                    stdexec::set_value(std::move(self->_receiver), std::move(self->_clientData));
 
                 } catch (const std::exception& e) {
                     std::println(stderr, "Exception in Accept Success: {}", e.what());
-                    DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                    stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
+                    SAFE_CHECK_ERR(true, Unknown);
                 } catch (...) {
                     std::println(stderr, "Unknown exception in Accept Success");
-                    DefaultAsyncAcceptPolicy::Close(*self->_clientData);
-                    stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
+                    SAFE_CHECK_ERR(true, Unknown);
                 }
             }
 
+#undef REF
+#define REF .
+
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                // Pre-create the client socket
-                self._clientData->socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
-                if (self._clientData->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::Unknown);
-                    return;
-                }
+                self._clientData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
+                CHECK_ERR(self._clientData.socket == macroINVALID_SOCKET, Unknown);
 
                 LPFN_ACCEPTEX acceptEx{ nullptr };
-                GUID guidAcceptEx{ WSAID_ACCEPTEX };
+
+                auto guidAcceptEx{ GUID(WSAID_ACCEPTEX) };
+
                 DWORD bytes{};
 
-                // Load AcceptEx
-                if (WSAIoctl(self._listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
+
+                auto funcPointerErr{ WSAIoctl(self._listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
                     &guidAcceptEx, sizeof(guidAcceptEx),
                     &acceptEx, sizeof(acceptEx),
-                    &bytes, nullptr, nullptr) == macroSOCKET_ERROR) {
-                    DefaultAsyncAcceptPolicy::Close(*self._clientData);
-                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::Unknown);
-                    return;
-                }
+                    &bytes, nullptr, nullptr) };
+                SAFE_CHECK_ERR(funcPointerErr == macroSOCKET_ERROR, Unknown);
 
                 self._status = {};
                 self._status.context = &self;
                 self._status.callback = IoCallback;
 
                 DWORD bytesReceived{};
-                const BOOL success = acceptEx(self._listenData->socket, self._clientData->socket,
-                    self._buffer, 0, // No receive data, just accept
+                const BOOL success = acceptEx(self._listenData->socket, self._clientData.socket,
+                    self._buffer, 0,
                     sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
                     &bytesReceived, &self._status);
 
-                if (!success && WSAGetLastError() != WSA_IO_PENDING) {
-                    DefaultAsyncAcceptPolicy::Close(*self._clientData);
-                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::ConnectionFailed);
-                }
+                SAFE_CHECK_ERR(!success && WSAGetLastError() != WSA_IO_PENDING, ConnectionFailed);
             }
         };
 
         template<class Receiver>
         friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const AcceptSender& self, Receiver r) {
-            return { self._listenData, self._clientData, self._options, std::move(r) };
+            return { self._listenData, self._options, std::move(r) };
         }
     };
 
     template<SocketDataConcept Data>
-    ConnectionResultOper DefaultAsyncAcceptPolicy<Data>::Listen(Data& data, int backlog, ListenOptions options) noexcept {
-        return DefaultAcceptPolicy<EndpointType, Type, Family>::Listen(data, backlog, options);
+    ConnectionResultOper DefaultAsyncAcceptPolicy<Data>::Listen(Data& data, int backlog, ListenOptions options) {
+        auto listenerPolicy{ DefaultAcceptPolicy<EndpointType, Type, Family>::Listen(data, backlog, options) };
+
+        if (!listenerPolicy)
+            return listenerPolicy;
+
+        auto sched{ options.scheduler };
+
+        if (!sched || !sched->RegisterHandle(reinterpret_cast<HANDLE>(data.socket)))
+            return std::unexpected{ ConnectionErrorEnum::NoScheduler };
+
+        return listenerPolicy;
     }
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::AsyncAccept(Data& listenData, Data& clientData, AcceptOptions options) noexcept {
+    auto DefaultAsyncAcceptPolicy<Data>::AsyncAccept(Data& listenData, AcceptOptions options) {
         static_assert(stdexec::sender<AcceptSender>);
-        static_assert(std::same_as<stdexec::value_types_of_t<AcceptSender>, std::variant<std::tuple<>>>);
+        static_assert(std::same_as<stdexec::value_types_of_t<AcceptSender>, std::variant<std::tuple<Data>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<AcceptSender>, std::variant<ConnectionErrorEnum>>);
 
-        return AcceptSender{ &listenData, &clientData, options };
+        return AcceptSender{ &listenData, options };
     }
 
 
@@ -196,10 +213,7 @@ namespace Hermes {
                     return;
                 }
 
-                if (shutdown(self._data->socket, static_cast<int>(SocketShutdownEnum::Send)) == macroSOCKET_ERROR) {
-                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::SendFailed);
-                    return;
-                }
+                CHECK_ERR(shutdown(self._data->socket, static_cast<int>(SocketShutdownEnum::Send)) == macroSOCKET_ERROR, SendFailed);
 
                 stdexec::set_value(std::move(self._receiver));
             }
@@ -213,7 +227,7 @@ namespace Hermes {
 
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::AsyncShutdown(Data& data) noexcept {
+    auto DefaultAsyncAcceptPolicy<Data>::AsyncShutdown(Data& data) {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);
@@ -233,3 +247,9 @@ namespace Hermes {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
     }
 }
+
+
+#undef SUCCESS_WITH
+#undef SUCCESS_WITH_H
+#undef CHECK_ERR
+#undef CHECK_ERROR_H

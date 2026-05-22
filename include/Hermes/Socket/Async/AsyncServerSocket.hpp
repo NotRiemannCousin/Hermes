@@ -1,8 +1,9 @@
 #pragma once
 #include <Hermes/Socket/Async/_base/Accept/DefaultAsyncAcceptPolicy.hpp>
-#include <Hermes/Socket/Async/_base/Accept/TlsAsyncAcceptPolicy.hpp>
+// #include <Hermes/Socket/Async/_base/Accept/TlsAsyncAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 #include <ranges>
 
@@ -33,11 +34,11 @@ namespace Hermes {
 
         template<std::ranges::contiguous_range R>
             requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncSend(R&& data) noexcept;
+        auto AsyncSend(R&& data);
 
         template<std::ranges::contiguous_range R>
             requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncRecv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
+        auto AsyncRecv(R&& data, RecvModeEnum mode = RecvModeEnum::All);
 
         auto AsyncShutdown() noexcept;
         void Close() noexcept;
@@ -52,7 +53,7 @@ namespace Hermes {
     };
 
     using RawTcpAsyncServer = AsyncServerSocket<>;
-    using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    // using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 }
 
 #include <Hermes/Socket/Async/AsyncServerSocket.tpp>

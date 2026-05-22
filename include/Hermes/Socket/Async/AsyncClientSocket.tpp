@@ -1,7 +1,6 @@
 #pragma once
 
 #include <utility>
-#include <stdexec/concepts.hpp>
 #include <exec/create.hpp>
 #include <ranges>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>

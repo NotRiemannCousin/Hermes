@@ -32,15 +32,15 @@ namespace Hermes {
         FastIoLoop(const FastIoLoop&) = delete;
         FastIoLoop& operator=(const FastIoLoop&) = delete;
 
-        void RegisterHandle(HANDLE handle) const;
+        bool RegisterHandle(HANDLE handle) const noexcept;
         void Stop() noexcept;
 
         [[nodiscard]] FastIoScheduler GetScheduler() const noexcept;
 
-        void PostWork(TransferOperStatus* status) const;
+        bool PostWork(TransferOperStatus* status) const noexcept;
 
     private:
-        void WorkerLoop() const;
+        void WorkerLoop() const noexcept;
     };
 
     struct FastIoScheduler {
@@ -67,10 +67,10 @@ namespace Hermes {
             Receiver _receiver;
             TransferOperStatus _status{};
 
-            OperationState(const FastIoLoop* loop, Receiver r) noexcept;
+            OperationState(const FastIoLoop* loop, Receiver r);
 
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept;
-            static void S_Callback(void* context, DWORD bytesTransferred, bool success) noexcept;
+            static void S_Callback(void* context, DWORD bytesTransferred, bool success);
         };
 
         template <class Receiver>
