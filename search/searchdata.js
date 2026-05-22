@@ -9,7 +9,7 @@ var indexSectionsWithContent =
   6: "bcdeioprstuv",
   7: "aceinprst",
   8: "abcdefhilmnoprstuvx",
-  9: "rst",
+  9: "lrst",
   10: "_efs",
   11: "as",
   12: "h",

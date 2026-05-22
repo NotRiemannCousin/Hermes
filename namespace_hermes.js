@@ -56,8 +56,6 @@ var namespace_hermes =
     [ "RawTcpListener", "namespace_hermes.html#a10af606e98c70fcda458f4a610867a04", null ],
     [ "RawTcpServer", "namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462", null ],
     [ "RawTlsAsyncClient", "namespace_hermes.html#ae71bc293e8544c06b0de3ab3dc4cfca8", null ],
-    [ "RawTlsAsyncListener", "namespace_hermes.html#aa44cb60a2fb3679e4c2604b14c0e8706", null ],
-    [ "RawTlsAsyncServer", "namespace_hermes.html#aaa02852435aa754487fccc181f0c1e26", null ],
     [ "RawTlsClient", "namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232", null ],
     [ "RawTlsListener", "namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b", null ],
     [ "RawTlsServer", "namespace_hermes.html#a2f5ad774015f851569d57545778e2d92", null ],
@@ -90,7 +88,8 @@ var namespace_hermes =
       [ "ResolveFailed", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc", null ],
       [ "ResolveNoAddressFound", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95", null ],
       [ "UnsupportedAddressFamily", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ],
-      [ "RenegotiationRequired", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ]
+      [ "RenegotiationRequired", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ],
+      [ "NoScheduler", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc", null ]
     ] ],
     [ "CredentialErrorEnum", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbc", [
       [ "None", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754", null ],

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['recvstream_0',['RecvStream',['../struct_hermes_1_1_tls_transfer_policy.html#aa6e04f40fefc5ad32635c132cf60c8d8',1,'Hermes::TlsTransferPolicy']]]
+  ['listensender_0',['ListenSender',['../struct_hermes_1_1_async_listener_socket.html#a87872982ad3399128ff9df465c9cd1b7',1,'Hermes::AsyncListenerSocket']]]
 ];

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['s_5fcallback_0',['S_Callback',['../struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html#a037c6ded0570546f26dcf0cd660e6c3e',1,'Hermes::FastIoScheduleSender::OperationState']]],
+  ['s_5fcallback_0',['S_Callback',['../struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html#a3440bf34ad1dda65562d508dcdcad7d4',1,'Hermes::FastIoScheduleSender::OperationState']]],
   ['schannel_1',['SChannel',['../_s_ch_cred_enum_8hpp.html#a05a0da1460a80f27916f53866c2afe50a3233cc82ac9e68edf1d47e0c28fc23ab',1,'SChCredEnum.hpp']]],
   ['schannel_5fuse_5fblacklists_2',['SCHANNEL_USE_BLACKLISTS',['../_win_api_8hpp.html#a8572977e5df191f944da22e1eda2322f',1,'WinApi.hpp']]],
   ['schannelcredflags_3',['SChannelCredFlags',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800',1,'SChannelCredFlags.hpp']]],
@@ -9,7 +9,7 @@ var searchData=
   ['schcredenum_6',['SChCredEnum',['../_s_ch_cred_enum_8hpp.html#a05a0da1460a80f27916f53866c2afe50',1,'SChCredEnum.hpp']]],
   ['schcredenum_2ehpp_7',['SChCredEnum.hpp',['../_s_ch_cred_enum_8hpp.html',1,'']]],
   ['schedule_8',['schedule',['../struct_hermes_1_1_fast_io_scheduler.html#a94c8548091784f3dcdd0ea3567832bb6',1,'Hermes::FastIoScheduler']]],
-  ['scheduler_9',['scheduler',['../struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html#abc71c1382024d7dbc991cbb050d60990',1,'Hermes::DefaultAsyncAcceptPolicy::AcceptOptions::scheduler'],['../struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html#ad5f0d5b2143d9affb57f5e4ea9a0649f',1,'Hermes::TlsAsyncAcceptPolicy::AcceptOptions::scheduler'],['../struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a17671c02f343fa951951a2369743e11e',1,'Hermes::DefaultAsyncConnectPolicy::Options::scheduler']]],
+  ['scheduler_9',['scheduler',['../struct_hermes_1_1_default_async_accept_policy_1_1_listen_options.html#a53befca313cd549473a10829ac96d93e',1,'Hermes::DefaultAsyncAcceptPolicy::ListenOptions::scheduler'],['../struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html#abc71c1382024d7dbc991cbb050d60990',1,'Hermes::DefaultAsyncAcceptPolicy::AcceptOptions::scheduler'],['../struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html#ad5f0d5b2143d9affb57f5e4ea9a0649f',1,'Hermes::TlsAsyncAcceptPolicy::AcceptOptions::scheduler'],['../struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a17671c02f343fa951951a2369743e11e',1,'Hermes::DefaultAsyncConnectPolicy::Options::scheduler']]],
   ['security_5fwin32_10',['security_win32',['../_macros_8hpp.html#a1859fb1234511b94993fe8566eba866b',1,'SECURITY_WIN32:&#160;Macros.hpp'],['../_win_api_8hpp.html#a1859fb1234511b94993fe8566eba866b',1,'SECURITY_WIN32:&#160;WinApi.hpp']]],
   ['securitybufferenum_11',['SecurityBufferEnum',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bb',1,'SecurityBufferEnum.hpp']]],
   ['securitybufferenum_2ehpp_12',['SecurityBufferEnum.hpp',['../_security_buffer_enum_8hpp.html',1,'']]],

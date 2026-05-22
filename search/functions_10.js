@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['s_5fcallback_0',['S_Callback',['../struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html#a037c6ded0570546f26dcf0cd660e6c3e',1,'Hermes::FastIoScheduleSender::OperationState']]],
+  ['s_5fcallback_0',['S_Callback',['../struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html#a3440bf34ad1dda65562d508dcdcad7d4',1,'Hermes::FastIoScheduleSender::OperationState']]],
   ['schedule_1',['schedule',['../struct_hermes_1_1_fast_io_scheduler.html#a94c8548091784f3dcdd0ea3567832bb6',1,'Hermes::FastIoScheduler']]],
   ['send_2',['send',['../struct_hermes_1_1_default_transfer_policy.html#a79394c254e8999dd7c9ffeecf6768fdb',1,'Hermes::DefaultTransferPolicy::Send()'],['../struct_hermes_1_1_tls_transfer_policy.html#a09a7d580de882662358d908f9effda77',1,'Hermes::TlsTransferPolicy::Send()'],['../struct_hermes_1_1_client_socket.html#a17c65da43ee739d25f9a6871450d61fc',1,'Hermes::ClientSocket::Send()'],['../struct_hermes_1_1_server_socket.html#a8965f20c2414de551ca8712ffcce79f3',1,'Hermes::ServerSocket::Send()']]],
   ['server_3',['server',['../struct_hermes_1_1_credentials.html#a52b564cde8a9de16a369a7bed8c4aa5f',1,'Hermes::Credentials::Server(const std::filesystem::path &amp;certPath, SChannelCredFlags sChannelFlags={}, const wchar_t *password=L&quot;&quot;) noexcept'],['../struct_hermes_1_1_credentials.html#acb5f0a6fbdb60437030006e885bbfa03',1,'Hermes::Credentials::Server(std::span&lt; const std::byte &gt; certBuffer, SChannelCredFlags sChannelFlags={}, const wchar_t *password=L&quot;&quot;) noexcept']]],

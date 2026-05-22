@@ -85,10 +85,8 @@ var NAVTREEINDEX0 =
 "_async_client_socket_8hpp_source.html":[10,0,0,0,2,1,1],
 "_async_listener_socket_8hpp.html":[10,0,0,0,2,1,2],
 "_async_listener_socket_8hpp.html#a19c0b7b20a9fb090c94b4c7de3a38ea7":[10,0,0,0,2,1,2,1],
-"_async_listener_socket_8hpp.html#aa44cb60a2fb3679e4c2604b14c0e8706":[10,0,0,0,2,1,2,2],
 "_async_listener_socket_8hpp_source.html":[10,0,0,0,2,1,2],
 "_async_server_socket_8hpp.html":[10,0,0,0,2,1,3],
-"_async_server_socket_8hpp.html#aaa02852435aa754487fccc181f0c1e26":[10,0,0,0,2,1,3,2],
 "_async_server_socket_8hpp.html#ae59760afa74220b02585dfc5aab5daa2":[10,0,0,0,2,1,3,1],
 "_async_server_socket_8hpp_source.html":[10,0,0,0,2,1,3],
 "_client_socket_8hpp.html":[10,0,0,0,2,3,1],
@@ -122,6 +120,7 @@ var NAVTREEINDEX0 =
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e":[10,0,0,0,0,1,6,26],
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa7a779cc702629f3a2eec07b3932d2f8e":[10,0,0,0,0,1,6,15],
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e":[10,0,0,0,0,1,6,0],
+"_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc":[10,0,0,0,0,1,6,27],
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa924ac3ba131a712d1ebeba6175565bfa":[10,0,0,0,0,1,6,18],
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba":[10,0,0,0,0,1,6,25],
 "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaa4866b9c40370f853b1434ff872be87c":[10,0,0,0,0,1,6,10],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa5c264fe5ed2b8a9332c42a7c8049126":[10,0,0,0,0,0,0,2,0,55],
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa6259bf84188fb377339c7ebbb54a191":[10,0,0,0,0,0,0,2,0,71],
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aa97b1c9a26552a9a1a0a91c44a09180e":[10,0,0,0,0,0,0,2,0,91],
-"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aaa9fcbed081f4f8ed3a26867c09979a6":[10,0,0,0,0,0,0,2,0,81]
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973aaa9fcbed081f4f8ed3a26867c09979a6":[10,0,0,0,0,0,0,2,0,81],
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab016524060e0d87f24e1959e3d1b0b3d":[10,0,0,0,0,0,0,2,0,56]
 };

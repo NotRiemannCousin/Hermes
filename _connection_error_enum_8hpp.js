@@ -33,6 +33,7 @@ var _connection_error_enum_8hpp =
       [ "ResolveFailed", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa0b8a9f7f0dcf3a059cfbd2ec277ec3cc", null ],
       [ "ResolveNoAddressFound", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaaeecff05d8eeeae10316684a41511ae95", null ],
       [ "UnsupportedAddressFamily", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ],
-      [ "RenegotiationRequired", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ]
+      [ "RenegotiationRequired", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ],
+      [ "NoScheduler", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc", null ]
     ] ]
 ];
