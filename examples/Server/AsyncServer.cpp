@@ -23,19 +23,19 @@ struct ClientState {
     Hermes::RawTcpAsyncServer client;
     std::array<char, 8192> buffer{};
     std::string socketView{};
-    std::string response{};
 };
 
 static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
     using namespace std::literals::string_view_literals;
 
     auto s_onSendComplete = [state](const auto&...) {
-        return state->client.AsyncShutdown();
+        state->client.Close();
+        return stdexec::just();
     };
 
     auto s_onRecv = [state, s_onSendComplete](const size_t bytesReceived) {
         if (bytesReceived == 0) {
-            std::println("Connection gracefully closed by peer.");
+            // std::println("Connection gracefully closed by peer.");
             throw std::runtime_error("Closed");
         }
 
@@ -43,24 +43,27 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
 
         const auto headerEnd{ state->socketView.find("\r\n\r\n") };
         if (headerEnd == std::string::npos) {
-            std::println(stderr, "Incomplete headers received.");
+            // std::println(stderr, "Incomplete headers received.");
             throw std::runtime_error("Incomplete");
         }
 
         const auto requestLine{ state->socketView.substr(0, state->socketView.find("\r\n")) };
-        std::println("Request Line:\n{}", requestLine);
+        // std::println("Request Line:\n{}", requestLine);
 
-        constexpr auto body{ "<h1>Hello Monadic Async World!</h1>"sv };
-        state->response = std::format(
-            "HTTP/1.1 200 OK\r\n"
-            "Server: Hermes/0.2 (Async)\r\n"
-            "Content-Type: text/html\r\n"
-            "Content-Length: {}\r\n"
-            "Connection: close\r\n\r\n"
-            "{}",
-            body.size(), body);
+        static auto response{ [] {
+            constexpr auto body{ "<h1>Hello Monadic Async World!</h1>"sv };
 
-        return state->client.AsyncSend(state->response)
+            return std::format(
+                "HTTP/1.1 200 OK\r\n"
+                "Server: Hermes/0.2 (Async)\r\n"
+                "Content-Type: text/html\r\n"
+                "Content-Length: {}\r\n"
+                "Connection: close\r\n\r\n"
+                "{}", body.size(), body);
+            }()
+        };
+
+        return state->client.AsyncSend(response)
              | stdexec::let_value(s_onSendComplete);
     };
 
@@ -72,14 +75,16 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
 
     static constexpr auto s_makeResponse = [](auto&& clientSocket) {
-        std::println("Accepted from: {}", clientSocket.GetEndpoint());
-        std::cout.flush();
+        // std::println("Accepted from: {}", clientSocket.GetEndpoint());
+        // std::cout.flush();
 
         auto state{ std::make_shared<ClientState>(ClientState{ std::move(clientSocket) }) };
 
         exec::start_detached(
             S_HandleClientAsync(std::move(state))
-                    | stdexec::let_error([](auto&&) { return stdexec::just(); })
+                    | stdexec::let_error([](auto&& err) {
+                        return stdexec::just();
+                    })
         );
         // start_detached is fire-and-forget, we didn't wait the connection end
         // because the other threads (of FastIoLoop) will deal with this for us.
@@ -89,17 +94,19 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     };
 
     auto s_acceptConn = [&ioLoop](auto& listener) {
-        std::println("listening at: {}", listener.GetEndpoint());
-        std::cout.flush();
+        // std::println("listening at: {}", listener.GetEndpoint());
+        // std::cout.flush();
 
         return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
                 | stdexec::let_value(s_makeResponse)
                 | exec::repeat_effect();
     };
 
-    auto serve{ Hermes::RawTcpAsyncListener::ListenOne(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
+    auto serve{ Hermes::RawTcpAsyncListener::Listen(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
             | stdexec::let_value(s_acceptConn)
-            | stdexec::upon_error([](auto...){ return 3.1416; }) };
+            | stdexec::upon_error([](auto err) {
+                return 3.1416;
+            }) };
     // repeat_effect leaves no value channel, so I'm redirecting the error channel
     // so that sync_wait can have areturn type.
 

@@ -85,24 +85,14 @@ namespace Hermes {
                     if (self->_options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self->_options.sendBufferSize);
 
 #pragma endregion
-
-                    LPFN_GETACCEPTEXSOCKADDRS getAcceptExSockaddrs{ nullptr };
-                    auto guidGetAcceptExSockaddrs{ GUID(WSAID_GETACCEPTEXSOCKADDRS) };
-                    DWORD bytes{};
-
-                    const auto funcPointerErr{ WSAIoctl(self->_listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
-                        &guidGetAcceptExSockaddrs, sizeof(guidGetAcceptExSockaddrs),
-                        &getAcceptExSockaddrs, sizeof(getAcceptExSockaddrs),
-                        &bytes, nullptr, nullptr) };
-
-                    SAFE_CHECK_ERR(funcPointerErr == macroSOCKET_ERROR, Unknown);
+                    const auto& extensions = s_listenerExtensions.at(self->_listenData->socket);
 
                     sockaddr* localAddr{ nullptr };
                     sockaddr* remoteAddr{ nullptr };
                     int localLen{};
                     int remoteLen{};
 
-                    getAcceptExSockaddrs(self->_buffer, 0,
+                    extensions.lpfnGetAcceptExSockaddrs(self->_buffer, 0,
                         sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
                         &localAddr, &localLen, &remoteAddr, &remoteLen);
 
@@ -133,25 +123,14 @@ namespace Hermes {
                 self._clientData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
                 CHECK_ERR(self._clientData.socket == macroINVALID_SOCKET, Unknown);
 
-                LPFN_ACCEPTEX acceptEx{ nullptr };
-
-                auto guidAcceptEx{ GUID(WSAID_ACCEPTEX) };
-
-                DWORD bytes{};
-
-
-                auto funcPointerErr{ WSAIoctl(self._listenData->socket, SIO_GET_EXTENSION_FUNCTION_POINTER,
-                    &guidAcceptEx, sizeof(guidAcceptEx),
-                    &acceptEx, sizeof(acceptEx),
-                    &bytes, nullptr, nullptr) };
-                SAFE_CHECK_ERR(funcPointerErr == macroSOCKET_ERROR, Unknown);
+                const auto& extensions = s_listenerExtensions.at(self._listenData->socket);
 
                 self._status = {};
                 self._status.context = &self;
                 self._status.callback = IoCallback;
 
                 DWORD bytesReceived{};
-                const BOOL success = acceptEx(self._listenData->socket, self._clientData.socket,
+                const BOOL success = extensions.lpfnAcceptEx(self._listenData->socket, self._clientData.socket,
                     self._buffer, 0,
                     sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
                     &bytesReceived, &self._status);
@@ -177,6 +156,20 @@ namespace Hermes {
 
         if (!sched || !sched->RegisterHandle(reinterpret_cast<HANDLE>(data.socket)))
             return std::unexpected{ ConnectionErrorEnum::NoScheduler };
+
+        ListenerExtensions extensions;
+        DWORD bytes;
+
+        GUID guidAcceptEx = WSAID_ACCEPTEX;
+        if (WSAIoctl(data.socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guidAcceptEx, sizeof(guidAcceptEx), &extensions.lpfnAcceptEx, sizeof(extensions.lpfnAcceptEx), &bytes, nullptr, nullptr) != 0)
+            return std::unexpected{ ConnectionErrorEnum::Unknown };
+
+        GUID guidGetAcceptExSockaddrs = WSAID_GETACCEPTEXSOCKADDRS;
+        if (WSAIoctl(data.socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guidGetAcceptExSockaddrs, sizeof(guidGetAcceptExSockaddrs), &extensions.lpfnGetAcceptExSockaddrs, sizeof(extensions.lpfnGetAcceptExSockaddrs), &bytes, nullptr, nullptr) != 0)
+            return std::unexpected{ ConnectionErrorEnum::Unknown };
+
+        std::lock_guard lock(s_listenerExtensionsMutex);
+        s_listenerExtensions[data.socket] = extensions;
 
         return listenerPolicy;
     }
@@ -240,11 +233,15 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void DefaultAsyncAcceptPolicy<Data>::Close(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Close(data);
+        std::lock_guard lock(s_listenerExtensionsMutex);
+        s_listenerExtensions.erase(data.socket);
     }
 
     template<SocketDataConcept Data>
     void DefaultAsyncAcceptPolicy<Data>::Abort(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
+        std::lock_guard lock(s_listenerExtensionsMutex);
+        s_listenerExtensions.erase(data.socket);
     }
 }
 

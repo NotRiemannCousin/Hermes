@@ -96,22 +96,6 @@ namespace Hermes {
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     template<class>
     typename AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenSender
-    AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenOne(SocketData &&data)
-        requires std::default_initializable<typename AcceptPolicy::ListenOptions> {
-        return ListenOne(std::move(data), {});
-    }
-
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
-    typename AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenSender
-    AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenOne(SocketData &&data, AcceptPolicy::ListenOptions opt) {
-        return Listen(std::move(data), std::move(opt), 1);
-    }
-
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
-    template<class>
-    typename AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenSender
     AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Listen(SocketData &&data, int backlog)
         requires std::default_initializable<typename AcceptPolicy::ListenOptions> {
         return Listen(std::move(data), {}, backlog);

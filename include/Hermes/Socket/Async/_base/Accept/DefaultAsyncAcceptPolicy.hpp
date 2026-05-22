@@ -4,6 +4,9 @@
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/_base.hpp>
 #include <stdexec/execution.hpp>
+#include <MSWSock.h>
+#include <unordered_map>
+#include <mutex>
 
 namespace Hermes {
 
@@ -28,9 +31,17 @@ namespace Hermes {
         static void Close(Data& data) noexcept;
         static void Abort(Data& data) noexcept;
 
-    private:
+    public:
         struct AcceptSender;
         struct ShutdownSender;
+
+        struct ListenerExtensions {
+            LPFN_ACCEPTEX lpfnAcceptEx = nullptr;
+            LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs = nullptr;
+        };
+
+        inline static std::mutex s_listenerExtensionsMutex;
+        inline static std::unordered_map<SOCKET, ListenerExtensions> s_listenerExtensions;
     };
 }
 
@@ -38,6 +49,4 @@ namespace Hermes {
 
 namespace Hermes {
     static_assert(AsyncAcceptPolicyConcept<DefaultAsyncAcceptPolicy<>, DefaultSocketData<>>);
-
-    // Sender concept verified by compilation, removed static_asserts that depend on stdexec internals
 }

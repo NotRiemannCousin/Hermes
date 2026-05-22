@@ -34,20 +34,6 @@ namespace Hermes {
          */
         [[nodiscard]] static ListenSender Listen(SocketData&& data, typename AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN);
 
-        /**
-         * @brief Creates a listener socket with a backlog of 1. This is a synchronous operation.
-         * @return A sender that yields an AsyncListenerSocket on success.
-         */
-        template<class = void>
-        [[nodiscard]] static ListenSender ListenOne(SocketData&& data)
-            requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
-
-        /**
-         * @brief Creates a listener socket with a backlog of 1. This is a synchronous operation.
-         * @return A sender that yields an AsyncListenerSocket on success.
-         */
-        [[nodiscard]] static ListenSender ListenOne(SocketData&& data, typename AcceptPolicy::ListenOptions opt);
-
         //! @brief Asynchronously accepts a new client connection.
         //! @return A sender that yields an AsyncServerSocket on success.
         template<class = void>
