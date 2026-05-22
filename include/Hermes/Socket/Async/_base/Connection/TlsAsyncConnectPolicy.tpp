@@ -33,7 +33,7 @@ namespace Hermes {
             DWORD flags{};
         public:
 
-            OperationState(Data* data, Options options, Receiver receiver, const ControlAction action = ControlAction::Connect) noexcept :
+            OperationState(Data* data, Options options, Receiver receiver, const ControlAction action = ControlAction::Connect) :
                 _data{ data }, _options{ options }, _receiver{ std::move(receiver) },
                 _status{}, _action{ action } {}
 

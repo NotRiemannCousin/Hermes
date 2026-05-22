@@ -32,7 +32,7 @@ namespace Hermes {
             DWORD flags{};
 
         public:
-            OperationState(Data* data, AcceptOptions options, Receiver receiver, const AcceptControlAction action = AcceptControlAction::Accept) noexcept :
+            OperationState(Data* data, AcceptOptions options, Receiver receiver, const AcceptControlAction action = AcceptControlAction::Accept) :
                 _data{ data }, _options{ options }, _receiver{ std::move(receiver) },
                 _status{}, _action{ action } {}
 

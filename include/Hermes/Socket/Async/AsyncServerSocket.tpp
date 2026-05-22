@@ -50,7 +50,7 @@ namespace Hermes {
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
         requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncSend(R&& data) noexcept {
+    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncSend(R&& data) {
         using Byte = std::remove_cv_t<std::ranges::range_value_t<R>>;
         std::span<const Byte> buffer(std::ranges::data(data), std::ranges::ssize(data));
 
@@ -62,7 +62,7 @@ namespace Hermes {
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     template<std::ranges::contiguous_range R>
         requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncRecv(R&& data, RecvModeEnum mode) noexcept {
+    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncRecv(R&& data, RecvModeEnum mode) {
         using Byte = std::remove_cv_t<std::ranges::range_value_t<R>>;
         std::span<Byte> buffer(std::ranges::data(data), std::ranges::ssize(data));
 

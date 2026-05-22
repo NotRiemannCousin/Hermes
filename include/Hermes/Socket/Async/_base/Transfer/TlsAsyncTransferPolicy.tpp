@@ -35,7 +35,7 @@ namespace Hermes {
             size_t _accumulatedBytes{};  // ADDED
 
         public:
-            OperationState(TlsAsyncTransferPolicy* policy, Data* data, std::span<std::byte> recv, std::span<const std::byte> send, RecvModeEnum mode, ActionEnum action, Receiver receiver) noexcept :
+            OperationState(TlsAsyncTransferPolicy* policy, Data* data, std::span<std::byte> recv, std::span<const std::byte> send, RecvModeEnum mode, ActionEnum action, Receiver receiver) :
                 _policy{ policy }, _data{ data }, _recvBuffer{ recv }, _sendBuffer{ send }, _mode{ mode }, _action{ action }, _receiver{ std::move(receiver) } {}
 
             void I_Pump() noexcept {

@@ -36,7 +36,6 @@ namespace Hermes {
                         static_cast<int>(self._buffer.size() - total), 0) };
 
                     if (res == 0) {
-                        closesocket(std::exchange(self._data->socket, macroINVALID_SOCKET));
                         stdexec::set_error(std::move(self._receiver), TransferError{ total, ConnectionErrorEnum::ConnectionClosed });
                         return;
                     }
