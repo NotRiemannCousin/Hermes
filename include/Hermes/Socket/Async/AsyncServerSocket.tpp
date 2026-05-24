@@ -48,32 +48,28 @@ namespace Hermes {
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
-    template<std::ranges::contiguous_range R>
-        requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncSend(R&& data) {
-        using Byte = std::remove_cv_t<std::ranges::range_value_t<R>>;
-        std::span<const Byte> buffer(std::ranges::data(data), std::ranges::ssize(data));
+    template<ContiguousByteRange R>
+    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) {
+        std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.AsyncSend(socketData, buffer);
+        return transferPolicy.Send(socketData, std::as_bytes(buffer));
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
-    template<std::ranges::contiguous_range R>
-        requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncRecv(R&& data, RecvModeEnum mode) {
-        using Byte = std::remove_cv_t<std::ranges::range_value_t<R>>;
-        std::span<Byte> buffer(std::ranges::data(data), std::ranges::ssize(data));
+    template<WritableContiguousByteRange R>
+    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) {
+        std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.AsyncRecv(socketData, buffer, mode);
+        return transferPolicy.Recv(socketData, std::as_writable_bytes(buffer), mode);
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
-    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncShutdown() noexcept {
-        return acceptPolicy.AsyncShutdown(socketData);
+    auto AsyncServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Shutdown() noexcept {
+        return acceptPolicy.Shutdown(socketData);
     }
 
 

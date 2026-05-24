@@ -7,8 +7,10 @@
 
 namespace Hermes {
 
+#pragma region Constructor
+
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocket(ServerSocket&& other) noexcept
         : socketData    (std::move(other.socketData)),
           acceptPolicy  (std::move(other.acceptPolicy)),
@@ -16,7 +18,7 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>&
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::operator=(ServerSocket&& other) noexcept {
         if (this != &other) {
@@ -31,14 +33,17 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::~ServerSocket() {
         Close();
     }
 
+#pragma endregion
+
+
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ConnectionResult<ServerSocket<SocketData, AcceptPolicy, TransferPolicy>>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::FromAccepted(SocketData&& data) noexcept {
         ServerSocket socket;
@@ -47,48 +52,51 @@ namespace Hermes {
     }
 
 
+
+#pragma region Transfer
+
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<std::ranges::contiguous_range R>
-        requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<ContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) noexcept {
-        using Byte = std::add_const_t<std::ranges::range_value_t<R>>;
+        std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        std::span<const Byte> buffer(std::data(data), std::ranges::ssize(data));
-
-        return transferPolicy.Send(socketData, buffer);
+        return transferPolicy.Send(socketData, std::as_bytes(buffer));
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<std::ranges::contiguous_range R>
-        requires ByteLike<std::ranges::range_value_t<R>>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<WritableContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Recv(socketData, buffer, mode);
+        return transferPolicy.Recv(socketData, std::as_writable_bytes(buffer), mode);
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
-    typename TransferPolicy::template RecvStream<Byte>
-    ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept {
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept {
         return typename TransferPolicy::template RecvStream<Byte>{ socketData, transferPolicy };
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange() noexcept {
         return RecvStream<Byte>() | Utils::dropLast;
     }
 
+#pragma endregion
+
+
+
+#pragma region Close
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Close() noexcept {
         if (socketData.socket == macroINVALID_SOCKET) return;
 
@@ -97,11 +105,13 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Abort() noexcept {
         if (socketData.socket == macroINVALID_SOCKET) return;
 
         acceptPolicy.Abort(socketData);
     }
+
+#pragma endregion
 
 }

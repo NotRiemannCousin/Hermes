@@ -114,13 +114,13 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::AsyncAccept(Data& listenData, Data& clientData, AcceptOptions options) {
+    auto TlsAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data& clientData, AcceptOptions options) {
         clientData.acceptStateMachine = std::make_unique<_details::TlsAcceptStateMachine<Data, TlsAsyncAcceptPolicy>>(options);
         _options = options;
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncAcceptPolicy<Data>::AsyncAccept(listenData, clientData, *reinterpret_cast<typename DefaultAsyncAcceptPolicy<Data>::AcceptOptions*>(&options))
+        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, clientData, *reinterpret_cast<typename DefaultAsyncAcceptPolicy<Data>::AcceptOptions*>(&options))
              | stdexec::let_value(Utils::Overloaded{
                  [&clientData, options]() mutable { return ControlSender{ &clientData, options, AcceptControlAction::Accept }; },
                  [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
@@ -128,13 +128,13 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::AsyncRenegotiate(Data& data) {
+    auto TlsAsyncAcceptPolicy<Data>::Renegotiate(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         return ControlSender{ &data, _options, AcceptControlAction::Renegotiate };
     }
 
     template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::AsyncShutdown(Data& data) {
+    auto TlsAsyncAcceptPolicy<Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         return ControlSender{ &data, _options, AcceptControlAction::Shutdown };
     }

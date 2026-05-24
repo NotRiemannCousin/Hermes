@@ -4,21 +4,20 @@
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
 
-#include <ranges>
-
 namespace Hermes {
     template<
         SocketDataConcept SocketData = DefaultSocketData<>,
         class ConnectionPolicy       = DefaultConnectPolicy<>,
         class TransferPolicy         = DefaultTransferPolicy<>>
-        requires ConnectionPolicyConcept<ConnectionPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     struct ClientSocket {
-        using EndpointType         = typename SocketData::EndpointType;
+        using EndpointType = SocketData::EndpointType;
 
 
         ClientSocket(ClientSocket&&) noexcept;
         ClientSocket& operator=(ClientSocket&&) noexcept;
         ~ClientSocket();
+
 
 
         template<class = void>
@@ -27,14 +26,14 @@ namespace Hermes {
 
         [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
 
+
+
         //! @return Returns the count of data sent on success, or an error on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::ranges::range_value_t<R>>
+        template<ContiguousByteRange R>
         StreamByteOper Send(R&& data) noexcept;
 
         //! @return Returns the count of data filled on success, or an error on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::ranges::range_value_t<R>>
+        template<WritableContiguousByteRange R>
         StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
@@ -57,6 +56,8 @@ namespace Hermes {
         template<ByteLike Byte = std::byte>
         auto RecvRange() noexcept;
 
+
+        
         void Close() noexcept;
         void Abort() noexcept;
 

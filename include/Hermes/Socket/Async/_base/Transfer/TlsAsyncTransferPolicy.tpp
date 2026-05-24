@@ -154,7 +154,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    auto TlsAsyncTransferPolicy<Data>::AsyncRecv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode) noexcept {
+    auto TlsAsyncTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode) noexcept {
         if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
 
@@ -164,7 +164,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    auto TlsAsyncTransferPolicy<Data>::AsyncSend(Data& data, std::span<const Byte> bufferSend) noexcept {
+    auto TlsAsyncTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
         static_assert(stdexec::sender<TransferSender<Byte>>);
         static_assert(std::same_as<stdexec::value_types_of_t<TransferSender<Byte>>, std::variant<std::tuple<size_t>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<TransferSender<Byte>>, std::variant<TransferError>>);

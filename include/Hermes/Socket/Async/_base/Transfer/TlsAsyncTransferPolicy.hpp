@@ -12,10 +12,10 @@ namespace Hermes {
         static constexpr auto Type{ Data::Type };
 
         template<ByteLike Byte>
-        auto AsyncRecv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
+        auto Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
 
         template<ByteLike Byte>
-        auto AsyncSend(Data& data, std::span<const Byte> bufferSend) noexcept;
+        auto Send(Data& data, std::span<const Byte> bufferSend) noexcept;
 
         enum class ActionEnum : std::uint8_t { Recv, Send };
     private:

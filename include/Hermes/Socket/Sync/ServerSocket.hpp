@@ -20,7 +20,7 @@ namespace Hermes {
         SocketDataConcept SocketData = DefaultSocketData<>,
         class AcceptPolicy           = DefaultAcceptPolicy<>,
         class TransferPolicy         = DefaultTransferPolicy<>>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     struct ServerSocket {
         using EndpointType = SocketData::EndpointType;
 
@@ -33,20 +33,15 @@ namespace Hermes {
         //! Called internally by ListenerSocket after a successful Accept().
         [[nodiscard]] static ConnectionResult<ServerSocket> FromAccepted(SocketData&& data) noexcept;
 
+
+
         //! @return Returns the count of data sent on success, or an error on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
+        template<ContiguousByteRange R>
         StreamByteOper Send(R&& data) noexcept;
 
         //! @return Returns the count of data filled on success, or an error on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::ranges::range_value_t<R>>
+        template<WritableContiguousByteRange R>
         StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
-
-        // //! @return Returns a seamless input_range over bytes received by the socket.
-        // template<ByteLike Byte = std::byte>
-        // TransferPolicy<SocketData>::template RecvStream<Byte> RecvRange() noexcept;
-
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
@@ -55,7 +50,7 @@ namespace Hermes {
         //! will discover that the transmission ended while trying to get a new value, so a 0x04 char
         //! (end of transmission) will be added as the last char.
         template<ByteLike Byte = std::byte>
-        typename TransferPolicy::template RecvStream<Byte> RecvStream() noexcept;
+        auto RecvStream() noexcept;
 
         //! @return Returns a seamlessly input_range to the data received by the socket.
         //!
@@ -67,6 +62,8 @@ namespace Hermes {
         //! discarded anyway so keep you aware of this.
         template<ByteLike Byte = std::byte>
         auto RecvRange() noexcept;
+
+
 
         void Close() noexcept;
         void Abort() noexcept;

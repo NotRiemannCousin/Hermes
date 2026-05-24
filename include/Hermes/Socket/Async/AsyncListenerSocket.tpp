@@ -121,7 +121,7 @@ namespace Hermes {
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(AcceptPolicy::AcceptOptions opt) {
 
-        return acceptPolicy.AsyncAccept(socketData, opt)
+        return acceptPolicy.Accept(socketData, opt)
                 | stdexec::then([](SocketData data) {
                       return ServerSocketType::FromAccepted(std::move(data));
                 });

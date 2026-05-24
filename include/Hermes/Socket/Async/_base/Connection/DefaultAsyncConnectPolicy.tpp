@@ -172,7 +172,7 @@ namespace Hermes {
 
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncConnectPolicy<Data>::AsyncConnect(Data& data, Options options) noexcept {
+    auto DefaultAsyncConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
         static_assert(stdexec::sender<ConnectSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ConnectSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ConnectSender>, std::variant<ConnectionErrorEnum>>);
@@ -181,7 +181,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncConnectPolicy<Data>::AsyncShutdown(Data& data) noexcept {
+    auto DefaultAsyncConnectPolicy<Data>::Shutdown(Data& data) noexcept {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);

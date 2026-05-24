@@ -23,8 +23,8 @@ namespace Hermes {
         static constexpr bool IsServer{ false };
 
 
-        auto AsyncConnect(Data& data, Options options);
-        auto AsyncShutdown(Data& data);
+        auto Connect(Data& data, Options options);
+        auto Shutdown(Data& data);
 
         static void Close(Data& data) noexcept;
         static void Abort(Data& data) noexcept;

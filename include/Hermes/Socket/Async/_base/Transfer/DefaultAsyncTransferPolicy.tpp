@@ -172,13 +172,13 @@ namespace Hermes {
     // =========================================================================
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    auto DefaultAsyncTransferPolicy<Data>::AsyncRecv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode) noexcept {
+    auto DefaultAsyncTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode) noexcept {
         return RecvSender<Byte>{ &data, bufferRecv, mode };
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    auto DefaultAsyncTransferPolicy<Data>::AsyncSend(Data& data, std::span<const Byte> bufferSend) noexcept {
+    auto DefaultAsyncTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
         return SendSender<Byte>{ &data, bufferSend };
     }
 }

@@ -16,36 +16,42 @@ namespace Hermes {
         SocketDataConcept SocketData = DefaultSocketData<>,
         class AcceptPolicy           = DefaultAcceptPolicy<>,
         class TransferPolicy         = DefaultTransferPolicy<>>
-    requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+    requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     struct ListenerSocket {
         using ServerSocketType = ServerSocket<SocketData, AcceptPolicy, TransferPolicy>;
 
+        using ListenerSockerResult = ConnectionResult<ListenerSocket>;
+        using ServerSockertResult = ConnectionResult<ServerSocketType>;
 
         ListenerSocket(ListenerSocket&&) noexcept;
         ListenerSocket& operator=(ListenerSocket&&) noexcept;
         ~ListenerSocket();
 
+
+
         //! @brief Creates the listener: socket() + bind() + listen().
         //! @param data  SocketData whose endpoint field identifies the address/port to bind.
         //! @param backlog  Maximum pending-connection queue length (default: SOMAXCONN).
         template<class = void>
-        [[nodiscard]] static ConnectionResult<ListenerSocket>
-            Listen(SocketData&& data, int backlog = SOMAXCONN) noexcept
+        [[nodiscard]] static auto
+            Listen(SocketData&& data, int backlog = SOMAXCONN) noexcept -> ListenerSockerResult
             requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
 
         //! @copydoc Listen
-        [[nodiscard]] static ConnectionResult<ListenerSocket>
-            Listen(SocketData&& data, AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN) noexcept;
+        [[nodiscard]] static auto
+            Listen(SocketData&& data, AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN) noexcept -> ListenerSockerResult;
 
         template<class = void>
-        [[nodiscard]] static ConnectionResult<ListenerSocket>
-            ListenOne(SocketData&& data) noexcept
+        [[nodiscard]] static auto
+            ListenOne(SocketData&& data) noexcept -> ListenerSockerResult
             requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
 
         //! @brief Creates the listener: socket() + bind() + listen().
         //! @param data  SocketData whose endpoint field identifies the address/port to bind.
-        [[nodiscard]] static ConnectionResult<ListenerSocket>
-            ListenOne(SocketData&& data, AcceptPolicy::ListenOptions opt) noexcept;
+        [[nodiscard]] static auto
+            ListenOne(SocketData&& data, AcceptPolicy::ListenOptions opt) noexcept -> ListenerSockerResult;
+
+
 
         //! @brief Blocks until one client connects, then returns a ready ServerSocket.
         template<class = void>
@@ -77,6 +83,8 @@ namespace Hermes {
         //! @copydoc AcceptAll
         [[nodiscard]] std::generator<ConnectionResult<ServerSocketType>>
             AcceptAll(AcceptPolicy::AcceptOptions opt) noexcept;
+
+
 
         void Close() noexcept;
         void Abort() noexcept;

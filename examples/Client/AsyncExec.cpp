@@ -41,7 +41,7 @@ std::expected<std::string, std::string> MakeRequest() {
     } };
 
     const auto s_makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
-        return Hermes::RawTlsAsyncClient::AsyncConnect(Hermes::TlsSocketData<>{ endpoint, url.hostname }, {{ .recvBufferSize = 8192, .scheduler = &ioLoop }});
+        return Hermes::RawTlsAsyncClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname }, {{ .recvBufferSize = 8192, .scheduler = &ioLoop }});
     } };
 
     const auto s_makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {
@@ -52,9 +52,9 @@ std::expected<std::string, std::string> MakeRequest() {
             return state;
         } };
 
-        // `AsyncSend` returns a Sender. We chain it using `stdexec::then` to map the resulting
+        // `Send` returns a Sender. We chain it using `stdexec::then` to map the resulting
         // value (bytes sent) back into our `ClientState` pointer, moving it forward down the pipeline.
-        return state->client.AsyncSend(state->request) | stdexec::then(s_returnState);
+        return state->client.Send(state->request) | stdexec::then(s_returnState);
     } };
 
     const auto s_getResponse{ [](std::shared_ptr<ClientState>& state) {
@@ -62,7 +62,7 @@ std::expected<std::string, std::string> MakeRequest() {
             return std::pair{ state, bytesReceived };
         } };
 
-        return state->client.AsyncRecv(state->chunk, Hermes::RecvModeEnum::Any) | stdexec::then(s_returnPair);
+        return state->client.Recv(state->chunk, Hermes::RecvModeEnum::Any) | stdexec::then(s_returnPair);
     } };
 
     const auto s_processData{ [](const std::pair<std::shared_ptr<ClientState>, size_t>& data) {
@@ -106,8 +106,8 @@ std::expected<std::string, std::string> MakeRequest() {
             return firstChunk + state->response;
         } };
 
-        // `let_value` is required when returning another Sender (AsyncRecv). It flattens the execution graph.
-        return state->client.AsyncRecv(state->response, Hermes::RecvModeEnum::All) | stdexec::then(s_concatBody);
+        // `let_value` is required when returning another Sender (Recv). It flattens the execution graph.
+        return state->client.Recv(state->response, Hermes::RecvModeEnum::All) | stdexec::then(s_concatBody);
     } };
 
     const auto s_mapErrorPipeline{ []<typename T>(T&& error) {

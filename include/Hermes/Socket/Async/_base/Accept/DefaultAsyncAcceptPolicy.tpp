@@ -175,7 +175,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::AsyncAccept(Data& listenData, AcceptOptions options) {
+    auto DefaultAsyncAcceptPolicy<Data>::Accept(Data& listenData, AcceptOptions options) {
         static_assert(stdexec::sender<AcceptSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<AcceptSender>, std::variant<std::tuple<Data>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<AcceptSender>, std::variant<ConnectionErrorEnum>>);
@@ -220,7 +220,7 @@ namespace Hermes {
 
 
     template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::AsyncShutdown(Data& data) {
+    auto DefaultAsyncAcceptPolicy<Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);

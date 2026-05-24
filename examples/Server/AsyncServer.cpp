@@ -38,7 +38,7 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
 
     auto s_extractHeaders = [state] {
         using VariantSender = exec::variant_sender<
-            decltype(state->client.AsyncRecv(state->socketView
+            decltype(state->client.Recv(state->socketView
                     | std::views::drop(0), Hermes::RecvModeEnum::All)),
             decltype(stdexec::just()),
             decltype(stdexec::just_error(Hermes::ConnectionErrorEnum{}))
@@ -70,7 +70,7 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
 
         assert(lastSize - state->bodyIdx <= contentLength);
 
-        auto requestMore{ state->client.AsyncRecv(state->socketView
+        auto requestMore{ state->client.Recv(state->socketView
                 | std::views::drop(lastSize), Hermes::RecvModeEnum::All) };
 
 
@@ -98,7 +98,7 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
             }()
         };
 
-        return state->client.AsyncSend(response);
+        return state->client.Send(response);
     };
 
     auto s_appendReadedBytes = [state](const size_t count) {
@@ -107,7 +107,7 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
         return stdexec::just(state->socketView.contains("\r\n\r\n"));
     };
 
-    return state->client.AsyncRecv(state->buffer, Hermes::RecvModeEnum::Any)
+    return state->client.Recv(state->buffer, Hermes::RecvModeEnum::Any)
             | stdexec::let_value(s_appendReadedBytes)
             | exec::repeat_until()
             | stdexec::let_value(s_extractHeaders)

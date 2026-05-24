@@ -13,7 +13,7 @@ namespace Hermes {
         SocketDataConcept SocketData = DefaultSocketData<>,
         class ConnectionPolicy       = DefaultAsyncConnectPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
-        requires AsyncConnectionPolicyConcept<ConnectionPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
+        requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     struct AsyncClientSocket {
         using EndpointType = typename SocketData::EndpointType;
 
@@ -22,26 +22,24 @@ namespace Hermes {
         ~AsyncClientSocket();
 
         template<class = void>
-        [[nodiscard]] static auto AsyncConnect(SocketData&& data) noexcept
+        [[nodiscard]] static auto Connect(SocketData&& data) noexcept
             requires std::default_initializable<typename ConnectionPolicy::Options>;
 
-        [[nodiscard]] static auto AsyncConnect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
+        [[nodiscard]] static auto Connect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
 
         //! @brief Asynchronously writes data to the socket.
         //! @return A sender that yields the number of bytes sent or a TransferError on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncSend(R&& data) noexcept;
+        template<ContiguousByteRange R>
+        auto Send(R&& data) noexcept;
 
         //! @brief Asynchronously reads data from the socket.
         //! @return A sender that yields the number of bytes received or a TransferError on failure.
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncRecv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
+        template<WritableContiguousByteRange R>
+        auto Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
         //! @brief Initiates asynchronous protocol-level shutdown (e.g., TLS close_notify or TCP FIN).
         //! @return A sender that yields on successful shutdown.
-        auto AsyncShutdown() noexcept;
+        auto Shutdown() noexcept;
 
         //! @brief Synchronously destroys the underlying handle and cancels pending I/O.
         void Close() noexcept;

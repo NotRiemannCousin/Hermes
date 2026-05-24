@@ -32,15 +32,13 @@ namespace Hermes {
         [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
         [[nodiscard]] SocketData& GetSocketData() noexcept { return socketData; }
 
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncSend(R&& data);
+        template<ContiguousByteRange R>
+        auto Send(R&& data);
 
-        template<std::ranges::contiguous_range R>
-            requires ByteLike<std::remove_cv_t<std::ranges::range_value_t<R>>>
-        auto AsyncRecv(R&& data, RecvModeEnum mode = RecvModeEnum::All);
+        template<WritableContiguousByteRange R>
+        auto Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All);
 
-        auto AsyncShutdown() noexcept;
+        auto Shutdown() noexcept;
         void Close() noexcept;
         void Abort() noexcept;
 

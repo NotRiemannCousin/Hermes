@@ -13,7 +13,7 @@ namespace Hermes {
         if (view->_policy->_streamState->index >= view->_policy->_streamState->size)
             auto _{ view->Receive() };
 
-        return std::bit_cast<Byte>(view->_policy->_streamState->buffer[view->_policy->_streamState->index]);
+        return static_cast<Byte>(view->_policy->_streamState->buffer[view->_policy->_streamState->index]);
     }
 
     template<SocketDataConcept Data>
@@ -96,8 +96,7 @@ namespace Hermes {
     // ==============================================================================
 
     template<SocketDataConcept Data>
-    template<ByteLike Byte>
-    StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) noexcept {
+    StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) noexcept {
         size_t totalReceived{}, bytesReceived{};
         ConnectionResultOper err{};
 
@@ -151,8 +150,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    template<ByteLike Byte>
-    StreamByteOper TlsTransferPolicy<Data>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
+    StreamByteOper TlsTransferPolicy<Data>::Send(Data& data, std::span<const std::byte> bufferSend) noexcept {
 
         if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsTransferPolicy>>();

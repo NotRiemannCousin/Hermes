@@ -67,7 +67,7 @@ namespace Hermes {
         auto& state{ _policy->_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper<std::byte>(*_socket, state->buffer, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper(*_socket, state->buffer, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -89,8 +89,8 @@ namespace Hermes {
 
 
     template<SocketTypeEnum SocketType>
-    template<SocketDataConcept Data, ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
+    template<SocketDataConcept Data>
+    StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
         if (_state != nullptr) {
             const auto size{ min(_state->size - _state->index, bufferRecv.size()) };
             std::memcpy(bufferRecv.data(), _state->buffer.data() + _state->index, size);
@@ -105,8 +105,7 @@ namespace Hermes {
     }
 
     template<SocketTypeEnum SocketType>
-    template<ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SOCKET& socket, std::span<Byte> bufferRecv, const RecvModeEnum recvMode) {
+    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SOCKET& socket, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
         if (socket == macroINVALID_SOCKET)
             return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
@@ -129,8 +128,8 @@ namespace Hermes {
     }
 
     template<SocketTypeEnum SocketType>
-    template<SocketDataConcept Data, ByteLike Byte>
-    StreamByteOper DefaultTransferPolicy<SocketType>::Send(Data& data, std::span<const Byte> bufferSend) {
+    template<SocketDataConcept Data>
+    StreamByteOper DefaultTransferPolicy<SocketType>::Send(Data& data, std::span<const std::byte> bufferSend) {
         if (data.socket == macroINVALID_SOCKET)
             return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};

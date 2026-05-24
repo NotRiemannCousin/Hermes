@@ -115,13 +115,13 @@ namespace Hermes {
     };
 
     template<SocketDataConcept Data>
-    auto TlsAsyncConnectPolicy<Data>::AsyncConnect(Data& data, Options options) {
+    auto TlsAsyncConnectPolicy<Data>::Connect(Data& data, Options options) {
         data.connectStateMachine = std::make_unique<_details::TlsConnectStateMachine<Data, TlsAsyncConnectPolicy>>(options);
         _options = options;
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncConnectPolicy<Data>::AsyncConnect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<Data>::Options*>(&options))
+        return DefaultAsyncConnectPolicy<Data>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<Data>::Options*>(&options))
              | stdexec::let_value(Utils::Overloaded{
                  [&data, options]() mutable { return ControlSender{ &data, options }; },
                  [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
@@ -129,7 +129,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto TlsAsyncConnectPolicy<Data>::AsyncShutdown(Data& data) {
+    auto TlsAsyncConnectPolicy<Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ControlSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ControlSender>, std::variant<ConnectionErrorEnum>>);

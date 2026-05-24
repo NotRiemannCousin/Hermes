@@ -10,7 +10,7 @@ namespace Hermes {
     struct TlsTransferPolicy {
         static constexpr auto Type{ Data::Type };
 
-        template<ByteLike Byte>
+        template<ByteLike Byte = std::byte>
         struct RecvStream : std::ranges::view_interface<RecvStream<Byte>> {
             struct Iterator {
                 using difference_type = std::ptrdiff_t;
@@ -37,11 +37,9 @@ namespace Hermes {
             TlsTransferPolicy* _policy;
         };
 
-        template<ByteLike Byte>
-        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
+        StreamByteOper Recv(Data& data, std::span<std::byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
 
-        template<ByteLike Byte>
-        StreamByteOper Send(Data& data, std::span<const Byte> bufferSend) noexcept;
+        StreamByteOper Send(Data& data, std::span<const std::byte> bufferSend) noexcept;
 
     private:
         struct StreamState {
@@ -60,5 +58,6 @@ namespace Hermes {
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.tpp>
 
 namespace Hermes {
+    static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvStream<>>);
     static_assert(TransferPolicyConcept<TlsTransferPolicy<>, TlsSocketData<>>);
 }

@@ -4,15 +4,17 @@
 
 namespace Hermes {
 
+#pragma region Constructors
+
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenerSocket(ListenerSocket&& other) noexcept
         : socketData  (std::move(other.socketData)),
           acceptPolicy(std::move(other.acceptPolicy)) { }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>&
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::operator=(ListenerSocket&& other) noexcept {
         if (this != &other) {
@@ -28,59 +30,29 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::~ListenerSocket() {
         Close();
     }
 
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<class>
-    ConnectionResult<ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>> ListenerSocket<SocketData
-    , AcceptPolicy, TransferPolicy>::ListenOne(SocketData &&data) noexcept
-        requires std::default_initializable<typename AcceptPolicy::ListenOptions> {
-        return ListenOne(std::move(data), {});
-    }
+#pragma endregion
 
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    template<class>
-    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
-    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne() noexcept
-        requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AcceptOne({});
-    }
 
-    template<SocketDataConcept SocketData, class AcceptPolicy, class
-        TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy,
-        SocketData>
-    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
-    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOneConnection() noexcept requires std::
-        default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AcceptOne();
-    }
-
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    ConnectionResult<ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>> ListenerSocket<SocketData, AcceptPolicy,
-    TransferPolicy>::ListenOne(SocketData &&data, typename AcceptPolicy::ListenOptions opt) noexcept {
-        return Listen(std::move(data), opt);
-    }
+#pragma region Listen
     
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<class>
-    ConnectionResult<ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>> ListenerSocket<SocketData
-    , AcceptPolicy, TransferPolicy>::Listen(SocketData &&data, int backlog) noexcept
+    auto ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Listen(SocketData &&data, int backlog) noexcept -> ListenerSockerResult
         requires std::default_initializable<typename AcceptPolicy::ListenOptions> {
         return Listen(std::move(data), {}, backlog);
     }
-    
+
+
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
-    ConnectionResult<ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>>
-    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Listen(SocketData&& data, typename AcceptPolicy::ListenOptions opt, int backlog) noexcept {
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    auto ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Listen(SocketData&& data,
+            typename AcceptPolicy::ListenOptions opt, int backlog) noexcept -> ListenerSockerResult {
         Network::Initialize();
 
         ListenerSocket listener;
@@ -94,7 +66,45 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<class>
+    auto ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenOne(SocketData &&data) noexcept -> ListenerSockerResult
+        requires std::default_initializable<typename AcceptPolicy::ListenOptions> {
+        return ListenOne(std::move(data), {});
+    }
+
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    auto ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ListenOne(SocketData &&data, typename AcceptPolicy::ListenOptions opt) noexcept -> ListenerSockerResult {
+        return Listen(std::move(data), opt);
+    }
+
+
+#pragma endregion
+
+
+#pragma region Accept
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<class>
+    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
+    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne() noexcept
+        requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
+        return AcceptOne({});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
+    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOneConnection() noexcept requires std::
+        default_initializable<typename AcceptPolicy::AcceptOptions> {
+        return AcceptOne();
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne(typename AcceptPolicy::AcceptOptions opt) noexcept {
         SocketData clientData{ socketData.MakeChild() };
@@ -106,7 +116,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-        requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<class>
     std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::
     ServerSocketType>> ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll() noexcept
@@ -116,7 +126,7 @@ namespace Hermes {
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll(typename AcceptPolicy::AcceptOptions opt) noexcept {
         while (socketData.socket != macroINVALID_SOCKET)
@@ -124,8 +134,13 @@ namespace Hermes {
     }
 
 
+#pragma endregion
+
+
+#pragma region Close
+
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Close() noexcept {
         if (socketData.socket == macroINVALID_SOCKET) return;
 
@@ -133,11 +148,13 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
-		requires AcceptPolicyConcept<AcceptPolicy, SocketData> && TransferPolicyConcept<TransferPolicy, SocketData>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Abort() noexcept {
         if (socketData.socket == macroINVALID_SOCKET) return;
 
         acceptPolicy.Abort(socketData);
     }
+
+#pragma endregion
 
 }

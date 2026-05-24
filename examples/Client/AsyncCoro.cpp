@@ -30,18 +30,18 @@ exec::task<std::expected<std::string, std::string>> MakeRequestAsync(Hermes::Fas
 
         // 2. Establish the asynchronous connection.
         // The coroutine suspends here until the TCP handshake and TLS negotiation are complete.
-        auto client{ co_await Hermes::RawTlsAsyncClient::AsyncConnect(
+        auto client{ co_await Hermes::RawTlsAsyncClient::Connect(
             Hermes::TlsSocketData<>{ endpoint, url.hostname },
             {{ .recvBufferSize = 8192, .scheduler = &ioLoop }}
         ) };
 
         // 3. Format and send the HTTP request.
-        co_await client.AsyncSend(url.FormatRequest());
+        co_await client.Send(url.FormatRequest());
 
         // 4. Receive the initial response chunk.
         // We read up to 8192 bytes. This usually covers the HTTP headers and the beginning of the body.
         std::array<char, 8192> chunk{};
-        const size_t bytesReceived{ co_await client.AsyncRecv(chunk, Hermes::RecvModeEnum::Any) };
+        const size_t bytesReceived{ co_await client.Recv(chunk, Hermes::RecvModeEnum::Any) };
 
         if (bytesReceived == 0)
             co_return std::unexpected{ "Connection Closed" };
@@ -83,7 +83,7 @@ exec::task<std::expected<std::string, std::string>> MakeRequestAsync(Hermes::Fas
         // 5. Receive the remainder of the payload.
         // RecvModeEnum::All ensures the socket keeps reading until the exact requested size is met.
         response.resize(bodySize - body.size());
-        co_await client.AsyncRecv(response, Hermes::RecvModeEnum::All);
+        co_await client.Recv(response, Hermes::RecvModeEnum::All);
 
         finalBody += response;
 

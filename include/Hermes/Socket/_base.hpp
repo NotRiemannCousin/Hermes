@@ -13,6 +13,16 @@ namespace Hermes {
     template<class Type>
     concept ByteLike = std::same_as<Type, char> || std::same_as<Type, unsigned char> || std::same_as<Type, std::byte>;
 
+    template<class R>
+    concept ContiguousByteRange = std::ranges::contiguous_range<R>
+        && ByteLike<std::ranges::range_value_t<R>>;
+
+    template<class R>
+    concept WritableContiguousByteRange = std::ranges::contiguous_range<R>
+        && ByteLike<std::remove_const_t<std::ranges::range_value_t<R>>>;
+
+
+
     //! @brief With `All`, the entire span will be filled, with `Any` the function will stop at the block received.
     enum class RecvModeEnum : std::uint8_t {
         Any, All
@@ -248,12 +258,12 @@ namespace Hermes {
     //! A struct defining settings to configure the socket.
     //!
     //! ### Connection
-    //! @code{.cpp} policy.AsyncConnect(data, opt) -> stdexec::sender @endcode
+    //! @code{.cpp} policy.Connect(data, opt) -> stdexec::sender @endcode
     //! Initiates a non-blocking connection. Delivers `ConnectionResultOper` through
     //! the sender's value channel on completion.
     //!
     //! ### Shutdown & Cleanup
-    //! @code{.cpp} policy.AsyncShutdown(data) -> stdexec::sender @endcode
+    //! @code{.cpp} policy.Shutdown(data) -> stdexec::sender @endcode
     //! Performs graceful protocol shutdown via network I/O (e.g., sending TLS close alerts
     //! or TCP FIN).
     //!
@@ -275,8 +285,8 @@ namespace Hermes {
         && requires (Policy policy, SocketData& data, typename Policy::Options opt) {
             { opt.scheduler                 };
 
-            { policy.AsyncConnect(data, opt) }; // -> AsyncConnectionResultOperConcept;
-            { policy.AsyncShutdown(data)     }; // -> AsyncConnectionResultOperConcept;
+            { policy.Connect(data, opt) }; // -> AsyncConnectionResultOperConcept;
+            { policy.Shutdown(data)     }; // -> AsyncConnectionResultOperConcept;
             { policy.Close(data)             } -> std::same_as<void>;
             { policy.Abort(data)             } -> std::same_as<void>;
         };
@@ -293,11 +303,11 @@ namespace Hermes {
     //! async ranges support, so no stream alternative is proposed.
     //!
     //! ### Sender-Based Buffer I/O
-    //! @code{.cpp} policy.AsyncRecv(data, bufferRecv) -> AsyncConnectionResultConcept @endcode
+    //! @code{.cpp} policy.Recv(data, bufferRecv) -> AsyncConnectionResultConcept @endcode
     //! Reads data from the socket into the provided `std::span<std::byte>` asynchronously.
     //! Delivers `StreamByteOper` through the sender's value channel on completion.
     //!
-    //! @code{.cpp} policy.AsyncSend(data, bufferSend) -> AsyncConnectionResultConcept @endcode
+    //! @code{.cpp} policy.Send(data, bufferSend) -> AsyncConnectionResultConcept @endcode
     //! Writes data to the socket from the provided `std::span<const std::byte>` asynchronously.
     //! Delivers `StreamByteOper` through the sender's value channel on completion.
     template<class Policy, class SocketData>
@@ -305,12 +315,11 @@ namespace Hermes {
         && Policy::Type == SocketData::Type
 
         && requires(
-            Policy& policy          , SocketData& data,
-            std::span<std::byte> bufferRecv     , std::span<const std::byte> bufferSend,
-            RecvModeEnum recvMode
+            Policy& policy, SocketData& data, RecvModeEnum recvMode,
+            std::span<std::byte> bufferRecv, std::span<const std::byte> bufferSend
         ) {
-        { policy.AsyncRecv(data, bufferRecv, recvMode) };
-        { policy.AsyncSend(data, bufferSend)           };
+        { policy.Recv(data, bufferRecv, recvMode) };
+        { policy.Send(data, bufferSend)           };
         };
 
 #pragma endregion
@@ -332,7 +341,7 @@ namespace Hermes {
     //!
     //! @code{.cpp} typename Policy::AcceptOptions @endcode
     //! A struct defining per-connection settings (e.g., TCP_NODELAY, handshake timeout).
-    //! Must also expose a `scheduler` field to select the execution context for `AsyncAccept()`.
+    //! Must also expose a `scheduler` field to select the execution context for `Accept()`.
     //!
     //! ### Initialization
     //! @code{.cpp} policy.Listen(data, backlog, opt) -> ConnectionResultOper @endcode
@@ -340,7 +349,7 @@ namespace Hermes {
     //! that complete immediately and must not be deferred to a sender.
     //!
     //! ### Connection
-    //! @code{.cpp} policy.AsyncAccept(data, acceptedData, opt) -> stdexec::sender @endcode
+    //! @code{.cpp} policy.Accept(data, acceptedData, opt) -> stdexec::sender @endcode
     //! Waits for and accepts an incoming connection without blocking. `acceptedData` is a child
     //! model (via `MakeChild()`) whose `socket` and `endpoint` will be filled on completion.
     //! Handles specific behaviors like server-side TLS handshakes or versioning.
@@ -365,12 +374,12 @@ namespace Hermes {
             { policy.Listen(data, backlog, opt) } -> std::same_as<ConnectionResultOper>;
         }
         && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
-            { opt.scheduler                    };
+            { opt.scheduler            };
 
-            { policy.AsyncAccept(data, opt) };// -> AsyncConnectionResultOperConcept;
-            { policy.AsyncShutdown(data)    };// -> AsyncConnectionResultOperConcept;
-            { policy.Close(data)            } -> std::same_as<void>;
-            { policy.Abort(data)            } -> std::same_as<void>;
+            { policy.Accept(data, opt) };// -> AsyncConnectionResultOperConcept;
+            { policy.Shutdown(data)    };// -> AsyncConnectionResultOperConcept;
+            { policy.Close(data)       } -> std::same_as<void>;
+            { policy.Abort(data)       } -> std::same_as<void>;
         };
 
 #pragma endregion

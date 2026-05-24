@@ -12,7 +12,7 @@ namespace Hermes {
 
         static_assert(SocketType != SocketTypeEnum::Dgram, "UDP not supported yet");
 
-        template<ByteLike Byte>
+        template<ByteLike Byte = std::byte>
         struct RecvStream : std::ranges::view_interface<RecvStream<Byte>> {
             struct Iterator {
                 using difference_type  = std::ptrdiff_t;
@@ -20,7 +20,7 @@ namespace Hermes {
 
                 RecvStream* view = nullptr;
 
-                [[nodiscard]] value_type operator*() const;
+                [[nodiscard]] Byte operator*() const;
                 Iterator& operator++();
                 Iterator& operator++(int);
                 [[nodiscard]] bool operator==(std::default_sentinel_t) const;
@@ -40,10 +40,10 @@ namespace Hermes {
             DefaultTransferPolicy* _policy;
         };
 
-        template<SocketDataConcept Data, ByteLike Byte>
-        StreamByteOper Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
-        template<SocketDataConcept Data, ByteLike Byte>
-        static StreamByteOper Send(Data& data, std::span<const Byte> bufferSend);
+        template<SocketDataConcept Data>
+        StreamByteOper Recv(Data& data, std::span<std::byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
+        template<SocketDataConcept Data>
+        static StreamByteOper Send(Data& data, std::span<const std::byte> bufferSend);
     private:
         struct State {
             static constexpr size_t bufferSize{ 0x4000 };
@@ -57,14 +57,13 @@ namespace Hermes {
 
         std::unique_ptr<State> _state{ nullptr };
 
-        template<ByteLike Byte>
-        static StreamByteOper RecvHelper(SOCKET& socket, std::span<Byte> bufferRecv, RecvModeEnum recvMode);
+        static StreamByteOper RecvHelper(SOCKET& socket, std::span<std::byte> bufferRecv, RecvModeEnum recvMode);
     };
 }
 
 #include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.tpp>
 
 namespace Hermes {
-    static_assert(std::ranges::viewable_range<DefaultTransferPolicy<>::RecvStream<std::byte>>);
+    static_assert(std::ranges::viewable_range<DefaultTransferPolicy<>::RecvStream<>>);
     static_assert(TransferPolicyConcept<DefaultTransferPolicy<>, DefaultSocketData<>>);
 }
