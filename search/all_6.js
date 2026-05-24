@@ -5,7 +5,7 @@ var searchData=
   ['fastioloop_2',['fastioloop',['../class_hermes_1_1_fast_io_loop.html',1,'Hermes::FastIoLoop'],['../class_hermes_1_1_fast_io_loop.html#a146795a746889d0f5e7d797406b90f67',1,'Hermes::FastIoLoop::FastIoLoop(const FastIoLoop &amp;)=delete'],['../class_hermes_1_1_fast_io_loop.html#aa14417e0c187c552adc024937da5805e',1,'Hermes::FastIoLoop::FastIoLoop(unsigned int threadCount=std::thread::hardware_concurrency())']]],
   ['fastioscheduler_3',['FastIoScheduler',['../struct_hermes_1_1_fast_io_scheduler.html',1,'Hermes']]],
   ['fastioschedulesender_4',['FastIoScheduleSender',['../struct_hermes_1_1_fast_io_schedule_sender.html',1,'Hermes']]],
-  ['features_5',['Features',['../index.html#autotoc_md22',1,'']]],
+  ['features_5',['Features',['../index.html#autotoc_md2',1,'']]],
   ['filereadfailed_6',['FileReadFailed',['../namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878',1,'Hermes']]],
   ['flags_7',['Flags',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba4ea7801f17a4e5485e8b050c052fb443',1,'SecurityBufferEnum.hpp']]],
   ['flags_5foperations_8',['FLAGS_OPERATIONS',['../_win_api_8hpp.html#acb3dcf3a15e143c1375cf85f12af9d2c',1,'WinApi.hpp']]],

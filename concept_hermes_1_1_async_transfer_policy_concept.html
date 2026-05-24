@@ -160,7 +160,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_transfer_poli
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages data transfer operations asynchronously. </p>
 <p>Async counterpart of <code>TransferPolicyConcept</code>. Send and receive operations return senders instead of blocking. We don't have <code>std::async_generator</code> neither async ranges support, so no stream alternative is proposed.</p>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<h3><a class="anchor" id="autotoc_md29"></a>
 Sender-Based Buffer I/O</h3>
 <div class="fragment"><div class="line">policy.AsyncRecv(data, bufferRecv) -&gt; AsyncConnectionResultConcept </div>
 </div><!-- fragment --><p> Reads data from the socket into the provided <code>std::span&lt;std::byte&gt;</code> asynchronously. Delivers <code>StreamByteOper</code> through the sender's value channel on completion.</p>
