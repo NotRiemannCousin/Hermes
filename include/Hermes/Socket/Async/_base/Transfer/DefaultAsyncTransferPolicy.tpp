@@ -17,39 +17,67 @@ namespace Hermes {
 
         template<class Receiver>
         struct OperationState {
-            Data* _data;
-            std::span<Byte> _buffer;
-            RecvModeEnum _mode;
-            Receiver _receiver;
+            Data*             _data;
+            std::span<Byte>   _buffer;
+            RecvModeEnum      _mode;
+            Receiver          _receiver;
+            TransferOperStatus _status{};
+            size_t            _total{};
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                if (self._data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(self._receiver), TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
+            static void IoCallback(void* context, DWORD bytesTransferred, bool success) noexcept {
+                auto* self{ static_cast<OperationState*>(context) };
+
+                if (!success) {
+                    stdexec::set_error(std::move(self->_receiver),
+                        TransferError{ self->_total, ConnectionErrorEnum::ReceiveFailed });
                     return;
                 }
 
-                size_t total{};
-
-                while (total < self._buffer.size()) {
-                    const int res{ recv(self._data->socket,
-                        reinterpret_cast<char*>(self._buffer.data() + total),
-                        static_cast<int>(self._buffer.size() - total), 0) };
-
-                    if (res == 0) {
-                        stdexec::set_error(std::move(self._receiver), TransferError{ total, ConnectionErrorEnum::ConnectionClosed });
-                        return;
-                    }
-
-                    if (res == macroSOCKET_ERROR) {
-                        stdexec::set_error(std::move(self._receiver), TransferError{ total, ConnectionErrorEnum::ReceiveFailed });
-                        return;
-                    }
-
-                    total += res;
-                    if (self._mode == RecvModeEnum::Any) break;
+                if (bytesTransferred == 0) {
+                    stdexec::set_error(std::move(self->_receiver),
+                        TransferError{ self->_total, ConnectionErrorEnum::ConnectionClosed });
+                    return;
                 }
 
-                stdexec::set_value(std::move(self._receiver), total);
+                self->_total += bytesTransferred;
+
+                if (self->_mode == RecvModeEnum::Any || self->_total >= self->_buffer.size()) {
+                    stdexec::set_value(std::move(self->_receiver), self->_total);
+                    return;
+                }
+
+                // RecvModeEnum::All — still need more bytes, re-post
+                self->PostRecv();
+            }
+
+            void PostRecv() noexcept {
+                _status          = {};
+                _status.context  = this;
+                _status.callback = IoCallback;
+
+                WSABUF wsaBuf{};
+                wsaBuf.buf = reinterpret_cast<char*>(_buffer.data() + _total);
+                wsaBuf.len = static_cast<ULONG>(_buffer.size() - _total);
+
+                DWORD flags{};
+                const int res{ WSARecv(_data->socket, &wsaBuf, 1,
+                    nullptr, &flags,
+                    static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
+
+                if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
+                    stdexec::set_error(std::move(_receiver),
+                        TransferError{ _total, ConnectionErrorEnum::ReceiveFailed });
+                }
+            }
+
+            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+                if (self._data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(self._receiver),
+                        TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+
+                self.PostRecv();
             }
         };
 
@@ -75,32 +103,60 @@ namespace Hermes {
 
         template<class Receiver>
         struct OperationState {
-            Data* _data;
-            std::span<const Byte> _buffer;
-            Receiver _receiver;
+            Data*                  _data;
+            std::span<const Byte>  _buffer;
+            Receiver               _receiver;
+            TransferOperStatus     _status{};
+            size_t                 _total{};
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                if (self._data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(self._receiver), TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
+            static void IoCallback(void* context, DWORD bytesTransferred, bool success) noexcept {
+                auto* self{ static_cast<OperationState*>(context) };
+
+                if (!success) {
+                    stdexec::set_error(std::move(self->_receiver),
+                        TransferError{ self->_total, ConnectionErrorEnum::SendFailed });
                     return;
                 }
 
-                size_t total{};
+                self->_total += bytesTransferred;
 
-                while (total < self._buffer.size()) {
-                    const int res{ send(self._data->socket,
-                        reinterpret_cast<const char*>(self._buffer.data() + total),
-                        static_cast<int>(self._buffer.size() - total), 0) };
-
-                    if (res == macroSOCKET_ERROR) {
-                        stdexec::set_error(std::move(self._receiver), TransferError{ total, ConnectionErrorEnum::SendFailed });
-                        return;
-                    }
-
-                    total += res;
+                if (self->_total >= self->_buffer.size()) {
+                    stdexec::set_value(std::move(self->_receiver), self->_total);
+                    return;
                 }
 
-                stdexec::set_value(std::move(self._receiver), total);
+                // Partial send — re-post the remainder
+                self->PostSend();
+            }
+
+            void PostSend() noexcept {
+                _status          = {};
+                _status.context  = this;
+                _status.callback = IoCallback;
+
+                WSABUF wsaBuf{};
+                wsaBuf.buf = const_cast<char*>(
+                    reinterpret_cast<const char*>(_buffer.data() + _total));
+                wsaBuf.len = static_cast<ULONG>(_buffer.size() - _total);
+
+                const int res{ WSASend(_data->socket, &wsaBuf, 1,
+                    nullptr, 0,
+                    static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
+
+                if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
+                    stdexec::set_error(std::move(_receiver),
+                        TransferError{ _total, ConnectionErrorEnum::SendFailed });
+                }
+            }
+
+            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+                if (self._data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(self._receiver),
+                        TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+
+                self.PostSend();
             }
         };
 
