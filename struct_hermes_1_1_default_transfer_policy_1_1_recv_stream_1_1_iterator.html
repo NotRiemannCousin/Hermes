@@ -152,8 +152,8 @@ Public Types</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a3e6b4914a97bca7ebf8c26621b3220b8" id="r_a3e6b4914a97bca7ebf8c26621b3220b8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#ad231d806e548e43a820f2859ce492e1c">value_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#a3e6b4914a97bca7ebf8c26621b3220b8">operator*</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a></td></tr>
-<tr class="separator:a3e6b4914a97bca7ebf8c26621b3220b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff1644f457744c1fbf04e25e2896306e" id="r_aff1644f457744c1fbf04e25e2896306e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#aff1644f457744c1fbf04e25e2896306e">operator*</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a></td></tr>
+<tr class="separator:aff1644f457744c1fbf04e25e2896306e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab5bdb64994e07caf50ced28c3276b86a" id="r_ab5bdb64994e07caf50ced28c3276b86a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html">Iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#ab5bdb64994e07caf50ced28c3276b86a">operator++</a> ()</td></tr>
 <tr class="separator:ab5bdb64994e07caf50ced28c3276b86a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa797705956ff146092e40467753c773b" id="r_aa797705956ff146092e40467753c773b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html">Iterator</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#aa797705956ff146092e40467753c773b">operator++</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">int</a>)</td></tr>
@@ -175,7 +175,7 @@ Public Attributes</h2></td></tr>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::difference_type =  std::ptrdiff_t</td>
@@ -193,7 +193,7 @@ template&lt;ByteLike Byte&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::value_type =  <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a></td>
@@ -204,18 +204,18 @@ template&lt;ByteLike Byte&gt; </div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3e6b4914a97bca7ebf8c26621b3220b8" name="a3e6b4914a97bca7ebf8c26621b3220b8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3e6b4914a97bca7ebf8c26621b3220b8">&#9670;&#160;</a></span>operator*()</h2>
+<a id="aff1644f457744c1fbf04e25e2896306e" name="aff1644f457744c1fbf04e25e2896306e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff1644f457744c1fbf04e25e2896306e">&#9670;&#160;</a></span>operator*()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html#ad231d806e548e43a820f2859ce492e1c">value_type</a> <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::operator* </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::operator* </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td> const</td>
@@ -233,7 +233,7 @@ template&lt;ByteLike Byte&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html">Iterator</a> &amp; <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::operator++ </td>
@@ -254,7 +254,7 @@ template&lt;ByteLike Byte&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream_1_1_iterator.html">Iterator</a> &amp; <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::operator++ </td>
@@ -276,7 +276,7 @@ template&lt;ByteLike Byte&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::operator== </td>
@@ -299,7 +299,7 @@ template&lt;ByteLike Byte&gt; </div>
 <div class="memtemplate">
 template&lt;<a class="el" href="_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
 <div class="memtemplate">
-template&lt;ByteLike Byte&gt; </div>
+template&lt;ByteLike Byte = std::byte&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html">RecvStream</a>* <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">SocketType</a> &gt;<a class="el" href="struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#a1e7a3b39a71d7e33bdabdbec334bd428">::RecvStream</a>&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Byte</a> &gt;::Iterator::view = <a class="el" href="struct_hermes_1_1_default_socket_data.html">nullptr</a></td>

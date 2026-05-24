@@ -155,23 +155,23 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 <div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Type;   }(); </div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_endpoint_concept_html"><div class="ttname"><a href="concept_hermes_1_1_endpoint_concept.html">Hermes::EndpointConcept</a></div><div class="ttdef"><b>Definition</b> EndpointConcept.hpp:14</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:51</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:61</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for the context representing a socket's state and cross-policy coordination. </p>
 <p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, static metadata (Family/Type), and any required cross-policy state (e.g., renegotiation callbacks). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs.</p>
-<h3><a class="anchor" id="autotoc_md14"></a>
+<h3><a class="anchor" id="autotoc_md0"></a>
 Type Requirements</h3>
 <ul>
 <li>Must define <code>EndpointType</code> which satisfies <code>EndpointConcept</code>.</li>
 <li>Must be <code>std::movable</code> and strictly <b>not</b> <code>std::copyable</code>.</li>
 </ul>
-<h3><a class="anchor" id="autotoc_md15"></a>
+<h3><a class="anchor" id="autotoc_md1"></a>
 Static Metadata</h3>
 <div class="fragment"><div class="line">SocketData::Family </div>
 </div><!-- fragment --><p> A <code>constexpr AddressFamilyEnum</code> representing the address family (e.g., IPv4, IPv6).</p>
 <div class="fragment"><div class="line">SocketData::Type </div>
 </div><!-- fragment --><p> A <code>constexpr SocketTypeEnum</code> representing the socket type (e.g., Stream, Datagram).</p>
-<h3><a class="anchor" id="autotoc_md16"></a>
+<h3><a class="anchor" id="autotoc_md2"></a>
 Instance Members</h3>
 <div class="fragment"><div class="line">data.socket </div>
 </div><!-- fragment --><p> The underlying OS <code>SOCKET</code> handle.</p>

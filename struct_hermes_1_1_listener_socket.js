@@ -1,5 +1,7 @@
 var struct_hermes_1_1_listener_socket =
 [
+    [ "ListenerSockerResult", "struct_hermes_1_1_listener_socket.html#a42d8c8fa01f34836ede67586dc6989c3", null ],
+    [ "ServerSockertResult", "struct_hermes_1_1_listener_socket.html#a8d08cf87cc200ad9eec38f6382b4f1cc", null ],
     [ "ServerSocketType", "struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6", null ],
     [ "ListenerSocket", "struct_hermes_1_1_listener_socket.html#ab64dd90419383049b35cbb3fdbf29d0f", null ],
     [ "~ListenerSocket", "struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64", null ],

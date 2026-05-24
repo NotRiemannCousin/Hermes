@@ -16,12 +16,14 @@ var searchData=
   ['hermes_3a_3abytelike_13',['ByteLike',['../concept_hermes_1_1_byte_like.html',1,'Hermes']]],
   ['hermes_3a_3aclientsocketconcept_14',['ClientSocketConcept',['../concept_hermes_1_1_client_socket_concept.html',1,'Hermes']]],
   ['hermes_3a_3aconnectionpolicyconcept_15',['ConnectionPolicyConcept',['../concept_hermes_1_1_connection_policy_concept.html',1,'Hermes']]],
-  ['hermes_3a_3aendpointconcept_16',['EndpointConcept',['../concept_hermes_1_1_endpoint_concept.html',1,'Hermes']]],
-  ['hermes_3a_3aserversocketconcept_17',['ServerSocketConcept',['../concept_hermes_1_1_server_socket_concept.html',1,'Hermes']]],
-  ['hermes_3a_3asocketdataconcept_18',['SocketDataConcept',['../concept_hermes_1_1_socket_data_concept.html',1,'Hermes']]],
-  ['hermes_3a_3atransferpolicyconcept_19',['TransferPolicyConcept',['../concept_hermes_1_1_transfer_policy_concept.html',1,'Hermes']]],
-  ['hermes_3a_3autils_20',['Utils',['../namespace_hermes_1_1_utils.html',1,'Hermes']]],
-  ['hermes_3a_3autils_3a_3acomparablerange_21',['ComparableRange',['../concept_hermes_1_1_utils_1_1_comparable_range.html',1,'Hermes::Utils']]],
-  ['hermes_3a_3autils_3a_3ahashable_22',['Hashable',['../concept_hermes_1_1_utils_1_1_hashable.html',1,'Hermes::Utils']]],
-  ['host_23',['host',['../struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571',1,'Hermes::TlsSocketData']]]
+  ['hermes_3a_3acontiguousbyterange_16',['ContiguousByteRange',['../concept_hermes_1_1_contiguous_byte_range.html',1,'Hermes']]],
+  ['hermes_3a_3aendpointconcept_17',['EndpointConcept',['../concept_hermes_1_1_endpoint_concept.html',1,'Hermes']]],
+  ['hermes_3a_3aserversocketconcept_18',['ServerSocketConcept',['../concept_hermes_1_1_server_socket_concept.html',1,'Hermes']]],
+  ['hermes_3a_3asocketdataconcept_19',['SocketDataConcept',['../concept_hermes_1_1_socket_data_concept.html',1,'Hermes']]],
+  ['hermes_3a_3atransferpolicyconcept_20',['TransferPolicyConcept',['../concept_hermes_1_1_transfer_policy_concept.html',1,'Hermes']]],
+  ['hermes_3a_3autils_21',['Utils',['../namespace_hermes_1_1_utils.html',1,'Hermes']]],
+  ['hermes_3a_3autils_3a_3acomparablerange_22',['ComparableRange',['../concept_hermes_1_1_utils_1_1_comparable_range.html',1,'Hermes::Utils']]],
+  ['hermes_3a_3autils_3a_3ahashable_23',['Hashable',['../concept_hermes_1_1_utils_1_1_hashable.html',1,'Hermes::Utils']]],
+  ['hermes_3a_3awritablecontiguousbyterange_24',['WritableContiguousByteRange',['../concept_hermes_1_1_writable_contiguous_byte_range.html',1,'Hermes']]],
+  ['host_25',['host',['../struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571',1,'Hermes::TlsSocketData']]]
 ];

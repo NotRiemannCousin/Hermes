@@ -34,6 +34,8 @@ var namespace_hermes =
     [ "TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", "struct_hermes_1_1_transfer_oper_status" ],
     [ "EndpointConcept", "concept_hermes_1_1_endpoint_concept.html", null ],
     [ "ByteLike", "concept_hermes_1_1_byte_like.html", null ],
+    [ "ContiguousByteRange", "concept_hermes_1_1_contiguous_byte_range.html", null ],
+    [ "WritableContiguousByteRange", "concept_hermes_1_1_writable_contiguous_byte_range.html", null ],
     [ "SocketDataConcept", "concept_hermes_1_1_socket_data_concept.html", null ],
     [ "ConnectionPolicyConcept", "concept_hermes_1_1_connection_policy_concept.html", null ],
     [ "TransferPolicyConcept", "concept_hermes_1_1_transfer_policy_concept.html", null ],

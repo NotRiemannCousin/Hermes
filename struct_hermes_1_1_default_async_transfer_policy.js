@@ -1,5 +1,5 @@
 var struct_hermes_1_1_default_async_transfer_policy =
 [
-    [ "AsyncRecv", "struct_hermes_1_1_default_async_transfer_policy.html#af8e758e8704be1e7afac20488d59fad6", null ],
-    [ "AsyncSend", "struct_hermes_1_1_default_async_transfer_policy.html#a22d56aa447ff1509dac1abb43f4833b1", null ]
+    [ "Recv", "struct_hermes_1_1_default_async_transfer_policy.html#a34168ed4740b0b9cc89c65745b54cc2b", null ],
+    [ "Send", "struct_hermes_1_1_default_async_transfer_policy.html#ac86d7d9f2bd6166db3a88db1f6f80c58", null ]
 ];

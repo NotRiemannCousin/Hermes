@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: Hermes::TransferPolicyConcept Concept Reference</title>
+<title>Hermes: Hermes::WritableContiguousByteRange Concept Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -106,7 +106,7 @@ $(function() {
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
-$(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_concept.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('concept_hermes_1_1_writable_contiguous_byte_range.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -132,60 +132,23 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_con
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Hermes::TransferPolicyConcept Concept Reference<div class="ingroups"><a class="el" href="group___sync_socket_concepts.html">SyncSocketConcepts</a></div></div></div>
+  <div class="headertitle"><div class="title">Hermes::WritableContiguousByteRange Concept Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Concept for a policy that manages data transfer operations.  
-<a href="concept_hermes_1_1_transfer_policy_concept.html#details">More...</a></p>
-
 <p><code>#include &lt;<a class="el" href="__base_8hpp_source.html">_base.hpp</a>&gt;</code></p>
 <h2 class="groupheader">Concept definition</h2>
-<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> Policy, <span class="keyword">class</span> SocketData&gt;</div>
-<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concept_hermes_1_1_transfer_policy_concept.html">Hermes::TransferPolicyConcept</a> =  <a class="code hl_concept" href="concept_hermes_1_1_socket_data_concept.html">SocketDataConcept&lt;SocketData&gt;</a></div>
-<div class="line">        &amp;&amp; Policy::Type == SocketData::Type</div>
-<div class="line"> </div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span>(SocketData&amp; data, Policy&amp; policy) {</div>
-<div class="line">            { _details::RecvStreamT&lt;Policy&gt;{ data, policy } } -&gt; std::ranges::input_range;</div>
-<div class="line">        }</div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span>(_details::RecvStreamT&lt;Policy&gt;&amp; range) {</div>
-<div class="line">            { *range.begin() } -&gt; std::same_as&lt;std::byte&gt;;</div>
-<div class="line">            { range.Error()  } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
-<div class="line">        }</div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span>(</div>
-<div class="line">            Policy&amp; policy     , SocketData&amp; data,</div>
-<div class="line">            std::span&lt;std::byte&gt; bufferRecv, std::span&lt;const std::byte&gt; bufferSend,</div>
-<div class="line">            <a class="code hl_enumeration" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> recvMode</div>
-<div class="line">        ) {</div>
-<div class="line">            { policy.Recv(data, bufferRecv, recvMode) } -&gt; std::same_as&lt;StreamByteOper&gt;;</div>
-<div class="line">            { policy.Send(data, bufferSend)           } -&gt; std::same_as&lt;StreamByteOper&gt;;</div>
-<div class="line">        }</div>
-<div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:61</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_transfer_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_transfer_policy_concept.html">Hermes::TransferPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages data transfer operations.</div><div class="ttdef"><b>Definition</b> _base.hpp:155</div></div>
-<div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a></div><div class="ttdeci">RecvModeEnum</div><div class="ttdoc">With All, the entire span will be filled, with Any the function will stop at the block received.</div><div class="ttdef"><b>Definition</b> _base.hpp:27</div></div>
-</div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Concept for a policy that manages data transfer operations. </p>
-<p>Defines how data is received and sent over the socket. It supports both modern, lazy, range-based reading and traditional buffer-based I/O. This allows encapsulation of specific protocols, such as reading length-prefixed messages, searching for delimiters, or handling TLS encryption transparently.</p>
-<h3><a class="anchor" id="autotoc_md6"></a>
-Lazy Range-Based Receive</h3>
-<div class="fragment"><div class="line">_details::RecvStreamT&lt;Policy, SocketData&gt; </div>
-</div><!-- fragment --><p> Must be constructible from <code>SocketData</code> and <code>Policy</code>, and satisfy <code>std::ranges::input_range</code>. It iteratively yields <code>std::byte</code> elements.</p>
-<div class="fragment"><div class="line">range.Error() -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
-<div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:59</div></div>
-</div><!-- fragment --><p> A custom method on the range to check for underlying socket or protocol errors that may occur during the iteration process.</p>
-<h3><a class="anchor" id="autotoc_md7"></a>
-Buffer-Based I/O</h3>
-<div class="fragment"><div class="line">policy.Recv(data, bufferRecv) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> </div>
-<div class="ttc" id="anamespace_hermes_html_a39bdfbf4b858f9fb7654cf2aadf2098b"><div class="ttname"><a href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">Hermes::StreamByteOper</a></div><div class="ttdeci">std::pair&lt; size_t, ConnectionResultOper &gt; StreamByteOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:61</div></div>
-</div><!-- fragment --><p> Reads data from the socket directly into the provided <code>std::span&lt;std::byte&gt;</code>.</p>
-<div class="fragment"><div class="line">policy.Send(data, bufferSend) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> </div>
-</div><!-- fragment --><p> Writes data to the socket directly from the provided <code>std::span&lt;const std::byte&gt;</code>. </p>
-</div></div><!-- contents -->
+<div class="fragment"><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> R&gt;</div>
+<div class="line"><span class="keyword">concept </span><a class="code hl_concept" href="concept_hermes_1_1_writable_contiguous_byte_range.html">Hermes::WritableContiguousByteRange</a> =  std::ranges::contiguous_range&lt;R&gt;</div>
+<div class="line">        &amp;&amp; <a class="code hl_concept" href="concept_hermes_1_1_byte_like.html">ByteLike&lt;std::remove_const_t&lt;std::ranges::range_value_t&lt;R&gt;</a>&gt;&gt;</div>
+<div class="ttc" id="aconcept_hermes_1_1_byte_like_html"><div class="ttname"><a href="concept_hermes_1_1_byte_like.html">Hermes::ByteLike</a></div><div class="ttdef"><b>Definition</b> _base.hpp:14</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_writable_contiguous_byte_range_html"><div class="ttname"><a href="concept_hermes_1_1_writable_contiguous_byte_range.html">Hermes::WritableContiguousByteRange</a></div><div class="ttdef"><b>Definition</b> _base.hpp:21</div></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_hermes.html">Hermes</a></li><li class="navelem"><a class="el" href="concept_hermes_1_1_transfer_policy_concept.html">TransferPolicyConcept</a></li>
+    <li class="navelem"><a class="el" href="namespace_hermes.html">Hermes</a></li><li class="navelem"><a class="el" href="concept_hermes_1_1_writable_contiguous_byte_range.html">WritableContiguousByteRange</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['tlsacceptstate_0',['TlsAcceptState',['../struct_hermes_1_1__details_1_1_tls_accept_state_machine.html#a22141e9c05914a8d93273a5406b6a77d',1,'Hermes::_details::TlsAcceptStateMachine']]],
-  ['tlsconnectstate_1',['TlsConnectState',['../struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#ace1b3f96609f0a986e19bd9713a601cf',1,'Hermes::_details::TlsConnectStateMachine']]],
-  ['tlstransferstate_2',['TlsTransferState',['../struct_hermes_1_1__details_1_1_tls_transfer_state_machine.html#a8b55135617e1a8aac5ced25a60bbb2e5',1,'Hermes::_details::TlsTransferStateMachine']]],
-  ['type_3',['type',['../struct_hermes_1_1_utils_1_1_drop_last_view.html#aa8ddc94ebd4e8a82df98d996cca65c33',1,'Hermes::Utils::DropLastView::Type'],['../struct_hermes_1_1_utils_1_1_until_match_view.html#a21f1615f346e97745cbf1145901ffa7c',1,'Hermes::Utils::UntilMatchView::Type']]]
+  ['sender_5fconcept_0',['sender_concept',['../struct_hermes_1_1_fast_io_schedule_sender.html#a58656134f6f3d7a3d34e9a057a852195',1,'Hermes::FastIoScheduleSender']]],
+  ['serversockertresult_1',['ServerSockertResult',['../struct_hermes_1_1_listener_socket.html#a8d08cf87cc200ad9eec38f6382b4f1cc',1,'Hermes::ListenerSocket']]],
+  ['serversockettype_2',['serversockettype',['../struct_hermes_1_1_async_listener_socket.html#aa173a7b416a05c093dbfebeec4ff2161',1,'Hermes::AsyncListenerSocket::ServerSocketType'],['../struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6',1,'Hermes::ListenerSocket::ServerSocketType']]],
+  ['socketinfoaddr_3',['SocketInfoAddr',['../namespace_hermes.html#ae387a226251b2771a996781de8eb3247',1,'Hermes']]],
+  ['streambyteoper_4',['StreamByteOper',['../namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b',1,'Hermes']]]
 ];

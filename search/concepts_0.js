@@ -9,10 +9,12 @@ var searchData=
   ['hermes_3a_3abytelike_6',['ByteLike',['../concept_hermes_1_1_byte_like.html',1,'Hermes']]],
   ['hermes_3a_3aclientsocketconcept_7',['ClientSocketConcept',['../concept_hermes_1_1_client_socket_concept.html',1,'Hermes']]],
   ['hermes_3a_3aconnectionpolicyconcept_8',['ConnectionPolicyConcept',['../concept_hermes_1_1_connection_policy_concept.html',1,'Hermes']]],
-  ['hermes_3a_3aendpointconcept_9',['EndpointConcept',['../concept_hermes_1_1_endpoint_concept.html',1,'Hermes']]],
-  ['hermes_3a_3aserversocketconcept_10',['ServerSocketConcept',['../concept_hermes_1_1_server_socket_concept.html',1,'Hermes']]],
-  ['hermes_3a_3asocketdataconcept_11',['SocketDataConcept',['../concept_hermes_1_1_socket_data_concept.html',1,'Hermes']]],
-  ['hermes_3a_3atransferpolicyconcept_12',['TransferPolicyConcept',['../concept_hermes_1_1_transfer_policy_concept.html',1,'Hermes']]],
-  ['hermes_3a_3autils_3a_3acomparablerange_13',['ComparableRange',['../concept_hermes_1_1_utils_1_1_comparable_range.html',1,'Hermes::Utils']]],
-  ['hermes_3a_3autils_3a_3ahashable_14',['Hashable',['../concept_hermes_1_1_utils_1_1_hashable.html',1,'Hermes::Utils']]]
+  ['hermes_3a_3acontiguousbyterange_9',['ContiguousByteRange',['../concept_hermes_1_1_contiguous_byte_range.html',1,'Hermes']]],
+  ['hermes_3a_3aendpointconcept_10',['EndpointConcept',['../concept_hermes_1_1_endpoint_concept.html',1,'Hermes']]],
+  ['hermes_3a_3aserversocketconcept_11',['ServerSocketConcept',['../concept_hermes_1_1_server_socket_concept.html',1,'Hermes']]],
+  ['hermes_3a_3asocketdataconcept_12',['SocketDataConcept',['../concept_hermes_1_1_socket_data_concept.html',1,'Hermes']]],
+  ['hermes_3a_3atransferpolicyconcept_13',['TransferPolicyConcept',['../concept_hermes_1_1_transfer_policy_concept.html',1,'Hermes']]],
+  ['hermes_3a_3autils_3a_3acomparablerange_14',['ComparableRange',['../concept_hermes_1_1_utils_1_1_comparable_range.html',1,'Hermes::Utils']]],
+  ['hermes_3a_3autils_3a_3ahashable_15',['Hashable',['../concept_hermes_1_1_utils_1_1_hashable.html',1,'Hermes::Utils']]],
+  ['hermes_3a_3awritablecontiguousbyterange_16',['WritableContiguousByteRange',['../concept_hermes_1_1_writable_contiguous_byte_range.html',1,'Hermes']]]
 ];
