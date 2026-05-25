@@ -27,7 +27,7 @@ struct ClientState {
     bool keepAlive{ true };
 };
 
-static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
+static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
     using namespace std::literals::string_view_literals;
 
     auto s_onComplete = [state](const auto&...) {
@@ -117,7 +117,7 @@ static auto S_HandleClientAsync(std::shared_ptr<ClientState> state) {
             | exec::repeat_until();
 }
 
-static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
+static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
 
     static constexpr auto s_makeResponse = [](auto&& clientSocket) {
@@ -127,7 +127,7 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
         auto state{ std::make_shared<ClientState>(ClientState{ std::move(clientSocket) }) };
 
         exec::start_detached(
-            S_HandleClientAsync(state)
+            HandleClientAsync(state)
                     | stdexec::let_error([](auto&& err) { return stdexec::just(); })
         );
         // start_detached is fire-and-forget, we didn't wait the connection end
@@ -162,7 +162,7 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
 int main() {
     Hermes::FastIoLoop loop{ std::thread::hardware_concurrency() };
 
-    S_RunServerAsync(loop);
+    RunServerAsync(loop);
 
     std::println("\n\nServer has been shut down.");
 
