@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['std_3a_3aformatter_3c_20ipaddress_20_3e_0',['formatter&lt; IpAddress &gt;',['../struct_hermes_1_1_ip_address.html#aacf46e65c4c867e62a11196fc73b2816',1,'Hermes::IpAddress']]],
-  ['std_3a_3aformatter_3c_20ipendpoint_20_3e_1',['formatter&lt; IpEndpoint &gt;',['../struct_hermes_1_1_ip_endpoint.html#a4378257788ed4583f889a6b5dad73d37',1,'Hermes::IpEndpoint']]],
-  ['std_3a_3ahash_3c_20ipaddress_20_3e_2',['hash&lt; IpAddress &gt;',['../struct_hermes_1_1_ip_address.html#a9825819e1f89bdee3d6f4a7ce7524fc5',1,'Hermes::IpAddress']]],
-  ['std_3a_3ahash_3c_20ipendpoint_20_3e_3',['hash&lt; IpEndpoint &gt;',['../struct_hermes_1_1_ip_endpoint.html#a1489886760aa0aa1aa443ce24ab0dc24',1,'Hermes::IpEndpoint']]]
+  ['tag_5finvoke_0',['tag_invoke',['../struct_hermes_1_1_fast_io_schedule_sender_1_1_operation_state.html#a32c748b1027618e38c851bc5b9b6b63f',1,'Hermes::FastIoScheduleSender::OperationState::tag_invoke'],['../struct_hermes_1_1_fast_io_schedule_sender.html#afe564dd051c966017412d3fa84a7dd34',1,'Hermes::FastIoScheduleSender::tag_invoke']]],
+  ['tlsasyncacceptpolicy_3c_20data_20_3e_1',['TlsAsyncAcceptPolicy&lt; Data &gt;',['../struct_hermes_1_1_tls_accept_policy.html#afa4f4c26e88ad8747619d59e37d0f89f',1,'Hermes::TlsAcceptPolicy']]],
+  ['tlsasyncconnectpolicy_3c_20data_20_3e_2',['TlsAsyncConnectPolicy&lt; Data &gt;',['../struct_hermes_1_1_tls_connect_policy.html#a3861884764edf748cf8752839f14016f',1,'Hermes::TlsConnectPolicy']]]
 ];

@@ -52,6 +52,5 @@ var annotated_dup =
       [ "TlsTransferPolicy", "struct_hermes_1_1_tls_transfer_policy.html", "struct_hermes_1_1_tls_transfer_policy" ],
       [ "TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ],
       [ "TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", "struct_hermes_1_1_transfer_oper_status" ]
-    ] ],
-    [ "_UNICODE_STRING", "struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html", "struct___u_n_i_c_o_d_e___s_t_r_i_n_g" ]
+    ] ]
 ];

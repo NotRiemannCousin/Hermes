@@ -15,6 +15,5 @@ var searchData=
   ['promptforcreds_12',['PromptForCreds',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea252216c68b137eadd3b859f5eaba1836',1,'InitializeSecurityContextFlags.hpp']]],
   ['protocolbasetypeenum_13',['ProtocolBaseTypeEnum',['../_protocol_base_type_enum_8hpp.html#a60c522c7ce02321beb7e6271b0f621b1',1,'ProtocolBaseTypeEnum.hpp']]],
   ['protocolbasetypeenum_2ehpp_14',['ProtocolBaseTypeEnum.hpp',['../_protocol_base_type_enum_8hpp.html',1,'']]],
-  ['proxybindings_15',['proxybindings',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextReturnFlags.hpp']]],
-  ['punicode_5fstring_16',['PUNICODE_STRING',['../_win_api_8hpp.html#a9d9596239ae6918bf1780d06c3124e8b',1,'WinApi.hpp']]]
+  ['proxybindings_15',['proxybindings',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextReturnFlags.hpp']]]
 ];

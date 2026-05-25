@@ -66,7 +66,6 @@ var NAVTREE =
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
-        [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
@@ -78,12 +77,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_sync_2_listener_socket_8hpp-example.html",
-"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab430d2ea405c65a98bcc35faab222889",
-"_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbae72ed1a5338bf740f526f2a9a77db770",
-"globals_enum.html",
-"struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#a2205c349c2303738f2b83c942ce7f3f1",
-"struct_hermes_1_1_default_connect_policy_1_1_options.html#a883ce6cf706185c44f37a74315f722e5",
-"struct_hermes_1_1_tls_async_accept_policy.html#a66d6962b55349e6d002dd7e4f93ab408"
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973abdb8e43b01c3b35e28c7daacfd19cfb2",
+"_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf7e68e5021e964fbe01bceb285896e8f",
+"hierarchy.html",
+"struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#aa1144d9ca1877a71f33b5487d0345734",
+"struct_hermes_1_1_default_socket_data.html#a46fbfb8b6a222d521baa6cde7c098b32",
+"struct_hermes_1_1_tls_async_connect_policy.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -25,8 +25,6 @@ var _accept_security_context_return_flags_8hpp =
       [ "FragmentToFit", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a0100b43228b7a44c6e30e03d2ada74db", null ],
       [ "NoToken", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60ab223364e8c3ac195629f1297336e5984", null ],
       [ "ProxyBindings", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8", null ],
-      [ "AllowMissingBindings", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a793ddbad9ef11eacf9eda368db553473", null ],
-      [ "Messages", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a41de6d6cfb8953c021bbe4ba0701c8a1", null ],
-      [ "ExplicitSession", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a780e0387dd821a96e6e32bffa4557b74", null ]
+      [ "AllowMissingBindings", "_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a793ddbad9ef11eacf9eda368db553473", null ]
     ] ]
 ];

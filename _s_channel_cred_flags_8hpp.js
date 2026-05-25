@@ -30,7 +30,6 @@ var _s_channel_cred_flags_8hpp =
       [ "CacheOnlyUrlRetrievalOnCreate", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a749fdf19aeaaa1700c5f81353788aea1", null ],
       [ "SniCredential", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ae0c159bc3ea69a90b0c0b041bc07d1dc", null ],
       [ "SniEnableOcsp", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a41a8e7bb0ea47d1a86d8a507603d1298", null ],
-      [ "DeferredCredValidation", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a3f5b0039305e0ff381734cc52625b648", null ],
       [ "X509Certchain", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a5d1dac3484cf47a8a1e5a557eeeb51d9", null ],
       [ "X509Capi", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800ada3ba214953a677b3ec8bccb0a6e9d16", null ],
       [ "CertContext", "_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800aa984fa4db850f78ede280e20baf178bd", null ]

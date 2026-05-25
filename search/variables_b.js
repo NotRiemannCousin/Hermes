@@ -11,6 +11,5 @@ var searchData=
   ['macrosocket_5ferror_8',['macroSOCKET_ERROR',['../_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea',1,'Macros.hpp']]],
   ['macrosol_5fsocket_9',['macroSOL_SOCKET',['../_macros_8hpp.html#a89a20c922a5445760ce416b10c610d99',1,'Macros.hpp']]],
   ['macrounisp_5fname_10',['macroUNISP_NAME',['../_macros_8hpp.html#aabf296f4a48a1f7d4859bda6fedfa644',1,'Macros.hpp']]],
-  ['macrowinsock_5fversion_11',['macroWINSOCK_VERSION',['../_macros_8hpp.html#ac4f710aaf65615e63a6e4ada00c47cef',1,'Macros.hpp']]],
-  ['maximumlength_12',['MaximumLength',['../struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html#ae0487ecc173e55918bcee834bd3d107b',1,'_UNICODE_STRING']]]
+  ['macrowinsock_5fversion_11',['macroWINSOCK_VERSION',['../_macros_8hpp.html#ac4f710aaf65615e63a6e4ada00c47cef',1,'Macros.hpp']]]
 ];

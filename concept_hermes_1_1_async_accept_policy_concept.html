@@ -154,8 +154,8 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_accept_policy
 <div class="line">        &amp;&amp; <span class="keyword">requires</span>(Policy policy, SocketData&amp; data, <span class="keyword">typename</span> Policy::AcceptOptions opt) {</div>
 <div class="line">            { opt.scheduler            };</div>
 <div class="line"> </div>
-<div class="line">            { policy.Accept(data, opt) };</div>
-<div class="line">            { policy.Shutdown(data)    };</div>
+<div class="line">            { policy.Accept(data, opt) } -&gt; stdexec::sender;</div>
+<div class="line">            { policy.Shutdown(data)    } -&gt; stdexec::sender;</div>
 <div class="line">            { policy.Close(data)       } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">            { policy.Abort(data)       } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">        }</div>

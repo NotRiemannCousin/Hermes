@@ -309,10 +309,10 @@ $(document).ready(function(){initNavTree('__base_8hpp_source.html',''); initResi
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        &amp;&amp; <span class="keyword">requires</span> (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>, SocketData&amp; <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <span class="keyword">typename</span> Policy::Options <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) {</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>            { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>.scheduler                 };</div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            { policy.Connect(data, opt) }; <span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            { policy.Shutdown(data)     }; <span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            { policy.Close(data)             } -&gt; std::same_as&lt;void&gt;;</div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            { policy.Abort(data)             } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>            { policy.Connect(data, opt) } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>            { policy.Shutdown(data)     } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>            { policy.Close(data)        } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>            { policy.Abort(data)        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        };</div>
 </div>
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
@@ -330,8 +330,8 @@ $(document).ready(function(){initNavTree('__base_8hpp_source.html',''); initResi
 <div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>            Policy&amp; policy, SocketData&amp; data, <a class="code hl_enumeration" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> recvMode,</div>
 <div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            std::span&lt;std::byte&gt; bufferRecv, std::span&lt;const std::byte&gt; bufferSend</div>
 <div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        ) {</div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        { policy.Recv(data, bufferRecv, recvMode) };</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        { policy.Send(data, bufferSend)           };</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        { policy.Recv(data, bufferRecv, recvMode) } -&gt; stdexec::sender;</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        { policy.Send(data, bufferSend)           } -&gt; stdexec::sender;</div>
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>        };</div>
 </div>
 <div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
@@ -354,8 +354,8 @@ $(document).ready(function(){initNavTree('__base_8hpp_source.html',''); initResi
 <div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>        &amp;&amp; <span class="keyword">requires</span>(Policy policy, SocketData&amp; data, <span class="keyword">typename</span> Policy::AcceptOptions opt) {</div>
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>            { opt.scheduler            };</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span> </div>
-<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>            { policy.Accept(data, opt) };<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            { policy.Shutdown(data)    };<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>            { policy.Accept(data, opt) } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            { policy.Shutdown(data)    } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
 <div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>            { policy.Close(data)       } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>            { policy.Abort(data)       } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        };</div>

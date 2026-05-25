@@ -1,6 +1,5 @@
 var hierarchy =
 [
-    [ "_UNICODE_STRING", "struct___u_n_i_c_o_d_e___s_t_r_i_n_g.html", null ],
     [ "Hermes::DefaultAcceptPolicy< Endpoint, SocketType, SocketFamily >::AcceptOptions", "struct_hermes_1_1_default_accept_policy_1_1_accept_options.html", [
       [ "Hermes::DefaultAsyncAcceptPolicy< Data >::AcceptOptions", "struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html", null ],
       [ "Hermes::TlsAcceptPolicy< Data >::AcceptOptions", "struct_hermes_1_1_tls_accept_policy_1_1_accept_options.html", [

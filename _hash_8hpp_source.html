@@ -142,24 +142,25 @@ $(document).ready(function(){initNavTree('_hash_8hpp_source.html',''); initResiz
 <div class="contents">
 <a href="_hash_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;utility&gt;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes_1_1_utils.html">Hermes::Utils</a> {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="foldopen" id="foldopen00006" data-start="{" data-end="}">
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="concept_hermes_1_1_utils_1_1_hashable.html">    6</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concept_hermes_1_1_utils_1_1_hashable.html">Hashable</a> = <span class="keyword">requires</span>(T a) {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>            { std::hash&lt;T&gt;{}(a) } -&gt; std::convertible_to&lt;std::size_t&gt;;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    };</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes_1_1_utils.html">Hermes::Utils</a> {</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00007" data-start="{" data-end="}">
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="concept_hermes_1_1_utils_1_1_hashable.html">    7</a></span>    <span class="keyword">concept </span><a class="code hl_concept" href="concept_hermes_1_1_utils_1_1_hashable.html">Hashable</a> = <span class="keyword">requires</span>(T a) {</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>            { std::hash&lt;T&gt;{}(a) } -&gt; std::convertible_to&lt;std::size_t&gt;;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    };</div>
 </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="}">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">   11</a></span>    <span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">HashCombine</a>(<span class="keywordtype">size_t</span>&amp; <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>, <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">v</a>) {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a> ^= <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">v</a> + 0x9e3779b97f4a7c15ULL + (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>&lt;&lt;6) + (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>&gt;&gt;2);</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    }</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="}">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">   12</a></span>    <span class="keyword">constexpr</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">HashCombine</a>(<span class="keywordtype">size_t</span>&amp; <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>, <span class="keyword">const</span> <span class="keywordtype">size_t</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">v</a>) {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a> ^= <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">v</a> + 0x9e3779b97f4a7c15ULL + (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>&lt;&lt;6) + (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">seed</a>&gt;&gt;2);</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    }</div>
 </div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>}</div>
-<div class="ttc" id="aconcept_hermes_1_1_utils_1_1_hashable_html"><div class="ttname"><a href="concept_hermes_1_1_utils_1_1_hashable.html">Hermes::Utils::Hashable</a></div><div class="ttdef"><b>Definition</b> Hash.hpp:6</div></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>}</div>
+<div class="ttc" id="aconcept_hermes_1_1_utils_1_1_hashable_html"><div class="ttname"><a href="concept_hermes_1_1_utils_1_1_hashable.html">Hermes::Utils::Hashable</a></div><div class="ttdef"><b>Definition</b> Hash.hpp:7</div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html"><div class="ttname"><a href="namespace_hermes_1_1_utils.html">Hermes::Utils</a></div><div class="ttdef"><b>Definition</b> DropLast.hpp:4</div></div>
-<div class="ttc" id="anamespace_hermes_1_1_utils_html_a862ab5e2ad7fe011225368bb285eaab5"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">Hermes::Utils::HashCombine</a></div><div class="ttdeci">constexpr void HashCombine(size_t &amp;seed, const size_t v)</div><div class="ttdoc">Knuth / TEA hash combine (same approach used by boost::hash_combine).</div><div class="ttdef"><b>Definition</b> Hash.hpp:11</div></div>
+<div class="ttc" id="anamespace_hermes_1_1_utils_html_a862ab5e2ad7fe011225368bb285eaab5"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5">Hermes::Utils::HashCombine</a></div><div class="ttdeci">constexpr void HashCombine(size_t &amp;seed, const size_t v)</div><div class="ttdoc">Knuth / TEA hash combine (same approach used by boost::hash_combine).</div><div class="ttdef"><b>Definition</b> Hash.hpp:12</div></div>
 <div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

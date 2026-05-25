@@ -26,7 +26,6 @@ var _accept_security_context_flags_8hpp =
       [ "NoToken", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8ab223364e8c3ac195629f1297336e5984", null ],
       [ "ProxyBindings", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8", null ],
       [ "AllowMissingBindings", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a793ddbad9ef11eacf9eda368db553473", null ],
-      [ "Messages", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a41de6d6cfb8953c021bbe4ba0701c8a1", null ],
-      [ "ExplicitSession", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a780e0387dd821a96e6e32bffa4557b74", null ]
+      [ "Messages", "_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a41de6d6cfb8953c021bbe4ba0701c8a1", null ]
     ] ]
 ];
