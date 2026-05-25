@@ -13,6 +13,8 @@ set(FULL_PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
+
 set(CMAKE_DEBUG_POSTFIX "_d")
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -75,6 +77,13 @@ target_link_options(Hermes PRIVATE
 target_link_libraries(Hermes PUBLIC
         $<BUILD_INTERFACE:stdexec>
 )
+if(WIN32)
+    target_link_libraries(Hermes PUBLIC ws2_32 crypt32 secur32)
+
+    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
+        target_link_libraries(Hermes PUBLIC stdc++exp)
+    endif()
+endif()
 
 
 set_target_properties(Hermes PROPERTIES

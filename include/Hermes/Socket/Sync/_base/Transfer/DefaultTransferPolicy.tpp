@@ -92,7 +92,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
         if (_state != nullptr) {
-            const auto size{ min(_state->size - _state->index, bufferRecv.size()) };
+            const auto size{ (std::min)((size_t)_state->size - _state->index, bufferRecv.size()) };
             std::memcpy(bufferRecv.data(), _state->buffer.data() + _state->index, size);
             _state->index += size;
 

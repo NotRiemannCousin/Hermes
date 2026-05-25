@@ -27,7 +27,10 @@ enum class AcceptSecurityContextReturnFlags : long long {
     NoToken              = ASC_RET_NO_TOKEN,
     ProxyBindings        = ASC_RET_NO_ADDITIONAL_TOKEN, // *INTERNAL*
     AllowMissingBindings = ASC_RET_MESSAGES, // Indicates that the TLS 1.3+ record layer is disabled, and the security context consumes and produces cleartext TLS messages, rather than records.
+
+#ifdef _MSC_VER
     Messages             = ASC_RET_REUSE_SESSION_TICKETS, // Indicates that the TLS 1.3+ server will allow session ticket reuse.
     ExplicitSession      = ASC_RET_EXPLICIT_SESSION, // Indicates that explicit TLS 1.3+ session management is enabled.
+#endif
 
 };

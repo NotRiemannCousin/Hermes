@@ -51,7 +51,7 @@ namespace Hermes {
 
         std::unique_ptr<StreamState> _streamState{ nullptr };
 
-        template<ByteLike Byte> friend struct RecvStream;
+        // template<ByteLike Byte> friend struct RecvStream;
     };
 }
 

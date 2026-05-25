@@ -30,5 +30,8 @@ enum class AcceptSecurityContextFlags : long long {
     AllowMissingBindings = ASC_REQ_ALLOW_MISSING_BINDINGS,
     Messages             = ASC_REQ_MESSAGES, // Disables the TLS 1.3+ record layer and causes the security context to consume and produce cleartext TLS messages, rather than records.
     // Request explicit TLS 1.3+ session management. TLS 1.3+ session ticket will only be generated when requested by the SSPI caller.
+
+#ifdef _MSC_VER
     ExplicitSession      = ASC_REQ_EXPLICIT_SESSION,
+#endif
 };

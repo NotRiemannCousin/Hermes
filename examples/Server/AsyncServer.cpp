@@ -143,7 +143,7 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
 
         return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
                 | stdexec::let_value(s_makeResponse)
-                | exec::repeat_effect();
+                | exec::repeat();
     };
 
     auto serve{ Hermes::RawTcpAsyncListener::Listen(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
@@ -151,7 +151,7 @@ static void S_RunServerAsync(Hermes::FastIoLoop& ioLoop) {
             | stdexec::upon_error([](auto err) {
                 return 3.1416;
             }) };
-    // repeat_effect leaves no value channel, so I'm redirecting the error channel
+    // repeat leaves no value channel, so I'm redirecting the error channel
     // so that sync_wait can have areturn type.
 
 

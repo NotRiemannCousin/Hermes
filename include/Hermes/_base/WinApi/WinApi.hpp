@@ -18,11 +18,13 @@
 #include <ws2tcpip.h>
 #include <winsock2.h>
 
-typedef struct _UNICODE_STRING {
-    USHORT Length;
-    USHORT MaximumLength;
-    PWSTR Buffer;
-} UNICODE_STRING, *PUNICODE_STRING;
+#include <ntdef.h>
+
+// typedef struct _UNICODE_STRING {
+//     USHORT Length;
+//     USHORT MaximumLength;
+//     PWSTR Buffer;
+// } UNICODE_STRING, *PUNICODE_STRING;
 
 #include <schannel.h>
 #include <sspi.h>

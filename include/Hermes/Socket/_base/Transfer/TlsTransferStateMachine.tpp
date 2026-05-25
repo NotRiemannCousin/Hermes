@@ -14,7 +14,7 @@
 
 #define AWAIT(nextState, opResult) do {                     \
     _state = &TlsTransferStateMachine::_##nextState##State; \
-    return TransferStateOpResult::opResult;                       \
+    return TransferStateOpResult::opResult;                 \
 } while (false)
 
 namespace Hermes::_details {

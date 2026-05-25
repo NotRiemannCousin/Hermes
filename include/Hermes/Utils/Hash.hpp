@@ -1,5 +1,6 @@
 #pragma once
 #include <utility>
+#include <functional>
 
 namespace Hermes::Utils {
     template<typename T>

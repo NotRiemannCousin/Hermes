@@ -31,7 +31,9 @@ enum class SChannelCredFlags {
     CacheOnlyUrlRetrievalOnCreate   = SCH_CRED_CACHE_ONLY_URL_RETRIEVAL_ON_CREATE,
     SniCredential                   = SCH_CRED_SNI_CREDENTIAL,
     SniEnableOcsp                   = SCH_CRED_SNI_ENABLE_OCSP,
+#ifdef _MSC_VER
     DeferredCredValidation          = SCH_CRED_DEFERRED_CRED_VALIDATION,
+#endif
     X509Certchain                   = SCH_CRED_X509_CERTCHAIN,
     X509Capi                        = SCH_CRED_X509_CAPI,
     CertContext                     = SCH_CRED_CERT_CONTEXT

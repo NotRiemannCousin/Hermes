@@ -285,10 +285,10 @@ namespace Hermes {
         && requires (Policy policy, SocketData& data, typename Policy::Options opt) {
             { opt.scheduler                 };
 
-            { policy.Connect(data, opt) }; // -> AsyncConnectionResultOperConcept;
-            { policy.Shutdown(data)     }; // -> AsyncConnectionResultOperConcept;
-            { policy.Close(data)             } -> std::same_as<void>;
-            { policy.Abort(data)             } -> std::same_as<void>;
+            { policy.Connect(data, opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
+            { policy.Shutdown(data)     } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
+            { policy.Close(data)        } -> std::same_as<void>;
+            { policy.Abort(data)        } -> std::same_as<void>;
         };
 
 #pragma endregion
@@ -318,8 +318,8 @@ namespace Hermes {
             Policy& policy, SocketData& data, RecvModeEnum recvMode,
             std::span<std::byte> bufferRecv, std::span<const std::byte> bufferSend
         ) {
-        { policy.Recv(data, bufferRecv, recvMode) };
-        { policy.Send(data, bufferSend)           };
+        { policy.Recv(data, bufferRecv, recvMode) } -> stdexec::sender;
+        { policy.Send(data, bufferSend)           } -> stdexec::sender;
         };
 
 #pragma endregion
@@ -376,8 +376,8 @@ namespace Hermes {
         && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
             { opt.scheduler            };
 
-            { policy.Accept(data, opt) };// -> AsyncConnectionResultOperConcept;
-            { policy.Shutdown(data)    };// -> AsyncConnectionResultOperConcept;
+            { policy.Accept(data, opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
+            { policy.Shutdown(data)    } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
             { policy.Close(data)       } -> std::same_as<void>;
             { policy.Abort(data)       } -> std::same_as<void>;
         };
