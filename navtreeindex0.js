@@ -81,7 +81,6 @@ var NAVTREEINDEX0 =
 "_address_family_enum_8hpp_source.html":[10,0,0,0,0,0,0,1],
 "_async_client_socket_8hpp.html":[10,0,0,0,2,1,1],
 "_async_client_socket_8hpp.html#abddac6999a8395418011d67d9578cae8":[10,0,0,0,2,1,1,1],
-"_async_client_socket_8hpp.html#ae71bc293e8544c06b0de3ab3dc4cfca8":[10,0,0,0,2,1,1,2],
 "_async_client_socket_8hpp_source.html":[10,0,0,0,2,1,1],
 "_async_listener_socket_8hpp.html":[10,0,0,0,2,1,2],
 "_async_listener_socket_8hpp.html#a19c0b7b20a9fb090c94b4c7de3a38ea7":[10,0,0,0,2,1,2,1],
@@ -249,5 +248,6 @@ var NAVTREEINDEX0 =
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab016524060e0d87f24e1959e3d1b0b3d":[10,0,0,0,0,0,0,0,1,0,56],
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab430d2ea405c65a98bcc35faab222889":[10,0,0,0,0,0,0,0,1,0,42],
 "_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab5a2947b1666babb3f6dcc9c5a30257d":[10,0,0,0,0,0,0,0,1,0,57],
-"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab7f929e050a421ecc6dd22c2552f7150":[10,0,0,0,0,0,0,0,1,0,64]
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973ab7f929e050a421ecc6dd22c2552f7150":[10,0,0,0,0,0,0,0,1,0,64],
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973abb9f6b086fcd2cf01285f45ab99eaffc":[10,0,0,0,0,0,0,0,1,0,63]
 };
