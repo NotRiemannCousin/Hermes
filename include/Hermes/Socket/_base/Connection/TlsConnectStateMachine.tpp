@@ -465,7 +465,7 @@ namespace Hermes::_details {
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_EndCloseState(Data &data) {
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
 
         return ConnectStateOpResult::Closed;
@@ -483,7 +483,7 @@ namespace Hermes::_details {
             sizeof(lingerOption)
         );
 
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
 
         return ConnectStateOpResult::Closed;

@@ -1,6 +1,7 @@
 #include <Hermes/Endpoint/IpEndpoint/IpAddress.hpp>
 #include <Hermes/_base/Network.hpp>
 #include <algorithm>
+#include <cstring>
 #include <bit>
 
 using std::string;

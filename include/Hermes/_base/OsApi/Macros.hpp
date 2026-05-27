@@ -1,4 +1,5 @@
 #pragma once
+#ifdef _WIN32
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SECURITY_WIN32
 
@@ -19,7 +20,7 @@ constexpr size_t macroSO_PROTOCOL_INFO { SO_PROTOCOL_INFO };
 
 
 
-constexpr SOCKET macroINVALID_SOCKET { INVALID_SOCKET };
+constexpr SocketFd macroINVALID_SOCKET { INVALID_SOCKET };
 constexpr size_t macroSOCKET_ERROR   { static_cast<size_t>(SOCKET_ERROR) };
 
 
@@ -36,3 +37,14 @@ constexpr unsigned long macroSECPKG_ATTR_STREAM_SIZES { SECPKG_ATTR_STREAM_SIZES
 constexpr bool macroSUCCEEDED(auto &&d) { return SUCCEEDED(d); }
 
 constexpr bool macroFAILED(auto &&d) { return FAILED(d); }
+#else
+#include <string_view>
+#include <sys/socket.h>
+#include <netinet/in.h>
+
+constexpr size_t macroSO_TYPE          { SO_TYPE };
+constexpr size_t macroSOL_SOCKET       { SOL_SOCKET };
+
+constexpr int macroINVALID_SOCKET { -1 };
+constexpr size_t macroSOCKET_ERROR   { static_cast<size_t>(-1) };
+#endif

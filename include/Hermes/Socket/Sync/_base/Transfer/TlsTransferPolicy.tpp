@@ -83,7 +83,7 @@ namespace Hermes {
         state->buffer[state->size++] = {};
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
-            closesocket(_data->socket);
+            CloseSocket(_data->socket);
             _data->socket = macroINVALID_SOCKET;
         }
 

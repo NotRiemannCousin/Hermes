@@ -50,7 +50,7 @@ namespace Hermes {
                 if (self._options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, self._options.recvBufferSize);
                 if (self._options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self._options.sendBufferSize);
 
-                const auto s_setNonBlocking = [&](SOCKET sock) {
+                const auto s_setNonBlocking = [&](SocketFd sock) {
 #ifdef _WIN32
                     u_long mode{ 1 };
                     ioctlsocket(sock, FIONBIO, &mode);
@@ -192,7 +192,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void DefaultAsyncConnectPolicy<Data>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }
@@ -208,7 +208,7 @@ namespace Hermes {
                 reinterpret_cast<const char*>(&lingerOption),
                 sizeof(lingerOption)
             );
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }

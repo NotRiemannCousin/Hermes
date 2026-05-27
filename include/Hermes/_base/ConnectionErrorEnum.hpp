@@ -64,8 +64,8 @@ namespace Hermes {
         size_t bytesTransferred;
         ConnectionErrorEnum error;
 
-        TransferError Accumulate(TransferError other) const noexcept;
-        TransferError Substitute(ConnectionErrorEnum err) const noexcept;
+        [[nodiscard]] TransferError Accumulate(TransferError other) const noexcept;
+        [[nodiscard]] TransferError Substitute(ConnectionErrorEnum err) const noexcept;
     };
     // using TransferResult = std::expected<size_t, TransferError>;
     // // TODO: change all StreamByteOper occourences to TransferResult

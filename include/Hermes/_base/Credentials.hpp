@@ -1,9 +1,10 @@
 #pragma once
-#include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/OsApi/OsApi.hpp>
 #include <expected>
 #include <filesystem>
 #include <span>
 #include <cstddef>
+#include <memory>
 
 namespace Hermes {
     enum class CredentialErrorEnum : unsigned long {
@@ -60,23 +61,24 @@ namespace Hermes {
         static std::expected<Credentials, CredentialErrorEnum> Both(std::span<const std::byte> certBuffer,
                 SChannelCredFlags sChannelFlags = {}, const wchar_t* password = L"") noexcept;
 
-        CredHandle GetCredHandle() const noexcept;
         SupportedProtocolsFlags GetProtocolFlags() const noexcept;
         CredentialFlags GetCredentialFlags() const noexcept;
-        TimeStamp GetTsExpiry() const noexcept;
         bool IsExpired() const noexcept;
         bool HasPrivateKey() const noexcept;
 
+#ifdef _WIN32
+        CredHandle GetCredHandle() const noexcept;
+        TimeStamp GetTsExpiry() const noexcept;
+#else
+        // Returns the OpenSSL SSL_CTX* held by this credential (opaque).
+        // The caller MUST NOT free or up-ref it — lifetime is tied to *this.
+        void* GetNativeHandle() const noexcept;
+#endif
+
     private:
-        Credentials() noexcept = default;
+        Credentials() noexcept;
 
-        CredHandle _credHandle{};
-        SupportedProtocolsFlags _protocolFlags{};
-        CredentialFlags _credentialFlags{};
-        TimeStamp _tsExpiry{};
-        bool _hasPrivateKey{};
-
-        HCERTSTORE _certStore{ nullptr };
-        PCCERT_CONTEXT _certContext{ nullptr };
+        struct Impl;
+        std::unique_ptr<Impl> _impl;
     };
 }

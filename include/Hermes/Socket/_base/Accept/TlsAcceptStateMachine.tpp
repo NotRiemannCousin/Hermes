@@ -423,7 +423,7 @@ namespace Hermes::_details {
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_EndCloseState(Data &data) {
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
         return AcceptStateOpResult::Closed;
     }
@@ -439,7 +439,7 @@ namespace Hermes::_details {
             reinterpret_cast<const char*>(&lingerOption),
             sizeof(lingerOption)
         );
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
         return AcceptStateOpResult::Closed;
     }

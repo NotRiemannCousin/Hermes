@@ -1,5 +1,9 @@
 #pragma once
+#ifdef _WIN32
 #include <WinSock2.h>
+#else
+#include <sys/socket.h>
+#endif
 
 enum class SocketTypeEnum : int {
     Stream    = SOCK_STREAM,        /* stream socket */

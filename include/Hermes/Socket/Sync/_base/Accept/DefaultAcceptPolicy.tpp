@@ -1,5 +1,8 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
+#ifdef __linux__
+#include <netinet/tcp.h>
+#endif
 
 namespace Hermes {
 
@@ -32,13 +35,13 @@ namespace Hermes {
 #pragma endregion
 
         if (bind(data.socket, reinterpret_cast<sockaddr*>(&addr), static_cast<int>(addrLen)) == macroSOCKET_ERROR) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
             return std::unexpected{ ConnectionErrorEnum::AddressInUse };
         }
 
         if (listen(data.socket, backlog) == macroSOCKET_ERROR) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
             return std::unexpected{ ConnectionErrorEnum::ListenFailed };
         }
@@ -51,7 +54,12 @@ namespace Hermes {
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Accept(Data& listenData, Data& outData, AcceptOptions options) noexcept {
         sockaddr_storage clientAddr{};
+#ifdef _WIN32
         int clientAddrLen{ sizeof(clientAddr) };
+#else
+        unsigned clientAddrLen{ sizeof(clientAddr) };
+#endif
+
 
         outData.socket = accept(listenData.socket, reinterpret_cast<sockaddr*>(&clientAddr), &clientAddrLen);
 
@@ -77,7 +85,7 @@ namespace Hermes {
             SocketInfoAddr{ clientAddr, static_cast<size_t>(clientAddrLen), AddressFamilyEnum{ clientAddr.ss_family } }) };
 
         if (!endpointRes) {
-            closesocket(outData.socket);
+            CloseSocket(outData.socket);
             outData.socket = macroINVALID_SOCKET;
             return std::unexpected{ ConnectionErrorEnum::InvalidEndpoint };
         }
@@ -91,7 +99,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void DefaultAcceptPolicy<Endpoint, SocketType, SocketFamily>::Close(Data& data) noexcept {
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 
@@ -108,7 +116,7 @@ namespace Hermes {
             sizeof(lingerOption)
         );
 
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 }

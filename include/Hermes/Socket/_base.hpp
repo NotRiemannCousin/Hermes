@@ -53,7 +53,7 @@ namespace Hermes {
     //!
     //! ### Instance Members
     //! @code{.cpp} data.socket @endcode
-    //! The underlying OS `SOCKET` handle.
+    //! The underlying OS `SocketFd` handle.
     //!
     //! @code{.cpp} data.endpoint @endcode
     //! The instance of `EndpointType` bound or connected to this socket.
@@ -65,7 +65,7 @@ namespace Hermes {
             { SocketData::Type   } -> std::same_as<const SocketTypeEnum&>;
 
             { data.endpoint } -> std::same_as<typename SocketData::EndpointType&>;
-            { data.socket   } -> std::same_as<SOCKET&>;
+            { data.socket   } -> std::same_as<SocketFd&>;
 
             []() constexpr { constexpr auto _ = SocketData::Family; }(); // forcing constexpr
             []() constexpr { constexpr auto _ = SocketData::Type;   }(); // forcing constexpr
@@ -403,7 +403,7 @@ namespace Hermes {
 
 
     namespace _details {
-        inline void SetTimeout(const SOCKET socket, const int time) {
+        inline void SetTimeout(const SocketFd socket, const int time) {
 #if defined(_WIN32) || defined(_WIN64)
             setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&time), sizeof(time));
             setsockopt(socket, SOL_SOCKET, SO_SNDTIMEO, reinterpret_cast<const char*>(&time), sizeof(time));

@@ -1,7 +1,7 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/Socket/_base.hpp>
-#include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/OsApi/OsApi.hpp>
 #include <Hermes/_base/Credentials.hpp>
 #include <memory>
 
@@ -52,7 +52,7 @@ namespace Hermes {
 
 
         Endpoint endpoint{};
-        SOCKET   socket{ macroINVALID_SOCKET };
+        SocketFd   socket{ macroINVALID_SOCKET };
 
         bool isHandshakeComplete{};
         bool isServer{};

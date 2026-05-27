@@ -1,7 +1,7 @@
 #pragma once
-// This file it's a wrapper to hold the things from windows headers
+// This file it's a wrapper to hold the things from the OS headers
 // used to manage socket connections and other things. Almost every
-// code here it's just the export of windows headers to C++20 modules.
+// code here it's just the export of OS headers to C++20 modules.
 // (and that it's why it's a mess
 
 // I cant forward macros so some things are wrapped in enums, constexpr
@@ -9,6 +9,36 @@
 // functions to make things easier.
 
 
+#pragma region Macro Operations
+#define FLAGS_OPERATIONS(TYPE)                                                              \
+        static_assert(std::is_enum_v<TYPE>);                                                \
+        constexpr TYPE operator|(TYPE f1, TYPE f2) noexcept {                               \
+            using type = std::underlying_type_t<decltype(f1)>;                              \
+            return static_cast<TYPE>(type(f1) | type(f2));                                  \
+        }                                                                                   \
+        constexpr TYPE& operator|=(TYPE& f1, TYPE f2) noexcept {                            \
+            using T = std::underlying_type_t<TYPE>;                                         \
+            f1 = static_cast<TYPE>(static_cast<T>(f1) | static_cast<T>(f2));                \
+            return f1;                                                                      \
+        }                                                                                   \
+                                                                                                \
+        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
+            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);                \
+        }                                                                                   \
+        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
+            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);                \
+        }
+
+#define ENUM_OPERATIONS(TYPE)                                                               \
+        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
+            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);                \
+        }                                                                                   \
+        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
+            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);                \
+        }
+#pragma endregion
+
+#ifdef _WIN32
 #define SCHANNEL_USE_BLACKLISTS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SECURITY_WIN32
@@ -29,72 +59,88 @@
 #include <schannel.h>
 #include <sspi.h>
 
-#pragma comment(lib, "ws2_32.lib")
-#pragma comment(lib, "secur32.lib")
+#else
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <unistd.h>
+#endif
+
+
+#ifdef _WIN32
+using SocketFd = SocketFd;
+using IoCount = int;
+#else
+using SocketFd = int;
+using IoCount = ssize_t;
+#endif
 
 
 
-#pragma region Macro Operations
-#define FLAGS_OPERATIONS(TYPE)                                                              \
-        static_assert(std::is_enum_v<TYPE>);                                                \
-        constexpr TYPE operator|(TYPE f1, TYPE f2) noexcept {                               \
-            using type = std::underlying_type_t<decltype(f1)>;                              \
-            return static_cast<TYPE>(type(f1) | type(f2));                                  \
-        }                                                                                   \
-        constexpr TYPE& operator|=(TYPE& f1, TYPE f2) noexcept {                            \
-            using T = std::underlying_type_t<TYPE>;                                         \
-            f1 = static_cast<TYPE>(static_cast<T>(f1) | static_cast<T>(f2));                \
-            return f1;                                                                      \
-        }                                                                                   \
-                                                                                            \
-        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
-            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);                \
-        }                                                                                   \
-        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
-            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);                \
-        }
-
-#define ENUM_OPERATIONS(TYPE)                                                               \
-        constexpr bool operator!=(auto a, TYPE b) noexcept {                                \
-            return a != static_cast<std::underlying_type_t<decltype(b)>>(b);                \
-        }                                                                                   \
-        constexpr bool operator==(auto a, TYPE b) noexcept {                                \
-            return a == static_cast<std::underlying_type_t<decltype(b)>>(b);                \
-        }
-#pragma endregion
+int CloseSocket(SocketFd socket);
+#ifdef _WIN32
+inline int CloseSocket(SocketFd socket) {
+    return CloseSocket(socket);
+}
+#else
+inline int CloseSocket(SocketFd socket) {
+    return close(socket);
+}
+#endif
 
 // export {
 // ReSharper disable once CppUnusedIncludeDirective
-#include <Hermes/_base/WinApi/ConversionAndLiterals.hpp>
-#include <Hermes/_base/WinApi/Macros.hpp>
+#include <Hermes/_base/OsApi/ConversionAndLiterals.hpp>
+#include <Hermes/_base/OsApi/Macros.hpp>
 
-#include <Hermes/_base/WinApi/Enums/AddressFamilyEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/ConditionFunctionEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/EncryptStatusEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/ProtocolBaseTypeEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/SChCredEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/SecurityBufferEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/SocketShutdownEnum.hpp>
-#include <Hermes/_base/WinApi/Enums/SocketTypeEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/AddressFamilyEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/ProtocolBaseTypeEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/SocketShutdownEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/SocketTypeEnum.hpp>
+
+
+#ifdef _WIN32
+#include <Hermes/_base/OsApi/Enums/Windows/ConditionFunctionEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/Windows/EncryptStatusEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/Windows/SChCredEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/Windows/SecurityBufferEnum.hpp>
+#else
+#include <Hermes/_base/OsApi/Enums/Linux/EncryptStatusEnum.hpp>
+#endif
 
 	ENUM_OPERATIONS(AddressFamilyEnum)
-	ENUM_OPERATIONS(ConditionFunctionEnum)
-	ENUM_OPERATIONS(EncryptStatusEnum)
 	ENUM_OPERATIONS(ProtocolBaseTypeEnum)
-	ENUM_OPERATIONS(SChCredEnum)
-	ENUM_OPERATIONS(SecurityBufferEnum)
 	ENUM_OPERATIONS(SocketShutdownEnum)
     ENUM_OPERATIONS(SocketTypeEnum)
 
+#ifdef _WIN32
+	ENUM_OPERATIONS(ConditionFunctionEnum)
+	ENUM_OPERATIONS(EncryptStatusEnum)
+	ENUM_OPERATIONS(SChCredEnum)
+	ENUM_OPERATIONS(SecurityBufferEnum)
+#else
+	ENUM_OPERATIONS(EncryptStatusEnum)
+#endif
 
-#include <Hermes/_base/WinApi/Flags/CredentialFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/SupportedProtocolsFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/InitializeSecurityContextFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/InitializeSecurityContextReturnFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/AcceptSecurityContextFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/AcceptSecurityContextReturnFlags.hpp>
-#include <Hermes/_base/WinApi/Flags/SChannelCredFlags.hpp>
 
+#include <Hermes/_base/OsApi/Flags/NameInfoFlags.hpp>
+
+#ifdef _WIN32
+#include <Hermes/_base/OsApi/Flags/Windows/CredentialFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/SupportedProtocolsFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/InitializeSecurityContextFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/InitializeSecurityContextReturnFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/AcceptSecurityContextFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/AcceptSecurityContextReturnFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Windows/SChannelCredFlags.hpp>
+#else
+#include <Hermes/_base/OsApi/Flags/Linux/CredentialFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Linux/SupportedProtocolsFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/Linux/SChannelCredFlags.hpp>
+#endif
+
+#ifdef _WIN32
     FLAGS_OPERATIONS(CredentialFlags)
     FLAGS_OPERATIONS(SupportedProtocolsFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextFlags)
@@ -130,6 +176,11 @@
     using ::QueryContextAttributesA;
     using ::QueryContextAttributesW;
     using ::SecPkgContext_StreamSizes;
+#else
+    FLAGS_OPERATIONS(CredentialFlags)
+    FLAGS_OPERATIONS(SupportedProtocolsFlags)
+    FLAGS_OPERATIONS(SChannelCredFlags)
+#endif
 // };
 
 #undef FLAGS_OPERATIONS

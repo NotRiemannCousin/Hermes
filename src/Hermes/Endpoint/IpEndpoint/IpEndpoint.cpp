@@ -1,7 +1,7 @@
 // ReSharper disable CppPassValueParameterByConstReference
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/OsApi/OsApi.hpp>
 
 using std::uint16_t;
 using std::uint8_t;

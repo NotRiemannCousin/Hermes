@@ -1,7 +1,11 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
 #include <print>
+#ifdef _WIN32
 #include <MSWSock.h>
+#else
+#include <netinet/tcp.h>
+#endif
 
 
 #pragma push_macro("SAFE_CHECK_ERR")

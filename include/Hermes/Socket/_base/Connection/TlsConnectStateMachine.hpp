@@ -47,8 +47,8 @@ namespace Hermes::_details {
 
         ConnectionResultOper _errorStatus{};
 
-        int _currReceived{};
-        int _currSent{};
+        IoCount _currReceived{};
+        IoCount _currSent{};
 
 #pragma region buffers
 

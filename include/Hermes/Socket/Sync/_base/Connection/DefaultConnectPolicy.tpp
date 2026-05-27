@@ -110,7 +110,7 @@ namespace Hermes {
     void DefaultConnectPolicy<Endpoint, SocketType, SocketFamily>::Close(Data& data) {
 
         shutdown(data.socket, static_cast<int>(SocketShutdownEnum::Send));
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 
@@ -127,7 +127,7 @@ namespace Hermes {
             sizeof(lingerOption)
         );
 
-        closesocket(data.socket);
+        CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
     }
 }

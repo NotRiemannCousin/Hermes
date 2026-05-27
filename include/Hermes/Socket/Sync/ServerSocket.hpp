@@ -1,8 +1,10 @@
 #pragma once
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
-#include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp>
+#ifdef _WIN32
+#include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
+#endif
 
 #include <ranges>
 
@@ -78,7 +80,9 @@ namespace Hermes {
 
 
     using RawTcpServer = ServerSocket<>;
+#ifdef _WIN32
     using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
+#endif
     // using RawUdpServer = ServerSocket<
     //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,
     //     DefaultAcceptPolicy<IpEndpoint, SocketTypeEnum::Dgram>,

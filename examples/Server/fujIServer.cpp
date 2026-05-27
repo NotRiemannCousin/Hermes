@@ -178,7 +178,11 @@ body, html{{
 
 int main() {
     if (const auto res{ RunServer() }; !res) {
+#ifdef _WIN32
         int err{ WSAGetLastError() };
+#else
+        int err{ errno };
+#endif
         
         std::println("\n\n{} : {}", res.error(), err);
     } else {

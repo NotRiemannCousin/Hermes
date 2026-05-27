@@ -32,5 +32,4 @@ enum class AcceptSecurityContextReturnFlags : long long {
     Messages             = ASC_RET_REUSE_SESSION_TICKETS, // Indicates that the TLS 1.3+ server will allow session ticket reuse.
     ExplicitSession      = ASC_RET_EXPLICIT_SESSION, // Indicates that explicit TLS 1.3+ session management is enabled.
 #endif
-
 };

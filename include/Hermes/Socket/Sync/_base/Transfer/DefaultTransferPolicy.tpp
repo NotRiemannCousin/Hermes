@@ -80,7 +80,7 @@ namespace Hermes {
         state->buffer[state->size++] = {};
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
-            closesocket(*_socket);
+            CloseSocket(*_socket);
             *_socket = macroINVALID_SOCKET;
         }
 
@@ -105,16 +105,16 @@ namespace Hermes {
     }
 
     template<SocketTypeEnum SocketType>
-    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SOCKET& socket, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
+    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SocketFd& socket, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
         if (socket == macroINVALID_SOCKET)
             return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
         do {
-            const int received{ recv(socket,
+            const IoCount received{ recv(socket,
                 reinterpret_cast<char*>(bufferRecv.data() + total),
                 static_cast<int>(bufferRecv.size() - total), 0) };
             if (received == 0) {
-                closesocket(std::exchange(socket, macroINVALID_SOCKET));
+                CloseSocket(std::exchange(socket, macroINVALID_SOCKET));
                 return { total, std::unexpected{ ConnectionErrorEnum::ConnectionClosed } };
             }
 
@@ -134,7 +134,7 @@ namespace Hermes {
             return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
         while (total < bufferSend.size()) {
-            const int sent{ send(data.socket,
+            const IoCount sent{ send(data.socket,
                 reinterpret_cast<const char*>(bufferSend.data() + total),
                 static_cast<int>(bufferSend.size() - total), 0) };
             if (sent == macroSOCKET_ERROR)

@@ -4,7 +4,11 @@
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/_base.hpp>
 #include <stdexec/execution.hpp>
+#ifdef _WIN32
 #include <MSWSock.h>
+#else
+
+#endif
 #include <unordered_map>
 #include <mutex>
 
@@ -35,13 +39,20 @@ namespace Hermes {
         struct AcceptSender;
         struct ShutdownSender;
 
+#ifdef _WIN32
         struct ListenerExtensions {
             LPFN_ACCEPTEX lpfnAcceptEx = nullptr;
             LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs = nullptr;
         };
+#else
+        struct ListenerExtensions {
+            // linux options
+        };
+#endif
+
 
         inline static std::mutex s_listenerExtensionsMutex;
-        inline static std::unordered_map<SOCKET, ListenerExtensions> s_listenerExtensions;
+        inline static std::unordered_map<SocketFd, ListenerExtensions> s_listenerExtensions;
     };
 }
 

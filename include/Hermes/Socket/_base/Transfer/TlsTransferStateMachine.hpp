@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/Socket/_base.hpp>
-#include <Hermes/_base/WinApi/WinApi.hpp>
+#include <Hermes/_base/OsApi/OsApi.hpp>
 #include <Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp>
 
 namespace Hermes::_details {

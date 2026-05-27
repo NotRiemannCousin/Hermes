@@ -2,14 +2,14 @@
 #include <winerror.h>
 
 enum class EncryptStatusEnum {
-    ErrOk                          = SEC_E_OK, // Everthing ok
+    ErrOk                          = SEC_E_OK, // Everything ok
 
     ErrInsufficientMemory          = SEC_E_INSUFFICIENT_MEMORY,           // Not enough memory is available to complete this request
     ErrInvalidHandle               = SEC_E_INVALID_HANDLE,                // The handle specified is invalid
     ErrUnsupportedFunction         = SEC_E_UNSUPPORTED_FUNCTION,          // The function requested is not supported
     ErrTargetUnknown               = SEC_E_TARGET_UNKNOWN,                // The specified target is unknown or unreachable
     ErrInternalError               = SEC_E_INTERNAL_ERROR,                // The Local Security Authority cannot be contacted
-    ErrSecpkgNotFound              = SEC_E_SECPKG_NOT_FOUND,              // The requested security package does not exist
+    ErrSecPkgNotFound              = SEC_E_SECPKG_NOT_FOUND,              // The requested security package does not exist
     ErrNotOwner                    = SEC_E_NOT_OWNER,                     // The caller is not the owner of the desired credentials
     ErrCannotInstall               = SEC_E_CANNOT_INSTALL,                // The security package failed to initialize, and cannot be installed
     ErrInvalidToken                = SEC_E_INVALID_TOKEN,                 // The token supplied to the function is invalid
@@ -22,7 +22,7 @@ enum class EncryptStatusEnum {
     ErrMessageAltered              = SEC_E_MESSAGE_ALTERED,               // The message or signature supplied for verification has been altered
     ErrOutOfSequence               = SEC_E_OUT_OF_SEQUENCE,               // The message supplied for verification is out of sequence
     ErrNoAuthenticatingAuthority   = SEC_E_NO_AUTHENTICATING_AUTHORITY,   // No authority could be contacted for authentication.
-    ErrBadPkgid                    = SEC_E_BAD_PKGID,                     // The requested security package does not exist
+    ErrBadPkgId                    = SEC_E_BAD_PKGID,                     // The requested security package does not exist
     ErrContextExpired              = SEC_E_CONTEXT_EXPIRED,               // The context has expired and can no longer be used.
     ErrIncompleteMessage           = SEC_E_INCOMPLETE_MESSAGE,            // The supplied message is incomplete. The signature was not verified.
     ErrIncompleteCredentials       = SEC_E_INCOMPLETE_CREDENTIALS,        // The credentials supplied were not complete, and could not be verified. The context could not be initialized.
@@ -52,7 +52,7 @@ enum class EncryptStatusEnum {
     ErrShutdownInProgress          = SEC_E_SHUTDOWN_IN_PROGRESS,          // A system shutdown is in progress.
     ErrKdcInvalidRequest           = SEC_E_KDC_INVALID_REQUEST,           // An invalid request was sent to the KDC.
     ErrKdcUnableToRefer            = SEC_E_KDC_UNABLE_TO_REFER,           // The KDC was unable to generate a referral for the service requested.
-    ErrKdcUnknownEtype             = SEC_E_KDC_UNKNOWN_ETYPE,             // The encryption type requested is not supported by the KDC.
+    ErrKdcUnknownEType             = SEC_E_KDC_UNKNOWN_ETYPE,             // The encryption type requested is not supported by the KDC.
     ErrUnsupportedPreauth          = SEC_E_UNSUPPORTED_PREAUTH,           // An unsupported preauthentication mechanism was presented to the Kerberos package.
     ErrDelegationRequired          = SEC_E_DELEGATION_REQUIRED,           // The requested operation cannot be completed. The computer must be trusted for delegation and the current user account must be configured to allow delegation.
     ErrBadBindings                 = SEC_E_BAD_BINDINGS,                  // Client's supplied SSPI channel bindings were incorrect.
@@ -66,7 +66,7 @@ enum class EncryptStatusEnum {
     ErrPkinitClientFailure         = SEC_E_PKINIT_CLIENT_FAILURE,         // The smartcard certificate used for authentication was not trusted. Please contact your system administrator.
     ErrSmartcardCertExpired        = SEC_E_SMARTCARD_CERT_EXPIRED,        // The smartcard certificate used for authentication has expired. Please contact your system administrator.
     ErrNoS4UProtSupport            = SEC_E_NO_S4U_PROT_SUPPORT,           // The Kerberos subsystem encountered an error. A service for user protocol request was made against a domain controller which does not support service for user.
-    ErrCrossrealmDelegationFailure = SEC_E_CROSSREALM_DELEGATION_FAILURE, // An attempt was made by this server to make a Kerberos constrained delegation request for a target outside of the server's realm. This is not supported, and indicates a misconfiguration on this server's allowed to delegate to list. Please contact your administrator.
+    ErrCrossRealmDelegationFailure = SEC_E_CROSSREALM_DELEGATION_FAILURE, // An attempt was made by this server to make a Kerberos constrained delegation request for a target outside of the server's realm. This is not supported, and indicates a misconfiguration on this server's allowed to delegate to list. Please contact your administrator.
     ErrRevocationOfflineKdc        = SEC_E_REVOCATION_OFFLINE_KDC,        // The revocation status of the domain controller certificate used for smartcard authentication could not be determined. There is additional information in the system event log. Please contact your system administrator.
     ErrIssuingCaUntrustedKdc       = SEC_E_ISSUING_CA_UNTRUSTED_KDC,      // An untrusted certificate authority was detected while processing the domain controller certificate used for authentication. There is additional information in the system event log. Please contact your system administrator.
     ErrKdcCertExpired              = SEC_E_KDC_CERT_EXPIRED,              // The domain controller certificate used for smartcard logon has expired. Please contact your system administrator with the contents of your system event log.

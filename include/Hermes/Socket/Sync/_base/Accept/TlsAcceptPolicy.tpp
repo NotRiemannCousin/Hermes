@@ -32,7 +32,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void TlsAcceptPolicy<Data>::Close(Data& data) noexcept {
         if (!data.acceptStateMachine) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
             return;
         }
@@ -44,7 +44,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void TlsAcceptPolicy<Data>::Abort(Data& data) noexcept {
         if (!data.acceptStateMachine) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
             return;
         }

@@ -1,5 +1,5 @@
 #pragma once
-#include <Hermes/_base/WinApi/Macros.hpp>
+#include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/Socket/_base/Connection/ITlsConnectStateMachine.hpp>
 #include <Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp>
 #include <Hermes/Socket/_base/Accept/ITlsAcceptStateMachine.hpp>

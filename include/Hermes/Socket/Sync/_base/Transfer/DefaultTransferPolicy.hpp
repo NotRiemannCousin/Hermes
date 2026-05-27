@@ -36,7 +36,7 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            SOCKET* _socket;
+            SocketFd* _socket;
             DefaultTransferPolicy* _policy;
         };
 
@@ -57,7 +57,7 @@ namespace Hermes {
 
         std::unique_ptr<State> _state{ nullptr };
 
-        static StreamByteOper RecvHelper(SOCKET& socket, std::span<std::byte> bufferRecv, RecvModeEnum recvMode);
+        static StreamByteOper RecvHelper(SocketFd& socket, std::span<std::byte> bufferRecv, RecvModeEnum recvMode);
     };
 }
 

@@ -33,7 +33,7 @@ enum class SecurityBufferEnum : long long {
     TrafficSecrets               = SECBUFFER_TRAFFIC_SECRETS,                 // Message sequence lengths and corresponding traffic secrets.
     CertificateRequestContext    = SECBUFFER_CERTIFICATE_REQUEST_CONTEXT,     // TLS 1.3 certificate request context.
 
-    Attrmask             = SECBUFFER_ATTRMASK,
+    AttrMask             = SECBUFFER_ATTRMASK,
     Readonly             = SECBUFFER_READONLY,              // Buffer is read-only, no checksum
     ReadonlyWithChecksum = SECBUFFER_READONLY_WITH_CHECKSUM,// Buffer is read-only, and checksummed
     Reserved             = SECBUFFER_RESERVED,              // Flags reserved to security system

@@ -40,6 +40,7 @@ add_library(Hermes
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
         src/Hermes/_base/Credentials.cpp
+        src/Hermes/Socket/_base/TlsSession.cpp
 )
 
 target_include_directories(Hermes PUBLIC
@@ -83,6 +84,9 @@ if(WIN32)
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         target_link_libraries(Hermes PUBLIC stdc++exp)
     endif()
+else()
+    find_package(OpenSSL REQUIRED)
+    target_link_libraries(Hermes PUBLIC OpenSSL::SSL OpenSSL::Crypto)
 endif()
 
 

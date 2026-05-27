@@ -1,6 +1,6 @@
 #pragma once
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
-#include <Hermes/_base/WinApi/Macros.hpp>
+#include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
 
 namespace Hermes {

@@ -1,5 +1,10 @@
 #pragma once
+
+#ifdef _WIN32
 #include <ws2def.h>
+#else
+#include <netdb.h>
+#endif
 
 enum class NameInfoFlags {
     NoFqdn      = NI_NOFQDN,      /* Only return nodename portion for local hosts */

@@ -5,7 +5,7 @@
 
 namespace Hermes {
 
-    //! @brief Blocking listener socket. Owns the listening SOCKET handle and produces
+    //! @brief Blocking listener socket. Owns the listening SocketFd handle and produces
     //! ServerSocket instances via AcceptOne() / AcceptAll().
     //!
     //! @details The listening socket lives inside socketData.socket. AcceptPolicy drives
@@ -97,8 +97,9 @@ namespace Hermes {
     };
 
     using RawTcpListener = ListenerSocket<>;
+#ifdef _WIN32
     using RawTlsListener = ListenerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
-
+#endif
 }
 
 #include <Hermes/Socket/Sync/ListenerSocket.tpp>

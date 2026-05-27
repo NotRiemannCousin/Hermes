@@ -1,7 +1,7 @@
 #pragma once
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.tpp>
-#include <Hermes/_base/WinApi/Macros.hpp>
+#include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
 
 namespace Hermes {
@@ -140,7 +140,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void TlsAsyncConnectPolicy<Data>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }
@@ -150,7 +150,7 @@ namespace Hermes {
         if (data.socket != macroINVALID_SOCKET) {
             constexpr linger lingerOption{ 1, 0 };
             setsockopt(data.socket, SOL_SOCKET, SO_LINGER, reinterpret_cast<const char*>(&lingerOption), sizeof(lingerOption));
-            closesocket(data.socket);
+            CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }
