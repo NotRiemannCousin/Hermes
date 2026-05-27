@@ -215,7 +215,7 @@ $(document).ready(function(){initNavTree('_os_api_8hpp_source.html',''); initRes
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#ifdef _WIN32</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">using </span><a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a> = <a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="keyword">using </span><a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a> = SOCKET;</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="keyword">using </span><a class="code hl_typedef" href="_os_api_8hpp.html#a0fec4dc3fcf2a3047326c2318eb0dc18">IoCount</a> = int;</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#else</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">   75</a></span><span class="keyword">using </span><a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a> = int;</div>
@@ -227,7 +227,7 @@ $(document).ready(function(){initNavTree('_os_api_8hpp_source.html',''); initRes
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keywordtype">int</span> <a class="code hl_function" href="_os_api_8hpp.html#a93fc0f7a6120794c5787cb466f06ac52">CloseSocket</a>(<a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a> socket);</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#ifdef _WIN32</span></div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code hl_function" href="_os_api_8hpp.html#a93fc0f7a6120794c5787cb466f06ac52">CloseSocket</a>(<a class="code hl_typedef" href="_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0">SocketFd</a> socket) {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="_os_api_8hpp.html#a93fc0f7a6120794c5787cb466f06ac52">CloseSocket</a>(socket);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <span class="keywordflow">return</span> closesocket(socket);</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>}</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#else</span></div>
 <div class="foldopen" id="foldopen00087" data-start="{" data-end="}">

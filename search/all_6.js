@@ -5,7 +5,7 @@ var searchData=
   ['fastioloop_2',['fastioloop',['../class_hermes_1_1_fast_io_loop.html',1,'Hermes::FastIoLoop'],['../class_hermes_1_1_fast_io_loop.html#a146795a746889d0f5e7d797406b90f67',1,'Hermes::FastIoLoop::FastIoLoop(const FastIoLoop &amp;)=delete'],['../class_hermes_1_1_fast_io_loop.html#aa14417e0c187c552adc024937da5805e',1,'Hermes::FastIoLoop::FastIoLoop(unsigned int threadCount=std::thread::hardware_concurrency())']]],
   ['fastioscheduler_3',['FastIoScheduler',['../struct_hermes_1_1_fast_io_scheduler.html',1,'Hermes']]],
   ['fastioschedulesender_4',['FastIoScheduleSender',['../struct_hermes_1_1_fast_io_schedule_sender.html',1,'Hermes']]],
-  ['features_5',['Features',['../index.html#autotoc_md18',1,'']]],
+  ['features_5',['Features',['../index.html#autotoc_md22',1,'']]],
   ['file_6',['File',['../_address_family_enum_8hpp.html#a63efc57a155d1c3d70361813b193c85ea0b27918290ff5323bea1e3b78a9cf04e',1,'AddressFamilyEnum.hpp']]],
   ['filereadfailed_7',['FileReadFailed',['../namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878',1,'Hermes']]],
   ['flags_8',['Flags',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba4ea7801f17a4e5485e8b050c052fb443',1,'SecurityBufferEnum.hpp']]],

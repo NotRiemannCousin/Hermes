@@ -6,7 +6,7 @@ var searchData=
   ['macrosocket_5ferror_3',['macroSOCKET_ERROR',['../_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea',1,'Macros.hpp']]],
   ['macrosol_5fsocket_4',['macroSOL_SOCKET',['../_macros_8hpp.html#a89a20c922a5445760ce416b10c610d99',1,'Macros.hpp']]],
   ['makechild_5',['makechild',['../struct_hermes_1_1_default_socket_data.html#a4dc0d7d23d9343754d0a80c0705bf4a2',1,'Hermes::DefaultSocketData::MakeChild()'],['../struct_hermes_1_1_tls_socket_data.html#a8a70bc5ccf3c699c08b2806c2512bf66',1,'Hermes::TlsSocketData::MakeChild()']]],
-  ['manual_20cmake_6',['Manual (CMake)',['../index.html#autotoc_md23',1,'']]],
+  ['manual_20cmake_6',['Manual (CMake)',['../index.html#autotoc_md27',1,'']]],
   ['manualcredvalidation_7',['manualcredvalidation',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;InitializeSecurityContextFlags.hpp'],['../_initialize_security_context_return_flags_8hpp.html#a98ea01e0e6ea490b06ee26aa25eaeb1ca0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;InitializeSecurityContextReturnFlags.hpp'],['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800a0ebbd2ab36ddf1ee926d2b7fc354a45b',1,'ManualCredValidation:&#160;SChannelCredFlags.hpp']]],
   ['maxhost_8',['MaxHost',['../_name_info_flags_8hpp.html#a3e00866f7ee47dd045ce0760f4ffdd76ace215f28da5ebd63759b4c1ab60fed7d',1,'NameInfoFlags.hpp']]],
   ['maxmessage_9',['maxMessage',['../struct_hermes_1_1__details_1_1_tls_session_1_1_stream_sizes.html#a1ab02c5f2102c94d04f1a677b23dd1e8',1,'Hermes::_details::TlsSession::StreamSizes']]],
