@@ -1,9 +1,11 @@
 #pragma once
 #include <Hermes/Socket/Async/_base/Accept/DefaultAsyncAcceptPolicy.hpp>
-// #include <Hermes/Socket/Async/_base/Accept/TlsAsyncAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.hpp>
-#include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
+#ifdef _WIN32
+#include <Hermes/Socket/Async/_base/Accept/TlsAsyncAcceptPolicy.hpp>
+#include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.hpp>
+#endif
 
 #include <ranges>
 

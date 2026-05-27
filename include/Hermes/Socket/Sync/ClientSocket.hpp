@@ -1,8 +1,10 @@
 #pragma once
 #include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp>
+#ifdef _WIN32
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
+#endif
 
 namespace Hermes {
     template<
