@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 <div class="line">            { SocketData::Type   } -&gt; std::same_as&lt;const SocketTypeEnum&amp;&gt;;</div>
 <div class="line"> </div>
 <div class="line">            { data.endpoint } -&gt; std::same_as&lt;typename SocketData::EndpointType&amp;&gt;;</div>
-<div class="line">            { data.socket   } -&gt; std::same_as&lt;SOCKET&amp;&gt;;</div>
+<div class="line">            { data.socket   } -&gt; std::same_as&lt;SocketFd&amp;&gt;;</div>
 <div class="line"> </div>
 <div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Family; }(); </div>
 <div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Type;   }(); </div>
@@ -174,7 +174,7 @@ Static Metadata</h3>
 <h3><a class="anchor" id="autotoc_md2"></a>
 Instance Members</h3>
 <div class="fragment"><div class="line">data.socket </div>
-</div><!-- fragment --><p> The underlying OS <code>SOCKET</code> handle.</p>
+</div><!-- fragment --><p> The underlying OS <code>SocketFd</code> handle.</p>
 <div class="fragment"><div class="line">data.endpoint </div>
 </div><!-- fragment --><p> The instance of <code>EndpointType</code> bound or connected to this socket. </p>
 </div></div><!-- contents -->

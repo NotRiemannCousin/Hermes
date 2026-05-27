@@ -149,8 +149,8 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_connection_policy_c
 <div class="line">        &amp;&amp; std::same_as&lt;typename Policy::EndpointType, typename SocketData::EndpointType&gt;</div>
 <div class="line"> </div>
 <div class="line">        &amp;&amp; <span class="keyword">requires</span> () { <span class="keyword">typename</span> Policy::Options; }</div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span> (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>, SocketData&amp; <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <span class="keyword">typename</span> Policy::Options <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) {</div>
-<div class="line">            { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>.Connect(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
+<div class="line">        &amp;&amp; <span class="keyword">requires</span> (<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Policy</a> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>, SocketData&amp; data, <span class="keyword">typename</span> Policy::Options <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) {</div>
+<div class="line">            { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>.Connect(data, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">opt</a>) } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
 <div class="line">            { policy.Close(data)        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">            { policy.Abort(data)        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">        }</div>

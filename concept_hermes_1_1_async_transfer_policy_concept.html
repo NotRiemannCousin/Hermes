@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_transfer_poli
 <div class="line">            std::span&lt;std::byte&gt; bufferRecv, std::span&lt;const std::byte&gt; bufferSend</div>
 <div class="line">        ) {</div>
 <div class="line">        { policy.Recv(data, bufferRecv, recvMode) } -&gt; stdexec::sender;</div>
-<div class="line">        { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>.Send(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">data</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">bufferSend</a>)           } -&gt; stdexec::sender;</div>
+<div class="line">        { <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">policy</a>.Send(data, <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">bufferSend</a>)           } -&gt; stdexec::sender;</div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_async_transfer_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_async_transfer_policy_concept.html">Hermes::AsyncTransferPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages data transfer operations asynchronously.</div><div class="ttdef"><b>Definition</b> _base.hpp:314</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:61</div></div>

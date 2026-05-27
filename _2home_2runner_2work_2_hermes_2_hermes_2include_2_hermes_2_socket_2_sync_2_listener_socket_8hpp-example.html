@@ -212,15 +212,15 @@ $(document).ready(function(){initNavTree('_2home_2runner_2work_2_hermes_2_hermes
 <div class="line">    };</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">using </span><a id="a12" name="a12"></a><a class="code hl_typedef" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">RawTcpListener</a> = ListenerSocket&lt;&gt;;</div>
-<div class="line">    <span class="keyword">using </span><a id="a13" name="a13"></a><a class="code hl_typedef" href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">RawTlsListener</a> = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
-<div class="line"> </div>
+<div class="line"><span class="preprocessor">#ifdef _WIN32</span></div>
+<div class="line">    <span class="keyword">using </span>RawTlsListener = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">}</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#include &lt;Hermes/Socket/Sync/ListenerSocket.tpp&gt;</span></div>
 <div class="ttc" id="a_server_socket_8hpp_html"><div class="ttname"><a href="_server_socket_8hpp.html">ServerSocket.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:9</div></div>
 <div class="ttc" id="anamespace_hermes_html_a10af606e98c70fcda458f4a610867a04"><div class="ttname"><a href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">Hermes::RawTcpListener</a></div><div class="ttdeci">ListenerSocket&lt;&gt; RawTcpListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:99</div></div>
-<div class="ttc" id="anamespace_hermes_html_ae401023cfb21220a1a3fde29593bf48b"><div class="ttname"><a href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">Hermes::RawTlsListener</a></div><div class="ttdeci">ListenerSocket&lt; TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt; &gt; RawTlsListener</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:100</div></div>
 <div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a0169204fa7a811549fa2b3a414174c19"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a0169204fa7a811549fa2b3a414174c19">Hermes::ListenerSocket::ListenOne</a></div><div class="ttdeci">static auto ListenOne(SocketData &amp;&amp;data) noexcept -&gt; ListenerSockerResult</div></div>
 <div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a136a34b38daa0671d04bc07b86a9689c"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a136a34b38daa0671d04bc07b86a9689c">Hermes::ListenerSocket::Listen</a></div><div class="ttdeci">static auto Listen(SocketData &amp;&amp;data, int backlog=SOMAXCONN) noexcept -&gt; ListenerSockerResult</div><div class="ttdoc">Creates the listener: socket() + bind() + listen().</div></div>
 <div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a42d8c8fa01f34836ede67586dc6989c3"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a42d8c8fa01f34836ede67586dc6989c3">Hermes::ListenerSocket::ListenerSockerResult</a></div><div class="ttdeci">ConnectionResult&lt; ListenerSocket &gt; ListenerSockerResult</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:23</div></div>

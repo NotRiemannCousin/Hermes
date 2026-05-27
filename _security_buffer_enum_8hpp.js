@@ -31,7 +31,7 @@ var _security_buffer_enum_8hpp =
       [ "Flags", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba4ea7801f17a4e5485e8b050c052fb443", null ],
       [ "TrafficSecrets", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba013f345b3f9df4fd583cb289227df537", null ],
       [ "CertificateRequestContext", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba46b7b77de03a05a9aabaca084c4b9a0d", null ],
-      [ "Attrmask", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba75e231a506771cae6f492179a7b2e7ac", null ],
+      [ "AttrMask", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba5a5969ca20f61bfad859f3c353b03ac5", null ],
       [ "Readonly", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba060d84e58c348e44da6637e57e2e9201", null ],
       [ "ReadonlyWithChecksum", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba7953d34b408742922b52168d081615f2", null ],
       [ "Reserved", "_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba942d4e37dd5607ab68e54755540d4a47", null ]

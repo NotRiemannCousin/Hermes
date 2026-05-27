@@ -12,8 +12,9 @@ var searchData=
   ['postwork_9',['PostWork',['../class_hermes_1_1_fast_io_loop.html#a73338a16f55c73e3489f4d4ef0e2deef',1,'Hermes::FastIoLoop']]],
   ['presharedkey_10',['PresharedKey',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbae7e3214e5c6469d80fe5b22ee774fc0d',1,'SecurityBufferEnum.hpp']]],
   ['presharedkeyidentity_11',['PresharedKeyIdentity',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba79bd3d2b50d157ced22b77ac561004b5',1,'SecurityBufferEnum.hpp']]],
-  ['promptforcreds_12',['PromptForCreds',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea252216c68b137eadd3b859f5eaba1836',1,'InitializeSecurityContextFlags.hpp']]],
-  ['protocolbasetypeenum_13',['ProtocolBaseTypeEnum',['../_protocol_base_type_enum_8hpp.html#a60c522c7ce02321beb7e6271b0f621b1',1,'ProtocolBaseTypeEnum.hpp']]],
-  ['protocolbasetypeenum_2ehpp_14',['ProtocolBaseTypeEnum.hpp',['../_protocol_base_type_enum_8hpp.html',1,'']]],
-  ['proxybindings_15',['proxybindings',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextReturnFlags.hpp']]]
+  ['produced_12',['produced',['../struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html#a468e94dedbab45729599f05ff672e3d6',1,'Hermes::_details::TlsSession::HandshakeOutcome::produced'],['../struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html#a437cdcca11e4c7aa93e7a34db05f28d9',1,'Hermes::_details::TlsSession::EncryptOutcome::produced']]],
+  ['promptforcreds_13',['PromptForCreds',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea252216c68b137eadd3b859f5eaba1836',1,'InitializeSecurityContextFlags.hpp']]],
+  ['protocolbasetypeenum_14',['ProtocolBaseTypeEnum',['../_protocol_base_type_enum_8hpp.html#a60c522c7ce02321beb7e6271b0f621b1',1,'ProtocolBaseTypeEnum.hpp']]],
+  ['protocolbasetypeenum_2ehpp_15',['ProtocolBaseTypeEnum.hpp',['../_protocol_base_type_enum_8hpp.html',1,'']]],
+  ['proxybindings_16',['proxybindings',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextReturnFlags.hpp']]]
 ];

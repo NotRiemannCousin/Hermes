@@ -11,6 +11,7 @@ var namespace_hermes_1_1__details =
     [ "OptionsTcpNoDelayBase< SocketTypeEnum::Stream >", "struct_hermes_1_1__details_1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", "struct_hermes_1_1__details_1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4" ],
     [ "TlsAcceptStateMachine", "struct_hermes_1_1__details_1_1_tls_accept_state_machine.html", "struct_hermes_1_1__details_1_1_tls_accept_state_machine" ],
     [ "TlsConnectStateMachine", "struct_hermes_1_1__details_1_1_tls_connect_state_machine.html", "struct_hermes_1_1__details_1_1_tls_connect_state_machine" ],
+    [ "TlsSession", "struct_hermes_1_1__details_1_1_tls_session.html", "struct_hermes_1_1__details_1_1_tls_session" ],
     [ "TlsTransferStateMachine", "struct_hermes_1_1__details_1_1_tls_transfer_state_machine.html", "struct_hermes_1_1__details_1_1_tls_transfer_state_machine" ],
     [ "RecvStreamT", "namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359", null ],
     [ "AcceptStateOpResult", "namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0d", [
@@ -35,5 +36,5 @@ var namespace_hermes_1_1__details =
       [ "Error", "namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021cca902b0d55fddef6f8d651fe1035b7d4bd", null ],
       [ "Done", "namespace_hermes_1_1__details.html#a9a1c3b936b9fa27d220f0a21d82021ccaf92965e2c8a7afb3c1b9a5c09a263636", null ]
     ] ],
-    [ "SetTimeout", "namespace_hermes_1_1__details.html#ab3ef50da682cfabbe334f3479133af5d", null ]
+    [ "SetTimeout", "namespace_hermes_1_1__details.html#af14659e0372d82bedf8444f24e56064d", null ]
 ];

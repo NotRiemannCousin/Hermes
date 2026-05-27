@@ -59,8 +59,6 @@ var namespace_hermes =
     [ "RawTcpServer", "namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462", null ],
     [ "RawTlsAsyncClient", "namespace_hermes.html#ae71bc293e8544c06b0de3ab3dc4cfca8", null ],
     [ "RawTlsClient", "namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232", null ],
-    [ "RawTlsListener", "namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b", null ],
-    [ "RawTlsServer", "namespace_hermes.html#a2f5ad774015f851569d57545778e2d92", null ],
     [ "SocketInfoAddr", "namespace_hermes.html#ae387a226251b2771a996781de8eb3247", null ],
     [ "StreamByteOper", "namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b", null ],
     [ "ConnectionErrorEnum", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba", [

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['_5fwinsock_5fdeprecated_5fno_5fwarnings_0',['_winsock_deprecated_no_warnings',['../_macros_8hpp.html#adfc8f90f3a8caa8423099cf36ff214f1',1,'_WINSOCK_DEPRECATED_NO_WARNINGS:&#160;Macros.hpp'],['../_win_api_8hpp.html#adfc8f90f3a8caa8423099cf36ff214f1',1,'_WINSOCK_DEPRECATED_NO_WARNINGS:&#160;WinApi.hpp']]]
+  ['enum_5foperations_0',['ENUM_OPERATIONS',['../_os_api_8hpp.html#a6582b6f37080ca1bd4d2940211aa4d99',1,'OsApi.hpp']]]
 ];

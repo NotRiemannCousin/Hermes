@@ -66,6 +66,7 @@ var NAVTREE =
         [ "All", "globals.html", null ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
         [ "Enumerations", "globals_enum.html", null ],
         [ "Macros", "globals_defs.html", null ]
       ] ]
@@ -77,12 +78,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_sync_2_listener_socket_8hpp-example.html",
-"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973abdb8e43b01c3b35e28c7daacfd19cfb2",
-"_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaf7e68e5021e964fbe01bceb285896e8f",
-"hierarchy.html",
-"struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#aa1144d9ca1877a71f33b5487d0345734",
-"struct_hermes_1_1_default_socket_data.html#a46fbfb8b6a222d521baa6cde7c098b32",
-"struct_hermes_1_1_tls_async_connect_policy.html"
+"_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973abb9f6b086fcd2cf01285f45ab99eaffc",
+"_security_buffer_enum_8hpp_source.html",
+"index.html#autotoc_md26",
+"struct_hermes_1_1__details_1_1_tls_connect_state_machine.html#acabd91a66f56205acf1297bae5317292",
+"struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html",
+"struct_hermes_1_1_server_socket.html#a026e66764c8e03c2a3d5adf12714441f",
+"struct_hermes_1_1_utils_1_1_until_match_view.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

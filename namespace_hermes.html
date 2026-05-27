@@ -189,7 +189,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocking listener socket. Owns the listening SOCKET handle and produces <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> instances via <a class="el" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e" title="Blocks until one client connects, then returns a ready ServerSocket.">AcceptOne()</a> / <a class="el" href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">AcceptAll()</a>.  <a href="struct_hermes_1_1_listener_socket.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocking listener socket. Owns the listening SocketFd handle and produces <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> instances via <a class="el" href="struct_hermes_1_1_listener_socket.html#af04452e43d9e0af9b0de54f486975f2e" title="Blocks until one client connects, then returns a ready ServerSocket.">AcceptOne()</a> / <a class="el" href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">AcceptAll()</a>.  <a href="struct_hermes_1_1_listener_socket.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_network.html">Network</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -284,12 +284,8 @@ Typedefs</h2></td></tr>
 <tr class="separator:ac21d67bd6e57542ef4efa3620ae42232"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10af606e98c70fcda458f4a610867a04" id="r_a10af606e98c70fcda458f4a610867a04"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a10af606e98c70fcda458f4a610867a04">RawTcpListener</a> = <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;&gt;</td></tr>
 <tr class="separator:a10af606e98c70fcda458f4a610867a04"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae401023cfb21220a1a3fde29593bf48b" id="r_ae401023cfb21220a1a3fde29593bf48b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">RawTlsListener</a> = <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&lt;&gt; &gt;</td></tr>
-<tr class="separator:ae401023cfb21220a1a3fde29593bf48b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae3a1ee0cb148ad5dd2773d754bf3d462" id="r_ae3a1ee0cb148ad5dd2773d754bf3d462"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462">RawTcpServer</a> = <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;&gt;</td></tr>
 <tr class="separator:ae3a1ee0cb148ad5dd2773d754bf3d462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2f5ad774015f851569d57545778e2d92" id="r_a2f5ad774015f851569d57545778e2d92"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hermes.html#a2f5ad774015f851569d57545778e2d92">RawTlsServer</a> = <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt; <a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&lt;&gt; &gt;</td></tr>
-<tr class="separator:a2f5ad774015f851569d57545778e2d92"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -524,36 +520,6 @@ template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clas
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232">Hermes::RawTlsClient</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_connect_policy.html">TlsConnectPolicy</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&lt;&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae401023cfb21220a1a3fde29593bf48b" name="ae401023cfb21220a1a3fde29593bf48b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae401023cfb21220a1a3fde29593bf48b">&#9670;&#160;</a></span>RawTlsListener</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b">Hermes::RawTlsListener</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&lt;&gt; &gt;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="section examples"><dt>Examples</dt><dd><a class="el" href="_2home_2runner_2work_2_hermes_2_hermes_2include_2_hermes_2_socket_2_sync_2_listener_socket_8hpp-example.html#a13">/home/runner/work/Hermes/Hermes/include/Hermes/Socket/Sync/ListenerSocket.hpp</a>.</dd>
-</dl>
-
-</div>
-</div>
-<a id="a2f5ad774015f851569d57545778e2d92" name="a2f5ad774015f851569d57545778e2d92"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2f5ad774015f851569d57545778e2d92">&#9670;&#160;</a></span>RawTlsServer</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">using</a> <a class="el" href="namespace_hermes.html#a2f5ad774015f851569d57545778e2d92">Hermes::RawTlsServer</a> = <a class="el" href="struct_hermes_1_1_default_socket_data.html">typedef</a> <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;<a class="el" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_accept_policy.html">TlsAcceptPolicy</a>&lt;&gt;, <a class="el" href="struct_hermes_1_1_tls_transfer_policy.html">TlsTransferPolicy</a>&lt;&gt; &gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">

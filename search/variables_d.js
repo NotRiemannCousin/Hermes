@@ -1,6 +1,9 @@
 var searchData=
 [
-  ['pattern_0',['pattern',['../struct_hermes_1_1_utils_1_1_until_match_adaptor.html#a391b4346bd31be2869a507679e18fb56',1,'Hermes::Utils::UntilMatchAdaptor']]],
-  ['pendingdata_1',['pendingData',['../struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597',1,'Hermes::TlsSocketData']]],
-  ['port_2',['port',['../struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e',1,'Hermes::IpEndpointParams']]]
+  ['recvbuffersize_0',['recvbuffersize',['../struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a36b4e7ea32f223d8e76f24bd6fabdfd9',1,'Hermes::DefaultAsyncConnectPolicy::Options::recvBufferSize'],['../struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a1f1ecd7f12e8140b272aaa57c8a19f93',1,'Hermes::DefaultAcceptPolicy::ListenOptions::recvBufferSize'],['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a338b785b683c81974fa542841dd906c6',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::recvBufferSize'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a4cf2d24cf0122ac486e117638c4fc0dd',1,'Hermes::DefaultConnectPolicy::Options::recvBufferSize']]],
+  ['recvtimeout_1',['recvTimeout',['../struct_hermes_1_1_default_socket_data_1_1_socket_options.html#a2cecfa5867070b78e27cb71259fb2040',1,'Hermes::DefaultSocketData::SocketOptions']]],
+  ['requestclientcertificate_2',['requestclientcertificate',['../struct_hermes_1_1_tls_socket_data.html#a5872baad0a1ad75f7100e7ae262e8ea9',1,'Hermes::TlsSocketData::requestClientCertificate'],['../struct_hermes_1_1_tls_accept_policy_1_1_accept_options.html#a2029994256922006d1eefce891ffc8a8',1,'Hermes::TlsAcceptPolicy::AcceptOptions::requestClientCertificate']]],
+  ['requestmutualauth_3',['requestmutualauth',['../struct_hermes_1_1_tls_async_connect_policy_1_1_options.html#a11f747260eeca023870e0ad783993707',1,'Hermes::TlsAsyncConnectPolicy::Options::requestMutualAuth'],['../struct_hermes_1_1_tls_connect_policy_1_1_options.html#a5b3a7a57f1efd7cd1fdcbef4eac7e337',1,'Hermes::TlsConnectPolicy::Options::requestMutualAuth']]],
+  ['requirevalidclientcertificate_4',['requireValidClientCertificate',['../struct_hermes_1_1_tls_accept_policy_1_1_listen_options.html#a677bf203b448e80a258e6fde72a66ca8',1,'Hermes::TlsAcceptPolicy::ListenOptions']]],
+  ['reuseaddress_5',['reuseAddress',['../struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a5b3227867833c1f6e17bbd2e7415f422',1,'Hermes::DefaultAcceptPolicy::ListenOptions']]]
 ];

@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: include/Hermes/_base/WinApi/Macros.hpp File Reference</title>
+<title>Hermes: include/Hermes/_base/OsApi/Macros.hpp File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -133,155 +133,40 @@ $(document).ready(function(){initNavTree('_macros_8hpp.html',''); initResizable(
 
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
-<a href="#func-members">Functions</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle"><div class="title">Macros.hpp File Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;string_view&gt;</code><br />
-<code>#include &lt;winsock2.h&gt;</code><br />
-<code>#include &lt;schannel.h&gt;</code><br />
-<code>#include &lt;sspi.h&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
+<code>#include &lt;netinet/in.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Macros.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_macros_8hpp__incl.svg" width="427" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_macros_8hpp__incl.svg" width="356" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_macros_8hpp__dep__incl.svg" width="2520" height="916"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_macros_8hpp__dep__incl.svg" width="2452" height="916"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_macros_8hpp_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:adfc8f90f3a8caa8423099cf36ff214f1" id="r_adfc8f90f3a8caa8423099cf36ff214f1"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#adfc8f90f3a8caa8423099cf36ff214f1">_WINSOCK_DEPRECATED_NO_WARNINGS</a></td></tr>
-<tr class="separator:adfc8f90f3a8caa8423099cf36ff214f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1859fb1234511b94993fe8566eba866b" id="r_a1859fb1234511b94993fe8566eba866b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a1859fb1234511b94993fe8566eba866b">SECURITY_WIN32</a></td></tr>
-<tr class="separator:a1859fb1234511b94993fe8566eba866b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a86d41f60b50b3219e4988a925c0b389c" id="r_a86d41f60b50b3219e4988a925c0b389c"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a86d41f60b50b3219e4988a925c0b389c">macroSUCCEEDED</a> (auto &amp;&amp;d)</td></tr>
-<tr class="separator:a86d41f60b50b3219e4988a925c0b389c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aefaa30275f45a6a12db233afe4c75451" id="r_aefaa30275f45a6a12db233afe4c75451"><td class="memItemLeft" align="right" valign="top">constexpr bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#aefaa30275f45a6a12db233afe4c75451">macroFAILED</a> (auto &amp;&amp;d)</td></tr>
-<tr class="separator:aefaa30275f45a6a12db233afe4c75451"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:ac4f710aaf65615e63a6e4ada00c47cef" id="r_ac4f710aaf65615e63a6e4ada00c47cef"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#ac4f710aaf65615e63a6e4ada00c47cef">macroWINSOCK_VERSION</a> { WINSOCK_VERSION }</td></tr>
-<tr class="separator:ac4f710aaf65615e63a6e4ada00c47cef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0fd5e0fbb07bae5ad632e5732baa186b" id="r_a0fd5e0fbb07bae5ad632e5732baa186b"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a0fd5e0fbb07bae5ad632e5732baa186b">macroSG_UNCONSTRAINED_GROUP</a> { SG_UNCONSTRAINED_GROUP }</td></tr>
-<tr class="separator:a0fd5e0fbb07bae5ad632e5732baa186b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a30e69625f8714f3b6901087f7dd397d0" id="r_a30e69625f8714f3b6901087f7dd397d0"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a30e69625f8714f3b6901087f7dd397d0">macroSG_CONSTRAINED_GROUP</a> { SG_CONSTRAINED_GROUP }</td></tr>
-<tr class="separator:a30e69625f8714f3b6901087f7dd397d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a363e448552df15b090a788e504401996" id="r_a363e448552df15b090a788e504401996"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a363e448552df15b090a788e504401996">macroSO_TYPE</a> { SO_TYPE }</td></tr>
 <tr class="separator:a363e448552df15b090a788e504401996"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89a20c922a5445760ce416b10c610d99" id="r_a89a20c922a5445760ce416b10c610d99"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a89a20c922a5445760ce416b10c610d99">macroSOL_SOCKET</a> { SOL_SOCKET }</td></tr>
 <tr class="separator:a89a20c922a5445760ce416b10c610d99"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad435245c247ad14793200b6fe76ef8d" id="r_aad435245c247ad14793200b6fe76ef8d"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#aad435245c247ad14793200b6fe76ef8d">macroSO_PROTOCOL_INFO</a> { SO_PROTOCOL_INFO }</td></tr>
-<tr class="separator:aad435245c247ad14793200b6fe76ef8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af85afa40bbf5e2e7c2e635fe0a195ca2" id="r_af85afa40bbf5e2e7c2e635fe0a195ca2"><td class="memItemLeft" align="right" valign="top">constexpr SOCKET&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#af85afa40bbf5e2e7c2e635fe0a195ca2">macroINVALID_SOCKET</a> { INVALID_SOCKET }</td></tr>
-<tr class="separator:af85afa40bbf5e2e7c2e635fe0a195ca2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7fbbff0d9f1cba84718c62e0573a03ea" id="r_a7fbbff0d9f1cba84718c62e0573a03ea"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea">macroSOCKET_ERROR</a> { static_cast&lt;size_t&gt;(SOCKET_ERROR) }</td></tr>
+<tr class="memitem:a243e6a2060225c58a9628c66754863e5" id="r_a243e6a2060225c58a9628c66754863e5"><td class="memItemLeft" align="right" valign="top">constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> { -1 }</td></tr>
+<tr class="separator:a243e6a2060225c58a9628c66754863e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbbff0d9f1cba84718c62e0573a03ea" id="r_a7fbbff0d9f1cba84718c62e0573a03ea"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea">macroSOCKET_ERROR</a> { static_cast&lt;size_t&gt;(-1) }</td></tr>
 <tr class="separator:a7fbbff0d9f1cba84718c62e0573a03ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45aa7a74a0bf05f862d966fa3539ba3e" id="r_a45aa7a74a0bf05f862d966fa3539ba3e"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a45aa7a74a0bf05f862d966fa3539ba3e">macroSCHANNEL_SHUTDOWN</a> { SCHANNEL_SHUTDOWN }</td></tr>
-<tr class="separator:a45aa7a74a0bf05f862d966fa3539ba3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aabf296f4a48a1f7d4859bda6fedfa644" id="r_aabf296f4a48a1f7d4859bda6fedfa644"><td class="memItemLeft" align="right" valign="top">constexpr std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#aabf296f4a48a1f7d4859bda6fedfa644">macroUNISP_NAME</a> { UNISP_NAME }</td></tr>
-<tr class="separator:aabf296f4a48a1f7d4859bda6fedfa644"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7850ac8993738dea034765fc64b19d78" id="r_a7850ac8993738dea034765fc64b19d78"><td class="memItemLeft" align="right" valign="top">constexpr unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#a7850ac8993738dea034765fc64b19d78">macroSECBUFFER_VERSION</a> { SECBUFFER_VERSION }</td></tr>
-<tr class="separator:a7850ac8993738dea034765fc64b19d78"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab35deb42d5cb9d78051a017a144c6ddb" id="r_ab35deb42d5cb9d78051a017a144c6ddb"><td class="memItemLeft" align="right" valign="top">constexpr unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_macros_8hpp.html#ab35deb42d5cb9d78051a017a144c6ddb">macroSECPKG_ATTR_STREAM_SIZES</a> { SECPKG_ATTR_STREAM_SIZES }</td></tr>
-<tr class="separator:ab35deb42d5cb9d78051a017a144c6ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="adfc8f90f3a8caa8423099cf36ff214f1" name="adfc8f90f3a8caa8423099cf36ff214f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adfc8f90f3a8caa8423099cf36ff214f1">&#9670;&#160;</a></span>_WINSOCK_DEPRECATED_NO_WARNINGS</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define _WINSOCK_DEPRECATED_NO_WARNINGS</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1859fb1234511b94993fe8566eba866b" name="a1859fb1234511b94993fe8566eba866b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1859fb1234511b94993fe8566eba866b">&#9670;&#160;</a></span>SECURITY_WIN32</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define SECURITY_WIN32</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
-<a id="aefaa30275f45a6a12db233afe4c75451" name="aefaa30275f45a6a12db233afe4c75451"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aefaa30275f45a6a12db233afe4c75451">&#9670;&#160;</a></span>macroFAILED()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool macroFAILED </td>
-          <td>(</td>
-          <td class="paramtype">auto &amp;&amp;&#160;</td>
-          <td class="paramname"><em>d</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a86d41f60b50b3219e4988a925c0b389c" name="a86d41f60b50b3219e4988a925c0b389c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86d41f60b50b3219e4988a925c0b389c">&#9670;&#160;</a></span>macroSUCCEEDED()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr bool macroSUCCEEDED </td>
-          <td>(</td>
-          <td class="paramtype">auto &amp;&amp;&#160;</td>
-          <td class="paramname"><em>d</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <h2 class="groupheader">Variable Documentation</h2>
-<a id="af85afa40bbf5e2e7c2e635fe0a195ca2" name="af85afa40bbf5e2e7c2e635fe0a195ca2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af85afa40bbf5e2e7c2e635fe0a195ca2">&#9670;&#160;</a></span>macroINVALID_SOCKET</h2>
+<a id="a243e6a2060225c58a9628c66754863e5" name="a243e6a2060225c58a9628c66754863e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a243e6a2060225c58a9628c66754863e5">&#9670;&#160;</a></span>macroINVALID_SOCKET</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -290,139 +175,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr SOCKET macroINVALID_SOCKET { INVALID_SOCKET }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a45aa7a74a0bf05f862d966fa3539ba3e" name="a45aa7a74a0bf05f862d966fa3539ba3e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45aa7a74a0bf05f862d966fa3539ba3e">&#9670;&#160;</a></span>macroSCHANNEL_SHUTDOWN</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr size_t macroSCHANNEL_SHUTDOWN { SCHANNEL_SHUTDOWN }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a7850ac8993738dea034765fc64b19d78" name="a7850ac8993738dea034765fc64b19d78"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7850ac8993738dea034765fc64b19d78">&#9670;&#160;</a></span>macroSECBUFFER_VERSION</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr unsigned long macroSECBUFFER_VERSION { SECBUFFER_VERSION }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ab35deb42d5cb9d78051a017a144c6ddb" name="ab35deb42d5cb9d78051a017a144c6ddb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab35deb42d5cb9d78051a017a144c6ddb">&#9670;&#160;</a></span>macroSECPKG_ATTR_STREAM_SIZES</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr unsigned long macroSECPKG_ATTR_STREAM_SIZES { SECPKG_ATTR_STREAM_SIZES }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a30e69625f8714f3b6901087f7dd397d0" name="a30e69625f8714f3b6901087f7dd397d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a30e69625f8714f3b6901087f7dd397d0">&#9670;&#160;</a></span>macroSG_CONSTRAINED_GROUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr size_t macroSG_CONSTRAINED_GROUP { SG_CONSTRAINED_GROUP }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a0fd5e0fbb07bae5ad632e5732baa186b" name="a0fd5e0fbb07bae5ad632e5732baa186b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0fd5e0fbb07bae5ad632e5732baa186b">&#9670;&#160;</a></span>macroSG_UNCONSTRAINED_GROUP</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr size_t macroSG_UNCONSTRAINED_GROUP { SG_UNCONSTRAINED_GROUP }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aad435245c247ad14793200b6fe76ef8d" name="aad435245c247ad14793200b6fe76ef8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad435245c247ad14793200b6fe76ef8d">&#9670;&#160;</a></span>macroSO_PROTOCOL_INFO</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr size_t macroSO_PROTOCOL_INFO { SO_PROTOCOL_INFO }</td>
+          <td class="memname">constexpr int macroINVALID_SOCKET { -1 }</td>
         </tr>
       </table>
   </td>
@@ -466,7 +219,7 @@ Variables</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">constexpr size_t macroSOCKET_ERROR { static_cast&lt;size_t&gt;(SOCKET_ERROR) }</td>
+          <td class="memname">constexpr size_t macroSOCKET_ERROR { static_cast&lt;size_t&gt;(-1) }</td>
         </tr>
       </table>
   </td>
@@ -500,56 +253,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a id="aabf296f4a48a1f7d4859bda6fedfa644" name="aabf296f4a48a1f7d4859bda6fedfa644"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aabf296f4a48a1f7d4859bda6fedfa644">&#9670;&#160;</a></span>macroUNISP_NAME</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr std::string_view macroUNISP_NAME { UNISP_NAME }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ac4f710aaf65615e63a6e4ada00c47cef" name="ac4f710aaf65615e63a6e4ada00c47cef"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4f710aaf65615e63a6e4ada00c47cef">&#9670;&#160;</a></span>macroWINSOCK_VERSION</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr size_t macroWINSOCK_VERSION { WINSOCK_VERSION }</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">constexpr</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_2b3d271d5966c522c8b24b964939946d.html">WinApi</a></li><li class="navelem"><a class="el" href="_macros_8hpp.html">Macros.hpp</a></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_48552af575f0c01fd908f857e8ea26ca.html">Hermes</a></li><li class="navelem"><a class="el" href="dir_1749b645fa05fc0c477f9e54117aefed.html">_base</a></li><li class="navelem"><a class="el" href="dir_b9672ba9cbffa01d0e8774c2238dc666.html">OsApi</a></li><li class="navelem"><a class="el" href="_macros_8hpp.html">Macros.hpp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
   </ul>
 </div>

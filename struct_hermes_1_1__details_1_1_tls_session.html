@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: Hermes::_details::TlsSession Struct Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="Hermes-logo.webp"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('struct_hermes_1_1__details_1_1_tls_session.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="struct_hermes_1_1__details_1_1_tls_session-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Hermes::_details::TlsSession Struct Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Platform-agnostic TLS session — wraps SCHANNEL on Windows, OpenSSL on Linux.  
+ <a href="struct_hermes_1_1__details_1_1_tls_session.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_tls_session_8hpp_source.html">TlsSession.hpp</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html">DecryptOutcome</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html">EncryptOutcome</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html">HandshakeOutcome</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_stream_sizes.html">StreamSizes</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a2114771f217376940e33c2eb19513d1a" id="r_a2114771f217376940e33c2eb19513d1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a2114771f217376940e33c2eb19513d1a">TlsSession</a> ()</td></tr>
+<tr class="separator:a2114771f217376940e33c2eb19513d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50ab04874fe5e3a3f7ee06d1c35b8005" id="r_a50ab04874fe5e3a3f7ee06d1c35b8005"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a50ab04874fe5e3a3f7ee06d1c35b8005">~TlsSession</a> ()</td></tr>
+<tr class="separator:a50ab04874fe5e3a3f7ee06d1c35b8005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bc77e802831799b965a840ca8e54930" id="r_a8bc77e802831799b965a840ca8e54930"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a8bc77e802831799b965a840ca8e54930">TlsSession</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;)=<a class="el" href="struct_hermes_1_1_default_socket_data.html">delete</a></td></tr>
+<tr class="separator:a8bc77e802831799b965a840ca8e54930"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9dac7b9f6acc66c406846228daca776c" id="r_a9dac7b9f6acc66c406846228daca776c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a9dac7b9f6acc66c406846228daca776c">operator=</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;)=<a class="el" href="struct_hermes_1_1_default_socket_data.html">delete</a></td></tr>
+<tr class="separator:a9dac7b9f6acc66c406846228daca776c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aea73d00791de2a46da32bac8845b4536" id="r_aea73d00791de2a46da32bac8845b4536"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#aea73d00791de2a46da32bac8845b4536">TlsSession</a> (<a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">other</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:aea73d00791de2a46da32bac8845b4536"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af084aec12ff1007775d817e127deee55" id="r_af084aec12ff1007775d817e127deee55"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#af084aec12ff1007775d817e127deee55">operator=</a> (<a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">other</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:af084aec12ff1007775d817e127deee55"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abaf3efd09449eb9f28917dc272a6d5dd" id="r_abaf3efd09449eb9f28917dc272a6d5dd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#abaf3efd09449eb9f28917dc272a6d5dd">BeginClient</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">creds</a>, std::string_view host, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">ignoreCertErrors</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">mutualAuth</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:abaf3efd09449eb9f28917dc272a6d5dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9526f037f871dba32ad912a4d89c0b77" id="r_a9526f037f871dba32ad912a4d89c0b77"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a9526f037f871dba32ad912a4d89c0b77">BeginServer</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">creds</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">requestClientCert</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a9526f037f871dba32ad912a4d89c0b77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa68df43710e3fecdb1977415543fea82" id="r_aa68df43710e3fecdb1977415543fea82"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#aa68df43710e3fecdb1977415543fea82">IsActive</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:aa68df43710e3fecdb1977415543fea82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a020ed1c45b501c5edfcbf994e2b1e224" id="r_a020ed1c45b501c5edfcbf994e2b1e224"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a020ed1c45b501c5edfcbf994e2b1e224">IsHandshakeComplete</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a020ed1c45b501c5edfcbf994e2b1e224"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abeb3d4415985b4ea32d429e3514b6a0a" id="r_abeb3d4415985b4ea32d429e3514b6a0a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#abeb3d4415985b4ea32d429e3514b6a0a">IsRenegotiation</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:abeb3d4415985b4ea32d429e3514b6a0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83632fafdff0a066439ebbdc6b92ba00" id="r_a83632fafdff0a066439ebbdc6b92ba00"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html">HandshakeOutcome</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a83632fafdff0a066439ebbdc6b92ba00">AdvanceHandshake</a> (std::span&lt; std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">inBytes</a>, std::span&lt; std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">outBuf</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a83632fafdff0a066439ebbdc6b92ba00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51f11b12f7c0f13c9a411d0139753e13" id="r_a51f11b12f7c0f13c9a411d0139753e13"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_stream_sizes.html">StreamSizes</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a51f11b12f7c0f13c9a411d0139753e13">GetStreamSizes</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a51f11b12f7c0f13c9a411d0139753e13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Valid only after <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a020ed1c45b501c5edfcbf994e2b1e224">IsHandshakeComplete()</a> is true.  <br /></td></tr>
+<tr class="separator:a51f11b12f7c0f13c9a411d0139753e13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af14706a19b2551140ffed80d61a75cae" id="r_af14706a19b2551140ffed80d61a75cae"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html">EncryptOutcome</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#af14706a19b2551140ffed80d61a75cae">Encrypt</a> (std::span&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">plain</a>, std::span&lt; std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">outBuf</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:af14706a19b2551140ffed80d61a75cae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84802b6009d292856af0adacee5e4cfb" id="r_a84802b6009d292856af0adacee5e4cfb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html">DecryptOutcome</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a84802b6009d292856af0adacee5e4cfb">Decrypt</a> (std::span&lt; std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">inBytes</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="separator:a84802b6009d292856af0adacee5e4cfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61e974317e045e4ee200de1fa6b8092d" id="r_a61e974317e045e4ee200de1fa6b8092d"><td class="memItemLeft" align="right" valign="top">std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a61e974317e045e4ee200de1fa6b8092d">Shutdown</a> (std::span&lt; std::byte &gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">outBuf</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a61e974317e045e4ee200de1fa6b8092d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initiate close_notify. Returns the byte count written to outBuf.  <br /></td></tr>
+<tr class="separator:a61e974317e045e4ee200de1fa6b8092d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a369b26e5a001543310f8c3fa76d47278" id="r_a369b26e5a001543310f8c3fa76d47278"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a369b26e5a001543310f8c3fa76d47278">DeleteContext</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a369b26e5a001543310f8c3fa76d47278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tear down the TLS context; session becomes inactive but the object remains valid.  <br /></td></tr>
+<tr class="separator:a369b26e5a001543310f8c3fa76d47278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Platform-agnostic TLS session — wraps SCHANNEL on Windows, OpenSSL on Linux. </p>
+<p>State machines orchestrate I/O (recv/send) around this session; the session owns the underlying TLS context and exposes only byte-level operations. Status codes follow the existing EncryptStatusEnum so the switch logic in the state machines is identical on both platforms. </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2114771f217376940e33c2eb19513d1a" name="a2114771f217376940e33c2eb19513d1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2114771f217376940e33c2eb19513d1a">&#9670;&#160;</a></span>TlsSession() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::_details::TlsSession::TlsSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a50ab04874fe5e3a3f7ee06d1c35b8005" name="a50ab04874fe5e3a3f7ee06d1c35b8005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50ab04874fe5e3a3f7ee06d1c35b8005">&#9670;&#160;</a></span>~TlsSession()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::_details::TlsSession::~TlsSession </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8bc77e802831799b965a840ca8e54930" name="a8bc77e802831799b965a840ca8e54930"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8bc77e802831799b965a840ca8e54930">&#9670;&#160;</a></span>TlsSession() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::_details::TlsSession::TlsSession </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aea73d00791de2a46da32bac8845b4536" name="aea73d00791de2a46da32bac8845b4536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea73d00791de2a46da32bac8845b4536">&#9670;&#160;</a></span>TlsSession() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::_details::TlsSession::TlsSession </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a83632fafdff0a066439ebbdc6b92ba00" name="a83632fafdff0a066439ebbdc6b92ba00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83632fafdff0a066439ebbdc6b92ba00">&#9670;&#160;</a></span>AdvanceHandshake()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html">HandshakeOutcome</a> Hermes::_details::TlsSession::AdvanceHandshake </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; std::byte &gt;&#160;</td>
+          <td class="paramname"><em>inBytes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; std::byte &gt;&#160;</td>
+          <td class="paramname"><em>outBuf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Drive one handshake step. May consume part/all of inBytes; may produce zero or more bytes in outBuf. Caller is responsible for sending the produced bytes to the peer between calls. </p>
+
+</div>
+</div>
+<a id="abaf3efd09449eb9f28917dc272a6d5dd" name="abaf3efd09449eb9f28917dc272a6d5dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abaf3efd09449eb9f28917dc272a6d5dd">&#9670;&#160;</a></span>BeginClient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> Hermes::_details::TlsSession::BeginClient </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> &amp;&#160;</td>
+          <td class="paramname"><em>creds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string_view&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td>
+          <td class="paramname"><em>ignoreCertErrors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td>
+          <td class="paramname"><em>mutualAuth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Initialize as a client. Calling Begin* on an already-active session is treated as a renegotiation on the existing context. </p>
+
+</div>
+</div>
+<a id="a9526f037f871dba32ad912a4d89c0b77" name="a9526f037f871dba32ad912a4d89c0b77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9526f037f871dba32ad912a4d89c0b77">&#9670;&#160;</a></span>BeginServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> Hermes::_details::TlsSession::BeginServer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> &amp;&#160;</td>
+          <td class="paramname"><em>creds</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a>&#160;</td>
+          <td class="paramname"><em>requestClientCert</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a84802b6009d292856af0adacee5e4cfb" name="a84802b6009d292856af0adacee5e4cfb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84802b6009d292856af0adacee5e4cfb">&#9670;&#160;</a></span>Decrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html">DecryptOutcome</a> Hermes::_details::TlsSession::Decrypt </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; std::byte &gt;&#160;</td>
+          <td class="paramname"><em>inBytes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Decrypt from inBytes. <code>data</code> is the decrypted payload, <code>extra</code> is any trailing ciphertext that belongs to the next record. </p>
+
+</div>
+</div>
+<a id="a369b26e5a001543310f8c3fa76d47278" name="a369b26e5a001543310f8c3fa76d47278"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a369b26e5a001543310f8c3fa76d47278">&#9670;&#160;</a></span>DeleteContext()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a> Hermes::_details::TlsSession::DeleteContext </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Tear down the TLS context; session becomes inactive but the object remains valid. </p>
+
+</div>
+</div>
+<a id="af14706a19b2551140ffed80d61a75cae" name="af14706a19b2551140ffed80d61a75cae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af14706a19b2551140ffed80d61a75cae">&#9670;&#160;</a></span>Encrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html">EncryptOutcome</a> Hermes::_details::TlsSession::Encrypt </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> std::byte &gt;&#160;</td>
+          <td class="paramname"><em>plain</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::span&lt; std::byte &gt;&#160;</td>
+          <td class="paramname"><em>outBuf</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Encrypt one record. outBuf must be at least <code><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a51f11b12f7c0f13c9a411d0139753e13" title="Valid only after IsHandshakeComplete() is true.">GetStreamSizes()</a>.header + plain.size() + <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a51f11b12f7c0f13c9a411d0139753e13" title="Valid only after IsHandshakeComplete() is true.">GetStreamSizes()</a>.trailer</code> bytes. </p>
+
+</div>
+</div>
+<a id="a51f11b12f7c0f13c9a411d0139753e13" name="a51f11b12f7c0f13c9a411d0139753e13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51f11b12f7c0f13c9a411d0139753e13">&#9670;&#160;</a></span>GetStreamSizes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_stream_sizes.html">StreamSizes</a> Hermes::_details::TlsSession::GetStreamSizes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Valid only after <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html#a020ed1c45b501c5edfcbf994e2b1e224">IsHandshakeComplete()</a> is true. </p>
+
+</div>
+</div>
+<a id="aa68df43710e3fecdb1977415543fea82" name="aa68df43710e3fecdb1977415543fea82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa68df43710e3fecdb1977415543fea82">&#9670;&#160;</a></span>IsActive()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Hermes::_details::TlsSession::IsActive </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a020ed1c45b501c5edfcbf994e2b1e224" name="a020ed1c45b501c5edfcbf994e2b1e224"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a020ed1c45b501c5edfcbf994e2b1e224">&#9670;&#160;</a></span>IsHandshakeComplete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Hermes::_details::TlsSession::IsHandshakeComplete </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abeb3d4415985b4ea32d429e3514b6a0a" name="abeb3d4415985b4ea32d429e3514b6a0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abeb3d4415985b4ea32d429e3514b6a0a">&#9670;&#160;</a></span>IsRenegotiation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">bool</a> Hermes::_details::TlsSession::IsRenegotiation </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9dac7b9f6acc66c406846228daca776c" name="a9dac7b9f6acc66c406846228daca776c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dac7b9f6acc66c406846228daca776c">&#9670;&#160;</a></span>operator=() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp; Hermes::_details::TlsSession::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af084aec12ff1007775d817e127deee55" name="af084aec12ff1007775d817e127deee55"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af084aec12ff1007775d817e127deee55">&#9670;&#160;</a></span>operator=() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp; Hermes::_details::TlsSession::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a> &amp;&amp;&#160;</td>
+          <td class="paramname"><em>other</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a61e974317e045e4ee200de1fa6b8092d" name="a61e974317e045e4ee200de1fa6b8092d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a61e974317e045e4ee200de1fa6b8092d">&#9670;&#160;</a></span>Shutdown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uint32_t Hermes::_details::TlsSession::Shutdown </td>
+          <td>(</td>
+          <td class="paramtype">std::span&lt; std::byte &gt;&#160;</td>
+          <td class="paramname"><em>outBuf</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Initiate close_notify. Returns the byte count written to outBuf. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/Hermes/Socket/_base/<a class="el" href="_tls_session_8hpp_source.html">TlsSession.hpp</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespace_hermes.html">Hermes</a></li><li class="navelem"><a class="el" href="namespace_hermes_1_1__details.html">_details</a></li><li class="navelem"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session.html">TlsSession</a></li>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

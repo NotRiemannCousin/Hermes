@@ -11,6 +11,6 @@ var struct_hermes_1_1_default_socket_data =
     [ "operator=", "struct_hermes_1_1_default_socket_data.html#a205f52b4ec26da132a3e0c606b88481f", null ],
     [ "endpoint", "struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7", null ],
     [ "options", "struct_hermes_1_1_default_socket_data.html#aed4ebb68c610ead3b5e5ad99ea8d2a82", null ],
-    [ "socket", "struct_hermes_1_1_default_socket_data.html#a939d7a9ba97abc70805f88d9f31c56f6", null ],
+    [ "socket", "struct_hermes_1_1_default_socket_data.html#a58b7baaa6aad803b6d0e52dd1cfea6a7", null ],
     [ "state", "struct_hermes_1_1_default_socket_data.html#a1dd2b158ed35f0a52ff4e367f30b942a", null ]
 ];

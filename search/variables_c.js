@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['onlyipv6_0',['onlyipv6',['../struct_hermes_1_1__details_1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html#a8c009daee7e53a882e403f07168841d1',1,'Hermes::_details::AcceptOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;::onlyIpv6'],['../struct_hermes_1_1__details_1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html#a59a1dfc9851e10e32d9f2c0aa633c25c',1,'Hermes::_details::ConnectOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;::onlyIpv6']]],
-  ['options_1',['options',['../struct_hermes_1_1_default_socket_data.html#aed4ebb68c610ead3b5e5ad99ea8d2a82',1,'Hermes::DefaultSocketData']]]
+  ['pattern_0',['pattern',['../struct_hermes_1_1_utils_1_1_until_match_adaptor.html#a391b4346bd31be2869a507679e18fb56',1,'Hermes::Utils::UntilMatchAdaptor']]],
+  ['pendingdata_1',['pendingData',['../struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597',1,'Hermes::TlsSocketData']]],
+  ['port_2',['port',['../struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e',1,'Hermes::IpEndpointParams']]],
+  ['produced_3',['produced',['../struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html#a468e94dedbab45729599f05ff672e3d6',1,'Hermes::_details::TlsSession::HandshakeOutcome::produced'],['../struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html#a437cdcca11e4c7aa93e7a34db05f28d9',1,'Hermes::_details::TlsSession::EncryptOutcome::produced']]]
 ];

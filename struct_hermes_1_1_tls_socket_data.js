@@ -21,7 +21,7 @@ var struct_hermes_1_1_tls_socket_data =
     [ "isServer", "struct_hermes_1_1_tls_socket_data.html#a1b925e7235ca0fa93c40efb3d5f62a8f", null ],
     [ "pendingData", "struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597", null ],
     [ "requestClientCertificate", "struct_hermes_1_1_tls_socket_data.html#a5872baad0a1ad75f7100e7ae262e8ea9", null ],
-    [ "socket", "struct_hermes_1_1_tls_socket_data.html#a8d1830f359ad799b3bc763f40960b165", null ],
+    [ "socket", "struct_hermes_1_1_tls_socket_data.html#aba5927f3bb0d2210f028d1230b5040c6", null ],
     [ "state", "struct_hermes_1_1_tls_socket_data.html#a6502d63aafdc2f6d1d6fc040f8805ad5", null ],
     [ "transferStateMachine", "struct_hermes_1_1_tls_socket_data.html#a153f3674ce1d7e6ae00fc9356c0494dc", null ]
 ];
