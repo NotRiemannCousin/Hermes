@@ -33,7 +33,7 @@ static std::expected<std::vector<std::byte>, Hermes::CredentialErrorEnum> S_Read
 static Hermes::CredentialErrorEnum S_MapSecurityStatus(SECURITY_STATUS status) noexcept {
     switch (static_cast<EncryptStatusEnum>(status)) {
         case EncryptStatusEnum::ErrOk                 : return Hermes::CredentialErrorEnum::None;
-        case EncryptStatusEnum::ErrSecpkgNotFound     : return Hermes::CredentialErrorEnum::SecurityPackageNotFound;
+        case EncryptStatusEnum::ErrSecPkgNotFound     : return Hermes::CredentialErrorEnum::SecurityPackageNotFound;
         case EncryptStatusEnum::ErrUnknownCredentials : return Hermes::CredentialErrorEnum::UnknownCredentials;
         case EncryptStatusEnum::ErrNoCredentials      : return Hermes::CredentialErrorEnum::NoCredentials;
         case EncryptStatusEnum::ErrInsufficientMemory : return Hermes::CredentialErrorEnum::InsufficientMemory;

@@ -69,7 +69,7 @@
 
 
 #ifdef _WIN32
-using SocketFd = SocketFd;
+using SocketFd = SOCKET;
 using IoCount = int;
 #else
 using SocketFd = int;
@@ -81,7 +81,7 @@ using IoCount = ssize_t;
 int CloseSocket(SocketFd socket);
 #ifdef _WIN32
 inline int CloseSocket(SocketFd socket) {
-    return CloseSocket(socket);
+    return closesocket(socket);
 }
 #else
 inline int CloseSocket(SocketFd socket) {
