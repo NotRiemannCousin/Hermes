@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <thread>
+#include <memory>
 
 namespace Hermes {
     enum class ConnectionErrorEnum;
@@ -8,12 +9,21 @@ namespace Hermes {
 
 namespace Hermes {
 
+#ifdef _WIN32
     struct TransferOperStatus : WSAOVERLAPPED {
-        using Operation = void(void* context, DWORD transferedBytes, bool success);
+        using Operation = void(void* context, size_t transferedBytes, bool success);
 
         void* context{};
         Operation* callback{};
     };
+#else
+    struct TransferOperStatus {
+        using Operation = void(void* context, size_t transferedBytes, bool success);
+
+        void* context{};
+        Operation* callback{};
+    };
+#endif
 
     class FastIoLoop;
     struct FastIoScheduler;
@@ -21,9 +31,8 @@ namespace Hermes {
 
     //! @brief IOCP/io_uring based loop for sockets.
     class FastIoLoop {
-        HANDLE _iocpHandle{ nullptr };
-        std::vector<std::jthread> _workers;
-        std::atomic<bool> _isRunning{ false };
+        struct Impl;
+        std::unique_ptr<Impl> _impl;
 
     public:
         explicit FastIoLoop(unsigned int threadCount = std::thread::hardware_concurrency());
@@ -32,12 +41,21 @@ namespace Hermes {
         FastIoLoop(const FastIoLoop&) = delete;
         FastIoLoop& operator=(const FastIoLoop&) = delete;
 
-        bool RegisterHandle(HANDLE handle) const noexcept;
+        bool RegisterHandle(SocketHandle handle) const noexcept;
         void Stop() noexcept;
 
         [[nodiscard]] FastIoScheduler GetScheduler() const noexcept;
 
         bool PostWork(TransferOperStatus* status) const noexcept;
+
+#ifndef _WIN32
+        static FastIoLoop* GetLoopForSocket(int fd) noexcept;
+        static void RegisterSocketLoop(int fd, FastIoLoop* loop) noexcept;
+        static void UnregisterSocketLoop(int fd) noexcept;
+
+        template <typename F>
+        void SubmitIo(F&& prep_fn) const noexcept;
+#endif
 
     private:
         void WorkerLoop() const noexcept;
@@ -70,7 +88,7 @@ namespace Hermes {
             OperationState(const FastIoLoop* loop, Receiver r);
 
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept;
-            static void S_Callback(void* context, DWORD bytesTransferred, bool success);
+            static void S_Callback(void* context, size_t bytesTransferred, bool success);
         };
 
         template <class Receiver>
@@ -79,11 +97,9 @@ namespace Hermes {
         }
     };
 
-
     static_assert(stdexec::scheduler<FastIoScheduler>);
     static_assert(stdexec::sender<FastIoScheduleSender>);
     static_assert(std::same_as<stdexec::schedule_result_t<FastIoScheduler>, FastIoScheduleSender>);
 }
 
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.tpp>
-

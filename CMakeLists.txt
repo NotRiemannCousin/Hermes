@@ -86,7 +86,7 @@ if(WIN32)
     endif()
 else()
     find_package(OpenSSL REQUIRED)
-    target_link_libraries(Hermes PUBLIC OpenSSL::SSL OpenSSL::Crypto)
+    target_link_libraries(Hermes PUBLIC OpenSSL::SSL OpenSSL::Crypto uring)
 endif()
 
 

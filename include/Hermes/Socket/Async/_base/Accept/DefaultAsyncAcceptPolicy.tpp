@@ -22,7 +22,7 @@
 #define REF ->
 #define SAFE_CHECK_ERR(COND, ERROR)                                                   \
 if (COND) {                                                                           \
-    DefaultAsyncAcceptPolicy::Close(self REF _clientData);                           \
+    DefaultAsyncAcceptPolicy::Close(self REF _clientData);                            \
     stdexec::set_error(std::move(self REF _receiver), ConnectionErrorEnum::ERROR);    \
     return;                                                                           \
 }
@@ -54,25 +54,31 @@ namespace Hermes {
             Receiver _receiver;
             TransferOperStatus _status{};
             std::byte _buffer[2 * (sizeof(sockaddr_storage) + 16)]{};
+#ifndef _WIN32
+            socklen_t _addrLen{ sizeof(sockaddr_storage) };
+#endif
 
             OperationState(Data* listenData, AcceptOptions options, Receiver receiver) :
                 _listenData{ listenData }, _options{ options }, _receiver{ std::move(receiver) }, _clientData{ listenData->MakeChild() } {}
 
-            static void IoCallback(void* context, DWORD _, bool success) noexcept {
+            static void IoCallback(void* context, size_t bytesTransferred, bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
 
                 SAFE_CHECK_ERR(!success, ConnectionFailed);
 
                 try {
+#ifdef _WIN32
                     auto acceptCtx{ setsockopt(self->_clientData.socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT,
                         reinterpret_cast<char*>(&self->_listenData->socket), sizeof(self->_listenData->socket)) };
-
                     SAFE_CHECK_ERR(acceptCtx == macroSOCKET_ERROR, Unknown);
-
+#else
+                    self->_clientData.socket = static_cast<SocketFd>(static_cast<int>(bytesTransferred));
+                    SAFE_CHECK_ERR(self->_clientData.socket < 0, ConnectionFailed);
+#endif
 
                     auto& sched{ self->_options.scheduler };
                     SAFE_CHECK_ERR(!sched
-                        || !sched->RegisterHandle(reinterpret_cast<HANDLE>(self->_clientData.socket)), NoScheduler);
+                        || !sched->RegisterHandle(reinterpret_cast<SocketHandle>(self->_clientData.socket)), NoScheduler);
 
 #pragma region Options
 
@@ -87,8 +93,9 @@ namespace Hermes {
                     if (self->_options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
                     if (self->_options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, self->_options.recvBufferSize);
                     if (self->_options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self->_options.sendBufferSize);
-
 #pragma endregion
+
+#ifdef _WIN32
                     const auto& extensions = s_listenerExtensions.at(self->_listenData->socket);
 
                     sockaddr* localAddr{ nullptr };
@@ -99,11 +106,13 @@ namespace Hermes {
                     extensions.lpfnGetAcceptExSockaddrs(self->_buffer, 0,
                         sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
                         &localAddr, &localLen, &remoteAddr, &remoteLen);
-
+#else
+                    sockaddr* remoteAddr{ reinterpret_cast<sockaddr*>(self->_buffer) };
+                    int remoteLen{ static_cast<int>(self->_addrLen) };
+#endif
                     if (remoteAddr) {
                         auto endpointRes{ Data::EndpointType::FromSockAddr(
                             SocketInfoAddr{ *reinterpret_cast<sockaddr_storage*>(remoteAddr), static_cast<size_t>(remoteLen), AddressFamilyEnum{ remoteAddr->sa_family } }) };
-
                         SAFE_CHECK_ERR(!endpointRes, InvalidEndpoint);
 
                         self->_clientData.endpoint = std::move(*endpointRes);
@@ -122,8 +131,8 @@ namespace Hermes {
 
 #undef REF
 #define REF .
-
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+#ifdef _WIN32
                 self._clientData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
                 CHECK_ERR(self._clientData.socket == macroINVALID_SOCKET, Unknown);
 
@@ -140,6 +149,21 @@ namespace Hermes {
                     &bytesReceived, &self._status);
 
                 SAFE_CHECK_ERR(!success && WSAGetLastError() != WSA_IO_PENDING, ConnectionFailed);
+#else
+                self._status = {};
+                self._status.context = &self;
+                self._status.callback = IoCallback;
+
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(self._listenData->socket));
+                SAFE_CHECK_ERR(!loop, NoScheduler);
+
+                loop->SubmitIo([&](struct io_uring_sqe* sqe) {
+                    self._addrLen = sizeof(sockaddr_storage);
+                    io_uring_prep_accept(sqe, static_cast<int>(self._listenData->socket),
+                        reinterpret_cast<sockaddr*>(self._buffer), &self._addrLen, 0);
+                    io_uring_sqe_set_data(sqe, &self._status);
+                });
+#endif
             }
         };
 
@@ -152,15 +176,14 @@ namespace Hermes {
     template<SocketDataConcept Data>
     ConnectionResultOper DefaultAsyncAcceptPolicy<Data>::Listen(Data& data, int backlog, ListenOptions options) {
         auto listenerPolicy{ DefaultAcceptPolicy<EndpointType, Type, Family>::Listen(data, backlog, options) };
-
         if (!listenerPolicy)
             return listenerPolicy;
 
         auto sched{ options.scheduler };
-
-        if (!sched || !sched->RegisterHandle(reinterpret_cast<HANDLE>(data.socket)))
+        if (!sched || !sched->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket)))
             return std::unexpected{ ConnectionErrorEnum::NoScheduler };
 
+#ifdef _WIN32
         ListenerExtensions extensions;
         DWORD bytes;
 
@@ -174,6 +197,7 @@ namespace Hermes {
 
         std::lock_guard lock(s_listenerExtensionsMutex);
         s_listenerExtensions[data.socket] = extensions;
+#endif
 
         return listenerPolicy;
     }
@@ -191,6 +215,7 @@ namespace Hermes {
     template<SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy<Data>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
+
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
             stdexec::set_error_t(ConnectionErrorEnum),
@@ -211,7 +236,6 @@ namespace Hermes {
                 }
 
                 CHECK_ERR(shutdown(self._data->socket, static_cast<int>(SocketShutdownEnum::Send)) == macroSOCKET_ERROR, SendFailed);
-
                 stdexec::set_value(std::move(self._receiver));
             }
         };
@@ -237,15 +261,23 @@ namespace Hermes {
     template<SocketDataConcept Data>
     void DefaultAsyncAcceptPolicy<Data>::Close(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Close(data);
+#ifdef _WIN32
         std::lock_guard lock(s_listenerExtensionsMutex);
         s_listenerExtensions.erase(data.socket);
+#else
+        FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
+#endif
     }
 
     template<SocketDataConcept Data>
     void DefaultAsyncAcceptPolicy<Data>::Abort(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
+#ifdef _WIN32
         std::lock_guard lock(s_listenerExtensionsMutex);
         s_listenerExtensions.erase(data.socket);
+#else
+        FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
+#endif
     }
 }
 

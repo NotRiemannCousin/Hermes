@@ -19,6 +19,21 @@ namespace Hermes {
             Data* _data;
             Options _options;
             Receiver _receiver;
+#ifndef _WIN32
+            TransferOperStatus _status{};
+            sockaddr_storage _addr{};
+            socklen_t _addrLen{};
+
+            static void IoCallback(void* context, size_t /*bytesTransferred*/, bool success) noexcept {
+                auto* self{ static_cast<OperationState*>(context) };
+                if (!success) {
+                    DefaultAsyncConnectPolicy::Close(*self->_data);
+                    stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::ConnectionFailed);
+                    return;
+                }
+                stdexec::set_value(std::move(self->_receiver));
+            }
+#endif
 
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
                 auto addrRes{ self._data->endpoint.ToSockAddr() };
@@ -63,23 +78,19 @@ namespace Hermes {
                 s_setNonBlocking(self._data->socket);
 
                 auto& sched{ self._options.scheduler };
-                if (!sched || !sched->RegisterHandle(reinterpret_cast<HANDLE>(self._data->socket))) {
+                if (!sched || !sched->RegisterHandle(reinterpret_cast<SocketHandle>(static_cast<intptr_t>(self._data->socket)))) {
                     stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::NoScheduler);
                     return;
                 }
 
+#ifdef _WIN32
                 const int res{ connect(self._data->socket, reinterpret_cast<sockaddr*>(&addr), addr_len) };
-
                 if (res == 0) {
                     stdexec::set_value(std::move(self._receiver));
                     return;
                 }
 
-#ifdef _WIN32
                 const bool inProgress{ WSAGetLastError() == WSAEWOULDBLOCK };
-#else
-                const bool inProgress{ errno == EINPROGRESS };
-#endif
 
                 if (!inProgress) {
                     DefaultAsyncConnectPolicy::Close(*self._data);
@@ -87,24 +98,12 @@ namespace Hermes {
                     return;
                 }
 
-                // TODO: FUTURE: integration with I/O CONTEXT
-                //
-                // auto env{ stdexec::get_env(self._receiver) };
-                // auto scheduler{ stdexec::get_scheduler(env) };
-                // auto ioContext{ scheduler.query(IoContext::query_t) };
-                //
-                // ioContext->RegisterConnect(self._data->socket, std::move(self._receiver));
-                // return;
-
-
-                // HACK: Fallback while there is no IoContext
                 const auto s_fallbackWait = [&]() {
                     fd_set writeSet, errSet;
                     FD_ZERO(&writeSet); FD_ZERO(&errSet);
                     FD_SET(self._data->socket, &writeSet); FD_SET(self._data->socket, &errSet);
 
                     const int selectRes{ select(static_cast<int>(self._data->socket) + 1, nullptr, &writeSet, &errSet, nullptr) };
-
                     if (selectRes > 0) {
                         int soError{ 0 };
                         socklen_t len{ sizeof(soError) };
@@ -121,6 +120,25 @@ namespace Hermes {
                 };
 
                 s_fallbackWait();
+#else
+                std::memcpy(&self._addr, &addr, addr_len);
+                self._addrLen = static_cast<socklen_t>(addr_len);
+                self._status = {};
+                self._status.context = &self;
+                self._status.callback = IoCallback;
+
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(self._data->socket));
+                if (!loop) {
+                    DefaultAsyncConnectPolicy::Close(*self._data);
+                    stdexec::set_error(std::move(self._receiver), ConnectionErrorEnum::NoScheduler);
+                    return;
+                }
+
+                loop->SubmitIo([&](struct io_uring_sqe* sqe) {
+                    io_uring_prep_connect(sqe, static_cast<int>(self._data->socket), reinterpret_cast<sockaddr*>(&self._addr), self._addrLen);
+                    io_uring_sqe_set_data(sqe, &self._status);
+                });
+#endif
             }
         };
 
@@ -130,12 +148,10 @@ namespace Hermes {
         }
     };
 
-    // =========================================================================
-    // Shutdown Sender
-    // =========================================================================
     template<SocketDataConcept Data>
     struct DefaultAsyncConnectPolicy<Data>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
+
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
             stdexec::set_error_t(ConnectionErrorEnum),
@@ -193,6 +209,9 @@ namespace Hermes {
     void DefaultAsyncConnectPolicy<Data>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             CloseSocket(data.socket);
+#ifndef _WIN32
+            FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
+#endif
             data.socket = macroINVALID_SOCKET;
         }
     }
@@ -209,6 +228,9 @@ namespace Hermes {
                 sizeof(lingerOption)
             );
             CloseSocket(data.socket);
+#ifndef _WIN32
+            FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
+#endif
             data.socket = macroINVALID_SOCKET;
         }
     }

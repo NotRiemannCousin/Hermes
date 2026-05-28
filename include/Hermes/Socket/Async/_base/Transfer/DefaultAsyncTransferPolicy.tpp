@@ -17,16 +17,15 @@ namespace Hermes {
 
         template<class Receiver>
         struct OperationState {
-            Data*             _data;
+            Data* _data;
             std::span<Byte>   _buffer;
             RecvModeEnum      _mode;
             Receiver          _receiver;
             TransferOperStatus _status{};
             size_t            _total{};
 
-            static void IoCallback(void* context, DWORD bytesTransferred, bool success) noexcept {
+            static void IoCallback(void* context, size_t bytesTransferred, bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
-
                 if (!success) {
                     stdexec::set_error(std::move(self->_receiver),
                         TransferError{ self->_total, ConnectionErrorEnum::ReceiveFailed });
@@ -40,7 +39,6 @@ namespace Hermes {
                 }
 
                 self->_total += bytesTransferred;
-
                 if (self->_mode == RecvModeEnum::Any || self->_total >= self->_buffer.size()) {
                     stdexec::set_value(std::move(self->_receiver), self->_total);
                     return;
@@ -55,19 +53,31 @@ namespace Hermes {
                 _status.context  = this;
                 _status.callback = IoCallback;
 
+#ifdef _WIN32
                 WSABUF wsaBuf{};
                 wsaBuf.buf = reinterpret_cast<char*>(_buffer.data() + _total);
                 wsaBuf.len = static_cast<ULONG>(_buffer.size() - _total);
-
                 DWORD flags{};
                 const int res{ WSARecv(_data->socket, &wsaBuf, 1,
                     nullptr, &flags,
                     static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
-
                 if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
                     stdexec::set_error(std::move(_receiver),
                         TransferError{ _total, ConnectionErrorEnum::ReceiveFailed });
                 }
+#else
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                if (!loop) {
+                    stdexec::set_error(std::move(_receiver),
+                        TransferError{ _total, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+                loop->SubmitIo([this](struct io_uring_sqe* sqe) {
+                    io_uring_prep_recv(sqe, static_cast<int>(_data->socket),
+                        _buffer.data() + _total, _buffer.size() - _total, 0);
+                    io_uring_sqe_set_data(sqe, &_status);
+                });
+#endif
             }
 
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
@@ -103,15 +113,14 @@ namespace Hermes {
 
         template<class Receiver>
         struct OperationState {
-            Data*                  _data;
+            Data* _data;
             std::span<const Byte>  _buffer;
             Receiver               _receiver;
             TransferOperStatus     _status{};
             size_t                 _total{};
 
-            static void IoCallback(void* context, DWORD bytesTransferred, bool success) noexcept {
+            static void IoCallback(void* context, size_t bytesTransferred, bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
-
                 if (!success) {
                     stdexec::set_error(std::move(self->_receiver),
                         TransferError{ self->_total, ConnectionErrorEnum::SendFailed });
@@ -119,7 +128,6 @@ namespace Hermes {
                 }
 
                 self->_total += bytesTransferred;
-
                 if (self->_total >= self->_buffer.size()) {
                     stdexec::set_value(std::move(self->_receiver), self->_total);
                     return;
@@ -134,6 +142,7 @@ namespace Hermes {
                 _status.context  = this;
                 _status.callback = IoCallback;
 
+#ifdef _WIN32
                 WSABUF wsaBuf{};
                 wsaBuf.buf = const_cast<char*>(
                     reinterpret_cast<const char*>(_buffer.data() + _total));
@@ -142,11 +151,23 @@ namespace Hermes {
                 const int res{ WSASend(_data->socket, &wsaBuf, 1,
                     nullptr, 0,
                     static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
-
                 if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
                     stdexec::set_error(std::move(_receiver),
                         TransferError{ _total, ConnectionErrorEnum::SendFailed });
                 }
+#else
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                if (!loop) {
+                    stdexec::set_error(std::move(_receiver),
+                        TransferError{ _total, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+                loop->SubmitIo([this](struct io_uring_sqe* sqe) {
+                    io_uring_prep_send(sqe, static_cast<int>(_data->socket),
+                        _buffer.data() + _total, _buffer.size() - _total, 0);
+                    io_uring_sqe_set_data(sqe, &_status);
+                });
+#endif
             }
 
             friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
