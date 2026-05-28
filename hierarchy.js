@@ -89,15 +89,13 @@ var hierarchy =
     [ "Hermes::TlsSocketData< Endpoint, SocketType, SocketFamily >", "struct_hermes_1_1_tls_socket_data.html", null ],
     [ "Hermes::TlsTransferPolicy< Data >", "struct_hermes_1_1_tls_transfer_policy.html", null ],
     [ "Hermes::TransferError", "struct_hermes_1_1_transfer_error.html", null ],
+    [ "Hermes::TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", null ],
     [ "Hermes::Utils::UntilMatchAdaptor< Inclusive, Pattern >", "struct_hermes_1_1_utils_1_1_until_match_adaptor.html", null ],
     [ "std::ranges::view_interface", null, [
       [ "Hermes::DefaultTransferPolicy< SocketType >::RecvStream< Byte >", "struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html", null ],
       [ "Hermes::TlsTransferPolicy< Data >::RecvStream< Byte >", "struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream.html", null ],
       [ "Hermes::Utils::DropLastView< Range >", "struct_hermes_1_1_utils_1_1_drop_last_view.html", null ],
       [ "Hermes::Utils::UntilMatchView< Range, Pattern, Inclusive >", "struct_hermes_1_1_utils_1_1_until_match_view.html", null ]
-    ] ],
-    [ "WSAOVERLAPPED", null, [
-      [ "Hermes::TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", null ]
     ] ],
     [ "Hermes::Utils::Ts", null, [
       [ "Hermes::Utils::Overloaded< Ts >", "struct_hermes_1_1_utils_1_1_overloaded.html", null ]

@@ -4,6 +4,7 @@ var searchData=
   ['serversockertresult_1',['ServerSockertResult',['../struct_hermes_1_1_listener_socket.html#a8d08cf87cc200ad9eec38f6382b4f1cc',1,'Hermes::ListenerSocket']]],
   ['serversockettype_2',['serversockettype',['../struct_hermes_1_1_async_listener_socket.html#aa173a7b416a05c093dbfebeec4ff2161',1,'Hermes::AsyncListenerSocket::ServerSocketType'],['../struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6',1,'Hermes::ListenerSocket::ServerSocketType']]],
   ['socketfd_3',['SocketFd',['../_os_api_8hpp.html#a7c9483602e011391f025d67191795fb0',1,'OsApi.hpp']]],
-  ['socketinfoaddr_4',['SocketInfoAddr',['../namespace_hermes.html#ae387a226251b2771a996781de8eb3247',1,'Hermes']]],
-  ['streambyteoper_5',['StreamByteOper',['../namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b',1,'Hermes']]]
+  ['sockethandle_4',['SocketHandle',['../_os_api_8hpp.html#ae8b1e59432f327ccfb7df89ed0bb9a30',1,'OsApi.hpp']]],
+  ['socketinfoaddr_5',['SocketInfoAddr',['../namespace_hermes.html#ae387a226251b2771a996781de8eb3247',1,'Hermes']]],
+  ['streambyteoper_6',['StreamByteOper',['../namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b',1,'Hermes']]]
 ];
