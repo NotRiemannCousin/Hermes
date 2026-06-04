@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/Endpoint/_base/EndpointConcept.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
+#include <Hermes/_base/OsApi/OsApi.hpp>
 
 #include <stdexec/execution.hpp>
 

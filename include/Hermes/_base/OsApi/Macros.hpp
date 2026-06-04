@@ -40,7 +40,6 @@ constexpr bool macroFAILED(auto &&d) { return FAILED(d); }
 #else
 #include <string_view>
 #include <sys/socket.h>
-#include <netinet/in.h>
 
 constexpr size_t macroSO_TYPE          { SO_TYPE };
 constexpr size_t macroSOL_SOCKET       { SOL_SOCKET };

@@ -5,7 +5,9 @@
 #include <netinet/in.h>
 #endif
 
-enum class ProtocolBaseTypeEnum : int {
-    Udp = IPPROTO_UDP,
-    Tcp = IPPROTO_TCP
-};
+namespace Hermes {
+    enum class ProtocolBaseTypeEnum : int {
+        Udp = IPPROTO_UDP,
+        Tcp = IPPROTO_TCP
+    };
+}

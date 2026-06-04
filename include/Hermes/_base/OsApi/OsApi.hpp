@@ -1,3 +1,4 @@
+// ReSharper disable CppUnusedIncludeDirective
 #pragma once
 // This file it's a wrapper to hold the things from the OS headers
 // used to manage socket connections and other things. Almost every
@@ -68,28 +69,32 @@
 #endif
 
 
+namespace Hermes {
 #ifdef _WIN32
-using SocketFd = SOCKET;
-using IoCount = int;
-using SocketHandle = HANDLE;
+    using SocketFd = SOCKET;
+    using IoCount = int;
+    using SocketHandle = HANDLE;
 #else
-using SocketFd = int;
-using IoCount = ssize_t;
-using SocketHandle = int*;
+
+    using SocketFd = int;
+    using IoCount = ssize_t;
+    using SocketHandle = int*;
+
 #endif
 
 
 
-int CloseSocket(SocketFd socket);
+    int CloseSocket(SocketFd socket);
 #ifdef _WIN32
-inline int CloseSocket(SocketFd socket) {
-    return closesocket(socket);
-}
+    inline int CloseSocket(SocketFd socket) {
+        return closesocket(socket);
+    }
 #else
-inline int CloseSocket(SocketFd socket) {
-    return close(socket);
-}
+    inline int CloseSocket(SocketFd socket) {
+        return close(socket);
+    }
 #endif
+}
 
 // export {
 // ReSharper disable once CppUnusedIncludeDirective
@@ -110,21 +115,21 @@ inline int CloseSocket(SocketFd socket) {
 #else
 #include <Hermes/_base/OsApi/Enums/Linux/EncryptStatusEnum.hpp>
 #endif
-
-	ENUM_OPERATIONS(AddressFamilyEnum)
-	ENUM_OPERATIONS(ProtocolBaseTypeEnum)
-	ENUM_OPERATIONS(SocketShutdownEnum)
+namespace Hermes {
+    ENUM_OPERATIONS(AddressFamilyEnum)
+    ENUM_OPERATIONS(ProtocolBaseTypeEnum)
+    ENUM_OPERATIONS(SocketShutdownEnum)
     ENUM_OPERATIONS(SocketTypeEnum)
 
 #ifdef _WIN32
-	ENUM_OPERATIONS(ConditionFunctionEnum)
-	ENUM_OPERATIONS(EncryptStatusEnum)
-	ENUM_OPERATIONS(SChCredEnum)
-	ENUM_OPERATIONS(SecurityBufferEnum)
+    ENUM_OPERATIONS(ConditionFunctionEnum)
+    ENUM_OPERATIONS(EncryptStatusEnum)
+    ENUM_OPERATIONS(SChCredEnum)
+    ENUM_OPERATIONS(SecurityBufferEnum)
 #else
-	ENUM_OPERATIONS(EncryptStatusEnum)
+    ENUM_OPERATIONS(EncryptStatusEnum)
 #endif
-
+}
 
 #include <Hermes/_base/OsApi/Flags/NameInfoFlags.hpp>
 
@@ -142,14 +147,15 @@ inline int CloseSocket(SocketFd socket) {
 #include <Hermes/_base/OsApi/Flags/Linux/SChannelCredFlags.hpp>
 #endif
 
-#ifdef _WIN32
+namespace Hermes {
     FLAGS_OPERATIONS(CredentialFlags)
     FLAGS_OPERATIONS(SupportedProtocolsFlags)
+    FLAGS_OPERATIONS(SChannelCredFlags)
+#ifdef _WIN32
     FLAGS_OPERATIONS(InitializeSecurityContextFlags)
     FLAGS_OPERATIONS(InitializeSecurityContextReturnFlags)
     FLAGS_OPERATIONS(AcceptSecurityContextFlags)
     FLAGS_OPERATIONS(AcceptSecurityContextReturnFlags)
-    FLAGS_OPERATIONS(SChannelCredFlags)
 
     using ::CredHandle;
     using ::CtxtHandle;
@@ -178,12 +184,8 @@ inline int CloseSocket(SocketFd socket) {
     using ::QueryContextAttributesA;
     using ::QueryContextAttributesW;
     using ::SecPkgContext_StreamSizes;
-#else
-    FLAGS_OPERATIONS(CredentialFlags)
-    FLAGS_OPERATIONS(SupportedProtocolsFlags)
-    FLAGS_OPERATIONS(SChannelCredFlags)
 #endif
-// };
+}
 
 #undef FLAGS_OPERATIONS
 #undef ENUM_OPERATIONS
