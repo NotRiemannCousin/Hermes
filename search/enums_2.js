@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['encryptstatusenum_0',['EncryptStatusEnum',['../_encrypt_status_enum_8hpp.html#ae89e3b848aee64b8bad977ffd5bc5973',1,'EncryptStatusEnum.hpp']]]
+  ['encryptstatusenum_0',['encryptstatusenum',['../namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919',1,'Hermes::EncryptStatusEnum'],['../namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919',1,'Hermes::EncryptStatusEnum']]]
 ];

@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['schannelcredflags_0',['SChannelCredFlags',['../_s_channel_cred_flags_8hpp.html#a691929b5459ea08f8e4b8264c8807800',1,'SChannelCredFlags.hpp']]],
-  ['schcredenum_1',['SChCredEnum',['../_s_ch_cred_enum_8hpp.html#a05a0da1460a80f27916f53866c2afe50',1,'SChCredEnum.hpp']]],
-  ['securitybufferenum_2',['SecurityBufferEnum',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bb',1,'SecurityBufferEnum.hpp']]],
-  ['socketshutdownenum_3',['SocketShutdownEnum',['../_socket_shutdown_enum_8hpp.html#a0cb2366718e1b46ebf561d3e51be0dde',1,'SocketShutdownEnum.hpp']]],
-  ['sockettypeenum_4',['SocketTypeEnum',['../_socket_type_enum_8hpp.html#a5753fcd9861613ed0caddc07e5656005',1,'SocketTypeEnum.hpp']]],
-  ['supportedprotocolsflags_5',['SupportedProtocolsFlags',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459',1,'SupportedProtocolsFlags.hpp']]]
+  ['schannelcredflags_0',['schannelcredflags',['../namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330b',1,'Hermes::SChannelCredFlags'],['../namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7',1,'Hermes::SChannelCredFlags']]],
+  ['schcredenum_1',['SChCredEnum',['../namespace_hermes.html#af2d929f81d6b92c79354aee44dd3a8c5',1,'Hermes']]],
+  ['securitybufferenum_2',['SecurityBufferEnum',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196',1,'Hermes']]],
+  ['socketshutdownenum_3',['SocketShutdownEnum',['../namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1',1,'Hermes']]],
+  ['sockettypeenum_4',['SocketTypeEnum',['../namespace_hermes.html#a804025810e605be277a9c534e5790013',1,'Hermes']]],
+  ['supportedprotocolsflags_5',['supportedprotocolsflags',['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6',1,'Hermes::SupportedProtocolsFlags'],['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6',1,'Hermes::SupportedProtocolsFlags']]]
 ];

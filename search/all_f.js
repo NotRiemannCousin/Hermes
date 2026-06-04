@@ -1,20 +1,20 @@
 var searchData=
 [
-  ['padding_0',['Padding',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbaa10443964156b9e87c95e74c8f9baf15',1,'SecurityBufferEnum.hpp']]],
+  ['padding_0',['Padding',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196aa10443964156b9e87c95e74c8f9baf15',1,'Hermes']]],
   ['pattern_1',['pattern',['../struct_hermes_1_1_utils_1_1_until_match_adaptor.html#a391b4346bd31be2869a507679e18fb56',1,'Hermes::Utils::UntilMatchAdaptor']]],
-  ['pct1_2',['Pct1',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459ac4f6bc8cde3227673bf48308239a52b5',1,'SupportedProtocolsFlags.hpp']]],
-  ['pct1client_3',['Pct1Client',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459afcb04277f5136f5b2c18ac013b73cf11',1,'SupportedProtocolsFlags.hpp']]],
-  ['pct1server_4',['Pct1Server',['../_supported_protocols_flags_8hpp.html#a4b496d78b08344230815b162b746b459a9617a5abd8071db95944d8f1f466e5fd',1,'SupportedProtocolsFlags.hpp']]],
+  ['pct1_2',['pct1',['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6ac4f6bc8cde3227673bf48308239a52b5',1,'Hermes::Pct1'],['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6ac4f6bc8cde3227673bf48308239a52b5',1,'Hermes::Pct1']]],
+  ['pct1client_3',['pct1client',['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6afcb04277f5136f5b2c18ac013b73cf11',1,'Hermes::Pct1Client'],['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6afcb04277f5136f5b2c18ac013b73cf11',1,'Hermes::Pct1Client']]],
+  ['pct1server_4',['pct1server',['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a9617a5abd8071db95944d8f1f466e5fd',1,'Hermes::Pct1Server'],['../namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a9617a5abd8071db95944d8f1f466e5fd',1,'Hermes::Pct1Server']]],
   ['pendingdata_5',['pendingData',['../struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597',1,'Hermes::TlsSocketData']]],
-  ['pixi_6',['pixi',['../index.html#autotoc_md25',1,'']]],
-  ['pkgparams_7',['PkgParams',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba3771476a25637324723e6f50a6fdb09f',1,'SecurityBufferEnum.hpp']]],
+  ['pixi_6',['pixi',['../index.html#autotoc_md11',1,'']]],
+  ['pkgparams_7',['PkgParams',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196a3771476a25637324723e6f50a6fdb09f',1,'Hermes']]],
   ['port_8',['port',['../struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e',1,'Hermes::IpEndpointParams']]],
   ['postwork_9',['PostWork',['../class_hermes_1_1_fast_io_loop.html#a73338a16f55c73e3489f4d4ef0e2deef',1,'Hermes::FastIoLoop']]],
-  ['presharedkey_10',['PresharedKey',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bbae7e3214e5c6469d80fe5b22ee774fc0d',1,'SecurityBufferEnum.hpp']]],
-  ['presharedkeyidentity_11',['PresharedKeyIdentity',['../_security_buffer_enum_8hpp.html#a74116f8f45a28b62aeee6413595567bba79bd3d2b50d157ced22b77ac561004b5',1,'SecurityBufferEnum.hpp']]],
-  ['produced_12',['produced',['../struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html#a468e94dedbab45729599f05ff672e3d6',1,'Hermes::_details::TlsSession::HandshakeOutcome::produced'],['../struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html#a437cdcca11e4c7aa93e7a34db05f28d9',1,'Hermes::_details::TlsSession::EncryptOutcome::produced']]],
-  ['promptforcreds_13',['PromptForCreds',['../_initialize_security_context_flags_8hpp.html#ab588894ac2bd76cd365bb97abc3d34cea252216c68b137eadd3b859f5eaba1836',1,'InitializeSecurityContextFlags.hpp']]],
-  ['protocolbasetypeenum_14',['ProtocolBaseTypeEnum',['../_protocol_base_type_enum_8hpp.html#a60c522c7ce02321beb7e6271b0f621b1',1,'ProtocolBaseTypeEnum.hpp']]],
+  ['presharedkey_10',['PresharedKey',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196ae7e3214e5c6469d80fe5b22ee774fc0d',1,'Hermes']]],
+  ['presharedkeyidentity_11',['PresharedKeyIdentity',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196a79bd3d2b50d157ced22b77ac561004b5',1,'Hermes']]],
+  ['produced_12',['produced',['../struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html#a437cdcca11e4c7aa93e7a34db05f28d9',1,'Hermes::_details::TlsSession::EncryptOutcome::produced'],['../struct_hermes_1_1__details_1_1_tls_session_1_1_handshake_outcome.html#a468e94dedbab45729599f05ff672e3d6',1,'Hermes::_details::TlsSession::HandshakeOutcome::produced']]],
+  ['promptforcreds_13',['PromptForCreds',['../namespace_hermes.html#adba4e43edf18b9ed50d8524298c2f69ca252216c68b137eadd3b859f5eaba1836',1,'Hermes']]],
+  ['protocolbasetypeenum_14',['ProtocolBaseTypeEnum',['../namespace_hermes.html#a2aae9cfdb4512653f00d7d928692c445',1,'Hermes']]],
   ['protocolbasetypeenum_2ehpp_15',['ProtocolBaseTypeEnum.hpp',['../_protocol_base_type_enum_8hpp.html',1,'']]],
-  ['proxybindings_16',['proxybindings',['../_accept_security_context_flags_8hpp.html#a0d7d98c069c2809ed9f3d774ad4e8bf8a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextFlags.hpp'],['../_accept_security_context_return_flags_8hpp.html#a819b328c56a1a08175edb14d0a131c60a6f2e036b56fdcd9cd4593a39b98168d8',1,'ProxyBindings:&#160;AcceptSecurityContextReturnFlags.hpp']]]
+  ['proxybindings_16',['proxybindings',['../namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58a6f2e036b56fdcd9cd4593a39b98168d8',1,'Hermes::ProxyBindings'],['../namespace_hermes.html#af1bc721cdf539a4fa545c282663222ada6f2e036b56fdcd9cd4593a39b98168d8',1,'Hermes::ProxyBindings']]]
 ];
