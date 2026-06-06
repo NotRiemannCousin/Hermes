@@ -87,7 +87,11 @@ namespace Hermes {
 
             OperationState(const FastIoLoop* loop, Receiver r);
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept;
+            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+                self._status.context = &self;
+                self._status.callback = S_Callback;
+                self._loop->PostWork(&self._status);
+            }
             static void S_Callback(void* context, size_t bytesTransferred, bool success);
         };
 
