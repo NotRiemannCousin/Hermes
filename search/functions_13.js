@@ -12,6 +12,6 @@ var searchData=
   ['_7eitlstransferstatemachine_9',['~ITlsTransferStateMachine',['../struct_hermes_1_1__details_1_1_i_tls_transfer_state_machine.html#a1dcfee8ff194b4e338a2be8353b2260a',1,'Hermes::_details::ITlsTransferStateMachine']]],
   ['_7elistenersocket_10',['~ListenerSocket',['../struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64',1,'Hermes::ListenerSocket']]],
   ['_7eserversocket_11',['~ServerSocket',['../struct_hermes_1_1_server_socket.html#a781c45312d3017be8a31b206327ae031',1,'Hermes::ServerSocket']]],
-  ['_7etlssession_12',['~TlsSession',['../struct_hermes_1_1__details_1_1_tls_session.html#a50ab04874fe5e3a3f7ee06d1c35b8005',1,'Hermes::_details::TlsSession']]],
+  ['_7etlssession_12',['~TlsSession',['../struct_hermes_1_1__details_1_1_tls_session.html#ad6974be01d66484de975c48dbd1c65a8',1,'Hermes::_details::TlsSession']]],
   ['_7etlssocketdata_13',['~TlsSocketData',['../struct_hermes_1_1_tls_socket_data.html#a3fd567d460ca85dde35276d50a847ce2',1,'Hermes::TlsSocketData']]]
 ];

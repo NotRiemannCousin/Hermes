@@ -1,5 +1,6 @@
 var _connection_error_enum_8hpp =
 [
+    [ "Hermes::ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
     [ "Hermes::TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ],
     [ "ByteData", "_connection_error_enum_8hpp.html#a0832e30628cac84f3f31a6d76a3b29ce", null ],
     [ "ByteDataSpan", "_connection_error_enum_8hpp.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd", null ],
@@ -35,5 +36,6 @@ var _connection_error_enum_8hpp =
       [ "UnsupportedAddressFamily", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ],
       [ "RenegotiationRequired", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ],
       [ "NoScheduler", "_connection_error_enum_8hpp.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc", null ]
-    ] ]
+    ] ],
+    [ "make_error_code", "_connection_error_enum_8hpp.html#a971874a9c463483d2f3258b0f29f4640", null ]
 ];

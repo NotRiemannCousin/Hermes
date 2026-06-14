@@ -161,6 +161,8 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7aed18152e78e2023bec0a086653dd4f" id="r_a7aed18152e78e2023bec0a086653dd4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html#a7aed18152e78e2023bec0a086653dd4f">Accept</a> (<a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">listenData</a>, <a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientData</a>, <a class="el" href="struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html">AcceptOptions</a> options)</td></tr>
 <tr class="separator:a7aed18152e78e2023bec0a086653dd4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a192fe7d1e26e199037d70883454e6027" id="r_a192fe7d1e26e199037d70883454e6027"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html#a192fe7d1e26e199037d70883454e6027">Accept</a> (<a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">listenData</a>, <a class="el" href="struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html">AcceptOptions</a> options)</td></tr>
+<tr class="separator:a192fe7d1e26e199037d70883454e6027"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1ad71d97717bd2752da24110815f19c" id="r_ac1ad71d97717bd2752da24110815f19c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html#ac1ad71d97717bd2752da24110815f19c">Renegotiate</a> (<a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;data)</td></tr>
 <tr class="separator:ac1ad71d97717bd2752da24110815f19c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22581ab7dfc7b77017aadf69cb926b70" id="r_a22581ab7dfc7b77017aadf69cb926b70"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html#a22581ab7dfc7b77017aadf69cb926b70">Shutdown</a> (<a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;data)</td></tr>
@@ -228,8 +230,46 @@ template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
 
 </div>
 </div>
+<a id="a192fe7d1e26e199037d70883454e6027" name="a192fe7d1e26e199037d70883454e6027"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a192fe7d1e26e199037d70883454e6027">&#9670;&#160;</a></span>Accept() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a> <a class="el" href="struct_hermes_1_1_tls_async_accept_policy.html">Hermes::TlsAsyncAcceptPolicy</a>&lt; <a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &gt;::Accept </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> &amp;&#160;</td>
+          <td class="paramname"><em>listenData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html">AcceptOptions</a>&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="a7aed18152e78e2023bec0a086653dd4f" name="a7aed18152e78e2023bec0a086653dd4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7aed18152e78e2023bec0a086653dd4f">&#9670;&#160;</a></span>Accept()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aed18152e78e2023bec0a086653dd4f">&#9670;&#160;</a></span>Accept() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">

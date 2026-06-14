@@ -6,6 +6,7 @@ var namespace_hermes =
     [ "AsyncListenerSocket", "struct_hermes_1_1_async_listener_socket.html", "struct_hermes_1_1_async_listener_socket" ],
     [ "AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html", "struct_hermes_1_1_async_server_socket" ],
     [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
+    [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
     [ "Credentials", "struct_hermes_1_1_credentials.html", "struct_hermes_1_1_credentials" ],
     [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
     [ "DefaultAsyncAcceptPolicy", "struct_hermes_1_1_default_async_accept_policy.html", "struct_hermes_1_1_default_async_accept_policy" ],
@@ -52,12 +53,16 @@ var namespace_hermes =
     [ "ConnectionResult", "namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9", null ],
     [ "ConnectionResultOper", "namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091", null ],
     [ "IoCount", "namespace_hermes.html#a4edf6efc3aa64ceec724e8d0c38244fd", null ],
+    [ "LongIoCount", "namespace_hermes.html#a9ab70aee801e3dea9fec8c9e1b6a0f18", null ],
     [ "RawTcpAsyncClient", "namespace_hermes.html#abddac6999a8395418011d67d9578cae8", null ],
     [ "RawTcpAsyncListener", "namespace_hermes.html#a19c0b7b20a9fb090c94b4c7de3a38ea7", null ],
     [ "RawTcpAsyncServer", "namespace_hermes.html#ae59760afa74220b02585dfc5aab5daa2", null ],
     [ "RawTcpClient", "namespace_hermes.html#a07c1d7f39955400d235a2da6433d0ed4", null ],
     [ "RawTcpListener", "namespace_hermes.html#a10af606e98c70fcda458f4a610867a04", null ],
     [ "RawTcpServer", "namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462", null ],
+    [ "RawTlsAsyncClient", "namespace_hermes.html#ae71bc293e8544c06b0de3ab3dc4cfca8", null ],
+    [ "RawTlsAsyncListener", "namespace_hermes.html#aa44cb60a2fb3679e4c2604b14c0e8706", null ],
+    [ "RawTlsAsyncServer", "namespace_hermes.html#aaa02852435aa754487fccc181f0c1e26", null ],
     [ "RawTlsClient", "namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232", null ],
     [ "SocketFd", "namespace_hermes.html#ad98e18cda370c46945ee9316d4a6422b", null ],
     [ "SocketHandle", "namespace_hermes.html#af417e3e9dd97e00e282076d298a5075c", null ],
@@ -797,5 +802,6 @@ var namespace_hermes =
       [ "XClients", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a7c654ce83e512d58668b970b08463c3c", null ],
       [ "XServers", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a1a5db63873f812ffe1ac464cd28c4c7c", null ]
     ] ],
-    [ "CloseSocket", "namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e", null ]
+    [ "CloseSocket", "namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e", null ],
+    [ "make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ]
 ];

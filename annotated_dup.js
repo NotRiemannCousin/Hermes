@@ -27,6 +27,7 @@ var annotated_dup =
       [ "AsyncListenerSocket", "struct_hermes_1_1_async_listener_socket.html", "struct_hermes_1_1_async_listener_socket" ],
       [ "AsyncServerSocket", "struct_hermes_1_1_async_server_socket.html", "struct_hermes_1_1_async_server_socket" ],
       [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
+      [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
       [ "Credentials", "struct_hermes_1_1_credentials.html", "struct_hermes_1_1_credentials" ],
       [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
       [ "DefaultAsyncAcceptPolicy", "struct_hermes_1_1_default_async_accept_policy.html", "struct_hermes_1_1_default_async_accept_policy" ],

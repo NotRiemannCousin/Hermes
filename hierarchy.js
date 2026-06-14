@@ -43,6 +43,9 @@ var hierarchy =
     [ "Hermes::DefaultTransferPolicy< SocketType >", "struct_hermes_1_1_default_transfer_policy.html", null ],
     [ "Hermes::Utils::DropLastAdaptor", "struct_hermes_1_1_utils_1_1_drop_last_adaptor.html", null ],
     [ "Hermes::_details::TlsSession::EncryptOutcome", "struct_hermes_1_1__details_1_1_tls_session_1_1_encrypt_outcome.html", null ],
+    [ "std::error_category", null, [
+      [ "Hermes::ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", null ]
+    ] ],
     [ "Hermes::FastIoLoop", "class_hermes_1_1_fast_io_loop.html", null ],
     [ "Hermes::FastIoScheduler", "struct_hermes_1_1_fast_io_scheduler.html", null ],
     [ "Hermes::FastIoScheduleSender", "struct_hermes_1_1_fast_io_schedule_sender.html", null ],

@@ -146,8 +146,10 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a927480b54a1bba4ce329afaff537e58c" id="r_a927480b54a1bba4ce329afaff537e58c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919">EncryptStatusEnum</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html#a927480b54a1bba4ce329afaff537e58c">status</a> {}</td></tr>
 <tr class="separator:a927480b54a1bba4ce329afaff537e58c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa31d920c355b33cbc243994222136985" id="r_aa31d920c355b33cbc243994222136985"><td class="memItemLeft" align="right" valign="top">std::span&lt; std::byte &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html#aa31d920c355b33cbc243994222136985">data</a> {}</td></tr>
+<tr class="memdesc:aa31d920c355b33cbc243994222136985"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrypted payload (in-place on Windows; session-owned on Linux)  <br /></td></tr>
 <tr class="separator:aa31d920c355b33cbc243994222136985"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed3828e90ae6176a19617a2a2c3d208b" id="r_aed3828e90ae6176a19617a2a2c3d208b"><td class="memItemLeft" align="right" valign="top">std::span&lt; std::byte &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html#aed3828e90ae6176a19617a2a2c3d208b">extra</a> {}</td></tr>
+<tr class="memdesc:aed3828e90ae6176a19617a2a2c3d208b"><td class="mdescLeft">&#160;</td><td class="mdescRight">unconsumed ciphertext belonging to the next record  <br /></td></tr>
 <tr class="separator:aed3828e90ae6176a19617a2a2c3d208b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -163,6 +165,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>decrypted payload (in-place on Windows; session-owned on Linux) </p>
+
 </div>
 </div>
 <a id="aed3828e90ae6176a19617a2a2c3d208b" name="aed3828e90ae6176a19617a2a2c3d208b"></a>
@@ -176,6 +180,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>unconsumed ciphertext belonging to the next record </p>
 
 </div>
 </div>

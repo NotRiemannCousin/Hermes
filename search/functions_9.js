@@ -20,7 +20,8 @@ var searchData=
   ['ispublic_17',['IsPublic',['../struct_hermes_1_1_ip_address.html#a6e5451439026ef326b648ee034343013',1,'Hermes::IpAddress']]],
   ['isrenegotiation_18',['IsRenegotiation',['../struct_hermes_1_1__details_1_1_tls_session.html#abeb3d4415985b4ea32d429e3514b6a0a',1,'Hermes::_details::TlsSession']]],
   ['isroutable_19',['IsRoutable',['../struct_hermes_1_1_ip_address.html#a35c454e264dead1596e3466e39b22715',1,'Hermes::IpAddress']]],
-  ['issitelocal_20',['IsSiteLocal',['../struct_hermes_1_1_ip_address.html#a7046e29ad0b1bc1c87044a67568b410b',1,'Hermes::IpAddress']]],
-  ['isunspecified_21',['IsUnspecified',['../struct_hermes_1_1_ip_address.html#a90a397c1963921f8538c3798cb54490a',1,'Hermes::IpAddress']]],
-  ['iterator_22',['iterator',['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#a235e42775d79541c965ffdfa4e01fe83',1,'Hermes::Utils::DropLastView::Iterator::Iterator()'],['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a94e7843dd5e851d3c03fec5dbefc2e67',1,'Hermes::Utils::UntilMatchView::Iterator::Iterator()']]]
+  ['isserver_20',['IsServer',['../struct_hermes_1_1__details_1_1_tls_session.html#a2880cf15a7f82c2052101a9b8e7f6542',1,'Hermes::_details::TlsSession']]],
+  ['issitelocal_21',['IsSiteLocal',['../struct_hermes_1_1_ip_address.html#a7046e29ad0b1bc1c87044a67568b410b',1,'Hermes::IpAddress']]],
+  ['isunspecified_22',['IsUnspecified',['../struct_hermes_1_1_ip_address.html#a90a397c1963921f8538c3798cb54490a',1,'Hermes::IpAddress']]],
+  ['iterator_23',['iterator',['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#a235e42775d79541c965ffdfa4e01fe83',1,'Hermes::Utils::DropLastView::Iterator::Iterator()'],['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a94e7843dd5e851d3c03fec5dbefc2e67',1,'Hermes::Utils::UntilMatchView::Iterator::Iterator()']]]
 ];
