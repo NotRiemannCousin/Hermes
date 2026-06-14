@@ -26,3 +26,8 @@ namespace std {
         }
     };
 }
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::IpEndpoint& ep) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", ep);
+    return os;
+}

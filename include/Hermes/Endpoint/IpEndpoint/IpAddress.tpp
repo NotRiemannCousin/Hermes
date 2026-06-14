@@ -35,8 +35,12 @@ namespace std {
         //! @note The order of the args matters, 'f' needs to be before 'b'.
         constexpr auto parse(auto &ctx) {
             auto &&it = ctx.begin();
-            if(it != ctx.end() && *it == 'f') _ipv6Reduced  = true, ++it;
-            if(it != ctx.end() && *it == 'b') _ipv6Brackets = true, ++it;
+            while (it != ctx.end() && *it != '}') {
+                if (*it == 'f') _ipv6Reduced = false;
+                else if (*it == 'b') _ipv6Brackets = true;
+                else throw std::format_error("Invalid format specifier for IpAddress");
+                ++it;
+            }
             return it;
         }
 
@@ -122,3 +126,8 @@ namespace std {
     };
 }
 
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::IpAddress& ip) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", ip);
+    return os;
+}
