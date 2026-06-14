@@ -67,12 +67,13 @@ namespace Hermes::Utils {
     template<rg::viewable_range Range, rg::contiguous_range Pattern, bool Inclusive>
     auto operator|(Range&& r, const UntilMatchAdaptor<Inclusive, Pattern>& adaptor);
 
-
-    // TODO: static_assert(rg::input_range<UntilMatchView<RawInputSocketRange<char>, std::string_view>>);
-
     template<rg::sized_range R1, rg::range R2>
-        requires std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
-    R1 CopyTo(R2& view);
+    requires std::default_initializable<R1> && (
+    std::indirectly_copyable<rg::iterator_t<R2>, rg::iterator_t<R1>>
+    || requires(R1& r, rg::range_reference_t<R2> val) { r.push_back(val); }
+    && std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
+)
+    R1 ExtractTo(R2& view);
 }
 
 #include <Hermes/Utils/UntilMatch.tpp>

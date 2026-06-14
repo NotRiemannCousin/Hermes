@@ -2,9 +2,7 @@
 #include <expected>
 #include <vector>
 #include <span>
-#include <type_traits>
 #include <stdexec/execution.hpp>
-#include <exec/any_sender_of.hpp>
 
 namespace Hermes {
     using ByteData     = std::vector<std::byte>;
@@ -54,6 +52,16 @@ namespace Hermes {
         NoScheduler
     };
 
+    struct ConnectionErrorCategory : std::error_category {
+        [[nodiscard]] const char* name() const noexcept override;
+
+        [[nodiscard]] std::string message(int ev) const override;
+    };
+
+    std::error_code make_error_code(ConnectionErrorEnum e) noexcept;
+
+
+
     template<class T>
     using ConnectionResult = std::expected<T, ConnectionErrorEnum>;
     using ConnectionResultOper = ConnectionResult<std::monostate>;
@@ -68,7 +76,7 @@ namespace Hermes {
         [[nodiscard]] TransferError Substitute(ConnectionErrorEnum err) const noexcept;
     };
     // using TransferResult = std::expected<size_t, TransferError>;
-    // // TODO: change all StreamByteOper occourences to TransferResult
+    // // TODO: change all StreamByteOper occurrences to TransferResult
     // ? ok i think maybe not
 
 #pragma region Async Definitions

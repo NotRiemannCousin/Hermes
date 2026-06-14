@@ -12,18 +12,19 @@ namespace Hermes {
 
         FileReadFailed,
 
+        // SSL
         InvalidPassword,          // ERROR_INVALID_PASSWORD
-        BadCertificateFormat,     // CRYPT_E_BAD_MSG ou ERROR_INVALID_DATA
+        BadCertificateFormat,     // CRYPT_E_BAD_MSG or ERROR_INVALID_DATA
         CertificateNotFound,      // CRYPT_E_NOT_FOUND
-        MissingPrivateKey,        // Retorno válido, mas cert sem propriedade CERT_KEY_PROV_INFO_PROP_ID
+        MissingPrivateKey,        // valid but without CERT_KEY_PROV_INFO_PROP_ID
 
-        // Falhas do Schannel (AcquireCredentialsHandle)
-        SecurityPackageNotFound,  // SEC_E_SECPKG_NOT_FOUND (Schannel não carregado/inexistente)
-        UnknownCredentials,       // SEC_E_UNKNOWN_CREDENTIALS (Geralmente falta de permissão na chave privada)
-        NoCredentials,            // SEC_E_NO_CREDENTIALS (A credencial passada não tem privilégios/não serve)
+        // SCHANNEL
+        SecurityPackageNotFound,  // SEC_E_SECPKG_NOT_FOUND
+        UnknownCredentials,       // SEC_E_UNKNOWN_CREDENTIALS
+        NoCredentials,            // SEC_E_NO_CREDENTIALS
         InsufficientMemory,       // SEC_E_INSUFFICIENT_MEMORY
-        InternalError,            // SEC_E_INTERNAL_ERROR (Falha no LSA ou subsistema de crypto do Windows)
-        UnsupportedFunction,      // SEC_E_UNSUPPORTED_FUNCTION (Ex: pedindo protocolo desativado no Registry)
+        InternalError,            // SEC_E_INTERNAL_ERROR
+        UnsupportedFunction,      // SEC_E_UNSUPPORTED_FUNCTION
 
         Unknown
     };

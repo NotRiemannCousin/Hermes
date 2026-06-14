@@ -18,102 +18,88 @@ namespace vs = std::views;
 // structures (like `ClientState` using `std::shared_ptr`) because local variables safely
 // outlive the suspension points (`co_await`).
 
-exec::task<std::expected<std::string, std::string>> MakeRequestAsync(Hermes::FastIoLoop& ioLoop) {
+extern exec::task<ExpString> MakeRequestAsync(Hermes::FastIoLoop& ioLoop) try {
     using namespace std::literals::string_view_literals;
 
-    try {
-        // 1. Resolve the target endpoint.
-        auto res{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
-        if (!res) throw res.error();
+    // 1. Resolve the target endpoint.
+    auto res{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
+    if (!res) throw res.error();
 
-        const auto& endpoint{ *res };
+    const auto& endpoint{ *res };
 
-        // 2. Establish the asynchronous connection.
-        // The coroutine suspends here until the TCP handshake and TLS negotiation are complete.
-        auto client{ co_await Hermes::RawTlsAsyncClient::Connect(
-            Hermes::TlsSocketData<>{ endpoint, url.hostname },
-            {{ .recvBufferSize = 8192, .scheduler = &ioLoop }}
-        ) };
+    // 2. Establish the asynchronous connection.
+    // The coroutine suspends here until the TCP handshake and TLS negotiation are complete.
+    auto client{ co_await Hermes::RawTlsAsyncClient::Connect(
+        Hermes::TlsSocketData<>{ endpoint, url.hostname },
+        {{ .recvBufferSize = 8192, .scheduler = &ioLoop }}
+    ) };
 
-        // 3. Format and send the HTTP request.
-        co_await client.Send(url.FormatRequest());
+    // 3. Format and send the HTTP request.
+    co_await client.Send(url.FormatRequest());
 
-        // 4. Receive the initial response chunk.
-        // We read up to 8192 bytes. This usually covers the HTTP headers and the beginning of the body.
-        std::array<char, 8192> chunk{};
-        const size_t bytesReceived{ co_await client.Recv(chunk, Hermes::RecvModeEnum::Any) };
+    // 4. Receive the initial response chunk.
+    // We read up to 8192 bytes. This usually covers the HTTP headers and the beginning of the body.
+    std::array<char, 8192> chunk{};
+    const size_t bytesReceived{ co_await client.Recv(chunk, Hermes::RecvModeEnum::Any) };
 
-        if (bytesReceived == 0)
-            co_return std::unexpected{ "Connection Closed" };
+    if (bytesReceived == 0)
+        co_return std::unexpected{ "Connection Closed" };
 
-        std::string response{};
-        response.append(chunk.data(), bytesReceived);
-        const std::string& socketView{ response };
+    std::string response{};
+    response.append(chunk.data(), bytesReceived);
+    const std::string& socketView{ response };
 
-        // Validate HTTP version
-        if (!socketView.starts_with("HTTP/1.1"sv))
-            throw std::string{ "Non supported version" };
+    // Validate HTTP version
+    if (!socketView.starts_with("HTTP/1.1"sv))
+        throw std::string{ "Non supported version" };
 
-        const auto headerEnd{ socketView.find("\r\n\r\n") };
-        if (headerEnd == std::string::npos)
-            throw std::string{ "Error receiving complete message or incomplete headers" };
+    const auto headerEnd{ socketView.find("\r\n\r\n") };
+    if (headerEnd == std::string::npos)
+        throw std::string{ "Error receiving complete message or incomplete headers" };
 
-        std::string_view headers{ socketView.data(), headerEnd };
-        std::string_view body{ socketView.data() + headerEnd + 4, socketView.size() - headerEnd - 4 };
+    std::string_view headers{ socketView.data(), headerEnd };
+    std::string_view body{ socketView.data() + headerEnd + 4, socketView.size() - headerEnd - 4 };
 
-        // Decode the chunked transfer size (hexadecimal).
-        size_t bodySize{};
-        const auto [ptr, err]{ std::from_chars(body.data(), body.data() + body.size(), bodySize, 16) };
+    // Decode the chunked transfer size (hexadecimal).
+    size_t bodySize{};
+    const auto [ptr, err]{ std::from_chars(body.data(), body.data() + body.size(), bodySize, 16) };
 
-        body.remove_prefix(ptr - body.data());
+    body.remove_prefix(ptr - body.data());
 
-        if (err != std::errc{} || !body.starts_with("\r\n"))
-            throw std::string{ "Invalid body size" };
+    if (err != std::errc{} || !body.starts_with("\r\n"))
+        throw std::string{ "Invalid body size" };
 
-        body.remove_prefix(2);
+    body.remove_prefix(2);
 
-        if (headers.size() < 12 || headers.substr(9, 3) != "200") {
-            const auto statusCode{ headers.size() >= 12 ? headers.substr(9, 3) : "UNK" };
-            throw std::format("error code: {}", statusCode);
-        }
-
-        // Save the first chunk of the body before resizing the main response buffer.
-        std::string finalBody{ body };
-
-        // 5. Receive the remainder of the payload.
-        // RecvModeEnum::All ensures the socket keeps reading until the exact requested size is met.
-        response.resize(bodySize - body.size());
-        co_await client.Recv(response, Hermes::RecvModeEnum::All);
-
-        finalBody += response;
-
-        // Return the successfully extracted body.
-        co_return finalBody;
+    if (headers.size() < 12 || headers.substr(9, 3) != "200") {
+        const auto statusCode{ headers.size() >= 12 ? headers.substr(9, 3) : "UNK" };
+        throw std::format("error code: {}", statusCode);
     }
-    // Native try-catch blocks replace the `let_error` pipeline mapping, unwinding
-    // stdexec errors into standard exception scopes.
-    // (Yeah a really didn't like it but this is the default for stdexec I guess).
-    catch (const Hermes::ConnectionErrorEnum& e) {
-        co_return std::unexpected{ MapHermesError(e) };
-    }
-    catch (const Hermes::TransferError& e) {
-        co_return std::unexpected{ std::format("Transfer error: {}, {} sent/received", e.error, e.bytesTransferred) };
-    }
-    catch (const std::string& s) {
-        co_return std::unexpected{ s };
-    }
-    catch (const char* s) {
-        co_return std::unexpected{ s };
-    }
-    catch (const std::exception& e) {
-        co_return std::unexpected{ e.what() };
-    }
-    catch (...) {
-        co_return std::unexpected{ "unknown exception" };
-    }
+
+    // Save the first chunk of the body before resizing the main response buffer.
+    std::string finalBody{ body };
+    finalBody.resize(bodySize);
+
+    // 5. Receive the remainder of the payload.
+    // RecvModeEnum::All ensures the socket keeps reading until the exact requested size is met.
+    if (body.size() < bodySize)
+        co_await client.Recv(finalBody | vs::drop(body.size()), Hermes::RecvModeEnum::All);
+
+    // Return the successfully extracted body.
+    co_return finalBody;
 }
+// Native try-catch blocks replace the `let_error` pipeline mapping, unwinding
+// stdexec errors into standard exception scopes.
+// (Yeah I really didn't like it but this is the default for stdexec).
+catch (const Hermes::ConnectionErrorEnum& e) { co_return std::unexpected{ std::format("{}", e) }; }
+catch (const Hermes::TransferError& e) { co_return std::unexpected{ std::format("{}", e) }; }
+catch (const std::string&           s) { co_return std::unexpected{ s }; }
+catch (const char*                  s) { co_return std::unexpected{ s }; }
+catch (const std::exception&        e) { co_return std::unexpected{ e.what() }; }
+catch (...) { co_return std::unexpected{ "unknown exception" }; }
 
-std::expected<std::string, std::string> MakeRequest() {
+
+extern ExpString MakeRequest() {
     // Synchronize and extract the value from the tuple returned by stdexec::sync_wait.
 
     Hermes::FastIoLoop loop{ 1 };

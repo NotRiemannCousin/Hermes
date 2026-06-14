@@ -1,10 +1,8 @@
 #pragma once
 #include <Hermes/Socket/Async/_base/Connection/DefaultAsyncConnectPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.hpp>
-#ifdef _WIN32
 #include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.hpp>
-#endif
 
 #include <stdexec/execution.hpp>
 #include <ranges>
@@ -60,9 +58,7 @@ namespace Hermes {
 
 
     using RawTcpAsyncClient = AsyncClientSocket<>;
-#ifdef _WIN32
     using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
-#endif
     // using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }
 

@@ -1,7 +1,7 @@
 #pragma once
 #include <Hermes/Socket/_base.hpp>
-#include <Hermes/_base/OsApi/OsApi.hpp>
 #include <Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp>
+#include <Hermes/Socket/_base/TlsSession.hpp>
 
 namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
@@ -55,8 +55,7 @@ namespace Hermes::_details {
         size_t _encryptedSize{};
         size_t _sentBytes{};
 
-        SECURITY_STATUS _status{};
-        std::array<SecBuffer, 4> _secBuffers{};
+        EncryptStatusEnum _status{};
 
         // Recv Branch
         TransferStateOpResult _RecvSetupState(Data &data);
@@ -73,8 +72,6 @@ namespace Hermes::_details {
         // Endings
         TransferStateOpResult _ErrorState(Data &data);
         TransferStateOpResult _DoneState(Data &data);
-
-        static constexpr bool S_HasData(const SecBuffer& buffer) noexcept;
     };
 }
 

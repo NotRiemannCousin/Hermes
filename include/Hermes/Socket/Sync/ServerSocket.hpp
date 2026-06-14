@@ -1,10 +1,9 @@
 #pragma once
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp>
-#ifdef _WIN32
 #include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp>
-#endif
+
 
 #include <ranges>
 

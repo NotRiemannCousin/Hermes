@@ -41,6 +41,7 @@ add_library(Hermes
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
         src/Hermes/_base/Credentials.cpp
         src/Hermes/Socket/_base/TlsSession.cpp
+        src/Hermes/_base/ConnectionErrorEnum.cpp
 )
 
 target_include_directories(Hermes PUBLIC

@@ -1,29 +1,25 @@
+// ReSharper disable CppDefaultCaseNotHandledInSwitchStatement
+// ReSharper disable CppPassValueParameterByConstReference
 #pragma once
 #include <format>
 
-namespace Hermes {
-    inline TransferError TransferError::Accumulate(const TransferError other) const noexcept {
-        return { bytesTransferred + other.bytesTransferred, other.error };
-    }
-
-    inline TransferError TransferError::Substitute(const ConnectionErrorEnum err) const noexcept {
-        return { bytesTransferred, err };
-    }
-}
 
 namespace std {
     template <>
-    struct formatter<Hermes::ConnectionErrorEnum> {
-        bool isVerbose = false;
+    struct is_error_code_enum<Hermes::ConnectionErrorEnum> : true_type {};
 
-        constexpr auto parse(std::format_parse_context& ctx) {
+    template <>
+    struct formatter<Hermes::ConnectionErrorEnum> {
+        bool isVerbose{};
+
+        constexpr auto parse(const std::format_parse_context& ctx) {
             auto it{ ctx.begin() };
             if (it != ctx.end() && *it == 'v') {
                 isVerbose = true;
                 ++it;
             }
             if (it != ctx.end() && *it != '}')
-                throw std::format_error("Invalid option for ConnectionErrorEnum");
+                throw std::format_error{ "Invalid option for ConnectionErrorEnum" };
 
             return it;
         }
@@ -84,6 +80,10 @@ namespace std {
                         return std::format_to(ctx.out(), "Resolve no address found: Valid host but no IP associated.");
                     case Hermes::ConnectionErrorEnum::UnsupportedAddressFamily:
                         return std::format_to(ctx.out(), "Unsupported address family: Address family not supported.");
+                    case Hermes::ConnectionErrorEnum::RenegotiationRequired:
+                        return std::format_to(ctx.out(), "Renegotiation required: Try do the handshake again");
+                    case Hermes::ConnectionErrorEnum::NoScheduler:
+                        return std::format_to(ctx.out(), "No scheduler: No scheduler was assigned");
                 }
             } else {
                 switch (error) {
@@ -139,10 +139,56 @@ namespace std {
                         return std::format_to(ctx.out(), "Resolve no address found");
                     case Hermes::ConnectionErrorEnum::UnsupportedAddressFamily:
                         return std::format_to(ctx.out(), "Unsupported address family");
+                    case Hermes::ConnectionErrorEnum::RenegotiationRequired:
+                        return std::format_to(ctx.out(), "Renegotiation required");
+                    case Hermes::ConnectionErrorEnum::NoScheduler:
+                        return std::format_to(ctx.out(), "No scheduler");
                 }
             }
+            // TODO: Implement with reflection when it arrives at MSVC
 
             return std::format_to(ctx.out(), "Unknown");
         }
     };
+
+    template <>
+    struct formatter<Hermes::StreamByteOper> {
+        static constexpr auto parse(const std::format_parse_context& ctx) { return ctx.begin(); }
+
+        template<class FormatContext>
+        auto format(const Hermes::StreamByteOper oper, FormatContext &ctx) const {
+            if (!oper.second)
+                return std::format_to(ctx.out(), "({} bytes transferred with no error)", oper.first);
+            return std::format_to(ctx.out(), "({} bytes transferred, {})", oper.first, oper.second.error());
+        }
+    };
+
+
+    template <>
+    struct formatter<Hermes::TransferError> {
+        static constexpr auto parse(const std::format_parse_context& ctx) { return ctx.begin(); }
+
+        template<class FormatContext>
+        auto format(const Hermes::TransferError error, FormatContext &ctx) const {
+            return std::format_to(ctx.out(),
+                "Transfer error: {} ({} bytes transferred)", error.bytesTransferred, error.error);
+        }
+    };
+
+
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::ConnectionErrorEnum err) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", err);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::TransferError err) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", err);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::StreamByteOper err) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", err);
+    return os;
 }

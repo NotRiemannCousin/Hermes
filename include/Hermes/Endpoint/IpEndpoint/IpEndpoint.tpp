@@ -3,7 +3,7 @@
 #include <string>
 
 namespace std {
-    template<>
+    template <>
     struct hash<Hermes::IpEndpoint> {
         size_t operator()(const Hermes::IpEndpoint &endpoint) const noexcept {
             size_t result{ std::hash<Hermes::IpAddress>{}(endpoint._ip) };
@@ -14,7 +14,7 @@ namespace std {
         }
     };
 
-    template<>
+    template <>
     struct formatter<Hermes::IpEndpoint> {
         using Endpoint = Hermes::IpEndpoint;
 

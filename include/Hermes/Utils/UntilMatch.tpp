@@ -1,7 +1,8 @@
 #pragma once
 #include <algorithm>
 
-namespace Hermes::Utils {
+namespace Hermes::Utils
+{
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::Iterator(UntilMatchView *parent)
@@ -132,21 +133,19 @@ namespace Hermes::Utils {
                 std::forward<Range>(r), adaptor.pattern);
     }
 
+    template <rg::sized_range R1, rg::range R2>
+    requires std::default_initializable<R1> && (
+        std::indirectly_copyable<rg::iterator_t<R2>, rg::iterator_t<R1>>
+        || requires(R1& r, rg::range_reference_t<R2> val) { r.push_back(val); }
+        && std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
+    )
+    R1 ExtractTo(R2& view) {
+        R1 out{};
 
-    template<rg::sized_range R1, rg::range R2>
-        requires std::indirectly_copyable<rg::iterator_t<R2>, std::back_insert_iterator<R1>>
-    R1 CopyTo(R2& view) {
-        R1 res;
-        auto it1{ rg::begin(res) };
-        auto it2{ rg::cbegin(view) };
+        if constexpr (requires { out.push_back(*rg::begin(view)); })
+            rg::copy(view, std::back_inserter(out));
+        else
+            rg::copy(view | vs::take(out.size()), rg::begin(out));
 
-        const auto end1{ rg::end(res) };
-        const auto end2{ rg::cend(view) };
-
-
-        for (; it1 != end1 && it2 != end2; ++it1, ++it2)
-            *it1 = *it2;
-
-        return res;
-    }
-}
+        return out;
+    }}

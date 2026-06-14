@@ -1,9 +1,8 @@
+// ReSharper disable CppPassValueParameterByConstReference
 #include <Hermes/_base/Credentials.hpp>
 
 #include <utility>
 #include <fstream>
-#include <functional>
-#include <iostream>
 #include <ranges>
 #include <vector>
 #include <string>
@@ -241,14 +240,13 @@ namespace Hermes {
 
 }
 
-#else // !_WIN32  --- OpenSSL backend ---
+#else
 
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #include <openssl/pkcs12.h>
 #include <openssl/bio.h>
 #include <openssl/x509.h>
-#include <openssl/x509v3.h>
 
 
 // Convert a (possibly UTF-32 on Linux) wchar_t string into UTF-8 so it can be
@@ -303,13 +301,15 @@ static Hermes::CredentialErrorEnum S_MapOpenSSLError() noexcept {
 }
 
 
-// Bag of OpenSSL objects extracted from a PKCS#12 blob; ownership is moved into
-// the SSL_CTX or freed by the Impl destructor when present.
-struct CertificateInfo {
-    X509*           cert;     // leaf certificate
-    EVP_PKEY*       pkey;     // private key (may be nullptr if cert-only PFX)
-    STACK_OF(X509)* caChain;  // additional CA certificates (may be nullptr)
-};
+namespace {
+    // Bag of OpenSSL objects extracted from a PKCS#12 blob; ownership is moved into
+    // the SSL_CTX or freed by the Impl destructor when present.
+    struct CertificateInfo {
+        X509*           cert;     // leaf certificate
+        EVP_PKEY*       pkey;     // private key (may be nullptr if cert-only PFX)
+        STACK_OF(X509)* caChain;  // additional CA certificates (may be nullptr)
+    };
+}
 
 static std::expected<CertificateInfo, Hermes::CredentialErrorEnum> ImportCertificate(
     const std::span<const std::byte> certBuffer, const wchar_t* password) noexcept {
@@ -535,12 +535,12 @@ namespace Hermes {
 
 }
 
-#endif // _WIN32
+#endif
 
 
 namespace Hermes {
 
-    Credentials::Credentials() noexcept : _impl(std::make_unique<Impl>()) {}
+    Credentials::Credentials() noexcept : _impl{ std::make_unique<Impl>() } {}
 
     Credentials::Credentials(Credentials&& other) noexcept = default;
     Credentials& Credentials::operator=(Credentials&& other) noexcept = default;

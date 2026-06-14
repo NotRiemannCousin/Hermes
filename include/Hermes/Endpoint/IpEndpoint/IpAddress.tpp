@@ -1,3 +1,4 @@
+// ReSharper disable CppPassValueParameterByConstReference
 #pragma once
 #include <Hermes/Utils/Hash.hpp>
 #include <format>
@@ -7,9 +8,8 @@
 #include <Hermes/Utils/Overloads.hpp>
 
 namespace std {
-    template<>
+    template <>
     struct hash<Hermes::IpAddress> {
-        // ReSharper disable once CppPassValueParameterByConstReference
         size_t operator()(const Hermes::IpAddress ip) const noexcept {
             return std::visit([](const auto data) {
                 size_t result{};
@@ -22,7 +22,7 @@ namespace std {
         }
     };
 
-    template<>
+    template <>
     struct formatter<Hermes::IpAddress> {
         using IpAddress = Hermes::IpAddress;
 

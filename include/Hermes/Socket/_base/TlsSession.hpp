@@ -1,10 +1,8 @@
 #pragma once
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <cstddef>
-#include <cstdint>
 #include <memory>
 #include <span>
-#include <string_view>
 
 namespace Hermes {
     struct Credentials;
@@ -19,6 +17,9 @@ namespace Hermes::_details {
     //! Status codes follow the existing EncryptStatusEnum so the switch logic in
     //! the state machines is identical on both platforms.
     struct TlsSession {
+
+#pragma region Struct Definitions
+
         struct StreamSizes {
             std::uint32_t header{};
             std::uint32_t trailer{};
@@ -27,8 +28,10 @@ namespace Hermes::_details {
 
         struct HandshakeOutcome {
             EncryptStatusEnum status{};
-            std::uint32_t     consumed{}; // bytes consumed from inBytes
-            std::uint32_t     produced{}; // bytes written into outBuf
+            //! bytes consumed from inBytes
+            std::uint32_t     consumed{};
+            //! bytes written into outBuf
+            std::uint32_t     produced{};
         };
 
         struct EncryptOutcome {
@@ -38,13 +41,17 @@ namespace Hermes::_details {
 
         struct DecryptOutcome {
             EncryptStatusEnum    status{};
-            std::span<std::byte> data{};  // decrypted payload (in-place on Windows; session-owned on Linux)
-            std::span<std::byte> extra{}; // unconsumed ciphertext belonging to the next record
+            //! decrypted payload (in-place on Windows; session-owned on Linux)
+            std::span<std::byte> data{};
+            //! unconsumed ciphertext belonging to the next record
+            std::span<std::byte> extra{};
         };
+
+#pragma endregion
 
 
         TlsSession();
-        ~TlsSession();
+        ~TlsSession() noexcept;
 
         TlsSession(const TlsSession&)            = delete;
         TlsSession& operator=(const TlsSession&) = delete;
@@ -55,15 +62,19 @@ namespace Hermes::_details {
 
         //! Initialize as a client. Calling Begin* on an already-active session is
         //! treated as a renegotiation on the existing context.
-        void BeginClient(const Credentials& creds, std::string_view host,
-                         bool ignoreCertErrors, bool mutualAuth) noexcept;
+        void BeginClient(const Credentials& creds, std::string host,
+                         bool ignoreCertErrors, bool mutualAuth) const noexcept;
 
-        void BeginServer(const Credentials& creds, bool requestClientCert) noexcept;
+        void BeginServer(const Credentials& creds, bool requestClientCert) const noexcept;
 
 
-        bool IsActive()            const noexcept;
-        bool IsHandshakeComplete() const noexcept;
-        bool IsRenegotiation()     const noexcept;
+        [[nodiscard]] TlsSession MakeChild() const;
+
+
+        [[nodiscard]] bool IsServer()            const noexcept;
+        [[nodiscard]] bool IsActive()            const noexcept;
+        [[nodiscard]] bool IsHandshakeComplete() const noexcept;
+        [[nodiscard]] bool IsRenegotiation()     const noexcept;
 
         //! Drive one handshake step. May consume part/all of inBytes; may produce
         //! zero or more bytes in outBuf. Caller is responsible for sending the
@@ -71,27 +82,27 @@ namespace Hermes::_details {
         HandshakeOutcome AdvanceHandshake(
             std::span<std::byte> inBytes,
             std::span<std::byte> outBuf
-        ) noexcept;
+        ) const noexcept;
 
         //! Valid only after IsHandshakeComplete() is true.
-        StreamSizes GetStreamSizes() const noexcept;
+        [[nodiscard]] StreamSizes GetStreamSizes() const noexcept;
 
         //! Encrypt one record. outBuf must be at least
         //! `GetStreamSizes().header + plain.size() + GetStreamSizes().trailer` bytes.
         EncryptOutcome Encrypt(
             std::span<const std::byte> plain,
             std::span<std::byte>       outBuf
-        ) noexcept;
+        ) const noexcept;
 
         //! Decrypt from inBytes. `data` is the decrypted payload, `extra` is any
         //! trailing ciphertext that belongs to the next record.
-        DecryptOutcome Decrypt(std::span<std::byte> inBytes) noexcept;
+        DecryptOutcome Decrypt(std::span<std::byte> inBytes) const noexcept;
 
         //! Initiate close_notify. Returns the byte count written to outBuf.
-        std::uint32_t Shutdown(std::span<std::byte> outBuf) noexcept;
+        std::uint32_t Shutdown(std::span<std::byte> outBuf) const noexcept;
 
         //! Tear down the TLS context; session becomes inactive but the object remains valid.
-        void DeleteContext() noexcept;
+        void DeleteContext() const noexcept;
 
     private:
         struct Impl;

@@ -1,6 +1,11 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
 
+#ifndef _WIN32
+#include <fcntl.h>
+#include <netinet/tcp.h>
+#endif
+
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     template<SocketDataConcept Data>

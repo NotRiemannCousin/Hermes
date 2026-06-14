@@ -1,5 +1,4 @@
 #include <Hermes/_base/Network.hpp>
-#include <Hermes/_base/OsApi/OsApi.hpp>
 #include <stdexcept>
 
 #ifdef _WIN32
@@ -12,39 +11,39 @@
 #include <openssl/err.h>
 #endif
 
+namespace {
+#ifdef _WIN32
+    struct WsaLifecycle {
+        WsaLifecycle() {
+            WSADATA wsaData;
+            if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+                throw std::runtime_error{ "WSAStartup failed" };
+        }
+
+        ~WsaLifecycle() {
+            WSACleanup();
+        }
+    };
+
+    using AuthServerLifecycle = WsaLifecycle;
+#else
+
+    struct OpenSllLifecycle {
+        OpenSllLifecycle() {
+            // OPENSSL_init_ssl is idempotent (1.1+) and threads-safe; loads
+            // default config + error strings so OpenSSL is ready to use.
+            if (OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS
+                                 | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, nullptr) != 1)
+                throw std::runtime_error{ "OPENSSL_init_ssl failed" };
+        }
+    };
+
+    using AuthServerLifecycle = OpenSllLifecycle;
+#endif
+}
 namespace Hermes {
-    namespace Detail {
-#ifdef _WIN32
-        struct WsaLifecycle {
-            WsaLifecycle() {
-                WSADATA wsaData;
-                if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
-                    throw std::runtime_error("WSAStartup failed");
-            }
-
-            ~WsaLifecycle() {
-                WSACleanup();
-            }
-        };
-#else
-        struct OpenSSLLifecycle {
-            OpenSSLLifecycle() {
-                // OPENSSL_init_ssl is idempotent (1.1+) and threads-safe; loads
-                // default config + error strings so OpenSSL is ready to use.
-                if (OPENSSL_init_ssl(OPENSSL_INIT_LOAD_SSL_STRINGS
-                                   | OPENSSL_INIT_LOAD_CRYPTO_STRINGS, nullptr) != 1)
-                    throw std::runtime_error("OPENSSL_init_ssl failed");
-            }
-        };
-#endif
-    }
-
     void Network::Initialize() {
-#ifdef _WIN32
-        static Detail::WsaLifecycle globalWsa;
-#else
-        static Detail::OpenSSLLifecycle globalSsl;
-#endif
+        [[maybe_unused]] static AuthServerLifecycle globalAuth;
     }
 
     const Credentials& Network::GetClientCredentials() {

@@ -62,7 +62,7 @@ namespace Hermes {
     };
 
     using RawTcpAsyncListener = AsyncListenerSocket<>;
-    // using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 
 }
 

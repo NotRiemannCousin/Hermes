@@ -1,6 +1,5 @@
 #include <Hermes/Endpoint/IpEndpoint/IpAddress.hpp>
 #include <Hermes/_base/Network.hpp>
-#include <algorithm>
 #include <cstring>
 #include <bit>
 
@@ -198,7 +197,7 @@ bool IpAddress::IsSiteLocal() const noexcept {
 bool IpAddress::IsIpv4Mapped() const noexcept {
     return std::visit(
         Utils::Overloaded{
-            [](const Ipv4Type _   ) { return false; },
+            [](const Ipv4Type     ) { return false; },
             [](const Ipv6Type ipv6) {
                 for (int i{}; i < 10; ++i)
                     if (ipv6[i] != 0) return false;

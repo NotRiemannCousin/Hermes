@@ -1,6 +1,5 @@
 // ReSharper disable CppRedundantTypenameKeyword
 #pragma once
-#include <Hermes/_base/Network.hpp>
 
 #pragma push_macro("NEXT")
 #pragma push_macro("AWAIT")
@@ -20,12 +19,7 @@
 namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
-    constexpr bool TlsTransferStateMachine<Data, TransferPolicy>::S_HasData(const SecBuffer& buffer) noexcept {
-        return buffer.cbBuffer > 0;
-    }
-
-    template<SocketDataConcept Data, class TransferPolicy>
-    typename TlsTransferStateMachine<Data, TransferPolicy>::TlsTransferState 
+    typename TlsTransferStateMachine<Data, TransferPolicy>::TlsTransferState
     TlsTransferStateMachine<Data, TransferPolicy>::GetState() const noexcept {
         return _state;
     }
@@ -37,7 +31,8 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     bool TlsTransferStateMachine<Data, TransferPolicy>::IsFinished() const noexcept {
-        return _state == &TlsTransferStateMachine::_DoneState || _state == &TlsTransferStateMachine::_ErrorState;
+        return _state == &TlsTransferStateMachine::_DoneState ||
+        _state == &TlsTransferStateMachine::_ErrorState;
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
@@ -96,7 +91,7 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::_RecvSetupState(Data &data) {
-        if (!data.isHandshakeComplete) {
+        if (!data.session.IsHandshakeComplete()) {
             _errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
             NEXT(Error);
         }
@@ -110,20 +105,44 @@ namespace Hermes::_details {
         auto& extraSpan{ data.state->decryptedExtraSpan };
 
         if (!dataSpan.empty()) {
-            _status = _tul(EncryptStatusEnum::ErrOk);
-            NEXT(RecvProcessNetwork);
+            const size_t countToCopy{ (std::min)(_userRecvBuffer.size(), dataSpan.size()) };
+            std::memmove(_userRecvBuffer.data(), dataSpan.data(), countToCopy);
+
+            _userRecvBuffer = _userRecvBuffer.subspan(countToCopy);
+            dataSpan = dataSpan.subspan(countToCopy);
+            _totalTransferred += countToCopy;
+
+            if (!dataSpan.empty()) {
+                std::memmove(data.state->decryptedData.data(), dataSpan.data(), dataSpan.size());
+                dataSpan = { data.state->decryptedData.data(), dataSpan.size() };
+
+                if (!extraSpan.empty()) {
+                    std::memmove(data.state->decryptedData.data() + dataSpan.size(), extraSpan.data(), extraSpan.size());
+                    extraSpan = { data.state->decryptedData.data() + dataSpan.size(), extraSpan.size() };
+                }
+                NEXT(Done);
+            }
+
+            if (_userRecvBuffer.empty() || _recvMode == RecvModeEnum::Any) {
+                if (!extraSpan.empty()) {
+                    std::memmove(data.state->decryptedData.data(), extraSpan.data(), extraSpan.size());
+                    extraSpan = { data.state->decryptedData.data(), extraSpan.size() };
+                }
+                NEXT(Done);
+            }
         }
 
-        if (!extraSpan.empty() && _status != _tul(EncryptStatusEnum::ErrIncompleteMessage)) {
-            std::swap(dataSpan, extraSpan);
-            _currReceived = dataSpan.size();
-            NEXT(RecvProcessNetwork);
+        if (!extraSpan.empty()) {
+            std::memmove(data.state->decryptedData.data(), extraSpan.data(), extraSpan.size());
+            dataSpan = { data.state->decryptedData.data(), extraSpan.size() };
+            extraSpan = {};
+            NEXT(RecvDecrypt);
         }
 
         if constexpr (IsAsync())
             AWAIT(RecvProcessNetwork, Recv);
         else {
-            _currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data() + extraSpan.size()), static_cast<int>(data.state->decryptedData.size() - extraSpan.size()), 0);
+            _currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data()), static_cast<int>(data.state->decryptedData.size()), 0);
             NEXT(RecvProcessNetwork);
         }
     }
@@ -141,16 +160,8 @@ namespace Hermes::_details {
         }
 
         auto& extraSpan{ data.state->decryptedExtraSpan };
-        auto& decryptedData{ data.state->decryptedData };
-
-        data.state->decryptedDataSpan = std::span<std::byte>{ decryptedData.data(), extraSpan.size() + _currReceived };
+        data.state->decryptedDataSpan = std::span<std::byte>{ data.state->decryptedData.data(), extraSpan.size() + _currReceived };
         extraSpan = {};
-
-        _secBuffers[0] = { _tul(data.state->decryptedDataSpan.size()), _tul(SecurityBufferEnum::Data), data.state->decryptedDataSpan.data() };
-        _secBuffers[1] = _secBuffers[2] = _secBuffers[3] = { 0, _tul(SecurityBufferEnum::Empty), nullptr };
-
-        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, _secBuffers.data() };
-        _status = DecryptMessage(&data.ctxtHandle, &buffDesc, 0, nullptr);
 
         NEXT(RecvDecrypt);
     }
@@ -158,81 +169,40 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::_RecvDecryptState(Data &data) {
-        auto& dataSpan{ data.state->decryptedDataSpan };
-        auto& extraSpan{ data.state->decryptedExtraSpan };
-        auto& decryptedData{ data.state->decryptedData };
+        auto outcome = data.session.Decrypt(data.state->decryptedDataSpan);
+        _status = outcome.status;
 
-        switch (static_cast<EncryptStatusEnum>(_status)) {
-            case EncryptStatusEnum::ErrOk: {
-                if (dataSpan.empty() || _secBuffers[0].BufferType != _tul(SecurityBufferEnum::Data)) {
-                    const auto dataBuffer{ std::ranges::find(_secBuffers, _tul(SecurityBufferEnum::Data), &SecBuffer::BufferType) };
-                    const auto extraBuffer{ std::ranges::find(_secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
+        data.state->decryptedDataSpan = outcome.data;
+        data.state->decryptedExtraSpan = outcome.extra;
 
-                    if (dataBuffer == _secBuffers.end()) {
-                        _errorStatus = std::unexpected{ ConnectionErrorEnum::Unknown };
-                        NEXT(Error);
-                    }
-
-                    dataSpan = { static_cast<std::byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer };
-
-                    if (extraBuffer != _secBuffers.end() && S_HasData(*extraBuffer))
-                        extraSpan = { static_cast<std::byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
-                    else
-                        extraSpan = { decryptedData.data(), 0 };
-
-                    if (!S_HasData(*dataBuffer)) NEXT(RecvCheckPending);
-                }
-
-                const size_t countToCopy{ (std::min)(_userRecvBuffer.size(), dataSpan.size()) };
-                std::memmove(_userRecvBuffer.data(), dataSpan.data(), countToCopy);
-
-                _userRecvBuffer = _userRecvBuffer.subspan(countToCopy);
-                dataSpan = dataSpan.subspan(countToCopy);
-                _totalTransferred += countToCopy;
-
-                if (dataSpan.empty() && !extraSpan.empty()) {
-                    std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
-                    extraSpan = { decryptedData.data(), extraSpan.size() };
-                }
-
-                if (_userRecvBuffer.empty() || _recvMode == RecvModeEnum::Any) NEXT(Done);
+        switch (_status) {
+            case EncryptStatusEnum::ErrOk:
                 NEXT(RecvCheckPending);
-            }
+
             case EncryptStatusEnum::ErrIncompleteMessage: {
-                const auto extraBuffer{ std::ranges::find(_secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
-                const auto missingBuffer{ std::ranges::find(_secBuffers, _tul(SecurityBufferEnum::Missing), &SecBuffer::BufferType) };
+                auto& extraSpan{ data.state->decryptedExtraSpan };
+                if (!extraSpan.empty()) {
+                    std::memmove(data.state->decryptedData.data(), extraSpan.data(), extraSpan.size());
+                    extraSpan = { data.state->decryptedData.data(), extraSpan.size() };
+                }
 
-                if (extraBuffer == _secBuffers.end()) {
-                    if (missingBuffer == _secBuffers.end()) {
-                        _errorStatus = std::unexpected{ ConnectionErrorEnum::Unknown };
-                        NEXT(Error);
-                    }
-                    extraSpan = dataSpan;
-                } else
-                    extraSpan = { static_cast<std::byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
-
-                std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
-                dataSpan  = {};
-                extraSpan = std::span<std::byte>{ decryptedData.data(), extraSpan.size() };
-                NEXT(RecvCheckPending);
+                if constexpr (IsAsync())
+                    AWAIT(RecvProcessNetwork, Recv);
+                else {
+                    _currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data() + extraSpan.size()), static_cast<int>(data.state->decryptedData.size() - extraSpan.size()), 0);
+                    NEXT(RecvProcessNetwork);
+                }
             }
             case EncryptStatusEnum::InfoRenegotiate: {
-                data.isHandshakeComplete = false;
-                const auto extraBuffer{ std::ranges::find(_secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
-
-                if (extraBuffer != _secBuffers.end() && S_HasData(*extraBuffer))
-                    extraSpan = { static_cast<std::byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
-                else
-                    extraSpan = {};
-
+                auto& extraSpan{ data.state->decryptedExtraSpan };
                 if (!extraSpan.empty()) {
-                    std::memmove(decryptedData.data(), extraSpan.data(), extraSpan.size());
-                    extraSpan = { decryptedData.data(), extraSpan.size() };
+                    std::memmove(data.state->decryptedData.data(), extraSpan.data(), extraSpan.size());
+                    extraSpan = { data.state->decryptedData.data(), extraSpan.size() };
                 }
 
                 data.pendingData = static_cast<uint32_t>(extraSpan.size());
                 _errorStatus = std::unexpected{ ConnectionErrorEnum::RenegotiationRequired };
-                dataSpan = {};
+                data.state->decryptedDataSpan = {};
                 NEXT(Error);
             }
             case EncryptStatusEnum::InfoContextExpired:
@@ -250,7 +220,7 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::_SendSetupState(Data &data) {
-        if (!data.isHandshakeComplete) {
+        if (!data.session.IsHandshakeComplete()) {
             _errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
             NEXT(Error);
         }
@@ -262,30 +232,24 @@ namespace Hermes::_details {
     TlsTransferStateMachine<Data, TransferPolicy>::_SendChunkState(Data &data) {
         if (_totalTransferred >= _initialSize) NEXT(Done);
 
-        const auto& sizes{ data.contextStreamSizes };
         const size_t remainingBytes{ _initialSize - _totalTransferred };
-        _chunkSize = (std::min)(remainingBytes, static_cast<size_t>(sizes.cbMaximumMessage));
+        _chunkSize = (std::min)(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
 
-        const auto dwChunkSize{ static_cast<ULONG>(_chunkSize) };
-        _secBuffers[0] = SecBuffer{ sizes.cbHeader , _tul(SecurityBufferEnum::StreamHeader) , static_cast<void*>(data.state->encryptedData.data()) };
-        _secBuffers[1] = SecBuffer{ dwChunkSize    , _tul(SecurityBufferEnum::Data)         , static_cast<void*>(data.state->encryptedData.data() + sizes.cbHeader) };
-        _secBuffers[2] = SecBuffer{ sizes.cbTrailer, _tul(SecurityBufferEnum::StreamTrailer), static_cast<void*>(data.state->encryptedData.data() + sizes.cbHeader + _chunkSize) };
-        _secBuffers[3] = SecBuffer{ 0              , _tul(SecurityBufferEnum::Empty)        , nullptr };
+        auto outcome = data.session.Encrypt(
+            std::span<const std::byte>{_userSendBuffer.data() + _totalTransferred, _chunkSize},
+            std::span<std::byte>{data.state->encryptedData}
+        );
+        _status = outcome.status;
 
-        std::memcpy(_secBuffers[1].pvBuffer, _userSendBuffer.data() + _totalTransferred, _chunkSize);
-
-        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, _secBuffers.data() };
-        const SECURITY_STATUS status{ EncryptMessage(&data.ctxtHandle, 0, &buffDesc, 0) };
-
-        if (status != _tul(EncryptStatusEnum::ErrOk)) {
-            if (static_cast<EncryptStatusEnum>(status) == EncryptStatusEnum::InfoContextExpired)
+        if (_status != EncryptStatusEnum::ErrOk) {
+            if (_status == EncryptStatusEnum::InfoContextExpired)
                 _errorStatus = std::unexpected{ ConnectionErrorEnum::ConnectionClosed };
             else
                 _errorStatus = std::unexpected{ ConnectionErrorEnum::SendFailed };
             NEXT(Error);
         }
 
-        _encryptedSize = _secBuffers[0].cbBuffer + _secBuffers[1].cbBuffer + _secBuffers[2].cbBuffer;
+        _encryptedSize = outcome.produced;
         _sentBytes = 0;
         NEXT(SendNetworkWrite);
     }
@@ -310,7 +274,6 @@ namespace Hermes::_details {
         }
 
         _sentBytes += static_cast<size_t>(_currSent);
-
         if (_sentBytes < _encryptedSize) {
             NEXT(SendNetworkWrite);
         }

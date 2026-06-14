@@ -24,7 +24,7 @@ namespace Hermes::_details {
         : _options{ std::move(opt) } {}
 
     template<SocketDataConcept Data, class AcceptPolicy>
-    TlsAcceptStateMachine<Data, AcceptPolicy>::TlsAcceptState TlsAcceptStateMachine<Data, AcceptPolicy>::GetState() const noexcept {
+    typename TlsAcceptStateMachine<Data, AcceptPolicy>::TlsAcceptState TlsAcceptStateMachine<Data, AcceptPolicy>::GetState() const noexcept {
         return _state;
     }
 
@@ -78,18 +78,8 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class AcceptPolicy>
     std::span<const std::byte> TlsAcceptStateMachine<Data, AcceptPolicy>::GetSendBuffer() noexcept {
-        return { static_cast<const std::byte*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer };
+        return { _outBuffer.data(), _outSize };
     }
-
-    template<SocketDataConcept Data, class AcceptPolicy>
-    SecBuffer & TlsAcceptStateMachine<Data, AcceptPolicy>::TokenBuffer() noexcept { return _secBuffers[0]; }
-    template<SocketDataConcept Data, class AcceptPolicy>
-    SecBuffer & TlsAcceptStateMachine<Data, AcceptPolicy>::ExtraBuffer() noexcept { return _secBuffers[1]; }
-
-    template<SocketDataConcept Data, class AcceptPolicy>
-    SecBuffer & TlsAcceptStateMachine<Data, AcceptPolicy>::OutBuffer() noexcept { return _secBuffers[2]; }
-    template<SocketDataConcept Data, class AcceptPolicy>
-    SecBuffer & TlsAcceptStateMachine<Data, AcceptPolicy>::MsgBuffer() noexcept { return _secBuffers[3]; }
 
 #pragma endregion
 
@@ -107,29 +97,15 @@ namespace Hermes::_details {
         }
         if (data.state == nullptr) data.state = std::make_unique<typename decltype(data.state)::element_type>();
 
-        _credHandle = data.credentials->GetCredHandle();
-        _dwSspiFlags = AcceptSecurityContextFlags::SequenceDetect  |
-                       AcceptSecurityContextFlags::ReplayDetect    |
-                       AcceptSecurityContextFlags::Confidentiality |
-                       AcceptSecurityContextFlags::ExtendedError   |
-                       AcceptSecurityContextFlags::Stream;
-
-        if (_options.requestClientCertificate)
-            _dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
-
-        _isRenegotiation = (data.ctxtHandle.dwLower != 0 || data.ctxtHandle.dwUpper != 0);
-        _firstPass       = !_isRenegotiation;
+        data.session.BeginServer(*data.credentials, _options.requestClientCertificate);
 
         _receivedBytes   = data.pendingData;
         data.pendingData = 0;
-
         if constexpr (!IsAsync())
             if (_options.handshakeTimeout.count() != 0)
                 SetTimeout(data.socket, _options.handshakeTimeout.count());
-
 #pragma endregion
 
-        // Servidor precisa de dados (ClientHello) para a primeira chamada
         if (_receivedBytes > 0)
             NEXT(AcceptContext);
         NEXT(Recv);
@@ -141,52 +117,41 @@ namespace Hermes::_details {
 
 #pragma region AcceptContext
 
-        TokenBuffer() = SecBuffer{ _receivedBytes, _tul(SecurityBufferEnum::Token), data.state->decryptedData.data() };
-        ExtraBuffer() = SecBuffer{ 0             , _tul(SecurityBufferEnum::Empty), nullptr };
-
-        OutBuffer() = SecBuffer{ _tul(_buffers[2].size()), _tul(SecurityBufferEnum::Token), _buffers[2].data() };
-        MsgBuffer() = SecBuffer{ _tul(_buffers[3].size()), _tul(SecurityBufferEnum::Alert), _buffers[3].data() };
-
-        _status = AcceptSecurityContext(
-            &_credHandle,
-            _firstPass ? nullptr : &data.ctxtHandle,
-            &_inBufferDesc,
-            _tul(_dwSspiFlags), 0,
-            &data.ctxtHandle,
-            &_outBufferDesc, &_pfContextAttr, &_tsExpiry
+        auto outcome = data.session.AdvanceHandshake(
+            std::span<std::byte>{data.state->decryptedData.data(), _receivedBytes},
+            std::span<std::byte>{_outBuffer}
         );
+        _status = outcome.status;
+        _outSize = outcome.produced;
 
-        _firstPass = false;
-
-        if (HasData(ExtraBuffer()) && ExtraBuffer().BufferType == SecurityBufferEnum::Extra) {
+        if (outcome.consumed > 0 && outcome.consumed <= _receivedBytes) {
             std::memmove(data.state->decryptedData.data(),
-                        data.state->decryptedData.data() + _receivedBytes - ExtraBuffer().cbBuffer,
-                        ExtraBuffer().cbBuffer);
-            _receivedBytes = ExtraBuffer().cbBuffer;
-        } else {
-            _receivedBytes = 0;
+                         data.state->decryptedData.data() + outcome.consumed,
+                         _receivedBytes - outcome.consumed);
+            _receivedBytes -= outcome.consumed;
         }
 
 #pragma endregion
 
-        switch (static_cast<EncryptStatusEnum>(_status)) {
-            case EncryptStatusEnum::InfoContinueNeeded:             if (HasData(OutBuffer())) NEXT(Send);      NEXT(CheckSend);
+        switch (_status) {
+            case EncryptStatusEnum::InfoContinueNeeded:
+                if (_outSize > 0) NEXT(Send);
+                NEXT(CheckSend);
             case EncryptStatusEnum::ErrIncompleteMessage:           NEXT(CheckSend);
-            case EncryptStatusEnum::ErrOk:                          if (HasData(OutBuffer())) NEXT(FinalSend); NEXT(HandshakeCompleted);
+            case EncryptStatusEnum::ErrOk:
+                if (_outSize > 0) NEXT(FinalSend);
+                NEXT(HandshakeCompleted);
 
             case EncryptStatusEnum::ErrIncompleteCredentials:       NEXT(InvalidCertificateError);
-
             case EncryptStatusEnum::ErrInsufficientMemory:
             case EncryptStatusEnum::ErrInvalidHandle:
             case EncryptStatusEnum::ErrInvalidToken:                NEXT(HandshakeFailedError);
-
             case EncryptStatusEnum::ErrLogonDenied:
             case EncryptStatusEnum::ErrCertUnknown:
             case EncryptStatusEnum::ErrCertExpired:
             case EncryptStatusEnum::ErrNoCredentials:
             case EncryptStatusEnum::ErrUntrustedRoot:
             case EncryptStatusEnum::ErrNoAuthenticatingAuthority:   NEXT(InvalidCertificateError);
-
             default:                                                NEXT(UnknownError);
         }
     }
@@ -203,7 +168,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(CheckSend, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(CheckSend);
         }
     }
@@ -211,18 +176,20 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class AcceptPolicy>
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_CheckSendState(Data &data) {
-        if (_currSent == macroSOCKET_ERROR)
-            NEXT(HandshakeFailedError);
+        if (_outSize > 0) {
+            if (_currSent == macroSOCKET_ERROR)
+                NEXT(HandshakeFailedError);
 
-        if (_currSent != OutBuffer().cbBuffer) {
-            OutBuffer().pvBuffer = static_cast<char*>(OutBuffer().pvBuffer) + _currSent;
-            OutBuffer().cbBuffer -= _currSent;
-            NEXT(Send);
+            if (static_cast<std::uint32_t>(_currSent) != _outSize) {
+                std::memmove(_outBuffer.data(), _outBuffer.data() + _currSent, _outSize - _currSent);
+                _outSize -= _currSent;
+                NEXT(Send);
+            }
+            _outSize = 0;
         }
 
         if (_status == EncryptStatusEnum::ErrIncompleteMessage || _receivedBytes == 0)
             NEXT(Recv);
-
         NEXT(AcceptContext);
     }
 
@@ -248,7 +215,6 @@ namespace Hermes::_details {
     TlsAcceptStateMachine<Data, AcceptPolicy>::_CheckRecvState(Data &data) {
         if (_currReceived <= 0)
             NEXT(HandshakeFailedError);
-
         _receivedBytes += _currReceived;
         NEXT(AcceptContext);
     }
@@ -265,7 +231,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(CheckFinalSend, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(CheckFinalSend);
         }
     }
@@ -273,13 +239,16 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class AcceptPolicy>
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_CheckFinalSendState(Data &data) {
-        if (_currSent == macroSOCKET_ERROR)
-            NEXT(HandshakeFailedError);
+        if (_outSize > 0) {
+            if (_currSent == macroSOCKET_ERROR)
+                NEXT(HandshakeFailedError);
 
-        if (_currSent != OutBuffer().cbBuffer) {
-            OutBuffer().pvBuffer = static_cast<char*>(OutBuffer().pvBuffer) + _currSent;
-            OutBuffer().cbBuffer -= _currSent;
-            NEXT(FinalSend);
+            if (static_cast<std::uint32_t>(_currSent) != _outSize) {
+                std::memmove(_outBuffer.data(), _outBuffer.data() + _currSent, _outSize - _currSent);
+                _outSize -= _currSent;
+                NEXT(FinalSend);
+            }
+            _outSize = 0;
         }
 
         NEXT(HandshakeCompleted);
@@ -288,27 +257,17 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class AcceptPolicy>
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_HandshakeCompletedState(Data &data) {
-        _status = QueryContextAttributesA(&data.ctxtHandle,
-                                        macroSECPKG_ATTR_STREAM_SIZES,
-                                        &data.contextStreamSizes);
-
-        if (_status != EncryptStatusEnum::ErrOk)
-            NEXT(HandshakeFailedError);
-
-        data.requestClientCertificate = _options.requestClientCertificate;
-        data.isHandshakeComplete      = true;
-        data.isServer                 = true;
+        _status = EncryptStatusEnum::ErrOk;
 
         if constexpr (!IsAsync())
             if (_options.handshakeTimeout.count() != 0)
                 SetTimeout(data.socket, 0);
 
-        std::size_t extraBufferSize{ _receivedBytes };
+        std::size_t extraBufferSize{ static_cast<std::size_t>(_receivedBytes) };
         data.state->decryptedExtraSpan = std::span<std::byte>{
             data.state->decryptedData.data(),
             extraBufferSize
         };
-
         return AcceptStateOpResult::Done;
     }
 
@@ -342,8 +301,7 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class AcceptPolicy>
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_CleanupState(Data &data) {
-        DeleteSecurityContext(&data.ctxtHandle);
-        data.ctxtHandle = {};
+        data.session.DeleteContext();
         NEXT(StartClose);
     }
 
@@ -352,49 +310,14 @@ namespace Hermes::_details {
     TlsAcceptStateMachine<Data, AcceptPolicy>::_StartCloseState(Data &data) {
         if (data.socket == macroINVALID_SOCKET) return AcceptStateOpResult::Error;
 
-        if (!data.isHandshakeComplete)
+        if (!data.session.IsHandshakeComplete())
             NEXT(EndClose);
 
-        DWORD dwType{ macroSCHANNEL_SHUTDOWN };
-        OutBuffer() = { sizeof(dwType), _tul(SecurityBufferEnum::Token), &dwType };
-
-        SecBufferDesc outBufferDesc{ macroSECBUFFER_VERSION, 1, &OutBuffer() };
-
-        SECURITY_STATUS status{ ApplyControlToken(&data.ctxtHandle, &outBufferDesc) };
-
-        if (status != EncryptStatusEnum::ErrOk)
-            NEXT(DeleteSecurityContext);
-
-        OutBuffer()   = SecBuffer{ 0, _tul(SecurityBufferEnum::Token), nullptr };
-        outBufferDesc = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &OutBuffer() };
-
-        auto dwSspiFlags{
-            AcceptSecurityContextFlags::SequenceDetect  |
-            AcceptSecurityContextFlags::ReplayDetect    |
-            AcceptSecurityContextFlags::Confidentiality |
-            AcceptSecurityContextFlags::Stream
-        };
-
-        if (data.requestClientCertificate)
-            dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
-
-        DWORD dwSSPIOutFlags{};
-        TimeStamp tsExpiry{};
-
-        status = AcceptSecurityContext(
-            &_credHandle,
-            &data.ctxtHandle,
-            nullptr,
-            _tul(dwSspiFlags),
-            0,
-            nullptr,
-            &outBufferDesc,
-            &dwSSPIOutFlags,
-            &tsExpiry
-        );
-
-        if (status == EncryptStatusEnum::ErrOk && HasData(OutBuffer()))
+        auto produced = data.session.Shutdown(std::span<std::byte>{_outBuffer});
+        if (produced > 0) {
+            _outSize = produced;
             NEXT(SendCloseNotify);
+        }
 
         NEXT(DeleteSecurityContext);
     }
@@ -405,7 +328,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(DeleteSecurityContext, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(DeleteSecurityContext);
         }
     }
@@ -413,9 +336,7 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class AcceptPolicy>
     AcceptStateOpResult
     TlsAcceptStateMachine<Data, AcceptPolicy>::_DeleteSecurityContextState(Data &data) {
-        DeleteSecurityContext(&data.ctxtHandle);
-        data.ctxtHandle = {};
-        data.isHandshakeComplete = false;
+        data.session.DeleteContext();
         NEXT(EndClose);
     }
 

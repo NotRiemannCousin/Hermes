@@ -23,9 +23,8 @@ namespace Hermes::_details {
     TlsConnectStateMachine<Data, ConnectionPolicy>::TlsConnectStateMachine(typename ConnectionPolicy::Options opt)
         : _options{ std::move(opt) } {}
 
-
     template<SocketDataConcept Data, class ConnectionPolicy>
-    TlsConnectStateMachine<Data, ConnectionPolicy>::TlsConnectState TlsConnectStateMachine<Data, ConnectionPolicy>::GetState() const noexcept {
+    typename TlsConnectStateMachine<Data, ConnectionPolicy>::TlsConnectState TlsConnectStateMachine<Data, ConnectionPolicy>::GetState() const noexcept {
         return _state;
     }
 
@@ -60,13 +59,11 @@ namespace Hermes::_details {
         _state       = &TlsConnectStateMachine::_SetupState;
     }
 
-
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
         TlsConnectStateMachine<Data, ConnectionPolicy>::Advance(Data &data) noexcept {
         return (this->*_state)(data);
     }
-
 
     template<SocketDataConcept Data, class ConnectionPolicy>
     void TlsConnectStateMachine<Data, ConnectionPolicy>::SetIoResult(const int bytes) noexcept {
@@ -81,24 +78,10 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class ConnectionPolicy>
     std::span<const std::byte> TlsConnectStateMachine<Data, ConnectionPolicy>::GetSendBuffer() noexcept {
-        return { static_cast<const std::byte*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer };
+        return { _outBuffer.data(), _outSize };
     }
 
-
-    template<SocketDataConcept Data, class ConnectionPolicy>
-    SecBuffer & TlsConnectStateMachine<Data, ConnectionPolicy>::TokenBuffer() noexcept { return _secBuffers[0]; }
-    template<SocketDataConcept Data, class ConnectionPolicy>
-    SecBuffer & TlsConnectStateMachine<Data, ConnectionPolicy>::ExtraBuffer() noexcept { return _secBuffers[1]; }
-
-    template<SocketDataConcept Data, class ConnectionPolicy>
-    SecBuffer & TlsConnectStateMachine<Data, ConnectionPolicy>::OutBuffer() noexcept { return _secBuffers[2]; }
-    template<SocketDataConcept Data, class ConnectionPolicy>
-    SecBuffer & TlsConnectStateMachine<Data, ConnectionPolicy>::MsgBuffer() noexcept { return _secBuffers[3]; }
-
 #pragma endregion
-
-
-
 
 #pragma region Setup
 
@@ -116,28 +99,14 @@ namespace Hermes::_details {
             return ConnectStateOpResult::Error;
         }
 
-        _credHandle = data.credentials->GetCredHandle();
-        _dwSspiFlags = InitializeSecurityContextFlags::SequenceDetect  |
-                       InitializeSecurityContextFlags::ReplayDetect    |
-                       InitializeSecurityContextFlags::Confidentiality |
-                       InitializeSecurityContextFlags::ExtendedError   |
-                       InitializeSecurityContextFlags::Stream;
+        data.session.BeginClient(*data.credentials, data.host, _options.ignoreCertificateErrors, _options.requestMutualAuth);
 
-        if (_options.requestMutualAuth)
-            _dwSspiFlags |= InitializeSecurityContextFlags::MutualAuth;
-
-        if (_options.ignoreCertificateErrors)
-            _dwSspiFlags |= InitializeSecurityContextFlags::ManualCredValidation;
-
-        _isRenegotiation = (data.ctxtHandle.dwLower != 0 || data.ctxtHandle.dwUpper != 0);
-        _firstPass       = !_isRenegotiation;
         _receivedBytes   = data.pendingData;
         data.pendingData = 0;
 
         if constexpr (!IsAsync())
             if (_options.handshakeTimeout.count() != 0)
                 SetTimeout(data.socket, _options.handshakeTimeout.count());
-
 #pragma endregion
 
         NEXT(InitializeContext);
@@ -149,40 +118,28 @@ namespace Hermes::_details {
 
 #pragma region InitializateContext
 
-        TokenBuffer() = SecBuffer{ _receivedBytes, _tul(SecurityBufferEnum::Token), data.state->decryptedData.data() };
-        ExtraBuffer() = SecBuffer{ 0             , _tul(SecurityBufferEnum::Empty), nullptr };
-
-        OutBuffer() = SecBuffer{ _tul(_buffers[2].size()), _tul(SecurityBufferEnum::Token), _buffers[2].data() };
-        MsgBuffer() = SecBuffer{ _tul(_buffers[3].size()), _tul(SecurityBufferEnum::Alert), _buffers[3].data() };
-
-        _status = InitializeSecurityContextA(
-            &_credHandle,
-            _firstPass ? nullptr : &data.ctxtHandle,
-            const_cast<SEC_CHAR*>(data.host.c_str()),
-            _tll(_dwSspiFlags), 0, 0,
-            _firstPass ? nullptr : &_inBufferDesc, 0,
-            &data.ctxtHandle,
-            &_outBufferDesc, &_pfContextAttr, &_tsExpiry
+        auto outcome = data.session.AdvanceHandshake(
+            std::span<std::byte>{data.state->decryptedData.data(), _receivedBytes},
+            std::span<std::byte>{_outBuffer}
         );
+        _status = outcome.status;
+        _outSize = outcome.produced;
 
-        _firstPass = false;
-
-        if (HasData(ExtraBuffer()) && ExtraBuffer().BufferType == SecurityBufferEnum::Extra) {
+        if (outcome.consumed > 0 && outcome.consumed <= _receivedBytes) {
             std::memmove(data.state->decryptedData.data(),
-                        data.state->decryptedData.data() + _receivedBytes - ExtraBuffer().cbBuffer,
-                        ExtraBuffer().cbBuffer); // reset buffer
-            _receivedBytes = ExtraBuffer().cbBuffer;
+                         data.state->decryptedData.data() + outcome.consumed,
+                         _receivedBytes - outcome.consumed);
+            _receivedBytes -= outcome.consumed;
         }
 
 #pragma endregion
 
-        switch (static_cast<EncryptStatusEnum>(_status)) {
-                case EncryptStatusEnum::InfoCompleteAndContinue:
-                case EncryptStatusEnum::InfoCompleteNeeded:             NEXT(CompleteAuth);
-                case EncryptStatusEnum::InfoContinueNeeded:             if (HasData(OutBuffer())) NEXT(Send);      NEXT(CheckSend);
+        switch (_status) {
+                case EncryptStatusEnum::InfoContinueNeeded:             if (_outSize > 0) NEXT(Send);      NEXT(CheckSend);
                 case EncryptStatusEnum::ErrIncompleteMessage:           NEXT(CheckSend);
-                case EncryptStatusEnum::ErrOk:                          if (HasData(OutBuffer())) NEXT(FinalSend); NEXT(HandshakeCompleted);
-                case EncryptStatusEnum::ErrIncompleteCredentials:       NEXT(InvalidCertificateError);
+                case EncryptStatusEnum::ErrOk:                          if (_outSize > 0) NEXT(FinalSend);
+                NEXT(HandshakeCompleted);
+                case EncryptStatusEnum::ErrIncompleteCredentials:       NEXT(IncompleteCredentialsError);
                 case EncryptStatusEnum::ErrInsufficientMemory:
                 case EncryptStatusEnum::ErrInvalidHandle:
                 case EncryptStatusEnum::ErrInvalidToken:                NEXT(HandshakeFailedError);
@@ -191,33 +148,13 @@ namespace Hermes::_details {
                 case EncryptStatusEnum::ErrUntrustedRoot:
                 case EncryptStatusEnum::ErrNoAuthenticatingAuthority:   NEXT(InvalidCertificateError);
                 default:                                                NEXT(UnknownError);
-            }
+        }
 
     }
 
 #pragma endregion
-
 
 #pragma region Incomplete
-
-
-#pragma region Complete Auth
-
-    template<SocketDataConcept Data, class ConnectionPolicy>
-    ConnectStateOpResult
-    TlsConnectStateMachine<Data, ConnectionPolicy>::_CompleteAuthState(Data &data) {
-#pragma region Complete Auth
-
-        CompleteAuthToken(&data.ctxtHandle, &_outBufferDesc);
-
-#pragma endregion
-
-        if (_status == EncryptStatusEnum::InfoCompleteAndContinue)
-            NEXT(InitializeContext);
-        NEXT(Send);
-    }
-
-#pragma endregion
 
 #pragma region Send
 
@@ -227,7 +164,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(CheckSend, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(CheckSend);
         }
     }
@@ -235,21 +172,21 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_CheckSendState(Data &data) {
-        if (_currSent == macroSOCKET_ERROR)
-            NEXT(HandshakeFailedError);
+        if (_outSize > 0) {
+            if (_currSent == macroSOCKET_ERROR)
+                NEXT(HandshakeFailedError);
 
-        if (_currSent != OutBuffer().cbBuffer) {
-            OutBuffer().pvBuffer = static_cast<char*>(OutBuffer().pvBuffer) + _currSent;
-            OutBuffer().cbBuffer -= _currSent;
-            NEXT(Send);
+            if (static_cast<std::uint32_t>(_currSent) != _outSize) {
+                std::memmove(_outBuffer.data(), _outBuffer.data() + _currSent, _outSize - _currSent);
+                _outSize -= _currSent;
+                NEXT(Send);
+            }
+            _outSize = 0;
         }
 
-        if (ExtraBuffer().BufferType != SecurityBufferEnum::Extra)
-            _receivedBytes = 0;
-
-        if (_receivedBytes > 0)
-            NEXT(InitializeContext);
-        NEXT(Recv);
+        if (_status == EncryptStatusEnum::ErrIncompleteMessage || _receivedBytes == 0)
+            NEXT(Recv);
+        NEXT(InitializeContext);
     }
 
 #pragma endregion
@@ -274,7 +211,6 @@ namespace Hermes::_details {
 
         if (_currReceived <= 0)
             NEXT(HandshakeFailedError);
-
         _receivedBytes += _currReceived;
 
         NEXT(InitializeContext);
@@ -283,9 +219,7 @@ namespace Hermes::_details {
 
 #pragma endregion
 
-
 #pragma endregion
-
 
 #pragma region Complete
 
@@ -295,7 +229,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(CheckFinalSend, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(CheckFinalSend);
         }
     }
@@ -303,13 +237,16 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_CheckFinalSendState(Data &data) {
-        if (_currSent == macroSOCKET_ERROR)
-            NEXT(HandshakeFailedError);
+        if (_outSize > 0) {
+            if (_currSent == macroSOCKET_ERROR)
+                NEXT(HandshakeFailedError);
 
-        if (_currSent != OutBuffer().cbBuffer) {
-            OutBuffer().pvBuffer = static_cast<char*>(OutBuffer().pvBuffer) + _currSent;
-            OutBuffer().cbBuffer -= _currSent;
-            NEXT(FinalSend);
+            if (static_cast<std::uint32_t>(_currSent) != _outSize) {
+                std::memmove(_outBuffer.data(), _outBuffer.data() + _currSent, _outSize - _currSent);
+                _outSize -= _currSent;
+                NEXT(FinalSend);
+            }
+            _outSize = 0;
         }
 
         NEXT(HandshakeCompleted);
@@ -318,36 +255,19 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_HandshakeCompletedState(Data &data) {
-        _status = QueryContextAttributesA(&data.ctxtHandle,
-                                        macroSECPKG_ATTR_STREAM_SIZES,
-                                        &data.contextStreamSizes);
-
-        if (_status != EncryptStatusEnum::ErrOk)
-            NEXT(HandshakeFailedError);
-
-        data.isHandshakeComplete = true;
-        data.isServer            = ConnectionPolicy::IsServer; // TODO: Change when updating the template param
-
         if constexpr (!IsAsync())
             if (_options.handshakeTimeout.count() != 0)
                 SetTimeout(data.socket, 0);
 
-        std::size_t extraBufferSize{
-            HasData(ExtraBuffer()) && ExtraBuffer().BufferType == SecurityBufferEnum::Extra
-                ? ExtraBuffer().cbBuffer
-                : 0
-        };
-
+        std::size_t extraBufferSize{ static_cast<std::size_t>(_receivedBytes) };
         data.state->decryptedExtraSpan = std::span<std::byte>{
             data.state->decryptedData.data(),
             extraBufferSize
         };
-
         return ConnectStateOpResult::Done;
     }
 
 #pragma endregion
-
 
 #pragma region Errors
 
@@ -381,12 +301,10 @@ namespace Hermes::_details {
 
 #pragma endregion
 
-
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_CleanupState(Data &data) {
-        DeleteSecurityContext(&data.ctxtHandle);
-        data.ctxtHandle = {};
+        data.session.DeleteContext();
 
         NEXT(StartClose);
     }
@@ -395,50 +313,11 @@ namespace Hermes::_details {
     TlsConnectStateMachine<Data, ConnectionPolicy>::_StartCloseState(Data &data) {
         if (data.socket == macroINVALID_SOCKET) return ConnectStateOpResult::Error;
 
-        if (!data.isHandshakeComplete)
+        if (!data.session.IsHandshakeComplete())
             NEXT(EndClose);
 
-
-        DWORD dwType{ macroSCHANNEL_SHUTDOWN };
-
-        OutBuffer() = { sizeof(dwType), _tul(SecurityBufferEnum::Token), &dwType };
-
-        SecBufferDesc outBufferDesc{ macroSECBUFFER_VERSION, 1, &OutBuffer() };
-
-        SECURITY_STATUS status{ ApplyControlToken(&data.ctxtHandle, &outBufferDesc) };
-
-        if (status != EncryptStatusEnum::ErrOk)
-            NEXT(DeleteSecurityContext);
-
-        OutBuffer()   = SecBuffer{ 0, _tul(SecurityBufferEnum::Token), nullptr };
-        outBufferDesc = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &OutBuffer() };
-
-        constexpr auto dwSspiFlags{
-            InitializeSecurityContextFlags::SequenceDetect  |
-            InitializeSecurityContextFlags::ReplayDetect    |
-            InitializeSecurityContextFlags::Confidentiality |
-            InitializeSecurityContextFlags::Stream
-        };
-
-        DWORD dwSSPIOutFlags{};
-        TimeStamp tsExpiry{};
-
-        status = InitializeSecurityContextA(
-            nullptr,
-            &data.ctxtHandle,
-            nullptr,
-            _tl(dwSspiFlags),
-            0,
-            0,
-            nullptr,
-            0,
-            nullptr,
-            &outBufferDesc,
-            &dwSSPIOutFlags,
-            &tsExpiry
-        );
-
-        if (status == EncryptStatusEnum::ErrOk && HasData(OutBuffer()))
+        _outSize = data.session.Shutdown(std::span<std::byte>{_outBuffer});
+        if (_outSize > 0)
             NEXT(SendCloseNotify);
 
         NEXT(DeleteSecurityContext);
@@ -449,16 +328,14 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(DeleteSecurityContext, Send);
         } else {
-            _currSent = send(data.socket, static_cast<const char*>(OutBuffer().pvBuffer), OutBuffer().cbBuffer, 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(_outBuffer.data()), _outSize, 0);
             NEXT(DeleteSecurityContext);
         }
     }
     template<SocketDataConcept Data, class ConnectionPolicy>
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_DeleteSecurityContextState(Data &data) {
-        DeleteSecurityContext(&data.ctxtHandle);
-        data.ctxtHandle = {};
-        data.isHandshakeComplete = false;
+        data.session.DeleteContext();
         NEXT(EndClose);
     }
     template<SocketDataConcept Data, class ConnectionPolicy>
@@ -474,7 +351,6 @@ namespace Hermes::_details {
     ConnectStateOpResult
     TlsConnectStateMachine<Data, ConnectionPolicy>::_AbortState(Data &data) {
         constexpr linger lingerOption{ 1, 0 };
-
         setsockopt(
             data.socket,
             SOL_SOCKET,
@@ -482,7 +358,6 @@ namespace Hermes::_details {
             reinterpret_cast<const char*>(&lingerOption),
             sizeof(lingerOption)
         );
-
         CloseSocket(data.socket);
         data.socket = macroINVALID_SOCKET;
 

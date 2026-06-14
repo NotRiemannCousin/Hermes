@@ -3,6 +3,20 @@
 #include <Hermes/_base/Network.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
 
+
+#if defined(__clang__)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmissing-field-initializers"
+#elif defined(__GNUC__)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+#elif defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable : 5262)
+#endif
+
+
+
 using std::uint16_t;
 using std::uint8_t;
 using std::bit_cast;
@@ -118,3 +132,13 @@ IpAddress IpEndpoint::GetIp() const noexcept {
 std::uint16_t IpEndpoint::GetPort() const noexcept {
     return _port;
 }
+
+
+
+#if defined(__clang__)
+#pragma clang diagnostic pop
+#elif defined(__GNUC__)
+#pragma GCC diagnostic pop
+#elif defined(_MSC_VER)
+#pragma warning(pop)
+#endif

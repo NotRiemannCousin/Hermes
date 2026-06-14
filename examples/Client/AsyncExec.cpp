@@ -1,7 +1,8 @@
-// ReSharper disable CppPassValueParameterByConstReference
+// ReSharper disable All
 #include <Hermes/Socket/Async/AsyncClientSocket.hpp>
 
 #include <stdexec/execution.hpp>
+#include <exec/variant_sender.hpp>
 
 #include <string_view>
 #include <string>
@@ -14,21 +15,24 @@
 namespace rg = std::ranges;
 namespace vs = std::views;
 
-// When using purely functional asynchronous pipelines (Senders/Receivers), we cannot rely on local
-// variables to survive across asynchronous boundaries (`let_value`, `then`).
-// Therefore, we allocate a state block on the heap (`ClientState`) using `std::shared_ptr` to
-// maintain the socket client and buffers alive throughout the entire pipeline lifetime.
-struct ClientState {
-    Hermes::RawTlsAsyncClient client;
-    std::string request{};
-    std::string response{};
-    std::array<char, 8192> chunk{};
+namespace {
+    // When using purely functional asynchronous pipelines (Senders/Receivers), we cannot rely on local
+    // variables to survive across asynchronous boundaries (`let_value`, `then`).
+    // Therefore, we allocate a state block on the heap (`ClientState`) using `std::shared_ptr` to
+    // maintain the socket client and buffers alive throughout the entire pipeline lifetime.
+    struct ClientState {
+        Hermes::RawTlsAsyncClient client;
+        std::string request{};
+        std::string response{};
+        std::array<char, 8192> chunk{};
 
-    explicit ClientState(Hermes::RawTlsAsyncClient&& c) : client(std::move(c)) {}
-};
+        explicit ClientState(Hermes::RawTlsAsyncClient&& c) : client{ std::move(c) } {}
+    };
+}
 
-std::expected<std::string, std::string> MakeRequest() {
+extern ExpString MakeRequest() {
     using namespace std::literals::string_view_literals;
+    using SharedState = std::shared_ptr<ClientState>;
 
     Hermes::FastIoLoop ioLoop{ 1 };
 
@@ -41,23 +45,25 @@ std::expected<std::string, std::string> MakeRequest() {
     } };
 
     const auto s_makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
-        return Hermes::RawTlsAsyncClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname }, {{ .recvBufferSize = 8192, .scheduler = &ioLoop }});
+        return Hermes::RawTlsAsyncClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname },
+            {{
+                .recvBufferSize = 8192,
+                .scheduler = &ioLoop
+            }});
     } };
 
     const auto s_makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {
-        auto state{ std::make_shared<ClientState>(std::move(client)) };
+        SharedState state{ std::make_shared<ClientState>(std::move(client)) };
         state->request = url.FormatRequest();
 
-        const auto s_returnState{ [state](size_t /*bytesSent*/) {
-            return state;
-        } };
+        const auto s_returnState{ [state](size_t) { return state; } };
 
         // `Send` returns a Sender. We chain it using `stdexec::then` to map the resulting
         // value (bytes sent) back into our `ClientState` pointer, moving it forward down the pipeline.
         return state->client.Send(state->request) | stdexec::then(s_returnState);
     } };
 
-    const auto s_getResponse{ [](std::shared_ptr<ClientState>& state) {
+    constexpr auto s_getResponse{ [](SharedState& state) {
         const auto s_returnPair{ [state](size_t bytesReceived) {
             return std::pair{ state, bytesReceived };
         } };
@@ -65,7 +71,7 @@ std::expected<std::string, std::string> MakeRequest() {
         return state->client.Recv(state->chunk, Hermes::RecvModeEnum::Any) | stdexec::then(s_returnPair);
     } };
 
-    const auto s_processData{ [](const std::pair<std::shared_ptr<ClientState>, size_t>& data) {
+    constexpr auto s_processData{ [](const std::pair<SharedState, size_t>& data) {
         auto [state, bytesReceived]{ data };
 
         if (bytesReceived == 0)
@@ -99,39 +105,45 @@ std::expected<std::string, std::string> MakeRequest() {
             throw std::format("error code: {}", statusCode);
         }
 
-        std::string firstChunk{ body };
-        state->response.resize(bodySize - body.size());
+        using RecvSender = decltype(state->client.Recv(state->response | vs::drop(0), Hermes::RecvModeEnum::All));
+        using JustSender = decltype(stdexec::just(std::size_t{}));
 
-        const auto s_concatBody{ [state, firstChunk{ std::move(firstChunk) }](std::size_t _) mutable {
-            return firstChunk + state->response;
-        } };
+        using Sender = exec::variant_sender<JustSender, RecvSender>;
+        const auto s_retResp{ [state](std::size_t) { return state->response; } };
 
-        // `let_value` is required when returning another Sender (Recv). It flattens the execution graph.
-        return state->client.Recv(state->response, Hermes::RecvModeEnum::All) | stdexec::then(s_concatBody);
+        state->response = body;
+        state->response.resize(bodySize);
+
+        // Not an accurate way to implement HTTP. It's assuming a chunk based response and parsing just the first
+        // chunk (needs exec::repeat_effect to implement it properly), but in this example it's enough.
+        if (body.size() >= bodySize)
+            return Sender{ stdexec::just(std::size_t{}) } | stdexec::then(s_retResp);
+
+        return Sender{ state->client.Recv(state->response | vs::drop(body.size()), Hermes::RecvModeEnum::All) }
+                | stdexec::then(s_retResp);
     } };
 
-    const auto s_mapErrorPipeline{ []<typename T>(T&& error) {
+    constexpr auto s_mapErrorPipeline{ []<typename T>(T&& error) {
         std::string errStr{};
         using ErrorType = std::remove_cvref_t<T>;
 
-        if constexpr (std::is_same_v<ErrorType, Hermes::ConnectionErrorEnum>) {
-            errStr = MapHermesError(error);
-        } else if constexpr (std::is_same_v<ErrorType, Hermes::StreamByteOper>) {
-            errStr = std::format("{}", error.error);
-        } else if constexpr (std::is_same_v<ErrorType, std::exception_ptr>) {
+        if constexpr (std::same_as<ErrorType, std::exception_ptr>) {
             try { std::rethrow_exception(error); }
-            catch (Hermes::ConnectionErrorEnum e) { errStr = MapHermesError(e); }
-            catch (const std::string& s) { errStr = s; }
-            catch (const char* s) { errStr = s; }
+            catch (Hermes::ConnectionErrorEnum  e) { errStr = std::format("{}", e); }
+            catch (const std::exception&        e) { errStr = e.what(); }
+            catch (const std::string&           s) { errStr = s; }
+            catch (const char*                  s) { errStr = s; }
             catch (...) { errStr = "unknown exception"; }
-        } else {
-            errStr = "unknown error type";
         }
+        else if constexpr (std::formattable<ErrorType, char>)
+            errStr = std::format("{}", error);
+        else
+            errStr = "unknown error type";
 
-        return stdexec::just(std::expected<std::string, std::string>{ std::unexpected{ errStr } });
+        return stdexec::just(ExpString{ std::unexpect, std::move(errStr) });
     } };
 
-    const auto s_returnExpected{ [](std::string val) -> std::expected<std::string, std::string> {
+    constexpr auto s_returnExpected{ [](std::string val) -> ExpString {
         return val;
     } };
 

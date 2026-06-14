@@ -16,7 +16,7 @@ namespace vs = std::views;
 // It creates a declarative, zero-overhead execution flow where the "happy path"
 // runs sequentially, and any error elegantly short-circuits to the end.
 
-std::expected<std::string, std::string> MakeRequest() {
+extern ExpString MakeRequest() {
     using namespace std::literals::string_view_literals;
 
 #pragma region Lambdas
@@ -37,7 +37,7 @@ std::expected<std::string, std::string> MakeRequest() {
         return val.second.transform(s_returnClient);
     } };
 
-    const auto s_getResponse{ [&](Hermes::RawTlsClient&& client) -> std::expected<std::string, std::string> {
+    const auto s_getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
         auto socketView{ client.RecvStream<char>() };
         // `RecvStream` is an input_range, so it consumes the bytes when you advance the iterator.
         // Advancing an iterator of an input_range can cause invalidation of other iterators, but
@@ -51,7 +51,7 @@ std::expected<std::string, std::string> MakeRequest() {
         if (!rg::starts_with(socketView, "HTTP/1.1"sv))
             return std::unexpected{ "Non supported version" };
 
-        const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 5>>(socketView) };
+        const auto statusCode{ Hermes::Utils::ExtractTo<std::array<char, 5>>(socketView) };
 
         if (!rg::equal(statusCode, " 200 "sv))
             return std::unexpected{ std::format("error code: {:s}", statusCode) };
@@ -86,6 +86,6 @@ std::expected<std::string, std::string> MakeRequest() {
     return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
             .and_then(s_makeSocket)
             .and_then(s_makeRequest)
-            .transform_error(MapHermesError)
+            .transform_error([](const auto e){ return std::format("{}", e); })
             .and_then(s_getResponse);
 }

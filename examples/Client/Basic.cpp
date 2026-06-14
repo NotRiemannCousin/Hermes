@@ -18,25 +18,25 @@ namespace vs = std::views;
 // Hermes' modern input ranges (`RecvStream` and `UntilMatch`) to process the incoming
 // TCP stream safely and sequentially.
 
-std::expected<std::string, std::string> MakeRequest() {
+extern ExpString MakeRequest() {
     using namespace std::literals::string_view_literals;
 
     // 1. Resolve the endpoint.
     auto endpointRes{ Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme) };
     if (!endpointRes)
-        return std::unexpected{ MapHermesError(endpointRes.error()) };
+        return std::unexpected{ std::format("{}", endpointRes.error()) };
 
     // 2. Connect the socket.
     auto clientRes{ Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ *endpointRes, url.hostname }) };
     if (!clientRes)
-        return std::unexpected{ MapHermesError(clientRes.error()) };
+        return std::unexpected{ std::format("{}", clientRes.error()) };
 
     auto client{ std::move(*clientRes) };
 
     // 3. Prepare and send the HTTP request.
     auto [bytesSent, sendErr]{ client.Send(url.FormatRequest()) };
     if (!sendErr)
-        return std::unexpected{ MapHermesError(sendErr.error()) };
+        return std::unexpected{ std::format("{}", sendErr.error()) };
 
     // 4. Receive and process the response using Ranges procedurally.
     auto socketView{ client.RecvStream<char>() };
@@ -49,7 +49,7 @@ std::expected<std::string, std::string> MakeRequest() {
         return std::unexpected{ "Non supported version" };
 
     // Copying exact bytes bypasses the need for string manipulation on fixed-size fields.
-    const auto statusCode{ Hermes::Utils::CopyTo<std::array<char, 5>>(socketView) };
+    const auto statusCode{ Hermes::Utils::ExtractTo<std::array<char, 5>>(socketView) };
 
     if (!rg::equal(statusCode, " 200 "sv))
         return std::unexpected{ std::format("error code: {:s}", statusCode) };

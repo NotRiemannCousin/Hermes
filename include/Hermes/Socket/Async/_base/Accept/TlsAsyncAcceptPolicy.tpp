@@ -6,7 +6,6 @@
 namespace Hermes {
 
     enum class AcceptControlAction : std::uint8_t { Accept, Renegotiate, Shutdown };
-
     template<SocketDataConcept Data>
     struct TlsAsyncAcceptPolicy<Data>::ControlSender {
         using sender_concept = stdexec::sender_t;
@@ -15,7 +14,6 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-
         Data* _data;
         AcceptOptions _options;
         AcceptControlAction _action;
@@ -29,39 +27,60 @@ namespace Hermes {
             TransferOperStatus _status;
             AcceptControlAction _action;
 
-            DWORD flags{};
-
+            LongIoCount _flags{};
         public:
             OperationState(Data* data, AcceptOptions options, Receiver receiver, const AcceptControlAction action = AcceptControlAction::Accept) :
                 _data{ data }, _options{ options }, _receiver{ std::move(receiver) },
                 _status{}, _action{ action } {}
 
             void Pump() noexcept {
-                flags = 0;
+                _flags = 0;
 
                 while (true) {
                     using AcceptStateOpResult = _details::AcceptStateOpResult;
                     switch (_data->acceptStateMachine->Advance(*_data)) {
                         case AcceptStateOpResult::Send: {
                             auto buf{ _data->acceptStateMachine->GetSendBuffer() };
+#ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
-
-                            if (WSASend(_data->socket, &wsaBuf, 1, nullptr, flags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSASend(_data->socket, &wsaBuf, 1, nullptr, _flags, &_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
                                     stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
                                 }
                             }
+#else
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            if (!loop) {
+                                stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                return;
+                            }
+                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                                io_uring_prep_send(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_sqe_set_data(sqe, &_status);
+                            });
+#endif
                             return;
                         }
                         case AcceptStateOpResult::Recv: {
                             auto buf{ _data->acceptStateMachine->GetRecvBuffer(*_data) };
+#ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
-
-                            if (WSARecv(_data->socket, &wsaBuf, 1, nullptr, &flags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSARecv(_data->socket, &wsaBuf, 1, nullptr, &_flags, &_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
                                     stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
                                 }
                             }
+#else
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            if (!loop) {
+                                stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                return;
+                            }
+                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                                io_uring_prep_recv(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_sqe_set_data(sqe, &_status);
+                            });
+#endif
                             return;
                         }
                         case AcceptStateOpResult::Done:
@@ -77,9 +96,8 @@ namespace Hermes {
                 }
             }
 
-            static void IoCallback(void* context, DWORD bytesTransferred, const bool success) noexcept {
+            static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
-
                 if (!success) {
                     stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
                     return;
@@ -97,11 +115,9 @@ namespace Hermes {
                     self._data->acceptStateMachine->SetToClose();
                 else
                     self._data->acceptStateMachine->SetToOpen();
-
                 self.Pump();
             }
         };
-
         template<class Receiver>
         friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const ControlSender& self, Receiver r) {
             return { self._data, self._options, std::move(r), self._action };
@@ -121,7 +137,8 @@ namespace Hermes {
         static_assert(stdexec::sender<ControlSender>);
 
         return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, clientData, *reinterpret_cast<typename DefaultAsyncAcceptPolicy<Data>::AcceptOptions*>(&options))
-             | stdexec::let_value(Utils::Overloaded{
+             |
+             stdexec::let_value(Utils::Overloaded{
                  [&clientData, options]() mutable { return ControlSender{ &clientData, options, AcceptControlAction::Accept }; },
                  [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
              });

@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/_base/Connection/ITlsConnectStateMachine.hpp>
+#include <Hermes/Socket/_base/TlsSession.hpp>
 
 namespace Hermes::_details {
     template<SocketDataConcept Data, class ConnectionPolicy>
@@ -31,7 +32,6 @@ namespace Hermes::_details {
 
         ConnectStateOpResult Advance(Data &data) noexcept override;
 
-
         void SetIoResult(int bytes) noexcept override;
 
         std::span<std::byte> GetRecvBuffer(Data& data) noexcept;
@@ -44,53 +44,24 @@ namespace Hermes::_details {
         typename ConnectionPolicy::Options _options;
         TlsConnectState _state{ &TlsConnectStateMachine::_SetupState };
 
-
         ConnectionResultOper _errorStatus{};
 
-        IoCount _currReceived{};
-        IoCount _currSent{};
+        int _currReceived{};
+        int _currSent{};
 
 #pragma region buffers
 
-        std::array<std::array<std::byte, 0x4000>, 4> _buffers{};
-        std::array<SecBuffer, 4> _secBuffers{};
-
-
-        SecBuffer& TokenBuffer() noexcept; // input:  data received from client
-        SecBuffer& ExtraBuffer() noexcept; // input:  leftover from previous iteration
-
-        SecBuffer& OutBuffer() noexcept; // output: token to send to client
-        SecBuffer& MsgBuffer() noexcept; // output: alert
-
-
-        SecBufferDesc _inBufferDesc{ .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &TokenBuffer() };
-        SecBufferDesc _outBufferDesc{ .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &OutBuffer() };
+        std::array<std::byte, 0x4000> _outBuffer{};
+        std::uint32_t _outSize{};
 
 #pragma endregion
 
 #pragma region settings and lifecycle
 
-        CredHandle _credHandle{};
-        TimeStamp _tsExpiry{};
-
-        InitializeSecurityContextFlags _dwSspiFlags{};
-        DWORD _pfContextAttr{};
-        SECURITY_STATUS _status{};
-
-        bool _isRenegotiation{};
-        bool _firstPass{};
-
-        DWORD _receivedBytes{};
+        EncryptStatusEnum _status{};
+        std::uint32_t _receivedBytes{};
 
 #pragma endregion
-
-#pragma endregion
-
-#pragma region Helpers
-
-        static constexpr bool HasData(const SecBuffer& buffer) noexcept {
-            return buffer.cbBuffer > 0;
-        }
 
 #pragma endregion
 
@@ -99,7 +70,6 @@ namespace Hermes::_details {
         ConnectStateOpResult _InitializeContextState(Data &data);
 
         // Incomplete
-        ConnectStateOpResult _CompleteAuthState(Data &data);
         ConnectStateOpResult _SendState(Data &data);
         ConnectStateOpResult _CheckSendState(Data &data);
         ConnectStateOpResult _RecvState(Data &data);

@@ -21,6 +21,6 @@ struct Url {
     }
 };
 
-inline Url url { "https", "api.discogs.com", "artists/4001234" };
+inline Url url{ "https", "api.discogs.com", "artists/4001234" };
 
-std::string MapHermesError(Hermes::ConnectionErrorEnum error);
+using ExpString = std::expected<std::string, std::string>;

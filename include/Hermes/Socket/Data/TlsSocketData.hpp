@@ -1,5 +1,6 @@
 #pragma once
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
+#include <Hermes/Socket/_base/TlsSession.hpp>
 #include <Hermes/Socket/_base.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <Hermes/_base/Credentials.hpp>
@@ -46,16 +47,10 @@ namespace Hermes {
         uint32_t pendingData{};
 
         // private:
-        CtxtHandle ctxtHandle{};
-
-        bool requestClientCertificate{};
 
 
         Endpoint endpoint{};
-        SocketFd   socket{ macroINVALID_SOCKET };
-
-        bool isHandshakeComplete{};
-        bool isServer{};
+        SocketFd socket{ macroINVALID_SOCKET };
 
         struct State {
             std::array<std::byte, 0x4800>  encryptedData{};
@@ -66,8 +61,8 @@ namespace Hermes {
         };
 
         std::unique_ptr<State> state{};
+        _details::TlsSession session{};
 
-        SecPkgContext_StreamSizes contextStreamSizes{};
         size_t decryptedOffset{};
 
         static_assert(SocketType == SocketTypeEnum::Stream && "DTLS not implemented yet");
