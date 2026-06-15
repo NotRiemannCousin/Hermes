@@ -163,15 +163,15 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_connection_po
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages the client-side connection lifecycle asynchronously. </p>
 <p>Async counterpart of <code>ConnectionPolicyConcept</code>. Connect and shutdown operations return senders instead of blocking, allowing integration with any <code>stdexec</code>-compatible scheduler. Cleanup operations (<code>Close</code>/<code>Abort</code>) remain synchronous, as resource release must be immediate and unconditional.</p>
-<h3><a class="anchor" id="autotoc_md26"></a>
+<h3><a class="anchor" id="autotoc_md12"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::Options </div>
 </div><!-- fragment --><p> A struct defining settings to configure the socket.</p>
-<h3><a class="anchor" id="autotoc_md27"></a>
+<h3><a class="anchor" id="autotoc_md13"></a>
 Connection</h3>
 <div class="fragment"><div class="line">policy.Connect(data, opt) -&gt; stdexec::sender </div>
 </div><!-- fragment --><p> Initiates a non-blocking connection. Delivers <code>ConnectionResultOper</code> through the sender's value channel on completion.</p>
-<h3><a class="anchor" id="autotoc_md28"></a>
+<h3><a class="anchor" id="autotoc_md14"></a>
 Shutdown &amp; Cleanup</h3>
 <div class="fragment"><div class="line">policy.Shutdown(data) -&gt; stdexec::sender </div>
 </div><!-- fragment --><p> Performs graceful protocol shutdown via network I/O (e.g., sending TLS close alerts or TCP FIN).</p>
