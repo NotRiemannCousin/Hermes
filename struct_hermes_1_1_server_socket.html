@@ -435,8 +435,8 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Returns a seamlessly input_range to the data received by the socket.</dd></dl>
-<p>It delays the char retrieved from <a class="el" href="struct_hermes_1_1_server_socket.html#aa7203bd8d740eee1a342c2b61ac0ab4d">RecvStream()</a> by 1 and discards the last char (0x04 end of transmission in cause of exhaustive read), working similar to what you get in other languages (retrieving the data on ++).</p>
+<dl class="section return"><dt>Returns</dt><dd>Returns a seamless input_range to the data received by the socket.</dd></dl>
+<p>It delays the char retrieved from <a class="el" href="struct_hermes_1_1_server_socket.html#aa7203bd8d740eee1a342c2b61ac0ab4d">RecvStream()</a> by 1 and discards the last char (0x04 end of transmission in case of exhaustive read), working similar to what you get in other languages (retrieving the data on ++).</p>
 <dl class="section note"><dt>Note</dt><dd>If it isn't an exhaustive read, the next char that you was expecting will be discarded anyway so keep you aware of this. </dd></dl>
 
 </div>
@@ -467,7 +467,7 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd>Returns a seamlessly input_range to the data received by the socket.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>Returns a seamless input_range to the data received by the socket.</dd></dl>
 <p>The data is fetched in the <code>operator*()</code> to prevent getting stuck by keep-alive or other idle state triggered by calling ++ one more time. Because of this behavior, it potentially will discover that the transmission ended while trying to get a new value, so a 0x04 char (end of transmission) will be added as the last char. </p>
 
 </div>

@@ -136,19 +136,20 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md__r_e_a_d_m_e"></a> <img src="Hermes-logo.webp" alt="Hermes" title="Hermes, the Greek god of messengers and trade" class="inline"/></p>
-<p>A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. <a class="el" href="namespace_hermes.html">Hermes</a> leverages modern C++ features — <code>std::expected</code>, <code>std::ranges</code>, <code>std::execution</code> (planned), and more — targeting <b>Windows 10 or newer</b> with <b>C++26</b>.</p>
+<p>A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. <a class="el" href="namespace_hermes.html">Hermes</a> leverages modern C++ features — <code>std::expected</code>, <code>std::ranges</code>, <code>std::execution</code>, and more — targeting <b>C++23</b>.</p>
 <blockquote class="doxtable">
-<p>&zwj;<b>Status:</b> v0.2 — active development. Async sockets (<code>std::execution</code>) are planned once compiler support matures. </p>
+<p>&zwj;<b>Status:</b> v0.5 — active development. Async sockets via <code>std::execution</code> are available. Linux is available. </p>
 </blockquote>
 <h1><a class="anchor" id="autotoc_md1"></a>
 &lt;/blockquote&gt;</h1>
 <h1><a class="anchor" id="autotoc_md2"></a>
 Features</h1>
 <ul>
-<li><b>TCP</b> and <b>TCP over TLS</b> (via SChannel — no third-party crypto dependency)</li>
+<li><b>TCP</b> and <b>TCP over TLS</b> (via SChannel on Windows, OpenSSL on Linux — no third-party crypto dependency on Windows)</li>
 <li><b>Policy-based design</b> — connection, transfer, and accept behaviors are independently composable via concepts</li>
-<li><b>Lazy receive ranges</b> — <code>RecvRange</code> is an <a href="https://en.cppreference.com/w/cpp/ranges/input_range.html"><code>input_range</code></a> that fetches bytes on demand, eliminating manual chunk management</li>
+<li><b>Lazy receive ranges</b> — <code>RecvStream</code> is an <a href="https://en.cppreference.com/w/cpp/ranges/input_range.html"><code>input_range</code></a> that fetches bytes on demand, eliminating manual chunk management</li>
 <li>**<code>std::expected</code> throughout** — no exceptions on the hot path</li>
+<li><b>Async support</b> — async sockets via <code>std::execution</code> (senders/receivers) and C++20 coroutines</li>
 <li>Extensible: implement <code>SocketDataConcept</code>, <code>ConnectionPolicyConcept</code> / <code>AcceptPolicyConcept</code>, and <code>TransferPolicyConcept</code> to add your own transport layer protocols</li>
 </ul>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.</p>
@@ -172,15 +173,15 @@ Manual (CMake)</h2>
 <div class="line">CPMAddPackage(</div>
 <div class="line">        NAME Hermes</div>
 <div class="line">        GITHUB_REPOSITORY NotRiemannCousin/Hermes</div>
-<div class="line">        GIT_TAG v0.3.02</div>
+<div class="line">        GIT_TAG v0.5</div>
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="autotoc_md9"></a>
 Example</h1>
-<p>The following example performs an HTTPS GET request, parsing the response incrementally using <code>RecvRange</code>. Notice how <code>UntilMatch</code> and range composition keep the parsing logic concise — no manual buffering.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;Hermes/Socket/ClientSocket.hpp&gt;</span></div>
+<p>The following example performs an HTTPS GET request, parsing the response incrementally using <code>RecvStream</code>. Notice how <code>UntilMatch</code> and range composition keep the parsing logic concise — no manual buffering.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/Sync/ClientSocket.hpp</a>&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_until_match_8hpp.html">Hermes/Utils/UntilMatch.hpp</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">namespace </span>rg = std::ranges;</div>
@@ -203,7 +204,7 @@ Example</h1>
 <div class="line">            format(</div>
 <div class="line">                <span class="stringliteral">&quot;GET /{} HTTP/1.1\r\n&quot;</span></div>
 <div class="line">                <span class="stringliteral">&quot;Accept-Encoding: identity\r\n&quot;</span></div>
-<div class="line">                <span class="stringliteral">&quot;User-Agent: Hermes/0.2\r\n&quot;</span></div>
+<div class="line">                <span class="stringliteral">&quot;User-Agent: Hermes/0.\r\n&quot;</span></div>
 <div class="line">                <span class="stringliteral">&quot;Host: {}\r\n\r\n&quot;</span>,</div>
 <div class="line">                url.path, url.hostname) };</div>
 <div class="line"> </div>
@@ -294,6 +295,7 @@ Example</h1>
 <div class="line">            .and_then(s_getResponse)</div>
 <div class="line">            .transform(s_processData);</div>
 <div class="line">}</div>
+<div class="ttc" id="a_client_socket_8hpp_html"><div class="ttname"><a href="_client_socket_8hpp.html">ClientSocket.hpp</a></div></div>
 <div class="ttc" id="a_until_match_8hpp_html"><div class="ttname"><a href="_until_match_8hpp.html">UntilMatch.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_1_1__details_html_acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="namespace_hermes_1_1__details.html#acabdad96039482c899b5c1465785cb0da902b0d55fddef6f8d651fe1035b7d4bd">Hermes::_details::AcceptStateOpResult::Error</a></div><div class="ttdeci">@ Error</div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div></div>
@@ -305,7 +307,6 @@ Example</h1>
 <h1><a class="anchor" id="autotoc_md11"></a>
 Roadmap</h1>
 <ul>
-<li>Async sockets via <code>std::execution</code> (pending compiler support)</li>
 <li>UDP sockets</li>
 <li>pixi and vcpkg packages</li>
 </ul>
@@ -313,8 +314,8 @@ Roadmap</h1>
 <h1><a class="anchor" id="autotoc_md13"></a>
 Requirements</h1>
 <ul>
-<li>Windows 10 or newer</li>
-<li>MSVC with C++26 support</li>
+<li>Windows 10 or newer / Linux</li>
+<li>MSVC or GCC with C++26 support (GCC/Clang on Linux)</li>
 <li>CMake 3.29.1 or newer </li>
 </ul>
 </div></div><!-- PageDoc -->

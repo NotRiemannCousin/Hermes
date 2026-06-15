@@ -164,7 +164,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_accept_policy_conce
 <h3><a class="anchor" id="autotoc_md22"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::Options </div>
-</div><!-- fragment --><p> A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE). This settings will be used to modify Listen() behavior.</p>
+</div><!-- fragment --><p> A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE). These settings will be used to modify Listen() behavior.</p>
 <h3><a class="anchor" id="autotoc_md23"></a>
 Initialization</h3>
 <div class="fragment"><div class="line">policy.Listen(data, backlog, opt) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
@@ -177,7 +177,7 @@ Connection</h3>
 <h3><a class="anchor" id="autotoc_md25"></a>
 Cleanup</h3>
 <div class="fragment"><div class="line">policy.Close(data) -&gt; <span class="keywordtype">void</span> </div>
-</div><!-- fragment --><p> Stops listening and (gracefuly) closes the server socket.</p>
+</div><!-- fragment --><p> Stops listening and (gracefully) closes the server socket.</p>
 <div class="fragment"><div class="line">policy.Abort(data) -&gt; <span class="keywordtype">void</span> </div>
 </div><!-- fragment --><p> Terminates abruptly an accepted connection. </p>
 </div></div><!-- contents -->
