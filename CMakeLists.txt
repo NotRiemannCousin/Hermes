@@ -1,12 +1,12 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.4
+        VERSION 0.5
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )
 
-set(PROJECT_VERSION_SUFFIX "")
+set(PROJECT_VERSION_SUFFIX "-beta")
 set(FULL_PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
 
@@ -24,7 +24,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include(cmake/get_cpm.cmake)
 
-# TODO: Remove when it arives at STL.
+# TODO: Remove when it arrives at STL.
 CPMFindPackage(
         NAME stdexec
         GITHUB_REPOSITORY NVIDIA/stdexec

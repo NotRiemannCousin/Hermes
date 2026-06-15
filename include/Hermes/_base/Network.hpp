@@ -3,7 +3,7 @@
 
 
 namespace Hermes {
-    //! Network is a static utility class used to initializing and access important things like WSA stuff and
+    //! Network is a static utility class used to initialize and access important things like WSA stuff and
     //! credentials.
     struct Network {
         Network() = delete;

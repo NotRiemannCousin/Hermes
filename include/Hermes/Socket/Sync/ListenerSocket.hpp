@@ -60,7 +60,7 @@ namespace Hermes {
 
         //! @copydoc AcceptOne
         //!
-        //! Used to desaguambigate pointer cast for functions with overloads.
+        //! Used to disambiguate pointer cast for functions with overloads.
         [[nodiscard]] ConnectionResult<ServerSocketType> AcceptOneConnection() noexcept
             requires std::default_initializable<typename AcceptPolicy::AcceptOptions>;
 

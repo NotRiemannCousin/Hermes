@@ -186,7 +186,7 @@ namespace Hermes {
     //! ### Configuration
     //! @code{.cpp} typename Policy::Options @endcode
     //! A struct defining settings to configure the socket (e.g., ONLY_IPV6, timeout, KEEP_ALIVE).
-    //! This settings will be used to modify Listen() behavior.
+    //! These settings will be used to modify Listen() behavior.
     //!
     //! ### Initialization
     //! @code{.cpp} policy.Listen(data, backlog, opt) -> ConnectionResultOper @endcode
@@ -200,7 +200,7 @@ namespace Hermes {
     //!
     //! ### Cleanup
     //! @code{.cpp} policy.Close(data) -> void @endcode
-    //! Stops listening and (gracefuly) closes the server socket.
+    //! Stops listening and (gracefully) closes the server socket.
     //!
     //! @code{.cpp} policy.Abort(data) -> void @endcode
     //! Terminates abruptly an accepted connection.

@@ -2,18 +2,19 @@
 
 ![Hermes](Hermes-logo.webp "Hermes, the Greek god of messengers and trade")
 
-A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution` (planned), and more — targeting **Windows 10 or newer** with **C++26**.
+A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution`, and more — targeting **C++23**.
 
-> **Status:** v0.2 — active development. Async sockets (`std::execution`) are planned once compiler support matures.
+> **Status:** v0.5 — active development. Async sockets via `std::execution` are available. Linux is available.
 
 ---
 
 ## Features
 
-- **TCP** and **TCP over TLS** (via SChannel — no third-party crypto dependency)
+- **TCP** and **TCP over TLS** (via SChannel on Windows, OpenSSL on Linux — no third-party crypto dependency on Windows)
 - **Policy-based design** — connection, transfer, and accept behaviors are independently composable via concepts
-- **Lazy receive ranges** — `RecvRange` is an [`input_range`](https://en.cppreference.com/w/cpp/ranges/input_range.html) that fetches bytes on demand, eliminating manual chunk management
+- **Lazy receive ranges** — `RecvStream` is an [`input_range`](https://en.cppreference.com/w/cpp/ranges/input_range.html) that fetches bytes on demand, eliminating manual chunk management
 - **`std::expected` throughout** — no exceptions on the hot path
+- **Async support** — async sockets via `std::execution` (senders/receivers) and C++20 coroutines
 - Extensible: implement `SocketDataConcept`, `ConnectionPolicyConcept` / `AcceptPolicyConcept`, and `TransferPolicyConcept` to add your own transport layer protocols
 
 Hermes operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.
@@ -38,7 +39,7 @@ include(CPM.cmake)
 CPMAddPackage(
         NAME Hermes
         GITHUB_REPOSITORY NotRiemannCousin/Hermes
-        GIT_TAG v0.3.02
+        GIT_TAG v0.5
 )
 
 target_link_libraries(your_target PRIVATE Hermes)
@@ -48,10 +49,10 @@ target_link_libraries(your_target PRIVATE Hermes)
 
 ## Example
 
-The following example performs an HTTPS GET request, parsing the response incrementally using `RecvRange`. Notice how `UntilMatch` and range composition keep the parsing logic concise — no manual buffering.
+The following example performs an HTTPS GET request, parsing the response incrementally using `RecvStream`. Notice how `UntilMatch` and range composition keep the parsing logic concise — no manual buffering.
 
 ```cpp
-#include <Hermes/Socket/ClientSocket.hpp>
+#include <Hermes/Socket/Sync/ClientSocket.hpp>
 #include <Hermes/Utils/UntilMatch.hpp>
 
 namespace rg = std::ranges;
@@ -74,7 +75,7 @@ std::expected<std::monostate, std::string> MakeRequest() {
             format(
                 "GET /{} HTTP/1.1\r\n"
                 "Accept-Encoding: identity\r\n"
-                "User-Agent: Hermes/0.2\r\n"
+                "User-Agent: Hermes/0.\r\n"
                 "Host: {}\r\n\r\n",
                 url.path, url.hostname) };
 
@@ -171,7 +172,6 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
 ## Roadmap
 
-- Async sockets via `std::execution` (pending compiler support)
 - UDP sockets
 - pixi and vcpkg packages
 
@@ -179,6 +179,6 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
 ## Requirements
 
-- Windows 10 or newer
-- MSVC with C++26 support
+- Windows 10 or newer / Linux
+- MSVC or GCC with C++26 support (GCC/Clang on Linux)
 - CMake 3.29.1 or newer

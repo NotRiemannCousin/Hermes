@@ -14,7 +14,7 @@ struct Url {
         return std::format(
             "GET /{} HTTP/1.1\r\n"
             "Accept-Encoding: identity\r\n"
-            "User-Agent: Hermes/0.2\r\n"
+            "User-Agent: Hermes/0.5\r\n"
             "Connection: close\r\n"
             "Host: {}\r\n\r\n",
             path, hostname);

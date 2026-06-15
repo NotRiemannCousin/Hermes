@@ -44,7 +44,7 @@ namespace Hermes {
         template<WritableContiguousByteRange R>
         StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
-        //! @return Returns a seamlessly input_range to the data received by the socket.
+        //! @return Returns a seamless input_range to the data received by the socket.
         //!
         //! The data is fetched in the `operator*()` to prevent getting stuck by keep-alive or other
         //! idle state triggered by calling ++ one more time. Because of this behavior, it potentially
@@ -53,10 +53,10 @@ namespace Hermes {
         template<ByteLike Byte = std::byte>
         auto RecvStream() noexcept;
 
-        //! @return Returns a seamlessly input_range to the data received by the socket.
+        //! @return Returns a seamless input_range to the data received by the socket.
         //!
         //! It delays the char retrieved from RecvStream() by 1 and discards the last char (0x04
-        //! end of transmission in cause of exhaustive read), working similar to what you get in
+        //! end of transmission in case of exhaustive read), working similar to what you get in
         //! other languages (retrieving the data on ++).
         //!
         //! @note If it isn't an exhaustive read, the next char that you was expecting will be

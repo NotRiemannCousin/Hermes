@@ -90,7 +90,7 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
 
             return std::format(
                 "HTTP/1.1 200 OK\r\n"
-                "Server: Hermes/0.2 (Async)\r\n"
+                "Server: Hermes/0.5 (Async)\r\n"
                 "Content-Type: text/html\r\n"
                 "Content-Length: {}\r\n"
                 "Connection: keep-alive\r\n\r\n"
