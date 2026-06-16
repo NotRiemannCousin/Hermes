@@ -145,11 +145,11 @@ $(document).ready(function(){initNavTree('_macros_8hpp_source.html',''); initRes
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#define _WINSOCK_DEPRECATED_NO_WARNINGS</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#define SECURITY_WIN32</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;winsock2.h&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;schannel.h&gt;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;sspi.h&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;string_view&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;winsock2.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;schannel.h&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;sspi.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;<a class="code" href="_types_8hpp.html">Hermes/_base/OsApi/Types.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> macroWINSOCK_VERSION{ WINSOCK_VERSION };</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
@@ -162,7 +162,7 @@ $(document).ready(function(){initNavTree('_macros_8hpp_source.html',''); initRes
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">constexpr</span> <a class="code hl_typedef" href="namespace_hermes.html#ad98e18cda370c46945ee9316d4a6422b">SocketFd</a> <a class="code hl_variable" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> { INVALID_SOCKET };</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">constexpr</span> <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::SocketFd</a> <a class="code hl_variable" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> { INVALID_SOCKET };</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> <a class="code hl_variable" href="_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea">macroSOCKET_ERROR</a>   { <span class="keyword">static_cast&lt;</span><span class="keywordtype">size_t</span><span class="keyword">&gt;</span>(SOCKET_ERROR) };</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
@@ -193,7 +193,8 @@ $(document).ready(function(){initNavTree('_macros_8hpp_source.html',''); initRes
 <div class="ttc" id="a_macros_8hpp_html_a363e448552df15b090a788e504401996"><div class="ttname"><a href="_macros_8hpp.html#a363e448552df15b090a788e504401996">macroSO_TYPE</a></div><div class="ttdeci">constexpr size_t macroSO_TYPE</div><div class="ttdef"><b>Definition</b> Macros.hpp:44</div></div>
 <div class="ttc" id="a_macros_8hpp_html_a7fbbff0d9f1cba84718c62e0573a03ea"><div class="ttname"><a href="_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea">macroSOCKET_ERROR</a></div><div class="ttdeci">constexpr size_t macroSOCKET_ERROR</div><div class="ttdef"><b>Definition</b> Macros.hpp:48</div></div>
 <div class="ttc" id="a_macros_8hpp_html_a89a20c922a5445760ce416b10c610d99"><div class="ttname"><a href="_macros_8hpp.html#a89a20c922a5445760ce416b10c610d99">macroSOL_SOCKET</a></div><div class="ttdeci">constexpr size_t macroSOL_SOCKET</div><div class="ttdef"><b>Definition</b> Macros.hpp:45</div></div>
-<div class="ttc" id="anamespace_hermes_html_ad98e18cda370c46945ee9316d4a6422b"><div class="ttname"><a href="namespace_hermes.html#ad98e18cda370c46945ee9316d4a6422b">Hermes::SocketFd</a></div><div class="ttdeci">int SocketFd</div><div class="ttdef"><b>Definition</b> OsApi.hpp:79</div></div>
+<div class="ttc" id="a_types_8hpp_html"><div class="ttname"><a href="_types_8hpp.html">Types.hpp</a></div></div>
+<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

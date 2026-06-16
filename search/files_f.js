@@ -11,5 +11,6 @@ var searchData=
   ['tlssocketdata_2ehpp_8',['TlsSocketData.hpp',['../_tls_socket_data_8hpp.html',1,'']]],
   ['tlstransferpolicy_2ehpp_9',['TlsTransferPolicy.hpp',['../_tls_transfer_policy_8hpp.html',1,'']]],
   ['tlstransferstatemachine_2ehpp_10',['TlsTransferStateMachine.hpp',['../_tls_transfer_state_machine_8hpp.html',1,'']]],
-  ['tobytes_2ehpp_11',['ToBytes.hpp',['../_to_bytes_8hpp.html',1,'']]]
+  ['tobytes_2ehpp_11',['ToBytes.hpp',['../_to_bytes_8hpp.html',1,'']]],
+  ['types_2ehpp_12',['Types.hpp',['../_types_8hpp.html',1,'']]]
 ];
