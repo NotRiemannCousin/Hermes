@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <cstddef>
+#include <string>
 #include <memory>
 #include <span>
 

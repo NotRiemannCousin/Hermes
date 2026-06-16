@@ -2,6 +2,7 @@
 #pragma once
 #include <Hermes/Utils/Hash.hpp>
 #include <format>
+#include <iostream>
 #include <functional>
 #include <ranges>
 
@@ -34,7 +35,7 @@ namespace std {
         //! @note If 'b' is specified, IPv6 will be formatted between '[' and ']'.
         //! @note The order of the args matters, 'f' needs to be before 'b'.
         constexpr auto parse(auto &ctx) {
-            auto &&it = ctx.begin();
+            auto&& it{ ctx.begin() };
             while (it != ctx.end() && *it != '}') {
                 if (*it == 'f') _ipv6Reduced = false;
                 else if (*it == 'b') _ipv6Brackets = true;
@@ -112,7 +113,7 @@ namespace std {
         }
 
     private:
-        bool _ipv6Reduced{};
+        bool _ipv6Reduced{ true };
         bool _ipv6Brackets{};
 
         static constexpr auto s_ipv6FmtData = [] {

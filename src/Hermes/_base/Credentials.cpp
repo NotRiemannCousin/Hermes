@@ -28,8 +28,11 @@ static std::expected<std::vector<std::byte>, Hermes::CredentialErrorEnum> S_Read
 
 
 #ifdef _WIN32
+#include <Hermes/_base/OsApi/Enums/Windows/EncryptStatusEnum.hpp>
 
 static Hermes::CredentialErrorEnum S_MapSecurityStatus(SECURITY_STATUS status) noexcept {
+    using Hermes::EncryptStatusEnum;
+
     switch (static_cast<EncryptStatusEnum>(status)) {
         case EncryptStatusEnum::ErrOk                 : return Hermes::CredentialErrorEnum::None;
         case EncryptStatusEnum::ErrSecPkgNotFound     : return Hermes::CredentialErrorEnum::SecurityPackageNotFound;

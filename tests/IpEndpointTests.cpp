@@ -196,8 +196,12 @@ TEST_F(IpEndpointTest, Format_Ipv4_MaxPort) {
     EXPECT_EQ(std::format("{}", epMaxPort), "127.0.0.1:65535");
 }
 
+TEST_F(IpEndpointTest, Format_Ipv6) {
+    EXPECT_EQ(std::format("{:}", ep80v6), "[::1]:80");
+}
+
 TEST_F(IpEndpointTest, Format_Ipv6_FullForm) {
-    EXPECT_EQ(std::format("{}", ep80v6), "0000:0000:0000:0000:0000:0000:0000:0001:80");
+    EXPECT_EQ(std::format("{:f}", ep80v6), "[0000:0000:0000:0000:0000:0000:0000:0001]:80");
 }
 
 #pragma endregion

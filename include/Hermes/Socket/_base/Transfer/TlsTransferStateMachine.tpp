@@ -26,7 +26,7 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     StreamByteOper TlsTransferStateMachine<Data, TransferPolicy>::GetResult() const noexcept {
-        return { _totalTransferred, _errorStatus };
+        return { _totalProcessed, _errorStatus };
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
@@ -40,7 +40,7 @@ namespace Hermes::_details {
         _userRecvBuffer   = buffer;
         _recvMode         = mode;
         _initialSize      = buffer.size();
-        _totalTransferred = 0;
+        _totalProcessed = 0;
         SetToRecv();
     }
 
@@ -48,7 +48,7 @@ namespace Hermes::_details {
     void TlsTransferStateMachine<Data, TransferPolicy>::StartToSend(std::span<const std::byte> buffer) noexcept {
         _userSendBuffer   = buffer;
         _initialSize      = buffer.size();
-        _totalTransferred = 0;
+        _totalProcessed = 0;
         SetToSend();
     }
 
@@ -110,7 +110,7 @@ namespace Hermes::_details {
 
             _userRecvBuffer = _userRecvBuffer.subspan(countToCopy);
             dataSpan = dataSpan.subspan(countToCopy);
-            _totalTransferred += countToCopy;
+            _totalProcessed += countToCopy;
 
             if (!dataSpan.empty()) {
                 std::memmove(data.state->decryptedData.data(), dataSpan.data(), dataSpan.size());
@@ -169,7 +169,7 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::_RecvDecryptState(Data &data) {
-        auto outcome = data.session.Decrypt(data.state->decryptedDataSpan);
+        auto outcome{ data.session.Decrypt(data.state->decryptedDataSpan) };
         _status = outcome.status;
 
         data.state->decryptedDataSpan = outcome.data;
@@ -230,16 +230,18 @@ namespace Hermes::_details {
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::_SendChunkState(Data &data) {
-        if (_totalTransferred >= _initialSize) NEXT(Done);
+        if (_totalProcessed >= _initialSize) NEXT(Done);
 
-        const size_t remainingBytes{ _initialSize - _totalTransferred };
+        const size_t remainingBytes{ _initialSize - _totalProcessed };
         _chunkSize = (std::min)(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
 
-        auto outcome = data.session.Encrypt(
-            std::span<const std::byte>{_userSendBuffer.data() + _totalTransferred, _chunkSize},
-            std::span<std::byte>{data.state->encryptedData}
-        );
+
+        const auto outcome{ data.session.Encrypt(
+            _userSendBuffer.subspan(_totalProcessed, _chunkSize), std::span<std::byte>{ data.state->encryptedData }
+        ) };
         _status = outcome.status;
+        _encryptedSize = outcome.produced;
+        _totalProcessed += _chunkSize;
 
         if (_status != EncryptStatusEnum::ErrOk) {
             if (_status == EncryptStatusEnum::InfoContextExpired)
@@ -249,7 +251,6 @@ namespace Hermes::_details {
             NEXT(Error);
         }
 
-        _encryptedSize = outcome.produced;
         _sentBytes = 0;
         NEXT(SendNetworkWrite);
     }
@@ -278,7 +279,6 @@ namespace Hermes::_details {
             NEXT(SendNetworkWrite);
         }
 
-        _totalTransferred += _chunkSize;
         NEXT(SendChunk);
     }
 

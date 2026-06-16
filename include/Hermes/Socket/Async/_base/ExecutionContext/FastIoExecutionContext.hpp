@@ -11,7 +11,7 @@ namespace Hermes {
 
 #ifdef _WIN32
     struct TransferOperStatus : WSAOVERLAPPED {
-        using Operation = void(void* context, size_t transferedBytes, bool success);
+        using Operation = void(void* context, LongIoCount transferedBytes, bool success);
 
         void* context{};
         Operation* callback{};

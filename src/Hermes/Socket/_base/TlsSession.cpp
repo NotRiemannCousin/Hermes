@@ -36,11 +36,11 @@ namespace Hermes::_details {
         std::array<SecBuffer, 4> _secBuffers{};
 
 
-        SecBuffer& TokenBuffer() const noexcept { return _secBuffers[0]; }
-        SecBuffer& ExtraBuffer() const noexcept { return _secBuffers[1]; }
+        SecBuffer& TokenBuffer() noexcept { return _secBuffers[0]; }
+        SecBuffer& ExtraBuffer() noexcept { return _secBuffers[1]; }
 
-        SecBuffer& OutBuffer() const noexcept { return _secBuffers[2]; }
-        SecBuffer& MsgBuffer() const noexcept { return _secBuffers[3]; }
+        SecBuffer& OutBuffer() noexcept { return _secBuffers[2]; }
+        SecBuffer& MsgBuffer() noexcept { return _secBuffers[3]; }
 
 
         SecBufferDesc _inBufferDesc { .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &TokenBuffer() };
@@ -48,17 +48,17 @@ namespace Hermes::_details {
 
 #pragma endregion
 
-        ~Impl() const noexcept {
+        ~Impl() noexcept {
             if (_ctxtHandle.dwLower != 0 || _ctxtHandle.dwUpper != 0)
                 ::DeleteSecurityContext(&_ctxtHandle);
         }
     };
 
 
-    void TlsSession::BeginClient(const Credentials& creds, std::string_view host,
+    void TlsSession::BeginClient(const Credentials& creds, std::string host,
                                  bool ignoreCertErrors, bool mutualAuth) const noexcept {
         _impl->_credHandle        = creds.GetCredHandle();
-        _impl->_host              = std::string{ host };
+        _impl->_host              = std::move(host);
         _impl->_isServer          = false;
         _impl->_ignoreCertErrors  = ignoreCertErrors;
         _impl->_mutualAuth        = mutualAuth;
@@ -161,7 +161,7 @@ namespace Hermes::_details {
         const auto& sizes{ _impl->_streamSizes };
 
         _impl->_secBuffers[0] = SecBuffer{ sizes.cbHeader      , _tul(SecurityBufferEnum::StreamHeader) , outBuf.data() };
-        _impl->_secBuffers[1] = SecBuffer{ _tul(plain.size())  , _tul(SecurityBufferEnum::Data)         , outBuf.data() + sizes.cbHeader };
+        _impl->_secBuffers[1] = SecBuffer{ _tul(plain.size()), _tul(SecurityBufferEnum::Data)         , outBuf.data() + sizes.cbHeader };
         _impl->_secBuffers[2] = SecBuffer{ sizes.cbTrailer     , _tul(SecurityBufferEnum::StreamTrailer), outBuf.data() + sizes.cbHeader + plain.size() };
         _impl->_secBuffers[3] = SecBuffer{ 0                   , _tul(SecurityBufferEnum::Empty)        , nullptr };
 
@@ -179,20 +179,21 @@ namespace Hermes::_details {
 
 
     TlsSession::DecryptOutcome TlsSession::Decrypt(std::span<std::byte> inBytes) const noexcept {
-        _impl->_secBuffers[0] = SecBuffer{ _tul(inBytes.size()), _tul(SecurityBufferEnum::Data), inBytes.data() };
-        _impl->_secBuffers[1] = _impl->_secBuffers[2] = _impl->_secBuffers[3] = SecBuffer{ 0, _tul(SecurityBufferEnum::Empty), nullptr };
+        std::span buffs{ _impl->_secBuffers };
+        buffs[0] = SecBuffer{ _tul(inBytes.size()), _tul(SecurityBufferEnum::Data), inBytes.data() };
+        buffs[1] = buffs[2] = buffs[3] = SecBuffer{ 0, _tul(SecurityBufferEnum::Empty), nullptr };
 
-        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, _impl->_secBuffers.data() };
+        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, buffs.data() };
         const SECURITY_STATUS status{ ::DecryptMessage(&_impl->_ctxtHandle, &buffDesc, 0, nullptr) };
 
-        DecryptOutcome out{ static_cast<EncryptStatusEnum>(status), {}, {} };
+        DecryptOutcome out{ static_cast<EncryptStatusEnum>(status), {}, inBytes };
 
-        const auto dataBuffer { std::ranges::find(_impl->_secBuffers, _tul(SecurityBufferEnum::Data),  &SecBuffer::BufferType) };
-        const auto extraBuffer{ std::ranges::find(_impl->_secBuffers, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
+        const auto dataBuffer { std::ranges::find(buffs, _tul(SecurityBufferEnum::Data),  &SecBuffer::BufferType) };
+        const auto extraBuffer{ std::ranges::find(buffs, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
 
-        if (dataBuffer != _impl->_secBuffers.end() && dataBuffer->cbBuffer > 0)
-            out.data = { static_cast<std::byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer };
-        if (extraBuffer != _impl->_secBuffers.end() && extraBuffer->cbBuffer > 0)
+        if (dataBuffer != buffs.end() && dataBuffer->cbBuffer > 0)
+            out.data = { static_cast<std::byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer }, out.extra = {};
+        if (extraBuffer != buffs.end() && extraBuffer->cbBuffer > 0)
             out.extra = { static_cast<std::byte*>(extraBuffer->pvBuffer), extraBuffer->cbBuffer };
 
         return out;
@@ -371,13 +372,6 @@ namespace Hermes::_details {
             SSL_set_verify(_impl->_ssl, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, nullptr);
     }
 
-    TlsSession TlsSession::MakeChild() const {
-        TlsSession session;
-        session._impl->_isServer = _impl->_isServer;
-        return session;
-    }
-
-
 
     bool TlsSession::IsServer()            const noexcept { return _impl->_isServer; }
     bool TlsSession::IsActive()            const noexcept { return _impl->_ssl != nullptr; }
@@ -523,4 +517,9 @@ namespace Hermes::_details {
     TlsSession::TlsSession(TlsSession&& other) noexcept = default;
     TlsSession& TlsSession::operator=(TlsSession&& other) noexcept = default;
 
+    TlsSession TlsSession::MakeChild() const {
+        TlsSession session;
+        session._impl->_isServer = _impl->_isServer;
+        return session;
+    }
 }

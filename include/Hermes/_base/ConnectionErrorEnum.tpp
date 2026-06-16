@@ -2,6 +2,7 @@
 // ReSharper disable CppPassValueParameterByConstReference
 #pragma once
 #include <format>
+#include <iostream>
 
 
 namespace std {

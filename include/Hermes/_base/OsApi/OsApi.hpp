@@ -49,17 +49,16 @@
 #include <ws2tcpip.h>
 #include <winsock2.h>
 
-#include <ntdef.h>
+// #include <ntdef.h>
 
-// typedef struct _UNICODE_STRING {
-//     USHORT Length;
-//     USHORT MaximumLength;
-//     PWSTR Buffer;
-// } UNICODE_STRING, *PUNICODE_STRING;
+typedef struct _UNICODE_STRING {
+    USHORT Length;
+    USHORT MaximumLength;
+    PWSTR Buffer;
+} UNICODE_STRING, *PUNICODE_STRING;
 
 #include <schannel.h>
 #include <sspi.h>
-
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -67,23 +66,9 @@
 #include <netdb.h>
 #include <unistd.h>
 #endif
-
+#include <Hermes/_base/OsApi/Types.hpp>
 
 namespace Hermes {
-#ifdef _WIN32
-    using SocketFd = SOCKET;
-    using IoCount = int;
-    using LongIoCount = DWORD;
-    using SocketHandle = HANDLE;
-#else
-    using SocketFd = int;
-    using IoCount = ssize_t;
-    using LongIoCount = unsigned long;
-    using SocketHandle = int*;
-#endif
-
-
-
     int CloseSocket(SocketFd socket);
 #ifdef _WIN32
     inline int CloseSocket(SocketFd socket) {

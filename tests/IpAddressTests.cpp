@@ -385,20 +385,20 @@ TEST_F(IpAddressTest, Format_Ipv4_Public) {
 
 TEST_F(IpAddressTest, Format_Ipv6_Reduced) {
     // ::1 in reduced form
-    EXPECT_EQ(std::format("{:f}", loopback6), "::1");
+    EXPECT_EQ(std::format("{:}", loopback6), "::1");
 }
 
 TEST_F(IpAddressTest, Format_Ipv6_Full) {
-    EXPECT_EQ(std::format("{}", loopback6), "0000:0000:0000:0000:0000:0000:0000:0001");
+    EXPECT_EQ(std::format("{:f}", loopback6), "0000:0000:0000:0000:0000:0000:0000:0001");
 }
 
 TEST_F(IpAddressTest, Format_Ipv6_Reduced_LinkLocal) {
     // fe80::1
-    EXPECT_EQ(std::format("{:f}", linkLocal6), "fe80::1");
+    EXPECT_EQ(std::format("{:}", linkLocal6), "fe80::1");
 }
 
 TEST_F(IpAddressTest, Format_Ipv6_Brackets) {
-    EXPECT_EQ(std::format("{:fb}", loopback6), "[::1]");
+    EXPECT_EQ(std::format("{:b}", loopback6), "[::1]");
 }
 
 #pragma endregion

@@ -19,6 +19,7 @@ using Hermes::RawTlsClient;
 using Hermes::RawTlsListener;
 using Hermes::RawTlsServer;
 using Hermes::TlsSocketData;
+using Hermes::SChannelCredFlags;
 
 namespace rg = std::ranges;
 

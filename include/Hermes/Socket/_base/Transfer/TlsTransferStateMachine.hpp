@@ -49,7 +49,7 @@ namespace Hermes::_details {
         RecvModeEnum _recvMode{ RecvModeEnum::All };
 
         size_t _initialSize{};
-        size_t _totalTransferred{};
+        size_t _totalProcessed{};
 
         size_t _chunkSize{};
         size_t _encryptedSize{};

@@ -1,5 +1,6 @@
 #pragma once
 #include <optional>
+#include <iostream>
 #include <string>
 
 namespace std {
@@ -18,12 +19,24 @@ namespace std {
     struct formatter<Hermes::IpEndpoint> {
         using Endpoint = Hermes::IpEndpoint;
 
-        constexpr auto parse(auto& ctx) { return ctx.begin(); }
+        constexpr auto parse(auto& ctx) {
+            auto it{ ctx.begin() };
+
+            if (it != ctx.end() && *it == 'f')
+                ++it, _ipv6Reduced = false;
+
+            return it;
+        }
 
         template<class FormatContext>
         auto format(const Endpoint &endpoint, FormatContext &ctx) const {
-            return std::format_to(ctx.out(), "{}:{}", endpoint._ip, endpoint._port);
+            if (_ipv6Reduced)
+                return std::format_to(ctx.out(), "{:b}:{}", endpoint._ip, endpoint._port);
+            return std::format_to(ctx.out(), "{:fb}:{}", endpoint._ip, endpoint._port);
         }
+
+    private:
+        bool _ipv6Reduced{ true };
     };
 }
 

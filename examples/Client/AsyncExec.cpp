@@ -115,7 +115,7 @@ extern ExpString MakeRequest() {
         state->response.resize(bodySize);
 
         // Not an accurate way to implement HTTP. It's assuming a chunk based response and parsing just the first
-        // chunk (needs exec::repeat_effect to implement it properly), but in this example it's enough.
+        // chunk (needs exec::repeat_effect_until to implement it properly), but in this example it's enough.
         if (body.size() >= bodySize)
             return Sender{ stdexec::just(std::size_t{}) } | stdexec::then(s_retResp);
 

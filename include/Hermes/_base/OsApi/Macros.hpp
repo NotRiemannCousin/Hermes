@@ -3,11 +3,11 @@
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SECURITY_WIN32
 
-
 #include <string_view>
 #include <winsock2.h>
 #include <schannel.h>
 #include <sspi.h>
+#include <Hermes/_base/OsApi/Types.hpp>
 
 constexpr size_t macroWINSOCK_VERSION{ WINSOCK_VERSION };
 
@@ -20,7 +20,7 @@ constexpr size_t macroSO_PROTOCOL_INFO { SO_PROTOCOL_INFO };
 
 
 
-constexpr SocketFd macroINVALID_SOCKET { INVALID_SOCKET };
+constexpr Hermes::SocketFd macroINVALID_SOCKET { INVALID_SOCKET };
 constexpr size_t macroSOCKET_ERROR   { static_cast<size_t>(SOCKET_ERROR) };
 
 
