@@ -97,9 +97,7 @@ namespace Hermes {
     };
 
     using RawTcpListener = ListenerSocket<>;
-#ifdef _WIN32
     using RawTlsListener = ListenerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
-#endif
 }
 
 #include <Hermes/Socket/Sync/ListenerSocket.tpp>

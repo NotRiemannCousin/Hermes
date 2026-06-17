@@ -11,6 +11,17 @@
 #include <atomic>
 #include <optional>
 
+#ifndef _WIN32
+#include <signal.h>
+
+class LinuxTestEnvironment : public testing::Environment {
+public:
+    void SetUp() override { signal(SIGPIPE, SIG_IGN); }
+};
+
+const testing::Environment* const g_linux_env = testing::AddGlobalTestEnvironment(new LinuxTestEnvironment);
+#endif
+
 using Hermes::ConnectionErrorEnum;
 using Hermes::IpAddress;
 using Hermes::IpEndpoint;
@@ -73,16 +84,17 @@ TEST_F(TlsListenerSocketTest, Listen_ValidLoopbackEndpoint_Succeeds) {
 
 TEST_F(TlsListenerSocketTest, Listen_PortAlreadyBound_ReturnsAddressInUse) {
     const std::uint16_t port{ I_GetNextPort() };
-    auto first{ I_MakeListenSocket(port, {{ .reuseAddress = false }}) };
+
+    auto first{ I_MakeListenSocket(port) };
     ASSERT_TRUE(first.has_value());
 
-    const auto second{ I_MakeListenSocket(port) };
+    const auto second{ I_MakeListenSocket(port, {{ .reuseAddress = false }}) };
     ASSERT_FALSE(second.has_value());
     EXPECT_EQ(second.error(), ConnectionErrorEnum::AddressInUse);
 }
 
 TEST_F(TlsListenerSocketTest, Listen_InvalidAddress_ReturnsError) {
-    const IpAddress foreignIp{ IpAddress::FromIpv4({8, 8, 8, 8}) };
+    const IpAddress foreignIp{ IpAddress::FromIpv4({ 8, 8, 8, 8 }) };
     const auto result{ RawTlsListener::Listen({ IpEndpoint{ foreignIp, I_GetNextPort() }, std::string{ kTlsHost }, I_GetServerAuth() }) };
     ASSERT_FALSE(result.has_value());
 }
@@ -151,9 +163,9 @@ TEST_F(TlsListenerSocketTest, AcceptOne_HandshakeTimeout_AbortsTlsEarly) {
         std::this_thread::sleep_for(500ms);
     }};
 
-    auto start{ steady_clock::now() };
+    const auto start{ steady_clock::now() };
     const auto result{ listener->AcceptOne({ .handshakeTimeout = 50ms }) };
-    auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
+    const auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
 
     EXPECT_FALSE(result.has_value());
     EXPECT_LT(elapsed, 400ms);
@@ -245,15 +257,15 @@ TEST_F(TlsClientSocketTest, Connect_HandshakeTimeout_AbortsTlsEarly) {
 struct TlsSocketBridgeFixture : testing::Test {
     std::optional<RawTlsClient> client{};
     std::optional<RawTlsServer> server{};
-
+    protected:
     void SetUp() override {
         const std::uint16_t port{ I_GetNextPort() };
         auto listener{ I_MakeListenSocket(port) };
         ASSERT_TRUE(listener.has_value());
 
-        std::jthread acceptThread{[&]() {
+        std::jthread acceptThread{ [&]() {
             if (auto srv{ listener->AcceptOne() }) server.emplace(std::move(*srv));
-        }};
+        } };
 
         auto cli{ I_MakeClientSocket(port) };
         ASSERT_TRUE(cli.has_value());
@@ -300,7 +312,7 @@ TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {
         outBuf[i] = static_cast<std::byte>(i & 0xff);
     }
 
-    EXPECT_TRUE(client->Send(outBuf).second.has_value());
+    std::jthread sender{[&] { EXPECT_TRUE(client->Send(outBuf).second.has_value()); }};
 
     std::vector<std::byte> inBuf{};
     inBuf.resize(payloadSize);

@@ -79,9 +79,7 @@ namespace Hermes {
 
 
     using RawTcpServer = ServerSocket<>;
-#ifdef _WIN32
     using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
-#endif
     // using RawUdpServer = ServerSocket<
     //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,
     //     DefaultAcceptPolicy<IpEndpoint, SocketTypeEnum::Dgram>,
