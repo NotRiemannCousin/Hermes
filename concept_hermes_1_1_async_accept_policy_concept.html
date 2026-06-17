@@ -154,32 +154,32 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_accept_policy
 <div class="line">        &amp;&amp; <span class="keyword">requires</span>(Policy policy, SocketData&amp; data, <span class="keyword">typename</span> Policy::AcceptOptions opt) {</div>
 <div class="line">            { opt.scheduler            };</div>
 <div class="line"> </div>
-<div class="line">            { policy.Accept(data, opt) } -&gt; stdexec::sender;</div>
-<div class="line">            { policy.Shutdown(data)    } -&gt; stdexec::sender;</div>
-<div class="line">            { policy.Close(data)       } -&gt; std::same_as&lt;void&gt;;</div>
-<div class="line">            { policy.Abort(data)       } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line">            { policy.Accept(data, data, opt) } -&gt; stdexec::sender;</div>
+<div class="line">            { policy.Shutdown(data)          } -&gt; stdexec::sender;</div>
+<div class="line">            { policy.Close(data)             } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line">            { policy.Abort(data)             } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_async_accept_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_async_accept_policy_concept.html">Hermes::AsyncAcceptPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages the server-side accept lifecycle asynchronously.</div><div class="ttdef"><b>Definition</b> _base.hpp:368</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:62</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages the server-side accept lifecycle asynchronously. </p>
 <p>Async counterpart of <code>AcceptPolicyConcept</code>. The accept operation returns a sender instead of blocking, enabling the server to process many concurrent connections without occupying a thread per accept call. <code>Listen()</code> intentionally remains synchronous, as <code>bind</code> and <code>listen</code> are non-blocking OS calls that complete instantly.</p>
-<h3><a class="anchor" id="autotoc_md16"></a>
+<h3><a class="anchor" id="autotoc_md30"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::ListenOptions </div>
 </div><!-- fragment --><p> A struct defining settings for the listening socket (e.g., REUSE_ADDRESS, buffer sizes). Used to modify <code>Listen()</code> behavior.</p>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::AcceptOptions </div>
 </div><!-- fragment --><p> A struct defining per-connection settings (e.g., TCP_NODELAY, handshake timeout). Must also expose a <code>scheduler</code> field to select the execution context for <code>Accept()</code>.</p>
-<h3><a class="anchor" id="autotoc_md17"></a>
+<h3><a class="anchor" id="autotoc_md31"></a>
 Initialization</h3>
 <div class="fragment"><div class="line">policy.Listen(data, backlog, opt) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:67</div></div>
 </div><!-- fragment --><p> Binds and begins listening. Synchronous — <code>bind</code> and <code>listen</code> are non-blocking OS calls that complete immediately and must not be deferred to a sender.</p>
-<h3><a class="anchor" id="autotoc_md18"></a>
+<h3><a class="anchor" id="autotoc_md32"></a>
 Connection</h3>
 <div class="fragment"><div class="line">policy.Accept(data, acceptedData, opt) -&gt; stdexec::sender </div>
 </div><!-- fragment --><p> Waits for and accepts an incoming connection without blocking. <code>acceptedData</code> is a child model (via <code>MakeChild()</code>) whose <code>socket</code> and <code>endpoint</code> will be filled on completion. Handles specific behaviors like server-side TLS handshakes or versioning. Delivers <code>ConnectionResultOper</code> through the sender's value channel on completion.</p>
-<h3><a class="anchor" id="autotoc_md19"></a>
+<h3><a class="anchor" id="autotoc_md33"></a>
 Cleanup</h3>
 <div class="fragment"><div class="line">policy.Close(data) -&gt; <span class="keywordtype">void</span> </div>
 </div><!-- fragment --><p> Stops listening and gracefully closes the server socket. Synchronous — must not schedule work or block on a sender.</p>

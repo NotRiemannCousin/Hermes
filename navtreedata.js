@@ -25,16 +25,16 @@
 var NAVTREE =
 [
   [ "Hermes", "index.html", [
-    [ "</blockquote>", "index.html#autotoc_md21", null ],
-    [ "Features", "index.html#autotoc_md22", null ],
-    [ "Installation", "index.html#autotoc_md24", [
-      [ "pixi", "index.html#autotoc_md25", null ],
-      [ "vcpkg", "index.html#autotoc_md26", null ],
-      [ "Manual (CMake)", "index.html#autotoc_md27", null ]
+    [ "</blockquote>", "index.html#autotoc_md13", null ],
+    [ "Features", "index.html#autotoc_md14", null ],
+    [ "Installation", "index.html#autotoc_md16", [
+      [ "pixi", "index.html#autotoc_md17", null ],
+      [ "vcpkg", "index.html#autotoc_md18", null ],
+      [ "Manual (CMake)", "index.html#autotoc_md19", null ]
     ] ],
-    [ "Example", "index.html#autotoc_md29", null ],
-    [ "Roadmap", "index.html#autotoc_md31", null ],
-    [ "Requirements", "index.html#autotoc_md33", null ],
+    [ "Example", "index.html#autotoc_md21", null ],
+    [ "Roadmap", "index.html#autotoc_md23", null ],
+    [ "Requirements", "index.html#autotoc_md25", null ],
     [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
