@@ -1,3 +1,7 @@
 @PACKAGE_INIT@
 
+
+include(CMakeFindDependencyMacro)
+find_dependency(stdexec)
+
 include("${CMAKE_CURRENT_LIST_DIR}/HermesTargets.cmake")
