@@ -14,7 +14,6 @@ add_executable(
 
         Socket/DefaultSocketTests.cpp
         Socket/TlsSocketTests.cpp
-#        Socket/AsyncSocketTests.cpp
 
         Utils/DropLastTests.cpp
         Utils/UntilMatchTests.cpp

@@ -66,7 +66,7 @@ INSTANTIATE_TEST_SUITE_P(
         IpPropertyTestCase{ "129.0.0.1",        true , true , false, false, false, false, false, false, false, false, true  },
         IpPropertyTestCase{ "224.0.0.1",        true , true , false, false, true , false, false, false, false, false, false },
         IpPropertyTestCase{ "255.255.255.255",  true , true , false, false, true , false, false, false, false, false, false },
-        IpPropertyTestCase{ "100.64.0.1",       true , true , false, true , false, false, false, false, false, false, false }, // CGNAT mapeado como Private=true
+        IpPropertyTestCase{ "100.64.0.1",       true , true , false, true , false, false, false, false, false, false, false }, // CGNAT mapped as Private=true
         IpPropertyTestCase{ "0.0.0.0",          true , true , false, false, false, false, false, true , false, false, false },
 
         // IPv6
