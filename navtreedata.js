@@ -25,16 +25,16 @@
 var NAVTREE =
 [
   [ "Hermes", "index.html", [
-    [ "</blockquote>", "index.html#autotoc_md21", null ],
-    [ "Features", "index.html#autotoc_md22", null ],
-    [ "Installation", "index.html#autotoc_md24", [
-      [ "pixi", "index.html#autotoc_md25", null ],
-      [ "vcpkg", "index.html#autotoc_md26", null ],
-      [ "Manual (CMake)", "index.html#autotoc_md27", null ]
+    [ "</blockquote>", "index.html#autotoc_md1", null ],
+    [ "Features", "index.html#autotoc_md2", null ],
+    [ "Installation", "index.html#autotoc_md4", [
+      [ "pixi", "index.html#autotoc_md5", null ],
+      [ "vcpkg", "index.html#autotoc_md6", null ],
+      [ "Manual (CMake)", "index.html#autotoc_md7", null ]
     ] ],
-    [ "Example", "index.html#autotoc_md29", null ],
-    [ "Roadmap", "index.html#autotoc_md31", null ],
-    [ "Requirements", "index.html#autotoc_md33", null ],
+    [ "Example", "index.html#autotoc_md9", null ],
+    [ "Roadmap", "index.html#autotoc_md11", null ],
+    [ "Requirements", "index.html#autotoc_md13", null ],
     [ "Topics", "topics.html", "topics" ],
     [ "Namespaces", "namespaces.html", [
       [ "Namespace List", "namespaces.html", "namespaces_dup" ],
@@ -85,8 +85,7 @@ var NAVTREEINDEX =
 "namespace_hermes.html#af1bc721cdf539a4fa545c282663222ada793ddbad9ef11eacf9eda368db553473",
 "struct_hermes_1_1__details_1_1_tls_session.html#aacaa5f6cc9d13ebab5d38f43da354430",
 "struct_hermes_1_1_default_async_transfer_policy.html",
-"struct_hermes_1_1_tls_accept_policy.html#afa4f4c26e88ad8747619d59e37d0f89f",
-"struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#afbc1559b1582123e708ee134759d8a53"
+"struct_hermes_1_1_tls_accept_policy.html#afa4f4c26e88ad8747619d59e37d0f89f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

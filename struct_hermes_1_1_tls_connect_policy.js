@@ -3,8 +3,6 @@ var struct_hermes_1_1_tls_connect_policy =
     [ "Options", "struct_hermes_1_1_tls_connect_policy_1_1_options.html", "struct_hermes_1_1_tls_connect_policy_1_1_options" ],
     [ "DataType", "struct_hermes_1_1_tls_connect_policy.html#ad54b382c6f2666107d4c5ea7410f726c", null ],
     [ "EndpointType", "struct_hermes_1_1_tls_connect_policy.html#a83726ce47c9053564c55ce1a6d53a964", null ],
-    [ "TlsConnectPolicy", "struct_hermes_1_1_tls_connect_policy.html#aab0ba22c6a4e5cfb5f05e19d16ae422c", null ],
-    [ "TlsConnectPolicy", "struct_hermes_1_1_tls_connect_policy.html#a1fdbf2de1ba209529174685d699f4081", null ],
     [ "Abort", "struct_hermes_1_1_tls_connect_policy.html#a9cf8a2742b30a60c9930593e3b16da29", null ],
     [ "Close", "struct_hermes_1_1_tls_connect_policy.html#ad99eaf6e364eee4d6da48e6ecfcfda99", null ],
     [ "Connect", "struct_hermes_1_1_tls_connect_policy.html#af5255116c2643d6021e3965c26317888", null ],
