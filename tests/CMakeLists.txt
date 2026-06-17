@@ -9,11 +9,15 @@ include(GoogleTest)
 add_executable(
         HermesTests
 
-        IpAddressTests.cpp
-        IpEndpointTests.cpp
-        DefaultSocketTests.cpp
-        TlsSocketTests.cpp
-        UtilsTests.cpp
+        Endpoint/IpAddressTests.cpp
+        Endpoint/IpEndpointTests.cpp
+
+        Socket/DefaultSocketTests.cpp
+        Socket/TlsSocketTests.cpp
+#        Socket/AsyncSocketTests.cpp
+
+        Utils/DropLastTests.cpp
+        Utils/UntilMatchTests.cpp
 )
 
 add_custom_command(

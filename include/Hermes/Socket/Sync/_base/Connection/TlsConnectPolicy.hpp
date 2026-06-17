@@ -38,9 +38,6 @@ namespace Hermes {
 
         ConnectionResultOper Renegotiate(Data& data);
 
-        TlsConnectPolicy() noexcept = default;
-        TlsConnectPolicy(TlsConnectPolicy&&) noexcept = default;
-
     private:
         ConnectionResultOper ClientHandshake(Data& data);
 

@@ -39,7 +39,7 @@ include(CPM.cmake)
 CPMAddPackage(
         NAME Hermes
         GITHUB_REPOSITORY NotRiemannCousin/Hermes
-        GIT_TAG v0.5.0-beta
+        GIT_TAG v0.5.1-beta
 )
 
 target_link_libraries(your_target PRIVATE Hermes)
@@ -75,7 +75,7 @@ std::expected<std::monostate, std::string> MakeRequest() {
             format(
                 "GET /{} HTTP/1.1\r\n"
                 "Accept-Encoding: identity\r\n"
-                "User-Agent: Hermes/0.\r\n"
+                "User-Agent: Hermes/0.5\r\n"
                 "Host: {}\r\n\r\n",
                 url.path, url.hostname) };
 
