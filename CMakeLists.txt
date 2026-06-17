@@ -11,30 +11,30 @@ set(FULL_PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
-
 set(CMAKE_DEBUG_POSTFIX "_d")
+set(CMAKE_CXX_STANDARD_REQUIRED   ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES    OFF)
 
-#----------------------------------------------------------------------------------------------------
-#       Hermes
-#----------------------------------------------------------------------------------------------------
+
+
+
+option(HERMES_BUILD_TESTS    "Build Hermes tests"           ${PROJECT_IS_TOP_LEVEL})
+option(HERMES_BUILD_EXAMPLES "Build Hermes examples"        ${PROJECT_IS_TOP_LEVEL})
+option(HERMES_INSTALL        "Generate the install target." ${PROJECT_IS_TOP_LEVEL})
+
 
 include(cmake/get_cpm.cmake)
+CPMAddPackage(URI "gh:NVIDIA/stdexec#main" OPTIONS "STDEXEC_BUILD_EXAMPLES OFF")
 
-# TODO: Remove when it arrives at STL.
-CPMFindPackage(
-        NAME stdexec
-        GITHUB_REPOSITORY NVIDIA/stdexec
-        GIT_TAG main
-        OPTIONS
-        "STDEXEC_BUILD_EXAMPLES OFF"
-        "STDEXEC_BUILD_TESTS OFF"
-)
 
-add_library(Hermes
+add_library(Hermes)
+add_library(Hermes::Hermes ALIAS Hermes)
+
+
+file(GLOB_RECURSE HERMES_PUBLIC_HEADERS CONFIGURE_DEPENDS include/Hermes/*.hpp include/Hermes/*.tpp)
+
+target_sources(Hermes PRIVATE
         src/Hermes/_base/Network.cpp
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
@@ -42,46 +42,36 @@ add_library(Hermes
         src/Hermes/_base/Credentials.cpp
         src/Hermes/Socket/_base/TlsSession.cpp
         src/Hermes/_base/ConnectionErrorEnum.cpp
+        PUBLIC
+        FILE_SET headers
+        TYPE HEADERS
+        BASE_DIRS include
+        FILES ${HERMES_PUBLIC_HEADERS}
 )
-
-target_include_directories(Hermes PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${stdexec_SOURCE_DIR}/include>
-)
-
 
 target_compile_options(Hermes PRIVATE
         $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:
-        /permissive- /GL /arch:AVX2 /GT /Gw /Gy /Zc:inline /openmp:llvm
-        >
+        /permissive- /GL /arch:AVX2 /GT /Gw /Gy /Zc:inline /openmp:llvm>
 
         $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
-        -Wall -Wextra -pedantic
-        -flto
-        -mavx2
-        -fopenmp
-        -ffunction-sections
-        -fdata-sections
-        >
+        -Wall -Wextra -pedantic -flto -mavx2 -fopenmp -ffunction-sections -fdata-sections>
 )
 
 target_link_options(Hermes PRIVATE
         $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
         -flto
-
         $<$<PLATFORM_ID:Darwin>:-Wl,-dead_strip>
-        $<$<NOT:$<PLATFORM_ID:Darwin>>:-Wl,--gc-sections>
-        >
+        $<$<NOT:$<PLATFORM_ID:Darwin>>:-Wl,--gc-sections>>
 )
 
 
 target_link_libraries(Hermes PUBLIC
-        $<BUILD_INTERFACE:stdexec>
+    $<BUILD_INTERFACE:stdexec>
+    $<INSTALL_INTERFACE:stdexec_EXTERNAL>
 )
+
 if(WIN32)
     target_link_libraries(Hermes PUBLIC ws2_32 crypt32 secur32)
-
     if(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
         target_link_libraries(Hermes PUBLIC stdc++exp)
     endif()
@@ -90,66 +80,55 @@ else()
     target_link_libraries(Hermes PUBLIC OpenSSL::SSL OpenSSL::Crypto uring)
 endif()
 
-
 set_target_properties(Hermes PROPERTIES
-        WINDOWS_EXPORT_ALL_SYMBOLS ON
-        POSITION_INDEPENDENT_CODE ON
+    WINDOWS_EXPORT_ALL_SYMBOLS ON
+    POSITION_INDEPENDENT_CODE ON
+    VERSION "${PROJECT_VERSION}"
+    SOVERSION "${PROJECT_VERSION_MAJOR}"
 )
 
-
-if(PROJECT_IS_TOP_LEVEL)
-    set(DEFAULT_BUILD_OPTS ON)
-else()
-    set(DEFAULT_BUILD_OPTS OFF)
-endif()
-
-option(HERMES_BUILD_EXAMPLES "Build project examples" ${DEFAULT_BUILD_OPTS})
-option(HERMES_BUILD_TESTS "Build project tests" ${DEFAULT_BUILD_OPTS})
-
 if(HERMES_BUILD_EXAMPLES)
-    add_subdirectory(examples EXCLUDE_FROM_ALL)
+    add_subdirectory(examples)
 endif()
 
 if(HERMES_BUILD_TESTS)
     enable_testing()
-    add_subdirectory(tests EXCLUDE_FROM_ALL)
+    add_subdirectory(tests)
 endif()
 
-install(TARGETS Hermes
-        EXPORT HermesTargets
-        ARCHIVE DESTINATION lib
-        LIBRARY DESTINATION lib
-        RUNTIME DESTINATION bin
-        CONFIGURATIONS Debug Release
-)
+if(HERMES_INSTALL)
+    include(GNUInstallDirs)
+    include(CMakePackageConfigHelpers)
 
+    install(TARGETS Hermes
+            EXPORT HermesTargets
+            FILE_SET headers
+            ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+            RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+    )
 
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION include)
+    install(EXPORT HermesTargets
+            FILE HermesTargets.cmake
+            NAMESPACE Hermes::
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+    )
 
-install(EXPORT HermesTargets
-        FILE HermesTargets.cmake
-        NAMESPACE Hermes::
-        DESTINATION lib/cmake/Hermes
-        CONFIGURATIONS Debug Release
-)
+    write_basic_package_version_file(
+            "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
+            VERSION ${PROJECT_VERSION}
+            COMPATIBILITY AnyNewerVersion
+    )
 
-include(CMakePackageConfigHelpers)
+    configure_package_config_file(
+            "${CMAKE_CURRENT_SOURCE_DIR}/cmake/HermesConfig.cmake.in"
+            "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
+            INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+    )
 
-write_basic_package_version_file(
-        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
-        VERSION ${PROJECT_VERSION}
-        COMPATIBILITY AnyNewerVersion
-)
-
-configure_package_config_file(
-        "${CMAKE_CURRENT_SOURCE_DIR}/cmake/HermesConfig.cmake.in"
-        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
-        INSTALL_DESTINATION lib/cmake/Hermes
-)
-
-
-install(FILES
-        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
-        "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
-        DESTINATION lib/cmake/Hermes
-)
+    install(FILES
+            "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
+            "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
+            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+    )
+endif()

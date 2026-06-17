@@ -1,7 +1,18 @@
 @PACKAGE_INIT@
 
-
 include(CMakeFindDependencyMacro)
-find_dependency(stdexec)
+
+if(NOT WIN32)
+    find_dependency(OpenSSL REQUIRED)
+endif()
+
+find_dependency(stdexec REQUIRED)
+
+if(NOT TARGET stdexec_EXTERNAL)
+    add_library(stdexec_EXTERNAL INTERFACE IMPORTED)
+    target_link_libraries(stdexec_EXTERNAL INTERFACE STDEXEC::stdexec)
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/HermesTargets.cmake")
+
+check_required_components(Hermes)
