@@ -21,10 +21,10 @@ static IpAddress I_MakeIpv6Loopback() {
 #pragma region Core & Formatting (Parameterized)
 
 struct EndpointTestCase {
-    IpAddress ip;
+    IpAddress     ip;
     std::uint16_t port;
-    std::string expectedFormat;
-    std::string expectedFullFormat;
+    std::string   expectedFormat;
+    std::string   expectedFullFormat;
 };
 
 struct IpEndpointParamTest : testing::TestWithParam<EndpointTestCase> {};
@@ -47,11 +47,11 @@ INSTANTIATE_TEST_SUITE_P(
     ComprehensiveEndpointCases,
     IpEndpointParamTest,
     testing::Values(
-        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    80,    "127.0.0.1:80",    "" },
-        EndpointTestCase{ I_MakeIpv4(129, 0, 0, 1),    443,   "129.0.0.1:443",   "" },
-        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    0,     "127.0.0.1:0",     "" },
+        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    80   , "127.0.0.1:80"   , "" },
+        EndpointTestCase{ I_MakeIpv4(129, 0, 0, 1),    443  , "129.0.0.1:443"  , "" },
+        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    0    , "127.0.0.1:0"    , "" },
         EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    65535, "127.0.0.1:65535", "" },
-        EndpointTestCase{ I_MakeIpv6Loopback(),        80,    "[::1]:80",        "[0000:0000:0000:0000:0000:0000:0000:0001]:80" }
+        EndpointTestCase{ I_MakeIpv6Loopback()    ,    80   , "[::1]:80"       , "[0000:0000:0000:0000:0000:0000:0000:0001]:80" }
     )
 );
 
@@ -62,13 +62,13 @@ INSTANTIATE_TEST_SUITE_P(
 struct IpEndpointMiscTest : testing::Test {
     const IpAddress loopback4{ I_MakeIpv4(127, 0, 0, 1) };
     const IpAddress public4  { I_MakeIpv4(129, 0, 0, 1) };
-    const IpAddress loopback6{ I_MakeIpv6Loopback() };
+    const IpAddress loopback6{ I_MakeIpv6Loopback()     };
 
-    const IpEndpoint ep80    { loopback4, 80 };
-    const IpEndpoint ep443   { loopback4, 443 };
-    const IpEndpoint ep80pub { public4, 80 };
-    const IpEndpoint ep80v6  { loopback6, 80 };
-    const IpEndpoint epZero  { loopback4, 0 };
+    const IpEndpoint ep80   { loopback4, 80  };
+    const IpEndpoint ep443  { loopback4, 443 };
+    const IpEndpoint ep80pub{ public4  , 80  };
+    const IpEndpoint ep80v6 { loopback6, 80  };
+    const IpEndpoint epZero { loopback4, 0   };
 };
 
 TEST_F(IpEndpointMiscTest, Build_MatchesDirectConstruct) {

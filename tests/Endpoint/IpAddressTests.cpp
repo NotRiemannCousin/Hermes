@@ -102,7 +102,7 @@ INSTANTIATE_TEST_SUITE_P(
 struct IpAddressMiscTest : testing::Test {
     const IpAddress loopback4{ IpAddress::FromIpv4({ 127, 0, 0, 1 }) };
     const IpAddress public4  { IpAddress::FromIpv4({ 129, 0, 0, 1 }) };
-    const IpAddress loopback6{ IpAddress::FromIpv6({ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 }) };
+    const IpAddress loopback6{ IpAddress::FromIpv6({ 0   ,0   ,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 }) };
     const IpAddress link6    { IpAddress::FromIpv6({ 0xfe,0x80,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 }) };
 };
 
@@ -121,15 +121,14 @@ TEST_F(IpAddressMiscTest, AsIpv6_FromIpv6_ReturnsSameBytes) {
 TEST_F(IpAddressMiscTest, AsIpv6_FromIpv4_HasIpv4MappedPrefixAndOctets) {
     const auto result{ loopback4.AsIpv6() };
 
-    // Prefixo IPv4-mapped: 80 bits zero, 16 bits um (0xff)
-    for (int i{}; i < 10; ++i) {
+    // Prefixo IPv4-mapped: 80 bits zero, 16 bits one (0xff)
+    for (int i{}; i < 10; ++i)
         EXPECT_EQ(result[i], 0) << "byte[" << i << "] should be 0";
-    }
 
     EXPECT_EQ(result[10], 0xff);
     EXPECT_EQ(result[11], 0xff);
 
-    // Final octets do IPv4
+    // Final octets of IPv4
     EXPECT_EQ(result[12], 127);
     EXPECT_EQ(result[13],   0);
     EXPECT_EQ(result[14],   0);
@@ -157,8 +156,8 @@ TEST_F(IpAddressMiscTest, Hash_UsableAndDistinct) {
     const IpAddress a{ IpAddress::FromIpv4({ 10, 0, 0, 1 }) };
     const IpAddress b{ IpAddress::FromIpv4({ 10, 0, 0, 1 }) };
 
-    EXPECT_EQ(std::hash<IpAddress>{}(a), std::hash<IpAddress>{}(b));
-    EXPECT_NE(std::hash<IpAddress>{}(loopback4), std::hash<IpAddress>{}(public4));
+    EXPECT_EQ(std::hash<IpAddress>{}(a)        , std::hash<IpAddress>{}(b)        );
+    EXPECT_NE(std::hash<IpAddress>{}(loopback4), std::hash<IpAddress>{}(public4)  );
     EXPECT_NE(std::hash<IpAddress>{}(loopback4), std::hash<IpAddress>{}(loopback6));
 }
 
@@ -168,12 +167,12 @@ TEST_F(IpAddressMiscTest, Hash_UsableAndDistinct) {
 
 TEST_F(IpAddressMiscTest, Format_YieldsCorrectStringRepresentation) {
     EXPECT_EQ(std::format("{}", loopback4), "127.0.0.1");
-    EXPECT_EQ(std::format("{}", public4), "129.0.0.1");
+    EXPECT_EQ(std::format("{}", public4  ), "129.0.0.1");
 
-    EXPECT_EQ(std::format("{:}", loopback6), "::1");
+    EXPECT_EQ(std::format("{:}" , loopback6), "::1"    );
     EXPECT_EQ(std::format("{:f}", loopback6), "0000:0000:0000:0000:0000:0000:0000:0001");
-    EXPECT_EQ(std::format("{:}", link6), "fe80::1");
-    EXPECT_EQ(std::format("{:b}", loopback6), "[::1]");
+    EXPECT_EQ(std::format("{:}" , link6    ), "fe80::1");
+    EXPECT_EQ(std::format("{:b}", loopback6), "[::1]"  );
 }
 
 #pragma endregion

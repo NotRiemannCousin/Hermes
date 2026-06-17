@@ -26,7 +26,7 @@ struct SocketBridgeFixture : testing::Test {
     std::optional<RawTcpListener> listener{};
     std::optional<RawTcpClient> client{};
     std::optional<RawTcpServer> server{};
-
+protected:
     void SetUp() override {
         const IpEndpoint endpoint{ I_MakeLoopbackEndpoint(I_GetNextPort()) };
         auto listenerResult{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };

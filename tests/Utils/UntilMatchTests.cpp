@@ -32,7 +32,7 @@ INSTANTIATE_TEST_SUITE_P(
     UntilMatchTest,
     testing::Values(
         UntilMatchTestCase{ "GET / HTTP/1.1\r\nHost: loc", "\r\n", "GET / HTTP/1.1", "GET / HTTP/1.1\r\n" },
-        UntilMatchTestCase{ "hello-world",                 "\r\n", "hello-world",    "hello-world" },
-        UntilMatchTestCase{ "PREFIX-rest",                 "PREFIX", "",             "PREFIX" }
+        UntilMatchTestCase{ "hello-world"                , "\r\n", "hello-world"   , "hello-world"        },
+        UntilMatchTestCase{ "PREFIX-rest"                , "PREFIX", ""            , "PREFIX"             }
     )
 );

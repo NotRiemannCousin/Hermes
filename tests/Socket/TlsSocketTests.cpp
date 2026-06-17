@@ -55,9 +55,9 @@ static Hermes::Credentials* I_GetServerAuth() {
 
 static Hermes::Credentials* I_GetClientAuth() {
     static auto auth{ Hermes::Credentials::Client(
-        SChannelCredFlags::NoServernameCheck |
+        SChannelCredFlags::NoServernameCheck       |
         SChannelCredFlags::IgnoreNoRevocationCheck | SChannelCredFlags::IgnoreRevocationOffline |
-        SChannelCredFlags::NoDefaultCreds | SChannelCredFlags::ManualCredValidation) };
+        SChannelCredFlags::NoDefaultCreds          | SChannelCredFlags::ManualCredValidation    ) };
     if (!auth.has_value()) std::abort();
     return &*auth;
 }
@@ -112,13 +112,13 @@ TEST_F(TlsListenerSocketTest, AcceptAll_YieldsServerSocketPerClient) {
     constexpr int clientCount{ 3 };
     std::atomic<int> accepted{ 0 };
 
-    std::jthread acceptThread{ [&]() {
+    std::jthread acceptThread{ [&] {
         for (auto&& result : listener->AcceptAll()) {
             if (!result) break;
             if (++accepted >= clientCount)
                 listener->Close();
         }
-    }};
+    } };
 
     for (int i{}; i < clientCount; ++i) {
         auto _{ I_MakeClientSocket(port) };
