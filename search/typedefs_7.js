@@ -10,5 +10,7 @@ var searchData=
   ['rawtlsasynclistener_7',['RawTlsAsyncListener',['../namespace_hermes.html#aa44cb60a2fb3679e4c2604b14c0e8706',1,'Hermes']]],
   ['rawtlsasyncserver_8',['RawTlsAsyncServer',['../namespace_hermes.html#aaa02852435aa754487fccc181f0c1e26',1,'Hermes']]],
   ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232',1,'Hermes']]],
-  ['recvstreamt_10',['RecvStreamT',['../namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359',1,'Hermes::_details']]]
+  ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b',1,'Hermes']]],
+  ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a2f5ad774015f851569d57545778e2d92',1,'Hermes']]],
+  ['recvstreamt_12',['RecvStreamT',['../namespace_hermes_1_1__details.html#a19f1b40aa507418128b3780b63bac359',1,'Hermes::_details']]]
 ];
