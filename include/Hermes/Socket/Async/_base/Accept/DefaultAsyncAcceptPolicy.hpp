@@ -29,6 +29,7 @@ namespace Hermes {
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
+        static auto Accept(Data& listenData, Data& clientData, AcceptOptions options);
         static auto Accept(Data& listenData, AcceptOptions options);
         static auto Shutdown(Data& data);
 

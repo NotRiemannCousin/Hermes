@@ -101,7 +101,7 @@ namespace Hermes {
         ConnectionResultOper err{};
 
         if (_streamState != nullptr) {
-            const auto size{ (std::min)(static_cast<size_t>(_streamState->size - _streamState->index), bufferRecv.size()) };
+            const auto size{ std::min(static_cast<size_t>(_streamState->size - _streamState->index), bufferRecv.size()) };
             std::memcpy(bufferRecv.data(), _streamState->buffer.data() + _streamState->index, size);
 
             _streamState->index += size;

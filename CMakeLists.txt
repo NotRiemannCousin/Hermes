@@ -107,12 +107,12 @@ option(HERMES_BUILD_EXAMPLES "Build project examples" ${DEFAULT_BUILD_OPTS})
 option(HERMES_BUILD_TESTS "Build project tests" ${DEFAULT_BUILD_OPTS})
 
 if(HERMES_BUILD_EXAMPLES)
-    add_subdirectory(examples)
+    add_subdirectory(examples EXCLUDE_FROM_ALL)
 endif()
 
 if(HERMES_BUILD_TESTS)
     enable_testing()
-    add_subdirectory(tests)
+    add_subdirectory(tests EXCLUDE_FROM_ALL)
 endif()
 
 install(TARGETS Hermes

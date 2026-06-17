@@ -252,8 +252,8 @@ namespace Hermes {
     }
 
     template <class Receiver>
-    void FastIoScheduleSender::OperationState<Receiver>::S_Callback(void *context, size_t /*bytesTransferred*/,
-                                                                    bool success) {
+    void FastIoScheduleSender::OperationState<Receiver>::S_Callback(void *context, LongIoCount /*bytesTransferred*/,
+                                                                    const bool success) {
         auto *self = static_cast<OperationState *>(context);
         if (success)
             stdexec::set_value(std::move(self->_receiver));

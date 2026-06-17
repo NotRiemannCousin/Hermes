@@ -24,7 +24,7 @@ namespace Hermes {
             TransferOperStatus _status{};
             size_t            _total{};
 
-            static void IoCallback(void* context, size_t bytesTransferred, bool success) noexcept {
+            static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
                 if (!success) {
                     stdexec::set_error(std::move(self->_receiver),
@@ -119,7 +119,7 @@ namespace Hermes {
             TransferOperStatus     _status{};
             size_t                 _total{};
 
-            static void IoCallback(void* context, size_t bytesTransferred, bool success) noexcept {
+            static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
                 if (!success) {
                     stdexec::set_error(std::move(self->_receiver),

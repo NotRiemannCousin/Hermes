@@ -92,7 +92,7 @@ namespace Hermes {
                 self._status.callback = S_Callback;
                 self._loop->PostWork(&self._status);
             }
-            static void S_Callback(void* context, size_t bytesTransferred, bool success);
+            static void S_Callback(void* context, LongIoCount bytesTransferred, bool success);
         };
 
         template <class Receiver>

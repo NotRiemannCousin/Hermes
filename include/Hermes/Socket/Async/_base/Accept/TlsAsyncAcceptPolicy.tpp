@@ -125,6 +125,67 @@ namespace Hermes {
     };
 
     template<SocketDataConcept Data>
+    struct TlsAsyncAcceptPolicy<Data>::AcceptSender {
+        using sender_concept = stdexec::sender_t;
+        using completion_signatures = stdexec::completion_signatures<
+            stdexec::set_value_t(Data),
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
+        >;
+
+        Data _data;
+        AcceptOptions _options;
+
+        template<class Receiver>
+        struct OperationState {
+            Data _data;
+            Receiver _receiver;
+
+            struct InnerReceiver {
+                using receiver_concept = stdexec::receiver_t;
+                OperationState* _parent;
+
+                friend void tag_invoke(stdexec::set_value_t, InnerReceiver&& self) noexcept {
+                    stdexec::set_value(std::move(self._parent->_receiver), std::move(self._parent->_data));
+                }
+
+                friend void tag_invoke(stdexec::set_error_t, InnerReceiver&& self, ConnectionErrorEnum e) noexcept {
+                    stdexec::set_error(std::move(self._parent->_receiver), e);
+                }
+
+                friend void tag_invoke(stdexec::set_stopped_t, InnerReceiver&& self) noexcept {
+                    stdexec::set_stopped(std::move(self._parent->_receiver));
+                }
+
+                friend auto tag_invoke(stdexec::get_env_t, const InnerReceiver& self) noexcept {
+                    return stdexec::get_env(self._parent->_receiver);
+                }
+            };
+
+            using InnerOpState = stdexec::connect_result_t<ControlSender, InnerReceiver>;
+            InnerOpState _innerOp;
+
+            OperationState(Data&& data, AcceptOptions options, Receiver receiver) :
+                _data{ std::move(data) },
+                _receiver{ std::move(receiver) },
+                _innerOp{ stdexec::connect(
+                    ControlSender{ &_data, options, AcceptControlAction::Accept },
+                    InnerReceiver{ this }
+                ) }
+            {}
+
+            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+                stdexec::start(self._innerOp);
+            }
+        };
+
+        template<class Receiver>
+        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, AcceptSender&& self, Receiver r) {
+            return { std::move(self._data), self._options, std::move(r) };
+        }
+    };
+
+    template<SocketDataConcept Data>
     ConnectionResultOper TlsAsyncAcceptPolicy<Data>::Listen(Data& data, const int backlog, ListenOptions options) noexcept {
         return TlsAcceptPolicy<Data>::Listen(data, backlog, options);
     }
@@ -135,13 +196,18 @@ namespace Hermes {
         _options = options;
 
         static_assert(stdexec::sender<ControlSender>);
+        auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<Data>::AcceptOptions>(options) };
 
-        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, clientData, *reinterpret_cast<typename DefaultAsyncAcceptPolicy<Data>::AcceptOptions*>(&options))
-             |
-             stdexec::let_value(Utils::Overloaded{
-                 [&clientData, options]() mutable { return ControlSender{ &clientData, options, AcceptControlAction::Accept }; },
-                 [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
+        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, clientData, defaultOptions)
+             | stdexec::let_value(Utils::Overloaded{
+                 [&options](Data& data)    { return AcceptSender{ std::move(data), options }; },
+                 [](ConnectionErrorEnum e) { return stdexec::just_error(e); }
              });
+    }
+
+    template<SocketDataConcept Data>
+    auto TlsAsyncAcceptPolicy<Data>::Accept(Data &listenData, AcceptOptions options) {
+        return Accept(listenData, listenData, options);
     }
 
     template<SocketDataConcept Data>

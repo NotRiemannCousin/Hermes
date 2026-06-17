@@ -377,10 +377,10 @@ namespace Hermes {
         && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
             { opt.scheduler            };
 
-            { policy.Accept(data, opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
-            { policy.Shutdown(data)    } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
-            { policy.Close(data)       } -> std::same_as<void>;
-            { policy.Abort(data)       } -> std::same_as<void>;
+            { policy.Accept(data, data, opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
+            { policy.Shutdown(data)          } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
+            { policy.Close(data)             } -> std::same_as<void>;
+            { policy.Abort(data)             } -> std::same_as<void>;
         };
 
 #pragma endregion

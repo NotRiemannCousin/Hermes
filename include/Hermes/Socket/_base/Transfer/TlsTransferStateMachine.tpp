@@ -105,7 +105,7 @@ namespace Hermes::_details {
         auto& extraSpan{ data.state->decryptedExtraSpan };
 
         if (!dataSpan.empty()) {
-            const size_t countToCopy{ (std::min)(_userRecvBuffer.size(), dataSpan.size()) };
+            const size_t countToCopy{ std::min(_userRecvBuffer.size(), dataSpan.size()) };
             std::memmove(_userRecvBuffer.data(), dataSpan.data(), countToCopy);
 
             _userRecvBuffer = _userRecvBuffer.subspan(countToCopy);
@@ -233,7 +233,7 @@ namespace Hermes::_details {
         if (_totalProcessed >= _initialSize) NEXT(Done);
 
         const size_t remainingBytes{ _initialSize - _totalProcessed };
-        _chunkSize = (std::min)(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
+        _chunkSize = std::min(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
 
 
         const auto outcome{ data.session.Encrypt(

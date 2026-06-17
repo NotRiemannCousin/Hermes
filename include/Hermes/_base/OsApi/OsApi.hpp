@@ -40,25 +40,29 @@
 #pragma endregion
 
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#define VC_EXTRALEAN
+#define NOGDI
+#define NOUSER
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #define SCHANNEL_USE_BLACKLISTS
 #define _WINSOCK_DEPRECATED_NO_WARNINGS
 #define SECURITY_WIN32
 
-
-// ReSharper disable once CppUnusedIncludeDirective
-#include <ws2tcpip.h>
 #include <winsock2.h>
+#include <ws2tcpip.h>
 
-// #include <ntdef.h>
-
-typedef struct _UNICODE_STRING {
-    USHORT Length;
-    USHORT MaximumLength;
-    PWSTR Buffer;
-} UNICODE_STRING, *PUNICODE_STRING;
+#include <windows.h>
+#include <subauth.h>
 
 #include <schannel.h>
+
 #include <sspi.h>
+#include <schannel.h>
+#include <wincrypt.h>
 #else
 #include <sys/socket.h>
 #include <netinet/in.h>
