@@ -39,7 +39,7 @@ include(CPM.cmake)
 CPMAddPackage(
         NAME Hermes
         GITHUB_REPOSITORY NotRiemannCousin/Hermes
-        GIT_TAG v0.5.1-beta
+        GIT_TAG v0.5.2-beta
 )
 
 target_link_libraries(your_target PRIVATE Hermes)
