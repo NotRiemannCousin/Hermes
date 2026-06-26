@@ -174,12 +174,28 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 <tr class="memitem:a1af960a26e436da2e59c8d2d90cf8d74" id="r_a1af960a26e436da2e59c8d2d90cf8d74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#a1af960a26e436da2e59c8d2d90cf8d74">AcceptOne</a> (AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="memdesc:a1af960a26e436da2e59c8d2d90cf8d74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks until one client connects, then returns a ready <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a>.    <br /></td></tr>
 <tr class="separator:a1af960a26e436da2e59c8d2d90cf8d74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefaf15c8914683f4c15a4251c1650327" id="r_aefaf15c8914683f4c15a4251c1650327"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</td></tr>
+<tr class="memitem:aefaf15c8914683f4c15a4251c1650327"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#aefaf15c8914683f4c15a4251c1650327">AcceptOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientDataPrototype</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:aefaf15c8914683f4c15a4251c1650327"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks until one client connects, using a prototype for the client data.  <br /></td></tr>
+<tr class="separator:aefaf15c8914683f4c15a4251c1650327"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00fe4232ab8bce9e912ea317ba96737e" id="r_a00fe4232ab8bce9e912ea317ba96737e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#a00fe4232ab8bce9e912ea317ba96737e">AcceptOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientDataPrototype</a>, AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a00fe4232ab8bce9e912ea317ba96737e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Blocks until one client connects, using a prototype for the client data.    <br /></td></tr>
+<tr class="separator:a00fe4232ab8bce9e912ea317ba96737e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afadee9467fada0be2dea9497f55d5c4f" id="r_afadee9467fada0be2dea9497f55d5c4f"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
 requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</td></tr>
 <tr class="memitem:afadee9467fada0be2dea9497f55d5c4f"><td class="memTemplItemLeft" align="right" valign="top">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f">AcceptAll</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:afadee9467fada0be2dea9497f55d5c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86bf7ed31df6f2b9ba615b8b6e225b1f" id="r_a86bf7ed31df6f2b9ba615b8b6e225b1f"><td class="memItemLeft" align="right" valign="top">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#a86bf7ed31df6f2b9ba615b8b6e225b1f">AcceptAll</a> (AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:a86bf7ed31df6f2b9ba615b8b6e225b1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afac873ca8b33b9a6955d591e0104c302" id="r_afac873ca8b33b9a6955d591e0104c302"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</td></tr>
+<tr class="memitem:afac873ca8b33b9a6955d591e0104c302"><td class="memTemplItemLeft" align="right" valign="top">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#afac873ca8b33b9a6955d591e0104c302">AcceptAll</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientDataPrototype</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:afac873ca8b33b9a6955d591e0104c302"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coroutine generator that yields a <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> for each accepted client, using a prototype.  <br /></td></tr>
+<tr class="separator:afac873ca8b33b9a6955d591e0104c302"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08f1831b8eef55d36754eb934ac3e8c4" id="r_a08f1831b8eef55d36754eb934ac3e8c4"><td class="memItemLeft" align="right" valign="top">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#a08f1831b8eef55d36754eb934ac3e8c4">AcceptAll</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientDataPrototype</a>, AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>) <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
+<tr class="memdesc:a08f1831b8eef55d36754eb934ac3e8c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Coroutine generator that yields a <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> for each accepted client, using a prototype.    <br /></td></tr>
+<tr class="separator:a08f1831b8eef55d36754eb934ac3e8c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae017ea0444e0f9d916a0126e576ae4ea" id="r_ae017ea0444e0f9d916a0126e576ae4ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#ae017ea0444e0f9d916a0126e576ae4ea">Close</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:ae017ea0444e0f9d916a0126e576ae4ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf16b1ee03e8a25d4729653e532cc975" id="r_adf16b1ee03e8a25d4729653e532cc975"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_listener_socket.html#adf16b1ee03e8a25d4729653e532cc975">Abort</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
@@ -344,7 +360,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 </div>
 </div>
 <a id="afadee9467fada0be2dea9497f55d5c4f" name="afadee9467fada0be2dea9497f55d5c4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afadee9467fada0be2dea9497f55d5c4f">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#afadee9467fada0be2dea9497f55d5c4f">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -376,7 +392,7 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 </div>
 </div>
 <a id="a86bf7ed31df6f2b9ba615b8b6e225b1f" name="a86bf7ed31df6f2b9ba615b8b6e225b1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a86bf7ed31df6f2b9ba615b8b6e225b1f">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a86bf7ed31df6f2b9ba615b8b6e225b1f">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -405,8 +421,93 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 
 </div>
 </div>
+<a id="afac873ca8b33b9a6955d591e0104c302" name="afac873ca8b33b9a6955d591e0104c302"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afac873ca8b33b9a6955d591e0104c302">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt; <a class="el" href="struct_hermes_1_1_listener_socket.html">Hermes::ListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AcceptAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;&#160;</td>
+          <td class="paramname"><em>clientDataPrototype</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Coroutine generator that yields a <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> for each accepted client, using a prototype. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clientDataPrototype</td><td>The prototype used to instantiate the client's SocketData via MakeChild(). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a08f1831b8eef55d36754eb934ac3e8c4" name="a08f1831b8eef55d36754eb934ac3e8c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08f1831b8eef55d36754eb934ac3e8c4">&#9670;&#160;</a></span>AcceptAll() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::generator&lt; <a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; &gt; <a class="el" href="struct_hermes_1_1_listener_socket.html">Hermes::ListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AcceptAll </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;&#160;</td>
+          <td class="paramname"><em>clientDataPrototype</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">AcceptPolicy::AcceptOptions&#160;</td>
+          <td class="paramname"><em>opt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Coroutine generator that yields a <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a> for each accepted client, using a prototype.   </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clientDataPrototype</td><td>The prototype used to instantiate the client's SocketData via MakeChild().   </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="af04452e43d9e0af9b0de54f486975f2e" name="af04452e43d9e0af9b0de54f486975f2e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af04452e43d9e0af9b0de54f486975f2e">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#af04452e43d9e0af9b0de54f486975f2e">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -440,7 +541,7 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 </div>
 </div>
 <a id="a1af960a26e436da2e59c8d2d90cf8d74" name="a1af960a26e436da2e59c8d2d90cf8d74"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1af960a26e436da2e59c8d2d90cf8d74">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a1af960a26e436da2e59c8d2d90cf8d74">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -466,6 +567,91 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
 </div><div class="memdoc">
 
 <p>Blocks until one client connects, then returns a ready <a class="el" href="struct_hermes_1_1_server_socket.html" title="A connected socket produced by ListenerSocket::AcceptOne / AcceptAll.">ServerSocket</a>.   </p>
+
+</div>
+</div>
+<a id="aefaf15c8914683f4c15a4251c1650327" name="aefaf15c8914683f4c15a4251c1650327"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aefaf15c8914683f4c15a4251c1650327">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<div class="memtemplate">
+template&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a>  = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions&gt;</div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; <a class="el" href="struct_hermes_1_1_listener_socket.html">Hermes::ListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AcceptOne </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;&#160;</td>
+          <td class="paramname"><em>clientDataPrototype</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Blocks until one client connects, using a prototype for the client data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clientDataPrototype</td><td>The prototype used to instantiate the client's SocketData via MakeChild(). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a00fe4232ab8bce9e912ea317ba96737e" name="a00fe4232ab8bce9e912ea317ba96737e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00fe4232ab8bce9e912ea317ba96737e">&#9670;&#160;</a></span>AcceptOne() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>  = DefaultAcceptPolicy&lt;&gt;, <a class="el" href="struct_hermes_1_1_default_socket_data.html">class</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a>  = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hermes.html#aea60127b207d39fb5d05a863ade851a9">ConnectionResult</a>&lt; <a class="el" href="struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6">ServerSocketType</a> &gt; <a class="el" href="struct_hermes_1_1_listener_socket.html">Hermes::ListenerSocket</a>&lt; SocketData, <a class="el" href="struct_hermes_1_1_default_socket_data.html">AcceptPolicy</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">TransferPolicy</a> &gt;::AcceptOne </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;&#160;</td>
+          <td class="paramname"><em>clientDataPrototype</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">AcceptPolicy::AcceptOptions&#160;</td>
+          <td class="paramname"><em>opt</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Blocks until one client connects, using a prototype for the client data.   </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">clientDataPrototype</td><td>The prototype used to instantiate the client's SocketData via MakeChild().   </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

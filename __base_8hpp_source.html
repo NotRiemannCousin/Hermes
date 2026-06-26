@@ -355,10 +355,10 @@ $(document).ready(function(){initNavTree('__base_8hpp_source.html',''); initResi
 <div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span>        &amp;&amp; <span class="keyword">requires</span>(Policy policy, SocketData&amp; data, <span class="keyword">typename</span> Policy::AcceptOptions opt) {</div>
 <div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>            { opt.scheduler            };</div>
 <div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span> </div>
-<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            { policy.Accept(data, data, opt) } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
-<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>            { policy.Shutdown(data)          } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
-<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>            { policy.Close(data)             } -&gt; std::same_as&lt;void&gt;;</div>
-<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>            { policy.Abort(data)             } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>            { policy.Accept(data, std::move(data), opt) } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>            { policy.Shutdown(data)                     } -&gt; stdexec::sender;<span class="comment">// -&gt; AsyncConnectionResultOperConcept;</span></div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>            { policy.Close(data)                        } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>            { policy.Abort(data)                        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        };</div>
 </div>
 <div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span> </div>

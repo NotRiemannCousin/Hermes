@@ -154,10 +154,10 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_async_accept_policy
 <div class="line">        &amp;&amp; <span class="keyword">requires</span>(Policy policy, SocketData&amp; data, <span class="keyword">typename</span> Policy::AcceptOptions opt) {</div>
 <div class="line">            { opt.scheduler            };</div>
 <div class="line"> </div>
-<div class="line">            { policy.Accept(data, data, opt) } -&gt; stdexec::sender;</div>
-<div class="line">            { policy.Shutdown(data)          } -&gt; stdexec::sender;</div>
-<div class="line">            { policy.Close(data)             } -&gt; std::same_as&lt;void&gt;;</div>
-<div class="line">            { policy.Abort(data)             } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line">            { policy.Accept(data, std::move(data), opt) } -&gt; stdexec::sender;</div>
+<div class="line">            { policy.Shutdown(data)                     } -&gt; stdexec::sender;</div>
+<div class="line">            { policy.Close(data)                        } -&gt; std::same_as&lt;void&gt;;</div>
+<div class="line">            { policy.Abort(data)                        } -&gt; std::same_as&lt;void&gt;;</div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_async_accept_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_async_accept_policy_concept.html">Hermes::AsyncAcceptPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages the server-side accept lifecycle asynchronously.</div><div class="ttdef"><b>Definition</b> _base.hpp:368</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:62</div></div>

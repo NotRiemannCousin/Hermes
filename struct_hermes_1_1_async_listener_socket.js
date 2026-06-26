@@ -6,6 +6,8 @@ var struct_hermes_1_1_async_listener_socket =
     [ "~AsyncListenerSocket", "struct_hermes_1_1_async_listener_socket.html#a3073c34d9595c937f7bb5bb91c1577ee", null ],
     [ "Abort", "struct_hermes_1_1_async_listener_socket.html#ac08db05af99435142f41d708bbaf82ad", null ],
     [ "AsyncAcceptOne", "struct_hermes_1_1_async_listener_socket.html#aa90aebe41d60d34b467160fe37e43f78", null ],
+    [ "AsyncAcceptOne", "struct_hermes_1_1_async_listener_socket.html#aa5065b739e9ab7db1db81696ee4e12f0", null ],
+    [ "AsyncAcceptOne", "struct_hermes_1_1_async_listener_socket.html#a3175b397e3b8afc203b789fd95f5d565", null ],
     [ "AsyncAcceptOne", "struct_hermes_1_1_async_listener_socket.html#a90a31b2ead20a8bce02eddf36473fa08", null ],
     [ "Close", "struct_hermes_1_1_async_listener_socket.html#a4d72c477e308c506148cdece25f6a25d", null ],
     [ "GetEndpoint", "struct_hermes_1_1_async_listener_socket.html#a67817e40474c766df65eedf55fe8031d", null ],

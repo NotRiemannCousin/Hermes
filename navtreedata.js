@@ -84,9 +84,9 @@ var NAVTREEINDEX =
 "namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea0ebbd2ab36ddf1ee926d2b7fc354a45b",
 "namespace_hermes.html#af1bc721cdf539a4fa545c282663222ada640931067618ca3bc723805cb196e22f",
 "struct_hermes_1_1__details_1_1_tls_session.html#aa68df43710e3fecdb1977415543fea82",
-"struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a36b4e7ea32f223d8e76f24bd6fabdfd9",
-"struct_hermes_1_1_tls_accept_policy.html",
-"struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#afbc1559b1582123e708ee134759d8a53"
+"struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a17671c02f343fa951951a2369743e11e",
+"struct_hermes_1_1_server_socket.html#aa310e6c3fa0f3f70639fbf576f6b8283",
+"struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a6017c3011a3d0d3eee85e205ce4dab15"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
