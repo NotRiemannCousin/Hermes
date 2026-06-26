@@ -109,25 +109,38 @@ namespace Hermes {
     }
 
 
-    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     template<class>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne()
         requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AsyncAcceptOne({});
+        return AsyncAcceptOne(socketData, {});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(AcceptPolicy::AcceptOptions opt) {
-        SocketData clientData{ socketData.MakeChild() };
+        return AsyncAcceptOne(socketData, opt);
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
+    template<class>
+    auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(const SocketData& clientDataPrototype)
+        requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
+        return AsyncAcceptOne(clientDataPrototype, {});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
+    auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(const SocketData& clientDataPrototype, AcceptPolicy::AcceptOptions opt) {
+        SocketData clientData{ clientDataPrototype.MakeChild() };
 
         return acceptPolicy.Accept(socketData, std::move(clientData), opt)
                 | stdexec::then([](SocketData data) {
                       return ServerSocketType::FromAccepted(std::move(data));
                 });
     }
-
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>

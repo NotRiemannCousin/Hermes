@@ -107,14 +107,18 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
         return stdexec::just(state->socketView.contains("\r\n\r\n"));
     };
 
-    return state->client.Recv(state->buffer, Hermes::RecvModeEnum::Any)
-            | stdexec::let_value(s_appendReadedBytes)
-            | exec::repeat_until()
-            | stdexec::let_value(s_extractHeaders)
-            | stdexec::let_value(s_requestMoreIfNeeded)
-            | stdexec::let_value(s_sendResponse)
-            | stdexec::let_value(s_onComplete)
-            | exec::repeat_until();
+    auto processOneRequest = stdexec::just()
+                | stdexec::let_value([state, s_appendReadedBytes]() {
+                      return state->client.Recv(state->buffer, Hermes::RecvModeEnum::Any)
+                           | stdexec::let_value(s_appendReadedBytes);
+                  })
+                | exec::repeat_until()
+                | stdexec::let_value(s_extractHeaders)
+                | stdexec::let_value(s_requestMoreIfNeeded)
+                | stdexec::let_value(s_sendResponse)
+                | stdexec::let_value(s_onComplete);
+
+    return processOneRequest | exec::repeat_until();
 }
 
 static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
@@ -130,9 +134,6 @@ static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
             HandleClientAsync(state)
                     | stdexec::let_error([](auto&& err) { return stdexec::just(); })
         );
-        // start_detached is fire-and-forget, we didn't wait the connection end
-        // because the other threads (of FastIoLoop) will deal with this for us.
-        // start_detached calls terminate() on error, so I'm removing this channel.
 
         return stdexec::just();
     };
@@ -141,19 +142,18 @@ static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
         std::println("listening at: {}", listener.GetEndpoint());
         std::cout.flush();
 
-        return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
-                | stdexec::let_value(s_makeResponse)
+        return stdexec::just()
+                | stdexec::let_value([&ioLoop, &listener]() {
+                      return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
+                               | stdexec::let_value(s_makeResponse);
+                })
                 | exec::repeat();
     };
-
     auto serve{ Hermes::RawTcpAsyncListener::Listen(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
             | stdexec::let_value(s_acceptConn)
             | stdexec::upon_error([](auto err) {
                 return 3.1416;
             }) };
-    // repeat leaves no value channel, so I'm redirecting the error channel
-    // so that sync_wait can have areturn type.
-
 
     if (!stdexec::sync_wait(std::move(serve)))
         std::println("Failed to initialize listener or handle client.");

@@ -92,7 +92,7 @@ namespace Hermes {
     ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne() noexcept
         requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AcceptOne({});
+        return AcceptOne(socketData, {});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
@@ -100,14 +100,30 @@ namespace Hermes {
     ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOneConnection() noexcept requires std::
         default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AcceptOne();
+        return AcceptOne(socketData, {});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne(typename AcceptPolicy::AcceptOptions opt) noexcept {
-        SocketData clientData{ socketData.MakeChild() };
+        return AcceptOne(socketData, opt);
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<class>
+    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
+    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne(const SocketData& clientDataPrototype) noexcept
+        requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
+        return AcceptOne(clientDataPrototype, {});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>
+    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptOne(const SocketData& clientDataPrototype, typename AcceptPolicy::AcceptOptions opt) noexcept {
+        SocketData clientData{ clientDataPrototype.MakeChild() };
 
         const auto result{ acceptPolicy.Accept(socketData, clientData, opt) };
         if (!result) return std::unexpected{ result.error() };
@@ -121,18 +137,37 @@ namespace Hermes {
     std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::
     ServerSocketType>> ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll() noexcept
         requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
-        co_yield std::ranges::elements_of(AcceptAll({}));
+        return AcceptAll(socketData, {});
     }
-
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>>
     ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll(typename AcceptPolicy::AcceptOptions opt) noexcept {
-        while (socketData.socket != macroINVALID_SOCKET)
-            co_yield AcceptOne(opt);
+        return AcceptAll(socketData, opt);
     }
 
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<class>
+    std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::
+    ServerSocketType>> ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll(const SocketData& clientDataPrototype) noexcept
+        requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
+        return AcceptAll(clientDataPrototype, {});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+		requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    std::generator<ConnectionResult<typename ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocketType>>
+    ListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AcceptAll(const SocketData& clientDataPrototype, typename AcceptPolicy::AcceptOptions opt) noexcept {
+        while (socketData.socket != macroINVALID_SOCKET) {
+            auto result{ AcceptOne(clientDataPrototype, opt) };
+            const bool isOk{ result.has_value() };
+
+            co_yield std::move(result);
+            if (!isOk) break;
+        }
+    }
 
 #pragma endregion
 

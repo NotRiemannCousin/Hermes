@@ -29,7 +29,7 @@ namespace Hermes {
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
-        static auto Accept(Data& listenData, Data& clientData, AcceptOptions options);
+        static auto Accept(Data& listenData, Data&& clientData, AcceptOptions options);
         static auto Accept(Data& listenData, AcceptOptions options);
         static auto Shutdown(Data& data);
 
@@ -47,10 +47,8 @@ namespace Hermes {
         };
 #else
         struct ListenerExtensions {
-            // linux options
         };
 #endif
-
 
         inline static std::mutex s_listenerExtensionsMutex;
         inline static std::unordered_map<SocketFd, ListenerExtensions> s_listenerExtensions;

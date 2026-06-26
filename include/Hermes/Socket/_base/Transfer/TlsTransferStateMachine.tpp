@@ -1,6 +1,10 @@
 // ReSharper disable CppRedundantTypenameKeyword
 #pragma once
 
+#pragma push_macro("MSG_NOSIGNAL")
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL 0
+#endif
 #pragma push_macro("NEXT")
 #pragma push_macro("AWAIT")
 #undef NEXT
@@ -261,7 +265,7 @@ namespace Hermes::_details {
         if constexpr (IsAsync()) {
             AWAIT(SendProcessNetwork, Send);
         } else {
-            _currSent = send(data.socket, reinterpret_cast<const char*>(data.state->encryptedData.data() + _sentBytes), static_cast<int>(_encryptedSize - _sentBytes), 0);
+            _currSent = send(data.socket, reinterpret_cast<const char*>(data.state->encryptedData.data() + _sentBytes), static_cast<int>(_encryptedSize - _sentBytes), MSG_NOSIGNAL);
             NEXT(SendProcessNetwork);
         }
     }
@@ -296,3 +300,4 @@ namespace Hermes::_details {
 
 #pragma pop_macro("AWAIT")
 #pragma pop_macro("NEXT")
+#pragma pop_macro("MSG_NOSIGNAL")

@@ -56,7 +56,8 @@ namespace Hermes {
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_send(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &_status);
+
+                                 io_uring_sqe_set_data(sqe, &_status);
                             });
 #endif
                             return;
@@ -78,7 +79,8 @@ namespace Hermes {
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_recv(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &_status);
+
+                                 io_uring_sqe_set_data(sqe, &_status);
                             });
 #endif
                             return;
@@ -132,7 +134,6 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-
         Data _data;
         AcceptOptions _options;
 
@@ -164,12 +165,12 @@ namespace Hermes {
 
             using InnerOpState = stdexec::connect_result_t<ControlSender, InnerReceiver>;
             InnerOpState _innerOp;
-
             OperationState(Data&& data, AcceptOptions options, Receiver receiver) :
                 _data{ std::move(data) },
                 _receiver{ std::move(receiver) },
                 _innerOp{ stdexec::connect(
                     ControlSender{ &_data, options, AcceptControlAction::Accept },
+
                     InnerReceiver{ this }
                 ) }
             {}
@@ -191,23 +192,22 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data& clientData, AcceptOptions options) {
+    auto TlsAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data&& clientData, AcceptOptions options) {
         clientData.acceptStateMachine = std::make_unique<_details::TlsAcceptStateMachine<Data, TlsAsyncAcceptPolicy>>(options);
         _options = options;
 
         static_assert(stdexec::sender<ControlSender>);
         auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<Data>::AcceptOptions>(options) };
 
-        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, clientData, defaultOptions)
-             | stdexec::let_value(Utils::Overloaded{
-                 [&options](Data& data)    { return AcceptSender{ std::move(data), options }; },
-                 [](ConnectionErrorEnum e) { return stdexec::just_error(e); }
-             });
+        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, std::move(clientData), defaultOptions)
+             | stdexec::let_value([options](Data& data) {
+                   return AcceptSender{ std::move(data), options };
+               });
     }
 
     template<SocketDataConcept Data>
     auto TlsAsyncAcceptPolicy<Data>::Accept(Data &listenData, AcceptOptions options) {
-        return Accept(listenData, listenData, options);
+        return Accept(listenData, listenData.MakeChild(), options);
     }
 
     template<SocketDataConcept Data>

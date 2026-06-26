@@ -43,6 +43,16 @@ namespace Hermes {
         //! @copydoc AsyncAcceptOne
         [[nodiscard]] auto AsyncAcceptOne(typename AcceptPolicy::AcceptOptions opt);
 
+        //! @brief Asynchronously accepts a new client connection using a specific prototype for the client data.
+        //! @param clientDataPrototype The prototype used to instantiate the client's SocketData via MakeChild().
+        //! @return A sender that yields an AsyncServerSocket on success.
+        template<class = void>
+        [[nodiscard]] auto AsyncAcceptOne(const SocketData& clientDataPrototype)
+            requires std::default_initializable<typename AcceptPolicy::AcceptOptions>;
+
+        //! @copydoc AsyncAcceptOne(const SocketData&)
+        [[nodiscard]] auto AsyncAcceptOne(const SocketData& clientDataPrototype, typename AcceptPolicy::AcceptOptions opt);
+
         [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
 
         void Close() noexcept;

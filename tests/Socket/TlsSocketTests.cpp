@@ -11,17 +11,6 @@
 #include <atomic>
 #include <optional>
 
-#ifndef _WIN32
-#include <signal.h>
-
-class LinuxTestEnvironment : public testing::Environment {
-public:
-    void SetUp() override { signal(SIGPIPE, SIG_IGN); }
-};
-
-const testing::Environment* const g_linux_env = testing::AddGlobalTestEnvironment(new LinuxTestEnvironment);
-#endif
-
 using Hermes::ConnectionErrorEnum;
 using Hermes::IpAddress;
 using Hermes::IpEndpoint;

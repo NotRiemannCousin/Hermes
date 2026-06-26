@@ -67,6 +67,15 @@ namespace Hermes {
         //! @copydoc AcceptOne
         [[nodiscard]] ConnectionResult<ServerSocketType> AcceptOne(AcceptPolicy::AcceptOptions opt) noexcept;
 
+        //! @brief Blocks until one client connects, using a prototype for the client data.
+        //! @param clientDataPrototype The prototype used to instantiate the client's SocketData via MakeChild().
+        template<class = void>
+        [[nodiscard]] ConnectionResult<ServerSocketType> AcceptOne(const SocketData& clientDataPrototype) noexcept
+            requires std::default_initializable<typename AcceptPolicy::AcceptOptions>;
+
+        //! @copydoc AcceptOne(const SocketData&)
+        [[nodiscard]] ConnectionResult<ServerSocketType> AcceptOne(const SocketData& clientDataPrototype, AcceptPolicy::AcceptOptions opt) noexcept;
+
 
         //! @brief Coroutine generator that yields a ServerSocket for each accepted client.
         //! Runs until Close() is called or a non-recoverable error occurs.
@@ -83,6 +92,17 @@ namespace Hermes {
         //! @copydoc AcceptAll
         [[nodiscard]] std::generator<ConnectionResult<ServerSocketType>>
             AcceptAll(AcceptPolicy::AcceptOptions opt) noexcept;
+
+        //! @brief Coroutine generator that yields a ServerSocket for each accepted client, using a prototype.
+        //! @param clientDataPrototype The prototype used to instantiate the client's SocketData via MakeChild().
+        template<class = void>
+        [[nodiscard]] std::generator<ConnectionResult<ServerSocketType>>
+            AcceptAll(const SocketData& clientDataPrototype) noexcept
+            requires std::default_initializable<typename AcceptPolicy::AcceptOptions>;
+
+        //! @copydoc AcceptAll(const SocketData&)
+        [[nodiscard]] std::generator<ConnectionResult<ServerSocketType>>
+            AcceptAll(const SocketData& clientDataPrototype, AcceptPolicy::AcceptOptions opt) noexcept;
 
 
 
