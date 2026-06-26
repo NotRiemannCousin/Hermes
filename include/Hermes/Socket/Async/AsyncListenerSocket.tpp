@@ -120,8 +120,9 @@ namespace Hermes {
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(AcceptPolicy::AcceptOptions opt) {
+        SocketData clientData{ socketData.MakeChild() };
 
-        return acceptPolicy.Accept(socketData, opt)
+        return acceptPolicy.Accept(socketData, std::move(clientData), opt)
                 | stdexec::then([](SocketData data) {
                       return ServerSocketType::FromAccepted(std::move(data));
                 });
