@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.5.2
+        VERSION 0.5.3
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )
@@ -48,22 +48,7 @@ target_sources(Hermes PRIVATE
         BASE_DIRS include
         FILES ${HERMES_PUBLIC_HEADERS}
 )
-
-target_compile_options(Hermes PRIVATE
-        $<$<AND:$<CXX_COMPILER_ID:MSVC>,$<CONFIG:Release>>:
-        /permissive- /GL /arch:AVX2 /GT /Gw /Gy /Zc:inline /openmp:llvm>
-
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
-        -Wall -Wextra -pedantic -flto -mavx2 -fopenmp -ffunction-sections -fdata-sections>
-)
-
-target_link_options(Hermes PRIVATE
-        $<$<AND:$<OR:$<CXX_COMPILER_ID:GNU>,$<CXX_COMPILER_ID:Clang>>,$<CONFIG:Release>>:
-        -flto
-        $<$<PLATFORM_ID:Darwin>:-Wl,-dead_strip>
-        $<$<NOT:$<PLATFORM_ID:Darwin>>:-Wl,--gc-sections>>
-)
-
+set_target_properties(Hermes PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 
 target_link_libraries(Hermes PUBLIC
     $<BUILD_INTERFACE:stdexec>
