@@ -54,14 +54,14 @@ namespace Hermes {
             int backlog;
             Receiver receiver;
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                ListenSender::ExecuteStart(self);
+            void start() & noexcept {
+                ListenSender::ExecuteStart(*this);
             }
         };
 
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, ListenSender&& self, Receiver r) {
-            return { std::move(self.data), std::move(self.opt), self.backlog, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) && {
+            return { std::move(data), std::move(opt), backlog, std::move(r) };
         }
     };
 

@@ -80,20 +80,20 @@ namespace Hermes {
 #endif
             }
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                if (self._data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(self._receiver),
+            void start() & noexcept {
+                if (_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(_receiver),
                         TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
 
-                self.PostRecv();
+                PostRecv();
             }
         };
 
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const RecvSender& self, Receiver r) {
-            return { self._data, self._buffer, self._mode, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _data, _buffer, _mode, std::move(r) };
         }
     };
 
@@ -170,20 +170,20 @@ namespace Hermes {
 #endif
             }
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                if (self._data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(self._receiver),
+            void start() & noexcept {
+                if (_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(_receiver),
                         TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
 
-                self.PostSend();
+                PostSend();
             }
         };
 
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const SendSender& self, Receiver r) {
-            return { self._data, self._buffer, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _data, _buffer, std::move(r) };
         }
     };
 

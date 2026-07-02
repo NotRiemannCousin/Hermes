@@ -260,4 +260,16 @@ namespace Hermes {
         else
             stdexec::set_stopped(std::move(self->_receiver));
     }
+
+    template <class Receiver>
+    void FastIoScheduleSender::OperationState<Receiver>::start() & noexcept {
+        _status.context = this;
+        _status.callback = S_Callback;
+        _loop->PostWork(&_status);
+    }
+
+    template <class Receiver>
+    auto FastIoScheduleSender::connect(Receiver r) const noexcept -> OperationState<Receiver> {
+        return { _loop, std::move(r) };
+    }
 }

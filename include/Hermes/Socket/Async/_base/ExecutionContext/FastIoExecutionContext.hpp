@@ -2,6 +2,7 @@
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <thread>
 #include <memory>
+#include <stdexec/execution.hpp>
 
 namespace Hermes {
     enum class ConnectionErrorEnum;
@@ -29,7 +30,6 @@ namespace Hermes {
     struct FastIoScheduler;
     struct FastIoScheduleSender;
 
-    //! @brief IOCP/io_uring based loop for sockets.
     class FastIoLoop {
         struct Impl;
         std::unique_ptr<Impl> _impl;
@@ -62,6 +62,8 @@ namespace Hermes {
     };
 
     struct FastIoScheduler {
+        using scheduler_concept = stdexec::scheduler_t;
+
         const FastIoLoop* _loop;
 
         bool operator==(const FastIoScheduler& other) const noexcept = default;
@@ -87,18 +89,13 @@ namespace Hermes {
 
             OperationState(const FastIoLoop* loop, Receiver r);
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                self._status.context = &self;
-                self._status.callback = S_Callback;
-                self._loop->PostWork(&self._status);
-            }
+            void start() & noexcept;
+
             static void S_Callback(void* context, LongIoCount bytesTransferred, bool success);
         };
 
         template <class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const FastIoScheduleSender& self, Receiver r) noexcept {
-            return { self._loop, std::move(r) };
-        }
+        OperationState<Receiver> connect(Receiver r) const noexcept;
     };
 
     static_assert(stdexec::scheduler<FastIoScheduler>);

@@ -133,9 +133,13 @@ namespace Hermes {
 
 #undef REF
 #define REF .
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+            void start() & noexcept
+            {
+                auto& self{ *this };
+
 #ifdef _WIN32
                 self._serverData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
+
                 CHECK_ERR(self._serverData.socket == macroINVALID_SOCKET, Unknown);
 
                 const auto& extensions = s_listenerExtensions.at(self._listenData->socket);
@@ -168,8 +172,8 @@ namespace Hermes {
             }
         };
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, AcceptSender&& self, Receiver r) {
-            return { self._listenData, std::move(self._serverData), self._options, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) && {
+            return { _listenData, std::move(_serverData), _options, std::move(r) };
         }
     };
 
@@ -229,7 +233,9 @@ namespace Hermes {
             Data* _data;
             Receiver _receiver;
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
+            void start() & noexcept {
+                auto& self{ *this };
+
                 if (self._data->socket == macroINVALID_SOCKET) {
                     stdexec::set_value(std::move(self._receiver));
                     return;
@@ -240,8 +246,8 @@ namespace Hermes {
             }
         };
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const ShutdownSender& self, Receiver r) {
-            return { self._data, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _data, std::move(r) };
         }
     };
 

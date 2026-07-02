@@ -147,20 +147,20 @@ namespace Hermes {
                 self->I_Pump();
             }
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                self._status.context = &self;
-                self._status.callback = S_IoCallback;
+            void start() & noexcept {
+                _status.context = this;
+                _status.callback = S_IoCallback;
 
-                if (self._action == ActionEnum::Recv)
-                    self._data->transferStateMachine->StartToRecv(self._recvBuffer, self._mode);
+                if (_action == ActionEnum::Recv)
+                    _data->transferStateMachine->StartToRecv(_recvBuffer, _mode);
                 else
-                    self._data->transferStateMachine->StartToSend(self._sendBuffer);
-                self.I_Pump();
+                    _data->transferStateMachine->StartToSend(_sendBuffer);
+                I_Pump();
             }
         };
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const TransferSender& self, Receiver r) {
-            return { self._policy, self._data, self._recvBuffer, self._sendBuffer, self._mode, self._action, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _policy, _data, _recvBuffer, _sendBuffer, _mode, _action, std::move(r) };
         }
     };
 

@@ -115,20 +115,20 @@ namespace Hermes {
                 self->Pump();
             }
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                self._status.context = &self;
-                self._status.callback = IoCallback;
+            void start() & noexcept {
+                _status.context = this;
+                _status.callback = IoCallback;
 
-                if (self._action == ControlAction::Shutdown)
-                    self._data->connectStateMachine->SetToClose();
+                if (_action == ControlAction::Shutdown)
+                    _data->connectStateMachine->SetToClose();
                 else
-                    self._data->connectStateMachine->SetToOpen();
-                self.Pump();
+                    _data->connectStateMachine->SetToOpen();
+                Pump();
             }
         };
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const ControlSender& self, Receiver r) {
-            return { self._data, self._options, std::move(r), self._action };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _data, _options, std::move(r), _action };
         }
     };
 

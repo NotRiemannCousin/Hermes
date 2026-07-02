@@ -109,20 +109,20 @@ namespace Hermes {
                 self->Pump();
             }
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                self._status.context = &self;
-                self._status.callback = IoCallback;
+            void start() & noexcept {
+                _status.context = this;
+                _status.callback = IoCallback;
 
-                if (self._action == AcceptControlAction::Shutdown)
-                    self._data->acceptStateMachine->SetToClose();
+                if (_action == AcceptControlAction::Shutdown)
+                    _data->acceptStateMachine->SetToClose();
                 else
-                    self._data->acceptStateMachine->SetToOpen();
-                self.Pump();
+                    _data->acceptStateMachine->SetToOpen();
+                Pump();
             }
         };
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, const ControlSender& self, Receiver r) {
-            return { self._data, self._options, std::move(r), self._action };
+        OperationState<Receiver> connect(Receiver r) const {
+            return { _data, _options, std::move(r), _action };
         }
     };
 
@@ -146,20 +146,20 @@ namespace Hermes {
                 using receiver_concept = stdexec::receiver_t;
                 OperationState* _parent;
 
-                friend void tag_invoke(stdexec::set_value_t, InnerReceiver&& self) noexcept {
-                    stdexec::set_value(std::move(self._parent->_receiver), std::move(self._parent->_data));
+                void set_value() && noexcept {
+                    stdexec::set_value(std::move(_parent->_receiver), std::move(_parent->_data));
                 }
 
-                friend void tag_invoke(stdexec::set_error_t, InnerReceiver&& self, ConnectionErrorEnum e) noexcept {
-                    stdexec::set_error(std::move(self._parent->_receiver), e);
+                void set_error(ConnectionErrorEnum e) && noexcept {
+                    stdexec::set_error(std::move(_parent->_receiver), e);
                 }
 
-                friend void tag_invoke(stdexec::set_stopped_t, InnerReceiver&& self) noexcept {
-                    stdexec::set_stopped(std::move(self._parent->_receiver));
+                void set_stopped() && noexcept {
+                    stdexec::set_stopped(std::move(_parent->_receiver));
                 }
 
-                friend auto tag_invoke(stdexec::get_env_t, const InnerReceiver& self) noexcept {
-                    return stdexec::get_env(self._parent->_receiver);
+                auto get_env() const noexcept {
+                    return stdexec::get_env(_parent->_receiver);
                 }
             };
 
@@ -175,14 +175,14 @@ namespace Hermes {
                 ) }
             {}
 
-            friend void tag_invoke(stdexec::start_t, OperationState& self) noexcept {
-                stdexec::start(self._innerOp);
+            void start() & noexcept {
+                stdexec::start(_innerOp);
             }
         };
 
         template<class Receiver>
-        friend OperationState<Receiver> tag_invoke(stdexec::connect_t, AcceptSender&& self, Receiver r) {
-            return { std::move(self._data), self._options, std::move(r) };
+        OperationState<Receiver> connect(Receiver r) && {
+            return { std::move(_data), _options, std::move(r) };
         }
     };
 
