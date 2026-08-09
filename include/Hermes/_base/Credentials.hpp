@@ -80,6 +80,6 @@ namespace Hermes {
         Credentials() noexcept;
 
         struct Impl;
-        std::unique_ptr<Impl> _impl;
+        std::unique_ptr<Impl> m_impl;
     };
 }

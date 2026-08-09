@@ -1,7 +1,8 @@
 CPMFindPackage(
-        NAME googletest
+        NAME              GTest
+        VERSION           1.17.0
         GITHUB_REPOSITORY google/googletest
-        GIT_TAG v1.17.0
+        GIT_TAG           v1.17.0
 )
 
 include(GoogleTest)
@@ -31,7 +32,7 @@ add_custom_command(
 target_include_directories(
         HermesTests
         PUBLIC
-        ${CMAKE_SOURCE_DIR}/tests
+        ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 target_link_libraries(
@@ -41,4 +42,4 @@ target_link_libraries(
         GTest::gtest_main
 )
 
-gtest_discover_tests(HermesTests)
+gtest_discover_tests(HermesTests WORKING_DIRECTORY "$<TARGET_FILE_DIR:HermesTests>")

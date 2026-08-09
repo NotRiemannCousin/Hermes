@@ -11,7 +11,7 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
         struct ListenOptions : TlsAcceptPolicy<Data>::ListenOptions {};
@@ -32,7 +32,7 @@ namespace Hermes {
         static void Abort(Data& data) noexcept;
 
     private:
-        AcceptOptions _options;
+        AcceptOptions m_options;
         struct ControlSender;
         struct AcceptSender;
     };

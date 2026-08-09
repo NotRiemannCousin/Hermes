@@ -26,23 +26,23 @@ using namespace std::chrono_literals;
 
 #pragma region Utils & Factories
 
-static std::uint16_t I_GetNextPort() {
+static std::uint16_t GetNextPort() {
     static std::atomic<std::uint16_t> s_port{ 20000 };
     return s_port++;
 }
 
-static IpEndpoint I_MakeEndpoint(const std::uint16_t port) {
+static IpEndpoint MakeEndpoint(const std::uint16_t port) {
     const IpAddress loopback{ IpAddress::FromIpv6({ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 }) };
     return IpEndpoint{ loopback, port };
 }
 
-static Hermes::Credentials* I_GetServerAuth() {
+static Hermes::Credentials* GetServerAuth() {
     static auto auth{ Hermes::Credentials::Server(std::filesystem::path{ "./cert.pfx" }) };
     if (!auth.has_value()) std::abort();
     return &*auth;
 }
 
-static Hermes::Credentials* I_GetClientAuth() {
+static Hermes::Credentials* GetClientAuth() {
     static auto auth{ Hermes::Credentials::Client(
         SChannelCredFlags::NoServernameCheck       |
         SChannelCredFlags::IgnoreNoRevocationCheck | SChannelCredFlags::IgnoreRevocationOffline |
@@ -53,12 +53,12 @@ static Hermes::Credentials* I_GetClientAuth() {
 
 static constexpr std::string_view kTlsHost{ "localhost" };
 
-static auto I_MakeListenSocket(std::uint16_t port, Hermes::TlsAcceptPolicy<>::ListenOptions options = {}) {
-    return RawTlsListener::Listen({ I_MakeEndpoint(port), std::string{ kTlsHost }, I_GetServerAuth() }, options);
+static auto MakeListenSocket(std::uint16_t port, Hermes::TlsAcceptPolicy<>::ListenOptions options = {}) {
+    return RawTlsListener::Listen({ MakeEndpoint(port), std::string{ kTlsHost }, GetServerAuth() }, options);
 }
 
-static auto I_MakeClientSocket(std::uint16_t port, Hermes::TlsConnectPolicy<>::Options options = {}) {
-    return RawTlsClient::Connect({ I_MakeEndpoint(port), std::string{ kTlsHost }, I_GetClientAuth() }, options);
+static auto MakeClientSocket(std::uint16_t port, Hermes::TlsConnectPolicy<>::Options options = {}) {
+    return RawTlsClient::Connect({ MakeEndpoint(port), std::string{ kTlsHost }, GetClientAuth() }, options);
 }
 
 #pragma endregion
@@ -68,34 +68,34 @@ static auto I_MakeClientSocket(std::uint16_t port, Hermes::TlsConnectPolicy<>::O
 struct TlsListenerSocketTest : testing::Test {};
 
 TEST_F(TlsListenerSocketTest, Listen_ValidLoopbackEndpoint_Succeeds) {
-    EXPECT_TRUE(I_MakeListenSocket(I_GetNextPort()).has_value());
+    EXPECT_TRUE(MakeListenSocket(GetNextPort()).has_value());
 }
 
 TEST_F(TlsListenerSocketTest, Listen_PortAlreadyBound_ReturnsAddressInUse) {
-    const std::uint16_t port{ I_GetNextPort() };
+    const std::uint16_t port{ GetNextPort() };
 
-    auto first{ I_MakeListenSocket(port) };
+    auto first{ MakeListenSocket(port) };
     ASSERT_TRUE(first.has_value());
 
-    const auto second{ I_MakeListenSocket(port, {{ .reuseAddress = false }}) };
+    const auto second{ MakeListenSocket(port, {{ .reuseAddress = false }}) };
     ASSERT_FALSE(second.has_value());
     EXPECT_EQ(second.error(), ConnectionErrorEnum::AddressInUse);
 }
 
 TEST_F(TlsListenerSocketTest, Listen_InvalidAddress_ReturnsError) {
     const IpAddress foreignIp{ IpAddress::FromIpv4({ 8, 8, 8, 8 }) };
-    const auto result{ RawTlsListener::Listen({ IpEndpoint{ foreignIp, I_GetNextPort() }, std::string{ kTlsHost }, I_GetServerAuth() }) };
+    const auto result{ RawTlsListener::Listen({ IpEndpoint{ foreignIp, GetNextPort() }, std::string{ kTlsHost }, GetServerAuth() }) };
     ASSERT_FALSE(result.has_value());
 }
 
 TEST_F(TlsListenerSocketTest, ListenOne_ValidEndpoint_Succeeds) {
-    auto result{ RawTlsListener::ListenOne({ I_MakeEndpoint(I_GetNextPort()), std::string{ kTlsHost }, I_GetServerAuth() }) };
+    auto result{ RawTlsListener::ListenOne({ MakeEndpoint(GetNextPort()), std::string{ kTlsHost }, GetServerAuth() }) };
     EXPECT_TRUE(result.has_value());
 }
 
 TEST_F(TlsListenerSocketTest, AcceptAll_YieldsServerSocketPerClient) {
-    const std::uint16_t port{ I_GetNextPort() };
-    auto listener{ I_MakeListenSocket(port) };
+    const std::uint16_t port{ GetNextPort() };
+    auto listener{ MakeListenSocket(port) };
     ASSERT_TRUE(listener.has_value());
 
     constexpr int clientCount{ 3 };
@@ -110,7 +110,7 @@ TEST_F(TlsListenerSocketTest, AcceptAll_YieldsServerSocketPerClient) {
     } };
 
     for (int i{}; i < clientCount; ++i) {
-        auto _{ I_MakeClientSocket(port) };
+        auto _{ MakeClientSocket(port) };
     }
 
     acceptThread.join();
@@ -118,8 +118,8 @@ TEST_F(TlsListenerSocketTest, AcceptAll_YieldsServerSocketPerClient) {
 }
 
 TEST_F(TlsListenerSocketTest, Concurrent_Clients_StressTest) {
-    const std::uint16_t port{ I_GetNextPort() };
-    auto listener{ I_MakeListenSocket(port) };
+    const std::uint16_t port{ GetNextPort() };
+    auto listener{ MakeListenSocket(port) };
     ASSERT_TRUE(listener.has_value());
 
     constexpr int numClients{ 15 };
@@ -133,7 +133,7 @@ TEST_F(TlsListenerSocketTest, Concurrent_Clients_StressTest) {
 
     std::vector<std::jthread> clientThreads{};
     for (int i{}; i < numClients; ++i) {
-        clientThreads.emplace_back([&]() { EXPECT_TRUE(I_MakeClientSocket(port).has_value()); });
+        clientThreads.emplace_back([&]() { EXPECT_TRUE(MakeClientSocket(port).has_value()); });
     }
 
     for (auto& t : clientThreads) t.join();
@@ -143,12 +143,12 @@ TEST_F(TlsListenerSocketTest, Concurrent_Clients_StressTest) {
 }
 
 TEST_F(TlsListenerSocketTest, AcceptOne_HandshakeTimeout_AbortsTlsEarly) {
-    const std::uint16_t port{ I_GetNextPort() };
-    auto listener{ I_MakeListenSocket(port) };
+    const std::uint16_t port{ GetNextPort() };
+    auto listener{ MakeListenSocket(port) };
     ASSERT_TRUE(listener.has_value());
 
     std::jthread tarpit{ [&]() {
-        auto tcpClient{ Hermes::RawTcpClient::Connect(Hermes::DefaultSocketData<>{ I_MakeEndpoint(port) }) };
+        auto tcpClient{ Hermes::RawTcpClient::Connect(Hermes::DefaultSocketData<>{ MakeEndpoint(port) }) };
         std::this_thread::sleep_for(500ms);
     }};
 
@@ -167,32 +167,32 @@ TEST_F(TlsListenerSocketTest, AcceptOne_HandshakeTimeout_AbortsTlsEarly) {
 struct TlsClientSocketTest : testing::Test {};
 
 TEST_F(TlsClientSocketTest, Connect_NoListener_ReturnsConnectionFailed) {
-    const auto result{ I_MakeClientSocket(I_GetNextPort()) };
+    const auto result{ MakeClientSocket(GetNextPort()) };
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), ConnectionErrorEnum::ConnectionFailed);
 }
 
 TEST_F(TlsClientSocketTest, Connect_NonTlsListener_ReturnsHandshakeFailed) {
-    const std::uint16_t port{ I_GetNextPort() };
-    auto listener{ Hermes::RawTcpListener::Listen(Hermes::DefaultSocketData<>{ I_MakeEndpoint(port) }) };
+    const std::uint16_t port{ GetNextPort() };
+    auto listener{ Hermes::RawTcpListener::Listen(Hermes::DefaultSocketData<>{ MakeEndpoint(port) }) };
     ASSERT_TRUE(listener.has_value());
 
     std::jthread{ [&]() { auto _{ listener->AcceptOne() }; } }.detach();
 
-    const auto result{ I_MakeClientSocket(port) };
+    const auto result{ MakeClientSocket(port) };
     ASSERT_FALSE(result.has_value());
     EXPECT_EQ(result.error(), ConnectionErrorEnum::HandshakeFailed);
 }
 
 TEST_F(TlsClientSocketTest, MoveConstruct_PreservesUsability) {
-    const std::uint16_t port{ I_GetNextPort() };
-    auto listener{ I_MakeListenSocket(port) };
+    const std::uint16_t port{ GetNextPort() };
+    auto listener{ MakeListenSocket(port) };
     ASSERT_TRUE(listener.has_value());
 
     Hermes::ConnectionResult<RawTlsServer> serverResult{ std::unexpected{ ConnectionErrorEnum::Unknown } };
     std::jthread acceptThread{ [&]() { serverResult = listener->AcceptOne(); }};
 
-    auto original{ I_MakeClientSocket(port) };
+    auto original{ MakeClientSocket(port) };
     ASSERT_TRUE(original.has_value());
 
     RawTlsClient moved{ std::move(*original) };
@@ -209,7 +209,7 @@ TEST_F(TlsClientSocketTest, Connect_ConnectionTimeout_AbortsTcpEarly) {
     const IpEndpoint blackhole{ IpAddress::FromIpv4({ 192, 0, 2, 1 }), 443 };
 
     const auto start{ steady_clock::now() };
-    const auto result{ RawTlsClient::Connect({ blackhole, std::string{ kTlsHost }, I_GetClientAuth() }, {{
+    const auto result{ RawTlsClient::Connect({ blackhole, std::string{ kTlsHost }, GetClientAuth() }, {{
             .connectionTimeout = 100ms
         }}) };
     const auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
@@ -220,9 +220,9 @@ TEST_F(TlsClientSocketTest, Connect_ConnectionTimeout_AbortsTcpEarly) {
 }
 
 TEST_F(TlsClientSocketTest, Connect_HandshakeTimeout_AbortsTlsEarly) {
-    const std::uint16_t port{ I_GetNextPort() };
+    const std::uint16_t port{ GetNextPort() };
 
-    auto tcpListener{ Hermes::RawTcpListener::Listen(Hermes::DefaultSocketData<>{ I_MakeEndpoint(port) }) };
+    auto tcpListener{ Hermes::RawTcpListener::Listen(Hermes::DefaultSocketData<>{ MakeEndpoint(port) }) };
     ASSERT_TRUE(tcpListener.has_value());
 
     std::jthread tarpit{ [&]() {
@@ -232,7 +232,7 @@ TEST_F(TlsClientSocketTest, Connect_HandshakeTimeout_AbortsTlsEarly) {
     }};
 
     auto start{ steady_clock::now() };
-    const auto result{ I_MakeClientSocket(port, { .handshakeTimeout = 50ms }) };
+    const auto result{ MakeClientSocket(port, { .handshakeTimeout = 50ms }) };
     auto elapsed{ duration_cast<milliseconds>(steady_clock::now() - start) };
 
     EXPECT_FALSE(result.has_value());
@@ -248,15 +248,15 @@ struct TlsSocketBridgeFixture : testing::Test {
     std::optional<RawTlsServer> server{};
     protected:
     void SetUp() override {
-        const std::uint16_t port{ I_GetNextPort() };
-        auto listener{ I_MakeListenSocket(port) };
+        const std::uint16_t port{ GetNextPort() };
+        auto listener{ MakeListenSocket(port) };
         ASSERT_TRUE(listener.has_value());
 
         std::jthread acceptThread{ [&]() {
             if (auto srv{ listener->AcceptOne() }) server.emplace(std::move(*srv));
         } };
 
-        auto cli{ I_MakeClientSocket(port) };
+        auto cli{ MakeClientSocket(port) };
         ASSERT_TRUE(cli.has_value());
 
         acceptThread.join();

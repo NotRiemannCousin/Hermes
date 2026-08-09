@@ -65,9 +65,9 @@ namespace Hermes {
     private:
         ClientSocket() = default;
 
-        SocketData       socketData{};
-        ConnectionPolicy connectionPolicy{};
-        TransferPolicy   transferPolicy{};
+        SocketData       m_socketData{};
+        ConnectionPolicy m_connectionPolicy{};
+        TransferPolicy   m_transferPolicy{};
     };
 
     using RawTcpClient = ClientSocket<>;

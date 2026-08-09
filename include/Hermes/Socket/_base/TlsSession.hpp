@@ -9,7 +9,7 @@ namespace Hermes {
     struct Credentials;
 }
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
 
     //! @brief Platform-agnostic TLS session — wraps SCHANNEL on Windows, OpenSSL on Linux.
     //!
@@ -107,7 +107,7 @@ namespace Hermes::_details {
 
     private:
         struct Impl;
-        std::unique_ptr<Impl> _impl;
+        std::unique_ptr<Impl> m_impl;
     };
 
 }

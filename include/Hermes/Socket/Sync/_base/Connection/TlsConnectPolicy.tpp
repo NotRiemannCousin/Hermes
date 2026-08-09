@@ -5,14 +5,14 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
-        data.connectStateMachine = std::make_unique<_details::TlsConnectStateMachine<Data, TlsConnectPolicy>>(options);
+        data.connectStateMachine = std::make_unique<details_::TlsConnectStateMachine<Data, TlsConnectPolicy>>(options);
 
-        const auto s_makeHandshake = [this, &data](std::monostate) {
+        const auto makeHandshake{ [this, &data](std::monostate) {
             return this->ClientHandshake(data);
-        };
+        } };
 
         return DefaultConnectPolicy<typename Data::EndpointType, SocketTypeEnum::Stream, Data::Family>::Connect(data, options)
-                .and_then(s_makeHandshake);
+                .and_then(makeHandshake);
     }
 
     // I hate TLS so much

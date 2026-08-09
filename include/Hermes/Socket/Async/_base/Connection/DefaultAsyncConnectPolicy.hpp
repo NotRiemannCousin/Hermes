@@ -9,11 +9,11 @@ namespace Hermes {
     template<SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
 
-        struct Options : _details::ConnectOptionsIpv6Base<Data::Family>, _details::OptionsTcpNoDelayBase<Data::Type> {
+        struct Options : details_::ConnectOptionsIpv6Base<Data::Family>, details_::OptionsTcpNoDelayBase<Data::Type> {
             bool keepAlive{};
 
             int recvBufferSize{};
@@ -23,7 +23,7 @@ namespace Hermes {
         };
 
 
-        static constexpr bool IsServer{ false };
+        static constexpr bool IsServer{};
 
 
         static auto Connect(Data& data, Options options) noexcept;

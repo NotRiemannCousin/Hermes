@@ -13,7 +13,7 @@
 #include <queue>
 #include <condition_variable>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     inline std::unordered_map<int, FastIoLoop *> g_loopMap;
     inline std::shared_mutex g_loopMapMutex;
 }
@@ -22,16 +22,16 @@ namespace Hermes::_details {
 namespace Hermes {
 #ifdef _WIN32
     struct FastIoLoop::Impl {
-        SocketHandle _iocpHandle{nullptr};
-        std::vector<std::jthread> _workers;
-        std::atomic<bool> _isRunning{false};
+        SocketHandle m_iocpHandle{nullptr};
+        std::vector<std::jthread> m_workers;
+        std::atomic<bool> m_isRunning{false};
     };
 #else
     struct FastIoLoop::Impl {
-        io_uring _ring{};
-        std::mutex _ringMutex{};
-        std::vector<std::jthread> _workers;
-        std::atomic<bool> _isRunning{false};
+        io_uring m_ring{};
+        std::mutex m_ringMutex{};
+        std::vector<std::jthread> m_workers;
+        std::atomic<bool> m_isRunning{false};
 
         struct WorkItem {
             void* context;
@@ -39,54 +39,54 @@ namespace Hermes {
             size_t bytesTransferred;
             bool success;
         };
-        std::queue<WorkItem> _workQueue;
-        std::mutex _workMutex;
-        std::condition_variable _workCv;
+        std::queue<WorkItem> m_workQueue;
+        std::mutex m_workMutex;
+        std::condition_variable m_workCv;
     };
 #endif
 
-    inline FastIoLoop::FastIoLoop(const unsigned int threadCount) : _impl(std::make_unique<Impl>()) {
+    inline FastIoLoop::FastIoLoop(const unsigned int threadCount) : m_impl(std::make_unique<Impl>()) {
 #ifdef _WIN32
-        _impl->_iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, threadCount);
-        if (!_impl->_iocpHandle) {
+        m_impl->m_iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, threadCount);
+        if (!m_impl->m_iocpHandle) {
             throw std::runtime_error(std::format("Not able to create IOCP. GetLastError: {}", GetLastError()));
         }
 
-        _impl->_isRunning.store(true, std::memory_order_release);
+        m_impl->m_isRunning.store(true, std::memory_order_release);
 
-        _impl->_workers.reserve(threadCount);
+        m_impl->m_workers.reserve(threadCount);
         for (unsigned int i{}; i < threadCount; ++i) {
-            _impl->_workers.emplace_back([this] { this->WorkerLoop(); });
+            m_impl->m_workers.emplace_back([this] { this->WorkerLoop(); });
         }
 #else
-        if (io_uring_queue_init(1024, &_impl->_ring, 0) < 0) {
+        if (io_uring_queue_init(1024, &m_impl->m_ring, 0) < 0) {
             throw std::runtime_error("Not able to create io_uring");
         }
 
-        _impl->_isRunning.store(true, std::memory_order_release);
+        m_impl->m_isRunning.store(true, std::memory_order_release);
 
-        _impl->_workers.reserve(threadCount);
+        m_impl->m_workers.reserve(threadCount);
 
-        _impl->_workers.emplace_back([this, threadCount] {
-            while (_impl->_isRunning.load(std::memory_order_relaxed)) {
+        m_impl->m_workers.emplace_back([this, threadCount] {
+            while (m_impl->m_isRunning.load(std::memory_order_relaxed)) {
                 struct io_uring_cqe* cqe;
-                const int ret = io_uring_wait_cqe(&_impl->_ring, &cqe);
+                const int ret{ io_uring_wait_cqe(&m_impl->m_ring, &cqe) };
                 if (ret < 0) continue;
                 if (!cqe) continue;
 
-                auto* status       = static_cast<TransferOperStatus*>(io_uring_cqe_get_data(cqe));
-                const size_t bytes = cqe->res >= 0 ? static_cast<size_t>(cqe->res) : 0;
-                const bool success = cqe->res >= 0;
-                io_uring_cqe_seen(&_impl->_ring, cqe);
+                auto* status      { static_cast<TransferOperStatus*>(io_uring_cqe_get_data(cqe)) };
+                const size_t bytes{ cqe->res >= 0 ? static_cast<size_t>(cqe->res) : 0 };
+                const bool success{ cqe->res >= 0 };
+                io_uring_cqe_seen(&m_impl->m_ring, cqe);
 
                 if (!status) continue;
 
                 if (threadCount > 1) {
                     {
-                        std::lock_guard lock(_impl->_workMutex);
-                        _impl->_workQueue.push({ status->context, status->callback, bytes, success });
+                        std::lock_guard lock(m_impl->m_workMutex);
+                        m_impl->m_workQueue.push({ status->context, status->callback, bytes, success });
                     }
-                    _impl->_workCv.notify_one();
+                    m_impl->m_workCv.notify_one();
                 } else {
                     if (status->callback) {
                         try {
@@ -102,7 +102,7 @@ namespace Hermes {
         });
 
         for (unsigned int i{ 1 }; i < threadCount; ++i) {
-            _impl->_workers.emplace_back([this] { this->WorkerLoop(); });
+            m_impl->m_workers.emplace_back([this] { this->WorkerLoop(); });
         }
 #endif
     }
@@ -114,20 +114,20 @@ namespace Hermes {
 #ifndef _WIN32
     template<typename F>
     inline void FastIoLoop::SubmitIo(F&& prep_fn) const noexcept {
-        std::lock_guard lock(const_cast<std::mutex&>(_impl->_ringMutex));
-        struct io_uring_sqe *sqe = io_uring_get_sqe(const_cast<io_uring *>(&_impl->_ring));
+        std::lock_guard lock(const_cast<std::mutex&>(m_impl->m_ringMutex));
+        struct io_uring_sqe *sqe = io_uring_get_sqe(const_cast<io_uring *>(&m_impl->m_ring));
         if (sqe) {
             prep_fn(sqe);
-            io_uring_submit(const_cast<io_uring *>(&_impl->_ring));
+            io_uring_submit(const_cast<io_uring *>(&m_impl->m_ring));
         }
     }
 #endif
 
     inline bool FastIoLoop::RegisterHandle(const SocketHandle handle) const noexcept {
 #ifdef _WIN32
-        return CreateIoCompletionPort(handle, _impl->_iocpHandle, 0, 0) != nullptr;
+        return CreateIoCompletionPort(handle, m_impl->m_iocpHandle, 0, 0) != nullptr;
 #else
-        int fd = static_cast<int>(reinterpret_cast<intptr_t>(handle));
+        int fd{ static_cast<int>(reinterpret_cast<intptr_t>(handle)) };
         RegisterSocketLoop(fd, const_cast<FastIoLoop *>(this));
         return true;
 #endif
@@ -135,7 +135,7 @@ namespace Hermes {
 
     inline bool FastIoLoop::PostWork(TransferOperStatus *status) const noexcept {
 #ifdef _WIN32
-        return PostQueuedCompletionStatus(_impl->_iocpHandle, 0, 0, status);
+        return PostQueuedCompletionStatus(m_impl->m_iocpHandle, 0, 0, status);
 #else
         SubmitIo([&](struct io_uring_sqe *sqe) {
             io_uring_prep_nop(sqe);
@@ -146,59 +146,59 @@ namespace Hermes {
     }
 
     inline void FastIoLoop::Stop() noexcept {
-        if (_impl->_isRunning.exchange(false, std::memory_order_acq_rel)) {
+        if (m_impl->m_isRunning.exchange(false, std::memory_order_acq_rel)) {
 #ifdef _WIN32
-            for (size_t i{}; i < _impl->_workers.size(); ++i) {
-                PostQueuedCompletionStatus(_impl->_iocpHandle, 0, 0, nullptr);
+            for (size_t i{}; i < m_impl->m_workers.size(); ++i) {
+                PostQueuedCompletionStatus(m_impl->m_iocpHandle, 0, 0, nullptr);
             }
 #else
             SubmitIo([](struct io_uring_sqe *sqe) {
                 io_uring_prep_nop(sqe);
                 io_uring_sqe_set_data(sqe, nullptr);
             });
-            _impl->_workCv.notify_all();
+            m_impl->m_workCv.notify_all();
 #endif
         }
 
-        _impl->_workers.clear();
+        m_impl->m_workers.clear();
 
 #ifdef _WIN32
-        if (_impl->_iocpHandle) {
-            CloseHandle(_impl->_iocpHandle);
-            _impl->_iocpHandle = nullptr;
+        if (m_impl->m_iocpHandle) {
+            CloseHandle(m_impl->m_iocpHandle);
+            m_impl->m_iocpHandle = nullptr;
         }
 #else
-        io_uring_queue_exit(&_impl->_ring);
+        io_uring_queue_exit(&m_impl->m_ring);
 #endif
     }
 
 #ifndef _WIN32
     inline FastIoLoop *FastIoLoop::GetLoopForSocket(int fd) noexcept {
-        std::shared_lock lock(_details::g_loopMapMutex);
-        auto it = _details::g_loopMap.find(fd);
-        return it != _details::g_loopMap.end() ? it->second : nullptr;
+        std::shared_lock lock(details_::g_loopMapMutex);
+        auto it{ details_::g_loopMap.find(fd) };
+        return it != details_::g_loopMap.end() ? it->second : nullptr;
     }
 
     inline void FastIoLoop::RegisterSocketLoop(int fd, FastIoLoop *loop) noexcept {
-        std::unique_lock lock(_details::g_loopMapMutex);
-        _details::g_loopMap[fd] = loop;
+        std::unique_lock lock(details_::g_loopMapMutex);
+        details_::g_loopMap[fd] = loop;
     }
 
     inline void FastIoLoop::UnregisterSocketLoop(int fd) noexcept {
-        std::unique_lock lock(_details::g_loopMapMutex);
-        _details::g_loopMap.erase(fd);
+        std::unique_lock lock(details_::g_loopMapMutex);
+        details_::g_loopMap.erase(fd);
     }
 #endif
 
     inline void FastIoLoop::WorkerLoop() const noexcept {
-        while (_impl->_isRunning.load(std::memory_order_relaxed)) {
+        while (m_impl->m_isRunning.load(std::memory_order_relaxed)) {
 #ifdef _WIN32
             DWORD bytesTransferred{};
             ULONG_PTR completionKey{};
             WSAOVERLAPPED *overlapped{};
 
             const bool success{
-                GetQueuedCompletionStatus(_impl->_iocpHandle, &bytesTransferred, &completionKey, &overlapped,
+                GetQueuedCompletionStatus(m_impl->m_iocpHandle, &bytesTransferred, &completionKey, &overlapped,
                                           INFINITE) != 0
             };
 
@@ -216,13 +216,13 @@ namespace Hermes {
 #else
             Impl::WorkItem item{};
             {
-                std::unique_lock lock(_impl->_workMutex);
-                _impl->_workCv.wait(lock, [this] {
-                    return !_impl->_workQueue.empty() || !_impl->_isRunning.load(std::memory_order_relaxed);
+                std::unique_lock lock(m_impl->m_workMutex);
+                m_impl->m_workCv.wait(lock, [this] {
+                    return !m_impl->m_workQueue.empty() || !m_impl->m_isRunning.load(std::memory_order_relaxed);
                 });
-                if (_impl->_workQueue.empty()) continue;
-                item = _impl->_workQueue.front();
-                _impl->_workQueue.pop();
+                if (m_impl->m_workQueue.empty()) continue;
+                item = m_impl->m_workQueue.front();
+                m_impl->m_workQueue.pop();
             }
 
             if (item.callback) {
@@ -243,33 +243,33 @@ namespace Hermes {
     }
 
     [[nodiscard]] inline FastIoScheduleSender FastIoScheduler::schedule() const noexcept {
-        return FastIoScheduleSender{ _loop };
+        return FastIoScheduleSender{ m_loop };
     }
 
     template <class Receiver>
     FastIoScheduleSender::OperationState<Receiver>::OperationState(const FastIoLoop *loop, Receiver r)
-        : _loop{ loop }, _receiver{ std::move(r) } {
+        : m_loop{ loop }, m_receiver{ std::move(r) } {
     }
 
     template <class Receiver>
-    void FastIoScheduleSender::OperationState<Receiver>::S_Callback(void *context, LongIoCount /*bytesTransferred*/,
+    void FastIoScheduleSender::OperationState<Receiver>::Callback(void *context, LongIoCount /*bytesTransferred*/,
                                                                     const bool success) {
         auto *self = static_cast<OperationState *>(context);
         if (success)
-            stdexec::set_value(std::move(self->_receiver));
+            stdexec::set_value(std::move(self->m_receiver));
         else
-            stdexec::set_stopped(std::move(self->_receiver));
+            stdexec::set_stopped(std::move(self->m_receiver));
     }
 
     template <class Receiver>
     void FastIoScheduleSender::OperationState<Receiver>::start() & noexcept {
-        _status.context = this;
-        _status.callback = S_Callback;
-        _loop->PostWork(&_status);
+        m_status.context = this;
+        m_status.callback = Callback;
+        m_loop->PostWork(&m_status);
     }
 
     template <class Receiver>
     auto FastIoScheduleSender::connect(Receiver r) const noexcept -> OperationState<Receiver> {
-        return { _loop, std::move(r) };
+        return { m_loop, std::move(r) };
     }
 }

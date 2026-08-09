@@ -1,37 +1,54 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.5.3
+        VERSION 0.5.4
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )
 
+#region Settings
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_DEBUG_POSTFIX "_d")
+
 set(PROJECT_VERSION_SUFFIX "-beta")
-set(FULL_PROJECT_VERSION "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
+set(PROJECT_VERSION_FULL "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
 
 set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_DEBUG_POSTFIX "_d")
-set(CMAKE_CXX_STANDARD_REQUIRED   ON)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-set(CMAKE_CXX_SCAN_FOR_MODULES    OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+#endregion
 
-
-
-
+#region options
 option(HERMES_BUILD_TESTS    "Build Hermes tests"           ${PROJECT_IS_TOP_LEVEL})
 option(HERMES_BUILD_EXAMPLES "Build Hermes examples"        ${PROJECT_IS_TOP_LEVEL})
 option(HERMES_INSTALL        "Generate the install target." ${PROJECT_IS_TOP_LEVEL})
+option(HERMES_BUILD_DOCS     "Build Doxygen documentation"  OFF)
+#endregion
+
+#region top-level compiler options
+include(cmake/Macros.cmake)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release" AND PROJECT_IS_TOP_LEVEL)
+    if(MSVC)
+        add_compile_options(/permissive- /O2 /GL /arch:AVX2 /Oi /Ot /GT /Gw /Gy /Zc:inline /openmp:llvm)
+    endif()
+endif()
+#endregion
 
 
-include(cmake/get_cpm.cmake)
-CPMAddPackage(URI "gh:NVIDIA/stdexec#main" OPTIONS "STDEXEC_BUILD_EXAMPLES OFF")
+enable_testing()
+include(cmake/GetCPM.cmake)
 
 
 add_library(Hermes)
 add_library(Hermes::Hermes ALIAS Hermes)
 
+set_target_properties(Hermes PROPERTIES
+        INTERPROCEDURAL_OPTIMIZATION ON
+        POSITION_INDEPENDENT_CODE    ON
+)
 
+#region Hermes Files
 file(GLOB_RECURSE HERMES_PUBLIC_HEADERS CONFIGURE_DEPENDS include/Hermes/*.hpp include/Hermes/*.tpp)
 
 target_sources(Hermes PRIVATE
@@ -48,12 +65,20 @@ target_sources(Hermes PRIVATE
         BASE_DIRS include
         FILES ${HERMES_PUBLIC_HEADERS}
 )
-set_target_properties(Hermes PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
+#endregion
 
-target_link_libraries(Hermes PUBLIC
-    $<BUILD_INTERFACE:stdexec>
-    $<INSTALL_INTERFACE:stdexec_EXTERNAL>
+
+#region linking
+CPMFindPackage(
+        NAME                    stdexec
+        VERSION                 0.10.0
+        GITHUB_REPOSITORY       NVIDIA/stdexec
+        GIT_TAG                 nvhpc-26.05
+        OPTIONS                 "STDEXEC_BUILD_EXAMPLES OFF"
+                                "STDEXEC_INSTALL ${HERMES_INSTALL}"
+        FIND_PACKAGE_ARGUMENTS  "CONFIG"
 )
+target_link_libraries(Hermes PUBLIC STDEXEC::stdexec)
 
 if(WIN32)
     target_link_libraries(Hermes PUBLIC ws2_32 crypt32 secur32)
@@ -64,26 +89,19 @@ else()
     find_package(OpenSSL REQUIRED)
     target_link_libraries(Hermes PUBLIC OpenSSL::SSL OpenSSL::Crypto uring)
 endif()
+#endregion
 
-set_target_properties(Hermes PROPERTIES
-    WINDOWS_EXPORT_ALL_SYMBOLS ON
-    POSITION_INDEPENDENT_CODE ON
-    VERSION "${PROJECT_VERSION}"
-    SOVERSION "${PROJECT_VERSION_MAJOR}"
-)
 
-if(HERMES_BUILD_EXAMPLES)
-    add_subdirectory(examples)
-endif()
+add_subdirectory_if(HERMES_BUILD_TESTS    tests)
+add_subdirectory_if(HERMES_BUILD_EXAMPLES examples)
+add_subdirectory_if(HERMES_BUILD_DOCS     docs)
 
-if(HERMES_BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
-endif()
-
+#region install
 if(HERMES_INSTALL)
     include(GNUInstallDirs)
     include(CMakePackageConfigHelpers)
+
+    set(HERMES_INSTALL_CMAKEDIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}@${PROJECT_VERSION_FULL}")
 
     install(TARGETS Hermes
             EXPORT HermesTargets
@@ -96,7 +114,7 @@ if(HERMES_INSTALL)
     install(EXPORT HermesTargets
             FILE HermesTargets.cmake
             NAMESPACE Hermes::
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+            DESTINATION ${HERMES_INSTALL_CMAKEDIR}
     )
 
     write_basic_package_version_file(
@@ -108,12 +126,13 @@ if(HERMES_INSTALL)
     configure_package_config_file(
             "${CMAKE_CURRENT_SOURCE_DIR}/cmake/HermesConfig.cmake.in"
             "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
-            INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+            INSTALL_DESTINATION ${HERMES_INSTALL_CMAKEDIR}
     )
 
     install(FILES
             "${CMAKE_CURRENT_BINARY_DIR}/HermesConfig.cmake"
             "${CMAKE_CURRENT_BINARY_DIR}/HermesConfigVersion.cmake"
-            DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/Hermes
+            DESTINATION ${HERMES_INSTALL_CMAKEDIR}
     )
 endif()
+#endregion

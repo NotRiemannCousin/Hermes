@@ -11,36 +11,36 @@ namespace Hermes {
             stdexec::set_stopped_t()
         >;
 
-        Data* _data;
-        std::span<Byte> _buffer;
-        RecvModeEnum _mode;
+        Data* m_data;
+        std::span<Byte> m_buffer;
+        RecvModeEnum m_mode;
 
         template<class Receiver>
         struct OperationState {
-            Data* _data;
-            std::span<Byte>   _buffer;
-            RecvModeEnum      _mode;
-            Receiver          _receiver;
-            TransferOperStatus _status{};
-            size_t            _total{};
+            Data* m_data;
+            std::span<Byte>   m_buffer;
+            RecvModeEnum      m_mode;
+            Receiver          m_receiver;
+            TransferOperStatus m_status{};
+            size_t            m_total{};
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
                 if (!success) {
-                    stdexec::set_error(std::move(self->_receiver),
-                        TransferError{ self->_total, ConnectionErrorEnum::ReceiveFailed });
+                    stdexec::set_error(std::move(self->m_receiver),
+                        TransferError{ self->m_total, ConnectionErrorEnum::ReceiveFailed });
                     return;
                 }
 
                 if (bytesTransferred == 0) {
-                    stdexec::set_error(std::move(self->_receiver),
-                        TransferError{ self->_total, ConnectionErrorEnum::ConnectionClosed });
+                    stdexec::set_error(std::move(self->m_receiver),
+                        TransferError{ self->m_total, ConnectionErrorEnum::ConnectionClosed });
                     return;
                 }
 
-                self->_total += bytesTransferred;
-                if (self->_mode == RecvModeEnum::Any || self->_total >= self->_buffer.size()) {
-                    stdexec::set_value(std::move(self->_receiver), self->_total);
+                self->m_total += bytesTransferred;
+                if (self->m_mode == RecvModeEnum::Any || self->m_total >= self->m_buffer.size()) {
+                    stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
 
@@ -49,40 +49,40 @@ namespace Hermes {
             }
 
             void PostRecv() noexcept {
-                _status          = {};
-                _status.context  = this;
-                _status.callback = IoCallback;
+                m_status          = {};
+                m_status.context  = this;
+                m_status.callback = IoCallback;
 
 #ifdef _WIN32
                 WSABUF wsaBuf{};
-                wsaBuf.buf = reinterpret_cast<char*>(_buffer.data() + _total);
-                wsaBuf.len = static_cast<ULONG>(_buffer.size() - _total);
+                wsaBuf.buf = reinterpret_cast<char*>(m_buffer.data() + m_total);
+                wsaBuf.len = static_cast<ULONG>(m_buffer.size() - m_total);
                 DWORD flags{};
-                const int res{ WSARecv(_data->socket, &wsaBuf, 1,
+                const int res{ WSARecv(m_data->socket, &wsaBuf, 1,
                     nullptr, &flags,
-                    static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
+                    static_cast<LPWSAOVERLAPPED>(&m_status), nullptr) };
                 if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
-                    stdexec::set_error(std::move(_receiver),
-                        TransferError{ _total, ConnectionErrorEnum::ReceiveFailed });
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::ReceiveFailed });
                 }
 #else
-                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                 if (!loop) {
-                    stdexec::set_error(std::move(_receiver),
-                        TransferError{ _total, ConnectionErrorEnum::SocketNotOpen });
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
                 loop->SubmitIo([this](struct io_uring_sqe* sqe) {
-                    io_uring_prep_recv(sqe, static_cast<int>(_data->socket),
-                        _buffer.data() + _total, _buffer.size() - _total, 0);
-                    io_uring_sqe_set_data(sqe, &_status);
+                    io_uring_prep_recv(sqe, static_cast<int>(m_data->socket),
+                        m_buffer.data() + m_total, m_buffer.size() - m_total, 0);
+                    io_uring_sqe_set_data(sqe, &m_status);
                 });
 #endif
             }
 
             void start() & noexcept {
-                if (_data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(_receiver),
+                if (m_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(m_receiver),
                         TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
@@ -93,7 +93,7 @@ namespace Hermes {
 
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) const {
-            return { _data, _buffer, _mode, std::move(r) };
+            return { m_data, m_buffer, m_mode, std::move(r) };
         }
     };
 
@@ -108,28 +108,28 @@ namespace Hermes {
             stdexec::set_stopped_t()
         >;
 
-        Data* _data;
-        std::span<const Byte> _buffer;
+        Data* m_data;
+        std::span<const Byte> m_buffer;
 
         template<class Receiver>
         struct OperationState {
-            Data* _data;
-            std::span<const Byte>  _buffer;
-            Receiver               _receiver;
-            TransferOperStatus     _status{};
-            size_t                 _total{};
+            Data* m_data;
+            std::span<const Byte>  m_buffer;
+            Receiver               m_receiver;
+            TransferOperStatus     m_status{};
+            size_t                 m_total{};
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
                 if (!success) {
-                    stdexec::set_error(std::move(self->_receiver),
-                        TransferError{ self->_total, ConnectionErrorEnum::SendFailed });
+                    stdexec::set_error(std::move(self->m_receiver),
+                        TransferError{ self->m_total, ConnectionErrorEnum::SendFailed });
                     return;
                 }
 
-                self->_total += bytesTransferred;
-                if (self->_total >= self->_buffer.size()) {
-                    stdexec::set_value(std::move(self->_receiver), self->_total);
+                self->m_total += bytesTransferred;
+                if (self->m_total >= self->m_buffer.size()) {
+                    stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
 
@@ -138,41 +138,41 @@ namespace Hermes {
             }
 
             void PostSend() noexcept {
-                _status          = {};
-                _status.context  = this;
-                _status.callback = IoCallback;
+                m_status          = {};
+                m_status.context  = this;
+                m_status.callback = IoCallback;
 
 #ifdef _WIN32
                 WSABUF wsaBuf{};
                 wsaBuf.buf = const_cast<char*>(
-                    reinterpret_cast<const char*>(_buffer.data() + _total));
-                wsaBuf.len = static_cast<ULONG>(_buffer.size() - _total);
+                    reinterpret_cast<const char*>(m_buffer.data() + m_total));
+                wsaBuf.len = static_cast<ULONG>(m_buffer.size() - m_total);
 
-                const int res{ WSASend(_data->socket, &wsaBuf, 1,
+                const int res{ WSASend(m_data->socket, &wsaBuf, 1,
                     nullptr, 0,
-                    static_cast<LPWSAOVERLAPPED>(&_status), nullptr) };
+                    static_cast<LPWSAOVERLAPPED>(&m_status), nullptr) };
                 if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
-                    stdexec::set_error(std::move(_receiver),
-                        TransferError{ _total, ConnectionErrorEnum::SendFailed });
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::SendFailed });
                 }
 #else
-                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                 if (!loop) {
-                    stdexec::set_error(std::move(_receiver),
-                        TransferError{ _total, ConnectionErrorEnum::SocketNotOpen });
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
                 loop->SubmitIo([this](struct io_uring_sqe* sqe) {
-                    io_uring_prep_send(sqe, static_cast<int>(_data->socket),
-                        _buffer.data() + _total, _buffer.size() - _total, 0);
-                    io_uring_sqe_set_data(sqe, &_status);
+                    io_uring_prep_send(sqe, static_cast<int>(m_data->socket),
+                        m_buffer.data() + m_total, m_buffer.size() - m_total, 0);
+                    io_uring_sqe_set_data(sqe, &m_status);
                 });
 #endif
             }
 
             void start() & noexcept {
-                if (_data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_error(std::move(_receiver),
+                if (m_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_error(std::move(m_receiver),
                         TransferError{ 0, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
@@ -183,7 +183,7 @@ namespace Hermes {
 
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) const {
-            return { _data, _buffer, std::move(r) };
+            return { m_data, m_buffer, std::move(r) };
         }
     };
 

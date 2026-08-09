@@ -12,7 +12,7 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAcceptPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
         struct ListenOptions : DefaultAcceptPolicy<EndpointType, SocketTypeEnum::Stream, Family>::ListenOptions {

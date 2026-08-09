@@ -23,21 +23,21 @@ namespace Hermes {
 
 #pragma region Settings
 
-        const auto s_applyOpt = [&](const int level, const int optName, auto value) {
+        const auto applyOpt{ [&](const int level, const int optName, auto value) {
             setsockopt(data.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
-        };
+        } };
 
         if constexpr (SocketFamily == AddressFamilyEnum::Inet6)
-            s_applyOpt(IPPROTO_IPV6, IPV6_V6ONLY, int{ options.onlyIpv6 });
+            applyOpt(IPPROTO_IPV6, IPV6_V6ONLY, int{ options.onlyIpv6 });
 
         if constexpr (SocketType == SocketTypeEnum::Stream)
-            if (options.tcpNoDelay) s_applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
+            if (options.tcpNoDelay) applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
 
-        if (options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
-        if (options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
-        if (options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
+        if (options.keepAlive)      applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
+        if (options.recvBufferSize) applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
+        if (options.sendBufferSize) applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
 
-        const auto s_connect_with_timeout = [&]() -> int {
+        const auto connect_with_timeout{ [&]() -> int {
             #ifdef _WIN32
             u_long mode{ 1 };
             ioctlsocket(data.socket, FIONBIO, &mode);
@@ -91,14 +91,14 @@ namespace Hermes {
             #endif
 
             return res;
-        };
+        } };
 
 #pragma endregion
 
         const int result{
             options.connectionTimeout.count() == 0
                 ? connect(data.socket, reinterpret_cast<sockaddr*>(&addr), addr_len)
-                : s_connect_with_timeout()
+                : connect_with_timeout()
         };
 
         if (result == macroSOCKET_ERROR) {

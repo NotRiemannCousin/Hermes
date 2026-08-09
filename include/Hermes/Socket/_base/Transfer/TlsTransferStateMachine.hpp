@@ -3,7 +3,7 @@
 #include <Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     template<SocketDataConcept Data, class TransferPolicy>
     struct TlsTransferStateMachine : public ITlsTransferStateMachine<Data> {
         using TlsTransferState = TransferStateOpResult(TlsTransferStateMachine::*)(Data&);
@@ -38,40 +38,40 @@ namespace Hermes::_details {
         std::span<const std::byte> GetSendBuffer(Data& data) const noexcept override;
 
     private:
-        TlsTransferState _state{ nullptr };
-        ConnectionResultOper _errorStatus{};
+        TlsTransferState m_state{ nullptr };
+        ConnectionResultOper m_errorStatus{};
 
-        int _currReceived{};
-        int _currSent{};
+        int m_currReceived{};
+        int m_currSent{};
 
-        std::span<std::byte> _userRecvBuffer{};
-        std::span<const std::byte> _userSendBuffer{};
-        RecvModeEnum _recvMode{ RecvModeEnum::All };
+        std::span<std::byte> m_userRecvBuffer{};
+        std::span<const std::byte> m_userSendBuffer{};
+        RecvModeEnum m_recvMode{ RecvModeEnum::All };
 
-        size_t _initialSize{};
-        size_t _totalProcessed{};
+        size_t m_initialSize{};
+        size_t m_totalProcessed{};
 
-        size_t _chunkSize{};
-        size_t _encryptedSize{};
-        size_t _sentBytes{};
+        size_t m_chunkSize{};
+        size_t m_encryptedSize{};
+        size_t m_sentBytes{};
 
-        EncryptStatusEnum _status{};
+        EncryptStatusEnum m_status{};
 
         // Recv Branch
-        TransferStateOpResult _RecvSetupState(Data &data);
-        TransferStateOpResult _RecvCheckPendingState(Data &data);
-        TransferStateOpResult _RecvProcessNetworkState(Data &data);
-        TransferStateOpResult _RecvDecryptState(Data &data);
+        TransferStateOpResult RecvSetupState(Data &data);
+        TransferStateOpResult RecvCheckPendingState(Data &data);
+        TransferStateOpResult RecvProcessNetworkState(Data &data);
+        TransferStateOpResult RecvDecryptState(Data &data);
 
         // Send Branch
-        TransferStateOpResult _SendSetupState(Data &data);
-        TransferStateOpResult _SendChunkState(Data &data);
-        TransferStateOpResult _SendNetworkWriteState(Data &data);
-        TransferStateOpResult _SendProcessNetworkState(Data &data);
+        TransferStateOpResult SendSetupState(Data &data);
+        TransferStateOpResult SendChunkState(Data &data);
+        TransferStateOpResult SendNetworkWriteState(Data &data);
+        TransferStateOpResult SendProcessNetworkState(Data &data);
 
         // Endings
-        TransferStateOpResult _ErrorState(Data &data);
-        TransferStateOpResult _DoneState(Data &data);
+        TransferStateOpResult ErrorState(Data &data);
+        TransferStateOpResult DoneState(Data &data);
     };
 }
 

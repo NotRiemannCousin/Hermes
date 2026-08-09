@@ -10,9 +10,9 @@ namespace Hermes {
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
 
     AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::AsyncClientSocket(AsyncClientSocket&& other) noexcept
-        : socketData      (std::move(other.socketData)),
-          connectionPolicy(std::move(other.connectionPolicy)),
-          transferPolicy  (std::move(other.transferPolicy)) { }
+        : m_socketData      (std::move(other.m_socketData)),
+          m_connectionPolicy(std::move(other.m_connectionPolicy)),
+          m_transferPolicy  (std::move(other.m_transferPolicy)) { }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
@@ -20,11 +20,11 @@ namespace Hermes {
     AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::operator=(AsyncClientSocket&& other) noexcept {
         if (this != &other) {
             Close();
-            socketData       = std::move(other.socketData);
-            connectionPolicy = std::move(other.connectionPolicy);
-            transferPolicy   = std::move(other.transferPolicy);
+            m_socketData       = std::move(other.m_socketData);
+            m_connectionPolicy = std::move(other.m_connectionPolicy);
+            m_transferPolicy   = std::move(other.m_transferPolicy);
 
-            other.socketData.socket = macroINVALID_SOCKET;
+            other.m_socketData.socket = macroINVALID_SOCKET;
         }
         return *this;
     }
@@ -51,9 +51,9 @@ namespace Hermes {
         return stdexec::just(AsyncClientSocket{})
              | stdexec::let_value(
                  [data = std::move(data), opt = std::move(opt)](AsyncClientSocket& socket) mutable {
-                     socket.socketData = std::move(data);
+                     socket.m_socketData = std::move(data);
 
-                     return socket.connectionPolicy.Connect(socket.socketData, opt)
+                     return socket.m_connectionPolicy.Connect(socket.m_socketData, opt)
                             | stdexec::let_value(Utils::Overloaded{
                                 [&socket]() mutable         { return stdexec::just(std::move(socket)); },
                                 [](ConnectionErrorEnum err) { return stdexec::just_error(err); }
@@ -69,7 +69,7 @@ namespace Hermes {
     auto AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Send(R&& data) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Send(socketData, std::as_bytes(buffer));;
+        return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer));;
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
@@ -78,26 +78,26 @@ namespace Hermes {
     auto AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Recv(socketData, std::as_writable_bytes(buffer), mode);
+        return m_transferPolicy.Recv(m_socketData, std::as_writable_bytes(buffer), mode);
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     auto AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Shutdown() noexcept {
-        return connectionPolicy.Shutdown(socketData);
+        return m_connectionPolicy.Shutdown(m_socketData);
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     void AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Close() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
-        connectionPolicy.Close(socketData);
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
+        m_connectionPolicy.Close(m_socketData);
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     void AsyncClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Abort() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
-        connectionPolicy.Abort(socketData);
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
+        m_connectionPolicy.Abort(m_socketData);
     }
 }

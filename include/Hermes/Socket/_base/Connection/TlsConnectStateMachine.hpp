@@ -3,7 +3,7 @@
 #include <Hermes/Socket/_base/Connection/ITlsConnectStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     template<SocketDataConcept Data, class ConnectionPolicy>
     struct TlsConnectStateMachine : public ITlsConnectStateMachine<Data> {
         using TlsConnectState = ConnectStateOpResult(TlsConnectStateMachine::*)(Data&);
@@ -41,60 +41,60 @@ namespace Hermes::_details {
 
 #pragma region variables
 
-        typename ConnectionPolicy::Options _options;
-        TlsConnectState _state{ &TlsConnectStateMachine::_SetupState };
+        typename ConnectionPolicy::Options m_options;
+        TlsConnectState m_state{ &TlsConnectStateMachine::SetupState };
 
-        ConnectionResultOper _errorStatus{};
+        ConnectionResultOper m_errorStatus{};
 
-        int _currReceived{};
-        int _currSent{};
+        int m_currReceived{};
+        int m_currSent{};
 
 #pragma region buffers
 
-        std::array<std::byte, 0x4000> _outBuffer{};
-        std::uint32_t _outSize{};
+        std::array<std::byte, 0x4000> m_outBuffer{};
+        std::uint32_t m_outSize{};
 
 #pragma endregion
 
 #pragma region settings and lifecycle
 
-        EncryptStatusEnum _status{};
-        std::uint32_t _receivedBytes{};
+        EncryptStatusEnum m_status{};
+        std::uint32_t m_receivedBytes{};
 
 #pragma endregion
 
 #pragma endregion
 
         // Setup
-        ConnectStateOpResult _SetupState(Data &data);
-        ConnectStateOpResult _InitializeContextState(Data &data);
+        ConnectStateOpResult SetupState(Data &data);
+        ConnectStateOpResult InitializeContextState(Data &data);
 
         // Incomplete
-        ConnectStateOpResult _SendState(Data &data);
-        ConnectStateOpResult _CheckSendState(Data &data);
-        ConnectStateOpResult _RecvState(Data &data);
-        ConnectStateOpResult _CheckRecvState(Data &data);
+        ConnectStateOpResult SendState(Data &data);
+        ConnectStateOpResult CheckSendState(Data &data);
+        ConnectStateOpResult RecvState(Data &data);
+        ConnectStateOpResult CheckRecvState(Data &data);
 
         // Complete
-        ConnectStateOpResult _FinalSendState(Data &data);
-        ConnectStateOpResult _CheckFinalSendState(Data &data);
-        ConnectStateOpResult _HandshakeCompletedState(Data &data);
+        ConnectStateOpResult FinalSendState(Data &data);
+        ConnectStateOpResult CheckFinalSendState(Data &data);
+        ConnectStateOpResult HandshakeCompletedState(Data &data);
 
         // Errors
-        ConnectStateOpResult _HandshakeFailedErrorState(Data &data);
-        ConnectStateOpResult _IncompleteCredentialsErrorState(Data &data);
-        ConnectStateOpResult _InvalidCertificateErrorState(Data &data);
-        ConnectStateOpResult _UnknownErrorState(Data &data);
+        ConnectStateOpResult HandshakeFailedErrorState(Data &data);
+        ConnectStateOpResult IncompleteCredentialsErrorState(Data &data);
+        ConnectStateOpResult InvalidCertificateErrorState(Data &data);
+        ConnectStateOpResult UnknownErrorState(Data &data);
 
         // Close
-        ConnectStateOpResult _CleanupState(Data &data);
-        ConnectStateOpResult _StartCloseState(Data &data);
-        ConnectStateOpResult _SendCloseNotifyState(Data &data);
-        ConnectStateOpResult _DeleteSecurityContextState(Data &data);
-        ConnectStateOpResult _EndCloseState(Data &data);
+        ConnectStateOpResult CleanupState(Data &data);
+        ConnectStateOpResult StartCloseState(Data &data);
+        ConnectStateOpResult SendCloseNotifyState(Data &data);
+        ConnectStateOpResult DeleteSecurityContextState(Data &data);
+        ConnectStateOpResult EndCloseState(Data &data);
 
         // Abort
-        ConnectStateOpResult _AbortState(Data &data);
+        ConnectStateOpResult AbortState(Data &data);
     };
 }
 

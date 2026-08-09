@@ -33,8 +33,8 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            Data* _data;
-            TlsTransferPolicy* _policy;
+            Data* m_data;
+            TlsTransferPolicy* m_policy;
         };
 
         StreamByteOper Recv(Data& data, std::span<std::byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
@@ -49,7 +49,7 @@ namespace Hermes {
             ConnectionResultOper status{};
         };
 
-        std::unique_ptr<StreamState> _streamState{ nullptr };
+        std::unique_ptr<StreamState> m_streamState{ nullptr };
 
         // template<ByteLike Byte> friend struct RecvStream;
     };

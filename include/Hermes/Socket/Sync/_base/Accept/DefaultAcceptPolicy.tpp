@@ -21,16 +21,16 @@ namespace Hermes {
 
 #pragma region Listen Options
 
-        const auto s_applyOpt = [&](const int level, const int optName, auto value) {
+        const auto applyOpt{ [&](const int level, const int optName, auto value) {
             setsockopt(data.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
-        };
+        } };
 
         if constexpr (Data::Family == AddressFamilyEnum::Inet6)
-            s_applyOpt(IPPROTO_IPV6, IPV6_V6ONLY, int{ options.onlyIpv6 });
+            applyOpt(IPPROTO_IPV6, IPV6_V6ONLY, int{ options.onlyIpv6 });
 
-        if (options.reuseAddress)   s_applyOpt(SOL_SOCKET, SO_REUSEADDR, 1);
-        if (options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
-        if (options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
+        if (options.reuseAddress)   applyOpt(SOL_SOCKET, SO_REUSEADDR, 1);
+        if (options.recvBufferSize) applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
+        if (options.sendBufferSize) applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
 
 #pragma endregion
 
@@ -68,16 +68,16 @@ namespace Hermes {
 
 #pragma region Accept Options
 
-        auto s_applyOpt = [&](int level, int optName, auto value) {
+        auto applyOpt{ [&](int level, int optName, auto value) {
             ::setsockopt(outData.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
-        };
+        } };
 
         if constexpr (Data::Type == SocketTypeEnum::Stream)
-            if (options.tcpNoDelay) s_applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
+            if (options.tcpNoDelay) applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
 
-        if (options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
-        if (options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
-        if (options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
+        if (options.keepAlive)      applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
+        if (options.recvBufferSize) applyOpt(SOL_SOCKET, SO_RCVBUF, options.recvBufferSize);
+        if (options.sendBufferSize) applyOpt(SOL_SOCKET, SO_SNDBUF, options.sendBufferSize);
 
 #pragma endregion
 

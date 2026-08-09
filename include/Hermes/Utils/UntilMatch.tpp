@@ -6,46 +6,54 @@ namespace Hermes::Utils
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::Iterator(UntilMatchView *parent)
-        : _view(parent) {
-        if (!_view->_history.empty())
+        : m_view(parent) {
+        if (!m_view->m_history.empty())
             return;
 
-        _view->_history.insert_range(_view->_history.begin(), _view->_view | vs::take(rg::size(_view->_pattern)));
-        _view->_matchFound = rg::equal(_view->_history, _view->_pattern);
+        const auto patternSize{ rg::size(m_view->m_pattern) };
+
+        m_view->m_history.insert_range(m_view->m_history.begin(), m_view->m_view | vs::take(patternSize));
+        const auto filled{ m_view->m_history.size() };
+
+        m_view->m_matchFound = rg::equal(m_view->m_history, m_view->m_pattern);
+
+        // avoiding division by 0
+        m_view->m_history.resize(std::max<std::size_t>(patternSize, 1));
 
         if constexpr (rg::bidirectional_range<Range>)
-            _view->_current = rg::next(_view->_view.begin(), rg::size(_view->_pattern));
+            m_view->m_current = rg::next(m_view->m_view.begin(), patternSize, m_view->m_view.end());
         else
-            _view->_current = _view->_view.begin();
+            m_view->m_current = m_view->m_view.begin();
 
-        _view->_head += _view->_history.size();
+        // count only real elements consumed, not the padded buffer size
+        m_view->m_head += filled;
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     typename UntilMatchView<Range, Pattern, Inclusive>::Iterator&
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator++() {
-        if (_view->_matchFound) {
+        if (m_view->m_matchFound) {
             if constexpr (Inclusive)
-                if (_view->_tail != _view->_head)
-                    ++_view->_tail;
+                if (m_view->m_tail != m_view->m_head)
+                    ++m_view->m_tail;
 
             return *this;
         }
 
-        if (_view->_current != _view->_view.end()) {
-            _view->_history[GetHeadIndex()] = *_view->_current;
-            ++_view->_current;
-            ++_view->_head;
+        if (m_view->m_current != m_view->m_view.end()) {
+            m_view->m_history[GetHeadIndex()] = *m_view->m_current;
+            ++m_view->m_current;
+            ++m_view->m_head;
         }
 
-        ++_view->_tail;
-        const auto s_getChar = [&](const std::size_t i) {
-            return _view->_history[GetIndex(i)];
-        };
+        ++m_view->m_tail;
+        const auto getChar{ [&](const std::size_t i) {
+            return m_view->m_history[GetIndex(i)];
+        } };
 
-        if (rg::equal(vs::iota(_view->_tail, _view->_head), _view->_pattern, {}, s_getChar))
-            _view->_matchFound = true;
+        if (rg::equal(vs::iota(m_view->m_tail, m_view->m_head), m_view->m_pattern, {}, getChar))
+            m_view->m_matchFound = true;
 
         return *this;
     }
@@ -54,23 +62,23 @@ namespace Hermes::Utils
         requires ComparableRange<Range, Pattern>
     typename UntilMatchView<Range, Pattern, Inclusive>::Type
     UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator*() const {
-        return _view->_history[GetTailIndex()];
+        return m_view->m_history[GetTailIndex()];
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     bool UntilMatchView<Range, Pattern, Inclusive>::Iterator::operator==(std::default_sentinel_t) const {
         if constexpr (Inclusive)
-            return (_view->_matchFound || _view->_current == _view->_view.end()) && _view->_tail >= _view->_head;
+            return (m_view->m_matchFound || m_view->m_current == m_view->m_view.end()) && m_view->m_tail >= m_view->m_head;
         else
-            return _view->_matchFound || (_view->_current == _view->_view.end() && _view->_tail >= _view->_head);
+            return m_view->m_matchFound || (m_view->m_current == m_view->m_view.end() && m_view->m_tail >= m_view->m_head);
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     UntilMatchView<Range, Pattern, Inclusive>::UntilMatchView(Range&& base, Pattern pattern)
-        : _current{ rg::begin(base) }, _view{ base }, _pattern{ pattern } {
-        _history.reserve(rg::size(_pattern));
+        : m_current{ rg::begin(base) }, m_view{ base }, m_pattern{ pattern } {
+        m_history.reserve(rg::size(m_pattern));
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
@@ -93,19 +101,19 @@ namespace Hermes::Utils
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
     requires ComparableRange<Range, Pattern>
     std::size_t UntilMatchView<Range, Pattern, Inclusive>::Iterator::GetIndex(std::size_t i) const noexcept {
-        return i % _view->_history.size();
+        return i % m_view->m_history.size();
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     std::size_t UntilMatchView<Range, Pattern, Inclusive>::Iterator::GetTailIndex() const noexcept {
-        return GetIndex(_view->_tail);
+        return GetIndex(m_view->m_tail);
     }
 
     template<rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive>
         requires ComparableRange<Range, Pattern>
     std::size_t UntilMatchView<Range, Pattern, Inclusive>::Iterator::GetHeadIndex() const noexcept {
-        return GetIndex(_view->_head);
+        return GetIndex(m_view->m_head);
     }
 
 
@@ -148,4 +156,5 @@ namespace Hermes::Utils
             rg::copy(view | vs::take(out.size()), rg::begin(out));
 
         return out;
-    }}
+    }
+}

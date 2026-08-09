@@ -115,7 +115,7 @@ namespace Hermes {
         friend struct std::hash<IpAddress>;
 
     private:
-        IpVariant _data{};
+        IpVariant m_data{};
     };
 
 }

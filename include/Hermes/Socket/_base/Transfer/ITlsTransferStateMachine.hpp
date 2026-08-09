@@ -3,7 +3,7 @@
 #include <span>
 #include <cstdint>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     enum class TransferStateOpResult : std::uint8_t { Recv, Send, Error, Done };
 
     template<typename Data>

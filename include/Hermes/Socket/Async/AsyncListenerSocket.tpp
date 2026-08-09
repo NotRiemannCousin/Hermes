@@ -13,8 +13,8 @@ namespace Hermes {
 
         Network::Initialize();
         AsyncListenerSocket listener;
-        listener.socketData = std::move(data);
-        const auto result = listener.acceptPolicy.Listen(listener.socketData, backlog, opt);
+        listener.m_socketData = std::move(data);
+        const auto result{ listener.m_acceptPolicy.Listen(listener.m_socketData, backlog, opt) };
 
         if (!result) {
             return std::unexpected(result.error());
@@ -39,7 +39,7 @@ namespace Hermes {
 
         template<class Receiver>
         static void ExecuteStart(OperationState<Receiver>& self) {
-            auto result = AsyncListenerSocket::InternalCreateAndListen(std::move(self.data), std::move(self.opt), self.backlog);
+            auto result{ AsyncListenerSocket::InternalCreateAndListen(std::move(self.data), std::move(self.opt), self.backlog) };
             if (!result) {
                 stdexec::set_error(std::move(self.receiver), result.error());
             } else {
@@ -68,8 +68,8 @@ namespace Hermes {
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncListenerSocket(AsyncListenerSocket&& other) noexcept
-        : socketData  (std::move(other.socketData)),
-          acceptPolicy(std::move(other.acceptPolicy)) { }
+        : m_socketData  (std::move(other.m_socketData)),
+          m_acceptPolicy(std::move(other.m_acceptPolicy)) { }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
@@ -78,9 +78,9 @@ namespace Hermes {
     AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::operator=(AsyncListenerSocket&& other) noexcept {
         if (this != &other) {
             Close();
-            socketData   = std::move(other.socketData);
-            acceptPolicy = std::move(other.acceptPolicy);
-            other.socketData.socket = macroINVALID_SOCKET;
+            m_socketData   = std::move(other.m_socketData);
+            m_acceptPolicy = std::move(other.m_acceptPolicy);
+            other.m_socketData.socket = macroINVALID_SOCKET;
         }
         return *this;
     }
@@ -114,13 +114,13 @@ template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
     template<class>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne()
         requires std::default_initializable<typename AcceptPolicy::AcceptOptions> {
-        return AsyncAcceptOne(socketData, {});
+        return AsyncAcceptOne(m_socketData, {});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(AcceptPolicy::AcceptOptions opt) {
-        return AsyncAcceptOne(socketData, opt);
+        return AsyncAcceptOne(m_socketData, opt);
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
@@ -136,7 +136,7 @@ template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
     auto AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::AsyncAcceptOne(const SocketData& clientDataPrototype, AcceptPolicy::AcceptOptions opt) {
         SocketData clientData{ clientDataPrototype.MakeChild() };
 
-        return acceptPolicy.Accept(socketData, std::move(clientData), opt)
+        return m_acceptPolicy.Accept(m_socketData, std::move(clientData), opt)
                 | stdexec::then([](SocketData data) {
                       return ServerSocketType::FromAccepted(std::move(data));
                 });
@@ -145,14 +145,14 @@ template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     void AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Close() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
-        acceptPolicy.Close(socketData);
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
+        m_acceptPolicy.Close(m_socketData);
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
 		requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     void AsyncListenerSocket<SocketData, AcceptPolicy, TransferPolicy>::Abort() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
-        acceptPolicy.Abort(socketData);
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
+        m_acceptPolicy.Abort(m_socketData);
     }
 }

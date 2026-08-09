@@ -7,9 +7,9 @@ namespace std {
     template <>
     struct hash<Hermes::IpEndpoint> {
         size_t operator()(const Hermes::IpEndpoint &endpoint) const noexcept {
-            size_t result{ std::hash<Hermes::IpAddress>{}(endpoint._ip) };
+            size_t result{ std::hash<Hermes::IpAddress>{}(endpoint.m_ip) };
 
-            Hermes::Utils::HashCombine(result, std::hash<uint16_t>{}(endpoint._port));;
+            Hermes::Utils::HashCombine(result, std::hash<uint16_t>{}(endpoint.m_port));;
 
             return result;
         }
@@ -23,20 +23,20 @@ namespace std {
             auto it{ ctx.begin() };
 
             if (it != ctx.end() && *it == 'f')
-                ++it, _ipv6Reduced = false;
+                ++it, m_ipv6Reduced = false;
 
             return it;
         }
 
         template<class FormatContext>
         auto format(const Endpoint &endpoint, FormatContext &ctx) const {
-            if (_ipv6Reduced)
-                return std::format_to(ctx.out(), "{:b}:{}", endpoint._ip, endpoint._port);
-            return std::format_to(ctx.out(), "{:fb}:{}", endpoint._ip, endpoint._port);
+            if (m_ipv6Reduced)
+                return std::format_to(ctx.out(), "{:b}:{}", endpoint.m_ip, endpoint.m_port);
+            return std::format_to(ctx.out(), "{:fb}:{}", endpoint.m_ip, endpoint.m_port);
         }
 
     private:
-        bool _ipv6Reduced{ true };
+        bool m_ipv6Reduced{ true };
     };
 }
 

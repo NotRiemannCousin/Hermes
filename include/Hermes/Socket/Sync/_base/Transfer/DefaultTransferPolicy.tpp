@@ -5,15 +5,15 @@ namespace Hermes {
     template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
     Byte DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator*() const {
-        if (view->_policy->_state->index >= view->_policy->_state->size)
+        if (view->m_policy->m_state->index >= view->m_policy->m_state->size)
             auto _{ view->Receive() };
-        return std::bit_cast<Byte>(view->_policy->_state->buffer[view->_policy->_state->index]);
+        return std::bit_cast<Byte>(view->m_policy->m_state->buffer[view->m_policy->m_state->index]);
     }
 
     template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
     auto DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator++() -> Iterator& {
-        ++view->_policy->_state->index;
+        ++view->m_policy->m_state->index;
         return *this;
     }
 
@@ -26,8 +26,8 @@ namespace Hermes {
     template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
     bool DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
-        return (!view->_policy->_state->status && view->_policy->_state->index >= view->_policy->_state->size)
-                || *view->_socket == macroINVALID_SOCKET;
+        return (!view->m_policy->m_state->status && view->m_policy->m_state->index >= view->m_policy->m_state->size)
+                || *view->m_socket == macroINVALID_SOCKET;
     }
 
 
@@ -35,9 +35,9 @@ namespace Hermes {
     template<ByteLike Byte>
     template<SocketDataConcept Data>
     DefaultTransferPolicy<SocketType>::RecvStream<Byte>::RecvStream(Data& data, DefaultTransferPolicy& policy)
-        : _socket{ &data.socket }, _policy{ &policy } {
-        if (policy._state == nullptr)
-            policy._state = std::make_unique<State>();
+        : m_socket{ &data.socket }, m_policy{ &policy } {
+        if (policy.m_state == nullptr)
+            policy.m_state = std::make_unique<State>();
     }
 
 
@@ -56,7 +56,7 @@ namespace Hermes {
     template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
     ConnectionResultOper DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Error() const {
-        return _policy->_state->status;
+        return m_policy->m_state->status;
     }
 
 
@@ -64,10 +64,10 @@ namespace Hermes {
     template<ByteLike Byte>
     ConnectionResultOper DefaultTransferPolicy<SocketType>::RecvStream<Byte>::Receive() {
         StreamByteOper::second_type err{};
-        auto& state{ _policy->_state };
+        auto& state{ m_policy->m_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper(*_socket, state->buffer, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper(*m_socket, state->buffer, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -80,8 +80,8 @@ namespace Hermes {
         state->buffer[state->size++] = {};
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
-            CloseSocket(*_socket);
-            *_socket = macroINVALID_SOCKET;
+            CloseSocket(*m_socket);
+            *m_socket = macroINVALID_SOCKET;
         }
 
         return state->status;
@@ -91,10 +91,10 @@ namespace Hermes {
     template<SocketTypeEnum SocketType>
     template<SocketDataConcept Data>
     StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
-        if (_state != nullptr) {
-            const auto size{ std::min((size_t)_state->size - _state->index, bufferRecv.size()) };
-            std::memcpy(bufferRecv.data(), _state->buffer.data() + _state->index, size);
-            _state->index += size;
+        if (m_state != nullptr) {
+            const auto size{ std::min((size_t)m_state->size - m_state->index, bufferRecv.size()) };
+            std::memcpy(bufferRecv.data(), m_state->buffer.data() + m_state->index, size);
+            m_state->index += size;
 
             bufferRecv = bufferRecv.subspan(size);
             if (bufferRecv.empty())

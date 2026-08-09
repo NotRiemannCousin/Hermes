@@ -12,12 +12,12 @@ using Hermes::DefaultSocketData;
 using Hermes::IpEndpoint;
 using Hermes::IpAddress;
 
-static IpEndpoint I_MakeLoopbackEndpoint(const std::uint16_t port) {
+static IpEndpoint MakeLoopbackEndpoint(const std::uint16_t port) {
     const IpAddress loopback{ IpAddress::FromIpv6({ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 }) };
     return IpEndpoint{ loopback, port };
 }
 
-static std::uint16_t I_GetNextPort() {
+static std::uint16_t GetNextPort() {
     static std::uint16_t port{ 20000 };
     return port++;
 }
@@ -28,7 +28,7 @@ struct SocketBridgeFixture : testing::Test {
     std::optional<RawTcpServer> server{};
 protected:
     void SetUp() override {
-        const IpEndpoint endpoint{ I_MakeLoopbackEndpoint(I_GetNextPort()) };
+        const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
         auto listenerResult{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };
         ASSERT_TRUE(listenerResult.has_value());
         listener = std::move(*listenerResult);

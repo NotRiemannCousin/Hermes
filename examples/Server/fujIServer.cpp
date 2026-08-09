@@ -178,7 +178,7 @@ body, html{{
 
 int main() {
     if (const auto res{ RunServer() }; !res) {
-#ifdef _WIN32
+#ifdef m_WIN32
         int err{ WSAGetLastError() };
 #else
         int err{ errno };

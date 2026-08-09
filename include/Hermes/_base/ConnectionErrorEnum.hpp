@@ -82,7 +82,7 @@ namespace Hermes {
 #pragma region Async Definitions
 
     // template <typename T, typename Variant>
-    // constexpr bool InVariant = false;
+    // constexpr bool InVariant{};
     //
     // template <typename T, typename... Types>
     // constexpr bool InVariant<T, std::variant<Types...>> = (std::same_as<T, Types> || ...);

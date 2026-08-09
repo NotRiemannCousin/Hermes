@@ -4,7 +4,7 @@
 #include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
-    namespace _details {
+    namespace details_ {
         template <AddressFamilyEnum>
         struct AcceptOptionsIpv6Base {};
 
@@ -21,10 +21,10 @@ namespace Hermes {
         AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct DefaultAcceptPolicy {
         static constexpr auto Family{ SocketFamily };
-        static constexpr auto Type{ SocketType };
+        static constexpr auto Type  { SocketType   };
         using EndpointType = Endpoint;
 
-        struct ListenOptions : _details::AcceptOptionsIpv6Base<Family> {
+        struct ListenOptions : details_::AcceptOptionsIpv6Base<Family> {
             bool reuseAddress{ true };
 
             int recvBufferSize{};

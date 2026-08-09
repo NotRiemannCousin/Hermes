@@ -14,85 +14,85 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-        Data* _data;
-        AcceptOptions _options;
-        AcceptControlAction _action;
+        Data* m_data;
+        AcceptOptions m_options;
+        AcceptControlAction m_action;
 
         template<class Receiver>
         struct OperationState {
         private:
-            Data* _data;
-            AcceptOptions _options;
-            Receiver _receiver;
-            TransferOperStatus _status;
-            AcceptControlAction _action;
+            Data* m_data;
+            AcceptOptions m_options;
+            Receiver m_receiver;
+            TransferOperStatus m_status;
+            AcceptControlAction m_action;
 
-            LongIoCount _flags{};
+            LongIoCount m_flags{};
         public:
             OperationState(Data* data, AcceptOptions options, Receiver receiver, const AcceptControlAction action = AcceptControlAction::Accept) :
-                _data{ data }, _options{ options }, _receiver{ std::move(receiver) },
-                _status{}, _action{ action } {}
+                m_data{ data }, m_options{ options }, m_receiver{ std::move(receiver) },
+                m_status{}, m_action{ action } {}
 
             void Pump() noexcept {
-                _flags = 0;
+                m_flags = 0;
 
                 while (true) {
-                    using AcceptStateOpResult = _details::AcceptStateOpResult;
-                    switch (_data->acceptStateMachine->Advance(*_data)) {
+                    using AcceptStateOpResult = details_::AcceptStateOpResult;
+                    switch (m_data->acceptStateMachine->Advance(*m_data)) {
                         case AcceptStateOpResult::Send: {
-                            auto buf{ _data->acceptStateMachine->GetSendBuffer() };
+                            auto buf{ m_data->acceptStateMachine->GetSendBuffer() };
 #ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
-                            if (WSASend(_data->socket, &wsaBuf, 1, nullptr, _flags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSASend(m_data->socket, &wsaBuf, 1, nullptr, m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
-                                stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_send(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
-                                 io_uring_sqe_set_data(sqe, &_status);
+                                 io_uring_sqe_set_data(sqe, &m_status);
                             });
 #endif
                             return;
                         }
                         case AcceptStateOpResult::Recv: {
-                            auto buf{ _data->acceptStateMachine->GetRecvBuffer(*_data) };
+                            auto buf{ m_data->acceptStateMachine->GetRecvBuffer(*m_data) };
 #ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
-                            if (WSARecv(_data->socket, &wsaBuf, 1, nullptr, &_flags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSARecv(m_data->socket, &wsaBuf, 1, nullptr, &m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
-                                stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_recv(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
-                                 io_uring_sqe_set_data(sqe, &_status);
+                                 io_uring_sqe_set_data(sqe, &m_status);
                             });
 #endif
                             return;
                         }
                         case AcceptStateOpResult::Done:
-                            stdexec::set_value(std::move(_receiver));
+                            stdexec::set_value(std::move(m_receiver));
                             return;
                         case AcceptStateOpResult::Error:
-                            stdexec::set_error(std::move(_receiver), _data->acceptStateMachine->GetResult().error_or(ConnectionErrorEnum::Unknown));
+                            stdexec::set_error(std::move(m_receiver), m_data->acceptStateMachine->GetResult().error_or(ConnectionErrorEnum::Unknown));
                             return;
                         case AcceptStateOpResult::Closed:
-                            stdexec::set_error(std::move(_receiver), ConnectionErrorEnum::Unknown);
+                            stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                             return;
                     }
                 }
@@ -101,28 +101,28 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
-                    stdexec::set_error(std::move(self->_receiver), ConnectionErrorEnum::Unknown);
+                    stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::Unknown);
                     return;
                 }
 
-                self->_data->acceptStateMachine->SetIoResult(bytesTransferred);
+                self->m_data->acceptStateMachine->SetIoResult(bytesTransferred);
                 self->Pump();
             }
 
             void start() & noexcept {
-                _status.context = this;
-                _status.callback = IoCallback;
+                m_status.context = this;
+                m_status.callback = IoCallback;
 
-                if (_action == AcceptControlAction::Shutdown)
-                    _data->acceptStateMachine->SetToClose();
+                if (m_action == AcceptControlAction::Shutdown)
+                    m_data->acceptStateMachine->SetToClose();
                 else
-                    _data->acceptStateMachine->SetToOpen();
+                    m_data->acceptStateMachine->SetToOpen();
                 Pump();
             }
         };
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) const {
-            return { _data, _options, std::move(r), _action };
+            return { m_data, m_options, std::move(r), m_action };
         }
     };
 
@@ -134,55 +134,55 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-        Data _data;
-        AcceptOptions _options;
+        Data m_data;
+        AcceptOptions m_options;
 
         template<class Receiver>
         struct OperationState {
-            Data _data;
-            Receiver _receiver;
+            Data m_data;
+            Receiver m_receiver;
 
             struct InnerReceiver {
                 using receiver_concept = stdexec::receiver_t;
-                OperationState* _parent;
+                OperationState* m_parent;
 
                 void set_value() && noexcept {
-                    stdexec::set_value(std::move(_parent->_receiver), std::move(_parent->_data));
+                    stdexec::set_value(std::move(m_parent->m_receiver), std::move(m_parent->m_data));
                 }
 
                 void set_error(ConnectionErrorEnum e) && noexcept {
-                    stdexec::set_error(std::move(_parent->_receiver), e);
+                    stdexec::set_error(std::move(m_parent->m_receiver), e);
                 }
 
                 void set_stopped() && noexcept {
-                    stdexec::set_stopped(std::move(_parent->_receiver));
+                    stdexec::set_stopped(std::move(m_parent->m_receiver));
                 }
 
                 auto get_env() const noexcept {
-                    return stdexec::get_env(_parent->_receiver);
+                    return stdexec::get_env(m_parent->m_receiver);
                 }
             };
 
             using InnerOpState = stdexec::connect_result_t<ControlSender, InnerReceiver>;
-            InnerOpState _innerOp;
+            InnerOpState m_innerOp;
             OperationState(Data&& data, AcceptOptions options, Receiver receiver) :
-                _data{ std::move(data) },
-                _receiver{ std::move(receiver) },
-                _innerOp{ stdexec::connect(
-                    ControlSender{ &_data, options, AcceptControlAction::Accept },
+                m_data{ std::move(data) },
+                m_receiver{ std::move(receiver) },
+                m_innerOp{ stdexec::connect(
+                    ControlSender{ &m_data, options, AcceptControlAction::Accept },
 
                     InnerReceiver{ this }
                 ) }
             {}
 
             void start() & noexcept {
-                stdexec::start(_innerOp);
+                stdexec::start(m_innerOp);
             }
         };
 
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) && {
-            return { std::move(_data), _options, std::move(r) };
+            return { std::move(m_data), m_options, std::move(r) };
         }
     };
 
@@ -193,8 +193,8 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     auto TlsAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data&& clientData, AcceptOptions options) {
-        clientData.acceptStateMachine = std::make_unique<_details::TlsAcceptStateMachine<Data, TlsAsyncAcceptPolicy>>(options);
-        _options = options;
+        clientData.acceptStateMachine = std::make_unique<details_::TlsAcceptStateMachine<Data, TlsAsyncAcceptPolicy>>(options);
+        m_options = options;
 
         static_assert(stdexec::sender<ControlSender>);
         auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<Data>::AcceptOptions>(options) };
@@ -213,13 +213,13 @@ namespace Hermes {
     template<SocketDataConcept Data>
     auto TlsAsyncAcceptPolicy<Data>::Renegotiate(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
-        return ControlSender{ &data, _options, AcceptControlAction::Renegotiate };
+        return ControlSender{ &data, m_options, AcceptControlAction::Renegotiate };
     }
 
     template<SocketDataConcept Data>
     auto TlsAsyncAcceptPolicy<Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
-        return ControlSender{ &data, _options, AcceptControlAction::Shutdown };
+        return ControlSender{ &data, m_options, AcceptControlAction::Shutdown };
     }
 
     template<SocketDataConcept Data>

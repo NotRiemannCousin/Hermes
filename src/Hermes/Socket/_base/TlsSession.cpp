@@ -10,7 +10,7 @@
 #include <utility>
 #include <vector>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
 
 #ifdef _WIN32
 // ============================================================================
@@ -18,65 +18,65 @@ namespace Hermes::_details {
 // ============================================================================
 
     struct TlsSession::Impl {
-        CredHandle                _credHandle{};
-        CtxtHandle                _ctxtHandle{};
-        TimeStamp                 _tsExpiry{};
-        SecPkgContext_StreamSizes _streamSizes{};
+        CredHandle                m_credHandle{};
+        CtxtHandle                m_ctxtHandle{};
+        TimeStamp                 m_tsExpiry{};
+        SecPkgContext_StreamSizes m_streamSizes{};
 
-        std::string _host{};
-        bool        _isServer{};
-        bool        _requestClientCert{};
-        bool        _ignoreCertErrors{};
-        bool        _mutualAuth{};
-        bool        _handshakeComplete{};
+        std::string m_host{};
+        bool        m_isServer{};
+        bool        m_requestClientCert{};
+        bool        m_ignoreCertErrors{};
+        bool        m_mutualAuth{};
+        bool        m_handshakeComplete{};
 
 #pragma region buffers
 
-        std::array<std::array<std::byte, 0x4000>, 4> _buffers{};
-        std::array<SecBuffer, 4> _secBuffers{};
+        std::array<std::array<std::byte, 0x4000>, 4> m_buffers{};
+        std::array<SecBuffer, 4> m_secBuffers{};
 
 
-        SecBuffer& TokenBuffer() noexcept { return _secBuffers[0]; }
-        SecBuffer& ExtraBuffer() noexcept { return _secBuffers[1]; }
+        SecBuffer& TokenBuffer() noexcept { return m_secBuffers[0]; }
+        SecBuffer& ExtraBuffer() noexcept { return m_secBuffers[1]; }
 
-        SecBuffer& OutBuffer() noexcept { return _secBuffers[2]; }
-        SecBuffer& MsgBuffer() noexcept { return _secBuffers[3]; }
+        SecBuffer& OutBuffer() noexcept { return m_secBuffers[2]; }
+        SecBuffer& MsgBuffer() noexcept { return m_secBuffers[3]; }
 
 
-        SecBufferDesc _inBufferDesc { .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &TokenBuffer() };
-        SecBufferDesc _outBufferDesc{ .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &OutBuffer()   };
+        SecBufferDesc m_inBufferDesc { .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &TokenBuffer() };
+        SecBufferDesc m_outBufferDesc{ .ulVersion = macroSECBUFFER_VERSION, .cBuffers = 2, .pBuffers = &OutBuffer()   };
 
 #pragma endregion
 
         ~Impl() noexcept {
-            if (_ctxtHandle.dwLower != 0 || _ctxtHandle.dwUpper != 0)
-                ::DeleteSecurityContext(&_ctxtHandle);
+            if (m_ctxtHandle.dwLower != 0 || m_ctxtHandle.dwUpper != 0)
+                ::DeleteSecurityContext(&m_ctxtHandle);
         }
     };
 
 
     void TlsSession::BeginClient(const Credentials& creds, std::string host,
                                  bool ignoreCertErrors, bool mutualAuth) const noexcept {
-        _impl->_credHandle        = creds.GetCredHandle();
-        _impl->_host              = std::move(host);
-        _impl->_isServer          = false;
-        _impl->_ignoreCertErrors  = ignoreCertErrors;
-        _impl->_mutualAuth        = mutualAuth;
-        _impl->_handshakeComplete = false;
+        m_impl->m_credHandle        = creds.GetCredHandle();
+        m_impl->m_host              = std::move(host);
+        m_impl->m_isServer          = false;
+        m_impl->m_ignoreCertErrors  = ignoreCertErrors;
+        m_impl->m_mutualAuth        = mutualAuth;
+        m_impl->m_handshakeComplete = false;
     }
 
     void TlsSession::BeginServer(const Credentials& creds, bool requestClientCert) const noexcept {
-        _impl->_credHandle        = creds.GetCredHandle();
-        _impl->_isServer          = true;
-        _impl->_requestClientCert = requestClientCert;
-        _impl->_handshakeComplete = false;
+        m_impl->m_credHandle        = creds.GetCredHandle();
+        m_impl->m_isServer          = true;
+        m_impl->m_requestClientCert = requestClientCert;
+        m_impl->m_handshakeComplete = false;
     }
 
 
-    bool TlsSession::IsServer()            const noexcept { return _impl->_isServer; }
-    bool TlsSession::IsActive()            const noexcept { return _impl->_credHandle.dwLower != 0 || _impl->_credHandle.dwUpper != 0; }
-    bool TlsSession::IsHandshakeComplete() const noexcept { return _impl->_handshakeComplete; }
-    bool TlsSession::IsRenegotiation()     const noexcept { return _impl->_ctxtHandle.dwLower != 0 || _impl->_ctxtHandle.dwUpper != 0; }
+    bool TlsSession::IsServer()            const noexcept { return m_impl->m_isServer; }
+    bool TlsSession::IsActive()            const noexcept { return m_impl->m_credHandle.dwLower != 0 || m_impl->m_credHandle.dwUpper != 0; }
+    bool TlsSession::IsHandshakeComplete() const noexcept { return m_impl->m_handshakeComplete; }
+    bool TlsSession::IsRenegotiation()     const noexcept { return m_impl->m_ctxtHandle.dwLower != 0 || m_impl->m_ctxtHandle.dwUpper != 0; }
 
 
     TlsSession::HandshakeOutcome TlsSession::AdvanceHandshake(
@@ -84,112 +84,112 @@ namespace Hermes::_details {
     ) const noexcept {
         const bool firstPass{ !IsRenegotiation() };
 
-        _impl->TokenBuffer() = SecBuffer{ _tul(inBytes.size()), _tul(SecurityBufferEnum::Token), inBytes.data() };
-        _impl->ExtraBuffer() = SecBuffer{ 0                  , _tul(SecurityBufferEnum::Empty), nullptr        };
+        m_impl->TokenBuffer() = SecBuffer{ tul(inBytes.size()), tul(SecurityBufferEnum::Token), inBytes.data() };
+        m_impl->ExtraBuffer() = SecBuffer{ 0                  , tul(SecurityBufferEnum::Empty), nullptr        };
 
-        _impl->OutBuffer() = SecBuffer{ _tul(outBuf.size())            , _tul(SecurityBufferEnum::Token), outBuf.data()           };
-        _impl->MsgBuffer() = SecBuffer{ _tul(_impl->_buffers[3].size()), _tul(SecurityBufferEnum::Alert), _impl->_buffers[3].data() };
+        m_impl->OutBuffer() = SecBuffer{ tul(outBuf.size())            , tul(SecurityBufferEnum::Token), outBuf.data()           };
+        m_impl->MsgBuffer() = SecBuffer{ tul(m_impl->m_buffers[3].size()), tul(SecurityBufferEnum::Alert), m_impl->m_buffers[3].data() };
 
         SECURITY_STATUS status{};
 
-        if (_impl->_isServer) {
-            auto _dwSspiFlags{ AcceptSecurityContextFlags::SequenceDetect  |
+        if (m_impl->m_isServer) {
+            auto m_dwSspiFlags{ AcceptSecurityContextFlags::SequenceDetect  |
                                AcceptSecurityContextFlags::ReplayDetect    |
                                AcceptSecurityContextFlags::Confidentiality |
                                AcceptSecurityContextFlags::ExtendedError   |
                                AcceptSecurityContextFlags::Stream };
-            if (_impl->_requestClientCert)
-                _dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
+            if (m_impl->m_requestClientCert)
+                m_dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
 
-            DWORD _pfContextAttr{};
+            DWORD m_pfContextAttr{};
             status = ::AcceptSecurityContext(
-                &_impl->_credHandle,
-                firstPass ? nullptr : &_impl->_ctxtHandle,
-                &_impl->_inBufferDesc,
-                _tul(_dwSspiFlags), 0,
-                &_impl->_ctxtHandle,
-                &_impl->_outBufferDesc, &_pfContextAttr, &_impl->_tsExpiry
+                &m_impl->m_credHandle,
+                firstPass ? nullptr : &m_impl->m_ctxtHandle,
+                &m_impl->m_inBufferDesc,
+                tul(m_dwSspiFlags), 0,
+                &m_impl->m_ctxtHandle,
+                &m_impl->m_outBufferDesc, &m_pfContextAttr, &m_impl->m_tsExpiry
             );
         } else {
-            auto _dwSspiFlags{ InitializeSecurityContextFlags::SequenceDetect  |
+            auto m_dwSspiFlags{ InitializeSecurityContextFlags::SequenceDetect  |
                                InitializeSecurityContextFlags::ReplayDetect    |
                                InitializeSecurityContextFlags::Confidentiality |
                                InitializeSecurityContextFlags::ExtendedError   |
                                InitializeSecurityContextFlags::Stream };
-            if (_impl->_mutualAuth)       _dwSspiFlags |= InitializeSecurityContextFlags::MutualAuth;
-            if (_impl->_ignoreCertErrors) _dwSspiFlags |= InitializeSecurityContextFlags::ManualCredValidation;
+            if (m_impl->m_mutualAuth)       m_dwSspiFlags |= InitializeSecurityContextFlags::MutualAuth;
+            if (m_impl->m_ignoreCertErrors) m_dwSspiFlags |= InitializeSecurityContextFlags::ManualCredValidation;
 
-            DWORD _pfContextAttr{};
+            DWORD m_pfContextAttr{};
             status = ::InitializeSecurityContextA(
-                &_impl->_credHandle,
-                firstPass ? nullptr : &_impl->_ctxtHandle,
-                const_cast<SEC_CHAR*>(_impl->_host.c_str()),
-                _tll(_dwSspiFlags), 0, 0,
-                firstPass ? nullptr : &_impl->_inBufferDesc, 0,
-                &_impl->_ctxtHandle,
-                &_impl->_outBufferDesc, &_pfContextAttr, &_impl->_tsExpiry
+                &m_impl->m_credHandle,
+                firstPass ? nullptr : &m_impl->m_ctxtHandle,
+                const_cast<SEC_CHAR*>(m_impl->m_host.c_str()),
+                tll(m_dwSspiFlags), 0, 0,
+                firstPass ? nullptr : &m_impl->m_inBufferDesc, 0,
+                &m_impl->m_ctxtHandle,
+                &m_impl->m_outBufferDesc, &m_pfContextAttr, &m_impl->m_tsExpiry
             );
         }
 
-        std::uint32_t consumed{ _tul(inBytes.size()) };
-        if (_impl->ExtraBuffer().cbBuffer > 0 && _impl->ExtraBuffer().BufferType == _tul(SecurityBufferEnum::Extra))
-            consumed -= _impl->ExtraBuffer().cbBuffer;
+        std::uint32_t consumed{ tul(inBytes.size()) };
+        if (m_impl->ExtraBuffer().cbBuffer > 0 && m_impl->ExtraBuffer().BufferType == tul(SecurityBufferEnum::Extra))
+            consumed -= m_impl->ExtraBuffer().cbBuffer;
 
         const auto translated{ static_cast<EncryptStatusEnum>(status) };
         if (translated == EncryptStatusEnum::ErrOk)
-            _impl->_handshakeComplete = true;
+            m_impl->m_handshakeComplete = true;
 
-        return { translated, consumed, _impl->OutBuffer().cbBuffer };
+        return { translated, consumed, m_impl->OutBuffer().cbBuffer };
     }
 
 
     TlsSession::StreamSizes TlsSession::GetStreamSizes() const noexcept {
-        if (_impl->_streamSizes.cbMaximumMessage == 0) {
+        if (m_impl->m_streamSizes.cbMaximumMessage == 0) {
             ::QueryContextAttributesA(
-                const_cast<CtxtHandle*>(&_impl->_ctxtHandle),
+                const_cast<CtxtHandle*>(&m_impl->m_ctxtHandle),
                 macroSECPKG_ATTR_STREAM_SIZES,
-                &_impl->_streamSizes
+                &m_impl->m_streamSizes
             );
         }
-        return { _impl->_streamSizes.cbHeader, _impl->_streamSizes.cbTrailer, _impl->_streamSizes.cbMaximumMessage };
+        return { m_impl->m_streamSizes.cbHeader, m_impl->m_streamSizes.cbTrailer, m_impl->m_streamSizes.cbMaximumMessage };
     }
 
 
     TlsSession::EncryptOutcome TlsSession::Encrypt(
         std::span<const std::byte> plain, std::span<std::byte> outBuf
     ) const noexcept {
-        const auto& sizes{ _impl->_streamSizes };
+        const auto& sizes{ m_impl->m_streamSizes };
 
-        _impl->_secBuffers[0] = SecBuffer{ sizes.cbHeader      , _tul(SecurityBufferEnum::StreamHeader) , outBuf.data() };
-        _impl->_secBuffers[1] = SecBuffer{ _tul(plain.size()), _tul(SecurityBufferEnum::Data)         , outBuf.data() + sizes.cbHeader };
-        _impl->_secBuffers[2] = SecBuffer{ sizes.cbTrailer     , _tul(SecurityBufferEnum::StreamTrailer), outBuf.data() + sizes.cbHeader + plain.size() };
-        _impl->_secBuffers[3] = SecBuffer{ 0                   , _tul(SecurityBufferEnum::Empty)        , nullptr };
+        m_impl->m_secBuffers[0] = SecBuffer{ sizes.cbHeader      , tul(SecurityBufferEnum::StreamHeader) , outBuf.data() };
+        m_impl->m_secBuffers[1] = SecBuffer{ tul(plain.size()), tul(SecurityBufferEnum::Data)         , outBuf.data() + sizes.cbHeader };
+        m_impl->m_secBuffers[2] = SecBuffer{ sizes.cbTrailer     , tul(SecurityBufferEnum::StreamTrailer), outBuf.data() + sizes.cbHeader + plain.size() };
+        m_impl->m_secBuffers[3] = SecBuffer{ 0                   , tul(SecurityBufferEnum::Empty)        , nullptr };
 
-        std::memcpy(_impl->_secBuffers[1].pvBuffer, plain.data(), plain.size());
+        std::memcpy(m_impl->m_secBuffers[1].pvBuffer, plain.data(), plain.size());
 
-        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, _impl->_secBuffers.data() };
-        const SECURITY_STATUS status{ ::EncryptMessage(&_impl->_ctxtHandle, 0, &buffDesc, 0) };
+        SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, m_impl->m_secBuffers.data() };
+        const SECURITY_STATUS status{ ::EncryptMessage(&m_impl->m_ctxtHandle, 0, &buffDesc, 0) };
 
-        if (status != _tul(EncryptStatusEnum::ErrOk))
+        if (status != tul(EncryptStatusEnum::ErrOk))
             return { static_cast<EncryptStatusEnum>(status), 0 };
 
-        const std::uint32_t produced{ _impl->_secBuffers[0].cbBuffer + _impl->_secBuffers[1].cbBuffer + _impl->_secBuffers[2].cbBuffer };
+        const std::uint32_t produced{ m_impl->m_secBuffers[0].cbBuffer + m_impl->m_secBuffers[1].cbBuffer + m_impl->m_secBuffers[2].cbBuffer };
         return { EncryptStatusEnum::ErrOk, produced };
     }
 
 
     TlsSession::DecryptOutcome TlsSession::Decrypt(std::span<std::byte> inBytes) const noexcept {
-        std::span buffs{ _impl->_secBuffers };
-        buffs[0] = SecBuffer{ _tul(inBytes.size()), _tul(SecurityBufferEnum::Data), inBytes.data() };
-        buffs[1] = buffs[2] = buffs[3] = SecBuffer{ 0, _tul(SecurityBufferEnum::Empty), nullptr };
+        std::span buffs{ m_impl->m_secBuffers };
+        buffs[0] = SecBuffer{ tul(inBytes.size()), tul(SecurityBufferEnum::Data), inBytes.data() };
+        buffs[1] = buffs[2] = buffs[3] = SecBuffer{ 0, tul(SecurityBufferEnum::Empty), nullptr };
 
         SecBufferDesc buffDesc{ macroSECBUFFER_VERSION, 4, buffs.data() };
-        const SECURITY_STATUS status{ ::DecryptMessage(&_impl->_ctxtHandle, &buffDesc, 0, nullptr) };
+        const SECURITY_STATUS status{ ::DecryptMessage(&m_impl->m_ctxtHandle, &buffDesc, 0, nullptr) };
 
         DecryptOutcome out{ static_cast<EncryptStatusEnum>(status), {}, inBytes };
 
-        const auto dataBuffer { std::ranges::find(buffs, _tul(SecurityBufferEnum::Data),  &SecBuffer::BufferType) };
-        const auto extraBuffer{ std::ranges::find(buffs, _tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
+        const auto dataBuffer { std::ranges::find(buffs, tul(SecurityBufferEnum::Data),  &SecBuffer::BufferType) };
+        const auto extraBuffer{ std::ranges::find(buffs, tul(SecurityBufferEnum::Extra), &SecBuffer::BufferType) };
 
         if (dataBuffer != buffs.end() && dataBuffer->cbBuffer > 0)
             out.data = { static_cast<std::byte*>(dataBuffer->pvBuffer), dataBuffer->cbBuffer }, out.extra = {};
@@ -203,30 +203,30 @@ namespace Hermes::_details {
     std::uint32_t TlsSession::Shutdown(std::span<std::byte> outBuf) const noexcept {
         DWORD dwType{ macroSCHANNEL_SHUTDOWN };
 
-        _impl->OutBuffer() = SecBuffer{ sizeof(dwType), _tul(SecurityBufferEnum::Token), &dwType };
-        SecBufferDesc outBufferDesc{ macroSECBUFFER_VERSION, 1, &_impl->OutBuffer() };
+        m_impl->OutBuffer() = SecBuffer{ sizeof(dwType), tul(SecurityBufferEnum::Token), &dwType };
+        SecBufferDesc outBufferDesc{ macroSECBUFFER_VERSION, 1, &m_impl->OutBuffer() };
 
-        if (::ApplyControlToken(&_impl->_ctxtHandle, &outBufferDesc) != _tul(EncryptStatusEnum::ErrOk))
+        if (::ApplyControlToken(&m_impl->m_ctxtHandle, &outBufferDesc) != tul(EncryptStatusEnum::ErrOk))
             return 0;
 
-        _impl->OutBuffer() = SecBuffer{ _tul(outBuf.size()), _tul(SecurityBufferEnum::Token), outBuf.data() };
-        outBufferDesc      = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &_impl->OutBuffer() };
+        m_impl->OutBuffer() = SecBuffer{ tul(outBuf.size()), tul(SecurityBufferEnum::Token), outBuf.data() };
+        outBufferDesc      = SecBufferDesc{ macroSECBUFFER_VERSION, 1, &m_impl->OutBuffer() };
 
         DWORD dwSSPIOutFlags{};
         TimeStamp tsExpiry{};
         SECURITY_STATUS status{};
 
-        if (_impl->_isServer) {
+        if (m_impl->m_isServer) {
             auto dwSspiFlags{ AcceptSecurityContextFlags::SequenceDetect  |
                               AcceptSecurityContextFlags::ReplayDetect    |
                               AcceptSecurityContextFlags::Confidentiality |
                               AcceptSecurityContextFlags::Stream };
-            if (_impl->_requestClientCert)
+            if (m_impl->m_requestClientCert)
                 dwSspiFlags |= AcceptSecurityContextFlags::MutualAuth;
 
             status = ::AcceptSecurityContext(
-                &_impl->_credHandle, &_impl->_ctxtHandle, nullptr,
-                _tul(dwSspiFlags), 0, nullptr, &outBufferDesc, &dwSSPIOutFlags, &tsExpiry
+                &m_impl->m_credHandle, &m_impl->m_ctxtHandle, nullptr,
+                tul(dwSspiFlags), 0, nullptr, &outBufferDesc, &dwSSPIOutFlags, &tsExpiry
             );
         } else {
             constexpr auto dwSspiFlags{
@@ -236,25 +236,25 @@ namespace Hermes::_details {
                 InitializeSecurityContextFlags::Stream
             };
             status = ::InitializeSecurityContextA(
-                nullptr, &_impl->_ctxtHandle, nullptr,
-                _tl(dwSspiFlags), 0, 0, nullptr, 0,
+                nullptr, &m_impl->m_ctxtHandle, nullptr,
+                tl(dwSspiFlags), 0, 0, nullptr, 0,
                 nullptr, &outBufferDesc, &dwSSPIOutFlags, &tsExpiry
             );
         }
 
-        if (status == _tul(EncryptStatusEnum::ErrOk))
-            return _impl->OutBuffer().cbBuffer;
+        if (status == tul(EncryptStatusEnum::ErrOk))
+            return m_impl->OutBuffer().cbBuffer;
         return 0;
     }
 
 
     void TlsSession::DeleteContext() const noexcept {
-        if (_impl->_ctxtHandle.dwLower != 0 || _impl->_ctxtHandle.dwUpper != 0) {
-            ::DeleteSecurityContext(&_impl->_ctxtHandle);
-            _impl->_ctxtHandle = {};
+        if (m_impl->m_ctxtHandle.dwLower != 0 || m_impl->m_ctxtHandle.dwUpper != 0) {
+            ::DeleteSecurityContext(&m_impl->m_ctxtHandle);
+            m_impl->m_ctxtHandle = {};
         }
-        _impl->_handshakeComplete = false;
-        _impl->_streamSizes       = {};
+        m_impl->m_handshakeComplete = false;
+        m_impl->m_streamSizes       = {};
     }
 
 
@@ -270,27 +270,27 @@ namespace Hermes::_details {
 
 
     struct TlsSession::Impl {
-        SSL_CTX* _ctx{ nullptr };
+        SSL_CTX* m_ctx{ nullptr };
 
-        SSL* _ssl { nullptr };
-        BIO* _rBio{ nullptr };
-        BIO* _wBio{ nullptr };
+        SSL* m_ssl { nullptr };
+        BIO* m_rBio{ nullptr };
+        BIO* m_wBio{ nullptr };
 
-        std::string _host{};
-        bool        _isServer{};
-        bool        _requestClientCert{};
-        bool        _ignoreCertErrors{};
-        bool        _handshakeComplete{};
+        std::string m_host{};
+        bool        m_isServer{};
+        bool        m_requestClientCert{};
+        bool        m_ignoreCertErrors{};
+        bool        m_handshakeComplete{};
 
-        std::vector<std::byte> _decryptScratch{};
+        std::vector<std::byte> m_decryptScratch{};
 
         ~Impl() noexcept {
-            if (_ssl) SSL_free(_ssl);
+            if (m_ssl) SSL_free(m_ssl);
         }
     };
 
 
-    static EncryptStatusEnum S_CertVerifyToStatus(const long verifyResult) noexcept {
+    static EncryptStatusEnum CertVerifyToStatus(const long verifyResult) noexcept {
         switch (verifyResult) {
             case X509_V_OK                                   : return EncryptStatusEnum::ErrOk;
             case X509_V_ERR_CERT_HAS_EXPIRED                 : return EncryptStatusEnum::ErrCertExpired;
@@ -304,7 +304,7 @@ namespace Hermes::_details {
         }
     }
 
-    static EncryptStatusEnum S_TranslateSslError(const SSL* ssl, const int ret, const bool produced) noexcept {
+    static EncryptStatusEnum TranslateSslError(const SSL* ssl, const int ret, const bool produced) noexcept {
         if (ret > 0)
             return EncryptStatusEnum::ErrOk;
 
@@ -316,7 +316,7 @@ namespace Hermes::_details {
             case SSL_ERROR_ZERO_RETURN: return EncryptStatusEnum::InfoContextExpired;
             case SSL_ERROR_SSL: {
                 const long verify{ SSL_get_verify_result(ssl) };
-                if (verify != X509_V_OK) return S_CertVerifyToStatus(verify);
+                if (verify != X509_V_OK) return CertVerifyToStatus(verify);
                 return EncryptStatusEnum::ErrInvalidToken;
             }
             case SSL_ERROR_SYSCALL:
@@ -327,82 +327,82 @@ namespace Hermes::_details {
 
     void TlsSession::BeginClient(const Credentials& creds, std::string host,
                                  bool ignoreCertErrors, bool mutualAuth) const noexcept {
-        _impl->_ctx               = static_cast<SSL_CTX*>(creds.GetNativeHandle());
-        _impl->_host              = std::move(host);
-        _impl->_isServer          = false;
-        _impl->_ignoreCertErrors  = ignoreCertErrors;
-        _impl->_handshakeComplete = false;
+        m_impl->m_ctx               = static_cast<SSL_CTX*>(creds.GetNativeHandle());
+        m_impl->m_host              = std::move(host);
+        m_impl->m_isServer          = false;
+        m_impl->m_ignoreCertErrors  = ignoreCertErrors;
+        m_impl->m_handshakeComplete = false;
 
-        if (_impl->_ssl) { SSL_free(_impl->_ssl); _impl->_ssl = nullptr; }
+        if (m_impl->m_ssl) { SSL_free(m_impl->m_ssl); m_impl->m_ssl = nullptr; }
 
-        _impl->_ssl  = SSL_new(_impl->_ctx);
-        _impl->_rBio = BIO_new(BIO_s_mem());
-        _impl->_wBio = BIO_new(BIO_s_mem());
-        SSL_set_bio(_impl->_ssl, _impl->_rBio, _impl->_wBio);
+        m_impl->m_ssl  = SSL_new(m_impl->m_ctx);
+        m_impl->m_rBio = BIO_new(BIO_s_mem());
+        m_impl->m_wBio = BIO_new(BIO_s_mem());
+        SSL_set_bio(m_impl->m_ssl, m_impl->m_rBio, m_impl->m_wBio);
 
-        SSL_set_connect_state(_impl->_ssl);
-        SSL_set_tlsext_host_name(_impl->_ssl, _impl->_host.c_str());
+        SSL_set_connect_state(m_impl->m_ssl);
+        SSL_set_tlsext_host_name(m_impl->m_ssl, m_impl->m_host.c_str());
 
         if (ignoreCertErrors) {
-            SSL_set_verify(_impl->_ssl, SSL_VERIFY_NONE, nullptr);
-        } else if (X509_VERIFY_PARAM* p{ SSL_get0_param(_impl->_ssl) }) {
+            SSL_set_verify(m_impl->m_ssl, SSL_VERIFY_NONE, nullptr);
+        } else if (X509_VERIFY_PARAM* p{ SSL_get0_param(m_impl->m_ssl) }) {
             X509_VERIFY_PARAM_set_hostflags(p, X509_CHECK_FLAG_NO_PARTIAL_WILDCARDS);
-            X509_VERIFY_PARAM_set1_host(p, _impl->_host.c_str(), _impl->_host.size());
+            X509_VERIFY_PARAM_set1_host(p, m_impl->m_host.c_str(), m_impl->m_host.size());
         }
 
         (void)mutualAuth;
     }
 
     void TlsSession::BeginServer(const Credentials& creds, bool requestClientCert) const noexcept {
-        _impl->_ctx               = static_cast<SSL_CTX*>(creds.GetNativeHandle());
-        _impl->_isServer          = true;
-        _impl->_requestClientCert = requestClientCert;
-        _impl->_handshakeComplete = false;
+        m_impl->m_ctx               = static_cast<SSL_CTX*>(creds.GetNativeHandle());
+        m_impl->m_isServer          = true;
+        m_impl->m_requestClientCert = requestClientCert;
+        m_impl->m_handshakeComplete = false;
 
-        if (_impl->_ssl) { SSL_free(_impl->_ssl); _impl->_ssl = nullptr; }
+        if (m_impl->m_ssl) { SSL_free(m_impl->m_ssl); m_impl->m_ssl = nullptr; }
 
-        _impl->_ssl  = SSL_new(_impl->_ctx);
-        _impl->_rBio = BIO_new(BIO_s_mem());
-        _impl->_wBio = BIO_new(BIO_s_mem());
-        SSL_set_bio(_impl->_ssl, _impl->_rBio, _impl->_wBio);
+        m_impl->m_ssl  = SSL_new(m_impl->m_ctx);
+        m_impl->m_rBio = BIO_new(BIO_s_mem());
+        m_impl->m_wBio = BIO_new(BIO_s_mem());
+        SSL_set_bio(m_impl->m_ssl, m_impl->m_rBio, m_impl->m_wBio);
 
-        SSL_set_accept_state(_impl->_ssl);
+        SSL_set_accept_state(m_impl->m_ssl);
 
         if (requestClientCert)
-            SSL_set_verify(_impl->_ssl, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, nullptr);
+            SSL_set_verify(m_impl->m_ssl, SSL_VERIFY_PEER | SSL_VERIFY_FAIL_IF_NO_PEER_CERT, nullptr);
     }
 
 
-    bool TlsSession::IsServer()            const noexcept { return _impl->_isServer; }
-    bool TlsSession::IsActive()            const noexcept { return _impl->_ssl != nullptr; }
-    bool TlsSession::IsHandshakeComplete() const noexcept { return _impl->_handshakeComplete; }
-    bool TlsSession::IsRenegotiation()     const noexcept { return _impl->_ssl != nullptr && _impl->_handshakeComplete; }
+    bool TlsSession::IsServer()            const noexcept { return m_impl->m_isServer; }
+    bool TlsSession::IsActive()            const noexcept { return m_impl->m_ssl != nullptr; }
+    bool TlsSession::IsHandshakeComplete() const noexcept { return m_impl->m_handshakeComplete; }
+    bool TlsSession::IsRenegotiation()     const noexcept { return m_impl->m_ssl != nullptr && m_impl->m_handshakeComplete; }
 
 
     TlsSession::HandshakeOutcome TlsSession::AdvanceHandshake(
         std::span<std::byte> inBytes, std::span<std::byte> outBuf
     ) const noexcept {
-        if (!_impl->_ssl) return { EncryptStatusEnum::ErrInvalidHandle, 0, 0 };
+        if (!m_impl->m_ssl) return { EncryptStatusEnum::ErrInvalidHandle, 0, 0 };
 
         std::uint32_t consumed{ 0 };
         if (!inBytes.empty()) {
-            const int written{ BIO_write(_impl->_rBio, inBytes.data(), static_cast<int>(inBytes.size())) };
+            const int written{ BIO_write(m_impl->m_rBio, inBytes.data(), static_cast<int>(inBytes.size())) };
             if (written > 0) consumed = static_cast<std::uint32_t>(written);
         }
 
         ERR_clear_error();
-        const int ret{ SSL_do_handshake(_impl->_ssl) };
+        const int ret{ SSL_do_handshake(m_impl->m_ssl) };
 
         std::uint32_t produced{ 0 };
-        const int pending{ BIO_pending(_impl->_wBio) };
+        const int pending{ BIO_pending(m_impl->m_wBio) };
         if (pending > 0 && !outBuf.empty()) {
-            const int n{ BIO_read(_impl->_wBio, outBuf.data(),
+            const int n{ BIO_read(m_impl->m_wBio, outBuf.data(),
                                    static_cast<int>(std::min<size_t>(outBuf.size(), static_cast<size_t>(pending)))) };
             if (n > 0) produced = static_cast<std::uint32_t>(n);
         }
 
-        const auto status{ S_TranslateSslError(_impl->_ssl, ret, produced > 0) };
-        if (ret == 1) _impl->_handshakeComplete = true;
+        const auto status{ TranslateSslError(m_impl->m_ssl, ret, produced > 0) };
+        if (ret == 1) m_impl->m_handshakeComplete = true;
 
         return { status, consumed, produced };
     }
@@ -416,22 +416,22 @@ namespace Hermes::_details {
     TlsSession::EncryptOutcome TlsSession::Encrypt(
         std::span<const std::byte> plain, std::span<std::byte> outBuf
     ) const noexcept {
-        if (!_impl->_ssl) return { EncryptStatusEnum::ErrInvalidHandle, 0 };
+        if (!m_impl->m_ssl) return { EncryptStatusEnum::ErrInvalidHandle, 0 };
 
         ERR_clear_error();
-        const int written{ SSL_write(_impl->_ssl, plain.data(), static_cast<int>(plain.size())) };
+        const int written{ SSL_write(m_impl->m_ssl, plain.data(), static_cast<int>(plain.size())) };
         if (written <= 0) {
-            const int err{ SSL_get_error(_impl->_ssl, written) };
+            const int err{ SSL_get_error(m_impl->m_ssl, written) };
             if (err == SSL_ERROR_ZERO_RETURN)
                 return { EncryptStatusEnum::InfoContextExpired, 0 };
             return { EncryptStatusEnum::ErrEncryptFailure, 0 };
         }
 
-        const int pending{ BIO_pending(_impl->_wBio) };
+        const int pending{ BIO_pending(m_impl->m_wBio) };
         if (pending <= 0)
             return { EncryptStatusEnum::ErrOk, 0 };
 
-        const int n{ BIO_read(_impl->_wBio, outBuf.data(),
+        const int n{ BIO_read(m_impl->m_wBio, outBuf.data(),
                                static_cast<int>(std::min<size_t>(outBuf.size(), static_cast<size_t>(pending)))) };
         if (n <= 0) return { EncryptStatusEnum::ErrEncryptFailure, 0 };
 
@@ -440,23 +440,23 @@ namespace Hermes::_details {
 
 
     TlsSession::DecryptOutcome TlsSession::Decrypt(std::span<std::byte> inBytes) const noexcept {
-        if (!_impl->_ssl) return { EncryptStatusEnum::ErrInvalidHandle, {}, {} };
+        if (!m_impl->m_ssl) return { EncryptStatusEnum::ErrInvalidHandle, {}, {} };
 
         if (!inBytes.empty())
-            BIO_write(_impl->_rBio, inBytes.data(), static_cast<int>(inBytes.size()));
+            BIO_write(m_impl->m_rBio, inBytes.data(), static_cast<int>(inBytes.size()));
 
-        _impl->_decryptScratch.assign(inBytes.size(), std::byte{});
+        m_impl->m_decryptScratch.assign(inBytes.size(), std::byte{});
 
         size_t totalRead = 0;
         ERR_clear_error();
 
         while (totalRead < inBytes.size()) {
-            const int n{ SSL_read(_impl->_ssl, _impl->_decryptScratch.data() + totalRead,
+            const int n{ SSL_read(m_impl->m_ssl, m_impl->m_decryptScratch.data() + totalRead,
                                   static_cast<int>(inBytes.size() - totalRead)) };
             if (n > 0) {
                 totalRead += static_cast<size_t>(n);
             } else {
-                const int err{ SSL_get_error(_impl->_ssl, n) };
+                const int err{ SSL_get_error(m_impl->m_ssl, n) };
                 if (totalRead > 0 && err == SSL_ERROR_WANT_READ) {
                     break;
                 }
@@ -472,7 +472,7 @@ namespace Hermes::_details {
         }
 
         if (totalRead > 0) {
-            std::memcpy(inBytes.data(), _impl->_decryptScratch.data(), totalRead);
+            std::memcpy(inBytes.data(), m_impl->m_decryptScratch.data(), totalRead);
             return { EncryptStatusEnum::ErrOk,
                      std::span{ inBytes.data(), totalRead },
                      {} };
@@ -483,35 +483,35 @@ namespace Hermes::_details {
 
 
     std::uint32_t TlsSession::Shutdown(std::span<std::byte> outBuf) const noexcept {
-        if (!_impl->_ssl) return 0;
+        if (!m_impl->m_ssl) return 0;
 
         ERR_clear_error();
-        SSL_shutdown(_impl->_ssl);
+        SSL_shutdown(m_impl->m_ssl);
 
-        const int pending{ BIO_pending(_impl->_wBio) };
+        const int pending{ BIO_pending(m_impl->m_wBio) };
         if (pending <= 0 || outBuf.empty()) return 0;
 
-        const int n{ BIO_read(_impl->_wBio, outBuf.data(),
+        const int n{ BIO_read(m_impl->m_wBio, outBuf.data(),
                               static_cast<int>(std::min<size_t>(outBuf.size(), static_cast<size_t>(pending)))) };
         return n > 0 ? static_cast<std::uint32_t>(n) : 0;
     }
 
 
     void TlsSession::DeleteContext() const noexcept {
-        if (_impl->_ssl) {
-            SSL_free(_impl->_ssl);
-            _impl->_ssl  = nullptr;
-            _impl->_rBio = nullptr;
-            _impl->_wBio = nullptr;
+        if (m_impl->m_ssl) {
+            SSL_free(m_impl->m_ssl);
+            m_impl->m_ssl  = nullptr;
+            m_impl->m_rBio = nullptr;
+            m_impl->m_wBio = nullptr;
         }
-        _impl->_handshakeComplete = false;
+        m_impl->m_handshakeComplete = false;
     }
 
 
 #endif
 
 
-    TlsSession::TlsSession() : _impl(std::make_unique<Impl>()) {}
+    TlsSession::TlsSession() : m_impl(std::make_unique<Impl>()) {}
     TlsSession::~TlsSession() noexcept = default;
 
     TlsSession::TlsSession(TlsSession&& other) noexcept = default;
@@ -519,7 +519,7 @@ namespace Hermes::_details {
 
     TlsSession TlsSession::MakeChild() const {
         TlsSession session;
-        session._impl->_isServer = _impl->_isServer;
+        session.m_impl->m_isServer = m_impl->m_isServer;
         return session;
     }
 }

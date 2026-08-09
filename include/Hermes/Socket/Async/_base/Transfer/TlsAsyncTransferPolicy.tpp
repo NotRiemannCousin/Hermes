@@ -12,155 +12,155 @@ namespace Hermes {
             stdexec::set_error_t(TransferError),
             stdexec::set_stopped_t()
         >;
-        TlsAsyncTransferPolicy* _policy;
-        Data* _data;
-        std::span<std::byte> _recvBuffer;
-        std::span<const std::byte> _sendBuffer;
-        RecvModeEnum _mode;
-        ActionEnum _action;
+        TlsAsyncTransferPolicy* m_policy;
+        Data* m_data;
+        std::span<std::byte> m_recvBuffer;
+        std::span<const std::byte> m_sendBuffer;
+        RecvModeEnum m_mode;
+        ActionEnum m_action;
         template<class Receiver>
         struct OperationState {
         private:
-            TlsAsyncTransferPolicy* _policy;
-            Data* _data;
-            std::span<std::byte> _recvBuffer;
-            std::span<const std::byte> _sendBuffer;
-            RecvModeEnum _mode;
-            ActionEnum _action;
-            Receiver _receiver;
-            TransferOperStatus _status{};
-            size_t _accumulatedBytes{};
+            TlsAsyncTransferPolicy* m_policy;
+            Data* m_data;
+            std::span<std::byte> m_recvBuffer;
+            std::span<const std::byte> m_sendBuffer;
+            RecvModeEnum m_mode;
+            ActionEnum m_action;
+            Receiver m_receiver;
+            TransferOperStatus m_status{};
+            size_t m_accumulatedBytes{};
 
-            LongIoCount _flags{};
+            LongIoCount m_flags{};
         public:
             OperationState(TlsAsyncTransferPolicy* policy, Data* data, std::span<std::byte> recv, std::span<const std::byte> send, RecvModeEnum mode, ActionEnum action, Receiver receiver) :
-                _policy{ policy }, _data{ data }, _recvBuffer{ recv }, _sendBuffer{ send }, _mode{ mode }, _action{ action }, _receiver{ std::move(receiver) } {}
+                m_policy{ policy }, m_data{ data }, m_recvBuffer{ recv }, m_sendBuffer{ send }, m_mode{ mode }, m_action{ action }, m_receiver{ std::move(receiver) } {}
 
-            void I_Pump() noexcept {
-                _flags = 0;
+            void Pump() noexcept {
+                m_flags = 0;
                 while (true) {
-                    using TransferStateOpResult = _details::TransferStateOpResult;
-                    switch (_data->transferStateMachine->Advance(*_data)) {
+                    using TransferStateOpResult = details_::TransferStateOpResult;
+                    switch (m_data->transferStateMachine->Advance(*m_data)) {
                         case TransferStateOpResult::Send: {
-                            auto buf{ _data->transferStateMachine->GetSendBuffer(*_data) };
+                            auto buf{ m_data->transferStateMachine->GetSendBuffer(*m_data) };
 #ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
                             DWORD sendFlags{};
 
-                            if (WSASend(_data->socket, &wsaBuf, 1, nullptr, sendFlags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSASend(m_data->socket, &wsaBuf, 1, nullptr, sendFlags, &m_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(_receiver), TransferError{ _data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
-                                stdexec::set_error(std::move(_receiver), TransferError{ _data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 return;
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_send(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &_status);
+                                io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_sqe_set_data(sqe, &m_status);
                             });
 #endif
                             return;
                         }
                         case TransferStateOpResult::Recv: {
-                            auto buf{ _data->transferStateMachine->GetRecvBuffer(*_data) };
+                            auto buf{ m_data->transferStateMachine->GetRecvBuffer(*m_data) };
 #ifdef _WIN32
                             WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
-                            if (WSARecv(_data->socket, &wsaBuf, 1, nullptr, &_flags, &_status, nullptr) == macroSOCKET_ERROR) {
+                            if (WSARecv(m_data->socket, &wsaBuf, 1, nullptr, &m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
                                 if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(_receiver), TransferError{ _data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(_data->socket));
+                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
-                                stdexec::set_error(std::move(_receiver), TransferError{ _data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 return;
                             }
                             loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_recv(sqe, static_cast<int>(_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &_status);
+                                io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
+                                io_uring_sqe_set_data(sqe, &m_status);
                             });
 #endif
                             return;
                         }
                         case TransferStateOpResult::Done:
                         case TransferStateOpResult::Error: {
-                            auto [bytes, oper]{ _data->transferStateMachine->GetResult() };
+                            auto [bytes, oper]{ m_data->transferStateMachine->GetResult() };
                             if (oper) {
-                                stdexec::set_value(std::move(_receiver), _accumulatedBytes + bytes);
+                                stdexec::set_value(std::move(m_receiver), m_accumulatedBytes + bytes);
                                 return;
                             }
 
                             if (oper.error() == ConnectionErrorEnum::RenegotiationRequired) {
-                                _accumulatedBytes += bytes;
-                                if (_action == ActionEnum::Recv)
-                                    _recvBuffer = _recvBuffer.subspan(bytes);
+                                m_accumulatedBytes += bytes;
+                                if (m_action == ActionEnum::Recv)
+                                    m_recvBuffer = m_recvBuffer.subspan(bytes);
                                 else
-                                    _sendBuffer = _sendBuffer.subspan(bytes);
-                                if (_data->connectStateMachine) {
-                                    _data->connectStateMachine->SetToOpen();
-                                    if (!_data->connectStateMachine->IsFinished())
-                                        _data->connectStateMachine->Advance(*_data);
+                                    m_sendBuffer = m_sendBuffer.subspan(bytes);
+                                if (m_data->connectStateMachine) {
+                                    m_data->connectStateMachine->SetToOpen();
+                                    if (!m_data->connectStateMachine->IsFinished())
+                                        m_data->connectStateMachine->Advance(*m_data);
                                 }
-                                else if (_data->acceptStateMachine) {
-                                    _data->acceptStateMachine->SetToOpen();
-                                    if (!_data->acceptStateMachine->IsFinished())
-                                        _data->acceptStateMachine->Advance(*_data);
+                                else if (m_data->acceptStateMachine) {
+                                    m_data->acceptStateMachine->SetToOpen();
+                                    if (!m_data->acceptStateMachine->IsFinished())
+                                        m_data->acceptStateMachine->Advance(*m_data);
                                 } else {
-                                    stdexec::set_error(std::move(_receiver), TransferError{ _accumulatedBytes, ConnectionErrorEnum::Unknown });
+                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes, ConnectionErrorEnum::Unknown });
                                 }
 
-                                const auto hsResult{ _data->connectStateMachine ?
-                                    _data->connectStateMachine->GetResult() : _data->acceptStateMachine->GetResult() };
+                                const auto hsResult{ m_data->connectStateMachine ?
+                                    m_data->connectStateMachine->GetResult() : m_data->acceptStateMachine->GetResult() };
 
                                 if (!hsResult) {
-                                    stdexec::set_error(std::move(_receiver), TransferError{ _accumulatedBytes, hsResult.error() });
+                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes, hsResult.error() });
                                     return;
                                 }
 
-                                if (_action == ActionEnum::Recv)
-                                    _data->transferStateMachine->StartToRecv(_recvBuffer, _mode);
+                                if (m_action == ActionEnum::Recv)
+                                    m_data->transferStateMachine->StartToRecv(m_recvBuffer, m_mode);
                                 else
-                                    _data->transferStateMachine->StartToSend(_sendBuffer);
+                                    m_data->transferStateMachine->StartToSend(m_sendBuffer);
                                 continue;
                             }
 
-                            stdexec::set_error(std::move(_receiver), TransferError{ _accumulatedBytes + bytes, oper.error() });
+                            stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes + bytes, oper.error() });
                             return;
                         }
                     }
                 }
             }
 
-            static void S_IoCallback(void* context, LongIoCount bytesTransferred, bool success) noexcept {
+            static void IoCallback(void* context, LongIoCount bytesTransferred, bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
-                    stdexec::set_error(std::move(self->_receiver), TransferError{ self->_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                    stdexec::set_error(std::move(self->m_receiver), TransferError{ self->m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                     return;
                 }
 
-                self->_data->transferStateMachine->SetIoResult(bytesTransferred);
-                self->I_Pump();
+                self->m_data->transferStateMachine->SetIoResult(bytesTransferred);
+                self->Pump();
             }
 
             void start() & noexcept {
-                _status.context = this;
-                _status.callback = S_IoCallback;
+                m_status.context = this;
+                m_status.callback = IoCallback;
 
-                if (_action == ActionEnum::Recv)
-                    _data->transferStateMachine->StartToRecv(_recvBuffer, _mode);
+                if (m_action == ActionEnum::Recv)
+                    m_data->transferStateMachine->StartToRecv(m_recvBuffer, m_mode);
                 else
-                    _data->transferStateMachine->StartToSend(_sendBuffer);
-                I_Pump();
+                    m_data->transferStateMachine->StartToSend(m_sendBuffer);
+                Pump();
             }
         };
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) const {
-            return { _policy, _data, _recvBuffer, _sendBuffer, _mode, _action, std::move(r) };
+            return { m_policy, m_data, m_recvBuffer, m_sendBuffer, m_mode, m_action, std::move(r) };
         }
     };
 
@@ -168,7 +168,7 @@ namespace Hermes {
     template<ByteLike Byte>
     auto TlsAsyncTransferPolicy<Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode) noexcept {
         if (!data.transferStateMachine)
-            data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
+            data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
         std::span<std::byte> byteSpan{ reinterpret_cast<std::byte*>(bufferRecv.data()), bufferRecv.size_bytes() };
         return TransferSender<Byte>{ this, &data, byteSpan, {}, recvMode, ActionEnum::Recv };
     }
@@ -181,7 +181,7 @@ namespace Hermes {
         static_assert(std::same_as<stdexec::error_types_of_t<TransferSender<Byte>>, std::variant<TransferError>>);
 
         if (!data.transferStateMachine)
-            data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
+            data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
         std::span<const std::byte> byteSpan{ reinterpret_cast<const std::byte*>(bufferSend.data()), bufferSend.size_bytes() };
         return TransferSender<Byte>{ this, &data, {}, byteSpan, RecvModeEnum::All, ActionEnum::Send };
     }

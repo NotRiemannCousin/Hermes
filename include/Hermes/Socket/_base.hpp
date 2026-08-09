@@ -68,8 +68,8 @@ namespace Hermes {
             { data.endpoint } -> std::same_as<typename SocketData::EndpointType&>;
             { data.socket   } -> std::same_as<SocketFd&>;
 
-            []() constexpr { constexpr auto _ = SocketData::Family; }(); // forcing constexpr
-            []() constexpr { constexpr auto _ = SocketData::Type;   }(); // forcing constexpr
+            []() constexpr { constexpr auto _{ SocketData::Family }; }(); // forcing constexpr
+            []() constexpr { constexpr auto _{ SocketData::Type };   }(); // forcing constexpr
         };
 
     //! @}
@@ -125,7 +125,7 @@ namespace Hermes {
 
 #pragma region TransferPolicyConcept
 
-    namespace _details {
+    namespace details_ {
         template<class Policy>
         using RecvStreamT = typename Policy::template RecvStream<std::byte>;
     }
@@ -138,7 +138,7 @@ namespace Hermes {
     //! messages, searching for delimiters, or handling TLS encryption transparently.
     //!
     //! ### Lazy Range-Based Receive
-    //! @code{.cpp} _details::RecvStreamT<Policy, SocketData> @endcode
+    //! @code{.cpp} details_::RecvStreamT<Policy, SocketData> @endcode
     //! Must be constructible from `SocketData` and `Policy`, and satisfy `std::ranges::input_range`.
     //! It iteratively yields `std::byte` elements.
     //!
@@ -157,9 +157,9 @@ namespace Hermes {
         && Policy::Type == SocketData::Type
 
         && requires(SocketData& data, Policy& policy) {
-            { _details::RecvStreamT<Policy>{ data, policy } } -> std::ranges::input_range;
+            { details_::RecvStreamT<Policy>{ data, policy } } -> std::ranges::input_range;
         }
-        && requires(_details::RecvStreamT<Policy>& range) {
+        && requires(details_::RecvStreamT<Policy>& range) {
             { *range.begin() } -> std::same_as<std::byte>;
             { range.Error()  } -> std::same_as<ConnectionResultOper>;
         }
@@ -403,7 +403,7 @@ namespace Hermes {
 #pragma endregion
 
 
-    namespace _details {
+    namespace details_ {
         inline void SetTimeout(const SocketFd socket, const int time) {
 #if defined(_WIN32) || defined(_WIN64)
             setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, reinterpret_cast<const char*>(&time), sizeof(time));

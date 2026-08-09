@@ -10,16 +10,16 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     auto TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator*() const -> value_type {
-        if (view->_policy->_streamState->index >= view->_policy->_streamState->size)
+        if (view->m_policy->m_streamState->index >= view->m_policy->m_streamState->size)
             auto _{ view->Receive() };
 
-        return static_cast<Byte>(view->_policy->_streamState->buffer[view->_policy->_streamState->index]);
+        return static_cast<Byte>(view->m_policy->m_streamState->buffer[view->m_policy->m_streamState->index]);
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     auto TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator++() -> Iterator& {
-        ++view->_policy->_streamState->index;
+        ++view->m_policy->m_streamState->index;
         return *this;
     }
 
@@ -32,18 +32,18 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     bool TlsTransferPolicy<Data>::RecvStream<Byte>::Iterator::operator==(std::default_sentinel_t) const {
-        const auto& state{ view->_policy->_streamState };
+        const auto& state{ view->m_policy->m_streamState };
 
         return (!state->status && state->index >= state->size)
-                || view->_data->socket == macroINVALID_SOCKET;
+                || view->m_data->socket == macroINVALID_SOCKET;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, TlsTransferPolicy& policy)
-        : _data{ &data }, _policy{ &policy } {
-        if (policy._streamState == nullptr)
-            policy._streamState = std::make_unique<StreamState>();
+        : m_data{ &data }, m_policy{ &policy } {
+        if (policy.m_streamState == nullptr)
+            policy.m_streamState = std::make_unique<StreamState>();
     }
 
     template<SocketDataConcept Data>
@@ -59,17 +59,17 @@ namespace Hermes {
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     ConnectionResultOper TlsTransferPolicy<Data>::RecvStream<Byte>::Error() const {
-        return _policy->_streamState->status;
+        return m_policy->m_streamState->status;
     }
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
     ConnectionResultOper TlsTransferPolicy<Data>::RecvStream<Byte>::Receive() {
         StreamByteOper::second_type err{};
-        auto& state{ _policy->_streamState };
+        auto& state{ m_policy->m_streamState };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ _policy->Recv(*_data, std::span<std::byte>{state->buffer}, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ m_policy->Recv(*m_data, std::span<std::byte>{state->buffer}, RecvModeEnum::Any) };
             err = errOp;
 
             state->index -= state->size;
@@ -83,8 +83,8 @@ namespace Hermes {
         state->buffer[state->size++] = {};
 
         if (err.error() == ConnectionErrorEnum::ConnectionClosed) {
-            CloseSocket(_data->socket);
-            _data->socket = macroINVALID_SOCKET;
+            CloseSocket(m_data->socket);
+            m_data->socket = macroINVALID_SOCKET;
         }
 
         return state->status;
@@ -100,11 +100,11 @@ namespace Hermes {
         size_t totalReceived{}, bytesReceived{};
         ConnectionResultOper err{};
 
-        if (_streamState != nullptr) {
-            const auto size{ std::min(static_cast<size_t>(_streamState->size - _streamState->index), bufferRecv.size()) };
-            std::memcpy(bufferRecv.data(), _streamState->buffer.data() + _streamState->index, size);
+        if (m_streamState != nullptr) {
+            const auto size{ std::min(static_cast<size_t>(m_streamState->size - m_streamState->index), bufferRecv.size()) };
+            std::memcpy(bufferRecv.data(), m_streamState->buffer.data() + m_streamState->index, size);
 
-            _streamState->index += size;
+            m_streamState->index += size;
             totalReceived += size;
             bufferRecv     = bufferRecv.subspan(size);
 
@@ -113,7 +113,7 @@ namespace Hermes {
         }
 
         if (!data.transferStateMachine)
-            data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
+            data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
 
 
         data.transferStateMachine->StartToRecv(std::as_writable_bytes(bufferRecv), recvMode);
@@ -153,7 +153,7 @@ namespace Hermes {
     StreamByteOper TlsTransferPolicy<Data>::Send(Data& data, std::span<const std::byte> bufferSend) noexcept {
 
         if (!data.transferStateMachine)
-            data.transferStateMachine = std::make_unique<_details::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
+            data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
 
         data.transferStateMachine->StartToSend(std::as_bytes(bufferSend));
 

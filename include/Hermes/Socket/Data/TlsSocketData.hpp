@@ -6,7 +6,7 @@
 #include <Hermes/_base/Credentials.hpp>
 #include <memory>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     template<typename Data>
     struct ITlsConnectStateMachine;
     template<typename Data>
@@ -24,8 +24,8 @@ namespace Hermes {
         using DataType = TlsSocketData<Endpoint, SocketType, SocketFamily>;
         using EndpointType = Endpoint;
 
-        static constexpr SocketTypeEnum Type = SocketType;
-        static constexpr AddressFamilyEnum Family = SocketFamily;
+        static constexpr SocketTypeEnum    Type  { SocketType   };
+        static constexpr AddressFamilyEnum Family{ SocketFamily };
 
         TlsSocketData() = default;
         TlsSocketData(Endpoint endpoint, std::string host, const Credentials* credentials = nullptr);
@@ -40,9 +40,9 @@ namespace Hermes {
 
         const Credentials* credentials{};
 
-        std::unique_ptr<_details::ITlsConnectStateMachine<DataType>> connectStateMachine;
-        std::unique_ptr<_details::ITlsTransferStateMachine<DataType>> transferStateMachine;
-        std::unique_ptr<_details::ITlsAcceptStateMachine<DataType>> acceptStateMachine;
+        std::unique_ptr<details_::ITlsConnectStateMachine<DataType>> connectStateMachine;
+        std::unique_ptr<details_::ITlsTransferStateMachine<DataType>> transferStateMachine;
+        std::unique_ptr<details_::ITlsAcceptStateMachine<DataType>> acceptStateMachine;
 
         uint32_t pendingData{};
 
@@ -61,7 +61,7 @@ namespace Hermes {
         };
 
         std::unique_ptr<State> state{};
-        _details::TlsSession session{};
+        details_::TlsSession session{};
 
         size_t decryptedOffset{};
 

@@ -19,7 +19,7 @@ namespace std {
                     Hermes::Utils::HashCombine(result, std::hash<uint8_t>{}(seg));
 
                 return result;
-            }, ip._data);
+            }, ip.m_data);
         }
     };
 
@@ -37,8 +37,8 @@ namespace std {
         constexpr auto parse(auto &ctx) {
             auto&& it{ ctx.begin() };
             while (it != ctx.end() && *it != '}') {
-                if (*it == 'f') _ipv6Reduced = false;
-                else if (*it == 'b') _ipv6Brackets = true;
+                if (*it == 'f') m_ipv6Reduced = false;
+                else if (*it == 'b') m_ipv6Brackets = true;
                 else throw std::format_error("Invalid format specifier for IpAddress");
                 ++it;
             }
@@ -57,9 +57,9 @@ namespace std {
             [&](auto ...args) {                          \
                 auto out{ ctx.out() };                   \
                                                          \
-                if (_ipv6Brackets) *out++ = '[';         \
+                if (m_ipv6Brackets) *out++ = '[';         \
                 out = std::format_to(out, fmt, args...); \
-                if (_ipv6Brackets) *out++ = ']';         \
+                if (m_ipv6Brackets) *out++ = ']';         \
                                                          \
                 return out;                              \
             }
@@ -69,7 +69,7 @@ namespace std {
                     return std::format_to(ctx.out(), "{}.{}.{}.{}", ipv4[0], ipv4[1], ipv4[2], ipv4[3]);
                 },
                 [&](IpAddress::Ipv6Type ipv6) {
-                    if (!_ipv6Reduced)
+                    if (!m_ipv6Reduced)
                         return std::apply(FORMAT_IPV6(ipv6Fmt), ipv6);
 
                     auto segments{ ipv6
@@ -108,22 +108,22 @@ namespace std {
 
                     return FORMAT_IPV6("{:s}")(views::join_with(segments, ':'));
                 }
-            }, ip._data);
+            }, ip.m_data);
 #undef FORMAT_IPV6
         }
 
     private:
-        bool _ipv6Reduced{ true };
-        bool _ipv6Brackets{};
+        bool m_ipv6Reduced{ true };
+        bool m_ipv6Brackets{};
 
-        static constexpr auto s_ipv6FmtData = [] {
+        static constexpr auto ipv6FmtData{ std::invoke([] {
             array<char, 256> buffer{};
-            string pattern = views::repeat("{:02x}{:02x}"sv, 8) | views::join_with(':') | ranges::to<string>();
+            string pattern{ views::repeat("{:02x}{:02x}"sv, 8) | views::join_with(':') | ranges::to<string>() };
             ranges::copy(pattern, buffer.begin());
             return buffer;
-        }();
+        }) };
 
-        static constexpr auto ipv6Fmt = string_view{ s_ipv6FmtData.data() };
+        static constexpr string_view ipv6Fmt{ ipv6FmtData.data() };
     };
 }
 

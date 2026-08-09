@@ -8,11 +8,11 @@ using Hermes::IpEndpointParams;
 
 #pragma region Utils
 
-static IpAddress I_MakeIpv4(const std::uint8_t a, const std::uint8_t b, const std::uint8_t c, const std::uint8_t d) {
+static IpAddress MakeIpv4(const std::uint8_t a, const std::uint8_t b, const std::uint8_t c, const std::uint8_t d) {
     return IpAddress::FromIpv4({ a, b, c, d });
 }
 
-static IpAddress I_MakeIpv6Loopback() {
+static IpAddress MakeIpv6Loopback() {
     return IpAddress::FromIpv6({ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 });
 }
 
@@ -47,11 +47,11 @@ INSTANTIATE_TEST_SUITE_P(
     ComprehensiveEndpointCases,
     IpEndpointParamTest,
     testing::Values(
-        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    80   , "127.0.0.1:80"   , "" },
-        EndpointTestCase{ I_MakeIpv4(129, 0, 0, 1),    443  , "129.0.0.1:443"  , "" },
-        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    0    , "127.0.0.1:0"    , "" },
-        EndpointTestCase{ I_MakeIpv4(127, 0, 0, 1),    65535, "127.0.0.1:65535", "" },
-        EndpointTestCase{ I_MakeIpv6Loopback()    ,    80   , "[::1]:80"       , "[0000:0000:0000:0000:0000:0000:0000:0001]:80" }
+        EndpointTestCase{ MakeIpv4(127, 0, 0, 1),    80   , "127.0.0.1:80"   , "" },
+        EndpointTestCase{ MakeIpv4(129, 0, 0, 1),    443  , "129.0.0.1:443"  , "" },
+        EndpointTestCase{ MakeIpv4(127, 0, 0, 1),    0    , "127.0.0.1:0"    , "" },
+        EndpointTestCase{ MakeIpv4(127, 0, 0, 1),    65535, "127.0.0.1:65535", "" },
+        EndpointTestCase{ MakeIpv6Loopback()    ,    80   , "[::1]:80"       , "[0000:0000:0000:0000:0000:0000:0000:0001]:80" }
     )
 );
 
@@ -60,9 +60,9 @@ INSTANTIATE_TEST_SUITE_P(
 #pragma region Comparisons, Hashing & Static Builders
 
 struct IpEndpointMiscTest : testing::Test {
-    const IpAddress loopback4{ I_MakeIpv4(127, 0, 0, 1) };
-    const IpAddress public4  { I_MakeIpv4(129, 0, 0, 1) };
-    const IpAddress loopback6{ I_MakeIpv6Loopback()     };
+    const IpAddress loopback4{ MakeIpv4(127, 0, 0, 1) };
+    const IpAddress public4  { MakeIpv4(129, 0, 0, 1) };
+    const IpAddress loopback6{ MakeIpv6Loopback()     };
 
     const IpEndpoint ep80   { loopback4, 80  };
     const IpEndpoint ep443  { loopback4, 443 };

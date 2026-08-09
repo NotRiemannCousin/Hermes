@@ -13,7 +13,7 @@ namespace Hermes {
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
         requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     struct AsyncServerSocket {
-        using EndpointType   = SocketData::EndpointType;
+        using EndpointType = SocketData::EndpointType;
 
         AsyncServerSocket(AsyncServerSocket&&) noexcept;
         AsyncServerSocket& operator=(AsyncServerSocket&&) noexcept;
@@ -26,9 +26,9 @@ namespace Hermes {
          */
         [[nodiscard]] static AsyncServerSocket FromAccepted(SocketData&& data) noexcept;
 
-        [[nodiscard]] EndpointType& GetEndpoint() noexcept { return socketData.endpoint; }
-        [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
-        [[nodiscard]] SocketData& GetSocketData() noexcept { return socketData; }
+        [[nodiscard]] EndpointType& GetEndpoint() noexcept { return m_socketData.endpoint; }
+        [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return m_socketData.endpoint; }
+        [[nodiscard]] SocketData& GetSocketData() noexcept { return m_socketData; }
 
         template<ContiguousByteRange R>
         auto Send(R&& data);
@@ -43,9 +43,9 @@ namespace Hermes {
     private:
         AsyncServerSocket() = default;
 
-        SocketData     socketData{};
-        AcceptPolicy   acceptPolicy{};
-        TransferPolicy transferPolicy{};
+        SocketData     m_socketData{};
+        AcceptPolicy   m_acceptPolicy{};
+        TransferPolicy m_transferPolicy{};
     };
 
     using RawTcpAsyncServer = AsyncServerSocket<>;

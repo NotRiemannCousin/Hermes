@@ -8,7 +8,7 @@
 namespace Hermes {
     template<SocketTypeEnum SocketType = SocketTypeEnum::Stream>
     struct DefaultTransferPolicy {
-        static constexpr auto Type = SocketType;
+        static constexpr auto Type{ SocketType };
 
         static_assert(SocketType != SocketTypeEnum::Dgram, "UDP not supported yet");
 
@@ -36,8 +36,8 @@ namespace Hermes {
         private:
             ConnectionResultOper Receive();
 
-            SocketFd* _socket;
-            DefaultTransferPolicy* _policy;
+            SocketFd* m_socket;
+            DefaultTransferPolicy* m_policy;
         };
 
         template<SocketDataConcept Data>
@@ -55,7 +55,7 @@ namespace Hermes {
             std::array<std::byte, bufferSize> buffer{};
         };
 
-        std::unique_ptr<State> _state{ nullptr };
+        std::unique_ptr<State> m_state{ nullptr };
 
         static StreamByteOper RecvHelper(SocketFd& socket, std::span<std::byte> bufferRecv, RecvModeEnum recvMode);
     };

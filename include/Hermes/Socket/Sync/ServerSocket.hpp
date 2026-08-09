@@ -72,9 +72,9 @@ namespace Hermes {
     private:
         ServerSocket() = default;
 
-        SocketData     socketData{};
-        AcceptPolicy   acceptPolicy{};
-        TransferPolicy transferPolicy{};
+        SocketData     m_socketData{};
+        AcceptPolicy   m_acceptPolicy{};
+        TransferPolicy m_transferPolicy{};
     };
 
 

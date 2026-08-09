@@ -4,19 +4,19 @@
 namespace Hermes::Utils {
 
     template<rg::range Range>
-    DropLastView<Range>::Iterator::Iterator(DropLastView *parent) : _view(parent) {
-        if (_view->_current != rg::end(_view->_view)) {
-            _view->_val = *_view->_current;
-            ++_view->_current;
+    DropLastView<Range>::Iterator::Iterator(DropLastView *parent) : m_view(parent) {
+        if (m_view->m_current != rg::end(m_view->m_view)) {
+            m_view->m_val = *m_view->m_current;
+            ++m_view->m_current;
         }
     }
 
     template<rg::range Range>
     typename DropLastView<Range>::Iterator&
     DropLastView<Range>::Iterator::operator++() {
-        if (_view->_current != rg::end(_view->_view)) {
-            _view->_val = *_view->_current;
-            ++_view->_current;
+        if (m_view->m_current != rg::end(m_view->m_view)) {
+            m_view->m_val = *m_view->m_current;
+            ++m_view->m_current;
         }
         return *this;
     }
@@ -24,12 +24,12 @@ namespace Hermes::Utils {
     template<rg::range Range>
     typename DropLastView<Range>::Type
     DropLastView<Range>::Iterator::operator*() const {
-        return _view->_val;
+        return m_view->m_val;
     }
 
     template<rg::range Range>
     bool DropLastView<Range>::Iterator::operator==(std::default_sentinel_t) const {
-        return _view->_current == rg::end(_view->_view);
+        return m_view->m_current == rg::end(m_view->m_view);
     }
 
     template<rg::range Range>
@@ -39,8 +39,8 @@ namespace Hermes::Utils {
 
     template<rg::range Range>
     DropLastView<Range>::DropLastView(Range base)
-        : _view{ std::move(base) } {
-        _current = rg::begin(_view);
+        : m_view{ std::move(base) } {
+        m_current = rg::begin(m_view);
     }
 
     template<rg::range Range>

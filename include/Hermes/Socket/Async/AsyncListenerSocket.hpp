@@ -53,7 +53,7 @@ namespace Hermes {
         //! @copydoc AsyncAcceptOne(const SocketData&)
         [[nodiscard]] auto AsyncAcceptOne(const SocketData& clientDataPrototype, typename AcceptPolicy::AcceptOptions opt);
 
-        [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return socketData.endpoint; }
+        [[nodiscard]] const EndpointType& GetEndpoint() const noexcept { return m_socketData.endpoint; }
 
         void Close() noexcept;
         void Abort() noexcept;
@@ -67,8 +67,8 @@ namespace Hermes {
             typename AcceptPolicy::ListenOptions opt,
             int backlog) noexcept;
 
-        SocketData   socketData{};
-        AcceptPolicy acceptPolicy{};
+        SocketData   m_socketData{};
+        AcceptPolicy m_acceptPolicy{};
     };
 
     using RawTcpAsyncListener = AsyncListenerSocket<>;

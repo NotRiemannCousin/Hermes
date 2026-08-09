@@ -5,7 +5,7 @@
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 
 namespace Hermes {
-    namespace _details {
+    namespace details_ {
         template <AddressFamilyEnum>
         struct ConnectOptionsIpv6Base {};
 
@@ -30,10 +30,10 @@ namespace Hermes {
         AddressFamilyEnum SocketFamily = AddressFamilyEnum::Inet6>
     struct DefaultConnectPolicy {
         static constexpr auto Family{ SocketFamily };
-        static constexpr auto Type{ SocketType };
+        static constexpr auto Type  { SocketType   };
         using EndpointType = Endpoint;
 
-        struct Options : _details::ConnectOptionsIpv6Base<SocketFamily>, _details::OptionsTcpNoDelayBase<SocketType> {
+        struct Options : details_::ConnectOptionsIpv6Base<SocketFamily>, details_::OptionsTcpNoDelayBase<SocketType> {
             std::chrono::milliseconds connectionTimeout{};
 
             bool keepAlive{};

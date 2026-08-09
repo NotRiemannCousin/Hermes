@@ -8,7 +8,7 @@ namespace Hermes {
     //! @brief Blocking listener socket. Owns the listening SocketFd handle and produces
     //! ServerSocket instances via AcceptOne() / AcceptAll().
     //!
-    //! @details The listening socket lives inside socketData.socket. AcceptPolicy drives
+    //! @details The listening socket lives inside m_socketData.socket. AcceptPolicy drives
     //! both the bind/listen phase (Listen()) and the per-connection accept phase
     //! (AcceptOne()), including any protocol-level handshake (e.g. TLS ServerHandshake).
     //! TransferPolicy is forwarded as-is to every ServerSocket produced.
@@ -112,8 +112,8 @@ namespace Hermes {
     private:
         ListenerSocket() = default;
 
-        SocketData   socketData{};
-        AcceptPolicy acceptPolicy{};
+        SocketData   m_socketData{};
+        AcceptPolicy m_acceptPolicy{};
     };
 
     using RawTcpListener = ListenerSocket<>;

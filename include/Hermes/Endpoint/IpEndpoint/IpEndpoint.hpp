@@ -58,8 +58,8 @@ namespace Hermes {
 
     private:
 
-        IpAddress     _ip{};
-        std::uint16_t _port{};
+        IpAddress     m_ip{};
+        std::uint16_t m_port{};
     };
 
     static_assert(EndpointConcept<IpEndpoint>);

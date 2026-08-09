@@ -50,9 +50,9 @@ namespace Hermes {
     private:
         AsyncClientSocket() = default;
 
-        SocketData       socketData{};
-        ConnectionPolicy connectionPolicy{};
-        TransferPolicy   transferPolicy{};
+        SocketData       m_socketData{};
+        ConnectionPolicy m_connectionPolicy{};
+        TransferPolicy   m_transferPolicy{};
     };
 
 

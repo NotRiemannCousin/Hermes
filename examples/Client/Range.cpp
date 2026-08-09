@@ -46,7 +46,7 @@ extern ExpString MakeRequest() {
         // This code shows how it can be useful.
 
         // (It's not a normal input_range, do I need to give a name to this type of range?
-        // sibling{_input}_range? global_{input}_range? Idk).
+        // sibling{m_input}m_range? global_{input}m_range? Idk).
 
         if (!rg::starts_with(socketView, "HTTP/1.1"sv))
             return std::unexpected{ "Non supported version" };

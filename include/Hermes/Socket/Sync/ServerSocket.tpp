@@ -12,9 +12,9 @@ namespace Hermes {
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::ServerSocket(ServerSocket&& other) noexcept
-        : socketData    (std::move(other.socketData)),
-          acceptPolicy  (std::move(other.acceptPolicy)),
-          transferPolicy(std::move(other.transferPolicy)) { }
+        : m_socketData    (std::move(other.m_socketData)),
+          m_acceptPolicy  (std::move(other.m_acceptPolicy)),
+          m_transferPolicy(std::move(other.m_transferPolicy)) { }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
@@ -22,11 +22,11 @@ namespace Hermes {
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>&
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::operator=(ServerSocket&& other) noexcept {
         if (this != &other) {
-            socketData     = std::move(other.socketData);
-            acceptPolicy   = std::move(other.acceptPolicy);
-            transferPolicy = std::move(other.transferPolicy);
+            m_socketData     = std::move(other.m_socketData);
+            m_acceptPolicy   = std::move(other.m_acceptPolicy);
+            m_transferPolicy = std::move(other.m_transferPolicy);
 
-            other.socketData.socket = macroINVALID_SOCKET;
+            other.m_socketData.socket = macroINVALID_SOCKET;
         }
         return *this;
     }
@@ -47,7 +47,7 @@ namespace Hermes {
     ConnectionResult<ServerSocket<SocketData, AcceptPolicy, TransferPolicy>>
     ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::FromAccepted(SocketData&& data) noexcept {
         ServerSocket socket;
-        socket.socketData = std::move(data);
+        socket.m_socketData = std::move(data);
         return socket;
     }
 
@@ -61,7 +61,7 @@ namespace Hermes {
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Send(socketData, std::as_bytes(buffer));
+        return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer));
     }
 
 
@@ -71,7 +71,7 @@ namespace Hermes {
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return transferPolicy.Recv(socketData, std::as_writable_bytes(buffer), mode);
+        return m_transferPolicy.Recv(m_socketData, std::as_writable_bytes(buffer), mode);
     }
 
 
@@ -79,7 +79,7 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept {
-        return typename TransferPolicy::template RecvStream<Byte>{ socketData, transferPolicy };
+        return typename TransferPolicy::template RecvStream<Byte>{ m_socketData, m_transferPolicy };
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
@@ -98,18 +98,18 @@ namespace Hermes {
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Close() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
 
-        acceptPolicy.Close(socketData);
+        m_acceptPolicy.Close(m_socketData);
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     void ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Abort() noexcept {
-        if (socketData.socket == macroINVALID_SOCKET) return;
+        if (m_socketData.socket == macroINVALID_SOCKET) return;
 
-        acceptPolicy.Abort(socketData);
+        m_acceptPolicy.Abort(m_socketData);
     }
 
 #pragma endregion

@@ -11,72 +11,72 @@
 #undef AWAIT
 
 #define NEXT(state) do {                                \
-    _state = &TlsTransferStateMachine::_##state##State; \
-    return (this->*_state)(data);                       \
+    m_state = &TlsTransferStateMachine::state##State; \
+    return (this->*m_state)(data);                       \
 } while (false)
 
 #define AWAIT(nextState, opResult) do {                     \
-    _state = &TlsTransferStateMachine::_##nextState##State; \
+    m_state = &TlsTransferStateMachine::nextState##State; \
     return TransferStateOpResult::opResult;                 \
 } while (false)
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
 
     template<SocketDataConcept Data, class TransferPolicy>
     typename TlsTransferStateMachine<Data, TransferPolicy>::TlsTransferState
     TlsTransferStateMachine<Data, TransferPolicy>::GetState() const noexcept {
-        return _state;
+        return m_state;
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     StreamByteOper TlsTransferStateMachine<Data, TransferPolicy>::GetResult() const noexcept {
-        return { _totalProcessed, _errorStatus };
+        return { m_totalProcessed, m_errorStatus };
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     bool TlsTransferStateMachine<Data, TransferPolicy>::IsFinished() const noexcept {
-        return _state == &TlsTransferStateMachine::_DoneState ||
-        _state == &TlsTransferStateMachine::_ErrorState;
+        return m_state == &TlsTransferStateMachine::DoneState ||
+        m_state == &TlsTransferStateMachine::ErrorState;
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::StartToRecv(std::span<std::byte> buffer, RecvModeEnum mode) noexcept {
-        _userRecvBuffer   = buffer;
-        _recvMode         = mode;
-        _initialSize      = buffer.size();
-        _totalProcessed = 0;
+        m_userRecvBuffer   = buffer;
+        m_recvMode         = mode;
+        m_initialSize      = buffer.size();
+        m_totalProcessed = 0;
         SetToRecv();
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::StartToSend(std::span<const std::byte> buffer) noexcept {
-        _userSendBuffer   = buffer;
-        _initialSize      = buffer.size();
-        _totalProcessed = 0;
+        m_userSendBuffer   = buffer;
+        m_initialSize      = buffer.size();
+        m_totalProcessed = 0;
         SetToSend();
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::SetToRecv() noexcept {
-        _errorStatus = {};
-        _state       = &TlsTransferStateMachine::_RecvSetupState;
+        m_errorStatus = {};
+        m_state       = &TlsTransferStateMachine::RecvSetupState;
     }
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::SetToSend() noexcept {
-        _errorStatus = {};
-        _state       = &TlsTransferStateMachine::_SendSetupState;
+        m_errorStatus = {};
+        m_state       = &TlsTransferStateMachine::SendSetupState;
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
     TlsTransferStateMachine<Data, TransferPolicy>::Advance(Data &data) noexcept {
-        return (this->*_state)(data);
+        return (this->*m_state)(data);
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::SetIoResult(const int bytes) noexcept {
-        _currSent     = bytes;
-        _currReceived = bytes;
+        m_currSent     = bytes;
+        m_currReceived = bytes;
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
@@ -87,16 +87,16 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     std::span<const std::byte> TlsTransferStateMachine<Data, TransferPolicy>::GetSendBuffer(Data &data) const noexcept {
-        return { static_cast<const std::byte*>(static_cast<const void*>(data.state->encryptedData.data())) + _sentBytes, _encryptedSize - _sentBytes };
+        return { static_cast<const std::byte*>(static_cast<const void*>(data.state->encryptedData.data())) + m_sentBytes, m_encryptedSize - m_sentBytes };
     }
 
 #pragma region Recv
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_RecvSetupState(Data &data) {
+    TlsTransferStateMachine<Data, TransferPolicy>::RecvSetupState(Data &data) {
         if (!data.session.IsHandshakeComplete()) {
-            _errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
+            m_errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
             NEXT(Error);
         }
         NEXT(RecvCheckPending);
@@ -104,17 +104,17 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_RecvCheckPendingState(Data &data) {
+    TlsTransferStateMachine<Data, TransferPolicy>::RecvCheckPendingState(Data &data) {
         auto& dataSpan{ data.state->decryptedDataSpan };
         auto& extraSpan{ data.state->decryptedExtraSpan };
 
         if (!dataSpan.empty()) {
-            const size_t countToCopy{ std::min(_userRecvBuffer.size(), dataSpan.size()) };
-            std::memmove(_userRecvBuffer.data(), dataSpan.data(), countToCopy);
+            const size_t countToCopy{ std::min(m_userRecvBuffer.size(), dataSpan.size()) };
+            std::memmove(m_userRecvBuffer.data(), dataSpan.data(), countToCopy);
 
-            _userRecvBuffer = _userRecvBuffer.subspan(countToCopy);
+            m_userRecvBuffer = m_userRecvBuffer.subspan(countToCopy);
             dataSpan = dataSpan.subspan(countToCopy);
-            _totalProcessed += countToCopy;
+            m_totalProcessed += countToCopy;
 
             if (!dataSpan.empty()) {
                 std::memmove(data.state->decryptedData.data(), dataSpan.data(), dataSpan.size());
@@ -127,7 +127,7 @@ namespace Hermes::_details {
                 NEXT(Done);
             }
 
-            if (_userRecvBuffer.empty() || _recvMode == RecvModeEnum::Any) {
+            if (m_userRecvBuffer.empty() || m_recvMode == RecvModeEnum::Any) {
                 if (!extraSpan.empty()) {
                     std::memmove(data.state->decryptedData.data(), extraSpan.data(), extraSpan.size());
                     extraSpan = { data.state->decryptedData.data(), extraSpan.size() };
@@ -146,25 +146,25 @@ namespace Hermes::_details {
         if constexpr (IsAsync())
             AWAIT(RecvProcessNetwork, Recv);
         else {
-            _currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data()), static_cast<int>(data.state->decryptedData.size()), 0);
+            m_currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data()), static_cast<int>(data.state->decryptedData.size()), 0);
             NEXT(RecvProcessNetwork);
         }
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_RecvProcessNetworkState(Data &data) {
-        if (_currReceived == 0) {
-            _errorStatus = std::unexpected{ ConnectionErrorEnum::ConnectionClosed };
+    TlsTransferStateMachine<Data, TransferPolicy>::RecvProcessNetworkState(Data &data) {
+        if (m_currReceived == 0) {
+            m_errorStatus = std::unexpected{ ConnectionErrorEnum::ConnectionClosed };
             NEXT(Error);
         }
-        if (_currReceived < 0) {
-            _errorStatus = std::unexpected{ ConnectionErrorEnum::ReceiveFailed };
+        if (m_currReceived < 0) {
+            m_errorStatus = std::unexpected{ ConnectionErrorEnum::ReceiveFailed };
             NEXT(Error);
         }
 
         auto& extraSpan{ data.state->decryptedExtraSpan };
-        data.state->decryptedDataSpan = std::span<std::byte>{ data.state->decryptedData.data(), extraSpan.size() + _currReceived };
+        data.state->decryptedDataSpan = std::span<std::byte>{ data.state->decryptedData.data(), extraSpan.size() + m_currReceived };
         extraSpan = {};
 
         NEXT(RecvDecrypt);
@@ -172,14 +172,14 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_RecvDecryptState(Data &data) {
+    TlsTransferStateMachine<Data, TransferPolicy>::RecvDecryptState(Data &data) {
         auto outcome{ data.session.Decrypt(data.state->decryptedDataSpan) };
-        _status = outcome.status;
+        m_status = outcome.status;
 
         data.state->decryptedDataSpan = outcome.data;
         data.state->decryptedExtraSpan = outcome.extra;
 
-        switch (_status) {
+        switch (m_status) {
             case EncryptStatusEnum::ErrOk:
                 NEXT(RecvCheckPending);
 
@@ -193,7 +193,7 @@ namespace Hermes::_details {
                 if constexpr (IsAsync())
                     AWAIT(RecvProcessNetwork, Recv);
                 else {
-                    _currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data() + extraSpan.size()), static_cast<int>(data.state->decryptedData.size() - extraSpan.size()), 0);
+                    m_currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data() + extraSpan.size()), static_cast<int>(data.state->decryptedData.size() - extraSpan.size()), 0);
                     NEXT(RecvProcessNetwork);
                 }
             }
@@ -205,14 +205,14 @@ namespace Hermes::_details {
                 }
 
                 data.pendingData = static_cast<uint32_t>(extraSpan.size());
-                _errorStatus = std::unexpected{ ConnectionErrorEnum::RenegotiationRequired };
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::RenegotiationRequired };
                 data.state->decryptedDataSpan = {};
                 NEXT(Error);
             }
             case EncryptStatusEnum::InfoContextExpired:
                 NEXT(Done);
             default:
-                _errorStatus = std::unexpected{ ConnectionErrorEnum::DecryptionFailed };
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::DecryptionFailed };
                 NEXT(Error);
         }
     }
@@ -223,9 +223,9 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_SendSetupState(Data &data) {
+    TlsTransferStateMachine<Data, TransferPolicy>::SendSetupState(Data &data) {
         if (!data.session.IsHandshakeComplete()) {
-            _errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
+            m_errorStatus = std::unexpected{ ConnectionErrorEnum::HandshakeFailed };
             NEXT(Error);
         }
         NEXT(SendChunk);
@@ -233,53 +233,53 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_SendChunkState(Data &data) {
-        if (_totalProcessed >= _initialSize) NEXT(Done);
+    TlsTransferStateMachine<Data, TransferPolicy>::SendChunkState(Data &data) {
+        if (m_totalProcessed >= m_initialSize) NEXT(Done);
 
-        const size_t remainingBytes{ _initialSize - _totalProcessed };
-        _chunkSize = std::min(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
+        const size_t remainingBytes{ m_initialSize - m_totalProcessed };
+        m_chunkSize = std::min(remainingBytes, static_cast<size_t>(data.session.GetStreamSizes().maxMessage));
 
 
         const auto outcome{ data.session.Encrypt(
-            _userSendBuffer.subspan(_totalProcessed, _chunkSize), std::span<std::byte>{ data.state->encryptedData }
+            m_userSendBuffer.subspan(m_totalProcessed, m_chunkSize), std::span<std::byte>{ data.state->encryptedData }
         ) };
-        _status = outcome.status;
-        _encryptedSize = outcome.produced;
-        _totalProcessed += _chunkSize;
+        m_status = outcome.status;
+        m_encryptedSize = outcome.produced;
+        m_totalProcessed += m_chunkSize;
 
-        if (_status != EncryptStatusEnum::ErrOk) {
-            if (_status == EncryptStatusEnum::InfoContextExpired)
-                _errorStatus = std::unexpected{ ConnectionErrorEnum::ConnectionClosed };
+        if (m_status != EncryptStatusEnum::ErrOk) {
+            if (m_status == EncryptStatusEnum::InfoContextExpired)
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::ConnectionClosed };
             else
-                _errorStatus = std::unexpected{ ConnectionErrorEnum::SendFailed };
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::SendFailed };
             NEXT(Error);
         }
 
-        _sentBytes = 0;
+        m_sentBytes = 0;
         NEXT(SendNetworkWrite);
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_SendNetworkWriteState(Data &data) {
+    TlsTransferStateMachine<Data, TransferPolicy>::SendNetworkWriteState(Data &data) {
         if constexpr (IsAsync()) {
             AWAIT(SendProcessNetwork, Send);
         } else {
-            _currSent = send(data.socket, reinterpret_cast<const char*>(data.state->encryptedData.data() + _sentBytes), static_cast<int>(_encryptedSize - _sentBytes), MSG_NOSIGNAL);
+            m_currSent = send(data.socket, reinterpret_cast<const char*>(data.state->encryptedData.data() + m_sentBytes), static_cast<int>(m_encryptedSize - m_sentBytes), MSG_NOSIGNAL);
             NEXT(SendProcessNetwork);
         }
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_SendProcessNetworkState(Data &data) {
-        if (_currSent <= 0) {
-            _errorStatus = std::unexpected{ ConnectionErrorEnum::SendFailed };
+    TlsTransferStateMachine<Data, TransferPolicy>::SendProcessNetworkState(Data &data) {
+        if (m_currSent <= 0) {
+            m_errorStatus = std::unexpected{ ConnectionErrorEnum::SendFailed };
             NEXT(Error);
         }
 
-        _sentBytes += static_cast<size_t>(_currSent);
-        if (_sentBytes < _encryptedSize) {
+        m_sentBytes += static_cast<size_t>(m_currSent);
+        if (m_sentBytes < m_encryptedSize) {
             NEXT(SendNetworkWrite);
         }
 
@@ -290,11 +290,11 @@ namespace Hermes::_details {
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_ErrorState(Data &data) { return TransferStateOpResult::Error; }
+    TlsTransferStateMachine<Data, TransferPolicy>::ErrorState(Data &data) { return TransferStateOpResult::Error; }
 
     template<SocketDataConcept Data, class TransferPolicy>
     TransferStateOpResult
-    TlsTransferStateMachine<Data, TransferPolicy>::_DoneState(Data &data) { return TransferStateOpResult::Done; }
+    TlsTransferStateMachine<Data, TransferPolicy>::DoneState(Data &data) { return TransferStateOpResult::Done; }
 
 }
 

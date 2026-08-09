@@ -10,7 +10,7 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
 
@@ -20,7 +20,7 @@ namespace Hermes {
         };
 
 
-        static constexpr bool IsServer{ false };
+        static constexpr bool IsServer{};
 
 
         auto Connect(Data& data, Options options);
@@ -30,7 +30,7 @@ namespace Hermes {
         static void Abort(Data& data) noexcept;
 
     private:
-        Options _options;
+        Options m_options;
         struct ControlSender;
     };
 }

@@ -26,7 +26,7 @@ using std::string;
 using namespace Hermes;
 
 IpEndpoint::IpEndpoint(const IpAddress ip, const std::uint16_t port)
-    : _ip{ ip }, _port{ port } {}
+    : m_ip{ ip }, m_port{ port } {}
 
 IpEndpoint IpEndpoint::Build(IpEndpointParams params) noexcept {
     return IpEndpoint{ params.ip, params.port };
@@ -66,11 +66,11 @@ ConnectionResult<SocketInfoAddr> IpEndpoint::ToSockAddr() const {
     sockaddr_storage addr{};
     size_t size{ sizeof(sockaddr_in6) };
 
-    const auto ipv6{ _ip.AsIpv6() };
+    const auto ipv6{ m_ip.AsIpv6() };
 
     auto *in6{ reinterpret_cast<sockaddr_in6*>(&addr) };
-    in6->sin6_family = _tus(AddressFamilyEnum::Inet6);
-    in6->sin6_port   = htons(_port);
+    in6->sin6_family = tus(AddressFamilyEnum::Inet6);
+    in6->sin6_port   = htons(m_port);
     in6->sin6_addr   = bit_cast<in6_addr>(ipv6);
 
     return SocketInfoAddr{ addr, size, AddressFamilyEnum::Inet6 };
@@ -96,8 +96,8 @@ ConnectionResult<IpEndpoint> IpEndpoint::TryResolve(const string& url, const str
     }
 
 
-    static constexpr auto s_addrInfoDeleter = [](addrinfo* p) { if (p) freeaddrinfo(p); };
-    const std::unique_ptr<addrinfo, decltype(s_addrInfoDeleter)> result{ resultPtr, s_addrInfoDeleter };
+    static constexpr auto addrInfoDeleter{ [](addrinfo* p) { if (p) freeaddrinfo(p); } };
+    const std::unique_ptr<addrinfo, decltype(addrInfoDeleter)> result{ resultPtr, addrInfoDeleter };
 
     if (!result || !result->ai_addr)
         return std::unexpected{ ConnectionErrorEnum::ResolveNoAddressFound };
@@ -126,11 +126,11 @@ ConnectionResult<IpEndpoint> IpEndpoint::TryResolve(const string& url, const str
 }
 
 IpAddress IpEndpoint::GetIp() const noexcept {
-    return _ip;
+    return m_ip;
 }
 
 std::uint16_t IpEndpoint::GetPort() const noexcept {
-    return _port;
+    return m_port;
 }
 
 

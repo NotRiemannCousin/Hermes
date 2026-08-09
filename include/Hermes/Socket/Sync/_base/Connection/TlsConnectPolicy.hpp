@@ -13,10 +13,10 @@ namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
-        static constexpr bool IsServer{ false };
+        static constexpr bool IsServer{};
 
         using DataType = TlsSocketData<EndpointType, Type, Family>;
 

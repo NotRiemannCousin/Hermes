@@ -32,7 +32,7 @@ namespace Hermes {
 
     class FastIoLoop {
         struct Impl;
-        std::unique_ptr<Impl> _impl;
+        std::unique_ptr<Impl> m_impl;
 
     public:
         explicit FastIoLoop(unsigned int threadCount = std::thread::hardware_concurrency());
@@ -64,7 +64,7 @@ namespace Hermes {
     struct FastIoScheduler {
         using scheduler_concept = stdexec::scheduler_t;
 
-        const FastIoLoop* _loop;
+        const FastIoLoop* m_loop;
 
         bool operator==(const FastIoScheduler& other) const noexcept = default;
 
@@ -79,19 +79,19 @@ namespace Hermes {
             stdexec::set_stopped_t()
         >;
 
-        const FastIoLoop* _loop;
+        const FastIoLoop* m_loop;
 
         template <class Receiver>
         struct OperationState {
-            const FastIoLoop* _loop;
-            Receiver _receiver;
-            TransferOperStatus _status{};
+            const FastIoLoop* m_loop;
+            Receiver m_receiver;
+            TransferOperStatus m_status{};
 
             OperationState(const FastIoLoop* loop, Receiver r);
 
             void start() & noexcept;
 
-            static void S_Callback(void* context, LongIoCount bytesTransferred, bool success);
+            static void Callback(void* context, LongIoCount bytesTransferred, bool success);
         };
 
         template <class Receiver>

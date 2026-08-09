@@ -10,14 +10,14 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     ConnectionResultOper TlsAcceptPolicy<Data>::Accept(Data& data, Data& outData, AcceptOptions options) noexcept {
-        outData.acceptStateMachine = std::make_unique<_details::TlsAcceptStateMachine<Data, TlsAcceptPolicy>>(options);
+        outData.acceptStateMachine = std::make_unique<details_::TlsAcceptStateMachine<Data, TlsAcceptPolicy>>(options);
 
-        const auto s_makeHandshake = [&](std::monostate) {
+        const auto makeHandshake{ [&](std::monostate) {
             return TlsAcceptPolicy::ServerHandshake(outData, options);
-        };
+        } };
 
         return DefaultAcceptPolicy<EndpointType, Type, Family>::Accept(data, outData, options)
-                .and_then(s_makeHandshake);
+                .and_then(makeHandshake);
     }
 
     template<SocketDataConcept Data>

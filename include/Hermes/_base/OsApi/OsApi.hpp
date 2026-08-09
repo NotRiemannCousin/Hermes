@@ -97,12 +97,12 @@ namespace Hermes {
 
 
 #ifdef _WIN32
-#include <Hermes/_base/OsApi/Enums/Windows/ConditionFunctionEnum.hpp>
-#include <Hermes/_base/OsApi/Enums/Windows/EncryptStatusEnum.hpp>
-#include <Hermes/_base/OsApi/Enums/Windows/SChCredEnum.hpp>
-#include <Hermes/_base/OsApi/Enums/Windows/SecurityBufferEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Windows/ConditionFunctionEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Windows/EncryptStatusEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Windows/SChCredEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Windows/SecurityBufferEnum.hpp>
 #else
-#include <Hermes/_base/OsApi/Enums/Linux/EncryptStatusEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Linux/EncryptStatusEnum.hpp>
 #endif
 namespace Hermes {
     ENUM_OPERATIONS(AddressFamilyEnum)
@@ -123,17 +123,17 @@ namespace Hermes {
 #include <Hermes/_base/OsApi/Flags/NameInfoFlags.hpp>
 
 #ifdef _WIN32
-#include <Hermes/_base/OsApi/Flags/Windows/CredentialFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/SupportedProtocolsFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/InitializeSecurityContextFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/InitializeSecurityContextReturnFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/AcceptSecurityContextFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/AcceptSecurityContextReturnFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Windows/SChannelCredFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/CredentialFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/SupportedProtocolsFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/InitializeSecurityContextFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/InitializeSecurityContextReturnFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/AcceptSecurityContextFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/AcceptSecurityContextReturnFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Windows/SChannelCredFlags.hpp>
 #else
-#include <Hermes/_base/OsApi/Flags/Linux/CredentialFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Linux/SupportedProtocolsFlags.hpp>
-#include <Hermes/_base/OsApi/Flags/Linux/SChannelCredFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Linux/CredentialFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Linux/SupportedProtocolsFlags.hpp>
+#include <Hermes/_base/OsApi/Flags/_os/Linux/SChannelCredFlags.hpp>
 #endif
 
 namespace Hermes {

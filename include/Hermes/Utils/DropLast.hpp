@@ -14,8 +14,14 @@ namespace Hermes::Utils {
             using difference_type  = std::ptrdiff_t;
             using value_type       = Type;
 
-            DropLastView* _view{};
+            DropLastView* m_view{};
 
+            // Needed so DropLastView<Range>::m_current (`rg::iterator_t<Range> m_current{}`)
+            // is well-formed when Range is itself a DropLastView (i.e. `r | dropLast | dropLast`).
+            // The default-constructed Iterator is only ever a transient placeholder: the
+            // enclosing DropLastView's constructor immediately overwrites m_current with a
+            // real value from rg::begin(), so this instance is never dereferenced.
+            Iterator() noexcept = default;
             explicit Iterator(DropLastView* parent);
 
             [[nodiscard]] value_type operator*() const;
@@ -30,11 +36,11 @@ namespace Hermes::Utils {
         static std::default_sentinel_t end();
 
     private:
-        rg::iterator_t<Range> _current{};
-        Type _val{};
-        std::size_t _index{};
+        rg::iterator_t<Range> m_current{};
+        Type m_val{};
+        std::size_t m_index{};
 
-        Range _view;
+        Range m_view;
     };
 
     struct DropLastAdaptor {

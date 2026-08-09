@@ -12,7 +12,7 @@ namespace Hermes{
     }
 
 
-    static const ConnectionErrorCategory& S_GetConnectionErrorCategory() noexcept {
+    static const ConnectionErrorCategory& GetConnectionErrorCategory() noexcept {
         static ConnectionErrorCategory instance;
         return instance;
     }
@@ -20,7 +20,7 @@ namespace Hermes{
     std::error_code make_error_code(ConnectionErrorEnum e) noexcept {
         return std::error_code{
             static_cast<int>(e),
-            S_GetConnectionErrorCategory()
+            GetConnectionErrorCategory()
         };
     }
 

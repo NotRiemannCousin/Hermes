@@ -7,7 +7,7 @@
 #include <vector>
 #include <string>
 
-static std::expected<std::vector<std::byte>, Hermes::CredentialErrorEnum> S_ReadCertFromFile(const std::filesystem::path& path) noexcept {
+static std::expected<std::vector<std::byte>, Hermes::CredentialErrorEnum> ReadCertFromFile(const std::filesystem::path& path) noexcept {
     std::ifstream file{ path, std::ios::binary | std::ios::ate };
 
     if (!file.is_open())
@@ -28,9 +28,9 @@ static std::expected<std::vector<std::byte>, Hermes::CredentialErrorEnum> S_Read
 
 
 #ifdef _WIN32
-#include <Hermes/_base/OsApi/Enums/Windows/EncryptStatusEnum.hpp>
+#include <Hermes/_base/OsApi/Enums/_os/Windows/EncryptStatusEnum.hpp>
 
-static Hermes::CredentialErrorEnum S_MapSecurityStatus(SECURITY_STATUS status) noexcept {
+static Hermes::CredentialErrorEnum MapSecurityStatus(SECURITY_STATUS status) noexcept {
     using Hermes::EncryptStatusEnum;
 
     switch (static_cast<EncryptStatusEnum>(status)) {
@@ -113,40 +113,40 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::FromCertificate(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, CredentialFlags credFlags, const wchar_t *password, bool useSelfStore) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return FromCertificate(data, sChannelFlags, credFlags, password, useSelfStore); });
     }
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::FromCertificate(std::span<const std::byte> certBuffer,
                                                                                  SChannelCredFlags sChannelFlags, CredentialFlags credFlags, const wchar_t *password, bool useSelfStore) noexcept {
-        const auto s_makeCreds = [=](CertificateInfo certInfo) -> std::expected<Credentials, CredentialErrorEnum> {
+        const auto makeCreds{ [=](CertificateInfo certInfo) -> std::expected<Credentials, CredentialErrorEnum> {
             Credentials creds{};
-            creds._impl->credentialFlags = credFlags;
-            creds._impl->certStore       = certInfo.certStore;
-            creds._impl->certContext     = certInfo.certContext;
-            creds._impl->hasPrivateKey   = certInfo.hasPrivateKey;
+            creds.m_impl->credentialFlags = credFlags;
+            creds.m_impl->certStore       = certInfo.certStore;
+            creds.m_impl->certContext     = certInfo.certContext;
+            creds.m_impl->hasPrivateKey   = certInfo.hasPrivateKey;
 
             SCH_CREDENTIALS cred{
                 .dwVersion = static_cast<DWORD>(SChCredEnum::SchCredentials),
                 .cCreds    = 1,
-                .paCred    = &creds._impl->certContext,
+                .paCred    = &creds.m_impl->certContext,
 
-                .hRootStore     = useSelfStore ? creds._impl->certStore : nullptr,
+                .hRootStore     = useSelfStore ? creds.m_impl->certStore : nullptr,
                 .cTlsParameters = 0,
                 .pTlsParameters = nullptr,
             };
 
             const SECURITY_STATUS status{ ::AcquireCredentialsHandleA(
-                nullptr, const_cast<LPSTR>(macroUNISP_NAME.data()), static_cast<unsigned long>(creds._impl->credentialFlags),
-                nullptr, &cred, nullptr, nullptr, &creds._impl->credHandle, &creds._impl->tsExpiry
+                nullptr, const_cast<LPSTR>(macroUNISP_NAME.data()), static_cast<unsigned long>(creds.m_impl->credentialFlags),
+                nullptr, &cred, nullptr, nullptr, &creds.m_impl->credHandle, &creds.m_impl->tsExpiry
             ) };
 
-            if (status != EncryptStatusEnum::ErrOk) return std::unexpected{ S_MapSecurityStatus(status) }; // sai com ErrAlgorithmMismatch
+            if (status != EncryptStatusEnum::ErrOk) return std::unexpected{ MapSecurityStatus(status) }; // sai com ErrAlgorithmMismatch
             return creds;
-        };
+        } };
 
         return ImportCertificate(certBuffer, password)
-                .and_then(s_makeCreds);
+                .and_then(makeCreds);
     }
 
 #pragma endregion
@@ -156,7 +156,7 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Client(SChannelCredFlags sChannelFlags) noexcept {
         Credentials creds{};
-        creds._impl->credentialFlags = CredentialFlags::Outbound;
+        creds.m_impl->credentialFlags = CredentialFlags::Outbound;
 
         SCH_CREDENTIALS cred{
             .dwVersion = static_cast<DWORD>(SChCredEnum::SchCredentials),
@@ -170,17 +170,17 @@ namespace Hermes {
 
 
         const SECURITY_STATUS status{ ::AcquireCredentialsHandleA(
-            nullptr, const_cast<LPSTR>(macroUNISP_NAME.data()), static_cast<unsigned long>(creds._impl->credentialFlags),
-            nullptr, &cred, nullptr, nullptr, &creds._impl->credHandle, &creds._impl->tsExpiry
+            nullptr, const_cast<LPSTR>(macroUNISP_NAME.data()), static_cast<unsigned long>(creds.m_impl->credentialFlags),
+            nullptr, &cred, nullptr, nullptr, &creds.m_impl->credHandle, &creds.m_impl->tsExpiry
         ) };
 
-        if (status != EncryptStatusEnum::ErrOk) return std::unexpected{ S_MapSecurityStatus(status) };
+        if (status != EncryptStatusEnum::ErrOk) return std::unexpected{ MapSecurityStatus(status) };
         return creds;
     }
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Client(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return Client(data, sChannelFlags, password); });
     }
 
@@ -196,7 +196,7 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Server(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data) { return Server(data, sChannelFlags, password); });
     }
 
@@ -211,7 +211,7 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Both(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return Both(data, sChannelFlags, password); });
     }
 
@@ -223,8 +223,8 @@ namespace Hermes {
 #pragma endregion
 
 
-    CredHandle Credentials::GetCredHandle() const noexcept { return _impl->credHandle; }
-    TimeStamp  Credentials::GetTsExpiry()  const noexcept { return _impl->tsExpiry;  }
+    CredHandle Credentials::GetCredHandle() const noexcept { return m_impl->credHandle; }
+    TimeStamp  Credentials::GetTsExpiry()  const noexcept { return m_impl->tsExpiry;  }
 
     bool Credentials::IsExpired() const noexcept {
         ULARGE_INTEGER now, exp;
@@ -235,8 +235,8 @@ namespace Hermes {
         now.LowPart = ftNow.dwLowDateTime;
         now.HighPart = ftNow.dwHighDateTime;
 
-        exp.LowPart = _impl->tsExpiry.LowPart;
-        exp.HighPart = _impl->tsExpiry.HighPart;
+        exp.LowPart = m_impl->tsExpiry.LowPart;
+        exp.HighPart = m_impl->tsExpiry.HighPart;
 
         return now.QuadPart >= exp.QuadPart;
     }
@@ -254,7 +254,7 @@ namespace Hermes {
 
 // Convert a (possibly UTF-32 on Linux) wchar_t string into UTF-8 so it can be
 // fed to PKCS12_parse, which expects a NUL-terminated UTF-8 password.
-static std::string S_WideToUtf8(const wchar_t* wide) noexcept {
+static std::string WideToUtf8(const wchar_t* wide) noexcept {
     std::string out;
     if (!wide) return out;
     for (; *wide; ++wide) {
@@ -280,7 +280,7 @@ static std::string S_WideToUtf8(const wchar_t* wide) noexcept {
 
 
 // Drain the OpenSSL error queue and map the first error to a CredentialErrorEnum.
-static Hermes::CredentialErrorEnum S_MapOpenSSLError() noexcept {
+static Hermes::CredentialErrorEnum MapOpenSSLError() noexcept {
     using Hermes::CredentialErrorEnum;
 
     auto result{ CredentialErrorEnum::Unknown };
@@ -328,7 +328,7 @@ static std::expected<CertificateInfo, Hermes::CredentialErrorEnum> ImportCertifi
         return std::unexpected{ CredentialErrorEnum::BadCertificateFormat };
     }
 
-    const std::string utf8Pass{ S_WideToUtf8(password) };
+    const std::string utf8Pass{ WideToUtf8(password) };
 
     EVP_PKEY*       pkey{ nullptr };
     X509*           cert{ nullptr };
@@ -337,7 +337,7 @@ static std::expected<CertificateInfo, Hermes::CredentialErrorEnum> ImportCertifi
     const int ok{ PKCS12_parse(p12, utf8Pass.c_str(), &pkey, &cert, &ca) };
     PKCS12_free(p12);
 
-    if (!ok) return std::unexpected{ S_MapOpenSSLError() };
+    if (!ok) return std::unexpected{ MapOpenSSLError() };
 
     if (!cert) {
         if (pkey) EVP_PKEY_free(pkey);
@@ -372,7 +372,7 @@ namespace Hermes {
 
 
     // Translate the SChannel-shaped flag set into OpenSSL verify mode + trust store loading.
-    static CredentialErrorEnum S_ApplyContextFlags(SSL_CTX* ctx, SChannelCredFlags flags, bool isServer) noexcept {
+    static CredentialErrorEnum ApplyContextFlags(SSL_CTX* ctx, SChannelCredFlags flags, bool isServer) noexcept {
         const auto has{ [flags](SChannelCredFlags f) noexcept {
             return (static_cast<unsigned long>(flags) & static_cast<unsigned long>(f)) != 0;
         } };
@@ -409,19 +409,19 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::FromCertificate(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, CredentialFlags credFlags, const wchar_t *password, bool useSelfStore) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return FromCertificate(data, sChannelFlags, credFlags, password, useSelfStore); });
     }
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::FromCertificate(std::span<const std::byte> certBuffer,
                                                                                  SChannelCredFlags sChannelFlags, CredentialFlags credFlags, const wchar_t *password, bool useSelfStore) noexcept {
-        const auto s_makeCreds = [=](CertificateInfo certInfo) -> std::expected<Credentials, CredentialErrorEnum> {
+        const auto makeCreds{ [=](CertificateInfo certInfo) -> std::expected<Credentials, CredentialErrorEnum> {
             Credentials creds{};
-            creds._impl->credentialFlags = credFlags;
-            creds._impl->certificate     = certInfo.cert;
-            creds._impl->privateKey      = certInfo.pkey;
-            creds._impl->caChain         = certInfo.caChain;
-            creds._impl->hasPrivateKey   = certInfo.pkey != nullptr;
+            creds.m_impl->credentialFlags = credFlags;
+            creds.m_impl->certificate     = certInfo.cert;
+            creds.m_impl->privateKey      = certInfo.pkey;
+            creds.m_impl->caChain         = certInfo.caChain;
+            creds.m_impl->hasPrivateKey   = certInfo.pkey != nullptr;
 
             const SSL_METHOD* method{
                 credFlags == CredentialFlags::Inbound  ? TLS_server_method() :
@@ -429,17 +429,17 @@ namespace Hermes {
                                                          TLS_method()
             };
 
-            creds._impl->sslCtx = SSL_CTX_new(method);
-            if (!creds._impl->sslCtx) return std::unexpected{ CredentialErrorEnum::SecurityPackageNotFound };
+            creds.m_impl->sslCtx = SSL_CTX_new(method);
+            if (!creds.m_impl->sslCtx) return std::unexpected{ CredentialErrorEnum::SecurityPackageNotFound };
 
-            S_ApplyContextFlags(creds._impl->sslCtx, sChannelFlags, credFlags != CredentialFlags::Outbound);
+            ApplyContextFlags(creds.m_impl->sslCtx, sChannelFlags, credFlags != CredentialFlags::Outbound);
 
-            if (SSL_CTX_use_certificate(creds._impl->sslCtx, certInfo.cert) != 1)
+            if (SSL_CTX_use_certificate(creds.m_impl->sslCtx, certInfo.cert) != 1)
                 return std::unexpected{ CredentialErrorEnum::UnknownCredentials };
 
             if (certInfo.pkey) {
-                if (SSL_CTX_use_PrivateKey(creds._impl->sslCtx, certInfo.pkey) != 1
-                    || SSL_CTX_check_private_key(creds._impl->sslCtx) != 1)
+                if (SSL_CTX_use_PrivateKey(creds.m_impl->sslCtx, certInfo.pkey) != 1
+                    || SSL_CTX_check_private_key(creds.m_impl->sslCtx) != 1)
                     return std::unexpected{ CredentialErrorEnum::UnknownCredentials };
             } else if (credFlags != CredentialFlags::Outbound) {
                 return std::unexpected{ CredentialErrorEnum::MissingPrivateKey };
@@ -450,11 +450,11 @@ namespace Hermes {
                     X509* ca{ sk_X509_value(certInfo.caChain, i) };
                     if (useSelfStore) {
                         // Treat the bundled CAs as the trust anchor for incoming peers.
-                        if (X509_STORE* store{ SSL_CTX_get_cert_store(creds._impl->sslCtx) })
+                        if (X509_STORE* store{ SSL_CTX_get_cert_store(creds.m_impl->sslCtx) })
                             X509_STORE_add_cert(store, ca);
                     }
                     if (X509_up_ref(ca) == 1)
-                        SSL_CTX_add_extra_chain_cert(creds._impl->sslCtx, ca);
+                        SSL_CTX_add_extra_chain_cert(creds.m_impl->sslCtx, ca);
                 }
             }
 
@@ -462,7 +462,7 @@ namespace Hermes {
         };
 
         return ImportCertificate(certBuffer, password)
-                .and_then(s_makeCreds);
+                .and_then(makeCreds);
     }
 
 #pragma endregion
@@ -472,18 +472,18 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Client(SChannelCredFlags sChannelFlags) noexcept {
         Credentials creds{};
-        creds._impl->credentialFlags = CredentialFlags::Outbound;
+        creds.m_impl->credentialFlags = CredentialFlags::Outbound;
 
-        creds._impl->sslCtx = SSL_CTX_new(TLS_client_method());
-        if (!creds._impl->sslCtx) return std::unexpected{ CredentialErrorEnum::SecurityPackageNotFound };
+        creds.m_impl->sslCtx = SSL_CTX_new(TLS_client_method());
+        if (!creds.m_impl->sslCtx) return std::unexpected{ CredentialErrorEnum::SecurityPackageNotFound };
 
-        S_ApplyContextFlags(creds._impl->sslCtx, sChannelFlags, /*isServer*/ false);
+        ApplyContextFlags(creds.m_impl->sslCtx, sChannelFlags, /*isServer*/ false);
         return creds;
     }
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Client(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return Client(data, sChannelFlags, password); });
     }
 
@@ -499,7 +499,7 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Server(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data) { return Server(data, sChannelFlags, password); });
     }
 
@@ -515,7 +515,7 @@ namespace Hermes {
 
     std::expected<Credentials, CredentialErrorEnum> Credentials::Both(const std::filesystem::path &certPath,
         SChannelCredFlags sChannelFlags, const wchar_t *password) noexcept {
-        return S_ReadCertFromFile(certPath)
+        return ReadCertFromFile(certPath)
                 .and_then([=](std::vector<std::byte> data){ return Both(data, sChannelFlags, password); });
     }
 
@@ -527,11 +527,11 @@ namespace Hermes {
 #pragma endregion
 
 
-    void* Credentials::GetNativeHandle() const noexcept { return _impl->sslCtx; }
+    void* Credentials::GetNativeHandle() const noexcept { return m_impl->sslCtx; }
 
     bool Credentials::IsExpired() const noexcept {
-        if (!_impl->certificate) return false;
-        const ASN1_TIME* notAfter{ X509_get0_notAfter(_impl->certificate) };
+        if (!m_impl->certificate) return false;
+        const ASN1_TIME* notAfter{ X509_get0_notAfter(m_impl->certificate) };
         if (!notAfter) return false;
         return X509_cmp_current_time(notAfter) < 0;
     }
@@ -543,14 +543,14 @@ namespace Hermes {
 
 namespace Hermes {
 
-    Credentials::Credentials() noexcept : _impl{ std::make_unique<Impl>() } {}
+    Credentials::Credentials() noexcept : m_impl{ std::make_unique<Impl>() } {}
 
     Credentials::Credentials(Credentials&& other) noexcept = default;
     Credentials& Credentials::operator=(Credentials&& other) noexcept = default;
     Credentials::~Credentials() noexcept = default;
 
-    SupportedProtocolsFlags Credentials::GetProtocolFlags()   const noexcept { return _impl->protocolFlags;   }
-    CredentialFlags         Credentials::GetCredentialFlags() const noexcept { return _impl->credentialFlags; }
-    bool                    Credentials::HasPrivateKey()      const noexcept { return _impl->hasPrivateKey;   }
+    SupportedProtocolsFlags Credentials::GetProtocolFlags()   const noexcept { return m_impl->protocolFlags;   }
+    CredentialFlags         Credentials::GetCredentialFlags() const noexcept { return m_impl->credentialFlags; }
+    bool                    Credentials::HasPrivateKey()      const noexcept { return m_impl->hasPrivateKey;   }
 
 }

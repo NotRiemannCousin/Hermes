@@ -12,8 +12,8 @@ namespace Hermes {
     struct DefaultSocketData {
         using EndpointType = Endpoint;
 
-        static constexpr SocketTypeEnum Type = SocketType;
-        static constexpr AddressFamilyEnum Family = SocketFamily;
+        static constexpr SocketTypeEnum    Type  { SocketType   };
+        static constexpr AddressFamilyEnum Family{ SocketFamily };
 
         DefaultSocketData() = default;
         explicit DefaultSocketData(Endpoint other);

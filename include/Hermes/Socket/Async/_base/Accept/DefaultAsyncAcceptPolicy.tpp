@@ -25,13 +25,13 @@
 #define REF ->
 #define SAFE_CHECK_ERR(COND, ERROR)                                                   \
 if (COND) {                                                                           \
-    DefaultAsyncAcceptPolicy::Close(self REF _serverData);                            \
-    stdexec::set_error(std::move(self REF _receiver), ConnectionErrorEnum::ERROR);    \
+    DefaultAsyncAcceptPolicy::Close(self REF m_serverData);                            \
+    stdexec::set_error(std::move(self REF m_receiver), ConnectionErrorEnum::ERROR);    \
     return;                                                                           \
 }
 #define CHECK_ERR(COND, ERROR)                                                        \
 if (COND) {                                                                           \
-    stdexec::set_error(std::move(self REF _receiver), ConnectionErrorEnum::ERROR);    \
+    stdexec::set_error(std::move(self REF m_receiver), ConnectionErrorEnum::ERROR);    \
     return;                                                                           \
 }
 
@@ -46,25 +46,25 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-        Data* _listenData{};
-        Data _serverData{};
-        AcceptOptions _options{};
+        Data* m_listenData{};
+        Data m_serverData{};
+        AcceptOptions m_options{};
 
         template<class Receiver>
         struct OperationState {
-            Data* _listenData;
-            Data _serverData;
-            AcceptOptions _options;
-            Receiver _receiver;
-            TransferOperStatus _status{};
-            std::byte _buffer[2 * (sizeof(sockaddr_storage) + 16)]{};
+            Data* m_listenData;
+            Data m_serverData;
+            AcceptOptions m_options;
+            Receiver m_receiver;
+            TransferOperStatus m_status{};
+            std::byte m_buffer[2 * (sizeof(sockaddr_storage) + 16)]{};
 #ifndef _WIN32
-            socklen_t _addrLen{ sizeof(sockaddr_storage) };
+            socklen_t m_addrLen{ sizeof(sockaddr_storage) };
 #endif
 
             OperationState(Data* listenData, Data&& serverData, AcceptOptions options, Receiver receiver) :
-                _listenData{ listenData }, _serverData{ std::move(serverData) },
-                _options{ options }, _receiver{ std::move(receiver) } {}
+                m_listenData{ listenData }, m_serverData{ std::move(serverData) },
+                m_options{ options }, m_receiver{ std::move(receiver) } {}
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
 
@@ -74,54 +74,54 @@ namespace Hermes {
 
                 try {
 #ifdef _WIN32
-                    auto acceptCtx{ setsockopt(self->_serverData.socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT,
-                        reinterpret_cast<char*>(&self->_listenData->socket), sizeof(self->_listenData->socket)) };
+                    auto acceptCtx{ setsockopt(self->m_serverData.socket, SOL_SOCKET, SO_UPDATE_ACCEPT_CONTEXT,
+                        reinterpret_cast<char*>(&self->m_listenData->socket), sizeof(self->m_listenData->socket)) };
                     SAFE_CHECK_ERR(acceptCtx == macroSOCKET_ERROR, Unknown);
 #else
-                    self->_serverData.socket = static_cast<SocketFd>(static_cast<int>(bytesTransferred));
-                    SAFE_CHECK_ERR(self->_serverData.socket < 0, ConnectionFailed);
+                    self->m_serverData.socket = static_cast<SocketFd>(static_cast<int>(bytesTransferred));
+                    SAFE_CHECK_ERR(self->m_serverData.socket < 0, ConnectionFailed);
 #endif
 
-                    auto& sched{ self->_options.scheduler };
+                    auto& sched{ self->m_options.scheduler };
                     SAFE_CHECK_ERR(!sched
-                        || !sched->RegisterHandle(reinterpret_cast<SocketHandle>(self->_serverData.socket)), NoScheduler);
+                        || !sched->RegisterHandle(reinterpret_cast<SocketHandle>(self->m_serverData.socket)), NoScheduler);
 #pragma region Options
 
-                    const auto s_applyOpt = [&](const int level, const int optName, auto value) {
-                        setsockopt(self->_serverData.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
-                    };
+                    const auto applyOpt{ [&](const int level, const int optName, auto value) {
+                        setsockopt(self->m_serverData.socket, level, optName, reinterpret_cast<const char*>(&value), sizeof(value));
+                    } };
 
                     if constexpr (Data::Type == SocketTypeEnum::Stream) {
-                        if (self->_options.tcpNoDelay) s_applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
+                        if (self->m_options.tcpNoDelay) applyOpt(IPPROTO_TCP, TCP_NODELAY, 1);
                     }
 
-                    if (self->_options.keepAlive)      s_applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
-                    if (self->_options.recvBufferSize) s_applyOpt(SOL_SOCKET, SO_RCVBUF, self->_options.recvBufferSize);
-                    if (self->_options.sendBufferSize) s_applyOpt(SOL_SOCKET, SO_SNDBUF, self->_options.sendBufferSize);
+                    if (self->m_options.keepAlive)      applyOpt(SOL_SOCKET, SO_KEEPALIVE, 1);
+                    if (self->m_options.recvBufferSize) applyOpt(SOL_SOCKET, SO_RCVBUF, self->m_options.recvBufferSize);
+                    if (self->m_options.sendBufferSize) applyOpt(SOL_SOCKET, SO_SNDBUF, self->m_options.sendBufferSize);
 #pragma endregion
 
 #ifdef _WIN32
-                    const auto& extensions = s_listenerExtensions.at(self->_listenData->socket);
+                    const auto& extensions = listenerExtensions.at(self->m_listenData->socket);
                     sockaddr* localAddr{ nullptr };
                     sockaddr* remoteAddr{ nullptr };
                     int localLen{};
                     int remoteLen{};
-                    extensions.lpfnGetAcceptExSockaddrs(self->_buffer, 0,
+                    extensions.lpfnGetAcceptExSockaddrs(self->m_buffer, 0,
                         sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
                         &localAddr, &localLen, &remoteAddr, &remoteLen);
 #else
-                    sockaddr* remoteAddr{ reinterpret_cast<sockaddr*>(self->_buffer) };
-                    int remoteLen{ static_cast<int>(self->_addrLen) };
+                    sockaddr* remoteAddr{ reinterpret_cast<sockaddr*>(self->m_buffer) };
+                    int remoteLen{ static_cast<int>(self->m_addrLen) };
 #endif
                     if (remoteAddr) {
                         auto endpointRes{ Data::EndpointType::FromSockAddr(
                             SocketInfoAddr{ *reinterpret_cast<sockaddr_storage*>(remoteAddr), static_cast<size_t>(remoteLen), AddressFamilyEnum{ remoteAddr->sa_family } }) };
                         SAFE_CHECK_ERR(!endpointRes, InvalidEndpoint);
 
-                        self->_serverData.endpoint = std::move(*endpointRes);
+                        self->m_serverData.endpoint = std::move(*endpointRes);
                     }
 
-                    stdexec::set_value(std::move(self->_receiver), std::move(self->_serverData));
+                    stdexec::set_value(std::move(self->m_receiver), std::move(self->m_serverData));
                 } catch (const std::exception& e) {
                     std::println(stderr, "Exception in Accept Success: {}", e.what());
                     SAFE_CHECK_ERR(true, Unknown);
@@ -138,34 +138,34 @@ namespace Hermes {
                 auto& self{ *this };
 
 #ifdef _WIN32
-                self._serverData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
+                self.m_serverData.socket = socket(static_cast<int>(Data::Family), static_cast<int>(Data::Type), 0);
 
-                CHECK_ERR(self._serverData.socket == macroINVALID_SOCKET, Unknown);
+                CHECK_ERR(self.m_serverData.socket == macroINVALID_SOCKET, Unknown);
 
-                const auto& extensions = s_listenerExtensions.at(self._listenData->socket);
+                const auto& extensions = listenerExtensions.at(self.m_listenData->socket);
 
-                self._status = {};
-                self._status.context = &self;
-                self._status.callback = IoCallback;
+                self.m_status = {};
+                self.m_status.context = &self;
+                self.m_status.callback = IoCallback;
 
                 DWORD bytesReceived{};
-                const BOOL success = extensions.lpfnAcceptEx(self._listenData->socket, self._serverData.socket,
-                    self._buffer, 0,
+                const BOOL success = extensions.lpfnAcceptEx(self.m_listenData->socket, self.m_serverData.socket,
+                    self.m_buffer, 0,
                     sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
-                    &bytesReceived, &self._status);
+                    &bytesReceived, &self.m_status);
                 SAFE_CHECK_ERR(!success && WSAGetLastError() != WSA_IO_PENDING, ConnectionFailed);
 #else
-                self._status = {};
-                self._status.context = &self;
-                self._status.callback = IoCallback;
+                self.m_status = {};
+                self.m_status.context = &self;
+                self.m_status.callback = IoCallback;
 
-                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(self._listenData->socket));
+                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(self.m_listenData->socket));
                 SAFE_CHECK_ERR(!loop, NoScheduler);
                 loop->SubmitIo([&](struct io_uring_sqe* sqe) {
-                    self._addrLen = sizeof(sockaddr_storage);
-                    io_uring_prep_accept(sqe, static_cast<int>(self._listenData->socket),
-                        reinterpret_cast<sockaddr*>(self._buffer), &self._addrLen, 0);
-                    io_uring_sqe_set_data(sqe, &self._status);
+                    self.m_addrLen = sizeof(sockaddr_storage);
+                    io_uring_prep_accept(sqe, static_cast<int>(self.m_listenData->socket),
+                        reinterpret_cast<sockaddr*>(self.m_buffer), &self.m_addrLen, 0);
+                    io_uring_sqe_set_data(sqe, &self.m_status);
 
                 });
 #endif
@@ -173,7 +173,7 @@ namespace Hermes {
         };
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) && {
-            return { _listenData, std::move(_serverData), _options, std::move(r) };
+            return { m_listenData, std::move(m_serverData), m_options, std::move(r) };
         }
     };
 
@@ -196,8 +196,8 @@ namespace Hermes {
         GUID guidGetAcceptExSockaddrs = WSAID_GETACCEPTEXSOCKADDRS;
         if (WSAIoctl(data.socket, SIO_GET_EXTENSION_FUNCTION_POINTER, &guidGetAcceptExSockaddrs, sizeof(guidGetAcceptExSockaddrs), &extensions.lpfnGetAcceptExSockaddrs, sizeof(extensions.lpfnGetAcceptExSockaddrs), &bytes, nullptr, nullptr) != 0)
             return std::unexpected{ ConnectionErrorEnum::Unknown };
-        std::lock_guard lock(s_listenerExtensionsMutex);
-        s_listenerExtensions[data.socket] = extensions;
+        std::lock_guard lock(listenerExtensionsMutex);
+        listenerExtensions[data.socket] = extensions;
 #endif
 
         return listenerPolicy;
@@ -226,28 +226,28 @@ namespace Hermes {
             stdexec::set_error_t(ConnectionErrorEnum),
             stdexec::set_stopped_t()
         >;
-        Data* _data;
+        Data* m_data;
 
         template<class Receiver>
         struct OperationState {
-            Data* _data;
-            Receiver _receiver;
+            Data* m_data;
+            Receiver m_receiver;
 
             void start() & noexcept {
                 auto& self{ *this };
 
-                if (self._data->socket == macroINVALID_SOCKET) {
-                    stdexec::set_value(std::move(self._receiver));
+                if (self.m_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_value(std::move(self.m_receiver));
                     return;
                 }
 
-                CHECK_ERR(shutdown(self._data->socket, static_cast<int>(SocketShutdownEnum::Send)) == macroSOCKET_ERROR, SendFailed);
-                stdexec::set_value(std::move(self._receiver));
+                CHECK_ERR(shutdown(self.m_data->socket, static_cast<int>(SocketShutdownEnum::Send)) == macroSOCKET_ERROR, SendFailed);
+                stdexec::set_value(std::move(self.m_receiver));
             }
         };
         template<class Receiver>
         OperationState<Receiver> connect(Receiver r) const {
-            return { _data, std::move(r) };
+            return { m_data, std::move(r) };
         }
     };
 
@@ -267,8 +267,8 @@ namespace Hermes {
     void DefaultAsyncAcceptPolicy<Data>::Close(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Close(data);
 #ifdef _WIN32
-        std::lock_guard lock(s_listenerExtensionsMutex);
-        s_listenerExtensions.erase(data.socket);
+        std::lock_guard lock(listenerExtensionsMutex);
+        listenerExtensions.erase(data.socket);
 #else
         FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif
@@ -278,8 +278,8 @@ namespace Hermes {
     void DefaultAsyncAcceptPolicy<Data>::Abort(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
 #ifdef _WIN32
-        std::lock_guard lock(s_listenerExtensionsMutex);
-        s_listenerExtensions.erase(data.socket);
+        std::lock_guard lock(listenerExtensionsMutex);
+        listenerExtensions.erase(data.socket);
 #else
         FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif

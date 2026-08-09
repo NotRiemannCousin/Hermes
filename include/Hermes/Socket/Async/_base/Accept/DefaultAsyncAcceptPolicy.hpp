@@ -17,7 +17,7 @@ namespace Hermes {
     template<SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
-        static constexpr auto Type{ Data::Type };
+        static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
         struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {
@@ -50,8 +50,8 @@ namespace Hermes {
         };
 #endif
 
-        inline static std::mutex s_listenerExtensionsMutex;
-        inline static std::unordered_map<SocketFd, ListenerExtensions> s_listenerExtensions;
+        inline static std::mutex listenerExtensionsMutex;
+        inline static std::unordered_map<SocketFd, ListenerExtensions> listenerExtensions;
     };
 }
 

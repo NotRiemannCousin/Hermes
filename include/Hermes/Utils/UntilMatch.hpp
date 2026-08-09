@@ -18,7 +18,7 @@ namespace Hermes::Utils {
             using difference_type  = std::ptrdiff_t;
             using value_type       = Type;
 
-            UntilMatchView* _view{};
+            UntilMatchView* m_view{};
 
             explicit Iterator(UntilMatchView* parent);
 
@@ -39,14 +39,14 @@ namespace Hermes::Utils {
 
     private:
 
-        rg::iterator_t<Range> _current{};
-        std::vector<Type> _history{};
-        std::size_t _head{};
-        std::size_t _tail{};
-        bool _matchFound{};
+        rg::iterator_t<Range> m_current{};
+        std::vector<Type> m_history{};
+        std::size_t m_head{};
+        std::size_t m_tail{};
+        bool m_matchFound{};
 
-        Range _view;
-        Pattern _pattern;
+        Range m_view;
+        Pattern m_pattern;
     };
 
     template<bool Inclusive, rg::contiguous_range Pattern>

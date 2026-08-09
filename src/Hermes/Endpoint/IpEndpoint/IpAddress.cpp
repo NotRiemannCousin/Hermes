@@ -12,7 +12,7 @@ using Hermes::IpAddress;
 
 
 
-IpAddress::IpAddress(const IpVariant& d) : _data(d) {}
+IpAddress::IpAddress(const IpVariant& d) : m_data(d) {}
 
 IpAddress IpAddress::FromIpv4(const Ipv4Type &data) { return IpAddress{ data }; }
 
@@ -32,7 +32,7 @@ IpAddress::Ipv6Type IpAddress::AsIpv6() const {
                 return ipv6;
             },
             [](const Ipv6Type ipv6) { return ipv6; }
-        } , _data);
+        } , m_data);
 }
 
 std::optional<IpAddress> IpAddress::TryParse(const string& str) {
@@ -52,16 +52,16 @@ std::optional<IpAddress> IpAddress::TryParse(const string& str) {
 }
 
 IpAddress::IpVariant IpAddress::GetIp() const {
-    return _data;
+    return m_data;
 }
 
 
 
 
 
-bool IpAddress::IsIpv4()  const { return std::holds_alternative<Ipv4Type>(_data); }
+bool IpAddress::IsIpv4()  const { return std::holds_alternative<Ipv4Type>(m_data); }
 
-bool IpAddress::IsIpv6()  const { return std::holds_alternative<Ipv6Type>(_data); }
+bool IpAddress::IsIpv6()  const { return std::holds_alternative<Ipv6Type>(m_data); }
 
 
 bool IpAddress::IsRoutable() const {
@@ -97,7 +97,7 @@ bool IpAddress::IsRoutable() const {
 
                 return true;
             }
-        }, _data);
+        }, m_data);
 }
 
 
@@ -122,7 +122,7 @@ bool IpAddress::IsPublic() const {
                     return false;
                 return true;
             },
-        }, _data);
+        }, m_data);
     }
 
 bool IpAddress::IsPrivate() const {
@@ -136,18 +136,18 @@ bool IpAddress::IsPrivate() const {
         [](const Ipv6Type ipv6) {
             return (ipv6[0] & 0xfe) == 0xfc;
         }
-    }, _data);
+    }, m_data);
 }
 
 
 bool IpAddress::IsLoopback() const {
-    static constexpr Ipv6Type _ipv6Loopback{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+    static constexpr Ipv6Type m_ipv6Loopback{ 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
 
     return std::visit(
         Utils::Overloaded{
             [](const Ipv4Type ipv4) { return ipv4[0] == 127;        },
-            [](const Ipv6Type ipv6) { return ipv6 == _ipv6Loopback; },
-        }, _data);
+            [](const Ipv6Type ipv6) { return ipv6 == m_ipv6Loopback; },
+        }, m_data);
 }
 
 
@@ -162,7 +162,7 @@ bool IpAddress::IsMulticast() const {
                 return false;
             },
             [](const Ipv6Type ipv6) { return ipv6[0] == 0xff; },
-        }, _data);
+        }, m_data);
 }
 
 bool IpAddress::IsUnspecified() const {
@@ -170,7 +170,7 @@ bool IpAddress::IsUnspecified() const {
         Utils::Overloaded{
             [](const Ipv4Type ipv4) { return ipv4 == Ipv4Type{}; },
             [](const Ipv6Type ipv6) { return ipv6 == Ipv6Type{}; },
-        }, _data);
+        }, m_data);
 }
 
 bool IpAddress::IsLinkLocal() const noexcept {
@@ -178,7 +178,7 @@ bool IpAddress::IsLinkLocal() const noexcept {
         Utils::Overloaded{
             [](const Ipv4Type ipv4) { return ipv4[0] == 169 && ipv4[1] == 254;            },
             [](const Ipv6Type ipv6) { return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0x80; }
-        }, _data);
+        }, m_data);
 }
 
 bool IpAddress::IsSiteLocal() const noexcept {
@@ -191,7 +191,7 @@ bool IpAddress::IsSiteLocal() const noexcept {
                 return false;
             },
             [](const Ipv6Type ipv6) { return ipv6[0] == 0xfe && (ipv6[1] & 0xc0) == 0xc0; },
-        }, _data);
+        }, m_data);
 }
 
 bool IpAddress::IsIpv4Mapped() const noexcept {
@@ -204,7 +204,7 @@ bool IpAddress::IsIpv4Mapped() const noexcept {
 
                 return ipv6[10] == 0xff && ipv6[11] == 0xff;
             },
-        }, _data);
+        }, m_data);
 }
 
 bool IpAddress::IsDocumentation() const noexcept {
@@ -219,5 +219,5 @@ bool IpAddress::IsDocumentation() const noexcept {
             [](const Ipv6Type ipv6) {
                 return ipv6[0] == 0x20 && ipv6[1] == 0x01 && ipv6[2] == 0x0d && ipv6[3] == 0xb8;
             },
-        }, _data);
+        }, m_data);
 }

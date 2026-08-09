@@ -2,7 +2,7 @@
 #include <Hermes/Socket/_base/Accept/ITlsAcceptStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
 
-namespace Hermes::_details {
+namespace Hermes::details_ {
     template<SocketDataConcept Data, class AcceptPolicy>
     struct TlsAcceptStateMachine : public ITlsAcceptStateMachine<Data> {
 
@@ -39,54 +39,54 @@ namespace Hermes::_details {
 
 #pragma region variables
 
-        typename AcceptPolicy::AcceptOptions _options;
-        TlsAcceptState _state{ &TlsAcceptStateMachine::_SetupState };
+        typename AcceptPolicy::AcceptOptions m_options;
+        TlsAcceptState m_state{ &TlsAcceptStateMachine::SetupState };
 
-        ConnectionResultOper _errorStatus{};
+        ConnectionResultOper m_errorStatus{};
 
-        int _currReceived{};
-        int _currSent{};
-        std::uint32_t _receivedBytes{};
+        int m_currReceived{};
+        int m_currSent{};
+        std::uint32_t m_receivedBytes{};
 
 #pragma region buffers e configuracoes
 
-        std::array<std::byte, 0x4000> _outBuffer{};
-        std::uint32_t _outSize{};
-        EncryptStatusEnum _status{};
+        std::array<std::byte, 0x4000> m_outBuffer{};
+        std::uint32_t m_outSize{};
+        EncryptStatusEnum m_status{};
 
 #pragma endregion
 
 #pragma endregion
 
         // Setup
-        AcceptStateOpResult _SetupState(Data &data);
-        AcceptStateOpResult _AcceptContextState(Data &data);
+        AcceptStateOpResult SetupState(Data &data);
+        AcceptStateOpResult AcceptContextState(Data &data);
 
         // Incomplete
-        AcceptStateOpResult _SendState(Data &data);
-        AcceptStateOpResult _CheckSendState(Data &data);
-        AcceptStateOpResult _RecvState(Data &data);
-        AcceptStateOpResult _CheckRecvState(Data &data);
+        AcceptStateOpResult SendState(Data &data);
+        AcceptStateOpResult CheckSendState(Data &data);
+        AcceptStateOpResult RecvState(Data &data);
+        AcceptStateOpResult CheckRecvState(Data &data);
 
         // Complete
-        AcceptStateOpResult _FinalSendState(Data &data);
-        AcceptStateOpResult _CheckFinalSendState(Data &data);
-        AcceptStateOpResult _HandshakeCompletedState(Data &data);
+        AcceptStateOpResult FinalSendState(Data &data);
+        AcceptStateOpResult CheckFinalSendState(Data &data);
+        AcceptStateOpResult HandshakeCompletedState(Data &data);
 
         // Errors
-        AcceptStateOpResult _HandshakeFailedErrorState(Data &data);
-        AcceptStateOpResult _InvalidCertificateErrorState(Data &data);
-        AcceptStateOpResult _UnknownErrorState(Data &data);
+        AcceptStateOpResult HandshakeFailedErrorState(Data &data);
+        AcceptStateOpResult InvalidCertificateErrorState(Data &data);
+        AcceptStateOpResult UnknownErrorState(Data &data);
 
         // Close
-        AcceptStateOpResult _CleanupState(Data &data);
-        AcceptStateOpResult _StartCloseState(Data &data);
-        AcceptStateOpResult _SendCloseNotifyState(Data &data);
-        AcceptStateOpResult _DeleteSecurityContextState(Data &data);
-        AcceptStateOpResult _EndCloseState(Data &data);
+        AcceptStateOpResult CleanupState(Data &data);
+        AcceptStateOpResult StartCloseState(Data &data);
+        AcceptStateOpResult SendCloseNotifyState(Data &data);
+        AcceptStateOpResult DeleteSecurityContextState(Data &data);
+        AcceptStateOpResult EndCloseState(Data &data);
 
         // Abort
-        AcceptStateOpResult _AbortState(Data &data);
+        AcceptStateOpResult AbortState(Data &data);
     };
 }
 
