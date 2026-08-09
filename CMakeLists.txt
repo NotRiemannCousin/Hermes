@@ -26,26 +26,31 @@ option(HERMES_BUILD_DOCS     "Build Doxygen documentation"  OFF)
 #endregion
 
 #region top-level compiler options
-include(cmake/Macros.cmake)
 
+add_library(ProjectCompilerFlags INTERFACE)
 if(CMAKE_BUILD_TYPE STREQUAL "Release" AND PROJECT_IS_TOP_LEVEL)
+
     if(MSVC)
-        add_compile_options(/permissive- /O2 /GL /arch:AVX2 /Oi /Ot /GT /Gw /Gy /Zc:inline /openmp:llvm)
+        target_compile_options(ProjectCompilerFlags INTERFACE
+                /permissive- /O2 /GL /arch:AVX2 /Oi /Ot /GT /Gw /Gy /Zc:inline /openmp:llvm)
+        target_link_options(ProjectCompilerFlags INTERFACE /LTCG)
     endif()
 endif()
+
 #endregion
 
 
 enable_testing()
 include(cmake/GetCPM.cmake)
+include(cmake/Macros.cmake)
 
 
 add_library(Hermes)
 add_library(Hermes::Hermes ALIAS Hermes)
 
 set_target_properties(Hermes PROPERTIES
-        INTERPROCEDURAL_OPTIMIZATION ON
-        POSITION_INDEPENDENT_CODE    ON
+        INTERPROCEDURAL_OPTIMIZATION_RELEASE ON
+        POSITION_INDEPENDENT_CODE            ON
 )
 
 #region Hermes Files
@@ -79,6 +84,9 @@ CPMFindPackage(
         FIND_PACKAGE_ARGUMENTS  "CONFIG"
 )
 target_link_libraries(Hermes PUBLIC STDEXEC::stdexec)
+if(TARGET ProjectCompilerFlags)
+    target_link_libraries(Hermes PRIVATE $<BUILD_INTERFACE:ProjectCompilerFlags>)
+endif()
 
 if(WIN32)
     target_link_libraries(Hermes PUBLIC ws2_32 crypt32 secur32)
