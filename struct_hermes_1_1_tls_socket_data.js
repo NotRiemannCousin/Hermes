@@ -9,15 +9,15 @@ var struct_hermes_1_1_tls_socket_data =
     [ "TlsSocketData", "struct_hermes_1_1_tls_socket_data.html#a28e800510e7461b120ad6520a0133dfd", null ],
     [ "MakeChild", "struct_hermes_1_1_tls_socket_data.html#a8a70bc5ccf3c699c08b2806c2512bf66", null ],
     [ "operator=", "struct_hermes_1_1_tls_socket_data.html#a462bd0e7c76f1a64794d0cd63bff9a97", null ],
-    [ "acceptStateMachine", "struct_hermes_1_1_tls_socket_data.html#a206f0fe0e9b931ae2799186c07ed7c02", null ],
-    [ "connectStateMachine", "struct_hermes_1_1_tls_socket_data.html#abb6e9bef7840a38404d1d090db9e0756", null ],
+    [ "acceptStateMachine", "struct_hermes_1_1_tls_socket_data.html#accbae4f1e84fb8acceef1fb3d3344b48", null ],
+    [ "connectStateMachine", "struct_hermes_1_1_tls_socket_data.html#ac4c03c1f839c114b3db055620847d263", null ],
     [ "credentials", "struct_hermes_1_1_tls_socket_data.html#a9c88fe98f084c958eb5232e7dcf3a4c2", null ],
     [ "decryptedOffset", "struct_hermes_1_1_tls_socket_data.html#ac22f1d8bd3d8264f769bc47f192e8a31", null ],
     [ "endpoint", "struct_hermes_1_1_tls_socket_data.html#ae4d5631d20226a94591d03929c079774", null ],
     [ "host", "struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571", null ],
     [ "pendingData", "struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597", null ],
-    [ "session", "struct_hermes_1_1_tls_socket_data.html#ae81cb01e7023773195884f74c333ba7a", null ],
+    [ "session", "struct_hermes_1_1_tls_socket_data.html#a027c46ff2df79207fe04c717af0fccc4", null ],
     [ "socket", "struct_hermes_1_1_tls_socket_data.html#aba5927f3bb0d2210f028d1230b5040c6", null ],
     [ "state", "struct_hermes_1_1_tls_socket_data.html#a6502d63aafdc2f6d1d6fc040f8805ad5", null ],
-    [ "transferStateMachine", "struct_hermes_1_1_tls_socket_data.html#a153f3674ce1d7e6ae00fc9356c0494dc", null ]
+    [ "transferStateMachine", "struct_hermes_1_1_tls_socket_data.html#a894c49210e732ba80d27500c4d82c942", null ]
 ];

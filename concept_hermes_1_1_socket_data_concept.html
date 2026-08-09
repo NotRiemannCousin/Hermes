@@ -151,8 +151,8 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_socket_data_concept
 <div class="line">            { data.endpoint } -&gt; std::same_as&lt;typename SocketData::EndpointType&amp;&gt;;</div>
 <div class="line">            { data.socket   } -&gt; std::same_as&lt;SocketFd&amp;&gt;;</div>
 <div class="line"> </div>
-<div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Family; }(); </div>
-<div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _ = SocketData::Type;   }(); </div>
+<div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _{ SocketData::Family }; }(); </div>
+<div class="line">            []() <span class="keyword">constexpr</span> { <span class="keyword">constexpr</span> <span class="keyword">auto</span> _{ SocketData::Type };   }(); </div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_endpoint_concept_html"><div class="ttname"><a href="concept_hermes_1_1_endpoint_concept.html">Hermes::EndpointConcept</a></div><div class="ttdef"><b>Definition</b> EndpointConcept.hpp:14</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:62</div></div>

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['decryptoutcome_0',['DecryptOutcome',['../struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html',1,'Hermes::_details::TlsSession']]],
+  ['decryptoutcome_0',['DecryptOutcome',['../struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome.html',1,'Hermes::details_::TlsSession']]],
   ['defaultacceptpolicy_1',['DefaultAcceptPolicy',['../struct_hermes_1_1_default_accept_policy.html',1,'Hermes']]],
   ['defaultasyncacceptpolicy_2',['DefaultAsyncAcceptPolicy',['../struct_hermes_1_1_default_async_accept_policy.html',1,'Hermes']]],
   ['defaultasyncconnectpolicy_3',['DefaultAsyncConnectPolicy',['../struct_hermes_1_1_default_async_connect_policy.html',1,'Hermes']]],

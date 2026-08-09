@@ -1,5 +1,27 @@
 var searchData=
 [
-  ['hashcombine_0',['HashCombine',['../namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5',1,'Hermes::Utils']]],
-  ['hasprivatekey_1',['HasPrivateKey',['../struct_hermes_1_1_credentials.html#a67ace0ea8b7780a004827fecb2f6088d',1,'Hermes::Credentials']]]
+  ['inclusiveuntilmatch_0',['InclusiveUntilMatch',['../namespace_hermes_1_1_utils.html#a0339faa9e600efff6611c316af3c2782',1,'Hermes::Utils']]],
+  ['initialize_1',['Initialize',['../struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46',1,'Hermes::Network']]],
+  ['ipaddress_2',['ipaddress',['../struct_hermes_1_1_ip_address.html#aa5ed8101e3ee925e4393b34e2f29d58b',1,'Hermes::IpAddress::IpAddress() noexcept=default'],['../struct_hermes_1_1_ip_address.html#af1b48fd17a9116e79f160426a5653405',1,'Hermes::IpAddress::IpAddress(const IpAddress &amp;) noexcept=default'],['../struct_hermes_1_1_ip_address.html#aaedc1533d1db33298b7f5ed37e7a5f4c',1,'Hermes::IpAddress::IpAddress(const IpVariant &amp;d)']]],
+  ['ipendpoint_3',['ipendpoint',['../struct_hermes_1_1_ip_endpoint.html#a79234d6d38bda14867321fcd51e59046',1,'Hermes::IpEndpoint::IpEndpoint(const IpEndpoint &amp;o) noexcept=default'],['../struct_hermes_1_1_ip_endpoint.html#a4333c8705ca6340cff137d88f535b4f6',1,'Hermes::IpEndpoint::IpEndpoint(IpAddress ip={}, std::uint16_t port=0)']]],
+  ['isactive_4',['IsActive',['../struct_hermes_1_1details___1_1_tls_session.html#a6b7cd77146c34dcf87d11485ff2c2b83',1,'Hermes::details_::TlsSession']]],
+  ['isasync_5',['isasync',['../struct_hermes_1_1details___1_1_tls_accept_state_machine.html#a27b484bc0e5e57487cf335352951a710',1,'Hermes::details_::TlsAcceptStateMachine::IsAsync()'],['../struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#acc58cea2258402c1e3b7cfa6557fd7f7',1,'Hermes::details_::TlsTransferStateMachine::IsAsync()'],['../struct_hermes_1_1details___1_1_tls_connect_state_machine.html#ac4821b39f483348460a59361082c75e3',1,'Hermes::details_::TlsConnectStateMachine::IsAsync()']]],
+  ['isdocumentation_6',['IsDocumentation',['../struct_hermes_1_1_ip_address.html#a34f5d7243924d15877e844f841ff63cd',1,'Hermes::IpAddress']]],
+  ['isexpired_7',['IsExpired',['../struct_hermes_1_1_credentials.html#a7222f0485640dbe0f7ce8f669f977e04',1,'Hermes::Credentials']]],
+  ['isfinished_8',['isfinished',['../struct_hermes_1_1details___1_1_tls_accept_state_machine.html#a2b15c5c1904520a3263611a89f70b0e9',1,'Hermes::details_::TlsAcceptStateMachine::IsFinished()'],['../struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a2a8a2e6f8fcc92c875392949fa1b4c17',1,'Hermes::details_::TlsTransferStateMachine::IsFinished()'],['../struct_hermes_1_1details___1_1_i_tls_transfer_state_machine.html#a5e91fd333abfa4f410faccc04d7a21df',1,'Hermes::details_::ITlsTransferStateMachine::IsFinished()'],['../struct_hermes_1_1details___1_1_i_tls_connect_state_machine.html#a9c80c8bc86b364f474f114c0dc1642d8',1,'Hermes::details_::ITlsConnectStateMachine::IsFinished()'],['../struct_hermes_1_1details___1_1_i_tls_accept_state_machine.html#a071e471bfa17215b43531793520e0d2c',1,'Hermes::details_::ITlsAcceptStateMachine::IsFinished()'],['../struct_hermes_1_1details___1_1_tls_connect_state_machine.html#ae54db2b99a6a0037629c2ce2cad6c470',1,'Hermes::details_::TlsConnectStateMachine::IsFinished()']]],
+  ['ishandshakecomplete_9',['IsHandshakeComplete',['../struct_hermes_1_1details___1_1_tls_session.html#a7bf9f94f8b0296d129ecf76f5c970120',1,'Hermes::details_::TlsSession']]],
+  ['isipv4_10',['IsIpv4',['../struct_hermes_1_1_ip_address.html#a5ed1d0f22810127bef146da1eb573ce3',1,'Hermes::IpAddress']]],
+  ['isipv4mapped_11',['IsIpv4Mapped',['../struct_hermes_1_1_ip_address.html#a66f348f5aba43eaaa7d93963260f960f',1,'Hermes::IpAddress']]],
+  ['isipv6_12',['IsIpv6',['../struct_hermes_1_1_ip_address.html#a5577e4e0974296358ab4efc88dde46bb',1,'Hermes::IpAddress']]],
+  ['islinklocal_13',['IsLinkLocal',['../struct_hermes_1_1_ip_address.html#a21b7686aeeacf434e28f906e0fba076a',1,'Hermes::IpAddress']]],
+  ['isloopback_14',['IsLoopback',['../struct_hermes_1_1_ip_address.html#aa9f2fb02fb11f612683d6bae33054288',1,'Hermes::IpAddress']]],
+  ['ismulticast_15',['IsMulticast',['../struct_hermes_1_1_ip_address.html#ac32ebff20ad58f3eefec5ba209dbbec8',1,'Hermes::IpAddress']]],
+  ['isprivate_16',['IsPrivate',['../struct_hermes_1_1_ip_address.html#a5ea3ca3f24bf5f81de244e723a4a367c',1,'Hermes::IpAddress']]],
+  ['ispublic_17',['IsPublic',['../struct_hermes_1_1_ip_address.html#a6e5451439026ef326b648ee034343013',1,'Hermes::IpAddress']]],
+  ['isrenegotiation_18',['IsRenegotiation',['../struct_hermes_1_1details___1_1_tls_session.html#a528b75dff2983f9f4cf0acd0afedd7b9',1,'Hermes::details_::TlsSession']]],
+  ['isroutable_19',['IsRoutable',['../struct_hermes_1_1_ip_address.html#a35c454e264dead1596e3466e39b22715',1,'Hermes::IpAddress']]],
+  ['isserver_20',['IsServer',['../struct_hermes_1_1details___1_1_tls_session.html#a1eb5b097cf415693c3f6d9f179dbeb58',1,'Hermes::details_::TlsSession']]],
+  ['issitelocal_21',['IsSiteLocal',['../struct_hermes_1_1_ip_address.html#a7046e29ad0b1bc1c87044a67568b410b',1,'Hermes::IpAddress']]],
+  ['isunspecified_22',['IsUnspecified',['../struct_hermes_1_1_ip_address.html#a90a397c1963921f8538c3798cb54490a',1,'Hermes::IpAddress']]],
+  ['iterator_23',['iterator',['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#af5b64247fb666fd73aca30c1861cacd6',1,'Hermes::Utils::DropLastView::Iterator::Iterator() noexcept=default'],['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#a235e42775d79541c965ffdfa4e01fe83',1,'Hermes::Utils::DropLastView::Iterator::Iterator(DropLastView *parent)'],['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a94e7843dd5e851d3c03fec5dbefc2e67',1,'Hermes::Utils::UntilMatchView::Iterator::Iterator()']]]
 ];

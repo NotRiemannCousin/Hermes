@@ -1,9 +1,7 @@
 var searchData=
 [
-  ['data_0',['data',['../struct_hermes_1_1__details_1_1_tls_session_1_1_decrypt_outcome.html#aa31d920c355b33cbc243994222136985',1,'Hermes::_details::TlsSession::DecryptOutcome']]],
-  ['decrypteddata_1',['decryptedData',['../struct_hermes_1_1_tls_socket_data_1_1_state.html#adfc0a2a15972a7a010af856f2ef2addd',1,'Hermes::TlsSocketData::State']]],
-  ['decrypteddataspan_2',['decryptedDataSpan',['../struct_hermes_1_1_tls_socket_data_1_1_state.html#ae159ed9f3fdda2cf0915cc5744013098',1,'Hermes::TlsSocketData::State']]],
-  ['decryptedextraspan_3',['decryptedExtraSpan',['../struct_hermes_1_1_tls_socket_data_1_1_state.html#ac8d9354a9bf76a3b7402bf50cc8ffabb',1,'Hermes::TlsSocketData::State']]],
-  ['decryptedoffset_4',['decryptedOffset',['../struct_hermes_1_1_tls_socket_data.html#ac22f1d8bd3d8264f769bc47f192e8a31',1,'Hermes::TlsSocketData']]],
-  ['droplast_5',['dropLast',['../namespace_hermes_1_1_utils.html#a8d64941b828fa10f6eda66670a2c8a42',1,'Hermes::Utils']]]
+  ['encrypteddata_0',['encryptedData',['../struct_hermes_1_1_tls_socket_data_1_1_state.html#a37947f7c1d79c307d3133625ee10aeab',1,'Hermes::TlsSocketData::State']]],
+  ['endpoint_1',['endpoint',['../struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7',1,'Hermes::DefaultSocketData::endpoint'],['../struct_hermes_1_1_tls_socket_data.html#ae4d5631d20226a94591d03929c079774',1,'Hermes::TlsSocketData::endpoint']]],
+  ['error_2',['error',['../struct_hermes_1_1_transfer_error.html#a86ec5b6600b87b1c907dabb5318d53c9',1,'Hermes::TransferError']]],
+  ['extra_3',['extra',['../struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome.html#a6d456e3f314dba5f61848c5cb1fe59db',1,'Hermes::details_::TlsSession::DecryptOutcome']]]
 ];

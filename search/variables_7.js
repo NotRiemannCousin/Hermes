@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['handshaketimeout_0',['handshaketimeout',['../struct_hermes_1_1_tls_accept_policy_1_1_accept_options.html#a45a00c72e3a63a77aceca0dc249ded4f',1,'Hermes::TlsAcceptPolicy::AcceptOptions::handshakeTimeout'],['../struct_hermes_1_1_tls_connect_policy_1_1_options.html#abfcf5b5e817957e358b0128eb0bddfb8',1,'Hermes::TlsConnectPolicy::Options::handshakeTimeout']]],
-  ['header_1',['header',['../struct_hermes_1_1__details_1_1_tls_session_1_1_stream_sizes.html#ab52c7ae07d44bd28f2ba2d8a299a0a2d',1,'Hermes::_details::TlsSession::StreamSizes']]],
-  ['host_2',['host',['../struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571',1,'Hermes::TlsSocketData']]]
+  ['ignorecertificateerrors_0',['ignorecertificateerrors',['../struct_hermes_1_1_tls_async_connect_policy_1_1_options.html#a0db7124d78cc8a07b8b480c1b645e1e2',1,'Hermes::TlsAsyncConnectPolicy::Options::ignoreCertificateErrors'],['../struct_hermes_1_1_tls_connect_policy_1_1_options.html#a8e6ae4b70a3dbbb3a52bad0cc7b0d17a',1,'Hermes::TlsConnectPolicy::Options::ignoreCertificateErrors']]],
+  ['ip_1',['ip',['../struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71',1,'Hermes::IpEndpointParams']]],
+  ['isserver_2',['isserver',['../struct_hermes_1_1details___1_1_tls_connect_state_machine.html#a04c0dca20fad94e1baa667f17cbee112',1,'Hermes::details_::TlsConnectStateMachine::IsServer'],['../struct_hermes_1_1_default_async_connect_policy.html#a324ced01b62a5943d64f84a17f1b939b',1,'Hermes::DefaultAsyncConnectPolicy::IsServer'],['../struct_hermes_1_1_tls_async_connect_policy.html#a1e45fa02e0c315aa163dba983ce6102d',1,'Hermes::TlsAsyncConnectPolicy::IsServer'],['../struct_hermes_1_1_tls_connect_policy.html#a02a7cf723b61b3b14a513cc908bcc115',1,'Hermes::TlsConnectPolicy::IsServer']]]
 ];

@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['decrypt_0',['Decrypt',['../struct_hermes_1_1__details_1_1_tls_session.html#ae93bbdfd22cb13650efe321f6bf5d8c3',1,'Hermes::_details::TlsSession']]],
-  ['defaultsocketdata_1',['defaultsocketdata',['../struct_hermes_1_1_default_socket_data.html#a98cf0cf02065fe542467db7557c07f97',1,'Hermes::DefaultSocketData::DefaultSocketData()=default'],['../struct_hermes_1_1_default_socket_data.html#a46fbfb8b6a222d521baa6cde7c098b32',1,'Hermes::DefaultSocketData::DefaultSocketData(Endpoint other)'],['../struct_hermes_1_1_default_socket_data.html#af1cb358e84b8aca9323d5b4a5dc0fa4f',1,'Hermes::DefaultSocketData::DefaultSocketData(DefaultSocketData &amp;&amp;other) noexcept']]],
-  ['deletecontext_2',['DeleteContext',['../struct_hermes_1_1__details_1_1_tls_session.html#aacaa5f6cc9d13ebab5d38f43da354430',1,'Hermes::_details::TlsSession']]],
-  ['droplastview_3',['DropLastView',['../struct_hermes_1_1_utils_1_1_drop_last_view.html#a3b03f582fa987d8b35af4bcf0819c163',1,'Hermes::Utils::DropLastView']]]
+  ['encrypt_0',['Encrypt',['../struct_hermes_1_1details___1_1_tls_session.html#aab85756a99cec8828ad905528f1a4048',1,'Hermes::details_::TlsSession']]],
+  ['end_1',['end',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#ae185ecd1017132a2ca1d58485b0df507',1,'Hermes::DefaultTransferPolicy::RecvStream::end()'],['../struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream.html#a92c8685ebc239632845d4eb5a3fc902d',1,'Hermes::TlsTransferPolicy::RecvStream::end()'],['../struct_hermes_1_1_utils_1_1_drop_last_view.html#a21e09090e0e87d2a81951ee72551fef0',1,'Hermes::Utils::DropLastView::end()'],['../struct_hermes_1_1_utils_1_1_until_match_view.html#af7f7e5f1041229b72072c3a8e6eb987f',1,'Hermes::Utils::UntilMatchView::end()']]],
+  ['error_2',['error',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_stream.html#adefcf4499dd7bdf1e6d2fec9365d2d46',1,'Hermes::DefaultTransferPolicy::RecvStream::Error()'],['../struct_hermes_1_1_tls_transfer_policy_1_1_recv_stream.html#a7512f98f84b8b545a3af129a3a0a97b9',1,'Hermes::TlsTransferPolicy::RecvStream::Error()']]],
+  ['exclusiveuntilmatch_3',['ExclusiveUntilMatch',['../namespace_hermes_1_1_utils.html#aa45741ea0263909df8ab44b8d53cc988',1,'Hermes::Utils']]],
+  ['extractto_4',['ExtractTo',['../namespace_hermes_1_1_utils.html#a24ead501386a4a15f68e00ff603524dc',1,'Hermes::Utils']]]
 ];

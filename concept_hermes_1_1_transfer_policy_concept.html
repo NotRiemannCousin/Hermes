@@ -146,9 +146,9 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_con
 <div class="line">        &amp;&amp; Policy::Type == SocketData::Type</div>
 <div class="line"> </div>
 <div class="line">        &amp;&amp; <span class="keyword">requires</span>(SocketData&amp; data, Policy&amp; policy) {</div>
-<div class="line">            { _details::RecvStreamT&lt;Policy&gt;{ data, policy } } -&gt; std::ranges::input_range;</div>
+<div class="line">            { details_::RecvStreamT&lt;Policy&gt;{ data, policy } } -&gt; std::ranges::input_range;</div>
 <div class="line">        }</div>
-<div class="line">        &amp;&amp; <span class="keyword">requires</span>(_details::RecvStreamT&lt;Policy&gt;&amp; range) {</div>
+<div class="line">        &amp;&amp; <span class="keyword">requires</span>(details_::RecvStreamT&lt;Policy&gt;&amp; range) {</div>
 <div class="line">            { *range.begin() } -&gt; std::same_as&lt;std::byte&gt;;</div>
 <div class="line">            { range.Error()  } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
 <div class="line">        }</div>
@@ -168,7 +168,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_con
 <p>Defines how data is received and sent over the socket. It supports both modern, lazy, range-based reading and traditional buffer-based I/O. This allows encapsulation of specific protocols, such as reading length-prefixed messages, searching for delimiters, or handling TLS encryption transparently.</p>
 <h3><a class="anchor" id="autotoc_md6"></a>
 Lazy Range-Based Receive</h3>
-<div class="fragment"><div class="line">_details::RecvStreamT&lt;Policy, SocketData&gt; </div>
+<div class="fragment"><div class="line">details_::RecvStreamT&lt;Policy, SocketData&gt; </div>
 </div><!-- fragment --><p> Must be constructible from <code>SocketData</code> and <code>Policy</code>, and satisfy <code>std::ranges::input_range</code>. It iteratively yields <code>std::byte</code> elements.</p>
 <div class="fragment"><div class="line">range.Error() -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">ConnectionResultOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_aa4c2bc87d8b3921bd110920bba542091"><div class="ttname"><a href="namespace_hermes.html#aa4c2bc87d8b3921bd110920bba542091">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:67</div></div>
