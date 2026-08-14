@@ -140,9 +140,9 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <blockquote class="doxtable">
 <p>&zwj;<b>Status:</b> v0.5 — active development. Async sockets via <code>std::execution</code> are available. Linux is available. </p>
 </blockquote>
-<h1><a class="anchor" id="autotoc_md9"></a>
+<h1><a class="anchor" id="autotoc_md21"></a>
 &lt;/blockquote&gt;</h1>
-<h1><a class="anchor" id="autotoc_md10"></a>
+<h1><a class="anchor" id="autotoc_md22"></a>
 Features</h1>
 <ul>
 <li><b>TCP</b> and <b>TCP over TLS</b> (via SChannel on Windows, OpenSSL on Linux — no third-party crypto dependency on Windows)</li>
@@ -154,19 +154,19 @@ Features</h1>
 </ul>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.</p>
 <hr  />
-<h1><a class="anchor" id="autotoc_md12"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 Installation</h1>
-<h2><a class="anchor" id="autotoc_md13"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 pixi</h2>
 <blockquote class="doxtable">
 <p>&zwj;<em>Coming soon.</em> </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md14"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 vcpkg</h2>
 <blockquote class="doxtable">
 <p>&zwj;<em>Maybe, someday, who knows.</em> </p>
 </blockquote>
-<h2><a class="anchor" id="autotoc_md15"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 Manual (CMake)</h2>
 <div class="fragment"><div class="line">include(CPM.cmake)</div>
 <div class="line"> </div>
@@ -178,7 +178,7 @@ Manual (CMake)</h2>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md17"></a>
+<h1><a class="anchor" id="autotoc_md29"></a>
 Example</h1>
 <p>The following example performs an HTTPS GET request, parsing the response incrementally using <code>RecvStream</code>. Notice how <code>UntilMatch</code> and range composition keep the parsing logic concise — no manual buffering.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/Sync/ClientSocket.hpp</a>&gt;</span></div>
@@ -195,11 +195,11 @@ Example</h1>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#pragma region Lambdas</span></div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> s_makeSocket = [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a> endpoint) {</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> makeSocket{ [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a> endpoint) {</div>
 <div class="line">        <span class="keywordflow">return</span> Hermes::RawTlsClient::Connect(<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::TlsSocketData&lt;&gt;</a>{ endpoint, url.hostname });</div>
-<div class="line">    };</div>
+<div class="line">    } };</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> s_makeRequest = [&amp;](<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::RawTlsClient</a>&amp;&amp; client) {</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> makeRequest{ [&amp;](<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::RawTlsClient</a>&amp;&amp; client) {</div>
 <div class="line">        <span class="keyword">const</span> <span class="keyword">auto</span> request{</div>
 <div class="line">            format(</div>
 <div class="line">                <span class="stringliteral">&quot;GET /{} HTTP/1.1\r\n&quot;</span></div>
@@ -210,9 +210,9 @@ Example</h1>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> client.Send(request).second</div>
 <div class="line">                .transform([client = std::move(client)](<span class="keyword">const</span> <span class="keyword">auto</span>) <span class="keyword">mutable</span> { <span class="keywordflow">return</span> std::move(client); });</div>
-<div class="line">    };</div>
+<div class="line">    } };</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> s_mapError = [](<span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a> error) -&gt; std::string {</div>
+<div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> mapError{ [](<span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a> error) -&gt; std::string {</div>
 <div class="line">        <span class="keyword">using </span><a class="code hl_enumvalue" href="namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20a902b0d55fddef6f8d651fe1035b7d4bd">Error</a> = <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a>;</div>
 <div class="line">        <span class="keywordflow">switch</span> (error) {</div>
 <div class="line">            <span class="keywordflow">case</span> Error::ResolveHostNotFound:</div>
@@ -237,9 +237,9 @@ Example</h1>
 <div class="line">            <span class="keywordflow">default</span>:</div>
 <div class="line">                <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown error&quot;</span>;</div>
 <div class="line">        }</div>
-<div class="line">    };</div>
+<div class="line">    } };</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> s_getResponse = [&amp;](<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::RawTlsClient</a>&amp;&amp; client) -&gt; std::expected&lt;std::string, std::string&gt; {</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> getResponse{ [&amp;](<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::RawTlsClient</a>&amp;&amp; client) -&gt; std::expected&lt;std::string, std::string&gt; {</div>
 <div class="line">        <span class="keyword">auto</span> socketView{ client.RecvLazyRange&lt;<span class="keywordtype">char</span>&gt;() };</div>
 <div class="line">        <span class="comment">// `RecvLazyRange` is an input_range, so it consumes the bytes when you advance the iterator. Advancing an iterator of an</span></div>
 <div class="line">        <span class="comment">// input_range can cause invalidation of other iterators, but the current state is stored in the range so all</span></div>
@@ -248,7 +248,7 @@ Example</h1>
 <div class="line"> </div>
 <div class="line">        <span class="comment">// (Do I need to give a name to this type of range? sibling{_input}_range? global_{input}_range? Idk yet).</span></div>
 <div class="line"> </div>
-<div class="line">        <span class="keywordflow">if</span> (!rg::starts_with(socketView, <span class="stringliteral">&quot;HTTP/1.1&quot;</span>sv))</div>
+<div class="line">        <span class="keywordflow">if</span> (!rg::startwith(socketView, <span class="stringliteral">&quot;HTTP/1.1&quot;</span>sv))</div>
 <div class="line">            <span class="keywordflow">return</span> std::unexpected{ <span class="stringliteral">&quot;Non supported version&quot;</span> };</div>
 <div class="line"> </div>
 <div class="line"> </div>
@@ -278,22 +278,22 @@ Example</h1>
 <div class="line">            <span class="keywordflow">return</span> std::unexpected{ <span class="stringliteral">&quot;Error receiving message&quot;</span> };</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> body;</div>
-<div class="line">    };</div>
+<div class="line">    } };</div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> s_processData = [](std::string&amp;&amp; body) {</div>
+<div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> processData{ [](std::string&amp;&amp; body) {</div>
 <div class="line">        std::println(<span class="stringliteral">&quot;body:\n\n{}&quot;</span>, body);</div>
 <div class="line"> </div>
 <div class="line">        <span class="keywordflow">return</span> std::monostate{};</div>
-<div class="line">    };</div>
+<div class="line">    } };</div>
 <div class="line"> </div>
 <div class="line"><span class="preprocessor">#pragma endregion</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_function" href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a>(url.hostname, url.scheme)</div>
-<div class="line">            .and_then(s_makeSocket)</div>
-<div class="line">            .and_then(s_makeRequest)</div>
-<div class="line">            .transform_error(s_mapError)</div>
-<div class="line">            .and_then(s_getResponse)</div>
-<div class="line">            .transform(s_processData);</div>
+<div class="line">            .and_then(makeSocket)</div>
+<div class="line">            .and_then(makeRequest)</div>
+<div class="line">            .transform_error(mapError)</div>
+<div class="line">            .and_then(getResponse)</div>
+<div class="line">            .transform(processData);</div>
 <div class="line">}</div>
 <div class="ttc" id="a_client_socket_8hpp_html"><div class="ttname"><a href="_client_socket_8hpp.html">ClientSocket.hpp</a></div></div>
 <div class="ttc" id="a_until_match_8hpp_html"><div class="ttname"><a href="_until_match_8hpp.html">UntilMatch.hpp</a></div></div>
@@ -304,14 +304,14 @@ Example</h1>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a></div><div class="ttdef"><b>Definition</b> IpEndpoint.hpp:18</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a5d226f8b82d93f4516092cdbaa50df4a"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a></div><div class="ttdeci">static ConnectionResult&lt; IpEndpoint &gt; TryResolve(const std::string &amp;url, const std::string &amp;service=&quot;&quot;, SocketTypeEnum socketType=SocketTypeEnum::Stream)</div><div class="ttdoc">Tries to resolve a hostname and service into an IP endpoint.</div></div>
 </div><!-- fragment --><hr  />
-<h1><a class="anchor" id="autotoc_md19"></a>
+<h1><a class="anchor" id="autotoc_md31"></a>
 Roadmap</h1>
 <ul>
 <li>UDP sockets</li>
 <li>pixi and vcpkg packages</li>
 </ul>
 <hr  />
-<h1><a class="anchor" id="autotoc_md21"></a>
+<h1><a class="anchor" id="autotoc_md33"></a>
 Requirements</h1>
 <ul>
 <li>Windows 10 or newer / Linux</li>

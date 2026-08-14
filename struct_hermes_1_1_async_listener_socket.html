@@ -173,7 +173,7 @@ requires std::default_initializable&lt;<a class="el" href="struct_hermes_1_1_def
 <tr class="memdesc:aa5065b739e9ab7db1db81696ee4e12f0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection using a specific prototype for the client data.  <br /></td></tr>
 <tr class="separator:aa5065b739e9ab7db1db81696ee4e12f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3175b397e3b8afc203b789fd95f5d565" id="r_a3175b397e3b8afc203b789fd95f5d565"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">auto</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a3175b397e3b8afc203b789fd95f5d565">AsyncAcceptOne</a> (<a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> SocketData &amp;<a class="el" href="struct_hermes_1_1_default_socket_data.html">clientDataPrototype</a>, <a class="el" href="struct_hermes_1_1_default_socket_data.html">typename</a> AcceptPolicy::AcceptOptions <a class="el" href="struct_hermes_1_1_default_socket_data.html">opt</a>)</td></tr>
-<tr class="memdesc:a3175b397e3b8afc203b789fd95f5d565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection using a specific prototype for the client data.    <br /></td></tr>
+<tr class="memdesc:a3175b397e3b8afc203b789fd95f5d565"><td class="mdescLeft">&#160;</td><td class="mdescRight">Asynchronously accepts a new client connection using a prototype and explicit options.  <br /></td></tr>
 <tr class="separator:a3175b397e3b8afc203b789fd95f5d565"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67817e40474c766df65eedf55fe8031d" id="r_a67817e40474c766df65eedf55fe8031d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_async_listener_socket.html#ae4544e9b08f74a68289b465700946897">EndpointType</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hermes_1_1_async_listener_socket.html#a67817e40474c766df65eedf55fe8031d">GetEndpoint</a> () <a class="el" href="struct_hermes_1_1_default_socket_data.html">const</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">noexcept</a></td></tr>
 <tr class="separator:a67817e40474c766df65eedf55fe8031d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -392,14 +392,15 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, <a class="
       </table>
 </div><div class="memdoc">
 
-<p>Asynchronously accepts a new client connection using a specific prototype for the client data.   </p>
+<p>Asynchronously accepts a new client connection using a prototype and explicit options. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">clientDataPrototype</td><td>The prototype used to instantiate the client's SocketData via MakeChild(). </td></tr>
+    <tr><td class="paramname">opt</td><td>Options used by AcceptPolicy while accepting the connection. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A sender that yields an <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a> on success.   </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A sender that yields an <a class="el" href="struct_hermes_1_1_async_server_socket.html">AsyncServerSocket</a> on success. </dd></dl>
 
 </div>
 </div>

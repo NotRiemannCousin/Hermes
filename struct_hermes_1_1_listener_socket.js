@@ -1,8 +1,11 @@
 var struct_hermes_1_1_listener_socket =
 [
     [ "ListenerSockerResult", "struct_hermes_1_1_listener_socket.html#a42d8c8fa01f34836ede67586dc6989c3", null ],
+    [ "RecvOptions", "struct_hermes_1_1_listener_socket.html#af299617927ded729a8dc8fd20bd65191", null ],
+    [ "SendOptions", "struct_hermes_1_1_listener_socket.html#a8725f564e5c8ff6e9794594af9706de8", null ],
     [ "ServerSockertResult", "struct_hermes_1_1_listener_socket.html#a8d08cf87cc200ad9eec38f6382b4f1cc", null ],
     [ "ServerSocketType", "struct_hermes_1_1_listener_socket.html#a84daf85af7ddc68e19bd3a1df23790e6", null ],
+    [ "TransferPolicyType", "struct_hermes_1_1_listener_socket.html#af8457370bf1d33a15770966a61c2d8af", null ],
     [ "ListenerSocket", "struct_hermes_1_1_listener_socket.html#ab64dd90419383049b35cbb3fdbf29d0f", null ],
     [ "~ListenerSocket", "struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64", null ],
     [ "Abort", "struct_hermes_1_1_listener_socket.html#adf16b1ee03e8a25d4729653e532cc975", null ],

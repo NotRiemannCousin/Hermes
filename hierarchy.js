@@ -78,6 +78,11 @@ var hierarchy =
       [ "Hermes::DefaultConnectPolicy< Endpoint, SocketType, SocketFamily >::Options", "struct_hermes_1_1_default_connect_policy_1_1_options.html", null ]
     ] ],
     [ "Hermes::details_::OptionsTcpNoDelayBase< SocketTypeEnum::Stream >", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", null ],
+    [ "Hermes::DefaultTransferPolicy< SocketType >::RecvOptions", "struct_hermes_1_1_default_transfer_policy_1_1_recv_options.html", null ],
+    [ "Hermes::TlsTransferPolicy< Data >::RecvOptions", "struct_hermes_1_1_tls_transfer_policy_1_1_recv_options.html", null ],
+    [ "Hermes::details_::ScopedNonBlocking", "class_hermes_1_1details___1_1_scoped_non_blocking.html", null ],
+    [ "Hermes::DefaultTransferPolicy< SocketType >::SendOptions", "struct_hermes_1_1_default_transfer_policy_1_1_send_options.html", null ],
+    [ "Hermes::TlsTransferPolicy< Data >::SendOptions", "struct_hermes_1_1_tls_transfer_policy_1_1_send_options.html", null ],
     [ "Hermes::ServerSocket< SocketData, AcceptPolicy, TransferPolicy >", "struct_hermes_1_1_server_socket.html", null ],
     [ "Hermes::DefaultSocketData< Endpoint, SocketType, SocketFamily >::SocketOptions", "struct_hermes_1_1_default_socket_data_1_1_socket_options.html", null ],
     [ "Hermes::DefaultSocketData< Endpoint, SocketType, SocketFamily >::State", "struct_hermes_1_1_default_socket_data_1_1_state.html", null ],

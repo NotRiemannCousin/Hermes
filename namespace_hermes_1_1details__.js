@@ -9,11 +9,13 @@ var namespace_hermes_1_1details__ =
     [ "ITlsTransferStateMachine", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine.html", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine" ],
     [ "OptionsTcpNoDelayBase", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base.html", null ],
     [ "OptionsTcpNoDelayBase< SocketTypeEnum::Stream >", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4" ],
+    [ "ScopedNonBlocking", "class_hermes_1_1details___1_1_scoped_non_blocking.html", "class_hermes_1_1details___1_1_scoped_non_blocking" ],
     [ "TlsAcceptStateMachine", "struct_hermes_1_1details___1_1_tls_accept_state_machine.html", "struct_hermes_1_1details___1_1_tls_accept_state_machine" ],
     [ "TlsConnectStateMachine", "struct_hermes_1_1details___1_1_tls_connect_state_machine.html", "struct_hermes_1_1details___1_1_tls_connect_state_machine" ],
     [ "TlsSession", "struct_hermes_1_1details___1_1_tls_session.html", "struct_hermes_1_1details___1_1_tls_session" ],
     [ "TlsTransferStateMachine", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html", "struct_hermes_1_1details___1_1_tls_transfer_state_machine" ],
     [ "RecvStreamT", "namespace_hermes_1_1details__.html#a12cfa131f134b860efc40e2644605464", null ],
+    [ "TransferDeadline", "namespace_hermes_1_1details__.html#a9c9e224e10a59de3845efef31f8b5eb9", null ],
     [ "AcceptStateOpResult", "namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20", [
       [ "Recv", "namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20af847fa133f30ecb64731e5ddddc38530", null ],
       [ "Send", "namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20a94966d90747b97d1f0f206c98a8b1ac3", null ],
@@ -36,5 +38,6 @@ var namespace_hermes_1_1details__ =
       [ "Error", "namespace_hermes_1_1details__.html#a167b02efb689d946168c02f5f6e4990da902b0d55fddef6f8d651fe1035b7d4bd", null ],
       [ "Done", "namespace_hermes_1_1details__.html#a167b02efb689d946168c02f5f6e4990daf92965e2c8a7afb3c1b9a5c09a263636", null ]
     ] ],
-    [ "SetTimeout", "namespace_hermes_1_1details__.html#af8fd2d0b9130c0bf67bc9e4b28399953", null ]
+    [ "SetTimeout", "namespace_hermes_1_1details__.html#af8fd2d0b9130c0bf67bc9e4b28399953", null ],
+    [ "WaitForSocket", "namespace_hermes_1_1details__.html#ae8fe3d3579390b00384ddf93af6c007f", null ]
 ];

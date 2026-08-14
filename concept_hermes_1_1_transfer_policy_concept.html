@@ -161,7 +161,7 @@ $(document).ready(function(){initNavTree('concept_hermes_1_1_transfer_policy_con
 <div class="line">            { policy.Send(data, bufferSend)           } -&gt; std::same_as&lt;StreamByteOper&gt;;</div>
 <div class="line">        }</div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket's state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:62</div></div>
-<div class="ttc" id="aconcept_hermes_1_1_transfer_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_transfer_policy_concept.html">Hermes::TransferPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages data transfer operations.</div><div class="ttdef"><b>Definition</b> _base.hpp:156</div></div>
+<div class="ttc" id="aconcept_hermes_1_1_transfer_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_transfer_policy_concept.html">Hermes::TransferPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages data transfer operations.</div><div class="ttdef"><b>Definition</b> _base.hpp:164</div></div>
 <div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a></div><div class="ttdeci">RecvModeEnum</div><div class="ttdoc">With All, the entire span will be filled, with Any the function will stop at the block received.</div><div class="ttdef"><b>Definition</b> _base.hpp:28</div></div>
 </div><!-- fragment --><a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages data transfer operations. </p>
@@ -178,8 +178,10 @@ Buffer-Based I/O</h3>
 <div class="fragment"><div class="line">policy.Recv(data, bufferRecv) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_a39bdfbf4b858f9fb7654cf2aadf2098b"><div class="ttname"><a href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">Hermes::StreamByteOper</a></div><div class="ttdeci">std::pair&lt; size_t, ConnectionResultOper &gt; StreamByteOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:69</div></div>
 </div><!-- fragment --><p> Reads data from the socket directly into the provided <code>std::span&lt;std::byte&gt;</code>.</p>
+<p>Both operations may receive an options object containing an absolute deadline. When a deadline is provided, it is shared by every partial read or write belonging to that call; it is not restarted after each successful transfer.</p>
 <div class="fragment"><div class="line">policy.Send(data, bufferSend) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#a39bdfbf4b858f9fb7654cf2aadf2098b">StreamByteOper</a> </div>
-</div><!-- fragment --><p> Writes data to the socket directly from the provided <code>std::span&lt;const std::byte&gt;</code>. </p>
+</div><!-- fragment --><p> Writes data to the socket directly from the provided <code>std::span&lt;const std::byte&gt;</code>.</p>
+<p>A receive deadline reports <code>ConnectionErrorEnum::ReceiveTimeout</code>, while a send deadline reports <code>ConnectionErrorEnum::SendTimeout</code>. An omitted deadline preserves the blocking behavior of the policy. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

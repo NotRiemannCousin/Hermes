@@ -15,6 +15,6 @@ var struct_hermes_1_1details___1_1_tls_transfer_state_machine =
     [ "SetIoResult", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a8156b68381039efa11ffbd66b261c42e", null ],
     [ "SetToRecv", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a8ec7b2e45bd6e4c87fc52361c000b3d8", null ],
     [ "SetToSend", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a402b1eb215315391871e15d5cb2ef3f4", null ],
-    [ "StartToRecv", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a25c1672a1744a78c8d5d5b381745ae58", null ],
-    [ "StartToSend", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#adf4b90aa0c91c8143221ddb17ab32f29", null ]
+    [ "StartToRecv", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#aa71519656fa3bc7a227c97a2eb1818e9", null ],
+    [ "StartToSend", "struct_hermes_1_1details___1_1_tls_transfer_state_machine.html#a162de42bdc8ddb784b4c9d2628aebf7e", null ]
 ];

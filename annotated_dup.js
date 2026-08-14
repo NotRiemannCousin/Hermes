@@ -11,6 +11,7 @@ var annotated_dup =
         [ "ITlsTransferStateMachine", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine.html", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine" ],
         [ "OptionsTcpNoDelayBase", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base.html", null ],
         [ "OptionsTcpNoDelayBase< SocketTypeEnum::Stream >", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4" ],
+        [ "ScopedNonBlocking", "class_hermes_1_1details___1_1_scoped_non_blocking.html", "class_hermes_1_1details___1_1_scoped_non_blocking" ],
         [ "TlsAcceptStateMachine", "struct_hermes_1_1details___1_1_tls_accept_state_machine.html", "struct_hermes_1_1details___1_1_tls_accept_state_machine" ],
         [ "TlsConnectStateMachine", "struct_hermes_1_1details___1_1_tls_connect_state_machine.html", "struct_hermes_1_1details___1_1_tls_connect_state_machine" ],
         [ "TlsSession", "struct_hermes_1_1details___1_1_tls_session.html", "struct_hermes_1_1details___1_1_tls_session" ],
