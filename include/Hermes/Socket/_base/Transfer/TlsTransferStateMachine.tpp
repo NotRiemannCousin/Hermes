@@ -40,17 +40,26 @@ namespace Hermes::details_ {
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
-    void TlsTransferStateMachine<Data, TransferPolicy>::StartToRecv(std::span<std::byte> buffer, RecvModeEnum mode) noexcept {
+    void TlsTransferStateMachine<Data, TransferPolicy>::StartToRecv(
+        std::span<std::byte> buffer,
+        RecvModeEnum mode,
+        std::optional<TransferDeadline> deadline
+    ) noexcept {
         m_userRecvBuffer   = buffer;
         m_recvMode         = mode;
+        m_deadline         = deadline;
         m_initialSize      = buffer.size();
         m_totalProcessed = 0;
         SetToRecv();
     }
 
     template<SocketDataConcept Data, class TransferPolicy>
-    void TlsTransferStateMachine<Data, TransferPolicy>::StartToSend(std::span<const std::byte> buffer) noexcept {
+    void TlsTransferStateMachine<Data, TransferPolicy>::StartToSend(
+        std::span<const std::byte> buffer,
+        std::optional<TransferDeadline> deadline
+    ) noexcept {
         m_userSendBuffer   = buffer;
+        m_deadline         = deadline;
         m_initialSize      = buffer.size();
         m_totalProcessed = 0;
         SetToSend();
@@ -146,6 +155,10 @@ namespace Hermes::details_ {
         if constexpr (IsAsync())
             AWAIT(RecvProcessNetwork, Recv);
         else {
+            if (!WaitForSocket(data.socket, true, m_deadline)) {
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::ReceiveTimeout };
+                NEXT(Error);
+            }
             m_currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data()), static_cast<int>(data.state->decryptedData.size()), 0);
             NEXT(RecvProcessNetwork);
         }
@@ -193,6 +206,10 @@ namespace Hermes::details_ {
                 if constexpr (IsAsync())
                     AWAIT(RecvProcessNetwork, Recv);
                 else {
+                    if (!WaitForSocket(data.socket, true, m_deadline)) {
+                        m_errorStatus = std::unexpected{ ConnectionErrorEnum::ReceiveTimeout };
+                        NEXT(Error);
+                    }
                     m_currReceived = recv(data.socket, reinterpret_cast<char*>(data.state->decryptedData.data() + extraSpan.size()), static_cast<int>(data.state->decryptedData.size() - extraSpan.size()), 0);
                     NEXT(RecvProcessNetwork);
                 }
@@ -265,6 +282,10 @@ namespace Hermes::details_ {
         if constexpr (IsAsync()) {
             AWAIT(SendProcessNetwork, Send);
         } else {
+            if (!WaitForSocket(data.socket, false, m_deadline)) {
+                m_errorStatus = std::unexpected{ ConnectionErrorEnum::SendTimeout };
+                NEXT(Error);
+            }
             m_currSent = send(data.socket, reinterpret_cast<const char*>(data.state->encryptedData.data() + m_sentBytes), static_cast<int>(m_encryptedSize - m_sentBytes), MSG_NOSIGNAL);
             NEXT(SendProcessNetwork);
         }

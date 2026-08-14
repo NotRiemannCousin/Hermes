@@ -1,4 +1,6 @@
 #include <gtest/gtest.h>
+#include <atomic>
+
 #include <Hermes/Socket/Sync/ClientSocket.hpp>
 #include <Hermes/Socket/Sync/ListenerSocket.hpp>
 #include <Hermes/Socket/Sync/ServerSocket.hpp>
@@ -34,7 +36,7 @@ protected:
         listener = std::move(*listenerResult);
 
         auto s_acceptLambda{ [&]() {
-            auto res{ listener->AcceptOne() };
+            auto res{ listener->AcceptOne({ .recvBufferSize = 1024 }) };
             if (res.has_value()) {
                 server = std::move(*res);
             }
@@ -42,7 +44,10 @@ protected:
 
         std::jthread acceptThread{ s_acceptLambda };
 
-        auto clientResult{ RawTcpClient::Connect(DefaultSocketData<>{ endpoint }) };
+        auto clientResult{ RawTcpClient::Connect(
+            DefaultSocketData<>{ endpoint },
+            Hermes::DefaultConnectPolicy<>::Options{ .sendBufferSize = 1024 }
+        ) };
         ASSERT_TRUE(clientResult.has_value());
         client = std::move(*clientResult);
 
@@ -81,4 +86,69 @@ TEST_F(SocketBridgeFixture, ServerClose_ClientRecv_ReturnsConnectionClosed) {
     ASSERT_FALSE(recvErr.has_value());
 
     EXPECT_EQ(recvErr.error(), Hermes::ConnectionErrorEnum::ConnectionClosed);
+}
+
+
+TEST_F(SocketBridgeFixture, Recv_DeadlineCoversMultipleBlocks) {
+    using namespace std::chrono_literals;
+
+    const std::vector<std::byte> first{ std::byte{'a'} };
+    const std::vector<std::byte> second{ std::byte{'b'} };
+    const auto deadline{ std::chrono::steady_clock::now() + 150ms };
+
+    std::jthread sender{ [&] {
+        ASSERT_TRUE(client->Send(first).second.has_value());
+        std::this_thread::sleep_for(300ms);
+        client->Send(second);
+    }};
+
+    std::array<std::byte, 2> buffer{};
+    const auto [received, err]{ server->Recv(
+        buffer,
+        Hermes::RecvModeEnum::All,
+        Hermes::DefaultTransferPolicy<>::RecvOptions{ .deadline = deadline }
+    ) };
+
+    EXPECT_EQ(received, 1);
+    ASSERT_FALSE(err.has_value());
+    EXPECT_EQ(err.error(), Hermes::ConnectionErrorEnum::ReceiveTimeout);
+    EXPECT_EQ(buffer[0], first[0]);
+}
+
+TEST_F(SocketBridgeFixture, RecvStream_DeadlineCoversMultipleBlocks) {
+    using namespace std::chrono_literals;
+
+    const std::vector<std::byte> first{ std::byte{'a'} };
+    const std::vector<std::byte> second{ std::byte{'b'} };
+    const auto deadline{ std::chrono::steady_clock::now() + 150ms };
+
+    std::jthread sender{ [&] {
+        ASSERT_TRUE(client->Send(first).second.has_value());
+        std::this_thread::sleep_for(300ms);
+        client->Send(second);
+    }};
+
+    auto stream{ server->RecvStream<char>({ .deadline = deadline }) };
+    auto iterator{ stream.begin() };
+
+    ASSERT_EQ(*iterator, 'a');
+    ++iterator;
+    static_cast<void>(*iterator);
+
+    ASSERT_FALSE(stream.Error().has_value());
+    EXPECT_EQ(stream.Error().error(), Hermes::ConnectionErrorEnum::ReceiveTimeout);
+}
+
+TEST_F(SocketBridgeFixture, Send_ExpiredDeadlineReturnsTimeout) {
+    const std::array<std::byte, 1> payload{ std::byte{'x'} };
+    const auto deadline{ std::chrono::steady_clock::now() };
+
+    const auto [sent, err]{ client->Send(
+        payload,
+        Hermes::DefaultTransferPolicy<>::SendOptions{ .deadline = deadline }
+    ) };
+
+    EXPECT_EQ(sent, 0);
+    ASSERT_FALSE(err.has_value());
+    EXPECT_EQ(err.error(), Hermes::ConnectionErrorEnum::SendTimeout);
 }

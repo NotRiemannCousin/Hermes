@@ -38,10 +38,19 @@ namespace Hermes {
                 || view->m_data->socket == macroINVALID_SOCKET;
     }
 
-    template<SocketDataConcept Data>
+        template<SocketDataConcept Data>
     template<ByteLike Byte>
     TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, TlsTransferPolicy& policy)
-        : m_data{ &data }, m_policy{ &policy } {
+        requires std::default_initializable<RecvOptions>
+        : RecvStream{ data, policy, RecvOptions{} } { }
+
+    template<SocketDataConcept Data>
+    template<ByteLike Byte>
+    TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(
+        Data& data, TlsTransferPolicy& policy, RecvOptions options
+    )
+
+        : m_data{ &data }, m_policy{ &policy }, m_options{ options } {
         if (policy.m_streamState == nullptr)
             policy.m_streamState = std::make_unique<StreamState>();
     }
@@ -69,7 +78,7 @@ namespace Hermes {
         auto& state{ m_policy->m_streamState };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ m_policy->Recv(*m_data, std::span<std::byte>{state->buffer}, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ m_policy->Recv(*m_data, std::span<std::byte>{state->buffer}, RecvModeEnum::Any, m_options) };
             err = errOp;
 
             state->index -= state->size;
@@ -96,7 +105,12 @@ namespace Hermes {
     // ==============================================================================
 
     template<SocketDataConcept Data>
-    StreamByteOper TlsTransferPolicy<Data>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) noexcept {
+    StreamByteOper TlsTransferPolicy<Data>::Recv(
+        Data& data,
+        std::span<std::byte> bufferRecv,
+        const RecvModeEnum recvMode,
+        const RecvOptions options
+    ) noexcept {
         size_t totalReceived{}, bytesReceived{};
         ConnectionResultOper err{};
 
@@ -112,11 +126,11 @@ namespace Hermes {
                 return { totalReceived, {} };
         }
 
-        if (!data.transferStateMachine)
+                if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
 
-
-        data.transferStateMachine->StartToRecv(std::as_writable_bytes(bufferRecv), recvMode);
+        details_::ScopedNonBlocking nonBlocking{ data.socket, options.deadline.has_value() };
+        data.transferStateMachine->StartToRecv(std::as_writable_bytes(bufferRecv), recvMode, options.deadline);
         do {
             RECV_INIT:
             data.transferStateMachine->SetToRecv();
@@ -150,12 +164,17 @@ namespace Hermes {
     }
 
     template<SocketDataConcept Data>
-    StreamByteOper TlsTransferPolicy<Data>::Send(Data& data, std::span<const std::byte> bufferSend) noexcept {
+    StreamByteOper TlsTransferPolicy<Data>::Send(
+        Data& data,
+        std::span<const std::byte> bufferSend,
+        const SendOptions options
+    ) noexcept {
 
-        if (!data.transferStateMachine)
+                if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
 
-        data.transferStateMachine->StartToSend(std::as_bytes(bufferSend));
+        details_::ScopedNonBlocking nonBlocking{ data.socket, options.deadline.has_value() };
+        data.transferStateMachine->StartToSend(std::as_bytes(bufferSend), options.deadline);
 
         if (!data.transferStateMachine->IsFinished())
             data.transferStateMachine->Advance(data);

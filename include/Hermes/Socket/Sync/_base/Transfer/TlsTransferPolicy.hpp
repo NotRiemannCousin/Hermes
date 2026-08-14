@@ -2,12 +2,25 @@
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
+#include <Hermes/Socket/_base/Transfer/TransferIo.hpp>
+
 #include <memory>
 #include <span>
 
 namespace Hermes {
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsTransferPolicy {
+        using Deadline = details_::TransferDeadline;
+        //! @brief Options for a bounded receive operation.
+        //! @details `deadline` is absolute and is shared by every partial receive in the call.
+        struct RecvOptions {
+            std::optional<Deadline> deadline{};
+        };
+        //! @brief Options for a bounded send operation.
+        //! @details `deadline` is absolute and is shared by every partial send in the call.
+        struct SendOptions {
+            std::optional<Deadline> deadline{};
+        };
         static constexpr auto Type{ Data::Type };
 
         template<ByteLike Byte = std::byte>
@@ -24,7 +37,10 @@ namespace Hermes {
                 bool operator==(std::default_sentinel_t) const;
             };
 
-            explicit RecvStream(Data& data, TlsTransferPolicy& policy);
+            explicit RecvStream(Data& data, TlsTransferPolicy& policy)
+                requires std::default_initializable<RecvOptions>;
+
+            explicit RecvStream(Data& data, TlsTransferPolicy& policy, RecvOptions options);
 
             Iterator begin();
             static std::default_sentinel_t end();
@@ -35,11 +51,22 @@ namespace Hermes {
 
             Data* m_data;
             TlsTransferPolicy* m_policy;
+            RecvOptions m_options{};
+
         };
 
-        StreamByteOper Recv(Data& data, std::span<std::byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
+        StreamByteOper Recv(
+            Data& data,
+            std::span<std::byte> bufferRecv,
+            RecvModeEnum recvMode = RecvModeEnum::All,
+            RecvOptions options = {}
+        ) noexcept;
 
-        StreamByteOper Send(Data& data, std::span<const std::byte> bufferSend) noexcept;
+        StreamByteOper Send(
+            Data& data,
+            std::span<const std::byte> bufferSend,
+            SendOptions options = {}
+        ) noexcept;
 
     private:
         struct StreamState {

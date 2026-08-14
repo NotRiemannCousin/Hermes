@@ -1,5 +1,7 @@
 #pragma once
 #include <Hermes/Socket/_base.hpp>
+#include <Hermes/Socket/_base/Transfer/TransferIo.hpp>
+
 #include <span>
 #include <cstdint>
 
@@ -10,8 +12,15 @@ namespace Hermes::details_ {
     struct ITlsTransferStateMachine {
         virtual ~ITlsTransferStateMachine() = default;
 
-        virtual void StartToRecv(std::span<std::byte> buffer, RecvModeEnum mode) noexcept = 0;
-        virtual void StartToSend(std::span<const std::byte> buffer) noexcept = 0;
+        virtual void StartToRecv(
+            std::span<std::byte> buffer,
+            RecvModeEnum mode,
+            std::optional<TransferDeadline> deadline = {}
+        ) noexcept = 0;
+        virtual void StartToSend(
+            std::span<const std::byte> buffer,
+            std::optional<TransferDeadline> deadline = {}
+        ) noexcept = 0;
 
         virtual void SetToRecv() noexcept = 0;
         virtual void SetToSend() noexcept = 0;

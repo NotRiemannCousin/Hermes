@@ -2,12 +2,24 @@
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base.hpp>
+#include <Hermes/Socket/_base/Transfer/TransferIo.hpp>
 
 #include <array>
 
 namespace Hermes {
     template<SocketTypeEnum SocketType = SocketTypeEnum::Stream>
     struct DefaultTransferPolicy {
+        using Deadline = details_::TransferDeadline;
+        //! @brief Options for a bounded receive operation.
+        //! @details `deadline` is absolute and is shared by every partial receive in the call.
+        struct RecvOptions {
+            std::optional<Deadline> deadline{};
+        };
+        //! @brief Options for a bounded send operation.
+        //! @details `deadline` is absolute and is shared by every partial send in the call.
+        struct SendOptions {
+            std::optional<Deadline> deadline{};
+        };
         static constexpr auto Type{ SocketType };
 
         static_assert(SocketType != SocketTypeEnum::Dgram, "UDP not supported yet");
@@ -27,7 +39,11 @@ namespace Hermes {
             };
 
             template<SocketDataConcept Data>
-            explicit RecvStream(Data& data, DefaultTransferPolicy& policy);
+            explicit RecvStream(Data& data, DefaultTransferPolicy& policy)
+                requires std::default_initializable<RecvOptions>;
+
+            template<SocketDataConcept Data>
+            explicit RecvStream(Data& data, DefaultTransferPolicy& policy, RecvOptions options);
 
             Iterator begin();
             static std::default_sentinel_t end();
@@ -38,12 +54,23 @@ namespace Hermes {
 
             SocketFd* m_socket;
             DefaultTransferPolicy* m_policy;
+            RecvOptions m_options{};
+
         };
 
         template<SocketDataConcept Data>
-        StreamByteOper Recv(Data& data, std::span<std::byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All);
+        StreamByteOper Recv(
+            Data& data,
+            std::span<std::byte> bufferRecv,
+            RecvModeEnum recvMode = RecvModeEnum::All,
+            RecvOptions options = {}
+        );
         template<SocketDataConcept Data>
-        static StreamByteOper Send(Data& data, std::span<const std::byte> bufferSend);
+        static StreamByteOper Send(
+            Data& data,
+            std::span<const std::byte> bufferSend,
+            SendOptions options = {}
+        );
     private:
         struct State {
             static constexpr size_t bufferSize{ 0x4000 };
@@ -57,7 +84,12 @@ namespace Hermes {
 
         std::unique_ptr<State> m_state{ nullptr };
 
-        static StreamByteOper RecvHelper(SocketFd& socket, std::span<std::byte> bufferRecv, RecvModeEnum recvMode);
+        static StreamByteOper RecvHelper(
+            SocketFd& socket,
+            std::span<std::byte> bufferRecv,
+            RecvModeEnum recvMode,
+            const RecvOptions& options
+        );
     };
 }
 

@@ -24,8 +24,15 @@ namespace Hermes::details_ {
         StreamByteOper GetResult() const noexcept override;
         bool IsFinished() const noexcept override;
 
-        void StartToRecv(std::span<std::byte> buffer, RecvModeEnum mode) noexcept override;
-        void StartToSend(std::span<const std::byte> buffer) noexcept override;
+        void StartToRecv(
+            std::span<std::byte> buffer,
+            RecvModeEnum mode,
+            std::optional<TransferDeadline> deadline
+        ) noexcept override;
+        void StartToSend(
+            std::span<const std::byte> buffer,
+            std::optional<TransferDeadline> deadline
+        ) noexcept override;
 
         void SetToRecv() noexcept override;
         void SetToSend() noexcept override;
@@ -54,6 +61,7 @@ namespace Hermes::details_ {
         size_t m_chunkSize{};
         size_t m_encryptedSize{};
         size_t m_sentBytes{};
+        std::optional<TransferDeadline> m_deadline{};
 
         EncryptStatusEnum m_status{};
 

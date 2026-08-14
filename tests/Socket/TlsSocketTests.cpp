@@ -10,6 +10,7 @@
 #include <vector>
 #include <atomic>
 #include <optional>
+#include <future>
 
 using Hermes::ConnectionErrorEnum;
 using Hermes::IpAddress;
@@ -252,11 +253,16 @@ struct TlsSocketBridgeFixture : testing::Test {
         auto listener{ MakeListenSocket(port) };
         ASSERT_TRUE(listener.has_value());
 
+        Hermes::TlsAcceptPolicy<>::AcceptOptions acceptOptions{};
+        acceptOptions.recvBufferSize = 1024;
+
         std::jthread acceptThread{ [&]() {
-            if (auto srv{ listener->AcceptOne() }) server.emplace(std::move(*srv));
+            if (auto srv{ listener->AcceptOne(acceptOptions) }) server.emplace(std::move(*srv));
         } };
 
-        auto cli{ MakeClientSocket(port) };
+        Hermes::TlsConnectPolicy<>::Options connectOptions{};
+        connectOptions.sendBufferSize = 1024;
+        auto cli{ MakeClientSocket(port, connectOptions) };
         ASSERT_TRUE(cli.has_value());
 
         acceptThread.join();
@@ -290,6 +296,45 @@ TEST_F(TlsSocketBridgeFixture, ServerSend_ClientRecv_SmallMessage) {
     const auto [recvd, recvErr]{ client->Recv(inBuf) };
     EXPECT_TRUE(recvErr.has_value());
     EXPECT_EQ(inBuf, "world");
+}
+
+TEST_F(TlsSocketBridgeFixture, Send_ExpiredDeadlineReturnsTimeout) {
+    const std::array payload{ std::byte{ 'x' } };
+    const auto deadline{ steady_clock::now() };
+
+    const auto [sent, err]{ client->Send(payload, { .deadline = deadline } ) };
+
+    EXPECT_LE(sent, payload.size());
+    ASSERT_FALSE(err.has_value());
+    EXPECT_EQ(err.error(), ConnectionErrorEnum::SendTimeout);
+}
+
+TEST_F(TlsSocketBridgeFixture, Recv_DeadlineCoversMultipleRecords) {
+    std::promise<void> firstSent;
+    auto firstSentFuture{ firstSent.get_future() };
+    std::promise<void> releaseSecond;
+    auto releaseSecondFuture{ releaseSecond.get_future() };
+
+    std::jthread sender{ [&] {
+        ASSERT_TRUE(client->Send(std::array{ std::byte{'a'} }).second.has_value());
+        firstSent.set_value();
+        releaseSecondFuture.wait();
+        client->Send(std::array{ std::byte{'b'} });
+    } };
+
+    firstSentFuture.wait();
+    std::array<std::byte, 2> buffer{};
+    const auto [received, err]{ server->Recv(
+        buffer,
+        Hermes::RecvModeEnum::All,
+        { .deadline = steady_clock::now() + 150ms }
+    ) };
+    releaseSecond.set_value();
+
+    EXPECT_EQ(received, 1);
+    ASSERT_FALSE(err.has_value());
+    EXPECT_EQ(err.error(), ConnectionErrorEnum::ReceiveTimeout);
+    EXPECT_EQ(buffer[0], std::byte{'a'});
 }
 
 TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {

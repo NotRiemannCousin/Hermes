@@ -31,11 +31,21 @@ namespace Hermes {
     }
 
 
-    template<SocketTypeEnum SocketType>
+        template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
     template<SocketDataConcept Data>
     DefaultTransferPolicy<SocketType>::RecvStream<Byte>::RecvStream(Data& data, DefaultTransferPolicy& policy)
-        : m_socket{ &data.socket }, m_policy{ &policy } {
+        requires std::default_initializable<RecvOptions>
+        : RecvStream{ data, policy, RecvOptions{} } { }
+
+    template<SocketTypeEnum SocketType>
+    template<ByteLike Byte>
+    template<SocketDataConcept Data>
+    DefaultTransferPolicy<SocketType>::RecvStream<Byte>::RecvStream(
+        Data& data, DefaultTransferPolicy& policy, RecvOptions options
+    )
+
+        : m_socket{ &data.socket }, m_policy{ &policy }, m_options{ options } {
         if (policy.m_state == nullptr)
             policy.m_state = std::make_unique<State>();
     }
@@ -67,7 +77,7 @@ namespace Hermes {
         auto& state{ m_policy->m_state };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper(*m_socket, state->buffer, RecvModeEnum::Any) };
+            auto [newSize, errOp]{ DefaultTransferPolicy::RecvHelper(*m_socket, state->buffer, RecvModeEnum::Any, m_options) };
             err = errOp;
 
             state->index -= state->size;
@@ -90,7 +100,12 @@ namespace Hermes {
 
     template<SocketTypeEnum SocketType>
     template<SocketDataConcept Data>
-    StreamByteOper DefaultTransferPolicy<SocketType>::Recv(Data& data, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
+    StreamByteOper DefaultTransferPolicy<SocketType>::Recv(
+        Data& data,
+        std::span<std::byte> bufferRecv,
+        const RecvModeEnum recvMode,
+        const RecvOptions options
+    ) {
         if (m_state != nullptr) {
             const auto size{ std::min((size_t)m_state->size - m_state->index, bufferRecv.size()) };
             std::memcpy(bufferRecv.data(), m_state->buffer.data() + m_state->index, size);
@@ -101,15 +116,23 @@ namespace Hermes {
                 return { size, {} };
         }
 
-        return DefaultTransferPolicy::RecvHelper(data.socket, bufferRecv, recvMode);
+        return DefaultTransferPolicy::RecvHelper(data.socket, bufferRecv, recvMode, options);
     }
 
     template<SocketTypeEnum SocketType>
-    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(SocketFd& socket, std::span<std::byte> bufferRecv, const RecvModeEnum recvMode) {
+    StreamByteOper DefaultTransferPolicy<SocketType>::RecvHelper(
+        SocketFd& socket,
+        std::span<std::byte> bufferRecv,
+        const RecvModeEnum recvMode,
+        const RecvOptions& options
+    ) {
         if (socket == macroINVALID_SOCKET)
             return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
+        details_::ScopedNonBlocking nonBlocking{ socket, options.deadline.has_value() };
         do {
+            if (!details_::WaitForSocket(socket, true, options.deadline))
+                return { total, std::unexpected{ ConnectionErrorEnum::ReceiveTimeout } };
             const IoCount received{ recv(socket,
                 reinterpret_cast<char*>(bufferRecv.data() + total),
                 static_cast<int>(bufferRecv.size() - total), 0) };
@@ -129,11 +152,18 @@ namespace Hermes {
 
     template<SocketTypeEnum SocketType>
     template<SocketDataConcept Data>
-    StreamByteOper DefaultTransferPolicy<SocketType>::Send(Data& data, std::span<const std::byte> bufferSend) {
+    StreamByteOper DefaultTransferPolicy<SocketType>::Send(
+        Data& data,
+        std::span<const std::byte> bufferSend,
+        const SendOptions options
+    ) {
         if (data.socket == macroINVALID_SOCKET)
             return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
+        details_::ScopedNonBlocking nonBlocking{ data.socket, options.deadline.has_value() };
         while (total < bufferSend.size()) {
+            if (!details_::WaitForSocket(data.socket, false, options.deadline))
+                return { total, std::unexpected{ ConnectionErrorEnum::SendTimeout } };
             const IoCount sent{ send(data.socket,
                 reinterpret_cast<const char*>(bufferSend.data() + total),
                 static_cast<int>(bufferSend.size() - total), 0) };

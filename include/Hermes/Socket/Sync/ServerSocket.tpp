@@ -58,35 +58,84 @@ namespace Hermes {
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ContiguousByteRange R>
-    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) noexcept {
+    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) noexcept
+        requires std::default_initializable<typename TransferPolicy::SendOptions> {
+        return Send(std::forward<R>(data), typename TransferPolicy::SendOptions{});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<ContiguousByteRange R>
+    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(
+        R&& data, typename TransferPolicy::SendOptions options
+    ) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer));
+        return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer), options);
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
-    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept {
+    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept
+        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
+        return Recv(std::forward<R>(data), mode, typename TransferPolicy::RecvOptions{});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<WritableContiguousByteRange R>
+    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(
+        R&& data, RecvModeEnum mode, typename TransferPolicy::RecvOptions options
+    ) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
-        return m_transferPolicy.Recv(m_socketData, std::as_writable_bytes(buffer), mode);
+        return m_transferPolicy.Recv(m_socketData, std::as_writable_bytes(buffer), mode, options);
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<WritableContiguousByteRange R>
+    StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(
+        R&& data, typename TransferPolicy::RecvOptions options
+    ) noexcept {
+        return Recv(std::forward<R>(data), RecvModeEnum::All, options);
     }
 
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
-    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept {
-        return typename TransferPolicy::template RecvStream<Byte>{ m_socketData, m_transferPolicy };
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept
+        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
+        return RecvStream<Byte>(typename TransferPolicy::RecvOptions{});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
-    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange() noexcept {
-        return RecvStream<Byte>() | Utils::dropLast;
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream(
+        typename TransferPolicy::RecvOptions options
+    ) noexcept {
+        return typename TransferPolicy::template RecvStream<Byte>{ m_socketData, m_transferPolicy, options };
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<ByteLike Byte>
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange() noexcept
+        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
+        return RecvRange<Byte>(typename TransferPolicy::RecvOptions{});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+        requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
+    template<ByteLike Byte>
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange(
+        typename TransferPolicy::RecvOptions options
+    ) noexcept {
+        return RecvStream<Byte>(options) | Utils::dropLast;
     }
 
 #pragma endregion

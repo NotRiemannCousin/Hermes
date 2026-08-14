@@ -66,11 +66,11 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
 #pragma region Lambdas
 
-    const auto s_makeSocket = [&](const Hermes::IpEndpoint endpoint) {
+    const auto makeSocket{ [&](const Hermes::IpEndpoint endpoint) {
         return Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname });
-    };
+    } };
 
-    const auto s_makeRequest = [&](Hermes::RawTlsClient&& client) {
+    const auto makeRequest{ [&](Hermes::RawTlsClient&& client) {
         const auto request{
             format(
                 "GET /{} HTTP/1.1\r\n"
@@ -81,9 +81,9 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
         return client.Send(request).second
                 .transform([client = std::move(client)](const auto) mutable { return std::move(client); });
-    };
+    } };
 
-    constexpr auto s_mapError = [](const Hermes::ConnectionErrorEnum error) -> std::string {
+    constexpr auto mapError{ [](const Hermes::ConnectionErrorEnum error) -> std::string {
         using Error = Hermes::ConnectionErrorEnum;
         switch (error) {
             case Error::ResolveHostNotFound:
@@ -108,9 +108,9 @@ std::expected<std::monostate, std::string> MakeRequest() {
             default:
                 return "unknown error";
         }
-    };
+    } };
 
-    const auto s_getResponse = [&](Hermes::RawTlsClient&& client) -> std::expected<std::string, std::string> {
+    const auto getResponse{ [&](Hermes::RawTlsClient&& client) -> std::expected<std::string, std::string> {
         auto socketView{ client.RecvLazyRange<char>() };
         // `RecvLazyRange` is an input_range, so it consumes the bytes when you advance the iterator. Advancing an iterator of an
         // input_range can cause invalidation of other iterators, but the current state is stored in the range so all
@@ -119,7 +119,7 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
         // (Do I need to give a name to this type of range? sibling{_input}_range? global_{input}_range? Idk yet).
 
-        if (!rg::starts_with(socketView, "HTTP/1.1"sv))
+        if (!rg::startwith(socketView, "HTTP/1.1"sv))
             return std::unexpected{ "Non supported version" };
 
 
@@ -149,22 +149,22 @@ std::expected<std::monostate, std::string> MakeRequest() {
             return std::unexpected{ "Error receiving message" };
 
         return body;
-    };
+    } };
 
-    const auto s_processData = [](std::string&& body) {
+    const auto processData{ [](std::string&& body) {
         std::println("body:\n\n{}", body);
 
         return std::monostate{};
-    };
+    } };
 
 #pragma endregion
 
     return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
-            .and_then(s_makeSocket)
-            .and_then(s_makeRequest)
-            .transform_error(s_mapError)
-            .and_then(s_getResponse)
-            .transform(s_processData);
+            .and_then(makeSocket)
+            .and_then(makeRequest)
+            .transform_error(mapError)
+            .and_then(getResponse)
+            .transform(processData);
 }
 ```
 

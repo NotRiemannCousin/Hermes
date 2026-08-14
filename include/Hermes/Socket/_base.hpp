@@ -150,8 +150,16 @@ namespace Hermes {
     //! @code{.cpp} policy.Recv(data, bufferRecv) -> StreamByteOper @endcode
     //! Reads data from the socket directly into the provided `std::span<std::byte>`.
     //!
+    //! Both operations may receive an options object containing an absolute deadline. When a
+    //! deadline is provided, it is shared by every partial read or write belonging to that call;
+    //! it is not restarted after each successful transfer.
+    //!
     //! @code{.cpp} policy.Send(data, bufferSend) -> StreamByteOper @endcode
     //! Writes data to the socket directly from the provided `std::span<const std::byte>`.
+    //!
+    //! A receive deadline reports `ConnectionErrorEnum::ReceiveTimeout`, while a send deadline
+    //! reports `ConnectionErrorEnum::SendTimeout`. An omitted deadline preserves the blocking
+    //! behavior of the policy.
     template<class Policy, class SocketData>
     concept TransferPolicyConcept = SocketDataConcept<SocketData>
         && Policy::Type == SocketData::Type

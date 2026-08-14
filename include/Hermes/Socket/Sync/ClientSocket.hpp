@@ -6,13 +6,28 @@
 
 
 namespace Hermes {
+
+    //! @brief A blocking client socket that establishes an outgoing connection.
+    //!
+    //! @details ClientSocket owns the connected SocketData and delegates connection
+    //! establishment to ConnectionPolicy and data transfer to TransferPolicy. The
+    //! policy types determine the protocol-specific behavior; for example, the
+    //! default policies provide TCP support and the TLS policies provide the TLS
+    //! handshake and encrypted transfer.
     template<
         SocketDataConcept SocketData = DefaultSocketData<>,
         class ConnectionPolicy       = DefaultConnectPolicy<>,
         class TransferPolicy         = DefaultTransferPolicy<>>
         requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     struct ClientSocket {
-        using EndpointType = SocketData::EndpointType;
+        //! @brief The endpoint type used by SocketData.
+        using EndpointType       = SocketData::EndpointType;
+        //! @brief The transfer policy used by this socket.
+        using TransferPolicyType = TransferPolicy;
+        //! @brief The options accepted by receive operations.
+        using RecvOptions        = typename TransferPolicy::RecvOptions;
+        //! @brief The options accepted by send operations.
+        using SendOptions        = typename TransferPolicy::SendOptions;
 
 
         ClientSocket(ClientSocket&&) noexcept;
@@ -21,45 +36,110 @@ namespace Hermes {
 
 
 
+        //! @brief Creates and connects a client socket.
+        //! @param data SocketData containing the endpoint to connect to.
+        //! @return The connected socket on success, or the connection error on failure.
         template<class = void>
         [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data) noexcept
             requires std::default_initializable<typename ConnectionPolicy::Options>;
 
+        //! @brief Creates and connects a client socket using explicit connection options.
+        //! @param data SocketData containing the endpoint to connect to.
+        //! @param opt Connection-policy options, including any handshake deadline.
+        //! @return The connected socket on success, or the connection error on failure.
         [[nodiscard]] static ConnectionResult<ClientSocket> Connect(SocketData&& data, ConnectionPolicy::Options opt) noexcept;
 
 
 
-        //! @return Returns the count of data sent on success, or an error on failure.
+        //! @brief Sends data using the transfer policy.
+        //! @param data A contiguous range of bytes to send.
+        //! @return The number of bytes sent and an empty error result on success, or
+        //! an error describing the failure. A successful call may send fewer bytes
+        //! than the range contains.
         template<ContiguousByteRange R>
-        StreamByteOper Send(R&& data) noexcept;
+        StreamByteOper Send(R&& data) noexcept
+            requires std::default_initializable<typename TransferPolicy::SendOptions>;
 
-        //! @return Returns the count of data filled on success, or an error on failure.
+        //! @brief Sends data using explicit transfer options.
+        //! @param data A contiguous range of bytes to send.
+        //! @param options Transfer options for this operation.
+        //! @details When a deadline is provided, it is an absolute time point shared
+        //! by every partial send belonging to this call. It is not restarted after
+        //! a partial write.
+        //! @return The number of bytes sent and an empty error result on success, or
+        //! an error describing the failure.
+        template<ContiguousByteRange R>
+        StreamByteOper Send(R&& data, typename TransferPolicy::SendOptions options) noexcept;
+
+        //! @brief Receives data using the selected receive mode.
+        //! @param data A writable contiguous range that receives the bytes.
+        //! @param mode Whether the operation receives any available data or fills
+        //! the range before completing.
+        //! @return The number of bytes received and an empty error result on success,
+        //! or an error describing the failure.
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
+        StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
+            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
 
-        //! @return Returns a seamless input_range to the data received by the socket.
+        //! @brief Receives data using explicit receive options.
+        //! @param data A writable contiguous range that receives the bytes.
+        //! @param mode Whether the operation receives any available data or fills
+        //! the range before completing.
+        //! @param options Receive options for this operation.
+        //! @details A provided deadline is absolute and applies to the complete
+        //! receive operation, including all partial reads.
+        //! @return The number of bytes received and an empty error result on success,
+        //! or an error describing the failure.
+        template<WritableContiguousByteRange R>
+        StreamByteOper Recv(R&& data, RecvModeEnum mode, typename TransferPolicy::RecvOptions options) noexcept;
+
+        //! @brief Receives a complete range using explicit receive options.
+        //! @param data A writable contiguous range that receives the bytes.
+        //! @param options Receive options for this operation.
+        //! @return The number of bytes received and an empty error result on success,
+        //! or an error describing the failure.
+        template<WritableContiguousByteRange R>
+        StreamByteOper Recv(R&& data, typename TransferPolicy::RecvOptions options) noexcept;
+
+        //! @brief Returns a lazy input range over the bytes received by the socket.
         //!
-        //! The data is fetched in the `operator*()` to prevent getting stuck by keep-alive or other
-        //! idle state triggered by calling ++ one more time. Because of this behavior, it potentially
-        //! will discover that the transmission ended while trying to get a new value, so a 0x04 char
-        //! (end of transmission) will be added as the last char.
+        //! Data is fetched by `operator*()` rather than by `operator++()`. This
+        //! prevents advancing the range from blocking while the peer is keeping the
+        //! connection alive without sending data. If the transmission ends while a
+        //! new value is being fetched, the range appends `0x04` as its end marker.
         template<ByteLike Byte = std::byte>
-        auto RecvStream() noexcept;
+        auto RecvStream() noexcept
+            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
 
-        //! @return Returns a seamless input_range to the data received by the socket.
-        //!
-        //! It delays the char retrieved from RecvStream() by 1 and discards the last char (0x04
-        //! end of transmission in case of exhaustive read), working similar to what you get in
-        //! other languages (retrieving the data on ++).
-        //!
-        //! @note If it isn't an exhaustive read, the next char that you was expecting will be
-        //! discarded anyway so keep you aware of this.
+        //! @brief Returns a lazy input range bounded by one absolute receive deadline.
+        //! @param options Receive options retained by the range for every internal read.
+        //! @details The deadline applies to the complete lazy operation and is not
+        //! restarted for each byte or block obtained from the range.
         template<ByteLike Byte = std::byte>
-        auto RecvRange() noexcept;
+        auto RecvStream(typename TransferPolicy::RecvOptions options) noexcept;
+
+        //! @brief Returns a lazy input range with conventional increment semantics.
+        //!
+        //! RecvRange() obtains the next value on increment rather than on dereference.
+        //! It is implemented on top of RecvStream(), omits the stream end marker `0x04`,
+        //! and therefore behaves like a conventional input range for exhaustive reads.
+        //!
+        //! @note For a non-exhaustive read, the value following the requested range
+        //! may be consumed while detecting the end of the stream.
+        template<ByteLike Byte = std::byte>
+        auto RecvRange() noexcept
+            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
+
+        //! @brief Returns a lazy input range with explicit receive options.
+        //! @param options Receive options retained for the complete range operation.
+        template<ByteLike Byte = std::byte>
+        auto RecvRange(typename TransferPolicy::RecvOptions options) noexcept;
 
 
-        
+
+        //! @brief Performs the protocol-level graceful shutdown and closes the socket.
         void Close() noexcept;
+        //! @brief Immediately closes the socket without a protocol-level shutdown.
         void Abort() noexcept;
 
     private:
