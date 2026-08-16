@@ -9,13 +9,13 @@ var struct_hermes_1_1_server_socket =
     [ "Abort", "struct_hermes_1_1_server_socket.html#adb02f84c6d9df90593fd6420bd6c1575", null ],
     [ "Close", "struct_hermes_1_1_server_socket.html#a026e66764c8e03c2a3d5adf12714441f", null ],
     [ "operator=", "struct_hermes_1_1_server_socket.html#af958a4b3a74d3385e476cb059836d672", null ],
-    [ "Recv", "struct_hermes_1_1_server_socket.html#a92c16ce1cf350a42aee81bc367c52e07", null ],
-    [ "Recv", "struct_hermes_1_1_server_socket.html#ac7f4874c56a6d0db992d7609c0844050", null ],
-    [ "Recv", "struct_hermes_1_1_server_socket.html#ae30d6c5e0aa3e403ec6d5b48180178fe", null ],
-    [ "RecvRange", "struct_hermes_1_1_server_socket.html#aeeb5ec80202454be35e5bb0a9a68527e", null ],
-    [ "RecvRange", "struct_hermes_1_1_server_socket.html#aeb0131e4b75dd3648a9f4dd1189ead18", null ],
-    [ "RecvStream", "struct_hermes_1_1_server_socket.html#af301a2906481a4fb0855981371360090", null ],
-    [ "RecvStream", "struct_hermes_1_1_server_socket.html#a8c8c1d2dd17828598670954f4a6c9335", null ],
-    [ "Send", "struct_hermes_1_1_server_socket.html#a8604cec70a2ad29b50024f80716c5e58", null ],
-    [ "Send", "struct_hermes_1_1_server_socket.html#a435a2cb7bb7017598f047d477675b39c", null ]
+    [ "Recv", "struct_hermes_1_1_server_socket.html#abd46c791893a9fff9c5f513175054c16", null ],
+    [ "Recv", "struct_hermes_1_1_server_socket.html#ac270da7864d6b90488268b9e36b5a40c", null ],
+    [ "Recv", "struct_hermes_1_1_server_socket.html#a84068779ea847e8695b239c0e4087044", null ],
+    [ "RecvRange", "struct_hermes_1_1_server_socket.html#a071d4bef3efc827ee2e098343c1a96e3", null ],
+    [ "RecvRange", "struct_hermes_1_1_server_socket.html#aaeef98d871221a80789d2bc2442bbd44", null ],
+    [ "RecvStream", "struct_hermes_1_1_server_socket.html#a91a89bcbffabba0c31f47ad58e145162", null ],
+    [ "RecvStream", "struct_hermes_1_1_server_socket.html#a88f24df7c9931feb22d81d1d396fa093", null ],
+    [ "Send", "struct_hermes_1_1_server_socket.html#a5707f19c060829b71dab91f38566aa66", null ],
+    [ "Send", "struct_hermes_1_1_server_socket.html#a7ca87bc8bd090278787bf66a18083c1a", null ]
 ];

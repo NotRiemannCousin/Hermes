@@ -1,0 +1,255 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: RecvStream vs RecvRange Behavior</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-msc.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="Hermes-logo.webp"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('recv-stream-behavior.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">RecvStream vs RecvRange Behavior</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md43"></a>
+RecvStream vs RecvRange Behavior</h1>
+<p><a class="el" href="namespace_hermes.html">Hermes</a> provides two distinct range-like iterators for reading from sockets: <code>RecvStream</code> and <code>RecvRange</code>. Their fetching mechanisms and termination conditions differ significantly. Using the wrong one can lead to indefinitely hanging threads.</p>
+<h2><a class="anchor" id="autotoc_md45"></a>
+Core Mechanics: &lt;tt&gt;operator*&lt;/tt&gt; vs &lt;tt&gt;operator++&lt;/tt&gt;</h2>
+<p>The primary difference lies in exactly <em>when</em> the network read operation occurs:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Action</b>   </th><th class="markdownTableHeadNone"><b>RecvStream</b>   </th><th class="markdownTableHeadNone"><b>RecvRange</b>    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">**<code>operator*()</code>**   </td><td class="markdownTableBodyNone"><b>Blocks and receives data.</b>   </td><td class="markdownTableBodyNone">Returns previously cached data.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">**<code>operator++()</code>**   </td><td class="markdownTableBodyNone">No-op (simply returns <code>*this</code>).   </td><td class="markdownTableBodyNone"><b>Blocks, receives data, and caches it.</b>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Read-ahead</b>   </td><td class="markdownTableBodyNone">Zero read-ahead.   </td><td class="markdownTableBodyNone">1-byte read-ahead.   </td></tr>
+</table>
+<h2><a class="anchor" id="autotoc_md47"></a>
+The Keep-Alive Trap (Hanging Threads)</h2>
+<p>Why does <code>RecvStream</code> exist if <code>RecvRange</code> complies with standard C++ iterators? The answer is <b>persistent connections</b>, such as HTTP Keep-Alive.</p>
+<p>Because <code>RecvRange</code> performs a read-ahead on <code>operator++</code> to correctly evaluate <code>it != end()</code>, it aggressively asks the socket for the next byte. If the server finishes sending a complete payload but keeps the underlying connection open waiting for your next request, <code>operator++</code> will <b>block indefinitely</b>. Your thread hangs forever because the loop tries to read a byte that doesn't exist yet.</p>
+<p><code>RecvStream</code> solves this. By pushing the read operation to <code>operator*()</code>, you can parse the payload, logically detect the end of the message (e.g., matching a Content-Length), and safely <code>break</code> the loop without triggering an unwanted read-ahead.</p>
+<h2><a class="anchor" id="autotoc_md50"></a>
+Termination and DropLastView</h2>
+<p>To comply with standard C++ iterators and terminate the loop gracefully on closed sockets, <code>RecvRange</code> wraps the stream in a <code>DropLastView</code>.</p>
+<p>It does not scan for specific terminator bytes. It simply evaluates to <code>true</code> when the underlying socket reaches the end of the stream (<code>== end()</code>), unconditionally discarding the last element yielded (which acts as the internal EOF marker).</p>
+<h2><a class="anchor" id="autotoc_md52"></a>
+Stateful Iteration (No Iterator Invalidation)</h2>
+<p>Unlike standard <code>input_range</code> iterators where advancing one copy might invalidate others, <code>RecvStream</code> maintains the socket's read state centrally within the view object itself. Advancing any iterator safely advances the global state of the stream.</p>
+<p><b>Why is this useful?</b> It allows you to sequentially chain multiple range-based algorithms on the exact same view to parse a protocol step-by-step. Reading a chunk of bytes leaves the view perfectly positioned for the next algorithm, avoiding iterator invalidation bugs entirely.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> socketView = client.RecvStream&lt;<span class="keywordtype">char</span>&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 1. Extract exactly 5 bytes. The stream state advances safely.</span></div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> statusCode = Hermes::Utils::ExtractTo&lt;std::array&lt;char, 5&gt;&gt;(socketView);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 2. Read until the next CRLF. Picks up exactly where step 1 left off.</span></div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> statusMessage = socketView </div>
+<div class="line">                         | <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a>(<span class="stringliteral">&quot;\r\n&quot;</span>sv) </div>
+<div class="line">                         | std::ranges::to&lt;std::string&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// 3. Read headers until double CRLF. Picks up exactly where step 2 left off.</span></div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> headers = socketView </div>
+<div class="line">                   | <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a>(<span class="stringliteral">&quot;\r\n\r\n&quot;</span>sv) </div>
+<div class="line">                   | std::ranges::to&lt;std::string&gt;();</div>
+<div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div></div>
+</div><!-- fragment --><p>This pattern turns complex, manual buffer management into clean, declarative algorithm chaining.</p>
+<h2><a class="anchor" id="autotoc_md54"></a>
+Limiting Reads for Security (&lt;tt&gt;std::views::take&lt;/tt&gt;)</h2>
+<p>Because <code>RecvStream</code> integrates seamlessly with <code>&lt;ranges&gt;</code>, you can combine it with <code>std::views::take</code> to enforce strict upper bounds on read operations. This is critical for security, preventing malicious actors from sending infinite streams of data (spam) to exhaust your memory when parsing dynamically sized fields.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> socketView = client.RecvStream&lt;<span class="keywordtype">char</span>&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Protection: Limit reading to a maximum of 1024 bytes.</span></div>
+<div class="line"><span class="comment">// If the &quot;\r\n\r\n&quot; pattern is not found within this limit, </span></div>
+<div class="line"><span class="comment">// the view will be interrupted and the read will terminate safely.</span></div>
+<div class="line"><span class="keyword">auto</span> safeHeadersView = socketView | std::views::take(1024);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> headers = safeHeadersView </div>
+<div class="line">                   | <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a>(<span class="stringliteral">&quot;\r\n\r\n&quot;</span>sv) </div>
+<div class="line">                   | std::ranges::to&lt;std::string&gt;();</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md55"></a>
+Comparative Example</h2>
+<h3><a class="anchor" id="autotoc_md56"></a>
+Using &lt;tt&gt;RecvStream&lt;/tt&gt; (Direct, No Read-Ahead)</h3>
+<p>Best for persistent connections and manual parsing.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> stream = client.RecvStream();</div>
+<div class="line"><span class="keyword">auto</span> it = stream.begin();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">while</span> (it != stream.end()) {</div>
+<div class="line">    <span class="keywordtype">char</span> c = *it; <span class="comment">// Network read happens exactly HERE.</span></div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">if</span> (c == <span class="charliteral">&#39;\n&#39;</span>) <span class="keywordflow">break</span>; <span class="comment">// Loop exits safely, no read-ahead is triggered.</span></div>
+<div class="line">    </div>
+<div class="line">    buffer.push_back(c);</div>
+<div class="line">    ++it; <span class="comment">// No-op.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md57"></a>
+Using &lt;tt&gt;RecvRange&lt;/tt&gt; (C++ Ranges Compatible)</h3>
+<p>Best for closed-stream scenarios and STL algorithms.</p>
+<div class="fragment"><div class="line"><span class="keyword">auto</span> range = client.RecvRange();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// &#39;++&#39; inside the loop mechanics performs the network read.</span></div>
+<div class="line"><span class="comment">// &#39;*&#39; simply returns the cached byte.</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">char</span> c : range) { </div>
+<div class="line">    buffer.push_back(c);</div>
+<div class="line">    <span class="comment">// Loop ends automatically when the connection closes.</span></div>
+<div class="line">    <span class="comment">// DANGER: Will hang here if the connection is kept alive.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md58"></a>
+Decision Table</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><b>Scenario</b>   </th><th class="markdownTableHeadNone"><b>Recommendation</b>   </th><th class="markdownTableHeadNone"><b>Reason</b>    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Persistent/Keep-Alive connections   </td><td class="markdownTableBodyNone">**<code>RecvStream</code>**   </td><td class="markdownTableBodyNone">Avoids blocking the thread on the next <code>operator++</code> read-ahead.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Custom delimiter parsing   </td><td class="markdownTableBodyNone">**<code>RecvStream</code>**   </td><td class="markdownTableBodyNone">Gives exact control over network reads.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Zero-copy / strict fetching   </td><td class="markdownTableBodyNone">**<code>RecvStream</code>**   </td><td class="markdownTableBodyNone">Fetches strictly when requested by <code>operator*</code>.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Protocol chunking/algorithm chaining   </td><td class="markdownTableBodyNone">**<code>RecvStream</code>**   </td><td class="markdownTableBodyNone">Preserves state perfectly across sequential algorithm calls.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Security bounds / Spam prevention   </td><td class="markdownTableBodyNone">**<code>RecvStream</code> + <code>take</code>**   </td><td class="markdownTableBodyNone">Safely limits unbounded protocol fields dynamically.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Standard <code>for</code> loops   </td><td class="markdownTableBodyNone">**<code>RecvRange</code>**   </td><td class="markdownTableBodyNone">Safely increments and evaluates loop conditions.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">STL <code>&lt;ranges&gt;</code> algorithms   </td><td class="markdownTableBodyNone">**<code>RecvRange</code>**   </td><td class="markdownTableBodyNone">Behaves like a standard input iterator.   </td></tr>
+</table>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>

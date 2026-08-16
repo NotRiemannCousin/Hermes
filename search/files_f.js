@@ -1,17 +1,11 @@
 var searchData=
 [
-  ['tlsacceptpolicy_2ehpp_0',['TlsAcceptPolicy.hpp',['../_tls_accept_policy_8hpp.html',1,'']]],
-  ['tlsacceptstatemachine_2ehpp_1',['TlsAcceptStateMachine.hpp',['../_tls_accept_state_machine_8hpp.html',1,'']]],
-  ['tlsasyncacceptpolicy_2ehpp_2',['TlsAsyncAcceptPolicy.hpp',['../_tls_async_accept_policy_8hpp.html',1,'']]],
-  ['tlsasyncconnectpolicy_2ehpp_3',['TlsAsyncConnectPolicy.hpp',['../_tls_async_connect_policy_8hpp.html',1,'']]],
-  ['tlsasynctransferpolicy_2ehpp_4',['TlsAsyncTransferPolicy.hpp',['../_tls_async_transfer_policy_8hpp.html',1,'']]],
-  ['tlsconnectpolicy_2ehpp_5',['TlsConnectPolicy.hpp',['../_tls_connect_policy_8hpp.html',1,'']]],
-  ['tlsconnectstatemachine_2ehpp_6',['TlsConnectStateMachine.hpp',['../_tls_connect_state_machine_8hpp.html',1,'']]],
-  ['tlssession_2ehpp_7',['TlsSession.hpp',['../_tls_session_8hpp.html',1,'']]],
-  ['tlssocketdata_2ehpp_8',['TlsSocketData.hpp',['../_tls_socket_data_8hpp.html',1,'']]],
-  ['tlstransferpolicy_2ehpp_9',['TlsTransferPolicy.hpp',['../_tls_transfer_policy_8hpp.html',1,'']]],
-  ['tlstransferstatemachine_2ehpp_10',['TlsTransferStateMachine.hpp',['../_tls_transfer_state_machine_8hpp.html',1,'']]],
-  ['tobytes_2ehpp_11',['ToBytes.hpp',['../_to_bytes_8hpp.html',1,'']]],
-  ['transferio_2ehpp_12',['TransferIo.hpp',['../_transfer_io_8hpp.html',1,'']]],
-  ['types_2ehpp_13',['Types.hpp',['../_types_8hpp.html',1,'']]]
+  ['schannelcredflags_2ehpp_0',['schannelcredflags.hpp',['../_linux_2_s_channel_cred_flags_8hpp.html',1,'(Global Namespace)'],['../_windows_2_s_channel_cred_flags_8hpp.html',1,'(Global Namespace)']]],
+  ['schcredenum_2ehpp_1',['SChCredEnum.hpp',['../_s_ch_cred_enum_8hpp.html',1,'']]],
+  ['securitybufferenum_2ehpp_2',['SecurityBufferEnum.hpp',['../_security_buffer_enum_8hpp.html',1,'']]],
+  ['sendandlift_20pattern_2emd_3',['SendAndLift Pattern.md',['../_send_and_lift_01_pattern_8md.html',1,'']]],
+  ['serversocket_2ehpp_4',['ServerSocket.hpp',['../_server_socket_8hpp.html',1,'']]],
+  ['socketshutdownenum_2ehpp_5',['SocketShutdownEnum.hpp',['../_socket_shutdown_enum_8hpp.html',1,'']]],
+  ['sockettypeenum_2ehpp_6',['SocketTypeEnum.hpp',['../_socket_type_enum_8hpp.html',1,'']]],
+  ['supportedprotocolsflags_2ehpp_7',['supportedprotocolsflags.hpp',['../_linux_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)'],['../_windows_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)']]]
 ];

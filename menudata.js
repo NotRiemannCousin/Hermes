@@ -24,7 +24,19 @@
 */
 var menudata={children:[
 {text:"Main Page",url:"index.html"},
-{text:"Topics",url:"topics.html"},
+{text:"Getting Started",url:"getting-started.html",children:[
+{text:"Getting Started",url:"getting-started.html"},
+{text:"Policy-based Architecture",url:"policy-architecture.html"},
+{text:"Policy Options",url:"policy-options.html"},
+{text:"RecvStream vs RecvRange",url:"recv-stream-behavior.html"},
+{text:"SendAndLift",url:"send-lift-pattern.html"}]},
+{text:"Async Sockets",url:"md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets",children:[
+{text:"Async Sockets",url:"md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets"}]},
+{text:"Examples",url:"",children:[
+{text:"TLS Client",url:"@ref example-tls-client"},
+{text:"TCP Server",url:"@ref example-tcp-server"}]},
+{text:"GitHub Repository",url:"^https://github.com/NotRiemannCousin/Hermes"},
+{text:"API Reference",url:"usergroup0.html",children:[
 {text:"Namespaces",url:"namespaces.html",children:[
 {text:"Namespace List",url:"namespaces.html"},
 {text:"Namespace Members",url:"namespacemembers.html",children:[
@@ -135,5 +147,4 @@ var menudata={children:[
 {text:"All",url:"globals.html"},
 {text:"Functions",url:"globals_func.html"},
 {text:"Variables",url:"globals_vars.html"},
-{text:"Macros",url:"globals_defs.html"}]}]},
-{text:"Examples",url:"examples.html"}]}
+{text:"Macros",url:"globals_defs.html"}]}]}]}]}

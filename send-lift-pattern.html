@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Hermes" />
+<meta property="og:image" content="https://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta property="og:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<meta property="og:url" content="https://jothepro.github.io/doxygen-awesome-css/" />
+<!-- END opengraph metadata -->
+<!-- BEGIN twitter metadata -->
+<meta name="twitter:image:src" content="hhttps://github.com/NotRiemannCousin/Hermes/blob/master/images/Hermes-logo-55px.webp?raw=true" />
+<meta name="twitter:title" content="Hermes" />
+<meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
+<!-- END twitter metadata -->
+<title>Hermes: SendAndLift and Composition with and_then</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="doxygen-awesome-darkmode-toggle.js"></script>
+<script type="text/javascript" src="doxygen-awesome-fragment-copy-button.js"></script>
+<script type="text/javascript" src="doxygen-awesome-paragraph-link.js"></script>
+<script type="text/javascript" src="doxygen-awesome-interactive-toc.js"></script>
+<script type="text/javascript" src="doxygen-awesome-tabs.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="theme-round.css" rel="stylesheet" type="text/css"/>
+<link href="theme-robot.css" rel="stylesheet" type="text/css"/>
+<link href="doxygen-awesome-msc.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<!-- https://tholman.com/github-corners/ -->
+<a href="https://github.com/NotRiemannCousin/Hermes" class="github-corner" title="View source on GitHub" target="_blank" rel="noopener noreferrer">
+    <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="Hermes-logo.webp"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Hermes
+   </div>
+   <div id="projectbrief">A functional, expressive, asynchronous C++26 socket library</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+<div id="theme-selection">
+ <label for="theme-select">Theme:</label>
+ <select id="theme-select">
+  <option value="theme-default">Default</option>
+  <option value="theme-round">Round</option>
+  <option value="theme-robot">Robot</option>
+ </select>
+</div>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('send-lift-pattern.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">SendAndLift and Composition with and_then</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><h1><a class="anchor" id="autotoc_md68"></a>
+SendAndLift and Composition with and_then</h1>
+<p><code>Send</code> reports whether it managed to send everything, <code>total</code> on success is always equal to the buffer size, <code>Send</code> either sends it all or returns an error. <code>SendAndLift</code> exists to carry the socket forward through a <code>std::expected</code> pipeline once that check passes, instead of a hand-written lambda re-capturing it at every step.</p>
+<h2><a class="anchor" id="autotoc_md69"></a>
+The problem it replaces</h2>
+<p>Without a lift, threading a socket through <code>.and_then()</code> after a <code>Send</code> looks like this.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> s_makeRequest{ [&amp;](<a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">Hermes::RawTlsClient</a>&amp;&amp; client) {</div>
+<div class="line">    <span class="keyword">auto</span> val{ client.Send(url.FormatRequest()) };</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">auto</span> s_returnClient{ [client{ std::move(client) }](<span class="keyword">const</span> <span class="keyword">auto</span>) <span class="keyword">mutable</span> {</div>
+<div class="line">        <span class="keywordflow">return</span> std::move(client);</div>
+<div class="line">    } };</div>
+<div class="line">    <span class="keywordflow">return</span> val.second.transform(s_returnClient);</div>
+<div class="line">} };</div>
+<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
+</div><!-- fragment --><p>The lambda inside the lambda exists for one reason, <code>Send</code> gives you back a byte count and an error, not the socket.</p>
+<h2><a class="anchor" id="autotoc_md70"></a>
+SendAndLift is a factory, not the operation itself</h2>
+<p><code>SendAndLift</code> doesn't send anything by itself. It's a <code>static</code> function that captures the data and options you give it and returns a lambda, and that lambda is what performs the send once <code>.and_then()</code> invokes it with a socket.</p>
+<div class="fragment"><div class="line">[[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> SendAndLift(R&amp;&amp; data) <span class="keyword">noexcept</span></div>
+<div class="line">    <span class="keyword">requires</span> std::default_initializable&lt;SendOptions&gt;;</div>
+<div class="line"> </div>
+<div class="line">[[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> SendAndLift(R&amp;&amp; data, SendOptions options) <span class="keyword">noexcept</span>;</div>
+</div><!-- fragment --><div class="fragment"><div class="line"><span class="keyword">template</span>&lt;ContiguousByteRange R&gt;</div>
+<div class="line"><span class="keyword">auto</span> ClientSocket&lt;SocketData, ConnectionPolicy, TransferPolicy&gt;::SendAndLift(R&amp;&amp; data, SendOptions options) <span class="keyword">noexcept</span> {</div>
+<div class="line">    <span class="keywordflow">return</span> [options, fData{ std::forward&lt;R&gt;(data) }](ClientSocket&amp; self) -&gt; ConnectionResult&lt;ClientSocket&gt; {</div>
+<div class="line">        <span class="keyword">auto</span> val{ self.Send(std::forward&lt;R&gt;(fData), options) };</div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">auto</span> movFromThis{ [client{ std::move(self) }](<span class="keyword">const</span> <span class="keyword">auto</span>) <span class="keyword">mutable</span> {</div>
+<div class="line">            <span class="keywordflow">return</span> std::move(client);</div>
+<div class="line">        } };</div>
+<div class="line">        <span class="keywordflow">return</span> val.second.transform(movFromThis);</div>
+<div class="line">    };</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The earlier problem collapses into a single expression at the call site.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> s_makeRequest{ ClientSocket::SendAndLift(url.FormatRequest()) };</div>
+<div class="line"><span class="comment">// ...</span></div>
+<div class="line"><span class="keywordflow">return</span> connectResult.and_then(s_makeRequest);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md71"></a>
+Why a factory instead of calling Send and lifting directly</h2>
+<p>An earlier version of this pattern tried to make <code>SendAndLift</code> an instance method you call directly, so a step in a chain could pass <code>&amp;Socket::SendAndLift</code> straight into <code>.and_then()</code>. That ran into two separate problems, and the factory shape here avoids both at once.</p>
+<p>Taking the address of an overloaded member function is ambiguous without a full argument list to pick a candidate from, so <code>SendAndLift(data)</code> and <code>SendAndLift(data, options)</code> couldn't share one name if either was meant to be taken by address. As a factory, <code>SendAndLift(data)</code> is called with parentheses, like every other overload in the library, and returns a plain lambda. Nothing ever takes its address, so the two overloads coexist the normal way.</p>
+<p>A <code>&amp;&amp;</code>-qualified instance method also doesn't compose cleanly with <code>std::expected::and_then</code>, since <code>and_then</code> forwards its contained value according to the value category of the <code>expected</code> object at that point in the chain, and a chain doesn't keep that value category rvalue at every step, an intermediate lambda that stores the socket in a named variable before returning it turns it into an lvalue, which a <code>&amp;&amp;</code>-qualified method can't bind to. The lambda <code>SendAndLift</code> returns takes a plain <code>ClientSocket&amp;</code> instead, which <code>and_then</code> can bind to either way, so nothing here depends on the value category of the chain at all.</p>
+<h2><a class="anchor" id="autotoc_md72"></a>
+The trade that's still there</h2>
+<p>Dropping the <code>&amp;&amp;</code> removes a compile-time guard, not the underlying risk. The returned lambda still moves out of <code>self</code> to build the <code>ClientSocket</code> it hands back on success, so a variable passed through it is left moved-from either way, there's just no <code>&amp;&amp;</code> on an instance method left to catch a caller reusing it by mistake. Reserve <code>SendAndLift</code> for pipeline code built through <code>.and_then()</code>, where the socket is a value passed along the chain and never touched again outside it, and prefer plain <code>Send</code> when the socket stays in a named variable you intend to keep using afterward.</p>
+<h2><a class="anchor" id="autotoc_md73"></a>
+Why there is no RecvAndLift</h2>
+<p>The same idea does not carry over to <code>Recv</code>. <code>Recv</code> reports <code>ConnectionErrorEnum::ConnectionClosed</code> through the error channel whenever the peer closes the socket, but a closed connection is not necessarily a failure, it is frequently the expected end of a response. A <code>RecvAndLift</code> would have to treat that as a hard error to keep its lambda's return type as <code>expected&lt;Socket, Error&gt;</code>, silently making that call for the caller.</p>
+<p>It also would not have anything left to hand back either way. By the time <code>Recv</code> reports <code>ConnectionClosed</code>, the underlying socket has already been closed and its handle invalidated, there is no live socket to lift back into the chain regardless of how the close is interpreted.</p>
+<h2><a class="anchor" id="autotoc_md74"></a>
+Decision table</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Scenario   </th><th class="markdownTableHeadNone">Use   </th><th class="markdownTableHeadNone">Reason    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Socket stays in a named variable used again later   </td><td class="markdownTableBodyNone"><code>Send</code> / <code>Send(opt)</code>   </td><td class="markdownTableBodyNone">Keeps the value in your control, no risk of an unnoticed moved-from.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Building a <code>.and_then()</code> chain, default options   </td><td class="markdownTableBodyNone"><code>SendAndLift(data)</code>   </td><td class="markdownTableBodyNone">Returns a plain lambda, no member-pointer ambiguity, no ref-qualifier to fight.    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Building a <code>.and_then()</code> chain, explicit deadline or options   </td><td class="markdownTableBodyNone"><code>SendAndLift(data, opt)</code>   </td><td class="markdownTableBodyNone">Same factory, same overload set as everywhere else in the library.    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Reading a response where the connection closing ends it   </td><td class="markdownTableBodyNone"><code>Recv</code> / <code>RecvStream</code>   </td><td class="markdownTableBodyNone">The caller decides whether <code>ConnectionClosed</code> is expected, not the library.   </td></tr>
+</table>
+<blockquote class="doxtable">
+<p>&zwj;Viracocha is a coding style guide based in this monadic design. Planned to be enforced in <a class="el" href="namespace_hermes.html">Hermes</a> soon. </p>
+</blockquote>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.8 </li>
+  </ul>
+</div>
+</body>
+</html>
