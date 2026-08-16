@@ -28,15 +28,20 @@ namespace Hermes {
         using EndpointType      = SocketData::EndpointType;
         //! @brief The transfer policy used by this socket.
         using TransferPolicyType = TransferPolicy;
+
+
+
         //! @brief The options accepted by receive operations.
-        using RecvOptions        = typename TransferPolicy::RecvOptions;
+        using RecvOptions = typename TransferPolicy::RecvOptions;
         //! @brief The options accepted by send operations.
-        using SendOptions        = typename TransferPolicy::SendOptions;
+        using SendOptions = typename TransferPolicy::SendOptions;
 
 
         ServerSocket(ServerSocket&&) noexcept;
         ServerSocket& operator=(ServerSocket&&) noexcept;
         ~ServerSocket();
+
+#pragma region Factory
 
         //! @brief Wraps an already-accepted SocketData into a ServerSocket.
         //! @param data SocketData containing the accepted socket and its endpoint.
@@ -45,7 +50,10 @@ namespace Hermes {
         //! accept operation. The returned object owns the accepted socket.
         [[nodiscard]] static ConnectionResult<ServerSocket> FromAccepted(SocketData&& data) noexcept;
 
+#pragma endregion
 
+
+#pragma region Send Methods
 
         //! @brief Sends data using the transfer policy.
         //! @param data A contiguous range of bytes to send.
@@ -54,7 +62,7 @@ namespace Hermes {
         //! than the range contains.
         template<ContiguousByteRange R>
         StreamByteOper Send(R&& data) noexcept
-            requires std::default_initializable<typename TransferPolicy::SendOptions>;
+            requires std::default_initializable<SendOptions>;
 
         //! @brief Sends data using explicit transfer options.
         //! @param data A contiguous range of bytes to send.
@@ -64,7 +72,28 @@ namespace Hermes {
         //! @return The number of bytes sent and an empty error result on success, or
         //! an error describing the failure.
         template<ContiguousByteRange R>
-        StreamByteOper Send(R&& data, typename TransferPolicy::SendOptions options) noexcept;
+        StreamByteOper Send(R&& data, SendOptions options) noexcept;
+
+        //! @brief Sends data and returns the socket on success, all-or-nothing.
+        //! @param data A contiguous range of bytes to send.
+        //! @return A lambda that receives a socket, try to send the data and re-trhow it on success, or the connection
+        //! error on failure.
+        template<ContiguousByteRange R>
+        [[nodiscard]] static auto SendAndLift(R&& data) noexcept
+            requires std::default_initializable<SendOptions>;
+
+        //! @brief Sends data and returns the socket on success, all-or-nothing.
+        //! @param data A contiguous range of bytes to send.
+        //! @param options Transfer options for this operation.
+        //! @return A lambda that receives a socket, try to send the data and re-trhow it on success, or the connection
+        //! error on failure.
+        template<ContiguousByteRange R>
+        [[nodiscard]] static auto SendAndLift(R&& data, SendOptions options) noexcept;
+
+#pragma endregion
+
+
+#pragma region Recv Methods
 
         //! @brief Receives data using the selected receive mode.
         //! @param data A writable contiguous range that receives the bytes.
@@ -74,7 +103,7 @@ namespace Hermes {
         //! or an error describing the failure.
         template<WritableContiguousByteRange R>
         StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
-            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
+            requires std::default_initializable<RecvOptions>;
 
         //! @brief Receives data using explicit receive options.
         //! @param data A writable contiguous range that receives the bytes.
@@ -86,31 +115,30 @@ namespace Hermes {
         //! @return The number of bytes received and an empty error result on success,
         //! or an error describing the failure.
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(
-            R&& data,
-            RecvModeEnum mode,
-            typename TransferPolicy::RecvOptions options
-        ) noexcept;
+        StreamByteOper Recv(R&& data, RecvModeEnum mode, RecvOptions options) noexcept;
 
+        //! @brief Receives a complete range using explicit receive options.
+        //! @param data A writable contiguous range that receives the bytes.
+        //! @param options Receive options for this operation.
+        //! @return The number of bytes received and an empty error result on success,
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(R&& data, typename TransferPolicy::RecvOptions options) noexcept;
+        StreamByteOper Recv(R&& data, RecvOptions options) noexcept;
 
         //! @brief Returns a lazy input range over the bytes received by the socket.
-        //!
         //! Data is fetched by `operator*()` rather than by `operator++()`. This
         //! prevents advancing the range from blocking while the peer is keeping the
         //! connection alive without sending data. If the transmission ends while a
         //! new value is being fetched, the range appends `0x04` as its end marker.
         template<ByteLike Byte = std::byte>
         auto RecvStream() noexcept
-            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
+            requires std::default_initializable<RecvOptions>;
 
         //! @brief Returns a lazy input range bounded by one absolute receive deadline.
         //! @param options Receive options retained by the range for every internal read.
         //! @details The deadline applies to the complete lazy operation and is not
         //! restarted for each byte or block obtained from the range.
         template<ByteLike Byte = std::byte>
-        auto RecvStream(typename TransferPolicy::RecvOptions options) noexcept;
+        auto RecvStream(RecvOptions options) noexcept;
 
         //! @brief Returns a lazy input range with conventional increment semantics.
         //!
@@ -122,17 +150,22 @@ namespace Hermes {
         //! may be consumed while detecting the end of the stream.
         template<ByteLike Byte = std::byte>
         auto RecvRange() noexcept
-            requires std::default_initializable<typename TransferPolicy::RecvOptions>;
+            requires std::default_initializable<RecvOptions>;
 
         template<ByteLike Byte = std::byte>
-        auto RecvRange(typename TransferPolicy::RecvOptions options) noexcept;
+        auto RecvRange(RecvOptions options) noexcept;
+
+#pragma endregion
 
 
+#pragma region Close Methods
 
         //! @brief Performs the protocol-level graceful shutdown and closes the socket.
         void Close() noexcept;
         //! @brief Immediately closes the socket without a protocol-level shutdown.
         void Abort() noexcept;
+
+#pragma endregion
 
     private:
         ServerSocket() = default;

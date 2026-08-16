@@ -2,7 +2,9 @@
 
 # RecvStream vs RecvRange Behavior
 
-Hermes provides two distinct range-like iterators for reading from sockets: `RecvStream` and `RecvRange`. Their fetching mechanisms and termination conditions differ significantly. Using the wrong one can lead to indefinitely hanging threads.
+Hermes provides two distinct range-like iterators for reading from sockets: `RecvStream` and `RecvRange`. Their fetching
+mechanisms and termination conditions differ significantly. Using the wrong one can lead to indefinitely hanging
+threads.
 
 ## Core Mechanics: `operator*` vs `operator++`
 
@@ -16,23 +18,35 @@ The primary difference lies in exactly *when* the network read operation occurs:
 
 ## The Keep-Alive Trap (Hanging Threads)
 
-Why does `RecvStream` exist if `RecvRange` complies with standard C++ iterators? The answer is **persistent connections**, such as HTTP Keep-Alive.
+Why does `RecvStream` exist if `RecvRange` complies with standard C++ iterators? The answer is **persistent
+connections**, such as HTTP Keep-Alive.
 
-Because `RecvRange` performs a read-ahead on `operator++` to correctly evaluate `it != end()`, it aggressively asks the socket for the next byte. If the server finishes sending a complete payload but keeps the underlying connection open waiting for your next request, `operator++` will **block indefinitely**. Your thread hangs forever because the loop tries to read a byte that doesn't exist yet.
+Because `RecvRange` performs a read-ahead on `operator++` to correctly evaluate `it != end()`, it aggressively asks the
+socket for the next byte. If the server finishes sending a complete payload but keeps the underlying connection open
+waiting for your next request, `operator++` will **block indefinitely**. Your thread hangs forever because the loop
+tries to read a byte that doesn't exist yet.
 
-`RecvStream` solves this. By pushing the read operation to `operator*()`, you can parse the payload, logically detect the end of the message (e.g., matching a Content-Length), and safely `break` the loop without triggering an unwanted read-ahead.
+`RecvStream` solves this. By pushing the read operation to `operator*()`, you can parse the payload, logically detect
+the end of the message (e.g., matching a Content-Length), and safely `break` the loop without triggering an unwanted
+read-ahead.
 
 ## Termination and DropLastView
 
-To comply with standard C++ iterators and terminate the loop gracefully on closed sockets, `RecvRange` wraps the stream in a `DropLastView`.
+To comply with standard C++ iterators and terminate the loop gracefully on closed sockets, `RecvRange` wraps the stream
+in a `DropLastView`.
 
-It does not scan for specific terminator bytes. It simply evaluates to `true` when the underlying socket reaches the end of the stream (`== end()`), unconditionally discarding the last element yielded (which acts as the internal EOF marker).
+It does not scan for specific terminator bytes. It simply evaluates to `true` when the underlying socket reaches the end
+of the stream (`== end()`), unconditionally discarding the last element yielded (which acts as the internal EOF marker).
 
 ## Stateful Iteration (No Iterator Invalidation)
 
-Unlike standard `input_range` iterators where advancing one copy might invalidate others, `RecvStream` maintains the socket's read state centrally within the view object itself. Advancing any iterator safely advances the global state of the stream.
+Unlike standard `input_range` iterators where advancing one copy might invalidate others, `RecvStream` maintains the
+socket's read state centrally within the view object itself. Advancing any iterator safely advances the global state of
+the stream.
 
-**Why is this useful?** It allows you to sequentially chain multiple range-based algorithms on the exact same view to parse a protocol step-by-step. Reading a chunk of bytes leaves the view perfectly positioned for the next algorithm, avoiding iterator invalidation bugs entirely.
+**Why is this useful?** It allows you to sequentially chain multiple range-based algorithms on the exact same view to
+parse a protocol step-by-step. Reading a chunk of bytes leaves the view perfectly positioned for the next algorithm,
+avoiding iterator invalidation bugs entirely.
 
 ```cpp
 auto socketView = client.RecvStream<char>();
@@ -55,7 +69,9 @@ This pattern turns complex, manual buffer management into clean, declarative alg
 
 ## Limiting Reads for Security (`std::views::take`)
 
-Because `RecvStream` integrates seamlessly with `<ranges>`, you can combine it with `std::views::take` to enforce strict upper bounds on read operations. This is critical for security, preventing malicious actors from sending infinite streams of data (spam) to exhaust your memory when parsing dynamically sized fields.
+Because `RecvStream` integrates seamlessly with `<ranges>`, you can combine it with `std::views::take` to enforce strict
+upper bounds on read operations. This is critical for security, preventing malicious actors from sending infinite
+streams of data (spam) to exhaust your memory when parsing dynamically sized fields.
 
 ```cpp
 auto socketView = client.RecvStream<char>();

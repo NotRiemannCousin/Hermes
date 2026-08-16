@@ -7,12 +7,12 @@
 ExpString MakeRequest();
 
 int main() {
-    constexpr auto s_printContent{ [](std::string&& content) {
+    constexpr auto printContent{ [](std::string&& content) {
         std::println("body:\n\n{}", content);
         return std::monostate{};
     } };
 
-    constexpr auto s_printError{ [](std::string&& error){
+    constexpr auto printError{ [](std::string&& error){
         // const int err{ WSAGetLastError() };
         const int err{ errno };
 
@@ -21,8 +21,8 @@ int main() {
     } };
 
     std::ignore = MakeRequest()
-            .transform(s_printContent)
-            .transform_error(s_printError);
+            .transform(printContent)
+            .transform_error(printError);
 
     return 0;
 }

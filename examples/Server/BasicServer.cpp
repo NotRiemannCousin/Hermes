@@ -19,13 +19,13 @@ std::expected<std::monostate, std::string> RunServer() {
 
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
 
-    static constexpr auto s_log = [](std::string message) {
+    static constexpr auto log = [](std::string message) {
         return [message = std::move(message)]<class T>(T&& obj) -> T {
             std::print("{}", message);
             return std::forward<T>(obj);
         };
     };
-    static constexpr auto s_sendRequest = [](RawTcpServer&& socket) -> Hermes::ConnectionResultOper {
+    static constexpr auto sendRequest = [](RawTcpServer&& socket) -> Hermes::ConnectionResultOper {
         auto socketView{ socket.RecvStream<char>() };
 
         const auto requestLine{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
@@ -50,10 +50,10 @@ std::expected<std::monostate, std::string> RunServer() {
 
 
     return RawTcpListener::ListenOne(Hermes::DefaultSocketData<>{ endpoint })
-            .transform(s_log(std::format("Listening on http://{}:{}...", endpoint.GetIp(), endpoint.GetPort())))
+            .transform(log(std::format("Listening on http://{}:{}...", endpoint.GetIp(), endpoint.GetPort())))
             .and_then(&RawTcpListener::AcceptOneConnection)
-            .transform(s_log("Accepted"))
-            .and_then(s_sendRequest)
+            .transform(log("Accepted"))
+            .and_then(sendRequest)
             .transform_error([](auto err){ return std::format("{:v}", err); });
 }
 

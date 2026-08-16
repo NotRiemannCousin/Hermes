@@ -38,13 +38,13 @@ extern ExpString MakeRequest() {
 
 #pragma region Lambdas
 
-    const auto s_resolveEndpoint{ [hostname{ url.hostname }, scheme{ url.scheme }]() {
+    const auto resolveEndpoint{ [hostname{ url.hostname }, scheme{ url.scheme }]() {
         auto res{ Hermes::IpEndpoint::TryResolve(hostname, scheme) };
         if (!res) throw res.error();
         return *res;
     } };
 
-    const auto s_makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
+    const auto makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
         return Hermes::RawTlsAsyncClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname },
             {{
                 .recvBufferSize = 8192,
@@ -52,26 +52,26 @@ extern ExpString MakeRequest() {
             }});
     } };
 
-    const auto s_makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {
+    const auto makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {
         SharedState state{ std::make_shared<ClientState>(std::move(client)) };
         state->request = url.FormatRequest();
 
-        const auto s_returnState{ [state](size_t) { return state; } };
+        const auto returnState{ [state](size_t) { return state; } };
 
         // `Send` returns a Sender. We chain it using `stdexec::then` to map the resulting
         // value (bytes sent) back into our `ClientState` pointer, moving it forward down the pipeline.
-        return state->client.Send(state->request) | stdexec::then(s_returnState);
+        return state->client.Send(state->request) | stdexec::then(returnState);
     } };
 
-    constexpr auto s_getResponse{ [](SharedState& state) {
-        const auto s_returnPair{ [state](size_t bytesReceived) {
+    constexpr auto getResponse{ [](SharedState& state) {
+        const auto returnPair{ [state](size_t bytesReceived) {
             return std::pair{ state, bytesReceived };
         } };
 
-        return state->client.Recv(state->chunk, Hermes::RecvModeEnum::Any) | stdexec::then(s_returnPair);
+        return state->client.Recv(state->chunk, Hermes::RecvModeEnum::Any) | stdexec::then(returnPair);
     } };
 
-    constexpr auto s_processData{ [](const std::pair<SharedState, size_t>& data) {
+    constexpr auto processData{ [](const std::pair<SharedState, size_t>& data) {
         auto [state, bytesReceived]{ data };
 
         if (bytesReceived == 0)
@@ -109,7 +109,7 @@ extern ExpString MakeRequest() {
         using JustSender = decltype(stdexec::just(std::size_t{}));
 
         using Sender = exec::variant_sender<JustSender, RecvSender>;
-        const auto s_retResp{ [state](std::size_t) { return state->response; } };
+        const auto retResp{ [state](std::size_t) { return state->response; } };
 
         state->response = body;
         state->response.resize(bodySize);
@@ -117,13 +117,13 @@ extern ExpString MakeRequest() {
         // Not an accurate way to implement HTTP. It's assuming a chunk based response and parsing just the first
         // chunk (needs exec::repeat_effect_until to implement it properly), but in this example it's enough.
         if (body.size() >= bodySize)
-            return Sender{ stdexec::just(std::size_t{}) } | stdexec::then(s_retResp);
+            return Sender{ stdexec::just(std::size_t{}) } | stdexec::then(retResp);
 
         return Sender{ state->client.Recv(state->response | vs::drop(body.size()), Hermes::RecvModeEnum::All) }
-                | stdexec::then(s_retResp);
+                | stdexec::then(retResp);
     } };
 
-    constexpr auto s_mapErrorPipeline{ []<typename T>(T&& error) {
+    constexpr auto mapErrorPipeline{ []<typename T>(T&& error) {
         std::string errStr{};
         using ErrorType = std::remove_cvref_t<T>;
 
@@ -143,7 +143,7 @@ extern ExpString MakeRequest() {
         return stdexec::just(ExpString{ std::unexpect, std::move(errStr) });
     } };
 
-    constexpr auto s_returnExpected{ [](std::string val) -> ExpString {
+    constexpr auto returnExpected{ [](std::string val) -> ExpString {
         return val;
     } };
 
@@ -153,13 +153,13 @@ extern ExpString MakeRequest() {
     // The execution pipeline definition. Notice how `stdexec::just()` kickstarts the lazy evaluation.
     // `let_value` is used to chain asynchronous operations, while `then` is used for synchronous transformations.
     auto requestSender{ stdexec::just()
-            | stdexec::then(s_resolveEndpoint)
-            | stdexec::let_value(s_makeSocket)
-            | stdexec::let_value(s_makeRequest)
-            | stdexec::let_value(s_getResponse)
-            | stdexec::let_value(s_processData)
-            | stdexec::then(s_returnExpected)
-            | stdexec::let_error(s_mapErrorPipeline) };
+            | stdexec::then(resolveEndpoint)
+            | stdexec::let_value(makeSocket)
+            | stdexec::let_value(makeRequest)
+            | stdexec::let_value(getResponse)
+            | stdexec::let_value(processData)
+            | stdexec::then(returnExpected)
+            | stdexec::let_error(mapErrorPipeline) };
 
     // sync_wait blocks the calling thread until the entire execution graph finishes evaluating.
     auto [result]{ stdexec::sync_wait(requestSender).value() };

@@ -35,19 +35,16 @@ protected:
         ASSERT_TRUE(listenerResult.has_value());
         listener = std::move(*listenerResult);
 
-        auto s_acceptLambda{ [&]() {
+        auto acceptLambda{ [&]() {
             auto res{ listener->AcceptOne({ .recvBufferSize = 1024 }) };
             if (res.has_value()) {
                 server = std::move(*res);
             }
         }};
 
-        std::jthread acceptThread{ s_acceptLambda };
+        std::jthread acceptThread{ acceptLambda };
 
-        auto clientResult{ RawTcpClient::Connect(
-            DefaultSocketData<>{ endpoint },
-            Hermes::DefaultConnectPolicy<>::Options{ .sendBufferSize = 1024 }
-        ) };
+        auto clientResult{ RawTcpClient::Connect( DefaultSocketData<>{ endpoint }, { .sendBufferSize = 1024 }) };
         ASSERT_TRUE(clientResult.has_value());
         client = std::move(*clientResult);
 
@@ -103,11 +100,7 @@ TEST_F(SocketBridgeFixture, Recv_DeadlineCoversMultipleBlocks) {
     }};
 
     std::array<std::byte, 2> buffer{};
-    const auto [received, err]{ server->Recv(
-        buffer,
-        Hermes::RecvModeEnum::All,
-        Hermes::DefaultTransferPolicy<>::RecvOptions{ .deadline = deadline }
-    ) };
+    const auto [received, err]{ server->Recv(buffer, Hermes::RecvModeEnum::All, { .deadline = deadline }) };
 
     EXPECT_EQ(received, 1);
     ASSERT_FALSE(err.has_value());
@@ -118,8 +111,8 @@ TEST_F(SocketBridgeFixture, Recv_DeadlineCoversMultipleBlocks) {
 TEST_F(SocketBridgeFixture, RecvStream_DeadlineCoversMultipleBlocks) {
     using namespace std::chrono_literals;
 
-    const std::vector<std::byte> first{ std::byte{'a'} };
-    const std::vector<std::byte> second{ std::byte{'b'} };
+    const std::vector first{ std::byte{ 'a' } };
+    const std::vector second{ std::byte{ 'b' } };
     const auto deadline{ std::chrono::steady_clock::now() + 150ms };
 
     std::jthread sender{ [&] {
@@ -140,13 +133,10 @@ TEST_F(SocketBridgeFixture, RecvStream_DeadlineCoversMultipleBlocks) {
 }
 
 TEST_F(SocketBridgeFixture, Send_ExpiredDeadlineReturnsTimeout) {
-    const std::array<std::byte, 1> payload{ std::byte{'x'} };
+    static constexpr std::array payload{ std::byte{'x'} };
     const auto deadline{ std::chrono::steady_clock::now() };
 
-    const auto [sent, err]{ client->Send(
-        payload,
-        Hermes::DefaultTransferPolicy<>::SendOptions{ .deadline = deadline }
-    ) };
+    const auto [sent, err]{ client->Send( payload, { .deadline = deadline } ) };
 
     EXPECT_EQ(sent, 0);
     ASSERT_FALSE(err.has_value());

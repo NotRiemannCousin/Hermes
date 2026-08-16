@@ -21,23 +21,11 @@ extern ExpString MakeRequest() {
 
 #pragma region Lambdas
 
-    const auto s_makeSocket{ [&](const Hermes::IpEndpoint endpoint) {
-        return Hermes::RawTlsClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname });
+    const auto makeSocket{ [&](const Hermes::IpEndpoint endpoint) {
+        return Hermes::RawTlsClient::Connect({ endpoint, url.hostname });
     } };
 
-    const auto s_makeRequest{ [&](Hermes::RawTlsClient&& client) {
-        // `client.Send` returns a pair: { bytes_sent, expected_error }.
-        // We evaluate the expected result, and if successful, we return the client back
-        // down the pipeline using `transform`.
-        auto val{ client.Send(url.FormatRequest()) };
-
-        auto s_returnClient{ [client{ std::move(client) }](const auto) mutable {
-            return std::move(client);
-        } };
-        return val.second.transform(s_returnClient);
-    } };
-
-    const auto s_getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
+    const auto getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
         auto socketView{ client.RecvStream<char>() };
         // `RecvStream` is an input_range, so it consumes the bytes when you advance the iterator.
         // Advancing an iterator of an input_range can cause invalidation of other iterators, but
@@ -68,7 +56,7 @@ extern ExpString MakeRequest() {
 
         const auto headers { socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv) | rg::to<std::string>() };
         const auto chunkLen{ socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
-        const auto body    { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
+        auto body          { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
 
         // Ok, this is unsafe because I'm being lazy here, but you can process and check this data properly.
         // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easily limit the size.
@@ -83,9 +71,11 @@ extern ExpString MakeRequest() {
 
 #pragma endregion
 
+    using Client = Hermes::RawTlsClient;
+
     return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
-            .and_then(s_makeSocket)
-            .and_then(s_makeRequest)
+            .and_then([&](const auto endpoint) { return Client::Connect({ endpoint, url.hostname }); })
+            .and_then(Client::SendAndLift(url.FormatRequest()))
             .transform_error([](const auto e){ return std::format("{}", e); })
-            .and_then(s_getResponse);
+            .and_then(getResponse);
 }

@@ -59,19 +59,41 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(R&& data) noexcept
-        requires std::default_initializable<typename TransferPolicy::SendOptions> {
-        return Send(std::forward<R>(data), typename TransferPolicy::SendOptions{});
+        requires std::default_initializable<SendOptions> {
+        return Send(std::forward<R>(data), SendOptions{});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Send(
-        R&& data, typename TransferPolicy::SendOptions options
+        R&& data, SendOptions options
     ) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
         return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer), options);
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy> requires ServerSocketConcept<
+        SocketData, AcceptPolicy, TransferPolicy>
+    template<ContiguousByteRange R>
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::SendAndLift(R&& data) noexcept
+        requires std::default_initializable<SendOptions> {
+        return SendAndLift(std::forward<R>(data), {});
+    }
+
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy> requires ServerSocketConcept<
+        SocketData, AcceptPolicy, TransferPolicy>
+    template<ContiguousByteRange R>
+    auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::SendAndLift(R&& data, SendOptions options) noexcept {
+        return [options, fData{ std::forward<R>(data) }](ServerSocket&& self) mutable -> ConnectionResult<ServerSocket> {
+            auto val{ self.Send(std::move(fData), options) };
+
+            auto movFromThis{ [client{ std::move(self) }](const auto) mutable {
+                return std::move(client);
+            } };
+            return val.second.transform(movFromThis);
+        };
     }
 
 
@@ -79,15 +101,15 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept
-        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
-        return Recv(std::forward<R>(data), mode, typename TransferPolicy::RecvOptions{});
+        requires std::default_initializable<RecvOptions> {
+        return Recv(std::forward<R>(data), mode, RecvOptions{});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(
-        R&& data, RecvModeEnum mode, typename TransferPolicy::RecvOptions options
+        R&& data, RecvModeEnum mode, RecvOptions options
     ) noexcept {
         std::span buffer(std::data(data), std::ranges::ssize(data));
 
@@ -98,7 +120,7 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::Recv(
-        R&& data, typename TransferPolicy::RecvOptions options
+        R&& data, RecvOptions options
     ) noexcept {
         return Recv(std::forward<R>(data), RecvModeEnum::All, options);
     }
@@ -108,15 +130,15 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream() noexcept
-        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
-        return RecvStream<Byte>(typename TransferPolicy::RecvOptions{});
+        requires std::default_initializable<RecvOptions> {
+        return RecvStream<Byte>(RecvOptions{});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvStream(
-        typename TransferPolicy::RecvOptions options
+        RecvOptions options
     ) noexcept {
         return typename TransferPolicy::template RecvStream<Byte>{ m_socketData, m_transferPolicy, options };
     }
@@ -125,15 +147,15 @@ namespace Hermes {
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange() noexcept
-        requires std::default_initializable<typename TransferPolicy::RecvOptions> {
-        return RecvRange<Byte>(typename TransferPolicy::RecvOptions{});
+        requires std::default_initializable<RecvOptions> {
+        return RecvRange<Byte>(RecvOptions{});
     }
 
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires ServerSocketConcept<SocketData, AcceptPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ServerSocket<SocketData, AcceptPolicy, TransferPolicy>::RecvRange(
-        typename TransferPolicy::RecvOptions options
+        RecvOptions options
     ) noexcept {
         return RecvStream<Byte>(options) | Utils::dropLast;
     }

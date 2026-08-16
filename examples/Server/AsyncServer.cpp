@@ -30,13 +30,13 @@ struct ClientState {
 static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
     using namespace std::literals::string_view_literals;
 
-    auto s_onComplete = [state](const auto&...) {
+    auto onComplete = [state](const auto&...) {
         state->socketView.clear();
 
         return stdexec::just(!state->keepAlive);
     };
 
-    auto s_extractHeaders = [state] {
+    auto extractHeaders = [state] {
         using VariantSender = exec::variant_sender<
             decltype(state->client.Recv(state->socketView
                     | std::views::drop(0), Hermes::RecvModeEnum::All)),
@@ -79,11 +79,11 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
         return VariantSender{ requestMore };
     };
 
-    auto s_requestMoreIfNeeded = [](auto...){
+    auto requestMoreIfNeeded = [](auto...){
         return stdexec::just();
     };
 
-    auto s_sendResponse = [state]{
+    auto sendResponse = [state]{
 
         static auto response{ [] {
             constexpr auto body{ "<h1>Hello Monadic Async World!</h1>"sv };
@@ -101,22 +101,22 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
         return state->client.Send(response);
     };
 
-    auto s_appendReadedBytes = [state](const size_t count) {
+    auto appendReadedBytes = [state](const size_t count) {
         state->socketView.append_range(state->buffer | std::views::take(count));
 
         return stdexec::just(state->socketView.contains("\r\n\r\n"));
     };
 
     auto processOneRequest = stdexec::just()
-                | stdexec::let_value([state, s_appendReadedBytes]() {
+                | stdexec::let_value([state, appendReadedBytes]() {
                       return state->client.Recv(state->buffer, Hermes::RecvModeEnum::Any)
-                           | stdexec::let_value(s_appendReadedBytes);
+                           | stdexec::let_value(appendReadedBytes);
                   })
                 | exec::repeat_until()
-                | stdexec::let_value(s_extractHeaders)
-                | stdexec::let_value(s_requestMoreIfNeeded)
-                | stdexec::let_value(s_sendResponse)
-                | stdexec::let_value(s_onComplete);
+                | stdexec::let_value(extractHeaders)
+                | stdexec::let_value(requestMoreIfNeeded)
+                | stdexec::let_value(sendResponse)
+                | stdexec::let_value(onComplete);
 
     return processOneRequest | exec::repeat_until();
 }
@@ -124,7 +124,7 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
 static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
 
-    static constexpr auto s_makeResponse = [](auto&& clientSocket) {
+    static constexpr auto makeResponse = [](auto&& clientSocket) {
         std::println("Accepted from: {}", clientSocket.GetEndpoint());
         std::cout.flush();
 
@@ -138,19 +138,19 @@ static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
         return stdexec::just();
     };
 
-    auto s_acceptConn = [&ioLoop](auto& listener) {
+    auto acceptConn = [&ioLoop](auto& listener) {
         std::println("listening at: {}", listener.GetEndpoint());
         std::cout.flush();
 
         return stdexec::just()
                 | stdexec::let_value([&ioLoop, &listener]() {
                       return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
-                               | stdexec::let_value(s_makeResponse);
+                               | stdexec::let_value(makeResponse);
                 })
                 | exec::repeat();
     };
     auto serve{ Hermes::RawTcpAsyncListener::Listen(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
-            | stdexec::let_value(s_acceptConn)
+            | stdexec::let_value(acceptConn)
             | stdexec::upon_error([](auto err) {
                 return 3.1416;
             }) };

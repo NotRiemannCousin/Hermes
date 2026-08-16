@@ -28,8 +28,8 @@ using namespace std::chrono_literals;
 #pragma region Utils & Factories
 
 static std::uint16_t GetNextPort() {
-    static std::atomic<std::uint16_t> s_port{ 20000 };
-    return s_port++;
+    static std::atomic<std::uint16_t> port{ 20000 };
+    return port++;
 }
 
 static IpEndpoint MakeEndpoint(const std::uint16_t port) {
@@ -253,16 +253,12 @@ struct TlsSocketBridgeFixture : testing::Test {
         auto listener{ MakeListenSocket(port) };
         ASSERT_TRUE(listener.has_value());
 
-        Hermes::TlsAcceptPolicy<>::AcceptOptions acceptOptions{};
-        acceptOptions.recvBufferSize = 1024;
 
-        std::jthread acceptThread{ [&]() {
-            if (auto srv{ listener->AcceptOne(acceptOptions) }) server.emplace(std::move(*srv));
+        std::jthread acceptThread{ [&] {
+            if (auto srv{ listener->AcceptOne({{ .recvBufferSize = 1024 }}) }) server.emplace(std::move(*srv));
         } };
 
-        Hermes::TlsConnectPolicy<>::Options connectOptions{};
-        connectOptions.sendBufferSize = 1024;
-        auto cli{ MakeClientSocket(port, connectOptions) };
+        auto cli{ MakeClientSocket(port, {{ .sendBufferSize = 1024 }}) };
         ASSERT_TRUE(cli.has_value());
 
         acceptThread.join();

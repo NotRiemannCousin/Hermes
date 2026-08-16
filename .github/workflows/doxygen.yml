@@ -17,7 +17,7 @@ jobs:
           submodules: recursive
 
       - name: Install Doxygen
-        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz
+        run: sudo apt-get update && sudo apt-get install -y doxygen graphviz mscgen
 
       - name: Generate docs
         run: doxygen docs/doxygen/Doxyfile
