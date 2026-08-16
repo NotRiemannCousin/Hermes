@@ -17,15 +17,15 @@ std::expected<std::monostate, std::string> RunServer() {
     using Hermes::RawTcpListener;
     using Hermes::RawTcpServer;
 
-    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
+    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({ 127, 0, 0, 1 }), 8080 };
 
-    static constexpr auto log = [](std::string message) {
+    static constexpr auto log{ [](std::string message) {
         return [message = std::move(message)]<class T>(T&& obj) -> T {
             std::print("{}", message);
             return std::forward<T>(obj);
         };
-    };
-    static constexpr auto sendRequest = [](RawTcpServer&& socket) -> Hermes::ConnectionResultOper {
+    } };
+    static constexpr auto sendRequest{ [](RawTcpServer&& socket) -> Hermes::ConnectionResultOper {
         auto socketView{ socket.RecvStream<char>() };
 
         const auto requestLine{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
@@ -46,7 +46,7 @@ std::expected<std::monostate, std::string> RunServer() {
                 body.size(), body) };
 
         return socket.Send(response).second;
-    };
+    } };
 
 
     return RawTcpListener::ListenOne(Hermes::DefaultSocketData<>{ endpoint })
