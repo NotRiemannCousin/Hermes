@@ -1,17 +1,17 @@
 var searchData=
 [
-  ['rawtcpasyncclient_0',['RawTcpAsyncClient',['../namespace_hermes.html#abddac6999a8395418011d67d9578cae8',1,'Hermes']]],
-  ['rawtcpasynclistener_1',['RawTcpAsyncListener',['../namespace_hermes.html#a19c0b7b20a9fb090c94b4c7de3a38ea7',1,'Hermes']]],
-  ['rawtcpasyncserver_2',['RawTcpAsyncServer',['../namespace_hermes.html#ae59760afa74220b02585dfc5aab5daa2',1,'Hermes']]],
-  ['rawtcpclient_3',['RawTcpClient',['../namespace_hermes.html#a07c1d7f39955400d235a2da6433d0ed4',1,'Hermes']]],
-  ['rawtcplistener_4',['RawTcpListener',['../namespace_hermes.html#a10af606e98c70fcda458f4a610867a04',1,'Hermes']]],
-  ['rawtcpserver_5',['RawTcpServer',['../namespace_hermes.html#ae3a1ee0cb148ad5dd2773d754bf3d462',1,'Hermes']]],
-  ['rawtlsasyncclient_6',['RawTlsAsyncClient',['../namespace_hermes.html#ae71bc293e8544c06b0de3ab3dc4cfca8',1,'Hermes']]],
-  ['rawtlsasynclistener_7',['RawTlsAsyncListener',['../namespace_hermes.html#aa44cb60a2fb3679e4c2604b14c0e8706',1,'Hermes']]],
-  ['rawtlsasyncserver_8',['RawTlsAsyncServer',['../namespace_hermes.html#aaa02852435aa754487fccc181f0c1e26',1,'Hermes']]],
-  ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#ac21d67bd6e57542ef4efa3620ae42232',1,'Hermes']]],
-  ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#ae401023cfb21220a1a3fde29593bf48b',1,'Hermes']]],
-  ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a2f5ad774015f851569d57545778e2d92',1,'Hermes']]],
-  ['recvoptions_12',['recvoptions',['../struct_hermes_1_1_client_socket.html#ab694d91fcf57206cdf45b20658affeeb',1,'Hermes::ClientSocket::RecvOptions'],['../struct_hermes_1_1_listener_socket.html#af299617927ded729a8dc8fd20bd65191',1,'Hermes::ListenerSocket::RecvOptions'],['../struct_hermes_1_1_server_socket.html#a34022d3e59c30d97b4b738b4ac5b7987',1,'Hermes::ServerSocket::RecvOptions']]],
-  ['recvstreamt_13',['RecvStreamT',['../namespace_hermes_1_1details__.html#a12cfa131f134b860efc40e2644605464',1,'Hermes::details_']]]
+  ['rawtcpasyncclient_0',['RawTcpAsyncClient',['../namespace_hermes.html#adb2085a29b369d7c6abd7c4eed7b47f6',1,'Hermes']]],
+  ['rawtcpasynclistener_1',['RawTcpAsyncListener',['../namespace_hermes.html#ac9693d88a82e83711e3adbbd538809cc',1,'Hermes']]],
+  ['rawtcpasyncserver_2',['RawTcpAsyncServer',['../namespace_hermes.html#ad1a21901501b5d394bf2f5c34cba04c4',1,'Hermes']]],
+  ['rawtcpclient_3',['RawTcpClient',['../namespace_hermes.html#a05352a65fe09716dd93d912ef12bdb6a',1,'Hermes']]],
+  ['rawtcplistener_4',['RawTcpListener',['../namespace_hermes.html#a978167d01a4fcd4ce77986d23214f0ee',1,'Hermes']]],
+  ['rawtcpserver_5',['RawTcpServer',['../namespace_hermes.html#a47cbf3461197b1b9f40eb4b71367d66b',1,'Hermes']]],
+  ['rawtlsasyncclient_6',['RawTlsAsyncClient',['../namespace_hermes.html#ad7901338915f2c0928b3cc91061c8fdf',1,'Hermes']]],
+  ['rawtlsasynclistener_7',['RawTlsAsyncListener',['../namespace_hermes.html#a8f659f0db7c96a7257d0696cc360d99f',1,'Hermes']]],
+  ['rawtlsasyncserver_8',['RawTlsAsyncServer',['../namespace_hermes.html#a0329290309c2af9c8823614d378c6c94',1,'Hermes']]],
+  ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#a682b34dbed834b2357c277d830472096',1,'Hermes']]],
+  ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#a30f3369cd037526b0a69b8f21007642c',1,'Hermes']]],
+  ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a159cf584f77d7bb4ee337d623625a960',1,'Hermes']]],
+  ['recvoptions_12',['RecvOptions',['../struct_hermes_1_1_client_socket.html#ab694d91fcf57206cdf45b20658affeeb',1,'Hermes::ClientSocket::RecvOptions'],['../struct_hermes_1_1_listener_socket.html#af299617927ded729a8dc8fd20bd65191',1,'Hermes::ListenerSocket::RecvOptions'],['../struct_hermes_1_1_server_socket.html#a34022d3e59c30d97b4b738b4ac5b7987',1,'Hermes::ServerSocket::RecvOptions']]],
+  ['recvstreamt_13',['RecvStreamT',['../namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf',1,'Hermes::details_']]]
 ];

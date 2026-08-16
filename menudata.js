@@ -30,8 +30,8 @@ var menudata={children:[
 {text:"Policy Options",url:"policy-options.html"},
 {text:"RecvStream vs RecvRange",url:"recv-stream-behavior.html"},
 {text:"SendAndLift",url:"send-lift-pattern.html"}]},
-{text:"Async Sockets",url:"md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets",children:[
-{text:"Async Sockets",url:"md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets"}]},
+{text:"Async Sockets",url:"async-sockets.html",children:[
+{text:"Async Sockets",url:"async-sockets.html"}]},
 {text:"Examples",url:"",children:[
 {text:"TLS Client",url:"@ref example-tls-client"},
 {text:"TCP Server",url:"@ref example-tcp-server"}]},

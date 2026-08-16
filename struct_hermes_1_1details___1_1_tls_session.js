@@ -1,9 +1,9 @@
 var struct_hermes_1_1details___1_1_tls_session =
 [
-    [ "DecryptOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome" ],
-    [ "EncryptOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_encrypt_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_encrypt_outcome" ],
-    [ "HandshakeOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_handshake_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_handshake_outcome" ],
     [ "StreamSizes", "struct_hermes_1_1details___1_1_tls_session_1_1_stream_sizes.html", "struct_hermes_1_1details___1_1_tls_session_1_1_stream_sizes" ],
+    [ "HandshakeOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_handshake_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_handshake_outcome" ],
+    [ "EncryptOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_encrypt_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_encrypt_outcome" ],
+    [ "DecryptOutcome", "struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome.html", "struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome" ],
     [ "TlsSession", "struct_hermes_1_1details___1_1_tls_session.html#a910e0325537efb7e83e89c1b62dcdb78", null ],
     [ "~TlsSession", "struct_hermes_1_1details___1_1_tls_session.html#ada385711c8b69427ddbed4d9d4d733bd", null ],
     [ "TlsSession", "struct_hermes_1_1details___1_1_tls_session.html#a237cd7df6ec142b28f2a25bbb36ea9b7", null ],

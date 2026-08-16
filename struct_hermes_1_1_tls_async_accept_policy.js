@@ -1,7 +1,7 @@
 var struct_hermes_1_1_tls_async_accept_policy =
 [
-    [ "AcceptOptions", "struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html", "struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options" ],
     [ "ListenOptions", "struct_hermes_1_1_tls_async_accept_policy_1_1_listen_options.html", null ],
+    [ "AcceptOptions", "struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options.html", "struct_hermes_1_1_tls_async_accept_policy_1_1_accept_options" ],
     [ "EndpointType", "struct_hermes_1_1_tls_async_accept_policy.html#a66d6962b55349e6d002dd7e4f93ab408", null ],
     [ "Accept", "struct_hermes_1_1_tls_async_accept_policy.html#a192fe7d1e26e199037d70883454e6027", null ],
     [ "Accept", "struct_hermes_1_1_tls_async_accept_policy.html#a5396fa68d8dbf54799782bafb5158d9d", null ],

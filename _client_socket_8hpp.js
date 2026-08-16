@@ -1,6 +1,6 @@
 var _client_socket_8hpp =
 [
-    [ "Hermes::ClientSocket< SocketData, ConnectionPolicy, TransferPolicy >", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
-    [ "RawTcpClient", "_client_socket_8hpp.html#a07c1d7f39955400d235a2da6433d0ed4", null ],
-    [ "RawTlsClient", "_client_socket_8hpp.html#ac21d67bd6e57542ef4efa3620ae42232", null ]
+    [ "Hermes::ClientSocket&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
+    [ "Hermes::RawTcpClient", "namespace_hermes.html#a05352a65fe09716dd93d912ef12bdb6a", null ],
+    [ "Hermes::RawTlsClient", "namespace_hermes.html#a682b34dbed834b2357c277d830472096", null ]
 ];

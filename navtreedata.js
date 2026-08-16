@@ -32,8 +32,8 @@ var NAVTREE =
       [ "RecvStream vs RecvRange", "recv-stream-behavior.html", null ],
       [ "SendAndLift", "send-lift-pattern.html", null ]
     ] ],
-    [ "Async Sockets", "md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets", [
-      [ "Async Sockets", "md_docs_2doxygen_2docs_2site_2_async_01_sockets.html#async-sockets", null ]
+    [ "Async Sockets", "async-sockets.html", [
+      [ "Async Sockets", "async-sockets.html", null ]
     ] ],
     [ "Examples", null, [
       [ "TLS Client", "@ref example-tls-client", null ],
@@ -81,18 +81,16 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "@ref example-tcp-server",
-"_initialize_security_context_return_flags_8hpp.html#a54a7600cb23e795f60cc9023db2570fea0cdb14d35612ac4b3e9108f95b939e9d",
-"_linux_2_supported_protocols_flags_8hpp.html#a34ca1e6ac91cdd2076f71db2ece61ce6ab1c94ca2fbc3e78fc30069c8d0f01680",
-"_windows_2_encrypt_status_enum_8hpp.html#a4e95007477c568d2cfec5fb0fa176919aa3bf4d6d1b95056d6f7fdbe58b52bf50",
-"functions_e.html",
-"namespace_hermes.html#a41772aab5b550db02cef57b951ab1bbfa4c32be4a0b4f48cdd593aef35fd69e44",
-"namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea0cdb14d35612ac4b3e9108f95b939e9d",
-"namespace_hermes.html#af1bc721cdf539a4fa545c282663222ada5cef6f231e0bdf65b80b9759de09c715",
-"struct_hermes_1_1_default_async_accept_policy_1_1_accept_options.html",
-"struct_hermes_1_1_listener_socket.html#ab64dd90419383049b35cbb3fdbf29d0f",
-"struct_hermes_1_1_transfer_oper_status.html",
-"struct_hermes_1_1details___1_1_tls_session.html#a528b75dff2983f9f4cf0acd0afedd7b9"
+"functions_func_n.html",
+"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a0f9ed521bc5b77ac24b3210b61d1282d",
+"namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fead536d7dc59308d82b20f59daca509cc7",
+"namespace_hermes.html#af1bc721cdf539a4fa545c282663222adaee3913ca35a42b1d586b93e52fae852e",
+"struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a18ff5bf5b2b059729d5d985638529bc1",
+"struct_hermes_1_1_listener_socket.html#afac873ca8b33b9a6955d591e0104c302",
+"struct_hermes_1_1_utils_1_1_drop_last_view.html#ae21989b3dd85458120fab4f35a349e8f",
+"struct_hermes_1_1details___1_1_tls_session.html#aac3dbbe053dd1665b6524ca3a9f2e19d"
 ];
 
-var SYNCONMSG = 'click to disable panel synchronisation';
-var SYNCOFFMSG = 'click to enable panel synchronisation';
+const SYNCONMSG = 'click to disable panel synchronization';
+const SYNCOFFMSG = 'click to enable panel synchronization';
+const LISTOFALLMEMBERS = 'List of all members';

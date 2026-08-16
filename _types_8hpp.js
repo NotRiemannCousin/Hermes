@@ -1,7 +1,7 @@
 var _types_8hpp =
 [
-    [ "IoCount", "_types_8hpp.html#a4edf6efc3aa64ceec724e8d0c38244fd", null ],
-    [ "LongIoCount", "_types_8hpp.html#a9ab70aee801e3dea9fec8c9e1b6a0f18", null ],
-    [ "SocketFd", "_types_8hpp.html#ad98e18cda370c46945ee9316d4a6422b", null ],
-    [ "SocketHandle", "_types_8hpp.html#af417e3e9dd97e00e282076d298a5075c", null ]
+    [ "Hermes::IoCount", "namespace_hermes.html#aa14d29e8f9d418585c54877eefb50022", null ],
+    [ "Hermes::LongIoCount", "namespace_hermes.html#a69f852ca6753d1c7a01c7aa4eb3b43a5", null ],
+    [ "Hermes::SocketFd", "namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8", null ],
+    [ "Hermes::SocketHandle", "namespace_hermes.html#a4aedf62ac66bae21d2bb8a958eec8bb8", null ]
 ];

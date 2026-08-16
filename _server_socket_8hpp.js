@@ -1,6 +1,6 @@
 var _server_socket_8hpp =
 [
-    [ "Hermes::ServerSocket< SocketData, AcceptPolicy, TransferPolicy >", "struct_hermes_1_1_server_socket.html", "struct_hermes_1_1_server_socket" ],
-    [ "RawTcpServer", "_server_socket_8hpp.html#ae3a1ee0cb148ad5dd2773d754bf3d462", null ],
-    [ "RawTlsServer", "_server_socket_8hpp.html#a2f5ad774015f851569d57545778e2d92", null ]
+    [ "Hermes::ServerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt;", "struct_hermes_1_1_server_socket.html", "struct_hermes_1_1_server_socket" ],
+    [ "Hermes::RawTcpServer", "namespace_hermes.html#a47cbf3461197b1b9f40eb4b71367d66b", null ],
+    [ "Hermes::RawTlsServer", "namespace_hermes.html#a159cf584f77d7bb4ee337d623625a960", null ]
 ];

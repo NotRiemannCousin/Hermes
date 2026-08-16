@@ -3,14 +3,14 @@ var annotated_dup =
     [ "Hermes", "namespace_hermes.html", [
       [ "details_", "namespace_hermes_1_1details__.html", [
         [ "AcceptOptionsIpv6Base", "struct_hermes_1_1details___1_1_accept_options_ipv6_base.html", null ],
-        [ "AcceptOptionsIpv6Base< AddressFamilyEnum::Inet6 >", "struct_hermes_1_1details___1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html", "struct_hermes_1_1details___1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4" ],
+        [ "AcceptOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;", "struct_hermes_1_1details___1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html", "struct_hermes_1_1details___1_1_accept_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4" ],
         [ "ConnectOptionsIpv6Base", "struct_hermes_1_1details___1_1_connect_options_ipv6_base.html", null ],
-        [ "ConnectOptionsIpv6Base< AddressFamilyEnum::Inet6 >", "struct_hermes_1_1details___1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html", "struct_hermes_1_1details___1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4" ],
+        [ "ConnectOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;", "struct_hermes_1_1details___1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html", "struct_hermes_1_1details___1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4" ],
         [ "ITlsAcceptStateMachine", "struct_hermes_1_1details___1_1_i_tls_accept_state_machine.html", "struct_hermes_1_1details___1_1_i_tls_accept_state_machine" ],
         [ "ITlsConnectStateMachine", "struct_hermes_1_1details___1_1_i_tls_connect_state_machine.html", "struct_hermes_1_1details___1_1_i_tls_connect_state_machine" ],
         [ "ITlsTransferStateMachine", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine.html", "struct_hermes_1_1details___1_1_i_tls_transfer_state_machine" ],
         [ "OptionsTcpNoDelayBase", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base.html", null ],
-        [ "OptionsTcpNoDelayBase< SocketTypeEnum::Stream >", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4" ],
+        [ "OptionsTcpNoDelayBase&lt; SocketTypeEnum::Stream &gt;", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4.html", "struct_hermes_1_1details___1_1_options_tcp_no_delay_base_3_01_socket_type_enum_1_1_stream_01_4" ],
         [ "ScopedNonBlocking", "class_hermes_1_1details___1_1_scoped_non_blocking.html", "class_hermes_1_1details___1_1_scoped_non_blocking" ],
         [ "TlsAcceptStateMachine", "struct_hermes_1_1details___1_1_tls_accept_state_machine.html", "struct_hermes_1_1details___1_1_tls_accept_state_machine" ],
         [ "TlsConnectStateMachine", "struct_hermes_1_1details___1_1_tls_connect_state_machine.html", "struct_hermes_1_1details___1_1_tls_connect_state_machine" ],

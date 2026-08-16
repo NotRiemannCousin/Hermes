@@ -1,5 +1,5 @@
 var _endpoint_concept_8hpp =
 [
     [ "Hermes::EndpointConcept", "concept_hermes_1_1_endpoint_concept.html", null ],
-    [ "SocketInfoAddr", "_endpoint_concept_8hpp.html#ae387a226251b2771a996781de8eb3247", null ]
+    [ "Hermes::SocketInfoAddr", "namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e", null ]
 ];

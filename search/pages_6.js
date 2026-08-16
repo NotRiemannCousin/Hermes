@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['md_5fdocs_5f2doxygen_5f2docs_5f2site_5f2_5fasync_5f01_5fsockets_0',['md_docs_2doxygen_2docs_2site_2_async_01_sockets',['../md_docs_2doxygen_2docs_2site_2_async_01_sockets.html',1,'']]]
+  ['generator_0',['Doxygen generator',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md55',1,'']]],
+  ['getting_20started_1',['Getting Started',['../getting-started.html',1,'Getting Started'],['../getting-started.html#autotoc_md75',1,'Getting Started']]],
+  ['graphviz_2',['Diagrams with Graphviz',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#tricks-graphviz',1,'']]]
 ];

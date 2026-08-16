@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['bytedata_0',['ByteData',['../namespace_hermes.html#a0832e30628cac84f3f31a6d76a3b29ce',1,'Hermes']]],
-  ['bytedataspan_1',['ByteDataSpan',['../namespace_hermes.html#a2e66d0f22a3ac87a8f45f45cce8ad1bd',1,'Hermes']]]
+  ['bytedata_0',['ByteData',['../namespace_hermes.html#a570f2292affb528836502a232031bf34',1,'Hermes']]],
+  ['bytedataspan_1',['ByteDataSpan',['../namespace_hermes.html#aeaab1e32effe6d5bd58938d53cee4701',1,'Hermes']]]
 ];

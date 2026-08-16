@@ -1,6 +1,28 @@
 var searchData=
 [
-  ['and_20composition_20with_20and_5fthen_0',['SendAndLift and Composition with and_then',['../send-lift-pattern.html',1,'']]],
-  ['and_5fthen_1',['SendAndLift and Composition with and_then',['../send-lift-pattern.html',1,'']]],
-  ['architecture_2',['Policy-based Architecture',['../policy-architecture.html',1,'']]]
+  ['a_20custom_20policy_0',['Designing a custom policy',['../policy-architecture.html#autotoc_md91',1,'']]],
+  ['a_20factory_20instead_20of_20calling_20send_20and_20lifting_20directly_1',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md47',1,'']]],
+  ['a_20factory_20not_20the_20operation_20itself_2',['SendAndLift is a factory, not the operation itself',['../send-lift-pattern.html#autotoc_md46',1,'']]],
+  ['a_20useful_20order_20for_20learning_20the_20library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md83',1,'']]],
+  ['accept_20options_4',['Listen and accept options',['../policy-options.html#autotoc_md96',1,'']]],
+  ['accept_20policy_3a_20creating_20an_20incoming_20connection_5',['Accept policy: creating an incoming connection',['../policy-architecture.html#autotoc_md88',1,'']]],
+  ['ahead_6',['Using &lt;span class=&quot;tt&quot;&gt;RecvStream&lt;/span&gt; (Direct, No Read-Ahead)',['../recv-stream-behavior.html#autotoc_md41',1,'']]],
+  ['alias_20is_20made_20of_7',['What the alias is made of',['../getting-started.html#autotoc_md79',1,'']]],
+  ['alive_20trap_20hanging_20threads_8',['The Keep-Alive Trap (Hanging Threads)',['../recv-stream-behavior.html#autotoc_md36',1,'']]],
+  ['an_20incoming_20connection_9',['Accept policy: creating an incoming connection',['../policy-architecture.html#autotoc_md88',1,'']]],
+  ['an_20outgoing_20connection_10',['Connection policy: creating an outgoing connection',['../policy-architecture.html#autotoc_md87',1,'']]],
+  ['and_20accept_20options_11',['Listen and accept options',['../policy-options.html#autotoc_md96',1,'']]],
+  ['and_20composition_20with_20and_5fthen_12',['and Composition with and_then',['../send-lift-pattern.html',1,'SendAndLift and Composition with and_then'],['../send-lift-pattern.html#autotoc_md44',1,'SendAndLift and Composition with and_then']]],
+  ['and_20droplastview_13',['Termination and DropLastView',['../recv-stream-behavior.html#autotoc_md37',1,'']]],
+  ['and_20lifting_20directly_14',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md47',1,'']]],
+  ['and_20options_15',['Policy composition and options',['../policy-architecture.html#autotoc_md92',1,'']]],
+  ['and_20ownership_16',['Socket data: state and ownership',['../policy-architecture.html#autotoc_md86',1,'']]],
+  ['and_20receive_20options_20and_20the_20deadline_17',['Send and receive options, and the deadline',['../policy-options.html#autotoc_md97',1,'']]],
+  ['and_20the_20deadline_18',['Send and receive options, and the deadline',['../policy-options.html#autotoc_md97',1,'']]],
+  ['and_5fthen_19',['and_then',['../send-lift-pattern.html',1,'SendAndLift and Composition with and_then'],['../send-lift-pattern.html#autotoc_md44',1,'SendAndLift and Composition with and_then']]],
+  ['application_20data_20',['Transfer policy: moving application data',['../policy-architecture.html#autotoc_md89',1,'']]],
+  ['architecture_21',['Policy-based Architecture',['../policy-architecture.html',1,'']]],
+  ['architecture_22',['Policy-based architecture',['../policy-architecture.html#autotoc_md84',1,'']]],
+  ['async_20sockets_23',['async-sockets',['../async-sockets.html',1,'']]],
+  ['available_20variables_24',['Available variables',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md54',1,'']]]
 ];
