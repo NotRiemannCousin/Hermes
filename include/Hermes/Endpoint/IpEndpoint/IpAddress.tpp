@@ -53,15 +53,15 @@ namespace std {
         auto format(const IpAddress &ip, FormatContext &ctx) const {
 
 #pragma push_macro("FORMAT_IPV6")
-#define FORMAT_IPV6(fmt) \
-            [&](auto ...args) {                          \
-                auto out{ ctx.out() };                   \
-                                                         \
+#define FORMAT_IPV6(fmt)                                  \
+            [&](auto ...args) {                           \
+                auto out{ ctx.out() };                    \
+                                                          \
                 if (m_ipv6Brackets) *out++ = '[';         \
-                out = std::format_to(out, fmt, args...); \
+                out = std::format_to(out, fmt, args...);  \
                 if (m_ipv6Brackets) *out++ = ']';         \
-                                                         \
-                return out;                              \
+                                                          \
+                return out;                               \
             }
 
             return std::visit(Hermes::Utils::Overloaded{

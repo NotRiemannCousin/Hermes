@@ -18,6 +18,7 @@ add_executable(
 
         Utils/DropLastTests.cpp
         Utils/UntilMatchTests.cpp
+        Socket/FastIoLoopTests.cpp
 )
 
 add_custom_command(

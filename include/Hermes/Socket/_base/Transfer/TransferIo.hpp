@@ -2,9 +2,12 @@
 #include <Hermes/Socket/_base.hpp>
 #include <chrono>
 #include <optional>
+#include <algorithm>
+#include <limits>
 
 #ifndef _WIN32
 #include <fcntl.h>
+#include <poll.h>
 #endif
 
 namespace Hermes::details_ {
@@ -58,21 +61,20 @@ namespace Hermes::details_ {
         const auto remaining{ *deadline - std::chrono::steady_clock::now() };
         if (remaining <= std::chrono::steady_clock::duration::zero())
             return false;
-        fd_set readSet, writeSet;
-        FD_ZERO(&readSet);
-        FD_ZERO(&writeSet);
-        FD_SET(socket, readable ? &readSet : &writeSet);
-        const auto micros{ std::chrono::duration_cast<std::chrono::microseconds>(remaining) };
-        timeval timeout{
-            static_cast<long>(micros.count() / 1'000'000),
-            static_cast<long>(micros.count() % 1'000'000)
-        };
-        return select(
-            static_cast<int>(socket) + 1,
-            readable ? &readSet : nullptr,
-            readable ? nullptr : &writeSet,
-            nullptr,
-            &timeout
-        ) > 0;
+
+        const auto millis{ std::chrono::duration_cast<std::chrono::milliseconds>(remaining) };
+        const int timeoutMs{ static_cast<int>(std::min<long long>(millis.count(), std::numeric_limits<int>::max())) };
+
+#ifdef _WIN32
+        WSAPOLLFD pfd{};
+        pfd.fd = socket;
+        pfd.events = readable ? POLLRDNORM : POLLWRNORM;
+        return WSAPoll(&pfd, 1, timeoutMs) > 0;
+#else
+        pollfd pfd{};
+        pfd.fd = socket;
+        pfd.events = readable ? POLLIN : POLLOUT;
+        return poll(&pfd, 1, timeoutMs) > 0;
+#endif
     }
 }

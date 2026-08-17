@@ -21,10 +21,6 @@ extern ExpString MakeRequest() {
 
 #pragma region Lambdas
 
-    const auto makeSocket{ [&](const Hermes::IpEndpoint endpoint) {
-        return Hermes::RawTlsClient::Connect({ endpoint, url.hostname });
-    } };
-
     const auto getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
         auto socketView{ client.RecvStream<char>() };
         // `RecvStream` is an input_range, so it consumes the bytes when you advance the iterator.
@@ -34,7 +30,7 @@ extern ExpString MakeRequest() {
         // This code shows how it can be useful.
 
         // (It's not a normal input_range, do I need to give a name to this type of range?
-        // sibling{m_input}m_range? global_{input}m_range? Idk).
+        // sibling{_input}_range? global{_input}_range? Idk).
 
         if (!rg::starts_with(socketView, "HTTP/1.1"sv))
             return std::unexpected{ "Non supported version" };

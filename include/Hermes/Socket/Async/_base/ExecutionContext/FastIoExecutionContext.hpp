@@ -54,7 +54,7 @@ namespace Hermes {
         static void UnregisterSocketLoop(int fd) noexcept;
 
         template <typename F>
-        void SubmitIo(F&& prep_fn) const noexcept;
+        void SubmitIo(F&& prep_fn, bool bypassRunningCheck = false) const noexcept;
 #endif
 
     private:

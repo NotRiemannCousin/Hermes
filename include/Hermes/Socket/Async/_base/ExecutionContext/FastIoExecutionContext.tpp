@@ -113,8 +113,21 @@ namespace Hermes {
 
 #ifndef _WIN32
     template<typename F>
-    inline void FastIoLoop::SubmitIo(F&& prep_fn) const noexcept {
+    inline void FastIoLoop::SubmitIo(F&& prep_fn, const bool bypassRunningCheck) const noexcept {
         std::lock_guard lock(const_cast<std::mutex&>(m_impl->m_ringMutex));
+
+        // Bail out if the loop has already been (or is being) torn down. Without this check,
+        // a SubmitIo() call racing with Stop() on another thread could read/write the io_uring
+        // instance concurrently with -- or strictly after -- io_uring_queue_exit() unmapping
+        // its internal buffers. Confirmed via AddressSanitizer as a SEGV (read of unmapped
+        // memory) inside liburing's io_uring_get_sqe() when this happened.
+        // bypassRunningCheck is set only by Stop()'s own internal wake-up NOP, which is
+        // intentionally submitted right after m_isRunning is cleared (that IS the shutdown
+        // signal to the completion-thread) -- still safe, because it and this check both run
+        // under m_ringMutex, so it can't race with the queue_exit() call further down in Stop().
+        if (!bypassRunningCheck && !m_impl->m_isRunning.load(std::memory_order_acquire))
+            return;
+
         struct io_uring_sqe *sqe = io_uring_get_sqe(const_cast<io_uring *>(&m_impl->m_ring));
         if (sqe) {
             prep_fn(sqe);
@@ -146,6 +159,12 @@ namespace Hermes {
     }
 
     inline void FastIoLoop::Stop() noexcept {
+        // Guard the ENTIRE teardown (not just the wake-up signals) behind the exchange, so
+        // Stop() is idempotent. Previously m_workers.clear() and io_uring_queue_exit()/
+        // CloseHandle() ran unconditionally on every call: since the destructor always calls
+        // Stop(), any code that also called loop.Stop() explicitly (a normal graceful-shutdown
+        // pattern) hit a second io_uring_queue_exit() on an already-torn-down ring -- confirmed
+        // via gdb as a SIGSEGV inside liburing's io_uring_queue_exit().
         if (m_impl->m_isRunning.exchange(false, std::memory_order_acq_rel)) {
 #ifdef _WIN32
             for (size_t i{}; i < m_impl->m_workers.size(); ++i) {
@@ -155,21 +174,28 @@ namespace Hermes {
             SubmitIo([](struct io_uring_sqe *sqe) {
                 io_uring_prep_nop(sqe);
                 io_uring_sqe_set_data(sqe, nullptr);
-            });
+            }, true);
             m_impl->m_workCv.notify_all();
 #endif
-        }
 
-        m_impl->m_workers.clear();
+            m_impl->m_workers.clear();
 
 #ifdef _WIN32
-        if (m_impl->m_iocpHandle) {
-            CloseHandle(m_impl->m_iocpHandle);
-            m_impl->m_iocpHandle = nullptr;
-        }
+            if (m_impl->m_iocpHandle) {
+                CloseHandle(m_impl->m_iocpHandle);
+                m_impl->m_iocpHandle = nullptr;
+            }
 #else
-        io_uring_queue_exit(&m_impl->m_ring);
+            // Also taken under m_ringMutex -- the same lock SubmitIo() holds while touching
+            // the ring -- so a submit that started just before m_isRunning flipped to false
+            // finishes (or safely no-ops) before the ring is torn down, instead of racing
+            // with it.
+            {
+                std::lock_guard lock(m_impl->m_ringMutex);
+                io_uring_queue_exit(&m_impl->m_ring);
+            }
 #endif
+        }
     }
 
 #ifndef _WIN32

@@ -1,9 +1,12 @@
 #pragma once
 #include <Hermes/_base/Network.hpp>
+#include <algorithm>
+#include <limits>
 
 #ifndef _WIN32
 #include <fcntl.h>
 #include <netinet/tcp.h>
+#include <poll.h>
 #endif
 
 namespace Hermes {
@@ -59,18 +62,21 @@ namespace Hermes {
             }
 
             if (inProgress) {
-                fd_set writeSet, errSet;
-                FD_ZERO(&writeSet);
-                FD_ZERO(&errSet);
-                FD_SET(data.socket, &writeSet);
-                FD_SET(data.socket, &errSet);
+                const auto millis{ options.connectionTimeout };
+                const int timeoutMs{ static_cast<int>(std::min<long long>(millis.count(), std::numeric_limits<int>::max())) };
 
-                timeval tv{
-                    static_cast<long>(options.connectionTimeout.count() / 1000),
-                    static_cast<long>((options.connectionTimeout.count() % 1000) * 1000)
-                };
-
-                const int selectRes{ select(static_cast<int>(data.socket) + 1, nullptr, &writeSet, &errSet, &tv) };
+#ifdef _WIN32
+                WSAPOLLFD pfd{};
+                pfd.fd = data.socket;
+                pfd.events = POLLWRNORM;
+                const int selectRes{ WSAPoll(&pfd, 1, timeoutMs) };
+#else
+                using PoolFd = pollfd;
+                pollfd pfd{};
+                pfd.fd = data.socket;
+                pfd.events = POLLOUT;
+                const int selectRes{ poll(&pfd, 1, timeoutMs) };
+#endif
 
                 if (selectRes > 0) {
                     int soError{ 0 };
