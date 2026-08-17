@@ -13,5 +13,5 @@ var searchData=
   ['hermes_3a_3adetails_5f_10',['details_',['../namespace_hermes_1_1details__.html',1,'Hermes']]],
   ['hermes_3a_3autils_11',['Utils',['../namespace_hermes_1_1_utils.html',1,'Hermes']]],
   ['host_12',['host',['../struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571',1,'Hermes::TlsSocketData']]],
-  ['how_20the_20facade_20composes_20the_20lego_13',['How the facade composes the lego',['../policy-architecture.html#autotoc_md90',1,'']]]
+  ['how_20the_20facade_20composes_20the_20lego_13',['How the facade composes the lego',['../policy-architecture.html#autotoc_md51',1,'']]]
 ];
