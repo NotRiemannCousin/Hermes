@@ -19,6 +19,8 @@ A C++ socket wrapper library providing a simple, type-safe, and secure interface
 
 Hermes operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.
 
+> Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required.
+
 ---
 
 ## Installation
@@ -180,5 +182,6 @@ std::expected<std::monostate, std::string> MakeRequest() {
 ## Requirements
 
 - Windows 10 or newer / Linux
+- OpenSSL and liburing on Linux (`sudo apt install libssl-dev liburing-dev`)
 - MSVC or GCC with C++26 support (GCC/Clang on Linux)
 - CMake 3.29.1 or newer
