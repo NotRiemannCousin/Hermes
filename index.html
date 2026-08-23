@@ -173,6 +173,9 @@ Features</h1>
 <li>Extensible: implement <span class="tt">SocketDataConcept</span>, <span class="tt">ConnectionPolicyConcept</span> / <span class="tt">AcceptPolicyConcept</span>, and <span class="tt">TransferPolicyConcept</span> to add your own transport layer protocols</li>
 </ul>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.</p>
+<blockquote class="doxtable">
+<p>Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required. </p>
+</blockquote>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
 Installation</h1>
@@ -337,6 +340,7 @@ Roadmap</h1>
 Requirements</h1>
 <ul>
 <li>Windows 10 or newer / Linux</li>
+<li>OpenSSL and liburing on Linux (<span class="tt">sudo apt install libssl-dev liburing-dev</span>)</li>
 <li>MSVC or GCC with C++26 support (GCC/Clang on Linux)</li>
 <li>CMake 3.29.1 or newer </li>
 </ul>

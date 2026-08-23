@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['facade_20composes_20the_20lego_0',['How the facade composes the lego',['../policy-architecture.html#autotoc_md51',1,'']]],
-  ['factory_20instead_20of_20calling_20send_20and_20lifting_20directly_1',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md57',1,'']]],
-  ['factory_20not_20the_20operation_20itself_2',['SendAndLift is a factory, not the operation itself',['../send-lift-pattern.html#autotoc_md54',1,'']]],
+  ['facade_20composes_20the_20lego_0',['How the facade composes the lego',['../policy-architecture.html#autotoc_md62',1,'']]],
+  ['factory_20instead_20of_20calling_20send_20and_20lifting_20directly_1',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md70',1,'']]],
+  ['factory_20not_20the_20operation_20itself_2',['SendAndLift is a factory, not the operation itself',['../send-lift-pattern.html#autotoc_md69',1,'']]],
   ['family_3',['Family',['../struct_hermes_1_1_default_async_accept_policy.html#ab5371d546708ca9fbbfcdc6ce1142dcf',1,'Hermes::DefaultAsyncAcceptPolicy::Family'],['../struct_hermes_1_1_tls_async_accept_policy.html#ab136b41fa467980c84365befdbeea1be',1,'Hermes::TlsAsyncAcceptPolicy::Family'],['../struct_hermes_1_1_default_async_connect_policy.html#a1830e11b0c908f85a22d1b0710db7c13',1,'Hermes::DefaultAsyncConnectPolicy::Family'],['../struct_hermes_1_1_tls_async_connect_policy.html#ab20cd7a77cf44d9a5398c51687e68fd3',1,'Hermes::TlsAsyncConnectPolicy::Family'],['../struct_hermes_1_1_default_socket_data.html#a3ae7516dc9aed2a5eabaa9711280c25f',1,'Hermes::DefaultSocketData::Family'],['../struct_hermes_1_1_tls_socket_data.html#ab593bc55f825b3d37825f2233157b52c',1,'Hermes::TlsSocketData::Family'],['../struct_hermes_1_1_default_accept_policy.html#a08bb744353cabfc9ed08e357b3387323',1,'Hermes::DefaultAcceptPolicy::Family'],['../struct_hermes_1_1_tls_accept_policy.html#a6a907a50d3d7c2197efe0a8516236925',1,'Hermes::TlsAcceptPolicy::Family'],['../struct_hermes_1_1_default_connect_policy.html#a806f6327878aad6796f7b79a6fa5c259',1,'Hermes::DefaultConnectPolicy::Family'],['../struct_hermes_1_1_tls_connect_policy.html#ad9f7c7ce2a06c5770e6dc84a6ddda453',1,'Hermes::TlsConnectPolicy::Family']]],
   ['fastioexecutioncontext_2ehpp_4',['FastIoExecutionContext.hpp',['../_fast_io_execution_context_8hpp.html',1,'']]],
   ['fastioloop_5',['FastIoLoop',['../class_hermes_1_1_fast_io_loop.html',1,'Hermes::FastIoLoop'],['../class_hermes_1_1_fast_io_loop.html#aa14417e0c187c552adc024937da5805e',1,'Hermes::FastIoLoop::FastIoLoop(unsigned int threadCount=std::thread::hardware_concurrency())'],['../class_hermes_1_1_fast_io_loop.html#a146795a746889d0f5e7d797406b90f67',1,'Hermes::FastIoLoop::FastIoLoop(const FastIoLoop &amp;)=delete']]],
@@ -13,14 +13,14 @@ var searchData=
   ['filereadfailed_10',['FileReadFailed',['../namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878',1,'Hermes']]],
   ['flags_11',['Flags',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196a4ea7801f17a4e5485e8b050c052fb443',1,'Hermes']]],
   ['flags_5foperations_12',['FLAGS_OPERATIONS',['../_os_api_8hpp.html#acb3dcf3a15e143c1375cf85f12af9d2c',1,'OsApi.hpp']]],
-  ['for_20learning_20the_20library_13',['A useful order for learning the library',['../getting-started.html#autotoc_md97',1,'']]],
-  ['for_20security_20std_3a_3aviews_3a_3atake_14',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md39',1,'']]],
+  ['for_20learning_20the_20library_13',['A useful order for learning the library',['../getting-started.html#autotoc_md66',1,'']]],
+  ['for_20security_20std_3a_3aviews_3a_3atake_14',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md45',1,'']]],
   ['formatcertcontext_15',['FormatCertContext',['../namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330baacfb1697c7b31c2db9614331527e7002',1,'Hermes::FormatCertContext'],['../namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7aacfb1697c7b31c2db9614331527e7002',1,'Hermes::FormatCertContext']]],
   ['formatcerthash_16',['FormatCertHash',['../namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba741044e3e10f09b86977b13751e496c8',1,'Hermes::FormatCertHash'],['../namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7a741044e3e10f09b86977b13751e496c8',1,'Hermes::FormatCertHash']]],
   ['formatcerthashstore_17',['FormatCertHashStore',['../namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba973bcff706d61513066f0df7faeea6e2',1,'Hermes::FormatCertHashStore'],['../namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7a973bcff706d61513066f0df7faeea6e2',1,'Hermes::FormatCertHashStore']]],
   ['formatting_20tables_18',['Formatting Tables',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#tricks-tables',1,'']]],
   ['forwardcredentials_19',['ForwardCredentials',['../namespace_hermes.html#adba4e43edf18b9ed50d8524298c2f69ca5a1224b4cfb84b0def0a98ee787cb8c6',1,'Hermes::ForwardCredentials'],['../namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea5a1224b4cfb84b0def0a98ee787cb8c6',1,'Hermes::ForwardCredentials']]],
-  ['four_20responsibilities_20',['The four responsibilities',['../policy-architecture.html#autotoc_md45',1,'']]],
+  ['four_20responsibilities_20',['The four responsibilities',['../policy-architecture.html#autotoc_md51',1,'']]],
   ['fragment_20copy_20button_21',['Fragment Copy Button',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#extension-copy-button',1,'']]],
   ['fragmentonly_22',['FragmentOnly',['../namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea3aa79556ee74ef5244a7731787707bf8',1,'Hermes']]],
   ['fragmentsupplied_23',['FragmentSupplied',['../namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58aebd5fdb9586b40d8c66317def2e7e125',1,'Hermes::FragmentSupplied'],['../namespace_hermes.html#af1bc721cdf539a4fa545c282663222adaebd5fdb9586b40d8c66317def2e7e125',1,'Hermes::FragmentSupplied'],['../namespace_hermes.html#adba4e43edf18b9ed50d8524298c2f69caebd5fdb9586b40d8c66317def2e7e125',1,'Hermes::FragmentSupplied']]],
@@ -30,5 +30,5 @@ var searchData=
   ['fromipv4_27',['FromIpv4',['../struct_hermes_1_1_ip_address.html#ab621b5f4de1300016fed7fe2b789099b',1,'Hermes::IpAddress']]],
   ['fromipv6_28',['FromIpv6',['../struct_hermes_1_1_ip_address.html#a6cedb56af851e861e60a28fbeb5e28da',1,'Hermes::IpAddress']]],
   ['fromsockaddr_29',['FromSockAddr',['../struct_hermes_1_1_ip_endpoint.html#a51d43d81922ffeefceabaa49e58fd67d',1,'Hermes::IpEndpoint']]],
-  ['full_20width_30',['Full Width',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#autotoc_md70',1,'']]]
+  ['full_20width_30',['Full Width',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#autotoc_md95',1,'']]]
 ];
