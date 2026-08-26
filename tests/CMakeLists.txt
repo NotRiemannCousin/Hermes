@@ -41,7 +41,7 @@ target_link_libraries(
         PRIVATE
         Hermes
         GTest::gtest_main
-        ProjectCompilerFlags
+        HermesCompilerFlags
 )
 
 gtest_discover_tests(HermesTests WORKING_DIRECTORY "$<TARGET_FILE_DIR:HermesTests>")

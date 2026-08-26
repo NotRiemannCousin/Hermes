@@ -46,10 +46,7 @@ namespace Hermes {
 
     template<SocketDataConcept Data>
     template<ByteLike Byte>
-    TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(
-        Data& data, TlsTransferPolicy& policy, RecvOptions options
-    )
-
+    TlsTransferPolicy<Data>::RecvStream<Byte>::RecvStream(Data& data, TlsTransferPolicy& policy, RecvOptions options)
         : m_data{ &data }, m_policy{ &policy }, m_options{ options } {
         if (policy.m_streamState == nullptr)
             policy.m_streamState = std::make_unique<StreamState>();

@@ -13,9 +13,10 @@ set(CMAKE_DEBUG_POSTFIX "_d")
 set(PROJECT_VERSION_SUFFIX "-beta")
 set(PROJECT_VERSION_FULL "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
-
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF)
 #endregion
 
 #region options
@@ -26,23 +27,27 @@ option(HERMES_BUILD_DOCS     "Build Doxygen documentation"  OFF)
 #endregion
 
 #region top-level compiler options
-
-add_library(ProjectCompilerFlags INTERFACE)
-if(CMAKE_BUILD_TYPE STREQUAL "Release" AND PROJECT_IS_TOP_LEVEL)
-
+add_library(HermesCompilerFlags INTERFACE)
+if(PROJECT_IS_TOP_LEVEL)
     if(MSVC)
-        target_compile_options(ProjectCompilerFlags INTERFACE
-                /permissive- /O2 /GL /arch:AVX2 /Oi /Ot /GT /Gw /Gy /Zc:inline /openmp:llvm)
-        target_link_options(ProjectCompilerFlags INTERFACE /LTCG)
+        target_compile_options(HermesCompilerFlags INTERFACE
+                $<IF:$<CONFIG:Release>,/permissive- /O2 /GL /Oi /Ot /GT /Gw /Gy /Zc:inline /openmp:llvm,>
+        )
+        target_link_options(HermesCompilerFlags INTERFACE $<IF:$<CONFIG:Release>,/LTCG,>)
     endif()
 endif()
-
 #endregion
 
+
+
+#region extern aux files
 
 enable_testing()
 include(cmake/GetCPM.cmake)
 include(cmake/Macros.cmake)
+register_lldb_script(Hermes)
+
+#endregion
 
 
 add_library(Hermes)
@@ -72,7 +77,6 @@ target_sources(Hermes PRIVATE
 )
 #endregion
 
-
 #region linking
 CPMFindPackage(
         NAME                    stdexec
@@ -80,12 +84,12 @@ CPMFindPackage(
         GITHUB_REPOSITORY       NVIDIA/stdexec
         GIT_TAG                 nvhpc-26.05
         OPTIONS                 "STDEXEC_BUILD_EXAMPLES OFF"
-                                "STDEXEC_INSTALL ${HERMES_INSTALL}"
+        "STDEXEC_INSTALL ${HERMES_INSTALL}"
         FIND_PACKAGE_ARGUMENTS  "CONFIG"
 )
 target_link_libraries(Hermes PUBLIC STDEXEC::stdexec)
-if(TARGET ProjectCompilerFlags)
-    target_link_libraries(Hermes PRIVATE $<BUILD_INTERFACE:ProjectCompilerFlags>)
+if(TARGET HermesCompilerFlags)
+    target_link_libraries(Hermes PRIVATE $<BUILD_INTERFACE:HermesCompilerFlags>)
 endif()
 
 if(WIN32)
@@ -100,9 +104,14 @@ endif()
 #endregion
 
 
+#region subdirectories
+
 add_subdirectory_if(HERMES_BUILD_TESTS    tests)
 add_subdirectory_if(HERMES_BUILD_EXAMPLES examples)
 add_subdirectory_if(HERMES_BUILD_DOCS     docs)
+
+#endregion
+
 
 #region install
 if(HERMES_INSTALL)
@@ -144,3 +153,6 @@ if(HERMES_INSTALL)
     )
 endif()
 #endregion
+
+
+generate_lldbinit()
