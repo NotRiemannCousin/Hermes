@@ -156,14 +156,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>A pipe adaptor that removes the last value from a range.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_drop_last_8hpp_source.html">DropLast.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2ed4bb8a9fa12d89693fde86379b94d9" id="r_a2ed4bb8a9fa12d89693fde86379b94d9"><td class="memTemplParams" colspan="2">template&lt;rg::range R&gt; </td></tr>
 <tr class="memitem:a2ed4bb8a9fa12d89693fde86379b94d9 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a2ed4bb8a9fa12d89693fde86379b94d9">operator()</a> (R &amp;&amp;r) const</td></tr>
+<tr class="memdesc:a2ed4bb8a9fa12d89693fde86379b94d9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html" title="A lazy view that removes the last element of a range.">DropLastView</a> over the supplied range.  <br /></td></tr>
 </table>
-<a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A pipe adaptor that removes the last value from a range. </p>
+</div><a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
 <a id="a2ed4bb8a9fa12d89693fde86379b94d9" name="a2ed4bb8a9fa12d89693fde86379b94d9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2ed4bb8a9fa12d89693fde86379b94d9">&#9670;&#160;</a></span>operator()()</h2>
 
@@ -188,6 +194,14 @@ template&lt;rg::range R&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Creates a <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html" title="A lazy view that removes the last element of a range.">DropLastView</a> over the supplied range. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>The range to adapt. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

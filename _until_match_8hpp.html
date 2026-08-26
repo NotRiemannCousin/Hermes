@@ -169,8 +169,11 @@ Include dependency graph for UntilMatch.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Hermes_3A_3AUtils_3A_3AUntilMatchView_3C_20Range_2C_20Pattern_2C_20Inclusive_20_3E" id="r_Hermes_3A_3AUtils_3A_3AUntilMatchView_3C_20Range_2C_20Pattern_2C_20Inclusive_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html">Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A range whose end is determined by the first occurrence of a pattern.  <a href="struct_hermes_1_1_utils_1_1_until_match_view.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Hermes_3A_3AUtils_3A_3AUntilMatchView_3C_20Range_2C_20Pattern_2C_20Inclusive_20_3E_3A_3AIterator" id="r_Hermes_3A_3AUtils_3A_3AUntilMatchView_3C_20Range_2C_20Pattern_2C_20Inclusive_20_3E_3A_3AIterator"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html">Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;::Iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The iterator used to scan the input and detect the pattern.  <a href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Hermes_3A_3AUtils_3A_3AUntilMatchAdaptor_3C_20Inclusive_2C_20Pattern_20_3E" id="r_Hermes_3A_3AUtils_3A_3AUntilMatchAdaptor_3C_20Inclusive_2C_20Pattern_20_3E"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">Hermes::Utils::UntilMatchAdaptor&lt; Inclusive, Pattern &gt;</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pipe adaptor that stores the pattern used by <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html" title="A range whose end is determined by the first occurrence of a pattern.">UntilMatchView</a>.  <a href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
@@ -180,22 +183,28 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:Hermes_3A_3AUtils_3A_3AComparableRange" id="r_Hermes_3A_3AUtils_3A_3AComparableRange"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concept_hermes_1_1_utils_1_1_comparable_range.html">Hermes::Utils::ComparableRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether two ranges expose equality-comparable references. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48" id="r_a9813b3d181c410db40297a5cdb7e7f48"><td class="memTemplParams" colspan="2">template&lt;bool Inclusive = false, rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:a9813b3d181c410db40297a5cdb7e7f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that stops at the pattern.  <br /></td></tr>
 <tr class="memitem:a0339faa9e600efff6611c316af3c2782" id="r_a0339faa9e600efff6611c316af3c2782"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:a0339faa9e600efff6611c316af3c2782 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes_1_1_utils.html#a0339faa9e600efff6611c316af3c2782">Hermes::Utils::InclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:a0339faa9e600efff6611c316af3c2782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that includes the first matching pattern.  <br /></td></tr>
 <tr class="memitem:aa45741ea0263909df8ab44b8d53cc988" id="r_aa45741ea0263909df8ab44b8d53cc988"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:aa45741ea0263909df8ab44b8d53cc988 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes_1_1_utils.html#aa45741ea0263909df8ab44b8d53cc988">Hermes::Utils::ExclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:aa45741ea0263909df8ab44b8d53cc988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that excludes the first matching pattern.  <br /></td></tr>
 <tr class="memitem:a59945c45a2268868d47c8706fadc6e15" id="r_a59945c45a2268868d47c8706fadc6e15"><td class="memTemplParams" colspan="2">template&lt;rg::viewable_range Range, rg::contiguous_range Pattern, bool Inclusive&gt; </td></tr>
 <tr class="memitem:a59945c45a2268868d47c8706fadc6e15 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes_1_1_utils.html#a59945c45a2268868d47c8706fadc6e15">Hermes::Utils::operator|</a> (Range &amp;&amp;r, const <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">UntilMatchAdaptor</a>&lt; Inclusive, Pattern &gt; &amp;adaptor)</td></tr>
+<tr class="memdesc:a59945c45a2268868d47c8706fadc6e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipes a range into an UntilMatch adaptor.  <br /></td></tr>
 <tr class="memitem:a24ead501386a4a15f68e00ff603524dc" id="r_a24ead501386a4a15f68e00ff603524dc"><td class="memTemplParams" colspan="2">template&lt;rg::sized_range R1, rg::range R2&gt; <br />
 requires std::default_initializable&lt;R1&gt; &amp;&amp; ( std::indirectly_copyable&lt;rg::iterator_t&lt;R2&gt;, rg::iterator_t&lt;R1&gt;&gt; || requires(R1&amp; r,<br class="typebreak" />
  rg::range_reference_t&lt;R2&gt; val) { r.push_back(val); } &amp;&amp; std::indirectly_copyable&lt;rg::iterator_t&lt;R2&gt;,<br class="typebreak" />
  std::back_insert_iterator&lt;R1&gt;&gt; )</td></tr>
 <tr class="memitem:a24ead501386a4a15f68e00ff603524dc template"><td class="memItemLeft">R1&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes_1_1_utils.html#a24ead501386a4a15f68e00ff603524dc">Hermes::Utils::ExtractTo</a> (R2 &amp;view)</td></tr>
+<tr class="memdesc:a24ead501386a4a15f68e00ff603524dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a range into a new container of the requested type.  <br /></td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

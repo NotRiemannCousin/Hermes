@@ -1,9 +1,9 @@
 var NAVTREEINDEX8 =
 {
-"struct_hermes_1_1details___1_1_tls_session.html#aac3dbbe053dd1665b6524ca3a9f2e19d":[4,0,0,0,0,12,19],
 "struct_hermes_1_1details___1_1_tls_session.html#aac3dbbe053dd1665b6524ca3a9f2e19d":[4,2,0,0,0,12,19],
-"struct_hermes_1_1details___1_1_tls_session.html#ac889cca522dda79f0af2d4d0e687b599":[4,0,0,0,0,12,8],
+"struct_hermes_1_1details___1_1_tls_session.html#aac3dbbe053dd1665b6524ca3a9f2e19d":[4,0,0,0,0,12,19],
 "struct_hermes_1_1details___1_1_tls_session.html#ac889cca522dda79f0af2d4d0e687b599":[4,2,0,0,0,12,8],
+"struct_hermes_1_1details___1_1_tls_session.html#ac889cca522dda79f0af2d4d0e687b599":[4,0,0,0,0,12,8],
 "struct_hermes_1_1details___1_1_tls_session.html#ada385711c8b69427ddbed4d9d4d733bd":[4,0,0,0,0,12,5],
 "struct_hermes_1_1details___1_1_tls_session.html#ada385711c8b69427ddbed4d9d4d733bd":[4,2,0,0,0,12,5],
 "struct_hermes_1_1details___1_1_tls_session_1_1_decrypt_outcome.html":[4,0,0,0,0,12,3],

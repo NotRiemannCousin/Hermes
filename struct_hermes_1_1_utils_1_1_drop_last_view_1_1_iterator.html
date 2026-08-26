@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>The iterator used by <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html" title="A lazy view that removes the last element of a range.">DropLastView</a>.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_drop_last_8hpp_source.html">DropLast.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -167,16 +170,24 @@ Public Types</h2></td></tr>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:af5b64247fb666fd73aca30c1861cacd6" id="r_af5b64247fb666fd73aca30c1861cacd6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af5b64247fb666fd73aca30c1861cacd6">Iterator</a> () noexcept=default</td></tr>
 <tr class="memitem:a235e42775d79541c965ffdfa4e01fe83" id="r_a235e42775d79541c965ffdfa4e01fe83"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a235e42775d79541c965ffdfa4e01fe83">Iterator</a> (<a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html#a3b03f582fa987d8b35af4bcf0819c163">DropLastView</a> *parent)</td></tr>
+<tr class="memdesc:a235e42775d79541c965ffdfa4e01fe83"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an iterator positioned at the first retained value.  <br /></td></tr>
 <tr class="memitem:a69ce173f42dce6a83bd5ee12a8b948b1" id="r_a69ce173f42dce6a83bd5ee12a8b948b1"><td class="memItemLeft"><a class="el" href="#aa3097beb1a60b4f278d30cc91316b3ee">value_type</a>&#160;</td><td class="memItemRight"><a class="el" href="#a69ce173f42dce6a83bd5ee12a8b948b1">operator*</a> () const</td></tr>
+<tr class="memdesc:a69ce173f42dce6a83bd5ee12a8b948b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the cached value that is currently being yielded.  <br /></td></tr>
 <tr class="memitem:ac2edfa89abfe397671ba6c148d162808" id="r_ac2edfa89abfe397671ba6c148d162808"><td class="memItemLeft"><a class="el" href="#af5b64247fb666fd73aca30c1861cacd6">Iterator</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ac2edfa89abfe397671ba6c148d162808">operator++</a> ()</td></tr>
+<tr class="memdesc:ac2edfa89abfe397671ba6c148d162808"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replaces the cached value with the next value in the range.  <br /></td></tr>
 <tr class="memitem:ade208d6c0c3e689778284129bd1fc927" id="r_ade208d6c0c3e689778284129bd1fc927"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ade208d6c0c3e689778284129bd1fc927">operator++</a> (int)</td></tr>
+<tr class="memdesc:ade208d6c0c3e689778284129bd1fc927"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advances the iterator by one value.  <br /></td></tr>
 <tr class="memitem:a4bcc11750bb310c199d6473cd5b706ab" id="r_a4bcc11750bb310c199d6473cd5b706ab"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a4bcc11750bb310c199d6473cd5b706ab">operator==</a> (std::default_sentinel_t) const</td></tr>
+<tr class="memdesc:a4bcc11750bb310c199d6473cd5b706ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether no retained value remains.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acaf9e98a8627f8a606a5d6d66423b7aa" id="r_acaf9e98a8627f8a606a5d6d66423b7aa"><td class="memItemLeft"><a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html#a3b03f582fa987d8b35af4bcf0819c163">DropLastView</a> *&#160;</td><td class="memItemRight"><a class="el" href="#acaf9e98a8627f8a606a5d6d66423b7aa">m_view</a> {}</td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;rg::range Range&gt;<br />
+struct Hermes::Utils::DropLastView&lt; Range &gt;::Iterator</div><p>The iterator used by <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html" title="A lazy view that removes the last element of a range.">DropLastView</a>. </p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="ad1a595947c928c3c0835fd11d0d13526" name="ad1a595947c928c3c0835fd11d0d13526"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad1a595947c928c3c0835fd11d0d13526">&#9670;&#160;</a></span>difference_type</h2>
 
@@ -262,6 +273,8 @@ template&lt;rg::range Range&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Creates an iterator positioned at the first retained value. </p>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -290,6 +303,8 @@ template&lt;rg::range Range&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Returns the cached value that is currently being yielded. </p>
+
 </div>
 </div>
 <a id="ac2edfa89abfe397671ba6c148d162808" name="ac2edfa89abfe397671ba6c148d162808"></a>
@@ -309,6 +324,8 @@ template&lt;rg::range Range&gt; </div>
       </table>
 </div><div class="memdoc">
 
+<p>Replaces the cached value with the next value in the range. </p>
+
 </div>
 </div>
 <a id="ade208d6c0c3e689778284129bd1fc927" name="ade208d6c0c3e689778284129bd1fc927"></a>
@@ -327,6 +344,8 @@ template&lt;rg::range Range&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Advances the iterator by one value. </p>
 
 </div>
 </div>
@@ -354,6 +373,8 @@ template&lt;rg::range Range&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Checks whether no retained value remains. </p>
 
 </div>
 </div>

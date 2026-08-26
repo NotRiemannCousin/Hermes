@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>The iterator used to scan the input and detect the pattern.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_until_match_8hpp_source.html">UntilMatch.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
@@ -171,14 +174,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a6017c3011a3d0d3eee85e205ce4dab15" id="r_a6017c3011a3d0d3eee85e205ce4dab15"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a6017c3011a3d0d3eee85e205ce4dab15">operator++</a> (int)</td></tr>
 <tr class="memitem:afbc1559b1582123e708ee134759d8a53" id="r_afbc1559b1582123e708ee134759d8a53"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#afbc1559b1582123e708ee134759d8a53">operator==</a> (std::default_sentinel_t) const</td></tr>
 <tr class="memitem:a4d076a7d99bf4d8a6175db7558306d8f" id="r_a4d076a7d99bf4d8a6175db7558306d8f"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a4d076a7d99bf4d8a6175db7558306d8f">GetIndex</a> (std::size_t i) const noexcept</td></tr>
+<tr class="memdesc:a4d076a7d99bf4d8a6175db7558306d8f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maps an absolute history position to the circular buffer.  <br /></td></tr>
 <tr class="memitem:a97ff1213928e9a864d4d6a03e2da6a5a" id="r_a97ff1213928e9a864d4d6a03e2da6a5a"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#a97ff1213928e9a864d4d6a03e2da6a5a">GetTailIndex</a> () const noexcept</td></tr>
+<tr class="memdesc:a97ff1213928e9a864d4d6a03e2da6a5a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the history position currently being yielded.  <br /></td></tr>
 <tr class="memitem:aa68447adba61fe4a4fa414c771d18398" id="r_aa68447adba61fe4a4fa414c771d18398"><td class="memItemLeft">std::size_t&#160;</td><td class="memItemRight"><a class="el" href="#aa68447adba61fe4a4fa414c771d18398">GetHeadIndex</a> () const noexcept</td></tr>
+<tr class="memdesc:aa68447adba61fe4a4fa414c771d18398"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the history position where the next value is stored.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:acfd7bc6b57fc41b7a77737fd424767c9" id="r_acfd7bc6b57fc41b7a77737fd424767c9"><td class="memItemLeft"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html#ae5deee47dfcfd4d2ea5979c964aea495">UntilMatchView</a> *&#160;</td><td class="memItemRight"><a class="el" href="#acfd7bc6b57fc41b7a77737fd424767c9">m_view</a> {}</td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&gt;<br />
+struct Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;::Iterator</div><p>The iterator used to scan the input and detect the pattern. </p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a7857bade64d2beab8ca857d2a6381420" name="a7857bade64d2beab8ca857d2a6381420"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7857bade64d2beab8ca857d2a6381420">&#9670;&#160;</a></span>difference_type</h2>
 
@@ -265,6 +274,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
 </table>
 </div><div class="memdoc">
 
+<p>Returns the history position where the next value is stored. </p>
+
 </div>
 </div>
 <a id="a4d076a7d99bf4d8a6175db7558306d8f" name="a4d076a7d99bf4d8a6175db7558306d8f"></a>
@@ -292,6 +303,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
 </table>
 </div><div class="memdoc">
 
+<p>Maps an absolute history position to the circular buffer. </p>
+
 </div>
 </div>
 <a id="a97ff1213928e9a864d4d6a03e2da6a5a" name="a97ff1213928e9a864d4d6a03e2da6a5a"></a>
@@ -318,6 +331,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns the history position currently being yielded. </p>
 
 </div>
 </div>

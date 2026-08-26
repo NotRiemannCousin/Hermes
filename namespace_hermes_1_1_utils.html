@@ -159,42 +159,57 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('namespace_herm
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:DropLastAdaptor" id="r_DropLastAdaptor"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_adaptor.html">DropLastAdaptor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pipe adaptor that removes the last value from a range.  <a href="struct_hermes_1_1_utils_1_1_drop_last_adaptor.html#details">More...</a><br /></td></tr>
 <tr class="memitem:DropLastView" id="r_DropLastView"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_view.html">DropLastView</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A lazy view that removes the last element of a range.  <a href="struct_hermes_1_1_utils_1_1_drop_last_view.html#details">More...</a><br /></td></tr>
 <tr class="memitem:Overloaded" id="r_Overloaded"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_overloaded.html">Overloaded</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines several function objects into one overloaded function object.  <a href="struct_hermes_1_1_utils_1_1_overloaded.html#details">More...</a><br /></td></tr>
 <tr class="memitem:UntilMatchAdaptor" id="r_UntilMatchAdaptor"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">UntilMatchAdaptor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A pipe adaptor that stores the pattern used by <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html" title="A range whose end is determined by the first occurrence of a pattern.">UntilMatchView</a>.  <a href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html#details">More...</a><br /></td></tr>
 <tr class="memitem:UntilMatchView" id="r_UntilMatchView"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html">UntilMatchView</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A range whose end is determined by the first occurrence of a pattern.  <a href="struct_hermes_1_1_utils_1_1_until_match_view.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
 Concepts</h2></td></tr>
 <tr class="memitem:ComparableRange" id="r_ComparableRange"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concept_hermes_1_1_utils_1_1_comparable_range.html">ComparableRange</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether two ranges expose equality-comparable references. <br /></td></tr>
 <tr class="memitem:Hashable" id="r_Hashable"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concept_hermes_1_1_utils_1_1_hashable.html">Hashable</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks whether a type can be hashed into a size value. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a08b3e7bff840b68dcf4d653b5ff32993" id="r_a08b3e7bff840b68dcf4d653b5ff32993"><td class="memTemplParams" colspan="2">template&lt;rg::range Range&gt; </td></tr>
 <tr class="memitem:a08b3e7bff840b68dcf4d653b5ff32993 template"><td class="memItemLeft">constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a08b3e7bff840b68dcf4d653b5ff32993">operator|</a> (Range &amp;&amp;r, const <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_adaptor.html">DropLastAdaptor</a> &amp;adaptor)</td></tr>
+<tr class="memdesc:a08b3e7bff840b68dcf4d653b5ff32993"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipes a range into the dropLast adaptor.  <br /></td></tr>
 <tr class="memitem:a862ab5e2ad7fe011225368bb285eaab5" id="r_a862ab5e2ad7fe011225368bb285eaab5"><td class="memItemLeft">constexpr void&#160;</td><td class="memItemRight"><a class="el" href="#a862ab5e2ad7fe011225368bb285eaab5">HashCombine</a> (size_t &amp;seed, const size_t v)</td></tr>
-<tr class="memdesc:a862ab5e2ad7fe011225368bb285eaab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Knuth / TEA hash combine (same approach used by boost::hash_combine).  <br /></td></tr>
+<tr class="memdesc:a862ab5e2ad7fe011225368bb285eaab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Combines a hash value with an existing seed.  <br /></td></tr>
 <tr class="memitem:ab7f0af003b080130d1c9985872875e7f" id="r_ab7f0af003b080130d1c9985872875e7f"><td class="memTemplParams" colspan="2">template&lt;std::ranges::viewable_range R&gt; <br />
 requires ByteLike&lt;std::ranges::range_value_t&lt;R&gt;&gt;</td></tr>
 <tr class="memitem:ab7f0af003b080130d1c9985872875e7f template"><td class="memItemLeft">std::span&lt; const std::byte &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab7f0af003b080130d1c9985872875e7f">ToBytes</a> (const R &amp;r)</td></tr>
+<tr class="memdesc:ab7f0af003b080130d1c9985872875e7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Views a byte-like range as a read-only byte span.  <br /></td></tr>
 <tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48" id="r_a9813b3d181c410db40297a5cdb7e7f48"><td class="memTemplParams" colspan="2">template&lt;bool Inclusive = false, rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:a9813b3d181c410db40297a5cdb7e7f48 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a9813b3d181c410db40297a5cdb7e7f48">UntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:a9813b3d181c410db40297a5cdb7e7f48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that stops at the pattern.  <br /></td></tr>
 <tr class="memitem:a0339faa9e600efff6611c316af3c2782" id="r_a0339faa9e600efff6611c316af3c2782"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:a0339faa9e600efff6611c316af3c2782 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a0339faa9e600efff6611c316af3c2782">InclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:a0339faa9e600efff6611c316af3c2782"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that includes the first matching pattern.  <br /></td></tr>
 <tr class="memitem:aa45741ea0263909df8ab44b8d53cc988" id="r_aa45741ea0263909df8ab44b8d53cc988"><td class="memTemplParams" colspan="2">template&lt;rg::contiguous_range Pattern&gt; </td></tr>
 <tr class="memitem:aa45741ea0263909df8ab44b8d53cc988 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#aa45741ea0263909df8ab44b8d53cc988">ExclusiveUntilMatch</a> (Pattern &amp;&amp;pattern)</td></tr>
+<tr class="memdesc:aa45741ea0263909df8ab44b8d53cc988"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an adaptor that excludes the first matching pattern.  <br /></td></tr>
 <tr class="memitem:a59945c45a2268868d47c8706fadc6e15" id="r_a59945c45a2268868d47c8706fadc6e15"><td class="memTemplParams" colspan="2">template&lt;rg::viewable_range Range, rg::contiguous_range Pattern, bool Inclusive&gt; </td></tr>
 <tr class="memitem:a59945c45a2268868d47c8706fadc6e15 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a59945c45a2268868d47c8706fadc6e15">operator|</a> (Range &amp;&amp;r, const <a class="el" href="struct_hermes_1_1_utils_1_1_until_match_adaptor.html">UntilMatchAdaptor</a>&lt; Inclusive, Pattern &gt; &amp;adaptor)</td></tr>
+<tr class="memdesc:a59945c45a2268868d47c8706fadc6e15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pipes a range into an UntilMatch adaptor.  <br /></td></tr>
 <tr class="memitem:a24ead501386a4a15f68e00ff603524dc" id="r_a24ead501386a4a15f68e00ff603524dc"><td class="memTemplParams" colspan="2">template&lt;rg::sized_range R1, rg::range R2&gt; <br />
 requires std::default_initializable&lt;R1&gt; &amp;&amp; ( std::indirectly_copyable&lt;rg::iterator_t&lt;R2&gt;, rg::iterator_t&lt;R1&gt;&gt; || requires(R1&amp; r,<br class="typebreak" />
  rg::range_reference_t&lt;R2&gt; val) { r.push_back(val); } &amp;&amp; std::indirectly_copyable&lt;rg::iterator_t&lt;R2&gt;,<br class="typebreak" />
  std::back_insert_iterator&lt;R1&gt;&gt; )</td></tr>
 <tr class="memitem:a24ead501386a4a15f68e00ff603524dc template"><td class="memItemLeft">R1&#160;</td><td class="memItemRight"><a class="el" href="#a24ead501386a4a15f68e00ff603524dc">ExtractTo</a> (R2 &amp;view)</td></tr>
+<tr class="memdesc:a24ead501386a4a15f68e00ff603524dc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copies a range into a new container of the requested type.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
 <tr class="memitem:a8d64941b828fa10f6eda66670a2c8a42" id="r_a8d64941b828fa10f6eda66670a2c8a42"><td class="memItemLeft">constexpr <a class="el" href="struct_hermes_1_1_utils_1_1_drop_last_adaptor.html">DropLastAdaptor</a>&#160;</td><td class="memItemRight"><a class="el" href="#a8d64941b828fa10f6eda66670a2c8a42">dropLast</a> {}</td></tr>
+<tr class="memdesc:a8d64941b828fa10f6eda66670a2c8a42"><td class="mdescLeft">&#160;</td><td class="mdescRight">The pipe adaptor used as <span class="tt">range | <a class="el" href="#a8d64941b828fa10f6eda66670a2c8a42" title="The pipe adaptor used as range | dropLast.">dropLast</a></span>.  <br /></td></tr>
 </table>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
 <a id="aa45741ea0263909df8ab44b8d53cc988" name="aa45741ea0263909df8ab44b8d53cc988"></a>
@@ -213,6 +228,14 @@ template&lt;rg::contiguous_range Pattern&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Creates an adaptor that excludes the first matching pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pattern</td><td>The contiguous sequence to search for. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -235,6 +258,16 @@ requires std::default_initializable&lt;R1&gt; &amp;&amp; ( std::indirectly_copya
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Copies a range into a new container of the requested type. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">view</td><td>The range to extract. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A container populated with the values from view.</dd></dl>
+<p>If the destination supports push_back(), all values are copied. Otherwise the destination's existing size limits the number of copied values. </p>
 
 </div>
 </div>
@@ -265,7 +298,15 @@ requires std::default_initializable&lt;R1&gt; &amp;&amp; ( std::indirectly_copya
 </table>
 </div><div class="memdoc">
 
-<p>Knuth / TEA hash combine (same approach used by boost::hash_combine). </p>
+<p>Combines a hash value with an existing seed. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">seed</td><td>The hash seed to update. </td></tr>
+    <tr><td class="paramname">v</td><td>The hash value to mix into seed.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>This uses the Knuth / TEA hash combine approach, the same approach used by boost::hash_combine. The order of calls matters when composing fields. </p>
 
 </div>
 </div>
@@ -285,6 +326,14 @@ template&lt;rg::contiguous_range Pattern&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Creates an adaptor that includes the first matching pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pattern</td><td>The contiguous sequence to search for. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -317,6 +366,15 @@ template&lt;rg::range Range&gt; </div>
 </table>
 </div><div class="memdoc">
 
+<p>Pipes a range into the dropLast adaptor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>The range whose last value should be removed. </td></tr>
+    <tr><td class="paramname">adaptor</td><td>The dropLast adaptor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="a59945c45a2268868d47c8706fadc6e15" name="a59945c45a2268868d47c8706fadc6e15"></a>
@@ -340,6 +398,15 @@ template&lt;rg::viewable_range Range, rg::contiguous_range Pattern, bool Inclusi
       </table>
 </div><div class="memdoc">
 
+<p>Pipes a range into an UntilMatch adaptor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>The viewable input range to scan. </td></tr>
+    <tr><td class="paramname">adaptor</td><td>The stored termination pattern and inclusion mode. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a id="ab7f0af003b080130d1c9985872875e7f" name="ab7f0af003b080130d1c9985872875e7f"></a>
@@ -360,6 +427,16 @@ requires ByteLike&lt;std::ranges::range_value_t&lt;R&gt;&gt;</div>
       </table>
 </div><div class="memdoc">
 
+<p>Views a byte-like range as a read-only byte span. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>A contiguous, viewable range whose values satisfy <a class="el" href="concept_hermes_1_1_byte_like.html">ByteLike</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A span over the same storage, reinterpreted as <span class="tt">std::byte</span>.</dd></dl>
+<p>The returned span does not own the data. The range must remain alive and its storage must not be invalidated while the span is being used. </p>
+
 </div>
 </div>
 <a id="a9813b3d181c410db40297a5cdb7e7f48" name="a9813b3d181c410db40297a5cdb7e7f48"></a>
@@ -378,6 +455,20 @@ template&lt;bool Inclusive = false, rg::contiguous_range Pattern&gt; </div>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Creates an adaptor that stops at the pattern. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Inclusive</td><td>Whether the matching pattern is included in the output. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pattern</td><td>The contiguous sequence to search for. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -401,6 +492,8 @@ template&lt;bool Inclusive = false, rg::contiguous_range Pattern&gt; </div>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>The pipe adaptor used as <span class="tt">range | <a class="el" href="#a8d64941b828fa10f6eda66670a2c8a42" title="The pipe adaptor used as range | dropLast.">dropLast</a></span>. </p>
 
 </div>
 </div>

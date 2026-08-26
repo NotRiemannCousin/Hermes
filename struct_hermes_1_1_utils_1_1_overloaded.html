@@ -156,13 +156,20 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>Combines several function objects into one overloaded function object.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_overloads_8hpp_source.html">Overloads.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Hermes::Utils::Overloaded&lt; Ts &gt;:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="struct_hermes_1_1_utils_1_1_overloaded__inherit__graph.svg" width="206" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;class... Ts&gt;<br />
+struct Hermes::Utils::Overloaded&lt; Ts &gt;</div><p>Combines several function objects into one overloaded function object. </p>
+<p>This is mainly useful with std::visit, where each lambda handles one alternative of a variant. The helper inherits every callable and exposes all their operator() overloads. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/Hermes/Utils/<a class="el" href="_overloads_8hpp_source.html">Overloads.hpp</a></li>
 </ul>
 </div><!-- contents -->

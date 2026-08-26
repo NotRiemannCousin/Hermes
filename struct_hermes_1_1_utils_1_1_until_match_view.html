@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>A range whose end is determined by the first occurrence of a pattern.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_until_match_8hpp_source.html">UntilMatch.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;:</div>
@@ -166,21 +169,31 @@ Inheritance diagram for Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclus
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Iterator" id="r_Iterator"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html">Iterator</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The iterator used to scan the input and detect the pattern.  <a href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:a21f1615f346e97745cbf1145901ffa7c" id="r_a21f1615f346e97745cbf1145901ffa7c"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a21f1615f346e97745cbf1145901ffa7c">Type</a> = rg::range_value_t&lt;Range&gt;</td></tr>
+<tr class="memdesc:a21f1615f346e97745cbf1145901ffa7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The value type yielded by the input range.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae5deee47dfcfd4d2ea5979c964aea495" id="r_ae5deee47dfcfd4d2ea5979c964aea495"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ae5deee47dfcfd4d2ea5979c964aea495">UntilMatchView</a> (Range &amp;&amp;base, Pattern pattern)</td></tr>
+<tr class="memdesc:ae5deee47dfcfd4d2ea5979c964aea495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructs a lazy view over a range and a contiguous match pattern.  <br /></td></tr>
 <tr class="memitem:ad318a3298374613027c00d5b2a6bbbe7" id="r_ad318a3298374613027c00d5b2a6bbbe7"><td class="memItemLeft"><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html">Iterator</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad318a3298374613027c00d5b2a6bbbe7">begin</a> ()</td></tr>
+<tr class="memdesc:ad318a3298374613027c00d5b2a6bbbe7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an iterator positioned at the beginning of the view.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af7f7e5f1041229b72072c3a8e6eb987f" id="r_af7f7e5f1041229b72072c3a8e6eb987f"><td class="memItemLeft">static std::default_sentinel_t&#160;</td><td class="memItemRight"><a class="el" href="#af7f7e5f1041229b72072c3a8e6eb987f">end</a> ()</td></tr>
+<tr class="memdesc:af7f7e5f1041229b72072c3a8e6eb987f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the sentinel used to mark the end of the view.  <br /></td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&gt;<br />
+requires ComparableRange&lt;Range, Pattern&gt;<br />
+struct Hermes::Utils::UntilMatchView&lt; Range, Pattern, Inclusive &gt;</div><p>A range whose end is determined by the first occurrence of a pattern. </p>
+<p><a class="el" href="struct_hermes_1_1_utils_1_1_until_match_view.html" title="A range whose end is determined by the first occurrence of a pattern.">UntilMatchView</a> consumes Range lazily and stops when Pattern is found. When Inclusive is false, the matching pattern is excluded. When true, it is included before the view ends. The view keeps a history buffer to detect a match without requiring Range to be multi-pass. </p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a21f1615f346e97745cbf1145901ffa7c" name="a21f1615f346e97745cbf1145901ffa7c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a21f1615f346e97745cbf1145901ffa7c">&#9670;&#160;</a></span>Type</h2>
 
@@ -194,6 +207,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The value type yielded by the input range. </p>
 
 </div>
 </div>
@@ -219,6 +234,15 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
       </table>
 </div><div class="memdoc">
 
+<p>Constructs a lazy view over a range and a contiguous match pattern. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">base</td><td>The input range to scan. </td></tr>
+    <tr><td class="paramname">pattern</td><td>The sequence that terminates the view. </td></tr>
+  </table>
+  </dd>
+</dl>
+
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
@@ -238,6 +262,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Returns an iterator positioned at the beginning of the view. </p>
 
 </div>
 </div>
@@ -265,6 +291,8 @@ template&lt;rg::input_range Range, rg::contiguous_range Pattern, bool Inclusive&
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Returns the sentinel used to mark the end of the view. </p>
 
 </div>
 </div>
