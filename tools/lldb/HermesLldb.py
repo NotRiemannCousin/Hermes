@@ -208,7 +208,10 @@ def IpEndpointSummary(value, _dict):
 def __lldb_init_module(debugger, _dict):
     recv_stream_names = "^Hermes::(DefaultTransferPolicy|TlsTransferPolicy)<.*>::RecvStream<.*>$"
 
-    debugger.HandleCommand(f'type summary add -F HermesLldb.RecvStreamSummary -x "{recv_stream_names}"')
+    debugger.HandleCommand('type category delete Hermes')
 
-    debugger.HandleCommand('type summary add -F HermesLldb.IpAddressSummary -x "^Hermes::IpAddress$"')
-    debugger.HandleCommand('type summary add -F HermesLldb.IpEndpointSummary -x "^Hermes::IpEndpoint$"')
+    debugger.HandleCommand(f'type summary add -w Hermes -F HermesLldb.RecvStreamSummary -x "{recv_stream_names}"')
+    debugger.HandleCommand('type summary add -w Hermes -F HermesLldb.IpAddressSummary -x "^Hermes::IpAddress$"')
+    debugger.HandleCommand('type summary add -w Hermes -F HermesLldb.IpEndpointSummary -x "^Hermes::IpEndpoint$"')
+
+    debugger.HandleCommand('type category enable Hermes')
