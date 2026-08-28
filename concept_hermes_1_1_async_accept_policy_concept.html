@@ -184,22 +184,22 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concept_hermes
 </div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages the server-side accept lifecycle asynchronously. </p>
 <p>Async counterpart of <span class="tt">AcceptPolicyConcept</span>. The accept operation returns a sender instead of blocking, enabling the server to process many concurrent connections without occupying a thread per accept call. <span class="tt">Listen()</span> intentionally remains synchronous, as <span class="tt">bind</span> and <span class="tt">listen</span> are non-blocking OS calls that complete instantly.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md30"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Configuration</h3>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::ListenOptions </div>
 </div><!-- fragment --><p> A struct defining settings for the listening socket (e.g., REUSE_ADDRESS, buffer sizes). Used to modify <span class="tt">Listen()</span> behavior.</p>
 <div class="fragment"><div class="line"><span class="keyword">typename</span> Policy::AcceptOptions </div>
 </div><!-- fragment --><p> A struct defining per-connection settings (e.g., TCP_NODELAY, handshake timeout). Must also expose a <span class="tt">scheduler</span> field to select the execution context for <span class="tt">Accept()</span>.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Initialization</h3>
 <div class="fragment"><div class="line">policy.Listen(data, backlog, opt) -&gt; <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> </div>
 <div class="ttc" id="anamespace_hermes_html_aac8abc3bdd5c80fc21e25034b874f0ed"><div class="ttname"><a href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:67</div></div>
 </div><!-- fragment --><p> Binds and begins listening. Synchronous — <span class="tt">bind</span> and <span class="tt">listen</span> are non-blocking OS calls that complete immediately and must not be deferred to a sender.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Connection</h3>
 <div class="fragment"><div class="line">policy.Accept(data, acceptedData, opt) -&gt; stdexec::sender </div>
 </div><!-- fragment --><p> Waits for and accepts an incoming connection without blocking. <span class="tt">acceptedData</span> is a child model (via <span class="tt">MakeChild()</span>) whose <span class="tt">socket</span> and <span class="tt">endpoint</span> will be filled on completion. Handles specific behaviors like server-side TLS handshakes or versioning. Delivers <span class="tt">ConnectionResultOper</span> through the sender's value channel on completion.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md33"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Cleanup</h3>
 <div class="fragment"><div class="line">policy.Close(data) -&gt; <span class="keywordtype">void</span> </div>
 </div><!-- fragment --><p> Stops listening and gracefully closes the server socket. Synchronous — must not schedule work or block on a sender.</p>

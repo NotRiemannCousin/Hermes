@@ -1,6 +1,5 @@
 var namespace_hermes =
 [
-    [ "details_", "namespace_hermes_1_1details__.html", "namespace_hermes_1_1details__" ],
     [ "Utils", "namespace_hermes_1_1_utils.html", "namespace_hermes_1_1_utils" ],
     [ "AsyncClientSocket", "struct_hermes_1_1_async_client_socket.html", "struct_hermes_1_1_async_client_socket" ],
     [ "AsyncListenerSocket", "struct_hermes_1_1_async_listener_socket.html", "struct_hermes_1_1_async_listener_socket" ],

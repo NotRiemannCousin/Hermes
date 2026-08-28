@@ -236,12 +236,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('__base_8hpp_so
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">#pragma region TransferPolicyConcept</span></div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="foldopen" id="foldopen00128" data-start="{" data-end="}">
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1details__.html">  128</a></span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes_1_1details__.html">details_</a> {</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keyword">namespace </span>details_ {</div>
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keyword">template</span>&lt;<span class="keyword">class</span> Policy&gt;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf">  130</a></span>        <span class="keyword">using </span><a class="code hl_typedef" href="namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf">RecvStreamT</a> = <span class="keyword">typename</span> Policy::template RecvStream&lt;std::byte&gt;;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        <span class="keyword">using </span>RecvStreamT = <span class="keyword">typename</span> Policy::template RecvStream&lt;std::byte&gt;;</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    }</div>
-</div>
 <div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span></div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Policy, <span class="keyword">class</span> SocketData&gt;</div>
 <div class="foldopen" id="foldopen00164" data-start="{" data-end="}">
@@ -249,9 +247,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('__base_8hpp_so
 <div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        &amp;&amp; Policy::Type == SocketData::Type</div>
 <div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span> </div>
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        &amp;&amp; <span class="keyword">requires</span>(SocketData&amp; data, Policy&amp; policy) {</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            { <a class="code hl_typedef" href="namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf">details_::RecvStreamT&lt;Policy&gt;</a>{ data, policy } } -&gt; std::ranges::input_range;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            { details_::RecvStreamT&lt;Policy&gt;{ data, policy } } -&gt; std::ranges::input_range;</div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        }</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        &amp;&amp; <span class="keyword">requires</span>(<a class="code hl_typedef" href="namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf">details_::RecvStreamT&lt;Policy&gt;</a>&amp; range) {</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        &amp;&amp; <span class="keyword">requires</span>(details_::RecvStreamT&lt;Policy&gt;&amp; range) {</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            { *range.begin() } -&gt; std::same_as&lt;std::byte&gt;;</div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            { range.Error()  } -&gt; std::same_as&lt;ConnectionResultOper&gt;;</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        }</div>
@@ -396,9 +394,8 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('__base_8hpp_so
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span><span class="preprocessor">#pragma endregion</span></div>
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span> </div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
-<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes_1_1details__.html">details_</a> {</div>
-<div class="foldopen" id="foldopen00415" data-start="{" data-end="}">
-<div class="line"><a id="l00415" name="l00415"></a><span class="lineno"><a class="line" href="namespace_hermes_1_1details__.html#af8fd2d0b9130c0bf67bc9e4b28399953">  415</a></span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_hermes_1_1details__.html#af8fd2d0b9130c0bf67bc9e4b28399953">SetTimeout</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> socket, <span class="keyword">const</span> <span class="keywordtype">int</span> time) {</div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span>    <span class="keyword">namespace </span>details_ {</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        <span class="keyword">inline</span> <span class="keywordtype">void</span> SetTimeout(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> socket, <span class="keyword">const</span> <span class="keywordtype">int</span> time) {</div>
 <div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span><span class="preprocessor">#if defined(_WIN32) || defined(_WIN64)</span></div>
 <div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>            setsockopt(socket, SOL_SOCKET, SO_RCVTIMEO, <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(&amp;time), <span class="keyword">sizeof</span>(time));</div>
 <div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>            setsockopt(socket, SOL_SOCKET, SO_SNDTIMEO, <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(&amp;time), <span class="keyword">sizeof</span>(time));</div>
@@ -410,7 +407,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('__base_8hpp_so
 <div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>            setsockopt(socket, SOL_SOCKET, SO_SNDTIMEO, <span class="keyword">reinterpret_cast&lt;</span><span class="keyword">const </span><span class="keywordtype">char</span>*<span class="keyword">&gt;</span>(&amp;tv), <span class="keyword">sizeof</span>(tv));</div>
 <div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        }</div>
-</div>
 <div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>    }</div>
 <div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span> </div>
 <div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>}</div>
@@ -432,9 +428,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('__base_8hpp_so
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket&#39;s state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:62</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_transfer_policy_concept_html"><div class="ttname"><a href="concept_hermes_1_1_transfer_policy_concept.html">Hermes::TransferPolicyConcept</a></div><div class="ttdoc">Concept for a policy that manages data transfer operations.</div><div class="ttdef"><b>Definition</b> _base.hpp:164</div></div>
 <div class="ttc" id="aconcept_hermes_1_1_writable_contiguous_byte_range_html"><div class="ttname"><a href="concept_hermes_1_1_writable_contiguous_byte_range.html">Hermes::WritableContiguousByteRange</a></div><div class="ttdef"><b>Definition</b> _base.hpp:22</div></div>
-<div class="ttc" id="anamespace_hermes_1_1details___html"><div class="ttname"><a href="namespace_hermes_1_1details__.html">Hermes::details_</a></div><div class="ttdef"><b>Definition</b> _base.hpp:128</div></div>
-<div class="ttc" id="anamespace_hermes_1_1details___html_a07066d0a774cc0706a5722b96eef58bf"><div class="ttname"><a href="namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf">Hermes::details_::RecvStreamT</a></div><div class="ttdeci">typename Policy::template RecvStream&lt; std::byte &gt; RecvStreamT</div><div class="ttdef"><b>Definition</b> _base.hpp:130</div></div>
-<div class="ttc" id="anamespace_hermes_1_1details___html_af8fd2d0b9130c0bf67bc9e4b28399953"><div class="ttname"><a href="namespace_hermes_1_1details__.html#af8fd2d0b9130c0bf67bc9e4b28399953">Hermes::details_::SetTimeout</a></div><div class="ttdeci">void SetTimeout(const SocketFd socket, const int time)</div><div class="ttdef"><b>Definition</b> _base.hpp:415</div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:7</div></div>
 <div class="ttc" id="anamespace_hermes_html_a34ca1e6ac91cdd2076f71db2ece61ce6ab1c94ca2fbc3e78fc30069c8d0f01680"><div class="ttname"><a href="namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6ab1c94ca2fbc3e78fc30069c8d0f01680">Hermes::SupportedProtocolsFlags::All</a></div><div class="ttdeci">@ All</div><div class="ttdef"><b>Definition</b> SupportedProtocolsFlags.hpp:17</div></div>
 <div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a></div><div class="ttdeci">RecvModeEnum</div><div class="ttdoc">With All, the entire span will be filled, with Any the function will stop at the block received.</div><div class="ttdef"><b>Definition</b> _base.hpp:28</div></div>

@@ -81,14 +81,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "@ref example-tcp-server",
-"functions_func_n.html",
-"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a0f9ed521bc5b77ac24b3210b61d1282d",
-"namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fead536d7dc59308d82b20f59daca509cc7",
-"namespace_hermes.html#af1bc721cdf539a4fa545c282663222adaee3913ca35a42b1d586b93e52fae852e",
-"struct_hermes_1_1_default_async_connect_policy_1_1_options.html#a18ff5bf5b2b059729d5d985638529bc1",
-"struct_hermes_1_1_listener_socket.html#afac873ca8b33b9a6955d591e0104c302",
-"struct_hermes_1_1_utils_1_1_drop_last_view.html#ae21989b3dd85458120fab4f35a349e8f",
-"struct_hermes_1_1details___1_1_tls_session.html#aac3dbbe053dd1665b6524ca3a9f2e19d"
+"functions_i.html",
+"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a1ea30f12af99affea66ee4a18abb132b",
+"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196",
+"namespace_hermes.html#afaea2e3839330149f067b0ba0206e77da1f6f1a285a70b6073e5c16c6b42ec3e2",
+"struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7",
+"struct_hermes_1_1_server_socket.html#aaeef98d871221a80789d2bc2442bbd44",
+"struct_hermes_1_1_utils_1_1_until_match_view.html#a21f1615f346e97745cbf1145901ffa7c"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

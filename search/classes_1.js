@@ -3,9 +3,5 @@ var searchData=
   ['clientsocket_0',['ClientSocket',['../struct_hermes_1_1_client_socket.html',1,'Hermes']]],
   ['clientsocket_3c_20tlssocketdata_3c_3e_2c_20tlsconnectpolicy_3c_3e_2c_20tlstransferpolicy_3c_3e_20_3e_1',['ClientSocket&lt; TlsSocketData&lt;&gt;, TlsConnectPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt; &gt;',['../struct_hermes_1_1_client_socket.html',1,'Hermes']]],
   ['connectionerrorcategory_2',['ConnectionErrorCategory',['../struct_hermes_1_1_connection_error_category.html',1,'Hermes']]],
-  ['connectoptionsipv6base_3',['ConnectOptionsIpv6Base',['../struct_hermes_1_1details___1_1_connect_options_ipv6_base.html',1,'Hermes::details_']]],
-  ['connectoptionsipv6base_3c_20addressfamilyenum_3a_3ainet6_20_3e_4',['ConnectOptionsIpv6Base&lt; AddressFamilyEnum::Inet6 &gt;',['../struct_hermes_1_1details___1_1_connect_options_ipv6_base_3_01_address_family_enum_1_1_inet6_01_4.html',1,'Hermes::details_']]],
-  ['connectoptionsipv6base_3c_20data_3a_3afamily_20_3e_5',['ConnectOptionsIpv6Base&lt; Data::Family &gt;',['../struct_hermes_1_1details___1_1_connect_options_ipv6_base.html',1,'Hermes::details_']]],
-  ['connectoptionsipv6base_3c_20socketfamily_20_3e_6',['ConnectOptionsIpv6Base&lt; SocketFamily &gt;',['../struct_hermes_1_1details___1_1_connect_options_ipv6_base.html',1,'Hermes::details_']]],
-  ['credentials_7',['Credentials',['../struct_hermes_1_1_credentials.html',1,'Hermes']]]
+  ['credentials_3',['Credentials',['../struct_hermes_1_1_credentials.html',1,'Hermes']]]
 ];

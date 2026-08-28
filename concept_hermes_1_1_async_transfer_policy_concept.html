@@ -178,7 +178,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concept_hermes
 </div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for a policy that manages data transfer operations asynchronously. </p>
 <p>Async counterpart of <span class="tt">TransferPolicyConcept</span>. Send and receive operations return senders instead of blocking. We don't have <span class="tt">std::async_generator</span> neither async ranges support, so no stream alternative is proposed.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md29"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Sender-Based Buffer I/O</h3>
 <div class="fragment"><div class="line">policy.Recv(data, bufferRecv) -&gt; AsyncConnectionResultConcept </div>
 </div><!-- fragment --><p> Reads data from the socket into the provided <span class="tt">std::span&lt;std::byte&gt;</span> asynchronously. Delivers <span class="tt">StreamByteOper</span> through the sender's value channel on completion.</p>

@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <p><b>Status:</b> v0.5 — active development. Async sockets via <span class="tt">std::execution</span> are available. Linux is available. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md79"></a>
 Features</h1>
 <ul>
 <li><b>TCP</b> and <b>TCP over TLS</b> (via SChannel on Windows, OpenSSL on Linux — no third-party crypto dependency on Windows)</li>
@@ -177,19 +177,19 @@ Features</h1>
 <p>Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md81"></a>
 Installation</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md82"></a>
 pixi</h2>
 <blockquote class="doxtable">
 <p><em>Coming soon.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
 vcpkg</h2>
 <blockquote class="doxtable">
 <p><em>Maybe, someday, who knows.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
 Manual (CMake)</h2>
 <div class="fragment"><div class="line">include(CPM.cmake)</div>
 <div class="line"> </div>
@@ -201,7 +201,7 @@ Manual (CMake)</h2>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
 Example</h1>
 <p>The following example performs an HTTPS GET request, parsing the response incrementally using <span class="tt">RecvStream</span>. Notice how <span class="tt">UntilMatch</span> and range composition keep the parsing logic concise — no manual buffering.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/Sync/ClientSocket.hpp</a>&gt;</span></div>
@@ -236,7 +236,7 @@ Example</h1>
 <div class="line">    } };</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">constexpr</span> <span class="keyword">auto</span> mapError{ [](<span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a> error) -&gt; std::string {</div>
-<div class="line">        <span class="keyword">using </span><a class="code hl_enumvalue" href="namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20a902b0d55fddef6f8d651fe1035b7d4bd">Error</a> = <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a>;</div>
+<div class="line">        <span class="keyword">using </span>Error = <a class="code hl_enumeration" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a>;</div>
 <div class="line">        <span class="keywordflow">switch</span> (error) {</div>
 <div class="line">            <span class="keywordflow">case</span> Error::ResolveHostNotFound:</div>
 <div class="line">            <span class="keywordflow">case</span> Error::ResolveServiceNotFound:</div>
@@ -321,7 +321,6 @@ Example</h1>
 <div class="ttc" id="a_client_socket_8hpp_html"><div class="ttname"><a href="_client_socket_8hpp.html">ClientSocket.hpp</a></div></div>
 <div class="ttc" id="a_until_match_8hpp_html"><div class="ttname"><a href="_until_match_8hpp.html">UntilMatch.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div><div class="ttdoc">Creates an adaptor that stops at the pattern.</div></div>
-<div class="ttc" id="anamespace_hermes_1_1details___html_a004b3b9edf6449e8bc22d70bf320fa20a902b0d55fddef6f8d651fe1035b7d4bd"><div class="ttname"><a href="namespace_hermes_1_1details__.html#a004b3b9edf6449e8bc22d70bf320fa20a902b0d55fddef6f8d651fe1035b7d4bd">Hermes::details_::AcceptStateOpResult::Error</a></div><div class="ttdeci">@ Error</div><div class="ttdef"><b>Definition</b> ITlsAcceptStateMachine.hpp:7</div></div>
 <div class="ttc" id="anamespace_hermes_html_a682b34dbed834b2357c277d830472096"><div class="ttname"><a href="namespace_hermes.html#a682b34dbed834b2357c277d830472096">Hermes::RawTlsClient</a></div><div class="ttdeci">ClientSocket&lt; TlsSocketData&lt;&gt;, TlsConnectPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt; &gt; RawTlsClient</div><div class="ttdoc">Raw TLS client socket.</div><div class="ttdef"><b>Definition</b> ClientSocket.hpp:191</div></div>
 <div class="ttc" id="anamespace_hermes_html_abcdc7039ff863f7958fab5478142dfba"><div class="ttname"><a href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></div><div class="ttdeci">ConnectionErrorEnum</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:11</div></div>
 <div class="ttc" id="astruct_hermes_1_1_client_socket_html_a52d3f96f36a1a11c9dd44d2902564fab"><div class="ttname"><a href="struct_hermes_1_1_client_socket.html#a52d3f96f36a1a11c9dd44d2902564fab">Hermes::ClientSocket&lt; TlsSocketData&lt;&gt;, TlsConnectPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt; &gt;::Connect</a></div><div class="ttdeci">static ConnectionResult&lt; ClientSocket &gt; Connect(SocketData &amp;&amp;data) noexcept</div></div>
@@ -329,14 +328,14 @@ Example</h1>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a5d226f8b82d93f4516092cdbaa50df4a"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a></div><div class="ttdeci">static ConnectionResult&lt; IpEndpoint &gt; TryResolve(const std::string &amp;url, const std::string &amp;service=&quot;&quot;, SocketTypeEnum socketType=SocketTypeEnum::Stream)</div><div class="ttdoc">Tries to resolve a hostname and service into an IP endpoint.</div></div>
 <div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
 Roadmap</h1>
 <ul>
 <li>UDP sockets</li>
 <li>pixi and vcpkg packages</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
 Requirements</h1>
 <ul>
 <li>Windows 10 or newer / Linux</li>

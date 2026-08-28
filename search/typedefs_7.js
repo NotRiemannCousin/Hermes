@@ -12,6 +12,5 @@ var searchData=
   ['rawtlsclient_9',['RawTlsClient',['../namespace_hermes.html#a682b34dbed834b2357c277d830472096',1,'Hermes']]],
   ['rawtlslistener_10',['RawTlsListener',['../namespace_hermes.html#a30f3369cd037526b0a69b8f21007642c',1,'Hermes']]],
   ['rawtlsserver_11',['RawTlsServer',['../namespace_hermes.html#a159cf584f77d7bb4ee337d623625a960',1,'Hermes']]],
-  ['recvoptions_12',['RecvOptions',['../struct_hermes_1_1_client_socket.html#ab694d91fcf57206cdf45b20658affeeb',1,'Hermes::ClientSocket::RecvOptions'],['../struct_hermes_1_1_listener_socket.html#af299617927ded729a8dc8fd20bd65191',1,'Hermes::ListenerSocket::RecvOptions'],['../struct_hermes_1_1_server_socket.html#a34022d3e59c30d97b4b738b4ac5b7987',1,'Hermes::ServerSocket::RecvOptions']]],
-  ['recvstreamt_13',['RecvStreamT',['../namespace_hermes_1_1details__.html#a07066d0a774cc0706a5722b96eef58bf',1,'Hermes::details_']]]
+  ['recvoptions_12',['RecvOptions',['../struct_hermes_1_1_client_socket.html#ab694d91fcf57206cdf45b20658affeeb',1,'Hermes::ClientSocket::RecvOptions'],['../struct_hermes_1_1_listener_socket.html#af299617927ded729a8dc8fd20bd65191',1,'Hermes::ListenerSocket::RecvOptions'],['../struct_hermes_1_1_server_socket.html#a34022d3e59c30d97b4b738b4ac5b7987',1,'Hermes::ServerSocket::RecvOptions']]]
 ];
