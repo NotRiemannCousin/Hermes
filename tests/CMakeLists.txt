@@ -7,6 +7,7 @@ CPMFindPackage(
 
 include(GoogleTest)
 
+
 add_executable(
         HermesTests
 
@@ -20,6 +21,27 @@ add_executable(
         Utils/UntilMatchTests.cpp
         Socket/FastIoLoopTests.cpp
 )
+
+if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
+    find_program(OPENSSL_EXECUTABLE openssl REQUIRED)
+
+    add_custom_command(
+            OUTPUT  "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+            COMMAND ${OPENSSL_EXECUTABLE} req -x509 -newkey rsa:2048 -nodes
+            -keyout "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
+            -out "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
+            -days 3650 -subj "/CN=localhost"
+            COMMAND ${OPENSSL_EXECUTABLE} pkcs12 -export
+            -out "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+            -inkey "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
+            -in "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
+            -passout pass:
+            COMMENT "Generating TLS certificates"
+            VERBATIM
+    )
+    add_custom_target(GenerateTestCert DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
+    add_dependencies(HermesTests GenerateTestCert)
+endif()
 
 add_custom_command(
         TARGET HermesTests POST_BUILD
