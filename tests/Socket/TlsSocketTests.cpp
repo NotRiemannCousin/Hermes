@@ -338,9 +338,8 @@ TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {
     std::vector<std::byte> outBuf{};
     outBuf.resize(payloadSize);
 
-    for (std::size_t i{}; i < payloadSize; ++i) {
+    for (std::size_t i{}; i < payloadSize; ++i)
         outBuf[i] = static_cast<std::byte>(i & 0xff);
-    }
 
     std::jthread sender{[&] { EXPECT_TRUE(client->Send(outBuf).second.has_value()); }};
 

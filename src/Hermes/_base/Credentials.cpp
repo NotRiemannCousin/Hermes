@@ -446,7 +446,7 @@ namespace Hermes {
             }
 
             if (certInfo.caChain) {
-                for (int i{ 0 }; i < sk_X509_num(certInfo.caChain); ++i) {
+                for (int i{}; i < sk_X509_num(certInfo.caChain); ++i) {
                     X509* ca{ sk_X509_value(certInfo.caChain, i) };
                     if (useSelfStore) {
                         // Treat the bundled CAs as the trust anchor for incoming peers.
@@ -459,7 +459,7 @@ namespace Hermes {
             }
 
             return creds;
-        };
+        } };
 
         return ImportCertificate(certBuffer, password)
                 .and_then(makeCreds);

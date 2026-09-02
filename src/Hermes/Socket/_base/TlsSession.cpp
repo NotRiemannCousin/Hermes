@@ -445,14 +445,15 @@ namespace Hermes::details_ {
         if (!inBytes.empty())
             BIO_write(m_impl->m_rBio, inBytes.data(), static_cast<int>(inBytes.size()));
 
-        m_impl->m_decryptScratch.assign(inBytes.size(), std::byte{});
+        constexpr size_t k_maxPlaintext{ 0x10000 };
+        m_impl->m_decryptScratch.resize(k_maxPlaintext);
 
-        size_t totalRead = 0;
+        size_t totalRead{};
         ERR_clear_error();
 
-        while (totalRead < inBytes.size()) {
+        while (totalRead < k_maxPlaintext) {
             const int n{ SSL_read(m_impl->m_ssl, m_impl->m_decryptScratch.data() + totalRead,
-                                  static_cast<int>(inBytes.size() - totalRead)) };
+                                  static_cast<int>(k_maxPlaintext - totalRead)) };
             if (n > 0) {
                 totalRead += static_cast<size_t>(n);
             } else {

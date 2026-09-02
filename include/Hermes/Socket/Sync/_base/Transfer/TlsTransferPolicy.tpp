@@ -166,8 +166,7 @@ namespace Hermes {
         std::span<const std::byte> bufferSend,
         const SendOptions options
     ) noexcept {
-
-                if (!data.transferStateMachine)
+        if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsTransferPolicy>>();
 
         details_::ScopedNonBlocking nonBlocking{ data.socket, options.deadline.has_value() };
