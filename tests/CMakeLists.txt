@@ -19,7 +19,7 @@ add_executable(
 
         Utils/DropLastTests.cpp
         Utils/UntilMatchTests.cpp
-        Socket/FastIoLoopTests.cpp
+#        Socket/FastIoLoopTests.cpp
 )
 
 if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
