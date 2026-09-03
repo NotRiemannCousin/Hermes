@@ -87,10 +87,10 @@ namespace Hermes {
         return {};
     }
 #else
-    inline std::expected<void, int> CloseSocket(SocketFd socket) {
+    inline int CloseSocket(SocketFd socket) {
         return close(socket);
     }
-    inline int GetError() {
+    inline std::expected<void, int> GetError() {
         if (const int err{ errno })
             return std::unexpected{ err };
         return {};
