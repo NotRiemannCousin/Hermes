@@ -1,6 +1,5 @@
 #pragma once
 #include <Hermes/Config.hpp>
-#if HERMES_ENABLE_TLS
 
 #include <Hermes/Socket/_base.hpp>
 #include <chrono>
@@ -81,5 +80,3 @@ namespace Hermes::details_ {
 #endif
     }
 }
-
-#endif
