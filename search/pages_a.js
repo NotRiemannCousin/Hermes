@@ -1,11 +1,11 @@
 var searchData=
 [
-  ['lazy_20range_20based_20receive_0',['Lazy Range-Based Receive',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md70',1,'']]],
-  ['learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md8',1,'']]],
-  ['lego_2',['How the facade composes the lego',['../policy-architecture.html#autotoc_md26',1,'']]],
-  ['library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md8',1,'']]],
-  ['lifting_20directly_4',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md36',1,'']]],
-  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_5',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md25',1,'']]],
+  ['lazy_20range_20based_20receive_0',['Lazy Range-Based Receive',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md55',1,'']]],
+  ['learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md29',1,'']]],
+  ['lego_2',['How the facade composes the lego',['../policy-architecture.html#autotoc_md38',1,'']]],
+  ['library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md29',1,'']]],
+  ['lifting_20directly_4',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md88',1,'']]],
+  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_5',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md44',1,'']]],
   ['linking_6',['Paragraph Linking',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#extension-para',1,'']]],
-  ['listen_20and_20accept_20options_7',['Listen and accept options',['../policy-options.html#autotoc_md12',1,'']]]
+  ['listen_20and_20accept_20options_7',['Listen and accept options',['../policy-options.html#autotoc_md19',1,'']]]
 ];

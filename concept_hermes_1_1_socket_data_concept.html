@@ -179,19 +179,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('concept_hermes
 </div><!-- fragment --><a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Concept for the context representing a socket's state and cross-policy coordination. </p>
 <p>A self-contained struct that aggregates the raw socket handle, its corresponding endpoint, static metadata (Family/Type), and any required cross-policy state (e.g., renegotiation callbacks). Enforces move-only semantics, as copying an underlying OS socket descriptor leads to double-close bugs.</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
 Type Requirements</h3>
 <ul>
 <li>Must define <span class="tt">EndpointType</span> which satisfies <span class="tt">EndpointConcept</span>.</li>
 <li>Must be <span class="tt">std::movable</span> and strictly <b>not</b> <span class="tt">std::copyable</span>.</li>
 </ul>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
 Static Metadata</h3>
 <div class="fragment"><div class="line">SocketData::Family </div>
 </div><!-- fragment --><p> A <span class="tt">constexpr AddressFamilyEnum</span> representing the address family (e.g., IPv4, IPv6).</p>
 <div class="fragment"><div class="line">SocketData::Type </div>
 </div><!-- fragment --><p> A <span class="tt">constexpr SocketTypeEnum</span> representing the socket type (e.g., Stream, Datagram).</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
 Instance Members</h3>
 <div class="fragment"><div class="line">data.socket </div>
 </div><!-- fragment --><p> The underlying OS <span class="tt">SocketFd</span> handle.</p>
