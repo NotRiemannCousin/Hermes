@@ -200,9 +200,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_transfer_
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            Iterator begin();</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keyword">static</span> std::default_sentinel_t end();</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> Error() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <a class="code hl_typedef" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a> Error() <span class="keyword">const</span>;</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a5639d3df5aea3d9e78027b843ee3cbb2">Receive</a>();</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <a class="code hl_typedef" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a> <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a5639d3df5aea3d9e78027b843ee3cbb2">Receive</a>();</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <a class="code hl_enumvalue" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a>* m_data;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            TlsTransferPolicy* m_policy;</div>
@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_transfer_
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordtype">size_t</span> index{};</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordtype">size_t</span> size{};</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            std::array&lt;std::byte, 4096&gt; buffer{};</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> status{};</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <a class="code hl_typedef" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a> status{};</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        };</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        std::unique_ptr&lt;StreamState&gt; m_streamState{ <span class="keyword">nullptr</span> };</div>
@@ -255,7 +255,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_transfer_
 <div class="ttc" id="anamespace_hermes_html_a682871a56b158ef823498bc68e94f0ac"><div class="ttname"><a href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">Hermes::StreamByteOper</a></div><div class="ttdeci">std::pair&lt; size_t, ConnectionResultOper &gt; StreamByteOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:70</div></div>
 <div class="ttc" id="anamespace_hermes_html_a70f3f20e9423957ca2e09906ba1fc8a1a5639d3df5aea3d9e78027b843ee3cbb2"><div class="ttname"><a href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a5639d3df5aea3d9e78027b843ee3cbb2">Hermes::SocketShutdownEnum::Receive</a></div><div class="ttdeci">@ Receive</div><div class="ttdef"><b>Definition</b> SocketShutdownEnum.hpp:18</div></div>
 <div class="ttc" id="anamespace_hermes_html_a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3"><div class="ttname"><a href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Hermes::SocketShutdownEnum::Send</a></div><div class="ttdeci">@ Send</div><div class="ttdef"><b>Definition</b> SocketShutdownEnum.hpp:19</div></div>
-<div class="ttc" id="anamespace_hermes_html_aac8abc3bdd5c80fc21e25034b874f0ed"><div class="ttname"><a href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:68</div></div>
+<div class="ttc" id="anamespace_hermes_html_a79d14e095855fb69409fa672244c08ba"><div class="ttname"><a href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; void &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:68</div></div>
 <div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

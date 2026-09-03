@@ -30,6 +30,7 @@ var NAVTREEINDEX1 =
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330bae0c159bc3ea69a90b0c0b041bc07d1dc":[4,0,0,0,52,38],
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330baec765f1adc3b4253f2d3b131a4a8618f":[4,0,0,0,52,12],
 "namespace_hermes.html#a05352a65fe09716dd93d912ef12bdb6a":[4,0,0,0,31],
+"namespace_hermes.html#a0c757ae42f6dca2f2ad59106cf7866f2":[4,0,0,0,61],
 "namespace_hermes.html#a2aae9cfdb4512653f00d7d928692c445":[4,0,0,0,50],
 "namespace_hermes.html#a2aae9cfdb4512653f00d7d928692c445a30b7fdeebc36988717d0e274cc2e7520":[4,0,0,0,50,1],
 "namespace_hermes.html#a2aae9cfdb4512653f00d7d928692c445a81baba40274ccb30f9fdfa2c73cf0482":[4,0,0,0,50,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX1 =
 "namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a34a9b72317b9ddf8cfce253dab73e020":[4,0,0,0,46,55],
 "namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3513165a506c6057d7812e71b00932b4":[4,0,0,0,45,108],
 "namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3513165a506c6057d7812e71b00932b4":[4,0,0,0,46,108],
-"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3ae00675e203a413518ad56689446cb8":[4,0,0,0,45,2],
-"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3ae00675e203a413518ad56689446cb8":[4,0,0,0,45,25]
+"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3ae00675e203a413518ad56689446cb8":[4,0,0,0,45,2]
 };

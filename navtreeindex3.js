@@ -1,11 +1,12 @@
 var NAVTREEINDEX3 =
 {
+"namespace_hermes.html#a79d14e095855fb69409fa672244c08ba":[4,0,0,0,28],
+"namespace_hermes.html#a804025810e605be277a9c534e5790013":[4,0,0,0,57],
 "namespace_hermes.html#a804025810e605be277a9c534e5790013a65e65c8ab0d8609ce12fc68a03cb8e00":[4,0,0,0,57,2],
 "namespace_hermes.html#a804025810e605be277a9c534e5790013a9a445c0052afc6b891014121d90c05f1":[4,0,0,0,57,3],
 "namespace_hermes.html#a804025810e605be277a9c534e5790013aab637eea3fd309b4e7614732335d828b":[4,0,0,0,57,4],
 "namespace_hermes.html#a804025810e605be277a9c534e5790013ac3177658ef36637801bea6fd4f1a1e92":[4,0,0,0,57,1],
 "namespace_hermes.html#a804025810e605be277a9c534e5790013aeae835e83c0494a376229f254f7d3392":[4,0,0,0,57,0],
-"namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e":[4,0,0,0,60],
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7":[4,0,0,0,53],
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7a0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,53,2],
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7a0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,53,23],
@@ -50,11 +51,11 @@ var NAVTREEINDEX3 =
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7adbea823d86c476460b1d2d5646bd73d1":[4,0,0,0,53,22],
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7ae0c159bc3ea69a90b0c0b041bc07d1dc":[4,0,0,0,53,38],
 "namespace_hermes.html#a8d53b4ecb3bc5d0bb59a38e4932498c7aec765f1adc3b4253f2d3b131a4a8618f":[4,0,0,0,53,12],
-"namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640":[4,0,0,0,61],
+"namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640":[4,0,0,0,62],
 "namespace_hermes.html#a978167d01a4fcd4ce77986d23214f0ee":[4,0,0,0,32],
 "namespace_hermes.html#aa14d29e8f9d418585c54877eefb50022":[4,0,0,0,29],
 "namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e":[4,0,0,0,36],
-"namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed":[4,0,0,0,28],
+"namespace_hermes.html#aad9c458472faad214cb0c031770ed671":[4,0,0,0,60],
 "namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8":[4,0,0,0,34],
 "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba":[4,0,0,0,42],
 "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa04a5d66da5997f2f05c1c8c2398ee520":[4,0,0,0,42,4],
@@ -248,6 +249,5 @@ var NAVTREEINDEX3 =
 "struct_hermes_1_1_client_socket.html#ab694d91fcf57206cdf45b20658affeeb":[4,2,0,0,1,2],
 "struct_hermes_1_1_client_socket.html#abafe3429f54b8a116174067af9593db5":[4,0,0,0,1,16],
 "struct_hermes_1_1_client_socket.html#abafe3429f54b8a116174067af9593db5":[4,2,0,0,1,16],
-"struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09":[4,0,0,0,1,11],
-"struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09":[4,2,0,0,1,11]
+"struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09":[4,0,0,0,1,11]
 };

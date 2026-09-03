@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_client_
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">using </span>RawTcpAsyncClient = AsyncClientSocket&lt;&gt;;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">using </span>RawTlsAsyncClient = AsyncClientSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncConnectPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="comment">// using RawUdpAsyncClient = AsyncClientSocket&lt;DefaultSocketData&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;&gt;;</span></div>

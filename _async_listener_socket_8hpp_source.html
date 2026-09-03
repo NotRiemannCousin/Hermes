@@ -216,7 +216,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_listene
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    };</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keyword">using </span>RawTcpAsyncListener = AsyncListenerSocket&lt;&gt;;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keyword">using </span>RawTlsAsyncListener = AsyncListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keyword">static_assert</span>(std::same_as&lt;RawTlsAsyncListener::EndpointType, IpAddress&gt;);</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="preprocessor">#endif</span></div>

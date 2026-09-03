@@ -28,7 +28,7 @@ var namespace_hermes =
     [ "ByteData", "namespace_hermes.html#a570f2292affb528836502a232031bf34", null ],
     [ "ByteDataSpan", "namespace_hermes.html#aeaab1e32effe6d5bd58938d53cee4701", null ],
     [ "ConnectionResult", "namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97", null ],
-    [ "ConnectionResultOper", "namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed", null ],
+    [ "ConnectionResultOper", "namespace_hermes.html#a79d14e095855fb69409fa672244c08ba", null ],
     [ "IoCount", "namespace_hermes.html#aa14d29e8f9d418585c54877eefb50022", null ],
     [ "LongIoCount", "namespace_hermes.html#a69f852ca6753d1c7a01c7aa4eb3b43a5", null ],
     [ "RawTcpClient", "namespace_hermes.html#a05352a65fe09716dd93d912ef12bdb6a", null ],
@@ -757,6 +757,7 @@ var namespace_hermes =
       [ "XClients", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a7c654ce83e512d58668b970b08463c3c", null ],
       [ "XServers", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a1a5db63873f812ffe1ac464cd28c4c7c", null ]
     ] ],
-    [ "CloseSocket", "namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e", null ],
+    [ "CloseSocket", "namespace_hermes.html#aad9c458472faad214cb0c031770ed671", null ],
+    [ "GetError", "namespace_hermes.html#a0c757ae42f6dca2f2ad59106cf7866f2", null ],
     [ "make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ]
 ];

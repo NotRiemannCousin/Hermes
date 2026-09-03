@@ -203,8 +203,8 @@ Typedefs</h2></td></tr>
 <tr class="memitem:aeaab1e32effe6d5bd58938d53cee4701" id="r_aeaab1e32effe6d5bd58938d53cee4701"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aeaab1e32effe6d5bd58938d53cee4701">ByteDataSpan</a> = std::span&lt;std::byte&gt;</td></tr>
 <tr class="memitem:acce89a5199fe55f63e86cfea1fe02e97" id="r_acce89a5199fe55f63e86cfea1fe02e97"><td class="memTemplParams" colspan="2">template&lt;class T&gt; </td></tr>
 <tr class="memitem:acce89a5199fe55f63e86cfea1fe02e97 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a> = std::expected&lt;T, <a class="el" href="#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a>&gt;</td></tr>
-<tr class="memitem:aac8abc3bdd5c80fc21e25034b874f0ed" id="r_aac8abc3bdd5c80fc21e25034b874f0ed"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> = <a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;std::monostate&gt;</td></tr>
-<tr class="memitem:a682871a56b158ef823498bc68e94f0ac" id="r_a682871a56b158ef823498bc68e94f0ac"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a> = std::pair&lt;size_t, <a class="el" href="#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a>&gt;</td></tr>
+<tr class="memitem:a79d14e095855fb69409fa672244c08ba" id="r_a79d14e095855fb69409fa672244c08ba"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a> = <a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;void&gt;</td></tr>
+<tr class="memitem:a682871a56b158ef823498bc68e94f0ac" id="r_a682871a56b158ef823498bc68e94f0ac"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a> = std::pair&lt;size_t, <a class="el" href="#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a>&gt;</td></tr>
 <tr class="memitem:ab0a8dd20db1e44bcc97b60bf041aa8f8" id="r_ab0a8dd20db1e44bcc97b60bf041aa8f8"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> = int</td></tr>
 <tr class="memitem:aa14d29e8f9d418585c54877eefb50022" id="r_aa14d29e8f9d418585c54877eefb50022"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aa14d29e8f9d418585c54877eefb50022">IoCount</a> = ssize_t</td></tr>
 <tr class="memitem:a69f852ca6753d1c7a01c7aa4eb3b43a5" id="r_a69f852ca6753d1c7a01c7aa4eb3b43a5"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a69f852ca6753d1c7a01c7aa4eb3b43a5">LongIoCount</a> = unsigned long</td></tr>
@@ -1112,7 +1112,8 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a971874a9c463483d2f3258b0f29f4640" id="r_a971874a9c463483d2f3258b0f29f4640"><td class="memItemLeft">std::error_code&#160;</td><td class="memItemRight"><a class="el" href="#a971874a9c463483d2f3258b0f29f4640">make_error_code</a> (<a class="el" href="#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a> e) noexcept</td></tr>
-<tr class="memitem:a84da6a9b983c4c8b18c94590db69132e" id="r_a84da6a9b983c4c8b18c94590db69132e"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a84da6a9b983c4c8b18c94590db69132e">CloseSocket</a> (<a class="el" href="#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> socket)</td></tr>
+<tr class="memitem:aad9c458472faad214cb0c031770ed671" id="r_aad9c458472faad214cb0c031770ed671"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#aad9c458472faad214cb0c031770ed671">CloseSocket</a> (<a class="el" href="#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> socket)</td></tr>
+<tr class="memitem:a0c757ae42f6dca2f2ad59106cf7866f2" id="r_a0c757ae42f6dca2f2ad59106cf7866f2"><td class="memItemLeft">std::expected&lt; void, int &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a0c757ae42f6dca2f2ad59106cf7866f2">GetError</a> ()</td></tr>
 </table>
 <a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="a570f2292affb528836502a232031bf34" name="a570f2292affb528836502a232031bf34"></a>
@@ -1161,14 +1162,14 @@ template&lt;class T&gt; </div>
 
 </div>
 </div>
-<a id="aac8abc3bdd5c80fc21e25034b874f0ed" name="aac8abc3bdd5c80fc21e25034b874f0ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac8abc3bdd5c80fc21e25034b874f0ed">&#9670;&#160;</a></span>ConnectionResultOper</h2>
+<a id="a79d14e095855fb69409fa672244c08ba" name="a79d14e095855fb69409fa672244c08ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79d14e095855fb69409fa672244c08ba">&#9670;&#160;</a></span>ConnectionResultOper</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#aac8abc3bdd5c80fc21e25034b874f0ed">Hermes::ConnectionResultOper</a> = <a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;std::monostate&gt;</td>
+          <td class="memname">using <a class="el" href="#a79d14e095855fb69409fa672244c08ba">Hermes::ConnectionResultOper</a> = <a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;void&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -1302,7 +1303,7 @@ template&lt;class T&gt; </div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="#a682871a56b158ef823498bc68e94f0ac">Hermes::StreamByteOper</a> = std::pair&lt;size_t, <a class="el" href="#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a>&gt;</td>
+          <td class="memname">using <a class="el" href="#a682871a56b158ef823498bc68e94f0ac">Hermes::StreamByteOper</a> = std::pair&lt;size_t, <a class="el" href="#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a>&gt;</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -2516,8 +2517,8 @@ template&lt;class T&gt; </div>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Function Documentation</h2>
-<a id="a84da6a9b983c4c8b18c94590db69132e" name="a84da6a9b983c4c8b18c94590db69132e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a84da6a9b983c4c8b18c94590db69132e">&#9670;&#160;</a></span>CloseSocket()</h2>
+<a id="aad9c458472faad214cb0c031770ed671" name="aad9c458472faad214cb0c031770ed671"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad9c458472faad214cb0c031770ed671">&#9670;&#160;</a></span>CloseSocket()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -2526,9 +2527,34 @@ template&lt;class T&gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">int Hermes::CloseSocket </td>
+          <td class="memname">std::expected&lt; void, int &gt; Hermes::CloseSocket </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a></td>          <td class="paramname"><span class="paramname"><em>socket</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel inline">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a0c757ae42f6dca2f2ad59106cf7866f2" name="a0c757ae42f6dca2f2ad59106cf7866f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c757ae42f6dca2f2ad59106cf7866f2">&#9670;&#160;</a></span>GetError()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Hermes::GetError </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
