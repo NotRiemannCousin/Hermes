@@ -48,7 +48,7 @@ if(HERMES_ENABLE_TLS)
             VERBATIM
     )
 endif()
-if(HERMES_ENABLE_ASYNC)
+if(HERMES_ENABLE_NATIVE_SCHEDULER)
     target_sources(HermesTests PRIVATE Socket/FastIoLoopTests.cpp)
 endif()
 
