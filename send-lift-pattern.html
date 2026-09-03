@@ -155,10 +155,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('send-lift-patt
   <div class="headertitle"><div class="title">SendAndLift and Composition with and_then </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md40"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
 SendAndLift and Composition with and_then</h1>
 <p><span class="tt">Send</span> reports whether it managed to send everything, <span class="tt">total</span> on success is always equal to the buffer size, <span class="tt">Send</span> either sends it all or returns an error. <span class="tt">SendAndLift</span> exists to carry the socket forward through a <span class="tt">std::expected</span> pipeline once that check passes, instead of a hand-written lambda re-capturing it at every step.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md41"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md55"></a>
 The problem it replaces</h2>
 <p>Without a lift, threading a socket through <span class="tt">.and_then()</span> after a <span class="tt">Send</span> looks like this.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> s_makeRequest{ [&amp;](Hermes::RawTlsClient&amp;&amp; client) {</div>
@@ -170,7 +170,7 @@ The problem it replaces</h2>
 <div class="line">    <span class="keywordflow">return</span> val.second.transform(s_returnClient);</div>
 <div class="line">} };</div>
 </div><!-- fragment --><p>The lambda inside the lambda exists for one reason, <span class="tt">Send</span> gives you back a byte count and an error, not the socket.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md42"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md56"></a>
 SendAndLift is a factory, not the operation itself</h2>
 <p><span class="tt">SendAndLift</span> doesn't send anything by itself. It's a <span class="tt">static</span> function that captures the data and options you give it and returns a lambda, and that lambda is what performs the send once <span class="tt">.and_then()</span> invokes it with a socket.</p>
 <div class="fragment"><div class="line">[[nodiscard]] <span class="keyword">static</span> <span class="keyword">auto</span> SendAndLift(R&amp;&amp; data) <span class="keyword">noexcept</span></div>
@@ -192,19 +192,19 @@ SendAndLift is a factory, not the operation itself</h2>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> s_makeRequest{ ClientSocket::SendAndLift(url.FormatRequest()) };</div>
 <div class="line"><span class="comment">// ...</span></div>
 <div class="line"><span class="keywordflow">return</span> connectResult.and_then(s_makeRequest);</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md45"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md57"></a>
 Why a factory instead of calling Send and lifting directly</h2>
 <p>An earlier version of this pattern tried to make <span class="tt">SendAndLift</span> an instance method you call directly, so a step in a chain could pass <span class="tt">&amp;Socket::SendAndLift</span> straight into <span class="tt">.and_then()</span>. That ran into two separate problems, and the factory shape here avoids both at once.</p>
 <p>Taking the address of an overloaded member function is ambiguous without a full argument list to pick a candidate from, so <span class="tt">SendAndLift(data)</span> and <span class="tt">SendAndLift(data, options)</span> couldn't share one name if either was meant to be taken by address. As a factory, <span class="tt">SendAndLift(data)</span> is called with parentheses, like every other overload in the library, and returns a plain lambda. Nothing ever takes its address, so the two overloads coexist the normal way.</p>
 <p>A <span class="tt">&amp;&amp;</span>-qualified instance method also doesn't compose cleanly with <span class="tt">std::expected::and_then</span>, since <span class="tt">and_then</span> forwards its contained value according to the value category of the <span class="tt">expected</span> object at that point in the chain, and a chain doesn't keep that value category rvalue at every step, an intermediate lambda that stores the socket in a named variable before returning it turns it into an lvalue, which a <span class="tt">&amp;&amp;</span>-qualified method can't bind to. The lambda <span class="tt">SendAndLift</span> returns takes a plain <span class="tt">ClientSocket&amp;</span> instead, which <span class="tt">and_then</span> can bind to either way, so nothing here depends on the value category of the chain at all.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md58"></a>
 The trade that's still there</h2>
 <p>Dropping the <span class="tt">&amp;&amp;</span> removes a compile-time guard, not the underlying risk. The returned lambda still moves out of <span class="tt">self</span> to build the <span class="tt">ClientSocket</span> it hands back on success, so a variable passed through it is left moved-from either way, there's just no <span class="tt">&amp;&amp;</span> on an instance method left to catch a caller reusing it by mistake. Reserve <span class="tt">SendAndLift</span> for pipeline code built through <span class="tt">.and_then()</span>, where the socket is a value passed along the chain and never touched again outside it, and prefer plain <span class="tt">Send</span> when the socket stays in a named variable you intend to keep using afterward.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md59"></a>
 Why there is no RecvAndLift</h2>
 <p>The same idea does not carry over to <span class="tt">Recv</span>. <span class="tt">Recv</span> reports <span class="tt">ConnectionErrorEnum::ConnectionClosed</span> through the error channel whenever the peer closes the socket, but a closed connection is not necessarily a failure, it is frequently the expected end of a response. A <span class="tt">RecvAndLift</span> would have to treat that as a hard error to keep its lambda's return type as <span class="tt">expected&lt;Socket, Error&gt;</span>, silently making that call for the caller.</p>
 <p>It also would not have anything left to hand back either way. By the time <span class="tt">Recv</span> reports <span class="tt">ConnectionClosed</span>, the underlying socket has already been closed and its handle invalidated, there is no live socket to lift back into the chain regardless of how the close is interpreted.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md49"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md60"></a>
 Decision table</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">

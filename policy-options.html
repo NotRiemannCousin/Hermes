@@ -155,23 +155,23 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('policy-options
   <div class="headertitle"><div class="title">Policy options </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md24"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
 Policy options</h1>
 <p>Every policy in <a class="el" href="namespace_hermes.html">Hermes</a> accepts its configuration through a nested options type. <a class="el" href="policy-architecture.html" title="Policy-based Architecture">Policy-based Architecture</a> explains why that shape exists. This page walks through what each options type actually looks like and how the facade decides which overload a call resolves to.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 The two-overload pattern</h2>
 <p>A facade method that takes an options type comes in two overloads. One takes no options and only exists when the policy's options type is <span class="tt">std::default_initializable</span>, it default-constructs <span class="tt">{}</span> internally and forwards to the other overload. The other always exists and takes the options type explicitly.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> client{ <a class="code hl_function" href="struct_hermes_1_1_client_socket.html#a52d3f96f36a1a11c9dd44d2902564fab">Hermes::RawTcpClient::Connect</a>(std::move(data)) };            <span class="comment">// uses ConnectionPolicy::Options{}</span></div>
 <div class="line"><span class="keyword">auto</span> client{ <a class="code hl_function" href="struct_hermes_1_1_client_socket.html#a52d3f96f36a1a11c9dd44d2902564fab">Hermes::RawTcpClient::Connect</a>(std::move(data), myOptions) }; <span class="comment">// uses an explicit ConnectionPolicy::Options</span></div>
 <div class="ttc" id="astruct_hermes_1_1_client_socket_html_a52d3f96f36a1a11c9dd44d2902564fab"><div class="ttname"><a href="struct_hermes_1_1_client_socket.html#a52d3f96f36a1a11c9dd44d2902564fab">Hermes::ClientSocket::Connect</a></div><div class="ttdeci">static ConnectionResult&lt; ClientSocket &gt; Connect(SocketData &amp;&amp;data) noexcept</div><div class="ttdoc">Creates and connects a client socket.</div></div>
 </div><!-- fragment --><p>If a policy's option type can't default-construct, the caller only sees the second overload. For example, <a class="el" href="struct_hermes_1_1_tls_socket_data.html" title="Hermes::TlsSocketData">TlsSocketData</a> already needs a hostname to connect and it can be needed again in renegotiation, so this shows up naturally on the socket data side rather than on <span class="tt">Options</span>, but the same rule applies wherever a policy author decides <span class="tt">Options{}</span> isn't a meaningful default. There's nothing special about the short overload beyond that, it's <span class="tt">Connect(data)</span> calling <span class="tt">Connect(data, {})</span>.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md26"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Connection options</h2>
 <p><span class="tt">ConnectionPolicy::Options</span> configures a single <span class="tt">Connect()</span> call. <a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html" title="Hermes::DefaultConnectPolicy::Options">DefaultConnectPolicy::Options</a> carries <span class="tt">connectionTimeout</span>, <span class="tt">keepAlive</span>, and, only when they apply to the family or socket type in use, <span class="tt">onlyIpv6</span> and <span class="tt">tcpNoDelay</span>. <span class="tt">TlsConnectPolicy::Options</span> builds on top of it and adds <span class="tt">handshakeTimeout</span>, <span class="tt">ignoreCertificateErrors</span> and <span class="tt">requestMutualAuth</span>.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> Hermes::RawTlsClient::ConnOptions options{ .connectionTimeout = 3s, .handshakeTimeout  = 2s };</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> client{ Hermes::RawTlsClient::Connect({ endpoint, hostname }, options) };</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md27"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Listen and accept options</h2>
 <p>Accept policies split their configuration in two, because <span class="tt">Listen</span> and <span class="tt">Accept</span> configure different sockets at different times. <span class="tt">ListenOptions</span> applies once, to the listening socket itself, <span class="tt">reuseAddress</span> and the listening socket's buffer sizes live here. <span class="tt">AcceptOptions</span> applies to every connection the listener accepts from that point on, <span class="tt">tcpNoDelay</span>, <span class="tt">keepAlive</span>, and for <span class="tt">TlsAcceptPolicy</span>, <span class="tt">handshakeTimeout</span> and <span class="tt">requestClientCertificate</span>.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> Hermes::RawTlsListener::ListenOptions listenOptions{ .reuseAddress = <span class="keyword">true</span> };</div>
@@ -181,7 +181,7 @@ Listen and accept options</h2>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp;&amp; result : listener-&gt;AcceptAll(acceptOptions)) {</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md28"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Send and receive options, and the deadline</h2>
 <p>Transfer operations use two separate options types, <span class="tt">SendOptions</span> and <span class="tt">RecvOptions</span>, even though today both only carry one field, <span class="tt">deadline</span>. They're kept separate because a field meaningful only for one direction, some framing or buffering hint that only makes sense while reading, for instance, would otherwise be silently accepted and ignored on the other call.</p>
 <p><span class="tt">deadline</span> is a <span class="tt">std::optional&lt;std::chrono::steady_clock::time_point&gt;</span>, an absolute point in time, not a duration. Leaving it unset preserves the policy's normal blocking behavior. Setting it bounds the whole call, not each underlying read or write inside it.</p>

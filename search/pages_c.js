@@ -1,8 +1,8 @@
 var searchData=
 [
   ['navigation_0',['Page Navigation',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#extension-page-navigation',1,'']]],
-  ['no_20iterator_20invalidation_1',['Stateful Iteration (No Iterator Invalidation)',['../recv-stream-behavior.html#autotoc_md33',1,'']]],
-  ['no_20read_20ahead_2',['Using &lt;span class=&quot;tt&quot;&gt;RecvStream&lt;/span&gt; (Direct, No Read-Ahead)',['../recv-stream-behavior.html#autotoc_md36',1,'']]],
-  ['no_20recvandlift_3',['Why there is no RecvAndLift',['../send-lift-pattern.html#autotoc_md47',1,'']]],
-  ['not_20the_20operation_20itself_4',['SendAndLift is a factory, not the operation itself',['../send-lift-pattern.html#autotoc_md42',1,'']]]
+  ['no_20iterator_20invalidation_1',['Stateful Iteration (No Iterator Invalidation)',['../recv-stream-behavior.html#autotoc_md37',1,'']]],
+  ['no_20read_20ahead_2',['Using &lt;span class=&quot;tt&quot;&gt;RecvStream&lt;/span&gt; (Direct, No Read-Ahead)',['../recv-stream-behavior.html#autotoc_md40',1,'']]],
+  ['no_20recvandlift_3',['Why there is no RecvAndLift',['../send-lift-pattern.html#autotoc_md59',1,'']]],
+  ['not_20the_20operation_20itself_4',['SendAndLift is a factory, not the operation itself',['../send-lift-pattern.html#autotoc_md56',1,'']]]
 ];

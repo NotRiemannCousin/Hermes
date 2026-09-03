@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('getting-starte
   <div class="headertitle"><div class="title">Getting Started </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md39"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
 Getting Started</h1>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> is a modular policy-based library that stands upon socket facades. Curently, it supports only connection-based client-server comunication, and there are two axes of facades:</p>
 <table style="width: 100%; border-collapse: collapse; margin: var(--spacing-medium) 0; font-size: var(--page-font-size);">
@@ -211,10 +211,10 @@ Getting Started</h1>
 <img src="msc_inline_mscgraph_5f19959e3841f150de16fb3080b747b5.svg" alt="msc_inline_mscgraph_5f19959e3841f150de16fb3080b747b5" border="0"/>
 </div>
  </div><p>The next section explains how to use each socket, and the second one explains what the aliases hide and how to work without them.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md43"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
 Using sockets</h2>
 <p>One additional thing that you need to know is <a class="el" href="concept_hermes_1_1_socket_data_concept.html" title="Hermes::SocketDataConcept">SocketData</a>. SocketData are classes that store the context information about a socket like hostname, callbacks, endpoint IP/port, security info, and so on (this is how we share info between policies, every socket needs one).</p>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
 Client</h3>
 <p>First you need to construct the SocketData with the necessary info to identify the other endpoint and then pass it to the <a class="el" href="struct_hermes_1_1_client_socket.html#a52d3f96f36a1a11c9dd44d2902564fab" title="Hermes::ClientSocket::Connect(SocketData &amp;&amp;)">ClientSocket::Connect</a> factory. This function will try to connect to the remote endpoint and return a <span class="tt">ClientSocket</span> if successful. After it, you can call <span class="tt">Send</span> and <span class="tt">Recv</span> to send and receive data.</p>
 <p>For a TLS request, to construct <a class="el" href="struct_hermes_1_1_tls_socket_data.html" title="Hermes::TlsSocketData">TlsSocketData</a> you need to resolve and endpoint using the URL and pass the URL to the SocketData before connecting to a RawTlsClient (TLS needs to keep the hostname for it entire life). The result must be checked before the socket is used, but since this library was designed with <span class="tt">std::expected</span> in mind you can specify it in a monadic way.</p>
@@ -273,7 +273,7 @@ Client</h3>
 <p>You can also pass some options to a connect/send/receive step, like deadline/timeout, TLS settings, SO settings (<span class="tt">setsockopt</span>), etc.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> deadline{ std::chrono::steady_clock::now() + 5s };</div>
 <div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> [sent, err]{ client-&gt;Send( payload, { .deadline = deadline }) };</div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md48"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md86"></a>
 Server</h3>
 <p>A server follows the opposite direction of the client. Instead of creating a connected socket directly, you first create a <span class="tt">ListenerSocket</span>, bind it to a local endpoint and then accept a connection from it. Each successful acceptance produces a <span class="tt">ServerSocket</span> that owns the connection with that client. It accepts one connection, reads one request, talks with a client and then finishes.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_listener_socket_8hpp.html">Hermes/Socket/Sync/ListenerSocket.hpp</a>&gt;</span></div>
@@ -360,9 +360,9 @@ Server</h3>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a42680fd27c3cf04c0361211761afec30"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a42680fd27c3cf04c0361211761afec30">Hermes::IpEndpoint::GetIp</a></div><div class="ttdeci">IpAddress GetIp() const noexcept</div></div>
 <div class="ttc" id="astruct_hermes_1_1_listener_socket_html_a136a34b38daa0671d04bc07b86a9689c"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html#a136a34b38daa0671d04bc07b86a9689c">Hermes::ListenerSocket::Listen</a></div><div class="ttdeci">static auto Listen(SocketData &amp;&amp;data, int backlog=SOMAXCONN) noexcept -&gt; ListenerSockerResult</div><div class="ttdoc">Creates and starts the listener.</div></div>
 </div><!-- fragment --><p>Both examples were very optimistic. Error handling is kept visible, but these examples does not yet implement a complete HTTP parser.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md50"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md87"></a>
 What the alias is made of</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md51"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
 Client</h3>
 <p>The client concept of a client socket is a composition of three independent responsibilities:</p>
 <table class="markdownTable">
@@ -379,7 +379,7 @@ Client</h3>
 <p>The client-side policy composition can be represented conceptually as:</p>
 <div class="fragment"><div class="line"><span class="keyword">using </span>Client = <a class="code hl_struct" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket&lt;MySocketData, MyConnectionPolicy, MyTransferPolicy&gt;</a>;</div>
 <div class="ttc" id="astruct_hermes_1_1_client_socket_html"><div class="ttname"><a href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a></div><div class="ttdoc">A blocking client socket that establishes an outgoing connection.</div><div class="ttdef"><b>Definition</b> ClientSocket.hpp:22</div></div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md52"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
 Server</h3>
 <p>The server side uses the same policy-based composition, but instead of the ConnectionPolicy it has the <a class="el" href="concept_hermes_1_1_accept_policy_concept.html" title="Hermes::AcceptPolicyConcept">AcceptPolicy</a>. This policy is responsible for listening, accepting incoming connections and producing a new <span class="tt">ServerSocket</span>.</p>
 <p><span class="tt">ListenerSocket</span> owns the listening <span class="tt"><a class="el" href="group___socket_data.html">SocketData</a></span> and the <span class="tt">AcceptPolicy</span> instance. When <span class="tt">Listen</span> is called, the facade delegates socket creation, option application, binding and listening to the policy. The policy receives the local endpoint through <span class="tt"><a class="el" href="group___socket_data.html">SocketData</a></span> and uses <span class="tt">ListenOptions</span> to configure the listening socket.</p>
@@ -403,7 +403,7 @@ Server</h3>
 <div class="line"><span class="keyword">using </span>Server = <a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket&lt;MySocketData, MyAcceptPolicy, MyTransferPolicy&gt;</a>;</div>
 <div class="ttc" id="astruct_hermes_1_1_listener_socket_html"><div class="ttname"><a href="struct_hermes_1_1_listener_socket.html">Hermes::ListenerSocket</a></div><div class="ttdoc">A blocking listener that accepts incoming connections.</div><div class="ttdef"><b>Definition</b> ListenerSocket.hpp:21</div></div>
 <div class="ttc" id="astruct_hermes_1_1_server_socket_html"><div class="ttname"><a href="struct_hermes_1_1_server_socket.html">Hermes::ServerSocket</a></div><div class="ttdoc">A blocking socket accepted by a ListenerSocket.</div><div class="ttdef"><b>Definition</b> ServerSocket.hpp:26</div></div>
-</div><!-- fragment --> <h3 class="doxsection"><a class="anchor" id="autotoc_md53"></a>
+</div><!-- fragment --> <h3 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
 Implementing policies</h3>
 <p>Use the aliases while the default policy contracts match the application. Move to an explicit composition when one of the following is true:</p>
 <ul>
@@ -414,7 +414,7 @@ Implementing policies</h3>
 <li>a custom policy must expose an operation-specific option type.</li>
 </ul>
 <p>If you encount some of these cases, see the <a class="el" href="policy-architecture.html" title="Policy-based Architecture">Policy-based Architecture</a> section for more information.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md54"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
 A useful order for learning the library</h2>
 <p>Read <a class="el" href="policy-architecture.html" title="Policy-based Architecture">Policy-based Architecture</a> to understand the composition model. Then read <a class="el" href="policy-options.html" title="Policy options">Policy options</a> for operation-wide options and <a class="el" href="recv-stream-behavior.html" title="RecvStream vs RecvRange Behavior">RecvStream vs RecvRange Behavior</a> with <a class="el" href="send-lift-pattern.html" title="SendAndLift and Composition with and_then">SendAndLift and Composition with and_then</a> for the central receiver design. Finally, use example-tls-client to connect the concepts to complete flows.</p>
 <p>To know more about async sockets, see <a class="el" href="async-sockets.html" title="async-sockets">async-sockets</a> (page not written yet, await maybe for v0.6.7). </p>
