@@ -11,6 +11,22 @@
 using namespace std::chrono_literals;
 
 namespace {
+#ifdef _WIN32
+    bool AsyncBackendAvailable() {
+        return true;
+    }
+#else
+    bool AsyncBackendAvailable() {
+        io_uring ring{};
+        const int result{ io_uring_queue_init(2, &ring, 0) };
+        if (result < 0)
+            return false;
+        io_uring_queue_exit(&ring);
+        return true;
+    }
+#endif
+
+
     // Runs `work` on the given scheduler and blocks until it completes (via set_value)
     // or is stopped (via set_stopped). Returns true iff set_value fired.
     bool RunOnScheduler(const Hermes::FastIoScheduler scheduler, auto&& work) {
@@ -24,6 +40,8 @@ namespace {
 #pragma region Baseline correctness
 
 TEST(FastIoLoopTest, SingleScheduledOperationCompletes) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     Hermes::FastIoLoop loop{ 2 };
 
     bool ran{ false };
@@ -34,6 +52,8 @@ TEST(FastIoLoopTest, SingleScheduledOperationCompletes) {
 }
 
 TEST(FastIoLoopTest, SingleThreadedLoop_SingleScheduledOperationCompletes) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     // threadCount=1 takes a structurally different code path (the completion thread runs
     // the user callback inline instead of handing off through the work queue), so it needs
     // its own coverage.
@@ -47,6 +67,8 @@ TEST(FastIoLoopTest, SingleThreadedLoop_SingleScheduledOperationCompletes) {
 }
 
 TEST(FastIoLoopTest, MultipleSequentialOperationsAllComplete) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     Hermes::FastIoLoop loop{ 2 };
     const auto scheduler{ loop.GetScheduler() };
 
@@ -69,6 +91,8 @@ TEST(FastIoLoopTest, MultipleSequentialOperationsAllComplete) {
 // io_uring_queue_exit() on an already-torn-down ring. Confirmed via gdb as a SIGSEGV
 // inside liburing's io_uring_queue_exit() before the fix.
 TEST(FastIoLoopTest, ExplicitStopFollowedByDestructorDoesNotCrash) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     Hermes::FastIoLoop loop{ 2 };
 
     bool ran{ false };
@@ -81,6 +105,8 @@ TEST(FastIoLoopTest, ExplicitStopFollowedByDestructorDoesNotCrash) {
 }
 
 TEST(FastIoLoopTest, CallingStopManyTimesIsSafe) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     Hermes::FastIoLoop loop{ 2 };
 
     for (int i{}; i < 10; ++i)
@@ -90,6 +116,8 @@ TEST(FastIoLoopTest, CallingStopManyTimesIsSafe) {
 }
 
 TEST(FastIoLoopTest, CallingStopBeforeAnyWorkIsSafe) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     Hermes::FastIoLoop loop{ 2 };
     loop.Stop();
     SUCCEED();
@@ -103,6 +131,8 @@ TEST(FastIoLoopTest, CallingStopBeforeAnyWorkIsSafe) {
 struct FastIoLoopConcurrencyTest : testing::TestWithParam<unsigned int> {};
 
 TEST_P(FastIoLoopConcurrencyTest, ConcurrentSchedulesAllCompleteExactlyOnce) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     constexpr int threadsCount{ 8 };
     constexpr int opsPerThread{ 200 };
 
@@ -138,6 +168,8 @@ INSTANTIATE_TEST_SUITE_P(
 
 #ifndef _WIN32
 TEST(FastIoLoopTest, ConcurrentRegisterAndUnregisterSocketLoop_NoCorruption) {
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "io_uring is unavailable in this environment";
     constexpr int threadsCount{ 8 };
     constexpr int opsPerThread{ 500 };
 
