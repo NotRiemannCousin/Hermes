@@ -3,7 +3,7 @@ var searchData=
   ['schannel_0',['SChannel',['../namespace_hermes.html#af2d929f81d6b92c79354aee44dd3a8c5a3233cc82ac9e68edf1d47e0c28fc23ab',1,'Hermes']]],
   ['schcredentials_1',['SchCredentials',['../namespace_hermes.html#af2d929f81d6b92c79354aee44dd3a8c5a996d7f7bf91106f67a741f75ec5b2ca9',1,'Hermes']]],
   ['securitypackagenotfound_2',['SecurityPackageNotFound',['../namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5',1,'Hermes']]],
-  ['send_3',['Send',['../struct_hermes_1_1_tls_async_transfer_policy.html#a0d4d3f72fe2c836a4124c5a526eadf2da94966d90747b97d1f0f206c98a8b1ac3',1,'Hermes::TlsAsyncTransferPolicy::Send'],['../namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3',1,'Hermes::Send']]],
+  ['send_3',['Send',['../namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3',1,'Hermes']]],
   ['sendfailed_4',['SendFailed',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa0c17cd2d71728d61693ae3bbedbd202d',1,'Hermes']]],
   ['sendgenerictlsextension_5',['SendGenericTlsExtension',['../namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af859868848437d189410bb14c771898b',1,'Hermes']]],
   ['sendtimeout_6',['SendTimeout',['../namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaeac52237c445c20365345eae513aa317',1,'Hermes']]],

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['asyncsocketconcepts_0',['AsyncSocketConcepts',['../group___async_socket_concepts.html',1,'']]]
+  ['socketdata_0',['SocketData',['../group___socket_data.html',1,'']]],
+  ['syncsocketconcepts_1',['SyncSocketConcepts',['../group___sync_socket_concepts.html',1,'']]]
 ];

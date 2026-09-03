@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['options_0',['options',['../struct_hermes_1_1_default_socket_data.html#aed4ebb68c610ead3b5e5ad99ea8d2a82',1,'Hermes::DefaultSocketData']]]
+  ['pattern_0',['pattern',['../struct_hermes_1_1_utils_1_1_until_match_adaptor.html#a391b4346bd31be2869a507679e18fb56',1,'Hermes::Utils::UntilMatchAdaptor']]],
+  ['pendingdata_1',['pendingData',['../struct_hermes_1_1_tls_socket_data.html#ad9ddc28046166fa0917d9ff8e8bb7597',1,'Hermes::TlsSocketData']]],
+  ['port_2',['port',['../struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e',1,'Hermes::IpEndpointParams']]]
 ];

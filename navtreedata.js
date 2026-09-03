@@ -58,10 +58,9 @@ var NAVTREE =
         [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
         [ "Class Members", "functions.html", [
           [ "All", "functions.html", "functions_dup" ],
-          [ "Functions", "functions_func.html", "functions_func" ],
+          [ "Functions", "functions_func.html", null ],
           [ "Variables", "functions_vars.html", null ],
           [ "Typedefs", "functions_type.html", null ],
-          [ "Enumerations", "functions_enum.html", null ],
           [ "Related Symbols", "functions_rela.html", null ]
         ] ]
       ] ],
@@ -81,13 +80,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "@ref example-tcp-server",
-"functions_i.html",
-"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a1ea30f12af99affea66ee4a18abb132b",
-"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196",
-"namespace_hermes.html#afaea2e3839330149f067b0ba0206e77da1f6f1a285a70b6073e5c16c6b42ec3e2",
-"struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7",
-"struct_hermes_1_1_server_socket.html#aaeef98d871221a80789d2bc2442bbd44",
-"struct_hermes_1_1_utils_1_1_until_match_view.html#a21f1615f346e97745cbf1145901ffa7c"
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba65a72e5a783a8af81ceb4d974fd3aebb",
+"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3ae00675e203a413518ad56689446cb8",
+"namespace_hermes.html#a804025810e605be277a9c534e5790013a65e65c8ab0d8609ce12fc68a03cb8e00",
+"struct_hermes_1_1_client_socket.html#a72b200041e3fbaace8e9332bd4c6991c",
+"struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

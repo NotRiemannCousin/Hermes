@@ -155,10 +155,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('recv-stream-be
   <div class="headertitle"><div class="title">RecvStream vs RecvRange Behavior </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md88"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 RecvStream vs RecvRange Behavior</h1>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> provides two distinct range-like iterators for reading from sockets: <span class="tt">RecvStream</span> and <span class="tt">RecvRange</span>. Their fetching mechanisms and termination conditions differ significantly. Using the wrong one can lead to indefinitely hanging threads.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md89"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
 Core Mechanics: <span class="tt">operator*</span> vs <span class="tt">operator++</span></h2>
 <p>The primary difference lies in exactly <em>when</em> the network read operation occurs:</p>
 <table class="markdownTable">
@@ -171,16 +171,16 @@ Core Mechanics: <span class="tt">operator*</span> vs <span class="tt">operator++
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><b>Read-ahead</b>  </td><td class="markdownTableBodyNone">Zero read-ahead.  </td><td class="markdownTableBodyNone">1-byte read-ahead.  </td></tr>
 </table>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 The Keep-Alive Trap (Hanging Threads)</h2>
 <p>Why does <span class="tt">RecvStream</span> exist if <span class="tt">RecvRange</span> complies with standard C++ iterators? The answer is <b>persistent connections</b>, such as HTTP Keep-Alive.</p>
 <p>Because <span class="tt">RecvRange</span> performs a read-ahead on <span class="tt">operator++</span> to correctly evaluate <span class="tt">it != end()</span>, it aggressively asks the socket for the next byte. If the server finishes sending a complete payload but keeps the underlying connection open waiting for your next request, <span class="tt">operator++</span> will <b>block indefinitely</b>. Your thread hangs forever because the loop tries to read a byte that doesn't exist yet.</p>
 <p><span class="tt">RecvStream</span> solves this. By pushing the read operation to <span class="tt">operator*()</span>, you can parse the payload, logically detect the end of the message (e.g., matching a Content-Length), and safely <span class="tt">break</span> the loop without triggering an unwanted read-ahead.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 Termination and DropLastView</h2>
 <p>To comply with standard C++ iterators and terminate the loop gracefully on closed sockets, <span class="tt">RecvRange</span> wraps the stream in a <span class="tt">DropLastView</span>.</p>
 <p>It does not scan for specific terminator bytes. It simply evaluates to <span class="tt">true</span> when the underlying socket reaches the end of the stream (<span class="tt">== end()</span>), unconditionally discarding the last element yielded (which acts as the internal EOF marker).</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md92"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 Stateful Iteration (No Iterator Invalidation)</h2>
 <p>Unlike standard <span class="tt">input_range</span> iterators where advancing one copy might invalidate others, <span class="tt">RecvStream</span> maintains the socket's read state centrally within the view object itself. Advancing any iterator safely advances the global state of the stream.</p>
 <p><b>Why is this useful?</b> It allows you to sequentially chain multiple range-based algorithms on the exact same view to parse a protocol step-by-step. Reading a chunk of bytes leaves the view perfectly positioned for the next algorithm, avoiding iterator invalidation bugs entirely.</p>
@@ -201,7 +201,7 @@ Stateful Iteration (No Iterator Invalidation)</h2>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a24ead501386a4a15f68e00ff603524dc"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a24ead501386a4a15f68e00ff603524dc">Hermes::Utils::ExtractTo</a></div><div class="ttdeci">R1 ExtractTo(R2 &amp;view)</div><div class="ttdoc">Copies a range into a new container of the requested type.</div></div>
 <div class="ttc" id="anamespace_hermes_1_1_utils_html_a9813b3d181c410db40297a5cdb7e7f48"><div class="ttname"><a href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a></div><div class="ttdeci">auto UntilMatch(Pattern &amp;&amp;pattern)</div><div class="ttdoc">Creates an adaptor that stops at the pattern.</div></div>
 </div><!-- fragment --><p>This pattern turns complex, manual buffer management into clean, declarative algorithm chaining.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md93"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Limiting Reads for Security (<span class="tt">std::views::take</span>)</h2>
 <p>Because <span class="tt">RecvStream</span> integrates seamlessly with <span class="tt">&lt;ranges&gt;</span>, you can combine it with <span class="tt">std::views::take</span> to enforce strict upper bounds on read operations. This is critical for security, preventing malicious actors from sending infinite streams of data (spam) to exhaust your memory when parsing dynamically sized fields.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> socketView = client.RecvStream&lt;<span class="keywordtype">char</span>&gt;();</div>
@@ -214,9 +214,9 @@ Limiting Reads for Security (<span class="tt">std::views::take</span>)</h2>
 <div class="line"><span class="keyword">const</span> <span class="keyword">auto</span> headers = safeHeadersView </div>
 <div class="line">                   | <a class="code hl_function" href="namespace_hermes_1_1_utils.html#a9813b3d181c410db40297a5cdb7e7f48">Hermes::Utils::UntilMatch</a>(<span class="stringliteral">&quot;\r\n\r\n&quot;</span>sv) </div>
 <div class="line">                   | std::ranges::to&lt;std::string&gt;();</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md94"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md20"></a>
 Comparative Example</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md95"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Using <span class="tt">RecvStream</span> (Direct, No Read-Ahead)</h3>
 <p>Best for persistent connections and manual parsing.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> stream = client.RecvStream();</div>
@@ -230,7 +230,7 @@ Using <span class="tt">RecvStream</span> (Direct, No Read-Ahead)</h3>
 <div class="line">    buffer.push_back(c);</div>
 <div class="line">    ++it; <span class="comment">// No-op.</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md96"></a>
+</div><!-- fragment --><h3 class="doxsection"><a class="anchor" id="autotoc_md22"></a>
 Using <span class="tt">RecvRange</span> (C++ Ranges Compatible)</h3>
 <p>Best for closed-stream scenarios and STL algorithms.</p>
 <div class="fragment"><div class="line"><span class="keyword">auto</span> range = client.RecvRange();</div>
@@ -242,7 +242,7 @@ Using <span class="tt">RecvRange</span> (C++ Ranges Compatible)</h3>
 <div class="line">    <span class="comment">// Loop ends automatically when the connection closes.</span></div>
 <div class="line">    <span class="comment">// DANGER: Will hang here if the connection is kept alive.</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md97"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Decision Table</h2>
 <table class="markdownTable">
 <tr class="markdownTableHead">

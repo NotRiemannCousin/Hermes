@@ -156,100 +156,107 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_transfer_
 </div><!--header-->
 <div class="contents">
 <a href="_tls_transfer_state_machine_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;<a class="code" href="_i_tls_transfer_state_machine_8hpp.html">Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_session_8hpp.html">Hermes/Socket/_base/TlsSession.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>Hermes::details_ {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span>    <span class="keyword">template</span>&lt;SocketDataConcept Data, <span class="keyword">class</span> TransferPolicy&gt;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>    <span class="keyword">struct </span>TlsTransferStateMachine : <span class="keyword">public</span> ITlsTransferStateMachine&lt;Data&gt; {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>        <span class="keyword">using </span>TlsTransferState = TransferStateOpResult(TlsTransferStateMachine::*)(<a class="code hl_enumvalue" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a>&amp;);</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> IsAsync() noexcept {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>            <span class="keywordflow">return</span> AsyncTransferPolicyConcept&lt;TransferPolicy, Data&gt;;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        }</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        TlsTransferStateMachine() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        TlsTransferStateMachine(<span class="keyword">const</span> TlsTransferStateMachine&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        TlsTransferStateMachine&amp; operator=(<span class="keyword">const</span> TlsTransferStateMachine&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        TlsTransferStateMachine(TlsTransferStateMachine&amp;&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        TlsTransferStateMachine&amp; operator=(TlsTransferStateMachine&amp;&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        TlsTransferState GetState() const noexcept;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <a class="code hl_typedef" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a> GetResult() const noexcept override;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordtype">bool</span> IsFinished() const noexcept override;</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;Hermes/Config.hpp&gt;</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="_i_tls_transfer_state_machine_8hpp.html">Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_session_8hpp.html">Hermes/Socket/_base/TlsSession.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Hermes::details_ {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keyword">template</span>&lt;SocketDataConcept Data, <span class="keyword">class</span> TransferPolicy&gt;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keyword">struct </span>TlsTransferStateMachine : <span class="keyword">public</span> ITlsTransferStateMachine&lt;Data&gt; {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>        <span class="keyword">using </span>TlsTransferState = TransferStateOpResult(TlsTransferStateMachine::*)(<a class="code hl_enumvalue" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a>&amp;);</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#if HERMES_ENABLE_ASYNC</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> IsAsync() noexcept {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            <span class="keywordflow">return</span> AsyncTransferPolicyConcept&lt;TransferPolicy, Data&gt;;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        }</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#else</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">bool</span> IsAsync() { <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        TlsTransferStateMachine() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        TlsTransferStateMachine(<span class="keyword">const</span> TlsTransferStateMachine&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        TlsTransferStateMachine&amp; operator=(<span class="keyword">const</span> TlsTransferStateMachine&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordtype">void</span> StartToRecv(</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            std::span&lt;std::<span class="keywordtype">byte</span>&gt; buffer,</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <a class="code hl_enumeration" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> mode,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            std::optional&lt;TransferDeadline&gt; deadline</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        ) noexcept override;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordtype">void</span> StartToSend(</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            std::span&lt;const std::<span class="keywordtype">byte</span>&gt; buffer,</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            std::optional&lt;TransferDeadline&gt; deadline</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        ) noexcept override;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordtype">void</span> SetToRecv() noexcept override;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordtype">void</span> SetToSend() noexcept override;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        TransferStateOpResult Advance(Data &amp;data) noexcept override;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keywordtype">void</span> SetIoResult(<span class="keywordtype">int</span> bytes) noexcept override;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        TlsTransferStateMachine(TlsTransferStateMachine&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        TlsTransferStateMachine&amp; operator=(TlsTransferStateMachine&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        TlsTransferState GetState() const noexcept;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        StreamByteOper GetResult() const noexcept override;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keywordtype">bool</span> IsFinished() const noexcept override;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordtype">void</span> StartToRecv(</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            std::span&lt;std::<span class="keywordtype">byte</span>&gt; buffer,</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            RecvModeEnum mode,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            std::optional&lt;TransferDeadline&gt; deadline</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        ) noexcept override;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordtype">void</span> StartToSend(</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            std::span&lt;const std::<span class="keywordtype">byte</span>&gt; buffer,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            std::optional&lt;TransferDeadline&gt; deadline</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        ) noexcept override;</div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::span&lt;std::<span class="keywordtype">byte</span>&gt; GetRecvBuffer(Data&amp; data) const noexcept override;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        std::span&lt;const std::<span class="keywordtype">byte</span>&gt; GetSendBuffer(Data&amp; data) const noexcept override;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordtype">void</span> SetToRecv() noexcept override;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordtype">void</span> SetToSend() noexcept override;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    private:</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        TlsTransferState m_state{ <span class="keyword">nullptr</span> };</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> m_errorStatus{};</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        TransferStateOpResult Advance(Data &amp;data) noexcept override;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordtype">void</span> SetIoResult(<span class="keywordtype">int</span> bytes) noexcept override;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordtype">int</span> m_currReceived{};</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordtype">int</span> m_currSent{};</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        std::span&lt;std::<span class="keywordtype">byte</span>&gt; GetRecvBuffer(Data&amp; data) const noexcept override;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        std::span&lt;const std::<span class="keywordtype">byte</span>&gt; GetSendBuffer(Data&amp; data) const noexcept override;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        std::span&lt;std::byte&gt; m_userRecvBuffer{};</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        std::span&lt;const std::byte&gt; m_userSendBuffer{};</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_enumeration" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> m_recvMode{ <a class="code hl_enumvalue" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">RecvModeEnum::All</a> };</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    private:</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        TlsTransferState m_state{ <span class="keyword">nullptr</span> };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <a class="code hl_typedef" href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">ConnectionResultOper</a> m_errorStatus{};</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">size_t</span> m_initialSize{};</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordtype">size_t</span> m_totalProcessed{};</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">int</span> m_currReceived{};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordtype">int</span> m_currSent{};</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordtype">size_t</span> m_chunkSize{};</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordtype">size_t</span> m_encryptedSize{};</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordtype">size_t</span> m_sentBytes{};</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        std::optional&lt;TransferDeadline&gt; m_deadline{};</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <a class="code hl_enumeration" href="namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919">EncryptStatusEnum</a> m_status{};</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        std::span&lt;std::byte&gt; m_userRecvBuffer{};</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        std::span&lt;const std::byte&gt; m_userSendBuffer{};</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_enumeration" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> m_recvMode{ RecvModeEnum::All };</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordtype">size_t</span> m_initialSize{};</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordtype">size_t</span> m_totalProcessed{};</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// Recv Branch</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        TransferStateOpResult RecvSetupState(Data &amp;data);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        TransferStateOpResult RecvCheckPendingState(Data &amp;data);</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        TransferStateOpResult RecvProcessNetworkState(Data &amp;data);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        TransferStateOpResult RecvDecryptState(Data &amp;data);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">// Send Branch</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        TransferStateOpResult SendSetupState(Data &amp;data);</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        TransferStateOpResult SendChunkState(Data &amp;data);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        TransferStateOpResult SendNetworkWriteState(Data &amp;data);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        TransferStateOpResult SendProcessNetworkState(Data &amp;data);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="comment">// Endings</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        TransferStateOpResult ErrorState(Data &amp;data);</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        TransferStateOpResult DoneState(Data &amp;data);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    };</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>}</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">#include &lt;Hermes/Socket/_base/Transfer/TlsTransferStateMachine.tpp&gt;</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keywordtype">size_t</span> m_chunkSize{};</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordtype">size_t</span> m_encryptedSize{};</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordtype">size_t</span> m_sentBytes{};</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        std::optional&lt;TransferDeadline&gt; m_deadline{};</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_enumeration" href="namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919">EncryptStatusEnum</a> m_status{};</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="comment">// Recv Branch</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        TransferStateOpResult RecvSetupState(Data &amp;data);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        TransferStateOpResult RecvCheckPendingState(Data &amp;data);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        TransferStateOpResult RecvProcessNetworkState(Data &amp;data);</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        TransferStateOpResult RecvDecryptState(Data &amp;data);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="comment">// Send Branch</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        TransferStateOpResult SendSetupState(Data &amp;data);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        TransferStateOpResult SendChunkState(Data &amp;data);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        TransferStateOpResult SendNetworkWriteState(Data &amp;data);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        TransferStateOpResult SendProcessNetworkState(Data &amp;data);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="comment">// Endings</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        TransferStateOpResult ErrorState(Data &amp;data);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        TransferStateOpResult DoneState(Data &amp;data);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    };</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#include &lt;Hermes/Socket/_base/Transfer/TlsTransferStateMachine.tpp&gt;</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a__base_8hpp_html"><div class="ttname"><a href="__base_8hpp.html">_base.hpp</a></div></div>
 <div class="ttc" id="a_i_tls_transfer_state_machine_8hpp_html"><div class="ttname"><a href="_i_tls_transfer_state_machine_8hpp.html">ITlsTransferStateMachine.hpp</a></div></div>
 <div class="ttc" id="a_tls_session_8hpp_html"><div class="ttname"><a href="_tls_session_8hpp.html">TlsSession.hpp</a></div></div>
-<div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a></div><div class="ttdeci">RecvModeEnum</div><div class="ttdoc">With All, the entire span will be filled, with Any the function will stop at the block received.</div><div class="ttdef"><b>Definition</b> _base.hpp:28</div></div>
-<div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">Hermes::RecvModeEnum::All</a></div><div class="ttdeci">@ All</div><div class="ttdef"><b>Definition</b> _base.hpp:29</div></div>
+<div class="ttc" id="anamespace_hermes_html_a3a2d0c44eefa9602c58fc10569c84338"><div class="ttname"><a href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">Hermes::RecvModeEnum</a></div><div class="ttdeci">RecvModeEnum</div><div class="ttdoc">With All, the entire span will be filled, with Any the function will stop at the block received.</div><div class="ttdef"><b>Definition</b> _base.hpp:31</div></div>
 <div class="ttc" id="anamespace_hermes_html_a4e95007477c568d2cfec5fb0fa176919"><div class="ttname"><a href="namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919">Hermes::EncryptStatusEnum</a></div><div class="ttdeci">EncryptStatusEnum</div><div class="ttdef"><b>Definition</b> EncryptStatusEnum.hpp:8</div></div>
 <div class="ttc" id="anamespace_hermes_html_a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee"><div class="ttname"><a href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Hermes::SecurityBufferEnum::Data</a></div><div class="ttdeci">@ Data</div><div class="ttdef"><b>Definition</b> SecurityBufferEnum.hpp:7</div></div>
-<div class="ttc" id="anamespace_hermes_html_a682871a56b158ef823498bc68e94f0ac"><div class="ttname"><a href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">Hermes::StreamByteOper</a></div><div class="ttdeci">std::pair&lt; size_t, ConnectionResultOper &gt; StreamByteOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:69</div></div>
-<div class="ttc" id="anamespace_hermes_html_aac8abc3bdd5c80fc21e25034b874f0ed"><div class="ttname"><a href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:67</div></div>
+<div class="ttc" id="anamespace_hermes_html_aac8abc3bdd5c80fc21e25034b874f0ed"><div class="ttname"><a href="namespace_hermes.html#aac8abc3bdd5c80fc21e25034b874f0ed">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; std::monostate &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:68</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->
