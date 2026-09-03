@@ -757,7 +757,7 @@ var namespace_hermes =
       [ "XClients", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a7c654ce83e512d58668b970b08463c3c", null ],
       [ "XServers", "namespace_hermes.html#a34ca1e6ac91cdd2076f71db2ece61ce6a1a5db63873f812ffe1ac464cd28c4c7c", null ]
     ] ],
-    [ "CloseSocket", "namespace_hermes.html#aad9c458472faad214cb0c031770ed671", null ],
-    [ "GetError", "namespace_hermes.html#a0c757ae42f6dca2f2ad59106cf7866f2", null ],
+    [ "CloseSocket", "namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e", null ],
+    [ "GetError", "namespace_hermes.html#a438f5d7b5e68a6b848484706bfefeadc", null ],
     [ "make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ]
 ];
