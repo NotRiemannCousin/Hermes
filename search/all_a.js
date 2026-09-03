@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['keep_20alive_20trap_20hanging_20threads_0',['The Keep-Alive Trap (Hanging Threads)',['../recv-stream-behavior.html#autotoc_md55',1,'']]],
+  ['keep_20alive_20trap_20hanging_20threads_0',['The Keep-Alive Trap (Hanging Threads)',['../recv-stream-behavior.html#autotoc_md19',1,'']]],
   ['keepalive_1',['keepAlive',['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a38282a930c0a7bada7c845511596408f',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::keepAlive'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a883ce6cf706185c44f37a74315f722e5',1,'Hermes::DefaultConnectPolicy::Options::keepAlive']]]
 ];

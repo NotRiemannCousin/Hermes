@@ -170,7 +170,7 @@ Public Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a84af5e5f2ece21219172c0d26f7b49cb" id="r_a84af5e5f2ece21219172c0d26f7b49cb"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a84af5e5f2ece21219172c0d26f7b49cb">TlsSocketData</a> ()=default</td></tr>
-<tr class="memitem:a618d5f6b9945271659a60f02ffc22692" id="r_a618d5f6b9945271659a60f02ffc22692"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a618d5f6b9945271659a60f02ffc22692">TlsSocketData</a> (Endpoint endpoint, std::string host, const <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> *credentials=nullptr)</td></tr>
+<tr class="memitem:a618d5f6b9945271659a60f02ffc22692" id="r_a618d5f6b9945271659a60f02ffc22692"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a618d5f6b9945271659a60f02ffc22692">TlsSocketData</a> (Endpoint endpoint, std::string host, const Credentials *credentials=nullptr)</td></tr>
 <tr class="memitem:a3fd567d460ca85dde35276d50a847ce2" id="r_a3fd567d460ca85dde35276d50a847ce2"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3fd567d460ca85dde35276d50a847ce2">~TlsSocketData</a> ()</td></tr>
 <tr class="memitem:a28e800510e7461b120ad6520a0133dfd" id="r_a28e800510e7461b120ad6520a0133dfd"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a28e800510e7461b120ad6520a0133dfd">TlsSocketData</a> (TlsSocketData &amp;&amp;other) noexcept</td></tr>
 <tr class="memitem:a462bd0e7c76f1a64794d0cd63bff9a97" id="r_a462bd0e7c76f1a64794d0cd63bff9a97"><td class="memItemLeft"><a class="el" href="#a84af5e5f2ece21219172c0d26f7b49cb">TlsSocketData</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a462bd0e7c76f1a64794d0cd63bff9a97">operator=</a> (<a class="el" href="#a84af5e5f2ece21219172c0d26f7b49cb">TlsSocketData</a> &amp;&amp;other) noexcept</td></tr>
@@ -179,7 +179,7 @@ Public Member Functions</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8820534d7e557669ca435b0b75f3b571" id="r_a8820534d7e557669ca435b0b75f3b571"><td class="memItemLeft">std::string&#160;</td><td class="memItemRight"><a class="el" href="#a8820534d7e557669ca435b0b75f3b571">host</a> {}</td></tr>
-<tr class="memitem:a9c88fe98f084c958eb5232e7dcf3a4c2" id="r_a9c88fe98f084c958eb5232e7dcf3a4c2"><td class="memItemLeft">const <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> *&#160;</td><td class="memItemRight"><a class="el" href="#a9c88fe98f084c958eb5232e7dcf3a4c2">credentials</a> {}</td></tr>
+<tr class="memitem:a9c88fe98f084c958eb5232e7dcf3a4c2" id="r_a9c88fe98f084c958eb5232e7dcf3a4c2"><td class="memItemLeft">const Credentials *&#160;</td><td class="memItemRight"><a class="el" href="#a9c88fe98f084c958eb5232e7dcf3a4c2">credentials</a> {}</td></tr>
 <tr class="memitem:ac4c03c1f839c114b3db055620847d263" id="r_ac4c03c1f839c114b3db055620847d263"><td class="memItemLeft">std::unique_ptr&lt; details_::ITlsConnectStateMachine&lt; <a class="el" href="#a6ce17562e93b50462ee94c19dca67fc2">DataType</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac4c03c1f839c114b3db055620847d263">connectStateMachine</a></td></tr>
 <tr class="memitem:a894c49210e732ba80d27500c4d82c942" id="r_a894c49210e732ba80d27500c4d82c942"><td class="memItemLeft">std::unique_ptr&lt; details_::ITlsTransferStateMachine&lt; <a class="el" href="#a6ce17562e93b50462ee94c19dca67fc2">DataType</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a894c49210e732ba80d27500c4d82c942">transferStateMachine</a></td></tr>
 <tr class="memitem:accbae4f1e84fb8acceef1fb3d3344b48" id="r_accbae4f1e84fb8acceef1fb3d3344b48"><td class="memItemLeft">std::unique_ptr&lt; details_::ITlsAcceptStateMachine&lt; <a class="el" href="#a6ce17562e93b50462ee94c19dca67fc2">DataType</a> &gt; &gt;&#160;</td><td class="memItemRight"><a class="el" href="#accbae4f1e84fb8acceef1fb3d3344b48">acceptStateMachine</a></td></tr>
@@ -277,7 +277,7 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a> *</td>          <td class="paramname"><span class="paramname"><em>credentials</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
+          <td class="paramtype">const Credentials *</td>          <td class="paramname"><span class="paramname"><em>credentials</em></span><span class="paramdefsep"> = </span><span class="paramdefval">nullptr</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -419,7 +419,7 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">const <a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a>* <a class="el" href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::credentials {}</td>
+          <td class="memname">const Credentials* <a class="el" href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::credentials {}</td>
         </tr>
       </table>
 </div><div class="memdoc">

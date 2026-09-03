@@ -157,23 +157,23 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_network_8hpp_
 <div class="contents">
 <a href="_network_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;<a class="code" href="_credentials_8hpp.html">Hermes/_base/Credentials.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;Hermes/Config.hpp&gt;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
-<div class="foldopen" id="foldopen00008" data-start="{" data-end="};">
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html">    8</a></span>    <span class="keyword">struct </span><a class="code hl_function" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">Network</a> {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">    9</a></span>        <a class="code hl_function" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">Network</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46">   11</a></span>        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46">Initialize</a>();</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#ifdef HERMES_ENABLE_TLS</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>        <span class="keyword">static</span> <span class="keyword">const</span> <a class="code hl_struct" href="struct_hermes_1_1_credentials.html">Credentials</a>&amp; GetClientCredentials();</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    };</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
+<div class="foldopen" id="foldopen00009" data-start="{" data-end="};">
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html">    9</a></span>    <span class="keyword">struct </span><a class="code hl_function" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">Network</a> {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">   10</a></span>        <a class="code hl_function" href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">Network</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46">   12</a></span>        <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46">Initialize</a>();</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>        <span class="keyword">static</span> <span class="keyword">const</span> Credentials&amp; GetClientCredentials();</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    };</div>
 </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>}</div>
 <div class="ttc" id="a_credentials_8hpp_html"><div class="ttname"><a href="_credentials_8hpp.html">Credentials.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
-<div class="ttc" id="astruct_hermes_1_1_credentials_html"><div class="ttname"><a href="struct_hermes_1_1_credentials.html">Hermes::Credentials</a></div><div class="ttdef"><b>Definition</b> Credentials.hpp:32</div></div>
 <div class="ttc" id="astruct_hermes_1_1_network_html_a6596891b7496501331ca4bc642618d46"><div class="ttname"><a href="struct_hermes_1_1_network.html#a6596891b7496501331ca4bc642618d46">Hermes::Network::Initialize</a></div><div class="ttdeci">static void Initialize()</div></div>
 <div class="ttc" id="astruct_hermes_1_1_network_html_acddc5b7d9ed49d98eef7bb416baeea88"><div class="ttname"><a href="struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88">Hermes::Network::Network</a></div><div class="ttdeci">Network()=delete</div></div>
 </div><!-- fragment --></div><!-- contents -->

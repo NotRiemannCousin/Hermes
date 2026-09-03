@@ -165,7 +165,6 @@ Classes</h2></td></tr>
 <tr class="memitem:ClientSocket" id="r_ClientSocket"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A blocking client socket that establishes an outgoing connection.  <a href="struct_hermes_1_1_client_socket.html#details">More...</a><br /></td></tr>
 <tr class="memitem:ConnectionErrorCategory" id="r_ConnectionErrorCategory"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_connection_error_category.html">ConnectionErrorCategory</a></td></tr>
-<tr class="memitem:Credentials" id="r_Credentials"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_credentials.html">Credentials</a></td></tr>
 <tr class="memitem:DefaultAcceptPolicy" id="r_DefaultAcceptPolicy"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_default_accept_policy.html">DefaultAcceptPolicy</a></td></tr>
 <tr class="memitem:DefaultConnectPolicy" id="r_DefaultConnectPolicy"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_default_connect_policy.html">DefaultConnectPolicy</a></td></tr>
 <tr class="memitem:DefaultSocketData" id="r_DefaultSocketData"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData</a></td></tr>
@@ -255,25 +254,6 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba">UnsupportedAddressFamily</a>
 , <a class="el" href="#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e">RenegotiationRequired</a>
 , <a class="el" href="#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc">NoScheduler</a>
-<br />
- }</td></tr>
-<tr class="memitem:a85eaa753a61e7a8453b3f7e9bb5dbfbc" id="r_a85eaa753a61e7a8453b3f7e9bb5dbfbc"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbc">CredentialErrorEnum</a> : unsigned long { <br />
-&#160;&#160;<a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754">None</a> = 0
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878">FileReadFailed</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6">InvalidPassword</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0">BadCertificateFormat</a>
-, <br />
-&#160;&#160;<a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a">CertificateNotFound</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00">MissingPrivateKey</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5">SecurityPackageNotFound</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22">UnknownCredentials</a>
-, <br />
-&#160;&#160;<a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9">NoCredentials</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e">InsufficientMemory</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5">InternalError</a>
-, <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a">UnsupportedFunction</a>
-, <br />
-&#160;&#160;<a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e">Unknown</a>
 <br />
  }</td></tr>
 <tr class="memitem:a4e95007477c568d2cfec5fb0fa176919" id="r_a4e95007477c568d2cfec5fb0fa176919"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="#a4e95007477c568d2cfec5fb0fa176919">EncryptStatusEnum</a> { <br />
@@ -1539,43 +1519,6 @@ template&lt;class T&gt; </div>
 <tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba" name="abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba"></a>UnsupportedAddressFamily&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e" name="abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e"></a>RenegotiationRequired&#160;</td><td class="fielddoc"></td></tr>
 <tr><td class="fieldname"><a id="abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc" name="abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc"></a>NoScheduler&#160;</td><td class="fielddoc"></td></tr>
-</table>
-
-</div>
-</div>
-<a id="a85eaa753a61e7a8453b3f7e9bb5dbfbc" name="a85eaa753a61e7a8453b3f7e9bb5dbfbc"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a85eaa753a61e7a8453b3f7e9bb5dbfbc">&#9670;&#160;</a></span>CredentialErrorEnum</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum class <a class="el" href="#a85eaa753a61e7a8453b3f7e9bb5dbfbc">Hermes::CredentialErrorEnum</a> : unsigned long</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<table class="fieldtable">
-<tr><th colspan="3">Enumerator</th></tr><tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754"></a>None&#160;</td><td class="fieldinit">0&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878"></a>FileReadFailed&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6"></a>InvalidPassword&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0"></a>BadCertificateFormat&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a"></a>CertificateNotFound&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00"></a>MissingPrivateKey&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5"></a>SecurityPackageNotFound&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22"></a>UnknownCredentials&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9"></a>NoCredentials&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e" name="a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e"></a>InsufficientMemory&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5"></a>InternalError&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a"></a>UnsupportedFunction&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e" name="a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e"></a>Unknown&#160;</td><td class="fieldinit">&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
 </div>

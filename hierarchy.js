@@ -8,7 +8,6 @@ var hierarchy =
     [ "Hermes::details_::ConnectOptionsIpv6Base&lt; SocketFamily &gt;", null, [
       [ "Hermes::DefaultConnectPolicy< Endpoint, SocketType, SocketFamily >::Options", "struct_hermes_1_1_default_connect_policy_1_1_options.html", null ]
     ] ],
-    [ "Hermes::Credentials", "struct_hermes_1_1_credentials.html", null ],
     [ "Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_accept_policy.html", null ],
     [ "Hermes::DefaultConnectPolicy&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_connect_policy.html", null ],
     [ "Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_socket_data.html", null ],

@@ -10,7 +10,6 @@ var annotated_dup =
       ] ],
       [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
       [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
-      [ "Credentials", "struct_hermes_1_1_credentials.html", "struct_hermes_1_1_credentials" ],
       [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
       [ "DefaultConnectPolicy", "struct_hermes_1_1_default_connect_policy.html", "struct_hermes_1_1_default_connect_policy" ],
       [ "DefaultSocketData", "struct_hermes_1_1_default_socket_data.html", "struct_hermes_1_1_default_socket_data" ],

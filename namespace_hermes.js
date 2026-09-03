@@ -3,7 +3,6 @@ var namespace_hermes =
     [ "Utils", "namespace_hermes_1_1_utils.html", "namespace_hermes_1_1_utils" ],
     [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
     [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
-    [ "Credentials", "struct_hermes_1_1_credentials.html", "struct_hermes_1_1_credentials" ],
     [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
     [ "DefaultConnectPolicy", "struct_hermes_1_1_default_connect_policy.html", "struct_hermes_1_1_default_connect_policy" ],
     [ "DefaultSocketData", "struct_hermes_1_1_default_socket_data.html", "struct_hermes_1_1_default_socket_data" ],
@@ -141,21 +140,6 @@ var namespace_hermes =
       [ "UnsupportedAddressFamily", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa9e4a0e45923c6a6f02591b915d4da6ba", null ],
       [ "RenegotiationRequired", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ],
       [ "NoScheduler", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc", null ]
-    ] ],
-    [ "CredentialErrorEnum", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbc", [
-      [ "None", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca6adf97f83acf6453d4a6a4b1070f3754", null ],
-      [ "FileReadFailed", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcabd41e4f9793ce71fc9da68e6f9bcd878", null ],
-      [ "InvalidPassword", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca9529eaa2e0960955fe0bd6d76ef7d6c6", null ],
-      [ "BadCertificateFormat", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca8e935fe52093559759a609501c3156b0", null ],
-      [ "CertificateNotFound", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca51af023cd16c1b3a670cc4cd5a79793a", null ],
-      [ "MissingPrivateKey", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca19874e2303c36460b96bd557e5e40d00", null ],
-      [ "SecurityPackageNotFound", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca866067fb16f9061c3bfcf44b7f1ff8e5", null ],
-      [ "UnknownCredentials", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcaa3bb342226a1e8e8fe8bc39e4b022f22", null ],
-      [ "NoCredentials", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcae3ab3921bc3fa5e3b181c5ec25b67ac9", null ],
-      [ "InsufficientMemory", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbcae65a410a9671de44a8fb2767b6bef60e", null ],
-      [ "InternalError", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca8462b58246e70e5c83e5b939a9332cb5", null ],
-      [ "UnsupportedFunction", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca23b51e5a988d95520fa0b771ae37cd1a", null ],
-      [ "Unknown", "namespace_hermes.html#a85eaa753a61e7a8453b3f7e9bb5dbfbca88183b946cc5f0e8c96b2e66e1c74a7e", null ]
     ] ],
     [ "CredentialFlags", "namespace_hermes.html#a41772aab5b550db02cef57b951ab1bbf", [
       [ "Inbound", "namespace_hermes.html#a41772aab5b550db02cef57b951ab1bbfa6c7e3200049198face0d2648e9d1a27d", null ],

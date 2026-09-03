@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['usage_0',['Usage',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#autotoc_md89',1,'Usage'],['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#autotoc_md91',1,'Usage']]],
-  ['useful_20order_20for_20learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md50',1,'']]],
-  ['using_20recvrange_20c_20ranges_20compatible_2',['Using &lt;span class=&quot;tt&quot;&gt;RecvRange&lt;/span&gt; (C++ Ranges Compatible)',['../recv-stream-behavior.html#autotoc_md65',1,'']]],
-  ['using_20recvstream_20direct_20no_20read_20ahead_3',['Using &lt;span class=&quot;tt&quot;&gt;RecvStream&lt;/span&gt; (Direct, No Read-Ahead)',['../recv-stream-behavior.html#autotoc_md63',1,'']]],
-  ['using_20sockets_4',['Using sockets',['../getting-started.html#autotoc_md38',1,'']]]
+  ['usage_0',['Usage',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#autotoc_md59',1,'Usage'],['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#autotoc_md61',1,'Usage']]],
+  ['useful_20order_20for_20learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md8',1,'']]],
+  ['using_20recvrange_20c_20ranges_20compatible_2',['Using &lt;span class=&quot;tt&quot;&gt;RecvRange&lt;/span&gt; (C++ Ranges Compatible)',['../recv-stream-behavior.html#autotoc_md31',1,'']]],
+  ['using_20recvstream_20direct_20no_20read_20ahead_3',['Using &lt;span class=&quot;tt&quot;&gt;RecvStream&lt;/span&gt; (Direct, No Read-Ahead)',['../recv-stream-behavior.html#autotoc_md29',1,'']]],
+  ['using_20sockets_4',['Using sockets',['../getting-started.html#autotoc_md1',1,'']]]
 ];

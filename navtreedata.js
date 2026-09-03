@@ -83,8 +83,8 @@ var NAVTREEINDEX =
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba65a72e5a783a8af81ceb4d974fd3aebb",
 "namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3ae00675e203a413518ad56689446cb8",
 "namespace_hermes.html#a804025810e605be277a9c534e5790013a65e65c8ab0d8609ce12fc68a03cb8e00",
-"struct_hermes_1_1_client_socket.html#a72b200041e3fbaace8e9332bd4c6991c",
-"struct_hermes_1_1_listener_socket.html#a83a43d469badac3ea8ec0ddad92ecb64"
+"struct_hermes_1_1_client_socket.html#ad7691207ce50e40e737f371e3ca84529",
+"struct_hermes_1_1_server_socket.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';
