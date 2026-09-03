@@ -87,7 +87,6 @@ target_sources(Hermes PRIVATE
 
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
-        src/Hermes/_base/Credentials.cpp
         src/Hermes/_base/ConnectionErrorEnum.cpp
         PUBLIC
         FILE_SET headers
@@ -97,7 +96,10 @@ target_sources(Hermes PRIVATE
 )
 
 if(HERMES_ENABLE_TLS)
-    target_sources(Hermes PRIVATE src/Hermes/Socket/_base/TlsSession.cpp)
+    target_sources(Hermes PRIVATE
+            src/Hermes/_base/Credentials.cpp
+            src/Hermes/Socket/_base/TlsSession.cpp
+    )
 endif()
 #endregion
 

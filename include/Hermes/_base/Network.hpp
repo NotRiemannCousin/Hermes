@@ -9,6 +9,8 @@ namespace Hermes {
         Network() = delete;
 
         static void Initialize();
+#ifdef HERMES_ENABLE_TLS
         static const Credentials& GetClientCredentials();
+#endif
     };
 }
