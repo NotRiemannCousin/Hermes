@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <p><b>Status:</b> v0.5 — active development. Async sockets via <span class="tt">std::execution</span> are available. Linux is available. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md61"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Features</h1>
 <ul>
 <li><b>TCP</b> and <b>TCP over TLS</b> via SChannel on Windows and OpenSSL on Linux (with the <span class="tt">HERMES_ENABLE_TLS</span> option, default <span class="tt">ON</span>)</li>
@@ -177,19 +177,19 @@ Features</h1>
 <p>Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md63"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Installation</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md64"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 pixi</h2>
 <blockquote class="doxtable">
 <p><em>Coming soon.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md65"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 vcpkg</h2>
 <blockquote class="doxtable">
 <p><em>Maybe, someday, who knows.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md66"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Manual (CMake)</h2>
 <div class="fragment"><div class="line">include(CPM.cmake)</div>
 <div class="line"> </div>
@@ -201,7 +201,7 @@ Manual (CMake)</h2>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md68"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md21"></a>
 Build Options</h1>
 <p>There are 3 library options:</p>
 <table class="markdownTable">
@@ -217,7 +217,7 @@ Build Options</h1>
 <p>If you only need synchronous sockets, <span class="tt">-DHERMES_ENABLE_TLS=ON -DHERMES_ENABLE_ASYNC=OFF</span> (the default) avoids pulling in <span class="tt">stdexec</span> entirely. For the full feature set (async + native scheduler + TLS):</p>
 <div class="fragment"><div class="line">-DHERMES_ENABLE_ASYNC=ON -DHERMES_ENABLE_NATIVE_SCHEDULER=ON -DHERMES_ENABLE_TLS=ON</div>
 </div><!-- fragment --><hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md70"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md23"></a>
 Example</h1>
 <p>The following example performs an HTTPS GET request, parsing the response incrementally using <span class="tt">RecvStream</span>. Notice how <span class="tt">UntilMatch</span> and range composition keep the parsing logic concise — no manual buffering.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_client_socket_8hpp.html">Hermes/Socket/Sync/ClientSocket.hpp</a>&gt;</span></div>
@@ -349,7 +349,7 @@ Roadmap</h1>
 <li>pixi and vcpkg packages</li>
 </ul>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md78"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md77"></a>
 Requirements</h1>
 <ul>
 <li>Windows 10 or newer / Linux</li>

@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['variables_0',['CSS-Variables',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md71',1,'']]],
-  ['variables_1',['Available variables',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md76',1,'']]],
-  ['vcpkg_2',['vcpkg',['../index.html#autotoc_md65',1,'']]],
-  ['vs_20operator_3',['Core Mechanics: &lt;span class=&quot;tt&quot;&gt;operator*&lt;/span&gt; vs &lt;span class=&quot;tt&quot;&gt;operator++&lt;/span&gt;',['../recv-stream-behavior.html#autotoc_md15',1,'']]],
-  ['vs_20recvrange_20behavior_4',['vs RecvRange Behavior',['../recv-stream-behavior.html',1,'RecvStream vs RecvRange Behavior'],['../recv-stream-behavior.html#autotoc_md14',1,'RecvStream vs RecvRange Behavior']]]
+  ['variables_0',['CSS-Variables',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md56',1,'']]],
+  ['variables_1',['Available variables',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md58',1,'']]],
+  ['vcpkg_2',['vcpkg',['../index.html#autotoc_md18',1,'']]],
+  ['vs_20operator_3',['Core Mechanics: &lt;span class=&quot;tt&quot;&gt;operator*&lt;/span&gt; vs &lt;span class=&quot;tt&quot;&gt;operator++&lt;/span&gt;',['../recv-stream-behavior.html#autotoc_md30',1,'']]],
+  ['vs_20recvrange_20behavior_4',['vs RecvRange Behavior',['../recv-stream-behavior.html',1,'RecvStream vs RecvRange Behavior'],['../recv-stream-behavior.html#autotoc_md29',1,'RecvStream vs RecvRange Behavior']]]
 ];
