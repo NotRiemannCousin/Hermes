@@ -1,15 +1,21 @@
-#include <Hermes/_base/Network.hpp>
 #include <stdexcept>
+#include <Hermes/Config.hpp>
+#include <Hermes/_base/Network.hpp>
 
 #ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <WinSock2.h>
+#include <WS2tcpip.h>
 // TODO: FUTURE: Remove and link
 #pragma comment(lib, "Ws2_32.lib")
-#ifdef HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS
 #pragma comment(lib, "secur32.lib")
 #pragma comment(lib, "crypt32.lib")
 #endif
 #else
-#ifdef HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS
 #include <openssl/ssl.h>
 #include <openssl/err.h>
 #endif
@@ -32,7 +38,7 @@ namespace {
     using AuthServerLifecycle = WsaLifecycle;
 #else
 
-#ifdef HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS
     struct OpenSllLifecycle {
         OpenSllLifecycle() {
             // OPENSSL_init_ssl is idempotent (1.1+) and threads-safe; loads
@@ -56,7 +62,7 @@ namespace Hermes {
         [[maybe_unused]] static AuthServerLifecycle globalAuth;
     }
 
-#ifdef HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS
     const Credentials& Network::GetClientCredentials() {
         Initialize();
         thread_local Credentials credentials{ Credentials::Client().value() };

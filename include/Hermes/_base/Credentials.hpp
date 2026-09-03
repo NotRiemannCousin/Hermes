@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <expected>
 #include <filesystem>
@@ -83,3 +86,5 @@ namespace Hermes {
         std::unique_ptr<Impl> m_impl;
     };
 }
+
+#endif

@@ -1,5 +1,6 @@
 #pragma once
 #include <Hermes/_base/Credentials.hpp>
+#include <Hermes/Config.hpp>
 
 
 namespace Hermes {
@@ -9,7 +10,7 @@ namespace Hermes {
         Network() = delete;
 
         static void Initialize();
-#ifdef HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS
         static const Credentials& GetClientCredentials();
 #endif
     };
