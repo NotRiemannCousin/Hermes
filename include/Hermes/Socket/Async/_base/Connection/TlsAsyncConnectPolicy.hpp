@@ -11,9 +11,9 @@
 namespace Hermes {
 
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
 #else
-    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
 #endif
     struct TlsAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
@@ -21,7 +21,7 @@ namespace Hermes {
         using EndpointType = typename Data::EndpointType;
 
 
-        struct Options : DefaultAsyncConnectPolicy<Data, Scheduler>::Options {
+        struct Options : DefaultAsyncConnectPolicy<ExecutionContext, Data>::Options {
             bool ignoreCertificateErrors{};
             bool requestMutualAuth{};
         };

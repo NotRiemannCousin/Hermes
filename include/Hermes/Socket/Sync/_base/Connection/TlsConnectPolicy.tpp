@@ -9,7 +9,7 @@ namespace Hermes {
     ConnectionResultOper TlsConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
         data.connectStateMachine = std::make_unique<details_::TlsConnectStateMachine<Data, TlsConnectPolicy>>(options);
 
-        const auto makeHandshake{ [this, &data](std::monostate) {
+        const auto makeHandshake{ [this, &data] {
             return this->ClientHandshake(data);
         } };
 

@@ -9,7 +9,7 @@
 namespace Hermes {
 
 #if HERMES_ENABLE_ASYNC
-    template<SocketDataConcept Data>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncAcceptPolicy;
 #endif
 
@@ -36,7 +36,8 @@ namespace Hermes {
         static ConnectionResultOper ServerHandshake(Data& data, AcceptOptions options) noexcept;
 
 #if HERMES_ENABLE_ASYNC
-        friend struct TlsAsyncAcceptPolicy<Data>;
+        template<class ExecutionContext, SocketDataConcept AsyncData>
+        friend struct TlsAsyncAcceptPolicy;
 #endif
     };
 

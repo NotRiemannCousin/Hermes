@@ -7,22 +7,13 @@
 ExpString MakeRequest();
 
 int main() {
-    constexpr auto printContent{ [](std::string&& content) {
-        std::println("body:\n\n{}", content);
-        return std::monostate{};
+    constexpr auto getError{ [](std::string&& error) {
+        const int err{ Hermes::GetError().error() };
+
+        return ExpString{ std::format("Request Failed with '{}'\n\nWSA Code : {}", error, err) };
     } };
 
-    constexpr auto printError{ [](std::string&& error){
-        // const int err{ WSAGetLastError() };
-        const int err{ errno };
-
-        std::println("Request Failed with '{}'\n\nWSA Code : {}", error, err);
-        return std::monostate{};
-    } };
-
-    std::ignore = MakeRequest()
-            .transform(printContent)
-            .transform_error(printError);
+    std::println("{}", MakeRequest().or_else(getError).value());
 
     return 0;
 }

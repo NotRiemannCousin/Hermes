@@ -106,7 +106,7 @@ namespace Hermes {
         return [options, fData{ std::forward<R>(data) }](ClientSocket&& self) mutable -> ConnectionResult<ClientSocket> {
             auto val{ self.Send(std::move(fData), options) };
 
-            auto movFromThis{ [client{ std::move(self) }](const auto) mutable {
+            auto movFromThis{ [client{ std::move(self) }](const auto...) mutable {
                 return std::move(client);
             } };
             return val.second.transform(movFromThis);

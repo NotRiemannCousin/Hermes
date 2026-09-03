@@ -8,9 +8,8 @@
 #include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
-
 #if HERMES_ENABLE_ASYNC
-    template<SocketDataConcept Data>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncConnectPolicy;
 #endif
 
@@ -46,7 +45,8 @@ namespace Hermes {
         ConnectionResultOper ClientHandshake(Data& data);
 
 #if HERMES_ENABLE_ASYNC
-        friend struct TlsAsyncConnectPolicy<Data>;
+        template<class ExecutionContext, SocketDataConcept AsyncData>
+        friend struct TlsAsyncConnectPolicy;
 #endif
 
     };

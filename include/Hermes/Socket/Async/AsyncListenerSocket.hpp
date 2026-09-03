@@ -74,7 +74,7 @@ namespace Hermes {
 
     //! @brief Alias to the raw TCP listener async socket.
     using RawTcpAsyncListener = AsyncListenerSocket<>;
-#if HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS && HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TLS listener async socket.
     using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
     static_assert(std::same_as<RawTlsAsyncListener::EndpointType, IpAddress>);

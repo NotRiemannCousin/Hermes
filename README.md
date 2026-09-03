@@ -85,7 +85,7 @@ The following example performs an HTTPS GET request, parsing the response increm
 namespace rg = std::ranges;
 namespace vs = std::views;
 
-std::expected<std::monostate, std::string> MakeRequest() {
+std::expected<void, std::string> MakeRequest() {
     using namespace std::literals::string_view_literals;
 
     struct { std::string scheme; std::string hostname; std::string path; } url {
@@ -180,8 +180,6 @@ std::expected<std::monostate, std::string> MakeRequest() {
 
     const auto processData{ [](std::string&& body) {
         std::println("body:\n\n{}", body);
-
-        return std::monostate{};
     } };
 
 #pragma endregion

@@ -51,7 +51,7 @@ namespace Hermes {
 
     //! @brief Alias to the raw TCP server async socket.
     using RawTcpAsyncServer = AsyncServerSocket<>;
-#if HERMES_ENABLE_TLS
+#if HERMES_ENABLE_TLS && HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TLS server async socket.
     using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 #endif

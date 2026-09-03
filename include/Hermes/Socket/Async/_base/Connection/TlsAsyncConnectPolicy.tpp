@@ -10,8 +10,8 @@
 namespace Hermes {
 
     enum class ControlAction : std::uint8_t { Connect, Renegotiate, Shutdown };
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    struct TlsAsyncConnectPolicy<Data, Scheduler>::ControlSender {
+    template<class ExecutionContext, SocketDataConcept Data>
+    struct TlsAsyncConnectPolicy<ExecutionContext, Data>::ControlSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -135,14 +135,14 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto TlsAsyncConnectPolicy<Data, Scheduler>::Connect(Data& data, Options options) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto TlsAsyncConnectPolicy<ExecutionContext, Data>::Connect(Data& data, Options options) {
         data.connectStateMachine = std::make_unique<details_::TlsConnectStateMachine<Data, TlsAsyncConnectPolicy>>(options);
         m_options = options;
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncConnectPolicy<Data, Scheduler>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<Data, Scheduler>::Options*>(&options))
+        return DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<ExecutionContext, Data>::Options*>(&options))
              |
              stdexec::let_value(Utils::Overloaded{
                  [&data, options]() mutable { return ControlSender{ &data, options }; },
@@ -150,8 +150,8 @@ namespace Hermes {
              });
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto TlsAsyncConnectPolicy<Data, Scheduler>::Shutdown(Data& data) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto TlsAsyncConnectPolicy<ExecutionContext, Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ControlSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ControlSender>, std::variant<ConnectionErrorEnum>>);
@@ -159,16 +159,16 @@ namespace Hermes {
         return ControlSender{ &data, m_options, ControlAction::Shutdown };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void TlsAsyncConnectPolicy<Data, Scheduler>::Close(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void TlsAsyncConnectPolicy<ExecutionContext, Data>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void TlsAsyncConnectPolicy<Data, Scheduler>::Abort(Data &data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void TlsAsyncConnectPolicy<ExecutionContext, Data>::Abort(Data &data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             constexpr linger lingerOption{ 1, 0 };
             setsockopt(data.socket, SOL_SOCKET, SO_LINGER, reinterpret_cast<const char*>(&lingerOption), sizeof(lingerOption));

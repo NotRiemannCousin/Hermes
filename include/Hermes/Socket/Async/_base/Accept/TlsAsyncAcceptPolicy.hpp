@@ -11,9 +11,9 @@
 
 namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
 #else
-    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
 #endif
     struct TlsAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
@@ -23,7 +23,7 @@ namespace Hermes {
         struct ListenOptions : TlsAcceptPolicy<Data>::ListenOptions {};
 
         struct AcceptOptions : TlsAcceptPolicy<Data>::AcceptOptions {
-            Scheduler* scheduler{};
+            ExecutionContext* scheduler{};
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options) noexcept;

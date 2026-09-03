@@ -14,7 +14,7 @@ namespace Hermes {
     ConnectionResultOper TlsAcceptPolicy<Data>::Accept(Data& data, Data& outData, AcceptOptions options) noexcept {
         outData.acceptStateMachine = std::make_unique<details_::TlsAcceptStateMachine<Data, TlsAcceptPolicy>>(options);
 
-        const auto makeHandshake{ [&](std::monostate) {
+        const auto makeHandshake{ [&] {
             return TlsAcceptPolicy::ServerHandshake(outData, options);
         } };
 

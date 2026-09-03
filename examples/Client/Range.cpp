@@ -1,77 +1,77 @@
-// ReSharper disable CppPassValueParameterByConstReference
-#include <Hermes/Socket/Sync/ClientSocket.hpp>
-#include <Hermes/Utils/UntilMatch.hpp>
+    // ReSharper disable CppPassValueParameterByConstReference
+    #include <Hermes/Socket/Sync/ClientSocket.hpp>
+    #include <Hermes/Utils/UntilMatch.hpp>
 
-#include <string_view>
-#include <algorithm>
-#include <ranges>
+    #include <string_view>
+    #include <algorithm>
+    #include <ranges>
 
-#include "_base.hpp"
+    #include "_base.hpp"
 
-namespace rg = std::ranges;
-namespace vs = std::views;
+    namespace rg = std::ranges;
+    namespace vs = std::views;
 
-// This paradigm fully utilizes C++23's monadic operations for `std::expected`
-// (`and_then`, `transform`, `transform_error`) combined with lazy evaluated Ranges.
-// It creates a declarative, zero-overhead execution flow where the "happy path"
-// runs sequentially, and any error elegantly short-circuits to the end.
+    // This paradigm fully utilizes C++23's monadic operations for `std::expected`
+    // (`and_then`, `transform`, `transform_error`) combined with lazy evaluated Ranges.
+    // It creates a declarative, zero-overhead execution flow where the "happy path"
+    // runs sequentially, and any error elegantly short-circuits to the end.
 
-extern ExpString MakeRequest() {
-    using namespace std::literals::string_view_literals;
+    extern ExpString MakeRequest() {
+        using namespace std::literals::string_view_literals;
 
-#pragma region Lambdas
+    #pragma region Lambdas
 
-    const auto getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
-        auto socketView{ client.RecvStream<char>() };
-        // `RecvStream` is an input_range, so it consumes the bytes when you advance the iterator.
-        // Advancing an iterator of an input_range can cause invalidation of other iterators, but
-        // the current state is stored in the range so all iterators are treated equally and
-        // represent the current state.
-        // This code shows how it can be useful.
+        const auto getResponse{ [&](Hermes::RawTlsClient&& client) -> ExpString {
+            auto socketView{ client.RecvStream<char>() };
+            // `RecvStream` is an input_range, so it consumes the bytes when you advance the iterator.
+            // Advancing an iterator of an input_range can cause invalidation of other iterators, but
+            // the current state is stored in the range so all iterators are treated equally and
+            // represent the current state.
+            // This code shows how it can be useful.
 
-        // (It's not a normal input_range, do I need to give a name to this type of range?
-        // sibling{_input}_range? global{_input}_range? Idk).
+            // (It's not a normal input_range, do I need to give a name to this type of range?
+            // sibling{_input}_range? global{_input}_range? Idk).
 
-        if (!rg::starts_with(socketView, "HTTP/1.1"sv))
-            return std::unexpected{ "Non supported version" };
+            if (!rg::starts_with(socketView, "HTTP/1.1"sv))
+                return std::unexpected{ "Non supported version" };
 
-        const auto statusCode{ Hermes::Utils::ExtractTo<std::array<char, 5>>(socketView) };
+            const auto statusCode{ Hermes::Utils::ExtractTo<std::array<char, 5>>(socketView) };
 
-        if (!rg::equal(statusCode, " 200 "sv))
-            return std::unexpected{ std::format("error code: {:s}", statusCode) };
+            if (!rg::equal(statusCode, " 200 "sv))
+                return std::unexpected{ std::format("error code: {:s}", statusCode) };
 
-        const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
-        // This range must receive more bytes just when reading with the * operator. receiving when
-        // advancing isn't that good because if your protocol uses a terminated sequence you will
-        // need more work to stop at the last byte (think about this like vec.end() being outside
-        // of the boundaries of the vector itself).
+            const auto statusMessage{ socketView | Hermes::Utils::UntilMatch("\r\n"sv) | rg::to<std::string>() };
+            // This range must receive more bytes just when reading with the * operator. receiving when
+            // advancing isn't that good because if your protocol uses a terminated sequence you will
+            // need more work to stop at the last byte (think about this like vec.end() being outside
+            // of the boundaries of the vector itself).
 
-        // e.g.: `UntilMatch("\r\n"sv)` goes until the first occurrence of "\r\n", discard the pattern
-        // (exclusive match, `UntilMatch<true>` is inclusive) and advance the state again to stop at
-        // the next byte of EOS.
+            // e.g.: `UntilMatch("\r\n"sv)` goes until the first occurrence of "\r\n", discard the pattern
+            // (exclusive match, `UntilMatch<true>` is inclusive) and advance the state again to stop at
+            // the next byte of EOS.
 
-        const auto headers { socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv) | rg::to<std::string>() };
-        const auto chunkLen{ socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
-        auto body          { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
+            const auto headers { socketView | Hermes::Utils::UntilMatch("\r\n\r\n"sv) | rg::to<std::string>() };
+            const auto chunkLen{ socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
+            auto body          { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
 
-        // Ok, this is unsafe because I'm being lazy here, but you can process and check this data properly.
-        // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easily limit the size.
-        // The range automatically stops when the connection ends, so you don't need to worry.
+            // Ok, this is unsafe because I'm being lazy here, but you can process and check this data properly.
+            // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easily limit the size.
+            // The range automatically stops when the connection ends, so you don't need to worry.
 
-        static constexpr auto ConnClose{ Hermes::ConnectionErrorEnum::ConnectionClosed };
-        if (socketView.Error().error_or(ConnClose) != ConnClose)
-            return std::unexpected{ "Error receiving message" };
+            static constexpr auto ConnClose{ Hermes::ConnectionErrorEnum::ConnectionClosed };
+            if (socketView.Error().error_or(ConnClose) != ConnClose)
+                return std::unexpected{ "Error receiving message" };
 
-        return body;
-    } };
+            return body;
+        } };
 
-#pragma endregion
+    #pragma endregion
 
-    using Client = Hermes::RawTlsClient;
+        using Client = Hermes::RawTlsClient;
 
-    return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
-            .and_then([&](const auto endpoint) { return Client::Connect({ endpoint, url.hostname }); })
-            .and_then(Client::SendAndLift(url.FormatRequest()))
-            .transform_error([](const auto e){ return std::format("{}", e); })
-            .and_then(getResponse);
-}
+        return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
+                .and_then([&](const auto endpoint) { return Client::Connect({ endpoint, url.hostname }); })
+                .and_then(Client::SendAndLift(url.FormatRequest()))
+                .transform_error([](const auto e){ return std::format("{}", e); })
+                .and_then(getResponse);
+    }

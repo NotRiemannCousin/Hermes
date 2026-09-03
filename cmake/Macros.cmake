@@ -116,3 +116,13 @@ macro(generate_lldbinit)
 endmacro()
 
 #endregion
+
+#region examples
+
+function(add_example TEST_NAME FILE)
+    add_executable(${TEST_NAME} ${FILE} ${ARGN})
+
+    target_link_libraries(${TEST_NAME} PRIVATE Hermes HermesCompilerFlags)
+endfunction()
+
+#endregion

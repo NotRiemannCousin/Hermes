@@ -41,8 +41,8 @@ if (COND) {                                                                     
 
 namespace Hermes {
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    struct DefaultAsyncAcceptPolicy<Data, Scheduler>::AcceptSender {
+    template<class ExecutionContext, SocketDataConcept Data>
+    struct DefaultAsyncAcceptPolicy<ExecutionContext, Data>::AcceptSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
@@ -180,8 +180,8 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    ConnectionResultOper DefaultAsyncAcceptPolicy<Data, Scheduler>::Listen(Data& data, int backlog, ListenOptions options) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    ConnectionResultOper DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Listen(Data& data, int backlog, ListenOptions options) {
         auto listenerPolicy{ DefaultAcceptPolicy<EndpointType, Type, Family>::Listen(data, backlog, options) };
         if (!listenerPolicy)
             return listenerPolicy;
@@ -206,8 +206,8 @@ namespace Hermes {
         return listenerPolicy;
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Accept(Data& listenData, Data&& serverData, AcceptOptions options) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Accept(Data& listenData, Data&& serverData, AcceptOptions options) {
         static_assert(stdexec::sender<AcceptSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<AcceptSender>, std::variant<std::tuple<Data>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<AcceptSender>, std::variant<ConnectionErrorEnum>>);
@@ -215,14 +215,14 @@ namespace Hermes {
         return AcceptSender{ &listenData, std::move(serverData), options };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Accept(Data& listenData, AcceptOptions options) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Accept(Data& listenData, AcceptOptions options) {
         return Accept(listenData, listenData.MakeChild(), options);
     }
 
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    struct DefaultAsyncAcceptPolicy<Data, Scheduler>::ShutdownSender {
+    template<class ExecutionContext, SocketDataConcept Data>
+    struct DefaultAsyncAcceptPolicy<ExecutionContext, Data>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -255,8 +255,8 @@ namespace Hermes {
     };
 
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Shutdown(Data& data) {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);
@@ -266,8 +266,8 @@ namespace Hermes {
 
 
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void DefaultAsyncAcceptPolicy<Data, Scheduler>::Close(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Close(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Close(data);
 #ifdef _WIN32
         std::lock_guard lock(listenerExtensionsMutex);
@@ -276,8 +276,8 @@ namespace Hermes {
 #endif
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void DefaultAsyncAcceptPolicy<Data, Scheduler>::Abort(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Abort(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
 #ifdef _WIN32
         std::lock_guard lock(listenerExtensionsMutex);

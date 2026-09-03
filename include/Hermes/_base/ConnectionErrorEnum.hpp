@@ -65,7 +65,7 @@ namespace Hermes {
 
     template<class T>
     using ConnectionResult = std::expected<T, ConnectionErrorEnum>;
-    using ConnectionResultOper = ConnectionResult<std::monostate>;
+    using ConnectionResultOper = ConnectionResult<void>;
 
     using StreamByteOper = std::pair<size_t, ConnectionResultOper>;
 

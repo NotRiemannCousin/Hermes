@@ -6,9 +6,9 @@
 
 namespace Hermes {
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    struct TlsAsyncTransferPolicy<Data, Scheduler>::TransferSender {
+    struct TlsAsyncTransferPolicy<ExecutionContext, Data>::TransferSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
@@ -56,7 +56,7 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = Scheduler::GetLoopForSocket(static_cast<int>(m_data->socket));
+                            auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
                                 stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 return;
@@ -78,7 +78,7 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = Scheduler::GetLoopForSocket(static_cast<int>(m_data->socket));
+                            auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
                             if (!loop) {
                                 stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                                 return;
@@ -167,18 +167,18 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    auto TlsAsyncTransferPolicy<Data, Scheduler>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode) noexcept {
+    auto TlsAsyncTransferPolicy<ExecutionContext, Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode) noexcept {
         if (!data.transferStateMachine)
             data.transferStateMachine = std::make_unique<details_::TlsTransferStateMachine<Data, TlsAsyncTransferPolicy>>();
         std::span<std::byte> byteSpan{ reinterpret_cast<std::byte*>(bufferRecv.data()), bufferRecv.size_bytes() };
         return TransferSender<Byte>{ this, &data, byteSpan, {}, recvMode, ActionEnum::Recv };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    auto TlsAsyncTransferPolicy<Data, Scheduler>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
+    auto TlsAsyncTransferPolicy<ExecutionContext, Data>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
         static_assert(stdexec::sender<TransferSender<Byte>>);
         static_assert(std::same_as<stdexec::value_types_of_t<TransferSender<Byte>>, std::variant<std::tuple<size_t>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<TransferSender<Byte>>, std::variant<TransferError>>);

@@ -71,16 +71,29 @@
 #include <unistd.h>
 #endif
 #include <Hermes/_base/OsApi/Types.hpp>
+#include <expected>
 
 namespace Hermes {
     int CloseSocket(SocketFd socket);
+    std::expected<void, int> GetError();
+
 #ifdef _WIN32
     inline int CloseSocket(SocketFd socket) {
         return closesocket(socket);
     }
+    inline std::expected<void, int> GetError() {
+        if (const int err{ WSAGetLastError() })
+            return std::unexpected{ err };
+        return {};
+    }
 #else
-    inline int CloseSocket(SocketFd socket) {
+    inline std::expected<void, int> CloseSocket(SocketFd socket) {
         return close(socket);
+    }
+    inline int GetError() {
+        if (const int err{ errno })
+            return std::unexpected{ err };
+        return {};
     }
 #endif
 }

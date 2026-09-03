@@ -7,8 +7,8 @@
 #include <cstring>
 
 namespace Hermes {
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    struct DefaultAsyncConnectPolicy<Data, Scheduler>::ConnectSender {
+    template<class ExecutionContext, SocketDataConcept Data>
+    struct DefaultAsyncConnectPolicy<ExecutionContext, Data>::ConnectSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -148,8 +148,8 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    struct DefaultAsyncConnectPolicy<Data, Scheduler>::ShutdownSender {
+    template<class ExecutionContext, SocketDataConcept Data>
+    struct DefaultAsyncConnectPolicy<ExecutionContext, Data>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
 
         using completion_signatures = stdexec::completion_signatures<
@@ -187,8 +187,8 @@ namespace Hermes {
     };
 
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto DefaultAsyncConnectPolicy<Data, Scheduler>::Connect(Data& data, Options options) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(Data& data, Options options) noexcept {
         static_assert(stdexec::sender<ConnectSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ConnectSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ConnectSender>, std::variant<ConnectionErrorEnum>>);
@@ -196,8 +196,8 @@ namespace Hermes {
         return ConnectSender{ &data, options };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    auto DefaultAsyncConnectPolicy<Data, Scheduler>::Shutdown(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    auto DefaultAsyncConnectPolicy<ExecutionContext, Data>::Shutdown(Data& data) noexcept {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);
@@ -205,8 +205,8 @@ namespace Hermes {
         return ShutdownSender{ &data };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void DefaultAsyncConnectPolicy<Data, Scheduler>::Close(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void DefaultAsyncConnectPolicy<ExecutionContext, Data>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             CloseSocket(data.socket);
 #ifndef _WIN32
@@ -215,8 +215,8 @@ namespace Hermes {
         }
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
-    void DefaultAsyncConnectPolicy<Data, Scheduler>::Abort(Data& data) noexcept {
+    template<class ExecutionContext, SocketDataConcept Data>
+    void DefaultAsyncConnectPolicy<ExecutionContext, Data>::Abort(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             constexpr linger lingerOption{ 1, 0 };
             setsockopt(

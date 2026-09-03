@@ -12,7 +12,7 @@
 namespace rg = std::ranges;
 namespace vs = std::views;
 
-std::expected<std::monostate, std::string> RunServer() {
+std::expected<void, std::string> RunServer() {
     using namespace std::literals::string_view_literals;
     using Hermes::RawTcpListener;
     using Hermes::RawTcpServer;
@@ -162,7 +162,7 @@ body, html{{
             if (!sla) return std::unexpected{ sla.error() };
             auto _{ sendRequest(std::move(*sla)) };
         }
-        return std::monostate{};
+        return {};
     } };
 
     return RawTcpListener::ListenOne(Hermes::DefaultSocketData<>{ endpoint })

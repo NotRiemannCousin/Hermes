@@ -3,9 +3,9 @@
 #if HERMES_ENABLE_ASYNC
 
 namespace Hermes {
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    struct DefaultAsyncTransferPolicy<Data, Scheduler>::RecvSender {
+    struct DefaultAsyncTransferPolicy<ExecutionContext, Data>::RecvSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
@@ -68,7 +68,7 @@ namespace Hermes {
                         TransferError{ m_total, ConnectionErrorEnum::ReceiveFailed });
                 }
 #else
-                auto* loop = Scheduler::GetLoopForSocket(static_cast<int>(m_data->socket));
+                auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
                 if (!loop) {
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
@@ -100,9 +100,9 @@ namespace Hermes {
     };
 
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    struct DefaultAsyncTransferPolicy<Data, Scheduler>::SendSender {
+    struct DefaultAsyncTransferPolicy<ExecutionContext, Data>::SendSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
@@ -158,7 +158,7 @@ namespace Hermes {
                         TransferError{ m_total, ConnectionErrorEnum::SendFailed });
                 }
 #else
-                auto* loop = Scheduler::GetLoopForSocket(static_cast<int>(m_data->socket));
+                auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
                 if (!loop) {
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
@@ -193,15 +193,15 @@ namespace Hermes {
     // =========================================================================
     // Policy Methods
     // =========================================================================
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    auto DefaultAsyncTransferPolicy<Data, Scheduler>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode) noexcept {
+    auto DefaultAsyncTransferPolicy<ExecutionContext, Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode) noexcept {
         return RecvSender<Byte>{ &data, bufferRecv, mode };
     }
 
-    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
-    auto DefaultAsyncTransferPolicy<Data, Scheduler>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
+    auto DefaultAsyncTransferPolicy<ExecutionContext, Data>::Send(Data& data, std::span<const Byte> bufferSend) noexcept {
         return SendSender<Byte>{ &data, bufferSend };
     }
 }

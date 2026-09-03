@@ -11,9 +11,9 @@
 namespace Hermes {
 
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
 #else
-    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler>
+    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
 #endif
     struct DefaultAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
@@ -27,7 +27,7 @@ namespace Hermes {
             int recvBufferSize{};
             int sendBufferSize{};
 
-            Scheduler* scheduler;
+            ExecutionContext* scheduler;
         };
 
 

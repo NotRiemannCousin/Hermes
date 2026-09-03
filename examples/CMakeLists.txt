@@ -1,22 +1,16 @@
-add_executable(BasicClientExample Client/main.cpp Client/Basic.cpp)
-add_executable(RangeClientExample Client/main.cpp Client/Range.cpp)
-add_executable(BasicServerExample Server/BasicServer.cpp)
-
-target_link_libraries(BasicClientExample PRIVATE Hermes HermesCompilerFlags)
-target_link_libraries(RangeClientExample PRIVATE Hermes HermesCompilerFlags)
-target_link_libraries(BasicServerExample PRIVATE Hermes HermesCompilerFlags)
-
-if(HERMES_ENABLE_ASYNC)
-    add_executable(AsyncCoroClientExample Client/main.cpp Client/AsyncCoro.cpp)
-    add_executable(AsyncExecClientExample Client/main.cpp Client/AsyncExec.cpp)
-    add_executable(AsyncServerExample Server/AsyncServer.cpp)
-
-    target_link_libraries(AsyncCoroClientExample PRIVATE Hermes HermesCompilerFlags)
-    target_link_libraries(AsyncExecClientExample PRIVATE Hermes HermesCompilerFlags)
-    target_link_libraries(AsyncServerExample PRIVATE Hermes HermesCompilerFlags)
+if(HERMES_ENABLE_TLS)
+    add_example(BasicClientExample Client/main.cpp Client/Basic.cpp)
+    add_example(RangeClientExample Client/main.cpp Client/Range.cpp)
 endif()
 
-if(HERMES_ENABLE_TLS)
-    add_executable(fujIServerExample Server/fujIServer.cpp)
-    target_link_libraries(fujIServerExample PRIVATE Hermes HermesCompilerFlags)
+add_example(BasicServerExample Server/BasicServer.cpp)
+
+if(HERMES_ENABLE_ASYNC AND HERMES_ENABLE_NATIVE_SCHEDULER)
+    if(HERMES_ENABLE_TLS)
+        add_example(AsyncCoroClientExample Client/main.cpp Client/AsyncCoro.cpp)
+        add_example(AsyncExecClientExample Client/main.cpp Client/AsyncExec.cpp)
+    endif()
+
+    add_example(AsyncServerExample Server/AsyncServer.cpp)
+    add_example(fujIServerExample Server/fujIServer.cpp)
 endif()
