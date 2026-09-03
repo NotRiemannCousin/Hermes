@@ -10,7 +10,11 @@
 
 namespace Hermes {
 
-    template<SocketDataConcept Data = TlsSocketData<>>
+    #if HERMES_ENABLE_NATIVE_SCHEDULER
+    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+#else
+    template<SocketDataConcept Data = TlsSocketData<>, stdexec::scheduler Scheduler>
+#endif
     struct TlsAsyncTransferPolicy {
         static constexpr auto Type{ Data::Type };
 
@@ -30,7 +34,11 @@ namespace Hermes {
 #include <Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.tpp>
 
 namespace Hermes {
+    #if HERMES_ENABLE_NATIVE_SCHEDULER
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy<>, TlsSocketData<>>);
+#endif
+#endif
 }
 
 #endif

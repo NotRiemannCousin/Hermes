@@ -5,11 +5,16 @@
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
+#include <stdexec/execution.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 
 namespace Hermes {
 
-    template<SocketDataConcept Data = DefaultSocketData<>>
+#if HERMES_ENABLE_NATIVE_SCHEDULER
+    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+#else
+    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler>
+#endif
     struct DefaultAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
@@ -22,7 +27,7 @@ namespace Hermes {
             int recvBufferSize{};
             int sendBufferSize{};
 
-            FastIoLoop* scheduler;
+            Scheduler* scheduler;
         };
 
 
@@ -44,7 +49,9 @@ namespace Hermes {
 #include <Hermes/Socket/Async/_base/Connection/DefaultAsyncConnectPolicy.tpp>
 
 namespace Hermes {
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     static_assert(AsyncConnectionPolicyConcept<DefaultAsyncConnectPolicy<>, DefaultSocketData<>>);
+#endif
 }
 
 #endif

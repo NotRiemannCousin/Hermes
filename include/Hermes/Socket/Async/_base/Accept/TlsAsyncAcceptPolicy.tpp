@@ -9,8 +9,8 @@
 namespace Hermes {
 
     enum class AcceptControlAction : std::uint8_t { Accept, Renegotiate, Shutdown };
-    template<SocketDataConcept Data>
-    struct TlsAsyncAcceptPolicy<Data>::ControlSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct TlsAsyncAcceptPolicy<Data, Scheduler>::ControlSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -52,12 +52,12 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
+                            auto* scheduler = m_options.scheduler;
+                            if (!scheduler) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
                                  io_uring_sqe_set_data(sqe, &m_status);
@@ -75,12 +75,12 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
+                            auto* scheduler = m_options.scheduler;
+                            if (!scheduler) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
                                  io_uring_sqe_set_data(sqe, &m_status);
@@ -129,8 +129,8 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data>
-    struct TlsAsyncAcceptPolicy<Data>::AcceptSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct TlsAsyncAcceptPolicy<Data, Scheduler>::AcceptSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
@@ -189,49 +189,49 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data>
-    ConnectionResultOper TlsAsyncAcceptPolicy<Data>::Listen(Data& data, const int backlog, ListenOptions options) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    ConnectionResultOper TlsAsyncAcceptPolicy<Data, Scheduler>::Listen(Data& data, const int backlog, ListenOptions options) noexcept {
         return TlsAcceptPolicy<Data>::Listen(data, backlog, options);
     }
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data&& clientData, AcceptOptions options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncAcceptPolicy<Data, Scheduler>::Accept(Data& listenData, Data&& clientData, AcceptOptions options) {
         clientData.acceptStateMachine = std::make_unique<details_::TlsAcceptStateMachine<Data, TlsAsyncAcceptPolicy>>(options);
         m_options = options;
 
         static_assert(stdexec::sender<ControlSender>);
-        auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<Data>::AcceptOptions>(options) };
+        auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<Data, Scheduler>::AcceptOptions>(options) };
 
-        return DefaultAsyncAcceptPolicy<Data>::Accept(listenData, std::move(clientData), defaultOptions)
+        return DefaultAsyncAcceptPolicy<Data, Scheduler>::Accept(listenData, std::move(clientData), defaultOptions)
              | stdexec::let_value([options](Data& data) {
                    return AcceptSender{ std::move(data), options };
                });
     }
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::Accept(Data &listenData, AcceptOptions options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncAcceptPolicy<Data, Scheduler>::Accept(Data &listenData, AcceptOptions options) {
         return Accept(listenData, listenData.MakeChild(), options);
     }
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::Renegotiate(Data& data) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncAcceptPolicy<Data, Scheduler>::Renegotiate(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         return ControlSender{ &data, m_options, AcceptControlAction::Renegotiate };
     }
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncAcceptPolicy<Data>::Shutdown(Data& data) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncAcceptPolicy<Data, Scheduler>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         return ControlSender{ &data, m_options, AcceptControlAction::Shutdown };
     }
 
-    template<SocketDataConcept Data>
-    void TlsAsyncAcceptPolicy<Data>::Close(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void TlsAsyncAcceptPolicy<Data, Scheduler>::Close(Data& data) noexcept {
         TlsAcceptPolicy<Data>::Close(data);
     }
 
-    template<SocketDataConcept Data>
-    void TlsAsyncAcceptPolicy<Data>::Abort(Data &data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void TlsAsyncAcceptPolicy<Data, Scheduler>::Abort(Data &data) noexcept {
         TlsAcceptPolicy<Data>::Abort(data);
     }
 }

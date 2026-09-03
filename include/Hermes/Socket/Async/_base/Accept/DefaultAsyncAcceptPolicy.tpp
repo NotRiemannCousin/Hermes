@@ -41,8 +41,8 @@ if (COND) {                                                                     
 
 namespace Hermes {
 
-    template<SocketDataConcept Data>
-    struct DefaultAsyncAcceptPolicy<Data>::AcceptSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct DefaultAsyncAcceptPolicy<Data, Scheduler>::AcceptSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
@@ -162,9 +162,9 @@ namespace Hermes {
                 self.m_status.context = &self;
                 self.m_status.callback = IoCallback;
 
-                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(self.m_listenData->socket));
-                SAFE_CHECK_ERR(!loop, NoScheduler);
-                loop->SubmitIo([&](struct io_uring_sqe* sqe) {
+                auto* scheduler = self.m_options.scheduler;
+                SAFE_CHECK_ERR(!scheduler, NoScheduler);
+                scheduler->SubmitIo([&](struct io_uring_sqe* sqe) {
                     self.m_addrLen = sizeof(sockaddr_storage);
                     io_uring_prep_accept(sqe, static_cast<int>(self.m_listenData->socket),
                         reinterpret_cast<sockaddr*>(self.m_buffer), &self.m_addrLen, 0);
@@ -180,8 +180,8 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data>
-    ConnectionResultOper DefaultAsyncAcceptPolicy<Data>::Listen(Data& data, int backlog, ListenOptions options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    ConnectionResultOper DefaultAsyncAcceptPolicy<Data, Scheduler>::Listen(Data& data, int backlog, ListenOptions options) {
         auto listenerPolicy{ DefaultAcceptPolicy<EndpointType, Type, Family>::Listen(data, backlog, options) };
         if (!listenerPolicy)
             return listenerPolicy;
@@ -206,8 +206,8 @@ namespace Hermes {
         return listenerPolicy;
     }
 
-    template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::Accept(Data& listenData, Data&& serverData, AcceptOptions options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Accept(Data& listenData, Data&& serverData, AcceptOptions options) {
         static_assert(stdexec::sender<AcceptSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<AcceptSender>, std::variant<std::tuple<Data>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<AcceptSender>, std::variant<ConnectionErrorEnum>>);
@@ -215,14 +215,14 @@ namespace Hermes {
         return AcceptSender{ &listenData, std::move(serverData), options };
     }
 
-    template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::Accept(Data& listenData, AcceptOptions options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Accept(Data& listenData, AcceptOptions options) {
         return Accept(listenData, listenData.MakeChild(), options);
     }
 
 
-    template<SocketDataConcept Data>
-    struct DefaultAsyncAcceptPolicy<Data>::ShutdownSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct DefaultAsyncAcceptPolicy<Data, Scheduler>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -255,8 +255,8 @@ namespace Hermes {
     };
 
 
-    template<SocketDataConcept Data>
-    auto DefaultAsyncAcceptPolicy<Data>::Shutdown(Data& data) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto DefaultAsyncAcceptPolicy<Data, Scheduler>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);
@@ -266,25 +266,23 @@ namespace Hermes {
 
 
 
-    template<SocketDataConcept Data>
-    void DefaultAsyncAcceptPolicy<Data>::Close(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void DefaultAsyncAcceptPolicy<Data, Scheduler>::Close(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Close(data);
 #ifdef _WIN32
         std::lock_guard lock(listenerExtensionsMutex);
         listenerExtensions.erase(data.socket);
 #else
-        FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif
     }
 
-    template<SocketDataConcept Data>
-    void DefaultAsyncAcceptPolicy<Data>::Abort(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void DefaultAsyncAcceptPolicy<Data, Scheduler>::Abort(Data& data) noexcept {
         DefaultAcceptPolicy<EndpointType, Type, Family>::Abort(data);
 #ifdef _WIN32
         std::lock_guard lock(listenerExtensionsMutex);
         listenerExtensions.erase(data.socket);
 #else
-        FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif
     }
 }

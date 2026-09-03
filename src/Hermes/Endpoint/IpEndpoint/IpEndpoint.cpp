@@ -3,6 +3,8 @@
 #include <Hermes/_base/Network.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
 
+#include <memory>
+
 
 #if defined(__clang__)
 #pragma clang diagnostic push

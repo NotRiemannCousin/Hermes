@@ -7,8 +7,8 @@
 #include <cstring>
 
 namespace Hermes {
-    template<SocketDataConcept Data>
-    struct DefaultAsyncConnectPolicy<Data>::ConnectSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct DefaultAsyncConnectPolicy<Data, Scheduler>::ConnectSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -127,14 +127,14 @@ namespace Hermes {
                 m_status.context = this;
                 m_status.callback = IoCallback;
 
-                auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
-                if (!loop) {
+                auto* scheduler = m_options.scheduler;
+                if (!scheduler) {
                     DefaultAsyncConnectPolicy::Close(*m_data);
                     stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                     return;
                 }
 
-                loop->SubmitIo([&](struct io_uring_sqe* sqe) {
+                scheduler->SubmitIo([&](struct io_uring_sqe* sqe) {
                     io_uring_prep_connect(sqe, static_cast<int>(m_data->socket), reinterpret_cast<sockaddr*>(&m_addr), m_addrLen);
                     io_uring_sqe_set_data(sqe, &m_status);
                 });
@@ -148,8 +148,8 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data>
-    struct DefaultAsyncConnectPolicy<Data>::ShutdownSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct DefaultAsyncConnectPolicy<Data, Scheduler>::ShutdownSender {
         using sender_concept = stdexec::sender_t;
 
         using completion_signatures = stdexec::completion_signatures<
@@ -187,8 +187,8 @@ namespace Hermes {
     };
 
 
-    template<SocketDataConcept Data>
-    auto DefaultAsyncConnectPolicy<Data>::Connect(Data& data, Options options) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto DefaultAsyncConnectPolicy<Data, Scheduler>::Connect(Data& data, Options options) noexcept {
         static_assert(stdexec::sender<ConnectSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ConnectSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ConnectSender>, std::variant<ConnectionErrorEnum>>);
@@ -196,8 +196,8 @@ namespace Hermes {
         return ConnectSender{ &data, options };
     }
 
-    template<SocketDataConcept Data>
-    auto DefaultAsyncConnectPolicy<Data>::Shutdown(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto DefaultAsyncConnectPolicy<Data, Scheduler>::Shutdown(Data& data) noexcept {
         static_assert(stdexec::sender<ShutdownSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ShutdownSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ShutdownSender>, std::variant<ConnectionErrorEnum>>);
@@ -205,19 +205,18 @@ namespace Hermes {
         return ShutdownSender{ &data };
     }
 
-    template<SocketDataConcept Data>
-    void DefaultAsyncConnectPolicy<Data>::Close(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void DefaultAsyncConnectPolicy<Data, Scheduler>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             CloseSocket(data.socket);
 #ifndef _WIN32
-            FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif
             data.socket = macroINVALID_SOCKET;
         }
     }
 
-    template<SocketDataConcept Data>
-    void DefaultAsyncConnectPolicy<Data>::Abort(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void DefaultAsyncConnectPolicy<Data, Scheduler>::Abort(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             constexpr linger lingerOption{ 1, 0 };
             setsockopt(
@@ -229,7 +228,6 @@ namespace Hermes {
             );
             CloseSocket(data.socket);
 #ifndef _WIN32
-            FastIoLoop::UnregisterSocketLoop(static_cast<int>(data.socket));
 #endif
             data.socket = macroINVALID_SOCKET;
         }

@@ -10,8 +10,8 @@
 namespace Hermes {
 
     enum class ControlAction : std::uint8_t { Connect, Renegotiate, Shutdown };
-    template<SocketDataConcept Data>
-    struct TlsAsyncConnectPolicy<Data>::ControlSender {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    struct TlsAsyncConnectPolicy<Data, Scheduler>::ControlSender {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
@@ -56,12 +56,12 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
+                            auto* scheduler = m_options.scheduler;
+                            if (!scheduler) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
                                 io_uring_sqe_set_data(sqe, &m_status);
                             });
@@ -80,12 +80,12 @@ namespace Hermes {
                                 }
                             }
 #else
-                            auto* loop = FastIoLoop::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
+                            auto* scheduler = m_options.scheduler;
+                            if (!scheduler) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
+                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
                                 io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
                                 io_uring_sqe_set_data(sqe, &m_status);
                             });
@@ -135,14 +135,14 @@ namespace Hermes {
         }
     };
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncConnectPolicy<Data>::Connect(Data& data, Options options) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncConnectPolicy<Data, Scheduler>::Connect(Data& data, Options options) {
         data.connectStateMachine = std::make_unique<details_::TlsConnectStateMachine<Data, TlsAsyncConnectPolicy>>(options);
         m_options = options;
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncConnectPolicy<Data>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<Data>::Options*>(&options))
+        return DefaultAsyncConnectPolicy<Data, Scheduler>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<Data, Scheduler>::Options*>(&options))
              |
              stdexec::let_value(Utils::Overloaded{
                  [&data, options]() mutable { return ControlSender{ &data, options }; },
@@ -150,8 +150,8 @@ namespace Hermes {
              });
     }
 
-    template<SocketDataConcept Data>
-    auto TlsAsyncConnectPolicy<Data>::Shutdown(Data& data) {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    auto TlsAsyncConnectPolicy<Data, Scheduler>::Shutdown(Data& data) {
         static_assert(stdexec::sender<ControlSender>);
         static_assert(std::same_as<stdexec::value_types_of_t<ControlSender>, std::variant<std::tuple<>>>);
         static_assert(std::same_as<stdexec::error_types_of_t<ControlSender>, std::variant<ConnectionErrorEnum>>);
@@ -159,16 +159,16 @@ namespace Hermes {
         return ControlSender{ &data, m_options, ControlAction::Shutdown };
     }
 
-    template<SocketDataConcept Data>
-    void TlsAsyncConnectPolicy<Data>::Close(Data& data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void TlsAsyncConnectPolicy<Data, Scheduler>::Close(Data& data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             CloseSocket(data.socket);
             data.socket = macroINVALID_SOCKET;
         }
     }
 
-    template<SocketDataConcept Data>
-    void TlsAsyncConnectPolicy<Data>::Abort(Data &data) noexcept {
+    template<SocketDataConcept Data, stdexec::scheduler Scheduler>
+    void TlsAsyncConnectPolicy<Data, Scheduler>::Abort(Data &data) noexcept {
         if (data.socket != macroINVALID_SOCKET) {
             constexpr linger lingerOption{ 1, 0 };
             setsockopt(data.socket, SOL_SOCKET, SO_LINGER, reinterpret_cast<const char*>(&lingerOption), sizeof(lingerOption));

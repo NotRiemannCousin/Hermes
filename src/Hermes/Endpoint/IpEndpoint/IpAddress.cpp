@@ -3,6 +3,9 @@
 #include <cstring>
 #include <bit>
 
+#include <Hermes/_base/OsApi/OsApi.hpp>
+#include <Hermes/_base/OsApi/Enums/AddressFamilyEnum.hpp>
+
 using std::string;
 using std::string_view;
 using std::optional;

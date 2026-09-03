@@ -16,19 +16,22 @@
 #include <mutex>
 
 namespace Hermes {
-
-    template<SocketDataConcept Data = DefaultSocketData<>>
+#if HERMES_ENABLE_NATIVE_SCHEDULER
+    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler = FastIoLoop>
+#else
+    template<SocketDataConcept Data = DefaultSocketData<>, stdexec::scheduler Scheduler>
+#endif
     struct DefaultAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
         struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {
-            FastIoLoop* scheduler;
+            Scheduler* scheduler;
         };
 
         struct AcceptOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions {
-            FastIoLoop* scheduler;
+            Scheduler* scheduler;
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
@@ -61,7 +64,9 @@ namespace Hermes {
 #include <Hermes/Socket/Async/_base/Accept/DefaultAsyncAcceptPolicy.tpp>
 
 namespace Hermes {
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     static_assert(AsyncAcceptPolicyConcept<DefaultAsyncAcceptPolicy<>, DefaultSocketData<>>);
+#endif
 }
 
 #endif
