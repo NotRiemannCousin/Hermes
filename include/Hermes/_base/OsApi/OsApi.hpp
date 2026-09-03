@@ -72,6 +72,7 @@
 #endif
 #include <Hermes/_base/OsApi/Types.hpp>
 #include <expected>
+#include <cerrno>
 
 namespace Hermes {
     int CloseSocket(SocketFd socket);
