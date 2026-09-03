@@ -1,5 +1,10 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/_base/Network.hpp>
+
+#include <cstring>
 
 namespace Hermes {
     template<SocketDataConcept Data>
@@ -230,3 +235,5 @@ namespace Hermes {
         }
     }
 }
+
+#endif

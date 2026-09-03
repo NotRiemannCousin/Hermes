@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/Socket/Async/_base/Connection/DefaultAsyncConnectPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.hpp>
@@ -57,9 +60,15 @@ namespace Hermes {
 
 
 
+    //! @brief Alias to the raw TCP client async socket.
     using RawTcpAsyncClient = AsyncClientSocket<>;
+#if HERMES_ENABLE_TLS
+    //! @brief Alias to the raw TLS client async socket.
     using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+#endif
     // using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }
 
 #include <Hermes/Socket/Async/AsyncClientSocket.tpp>
+
+#endif

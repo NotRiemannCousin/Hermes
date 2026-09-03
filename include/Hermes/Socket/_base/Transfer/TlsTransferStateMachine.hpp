@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base.hpp>
 #include <Hermes/Socket/_base/Transfer/ITlsTransferStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
@@ -8,9 +11,13 @@ namespace Hermes::details_ {
     struct TlsTransferStateMachine : public ITlsTransferStateMachine<Data> {
         using TlsTransferState = TransferStateOpResult(TlsTransferStateMachine::*)(Data&);
 
+#if HERMES_ENABLE_ASYNC
         static constexpr bool IsAsync() noexcept {
             return AsyncTransferPolicyConcept<TransferPolicy, Data>;
         }
+#else
+        static constexpr bool IsAsync() { return false; }
+#endif
 
         TlsTransferStateMachine() = default;
 
@@ -84,3 +91,5 @@ namespace Hermes::details_ {
 }
 
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.tpp>
+
+#endif

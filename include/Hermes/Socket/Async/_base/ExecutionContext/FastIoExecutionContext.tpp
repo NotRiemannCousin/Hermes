@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_NATIVE_SCHEDULER
+
 #include <stdexcept>
 #include <format>
 #include <print>
@@ -299,3 +302,5 @@ namespace Hermes {
         return { m_loop, std::move(r) };
     }
 }
+
+#endif

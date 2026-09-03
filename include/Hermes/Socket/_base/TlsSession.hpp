@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <cstddef>
 #include <string>
@@ -111,3 +114,5 @@ namespace Hermes::details_ {
     };
 
 }
+
+#endif

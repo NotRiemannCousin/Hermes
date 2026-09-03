@@ -7,50 +7,50 @@ CPMFindPackage(
 
 include(GoogleTest)
 
-
 add_executable(
         HermesTests
-
         Endpoint/IpAddressTests.cpp
         Endpoint/IpEndpointTests.cpp
-
         Socket/DefaultSocketTests.cpp
-        Socket/TlsSocketTests.cpp
-
         Utils/DropLastTests.cpp
         Utils/UntilMatchTests.cpp
-#        Socket/FastIoLoopTests.cpp
 )
+if(HERMES_ENABLE_TLS)
+    target_sources(HermesTests PRIVATE Socket/TlsSocketTests.cpp)
 
-if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
-    find_program(OPENSSL_EXECUTABLE openssl REQUIRED)
+    if(NOT EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
+        find_program(OPENSSL_EXECUTABLE openssl REQUIRED)
+
+        add_custom_command(
+                OUTPUT  "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+                COMMAND ${OPENSSL_EXECUTABLE} req -x509 -newkey rsa:2048 -nodes
+                -keyout "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
+                -out "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
+                -days 3650 -subj "/CN=localhost"
+                COMMAND ${OPENSSL_EXECUTABLE} pkcs12 -export
+                -out "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+                -inkey "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
+                -in "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
+                -passout pass:
+                COMMENT "Generating TLS certificates"
+                VERBATIM
+        )
+        add_custom_target(GenerateTestCert DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
+        add_dependencies(HermesTests GenerateTestCert)
+    endif()
 
     add_custom_command(
-            OUTPUT  "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
-            COMMAND ${OPENSSL_EXECUTABLE} req -x509 -newkey rsa:2048 -nodes
-            -keyout "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
-            -out "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
-            -days 3650 -subj "/CN=localhost"
-            COMMAND ${OPENSSL_EXECUTABLE} pkcs12 -export
-            -out "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
-            -inkey "${CMAKE_CURRENT_BINARY_DIR}/test-key.pem"
-            -in "${CMAKE_CURRENT_BINARY_DIR}/test-cert.pem"
-            -passout pass:
-            COMMENT "Generating TLS certificates"
+            TARGET HermesTests POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
+            "$<TARGET_FILE_DIR:HermesTests>/"
+            COMMENT "Copying certificate for TLS tests..."
             VERBATIM
     )
-    add_custom_target(GenerateTestCert DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx")
-    add_dependencies(HermesTests GenerateTestCert)
 endif()
-
-add_custom_command(
-        TARGET HermesTests POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        "${CMAKE_CURRENT_SOURCE_DIR}/cert.pfx"
-        "$<TARGET_FILE_DIR:HermesTests>/"
-        COMMENT "Copying certificate for TLS tests..."
-        VERBATIM
-)
+if(HERMES_ENABLE_ASYNC)
+    target_sources(HermesTests PRIVATE Socket/FastIoLoopTests.cpp)
+endif()
 
 target_include_directories(
         HermesTests

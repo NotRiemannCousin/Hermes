@@ -1,4 +1,6 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
 
 #include <utility>
 #include <exec/create.hpp>
@@ -101,3 +103,6 @@ namespace Hermes {
         m_connectionPolicy.Abort(m_socketData);
     }
 }
+
+
+#endif

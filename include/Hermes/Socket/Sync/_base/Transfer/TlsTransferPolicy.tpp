@@ -1,5 +1,9 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.hpp>
+
+#include <cstring>
 
 namespace Hermes {
 
@@ -181,3 +185,5 @@ namespace Hermes {
     }
 
 }
+
+#endif

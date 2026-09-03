@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/_base/Network.hpp>
 
 #pragma push_macro("MSG_NOSIGNAL")
@@ -372,3 +375,5 @@ namespace Hermes::details_ {
 #pragma pop_macro("AWAIT")
 #pragma pop_macro("NEXT")
 #pragma pop_macro("MSG_NOSIGNAL")
+
+#endif

@@ -1,4 +1,6 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/Accept/TlsAcceptStateMachine.hpp>
 
 namespace Hermes {
@@ -53,3 +55,5 @@ namespace Hermes {
         data.acceptStateMachine->Advance(data);
     }
 }
+
+#endif

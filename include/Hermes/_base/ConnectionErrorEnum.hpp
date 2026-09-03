@@ -1,8 +1,9 @@
 #pragma once
+#include <system_error>
 #include <expected>
+#include <variant>
 #include <vector>
 #include <span>
-#include <stdexec/execution.hpp>
 
 namespace Hermes {
     using ByteData     = std::vector<std::byte>;

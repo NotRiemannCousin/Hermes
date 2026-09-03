@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
@@ -60,3 +63,5 @@ namespace Hermes {
 namespace Hermes {
     static_assert(AsyncAcceptPolicyConcept<DefaultAsyncAcceptPolicy<>, DefaultSocketData<>>);
 }
+
+#endif

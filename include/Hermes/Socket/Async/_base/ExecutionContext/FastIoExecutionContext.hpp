@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_NATIVE_SCHEDULER
+
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <thread>
 #include <memory>
@@ -95,7 +98,8 @@ namespace Hermes {
         };
 
         template <class Receiver>
-        OperationState<Receiver> connect(Receiver r) const noexcept;
+        OperationState<Receiver>
+        connect(Receiver r) const noexcept;
     };
 
     static_assert(stdexec::scheduler<FastIoScheduler>);
@@ -104,3 +108,5 @@ namespace Hermes {
 }
 
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.tpp>
+
+#endif

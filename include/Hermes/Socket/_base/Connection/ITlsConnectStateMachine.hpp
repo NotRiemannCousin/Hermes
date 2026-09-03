@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base.hpp>
 #include <span>
 #include <cstdint>
@@ -23,3 +26,5 @@ namespace Hermes::details_ {
         virtual std::span<const std::byte> GetSendBuffer() noexcept = 0;
     };
 }
+
+#endif

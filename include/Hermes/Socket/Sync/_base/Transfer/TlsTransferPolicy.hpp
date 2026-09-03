@@ -1,4 +1,6 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
@@ -88,3 +90,5 @@ namespace Hermes {
     static_assert(std::ranges::viewable_range<TlsTransferPolicy<>::RecvStream<>>);
     static_assert(TransferPolicyConcept<TlsTransferPolicy<>, TlsSocketData<>>);
 }
+
+#endif

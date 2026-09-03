@@ -185,10 +185,12 @@ namespace Hermes {
         TransferPolicy   m_transferPolicy{};
     };
 
-    //! @brief Raw TCP client socket.
+    //! @brief Alias to the raw TCP client socket.
     using RawTcpClient = ClientSocket<>;
-    //! @brief Raw TLS client socket.
+#if HERMES_ENABLE_TLS
+    //! @brief Alias to the raw TLS client socket.
     using RawTlsClient = ClientSocket<TlsSocketData<>, TlsConnectPolicy<>, TlsTransferPolicy<>>;
+#endif
     // using RawUdpClient = ClientSocket<
     //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,
     //     DefaultConnectPolicy<IpEndpoint, SocketTypeEnum::Dgram>,

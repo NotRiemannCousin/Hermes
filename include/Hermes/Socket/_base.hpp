@@ -2,8 +2,11 @@
 #include <Hermes/Endpoint/_base/EndpointConcept.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
+#include <Hermes/Config.hpp>
 
+#if HERMES_ENABLE_ASYNC
 #include <stdexec/execution.hpp>
+#endif
 
 #include <concepts>
 #include <ranges>
@@ -248,6 +251,8 @@ namespace Hermes {
 #pragma endregion
 
 
+#if HERMES_ENABLE_ASYNC
+
 #pragma region Async
 
     //! @addtogroup AsyncSocketConcepts
@@ -410,6 +415,7 @@ namespace Hermes {
 
 #pragma endregion
 
+#endif
 
     namespace details_ {
         inline void SetTimeout(const SocketFd socket, const int time) {
@@ -425,5 +431,4 @@ namespace Hermes {
 #endif
         }
     }
-
 }

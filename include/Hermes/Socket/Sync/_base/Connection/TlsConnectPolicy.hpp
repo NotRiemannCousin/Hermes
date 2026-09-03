@@ -1,4 +1,6 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
@@ -7,8 +9,10 @@
 
 namespace Hermes {
 
+#if HERMES_ENABLE_ASYNC
     template<SocketDataConcept Data>
     struct TlsAsyncConnectPolicy;
+#endif
 
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
@@ -41,7 +45,9 @@ namespace Hermes {
     private:
         ConnectionResultOper ClientHandshake(Data& data);
 
+#if HERMES_ENABLE_ASYNC
         friend struct TlsAsyncConnectPolicy<Data>;
+#endif
 
     };
 }
@@ -51,3 +57,5 @@ namespace Hermes {
 namespace Hermes {
     static_assert(ConnectionPolicyConcept<TlsConnectPolicy<>, TlsSocketData<>>);
 }
+
+#endif

@@ -1,5 +1,6 @@
 #pragma once
 #include <print>
+#include <cstring>
 
 namespace Hermes {
     template<SocketTypeEnum SocketType>

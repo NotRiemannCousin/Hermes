@@ -1,4 +1,6 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
 
 namespace Hermes {
     template<SocketDataConcept Data>
@@ -203,3 +205,5 @@ namespace Hermes {
         return SendSender<Byte>{ &data, bufferSend };
     }
 }
+
+#endif

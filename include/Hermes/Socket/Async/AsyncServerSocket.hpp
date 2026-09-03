@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/Socket/Async/_base/Accept/DefaultAsyncAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Transfer/DefaultAsyncTransferPolicy.hpp>
 #include <Hermes/Socket/Async/_base/Accept/TlsAsyncAcceptPolicy.hpp>
@@ -19,11 +22,9 @@ namespace Hermes {
         AsyncServerSocket& operator=(AsyncServerSocket&&) noexcept;
         ~AsyncServerSocket();
 
-        /**
-         * @brief Creates a server socket from already accepted socket data.
-         * @param data The socket data, typically from a listener.
-         * @return A new AsyncServerSocket instance.
-         */
+        //! @brief Creates a server socket from already accepted socket data.
+        //! @param data The socket data, typically from a listener.
+        //! @return A new AsyncServerSocket instance.
         [[nodiscard]] static AsyncServerSocket FromAccepted(SocketData&& data) noexcept;
 
         [[nodiscard]] EndpointType& GetEndpoint() noexcept { return m_socketData.endpoint; }
@@ -48,8 +49,14 @@ namespace Hermes {
         TransferPolicy m_transferPolicy{};
     };
 
+    //! @brief Alias to the raw TCP server async socket.
     using RawTcpAsyncServer = AsyncServerSocket<>;
+#if HERMES_ENABLE_TLS
+    //! @brief Alias to the raw TLS server async socket.
     using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+#endif
 }
 
 #include <Hermes/Socket/Async/AsyncServerSocket.tpp>
+
+#endif

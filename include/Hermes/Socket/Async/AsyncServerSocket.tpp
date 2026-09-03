@@ -1,4 +1,6 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
 
 #include <utility>
 #include <ranges>
@@ -89,3 +91,5 @@ namespace Hermes {
     }
 
 }
+
+#endif

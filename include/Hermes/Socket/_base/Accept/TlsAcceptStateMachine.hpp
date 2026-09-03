@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/Accept/ITlsAcceptStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
 
@@ -8,9 +11,13 @@ namespace Hermes::details_ {
 
         using TlsAcceptState = AcceptStateOpResult(TlsAcceptStateMachine::*)(Data&);
 
+#if HERMES_ENABLE_ASYNC
         static constexpr bool IsAsync() noexcept {
             return AsyncConnectionPolicyConcept<AcceptPolicy, Data>;
         }
+#else
+        static constexpr bool IsAsync() { return false; }
+#endif
 
         explicit TlsAcceptStateMachine(typename AcceptPolicy::AcceptOptions opt);
 
@@ -91,3 +98,5 @@ namespace Hermes::details_ {
 }
 
 #include <Hermes/Socket/_base/Accept/TlsAcceptStateMachine.tpp>
+
+#endif

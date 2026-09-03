@@ -1,0 +1,4 @@
+#pragma once
+#cmakedefine01 HERMES_ENABLE_ASYNC
+#cmakedefine01 HERMES_ENABLE_NATIVE_SCHEDULER
+#cmakedefine01 HERMES_ENABLE_TLS

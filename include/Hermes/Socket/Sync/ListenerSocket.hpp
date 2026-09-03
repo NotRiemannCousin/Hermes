@@ -163,8 +163,12 @@ namespace Hermes {
         AcceptPolicy m_acceptPolicy{};
     };
 
+    //! @brief Alias to the raw TCP listener socket.
     using RawTcpListener = ListenerSocket<>;
+#if HERMES_ENABLE_TLS
+    //! @brief Alias to the raw TLS listener socket.
     using RawTlsListener = ListenerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
+#endif
 }
 
 #include <Hermes/Socket/Sync/ListenerSocket.tpp>

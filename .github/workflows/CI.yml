@@ -1,12 +1,26 @@
 name: CI
-
 on:
   push:
   pull_request:
 
 jobs:
   linux:
+    strategy:
+      fail-fast: false
+      matrix:
+        async:  [ON, OFF]
+        tls:    [ON, OFF]
+        native: [ON, OFF]
+        exclude:
+          - async: OFF
+            native: ON
+
     uses: NotRiemannCousin/cpp-toolchain/.github/workflows/cpp-ci-linux.yml@v1
     with:
       image: ghcr.io/notriemanncousin/cpp-ci-linux:gcc16.2-979cf78ac92ade7f1c72f60baa26106778d6f25f
-      cmake-args: -DHERMES_BUILD_TESTS=ON -DHERMES_BUILD_EXAMPLES=OFF
+      cmake-args: >-
+        -DHERMES_BUILD_TESTS=ON 
+        -DHERMES_BUILD_EXAMPLES=OFF 
+        -DHERMES_ENABLE_ASYNC=${{ matrix.async }} 
+        -DHERMES_ENABLE_NATIVE_SCHEDULER=${{ matrix.native }} 
+        -DHERMES_ENABLE_TLS=${{ matrix.tls }}

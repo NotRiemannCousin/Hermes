@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <list>
 #include <Hermes/_base/Network.hpp>
 #include <print>
@@ -290,3 +293,5 @@ namespace Hermes {
 #pragma pop_macro("SAFE_CHECK_ERR_H")
 #pragma pop_macro("CHECK_ERR")
 #pragma pop_macro("CHECK_ERROR_H")
+
+#endif

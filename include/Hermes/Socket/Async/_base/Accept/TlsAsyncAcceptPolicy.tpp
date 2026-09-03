@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
@@ -232,3 +235,5 @@ namespace Hermes {
         TlsAcceptPolicy<Data>::Abort(data);
     }
 }
+
+#endif

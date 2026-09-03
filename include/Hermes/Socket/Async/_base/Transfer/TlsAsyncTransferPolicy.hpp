@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/_base.hpp>
@@ -29,3 +32,5 @@ namespace Hermes {
 namespace Hermes {
     static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy<>, TlsSocketData<>>);
 }
+
+#endif

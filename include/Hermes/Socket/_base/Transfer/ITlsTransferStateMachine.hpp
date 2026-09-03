@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base.hpp>
 #include <Hermes/Socket/_base/Transfer/TransferIo.hpp>
 
@@ -35,3 +38,5 @@ namespace Hermes::details_ {
         virtual std::span<const std::byte> GetSendBuffer(Data& data) const noexcept = 0;
     };
 }
+
+#endif

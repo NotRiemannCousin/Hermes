@@ -91,6 +91,10 @@ The current builtin aliases are:
 | Listener Socket | @ref Hermes::RawTcpListener "RawTcpListener", @ref Hermes::RawTlsListener "RawTlsListener" | @ref Hermes::RawTcpAsyncListener "RawTcpAsyncListener", @ref Hermes::RawTlsAsyncListener "RawTlsAsyncListener" |
 | Server Socket   | @ref Hermes::RawTcpServer "RawTcpServer", @ref Hermes::RawTlsServer "RawTlsServer"         | @ref Hermes::RawTcpAsyncServer "RawTcpAsyncServer", @ref Hermes::RawTlsAsyncServer "RawTlsAsyncServer"         |
 
+> The Async column requires building Hermes with `HERMES_ENABLE_ASYNC=ON` (see the
+> [Build Options](https://github.com/NotRiemannCousin/Hermes#build-options) section of the README). With the
+> default configuration, the Async headers exist but resolve to nothing.
+
 This page will only talk about sync sockets. Overall, their API and sequence diagram are:
 
 | Operation  |  ClientSocket                     |  ServerSocket                     | ListenerSocket                                  | Description                                                                   |
@@ -385,4 +389,4 @@ Read @ref policy-architecture to understand the composition model. Then read @re
 options and @ref recv-stream-behavior with @ref send-lift-pattern for the central receiver design. Finally, use
 @ref example-tls-client to connect the concepts to complete flows.
 
-To know more about async sockets, see @ref async-sockets (not implemented yet, await maybe for v0.6.7).
+To know more about async sockets, see @ref async-sockets (page not written yet, await maybe for v0.6.7).

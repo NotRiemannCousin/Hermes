@@ -1,5 +1,7 @@
 // ReSharper disable CppRedundantTypenameKeyword
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
 
 #pragma push_macro("MSG_NOSIGNAL")
 #ifndef MSG_NOSIGNAL
@@ -322,3 +324,5 @@ namespace Hermes::details_ {
 #pragma pop_macro("AWAIT")
 #pragma pop_macro("NEXT")
 #pragma pop_macro("MSG_NOSIGNAL")
+
+#endif

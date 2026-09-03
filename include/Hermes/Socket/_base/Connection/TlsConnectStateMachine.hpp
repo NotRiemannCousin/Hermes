@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/_base/Connection/ITlsConnectStateMachine.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
@@ -9,9 +12,13 @@ namespace Hermes::details_ {
         using TlsConnectState = ConnectStateOpResult(TlsConnectStateMachine::*)(Data&);
 
         static constexpr bool IsServer{ ConnectionPolicy::IsServer };
+#if HERMES_ENABLE_ASYNC
         static constexpr bool IsAsync() noexcept {
             return AsyncConnectionPolicyConcept<ConnectionPolicy, Data>;
         }
+#else
+        static constexpr bool IsAsync() { return false; }
+#endif
 
         explicit TlsConnectStateMachine(typename ConnectionPolicy::Options opt);
 
@@ -99,3 +106,5 @@ namespace Hermes::details_ {
 }
 
 #include <Hermes/Socket/_base/Connection/TlsConnectStateMachine.tpp>
+
+#endif

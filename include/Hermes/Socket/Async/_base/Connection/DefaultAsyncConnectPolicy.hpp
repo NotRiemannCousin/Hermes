@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
@@ -43,3 +46,5 @@ namespace Hermes {
 namespace Hermes {
     static_assert(AsyncConnectionPolicyConcept<DefaultAsyncConnectPolicy<>, DefaultSocketData<>>);
 }
+
+#endif

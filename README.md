@@ -2,7 +2,8 @@
 
 ![Hermes](Hermes-logo.webp "Hermes, the Greek god of messengers and trade")
 
-A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution`, and more — targeting **C++26**.
+A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes
+leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution`, and more — targeting **C++26**.
 
 > **Status:** v0.5 — active development. Async sockets via `std::execution` are available. Linux is available.
 
@@ -10,16 +11,21 @@ A C++ socket wrapper library providing a simple, type-safe, and secure interface
 
 ## Features
 
-- **TCP** and **TCP over TLS** (via SChannel on Windows, OpenSSL on Linux — no third-party crypto dependency on Windows)
+- **TCP** and **TCP over TLS** via SChannel on Windows and OpenSSL on Linux (with the `HERMES_ENABLE_TLS` option,
+default `ON`)
 - **Policy-based design** — connection, transfer, and accept behaviors are independently composable via concepts
-- **Lazy receive ranges** — `RecvStream` is an [`input_range`](https://en.cppreference.com/w/cpp/ranges/input_range.html) that fetches bytes on demand, eliminating manual chunk management
+- **Lazy receive ranges** — `RecvStream` is an [`input_range`](https://en.cppreference.com/w/cpp/ranges/input_range.html) that fetches bytes on demand, eliminating manual
+chunk management
 - **`std::expected` throughout** — no exceptions on the hot path
-- **Async support** — async sockets via `std::execution` (senders/receivers) and C++20 coroutines
-- Extensible: implement `SocketDataConcept`, `ConnectionPolicyConcept` / `AcceptPolicyConcept`, and `TransferPolicyConcept` to add your own transport layer protocols
+- **Async support** — async sockets via `stdexec` (senders/receivers) and C++20 coroutines (with `HERMES_ENABLE_ASYNC`
+option, default `OFF`)
+- Extensible: implement `SocketDataConcept`, `ConnectionPolicyConcept` / `AcceptPolicyConcept`, and
+`TransferPolicyConcept` to add your own transport layer protocols
 
 Hermes operates at the transport layer only. Application-layer protocols (HTTP, WebSocket, etc.) are left to the user.
 
-> Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required.
+> Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current
+MSVC flag compatibility, but a C++26-capable compiler is strictly required.
 
 ---
 
@@ -41,10 +47,29 @@ include(CPM.cmake)
 CPMAddPackage(
         NAME Hermes
         GITHUB_REPOSITORY NotRiemannCousin/Hermes
-        GIT_TAG v0.5.6
+        GIT_TAG v0.6.0
 )
 
 target_link_libraries(your_target PRIVATE Hermes)
+```
+
+---
+
+## Build Options
+
+There are 3 library options:
+
+| Option                           | Default | Effect                                                                                                                                                         |
+|----------------------------------|---------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `HERMES_ENABLE_TLS`              | `ON`    | Builds TCP over TLS (OpenSSL on Linux, SChannel on Windows) with its own aliases and policies.                                                                 |
+| `HERMES_ENABLE_ASYNC`            | `OFF`   | Builds the family of async sockets (needs `stdexec`).                                                                                                          |
+| `HERMES_ENABLE_NATIVE_SCHEDULER` | `OFF`   | Builds `FastIoLoop`'s native backend (used to schedule jobs on async sockets, needs io_uring on Linux and IOCP on Windows). Requires `HERMES_ENABLE_ASYNC=ON`. |
+
+If you only need synchronous sockets, `-DHERMES_ENABLE_TLS=ON -DHERMES_ENABLE_ASYNC=OFF` (the default) avoids pulling
+in `stdexec` entirely. For the full feature set (async + native scheduler + TLS):
+
+```
+-DHERMES_ENABLE_ASYNC=ON -DHERMES_ENABLE_NATIVE_SCHEDULER=ON -DHERMES_ENABLE_TLS=ON
 ```
 
 ---
@@ -144,7 +169,7 @@ std::expected<std::monostate, std::string> MakeRequest() {
         const auto body    { socketView | Hermes::Utils::UntilMatch("\r\n"sv)     | rg::to<std::string>() };
 
         // Ok, this is unsafe because I'm being lazy here, but you can process and check this data properly.
-        // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easely limit the size.
+        // You can use ` | std::views::take(maxChunkStringLength)` before UntilMatch to easily limit the size.
         // The range automatically stops when the connection ends, but be careful with this.
 
         if (const auto err{ socketView.Error() }; !err)
@@ -182,6 +207,7 @@ std::expected<std::monostate, std::string> MakeRequest() {
 ## Requirements
 
 - Windows 10 or newer / Linux
-- OpenSSL and liburing on Linux (`sudo apt install libssl-dev liburing-dev`)
-- MSVC or GCC with C++26 support (GCC/Clang on Linux)
+- On Linux, OpenSSL for `HERMES_ENABLE_TLS` and liburing for `HERMES_ENABLE_NATIVE_SCHEDULER` (download like `sudo apt
+install libssl-dev liburing-dev`)
+- MSVC or GCC with C++26 support (GCC 16 on Linux)
 - CMake 3.29.1 or newer

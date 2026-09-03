@@ -1,4 +1,6 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
 
 #include <utility>
 #include <stdexec/execution.hpp>
@@ -156,3 +158,5 @@ template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         m_acceptPolicy.Abort(m_socketData);
     }
 }
+
+#endif

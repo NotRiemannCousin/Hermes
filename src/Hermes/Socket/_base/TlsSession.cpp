@@ -1,4 +1,7 @@
 // ReSharper disable CppMemberFunctionMayBeStatic
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/TlsSession.hpp>
 #include <Hermes/_base/Credentials.hpp>
 
@@ -524,3 +527,5 @@ namespace Hermes::details_ {
         return session;
     }
 }
+
+#endif

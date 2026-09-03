@@ -1,4 +1,6 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
@@ -6,8 +8,10 @@
 
 namespace Hermes {
 
+#if HERMES_ENABLE_ASYNC
     template<SocketDataConcept Data>
     struct TlsAsyncAcceptPolicy;
+#endif
 
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAcceptPolicy {
@@ -31,7 +35,9 @@ namespace Hermes {
     private:
         static ConnectionResultOper ServerHandshake(Data& data, AcceptOptions options) noexcept;
 
+#if HERMES_ENABLE_ASYNC
         friend struct TlsAsyncAcceptPolicy<Data>;
+#endif
     };
 
 }
@@ -41,3 +47,5 @@ namespace Hermes {
 namespace Hermes {
     static_assert(AcceptPolicyConcept<TlsAcceptPolicy<>, TlsSocketData<>>);
 }
+
+#endif

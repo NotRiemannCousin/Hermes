@@ -1,4 +1,6 @@
 #pragma once
+#if HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/Connection/TlsConnectStateMachine.hpp>
 
 namespace Hermes {
@@ -51,3 +53,5 @@ namespace Hermes {
         return data.connectStateMachine->GetResult();
     }
 }
+
+#endif

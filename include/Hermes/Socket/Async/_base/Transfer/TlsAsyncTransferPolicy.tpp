@@ -1,4 +1,7 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
+
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.hpp>
 
 namespace Hermes {
@@ -186,3 +189,5 @@ namespace Hermes {
         return TransferSender<Byte>{ this, &data, {}, byteSpan, RecvModeEnum::All, ActionEnum::Send };
     }
 }
+
+#endif

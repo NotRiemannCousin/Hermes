@@ -1,7 +1,9 @@
 #pragma once
+#include <Hermes/Config.hpp>
+#if HERMES_ENABLE_ASYNC
+
 #include <Hermes/Socket/Async/AsyncServerSocket.hpp>
 #include <Hermes/Socket/_base.hpp>
-#include <stdexec/execution.hpp>
 
 namespace Hermes {
 
@@ -20,18 +22,14 @@ namespace Hermes {
         AsyncListenerSocket& operator=(AsyncListenerSocket&&) noexcept;
         ~AsyncListenerSocket();
 
-        /**
-         * @brief Creates a listener socket. This is a synchronous operation.
-         * @return A sender that yields an AsyncListenerSocket on success.
-         */
+        //! @brief Creates a listener socket. This is a synchronous operation.
+        //! @return A sender that yields an AsyncListenerSocket on success.
         template<class = void>
         [[nodiscard]] static ListenSender Listen(SocketData&& data, int backlog = SOMAXCONN)
             requires std::default_initializable<typename AcceptPolicy::ListenOptions>;
 
-        /**
-         * @brief Creates a listener socket. This is a synchronous operation.
-         * @return A sender that yields an AsyncListenerSocket on success.
-         */
+        //! @brief Creates a listener socket. This is a synchronous operation.
+        //! @return A sender that yields an AsyncListenerSocket on success.
         [[nodiscard]] static ListenSender Listen(SocketData&& data, typename AcceptPolicy::ListenOptions opt, int backlog = SOMAXCONN);
 
         //! @brief Asynchronously accepts a new client connection.
@@ -74,9 +72,16 @@ namespace Hermes {
         AcceptPolicy m_acceptPolicy{};
     };
 
+    //! @brief Alias to the raw TCP listener async socket.
     using RawTcpAsyncListener = AsyncListenerSocket<>;
+#if HERMES_ENABLE_TLS
+    //! @brief Alias to the raw TLS listener async socket.
     using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    static_assert(std::same_as<RawTlsAsyncListener::EndpointType, IpAddress>);
+#endif
 
 }
 
 #include <Hermes/Socket/Async/AsyncListenerSocket.tpp>
+
+#endif
