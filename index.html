@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <p><img src="Hermes-logo.webp" alt="Hermes" title="Hermes, the Greek god of messengers and trade" class="inline"/></p>
 <p>A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. <a class="el" href="namespace_hermes.html">Hermes</a> leverages modern C++ features — <span class="tt">std::expected</span>, <span class="tt">std::ranges</span>, <span class="tt">std::execution</span>, and more — targeting <b>C++26</b>.</p>
 <blockquote class="doxtable">
-<p><b>Status:</b> v0.5 — active development. Async sockets via <span class="tt">std::execution</span> are available. Linux is available. </p>
+<p><b>Status:</b> v0.6.1 — active development. Async sockets via <span class="tt">std::execution</span> are available. Linux is available. </p>
 </blockquote>
 <hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
@@ -196,7 +196,7 @@ Manual (CMake)</h2>
 <div class="line">CPMAddPackage(</div>
 <div class="line">        NAME Hermes</div>
 <div class="line">        GITHUB_REPOSITORY NotRiemannCousin/Hermes</div>
-<div class="line">        GIT_TAG v0.6.0</div>
+<div class="line">        GIT_TAG v0.6.1</div>
 <div class="line">)</div>
 <div class="line"> </div>
 <div class="line">target_link_libraries(your_target PRIVATE Hermes)</div>
@@ -243,7 +243,7 @@ Example</h1>
 <div class="line">            format(</div>
 <div class="line">                <span class="stringliteral">&quot;GET /{} HTTP/1.1\r\n&quot;</span></div>
 <div class="line">                <span class="stringliteral">&quot;Accept-Encoding: identity\r\n&quot;</span></div>
-<div class="line">                <span class="stringliteral">&quot;User-Agent: Hermes/0.5\r\n&quot;</span></div>
+<div class="line">                <span class="stringliteral">&quot;User-Agent: Hermes/0.6\r\n&quot;</span></div>
 <div class="line">                <span class="stringliteral">&quot;Host: {}\r\n\r\n&quot;</span>,</div>
 <div class="line">                url.path, url.hostname) };</div>
 <div class="line"> </div>

@@ -250,8 +250,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_2home_2runner
 <div class="line">    };</div>
 <div class="line"></div>
 <div class="line">    <span class="keyword">using </span><a id="a17" name="a17"></a><a class="code hl_typedef" href="namespace_hermes.html#a978167d01a4fcd4ce77986d23214f0ee">RawTcpListener</a> = ListenerSocket&lt;&gt;;</div>
+<div class="line">    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>ListenerSocket&lt;DefaultSocketData&lt;&gt;, DefaultAcceptPolicy&lt;&gt;, DefaultTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
 <div class="line">    <span class="keyword">using </span>RawTlsListener = ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line">    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>ListenerSocket&lt;TlsSocketData&lt;&gt;, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 <div class="line">}</div>
 <div class="line"> </div>

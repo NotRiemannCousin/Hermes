@@ -204,14 +204,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    };</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span></div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">using </span>RawTcpAsyncServer = AsyncServerSocket&lt;&gt;;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">using </span>RawTlsAsyncServer = AsyncServerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/AsyncServerSocket.tpp&gt;</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;DefaultSocketData&lt;&gt;, DefaultAsyncAcceptPolicy&lt;&gt;, DefaultAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">using </span>RawTlsAsyncServer = AsyncServerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>}</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/AsyncServerSocket.tpp&gt;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a__base_8hpp_html"><div class="ttname"><a href="__base_8hpp.html">_base.hpp</a></div></div>
 <div class="ttc" id="a_default_async_accept_policy_8hpp_html"><div class="ttname"><a href="_default_async_accept_policy_8hpp.html">DefaultAsyncAcceptPolicy.hpp</a></div></div>
 <div class="ttc" id="a_default_async_transfer_policy_8hpp_html"><div class="ttname"><a href="_default_async_transfer_policy_8hpp.html">DefaultAsyncTransferPolicy.hpp</a></div></div>

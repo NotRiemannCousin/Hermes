@@ -210,15 +210,17 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_client_
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span></div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">using </span>RawTcpAsyncClient = AsyncClientSocket&lt;&gt;;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">using </span>RawTlsAsyncClient = AsyncClientSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncConnectPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="comment">// using RawUdpAsyncClient = AsyncClientSocket&lt;DefaultSocketData&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;&gt;;</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>}</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/AsyncClientSocket.tpp&gt;</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncClientSocket&lt;DefaultSocketData&lt;&gt;, DefaultAsyncConnectPolicy&lt;&gt;, DefaultAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#if HERMES_ENABLE_TLS &amp;&amp; HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">using </span>RawTlsAsyncClient = AsyncClientSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncConnectPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncClientSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncConnectPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">// using RawUdpAsyncClient = AsyncClientSocket&lt;DefaultSocketData&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;&gt;;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/AsyncClientSocket.tpp&gt;</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a_default_async_connect_policy_8hpp_html"><div class="ttname"><a href="_default_async_connect_policy_8hpp.html">DefaultAsyncConnectPolicy.hpp</a></div></div>
 <div class="ttc" id="a_default_async_transfer_policy_8hpp_html"><div class="ttname"><a href="_default_async_transfer_policy_8hpp.html">DefaultAsyncTransferPolicy.hpp</a></div></div>
 <div class="ttc" id="a_tls_async_connect_policy_8hpp_html"><div class="ttname"><a href="_tls_async_connect_policy_8hpp.html">TlsAsyncConnectPolicy.hpp</a></div></div>

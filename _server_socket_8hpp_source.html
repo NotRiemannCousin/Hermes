@@ -259,17 +259,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_server_socket
 <div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
 <div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span></div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno"><a class="line" href="namespace_hermes.html#a47cbf3461197b1b9f40eb4b71367d66b">  180</a></span>    <span class="keyword">using </span><a class="code hl_typedef" href="namespace_hermes.html#a47cbf3461197b1b9f40eb4b71367d66b">RawTcpServer</a> = <a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">ServerSocket&lt;&gt;</a>;</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <span class="keyword">using </span>RawTlsServer = <a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">ServerSocket&lt;TlsSocketData&lt;&gt;</a>, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="comment">// using RawUdpServer = ServerSocket&lt;</span></div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    <span class="comment">//     DefaultSocketData&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;,</span></div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="comment">//     DefaultAcceptPolicy&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;,</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="comment">//     DefaultTransferPolicy&lt;SocketTypeEnum::Dgram&gt;</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="comment">// &gt;;</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>}</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span><span class="preprocessor">#include &lt;Hermes/Socket/Sync/ServerSocket.tpp&gt;</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">ServerSocket&lt;DefaultSocketData&lt;&gt;</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_accept_policy.html">DefaultAcceptPolicy&lt;&gt;</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_transfer_policy.html">DefaultTransferPolicy&lt;&gt;</a>&gt;;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="keyword">using </span>RawTlsServer = <a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">ServerSocket&lt;TlsSocketData&lt;&gt;</a>, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span><a class="code hl_struct" href="struct_hermes_1_1_server_socket.html">ServerSocket&lt;TlsSocketData&lt;&gt;</a>, TlsAcceptPolicy&lt;&gt;, TlsTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="comment">// using RawUdpServer = ServerSocket&lt;</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    <span class="comment">//     DefaultSocketData&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;,</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    <span class="comment">//     DefaultAcceptPolicy&lt;IpEndpoint, SocketTypeEnum::Dgram&gt;,</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    <span class="comment">//     DefaultTransferPolicy&lt;SocketTypeEnum::Dgram&gt;</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="comment">// &gt;;</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>}</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">#include &lt;Hermes/Socket/Sync/ServerSocket.tpp&gt;</span></div>
 <div class="ttc" id="a_default_accept_policy_8hpp_html"><div class="ttname"><a href="_default_accept_policy_8hpp.html">DefaultAcceptPolicy.hpp</a></div></div>
 <div class="ttc" id="a_default_transfer_policy_8hpp_html"><div class="ttname"><a href="_default_transfer_policy_8hpp.html">DefaultTransferPolicy.hpp</a></div></div>
 <div class="ttc" id="a_tls_accept_policy_8hpp_html"><div class="ttname"><a href="_tls_accept_policy_8hpp.html">TlsAcceptPolicy.hpp</a></div></div>
