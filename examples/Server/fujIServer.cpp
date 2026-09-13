@@ -145,7 +145,7 @@ body, html{{
         const auto response{
             std::format(
                 "HTTP/1.1 200 OK\r\n"
-                "Server: Hermes/0.2\r\n"
+                "Server: Hermes/0.6\r\n"
                 "Content-Type: text/html\r\n"
                 "Content-Length: {}\r\n"
                 "Connection: close\r\n\r\n"

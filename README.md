@@ -5,7 +5,7 @@
 A C++ socket wrapper library providing a simple, type-safe, and secure interface for transport-layer networking. Hermes
 leverages modern C++ features — `std::expected`, `std::ranges`, `std::execution`, and more — targeting **C++26**.
 
-> **Status:** v0.5 — active development. Async sockets via `std::execution` are available. Linux is available.
+> **Status:** v0.6.1 — active development. Async sockets via `std::execution` are available. Linux is available.
 
 ---
 
@@ -47,7 +47,7 @@ include(CPM.cmake)
 CPMAddPackage(
         NAME Hermes
         GITHUB_REPOSITORY NotRiemannCousin/Hermes
-        GIT_TAG v0.6.0
+        GIT_TAG v0.6.1
 )
 
 target_link_libraries(your_target PRIVATE Hermes)
@@ -102,7 +102,7 @@ std::expected<void, std::string> MakeRequest() {
             format(
                 "GET /{} HTTP/1.1\r\n"
                 "Accept-Encoding: identity\r\n"
-                "User-Agent: Hermes/0.5\r\n"
+                "User-Agent: Hermes/0.6\r\n"
                 "Host: {}\r\n\r\n",
                 url.path, url.hostname) };
 

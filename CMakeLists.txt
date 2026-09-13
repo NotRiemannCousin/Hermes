@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.6.0
+        VERSION 0.6.1
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )
@@ -88,6 +88,7 @@ target_sources(Hermes PRIVATE
         src/Hermes/Endpoint/IpEndpoint/IpAddress.cpp
         src/Hermes/Endpoint/IpEndpoint/IpEndpoint.cpp
         src/Hermes/_base/ConnectionErrorEnum.cpp
+        src/Hermes/Socket/_base.cpp
         PUBLIC
         FILE_SET headers
         TYPE HEADERS

@@ -178,9 +178,11 @@ namespace Hermes {
 
     //! @brief Alias to the raw TCP server socket.
     using RawTcpServer = ServerSocket<>;
+    extern template struct ServerSocket<DefaultSocketData<>, DefaultAcceptPolicy<>, DefaultTransferPolicy<>>;
 #if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS server socket.
     using RawTlsServer = ServerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
+    extern template struct ServerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
 #endif
     // using RawUdpServer = ServerSocket<
     //     DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>,

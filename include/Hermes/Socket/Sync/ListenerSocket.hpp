@@ -165,9 +165,11 @@ namespace Hermes {
 
     //! @brief Alias to the raw TCP listener socket.
     using RawTcpListener = ListenerSocket<>;
+    extern template struct ListenerSocket<DefaultSocketData<>, DefaultAcceptPolicy<>, DefaultTransferPolicy<>>;
 #if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS listener socket.
     using RawTlsListener = ListenerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
+    extern template struct ListenerSocket<TlsSocketData<>, TlsAcceptPolicy<>, TlsTransferPolicy<>>;
 #endif
 }
 
