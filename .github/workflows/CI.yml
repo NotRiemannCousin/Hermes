@@ -1,6 +1,7 @@
 name: CI
 on:
   push:
+    branches: [master]
   pull_request:
 
 jobs:
@@ -24,3 +25,36 @@ jobs:
         -DHERMES_ENABLE_ASYNC=${{ matrix.async }} 
         -DHERMES_ENABLE_NATIVE_SCHEDULER=${{ matrix.native }} 
         -DHERMES_ENABLE_TLS=${{ matrix.tls }}
+
+  windows:
+    strategy:
+      fail-fast: false
+      matrix:
+        async:  [ON, OFF]
+        tls:    [ON, OFF]
+        native: [ON, OFF]
+        exclude:
+          - async: OFF
+            native: ON
+
+    uses: NotRiemannCousin/cpp-toolchain/.github/workflows/cpp-ci-windows.yml@v1
+    with:
+      cmake-args: >-
+        -DHERMES_BUILD_TESTS=ON 
+        -DHERMES_BUILD_EXAMPLES=OFF 
+        -DHERMES_ENABLE_ASYNC=${{ matrix.async }} 
+        -DHERMES_ENABLE_NATIVE_SCHEDULER=${{ matrix.native }} 
+        -DHERMES_ENABLE_TLS=${{ matrix.tls }}
+
+  ci-passed:
+    name: CI passed
+    needs: [linux, windows]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check matrix results
+        run: |
+          if [ "${{ needs.linux.result }}" != "success" ] || [ "${{ needs.windows.result }}" != "success" ]; then
+            echo "One or more required jobs failed."
+            exit 1
+          fi
