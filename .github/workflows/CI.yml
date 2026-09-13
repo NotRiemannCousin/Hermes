@@ -1,6 +1,7 @@
 name: CI
 on:
   push:
+    branches: [master]
   pull_request:
 
 jobs:
@@ -44,3 +45,16 @@ jobs:
         -DHERMES_ENABLE_ASYNC=${{ matrix.async }} 
         -DHERMES_ENABLE_NATIVE_SCHEDULER=${{ matrix.native }} 
         -DHERMES_ENABLE_TLS=${{ matrix.tls }}
+
+  ci-passed:
+    name: CI passed
+    needs: [linux, windows]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check matrix results
+        run: |
+          if [ "${{ needs.linux.result }}" != "success" ] || [ "${{ needs.windows.result }}" != "success" ]; then
+            echo "One or more required jobs failed."
+            exit 1
+          fi
