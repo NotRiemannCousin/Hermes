@@ -20,11 +20,11 @@ namespace Hermes {
         template<class Receiver>
         struct OperationState {
             Data* m_data;
-            std::span<Byte>   m_buffer;
-            RecvModeEnum      m_mode;
-            Receiver          m_receiver;
+            std::span<Byte>    m_buffer;
+            RecvModeEnum       m_mode;
+            Receiver           m_receiver;
             TransferOperStatus m_status{};
-            size_t            m_total{};
+            size_t             m_total{};
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };

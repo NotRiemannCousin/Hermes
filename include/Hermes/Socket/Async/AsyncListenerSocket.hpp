@@ -72,13 +72,15 @@ namespace Hermes {
         AcceptPolicy m_acceptPolicy{};
     };
 
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TCP listener async socket.
     using RawTcpAsyncListener = AsyncListenerSocket<>;
     extern template struct AsyncListenerSocket<DefaultSocketData<>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
-#if HERMES_ENABLE_TLS && HERMES_ENABLE_NATIVE_SCHEDULER
+#if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS listener async socket.
     using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
     extern template struct AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+#endif
 #endif
 
 }

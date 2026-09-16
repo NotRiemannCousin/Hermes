@@ -60,13 +60,15 @@ namespace Hermes {
 
 
 
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TCP client async socket.
     using RawTcpAsyncClient = AsyncClientSocket<>;
     extern template struct AsyncClientSocket<DefaultSocketData<>, DefaultAsyncConnectPolicy<>, DefaultAsyncTransferPolicy<>>;
-#if HERMES_ENABLE_TLS && HERMES_ENABLE_NATIVE_SCHEDULER
+#if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS client async socket.
     using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
     extern template struct AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+#endif
 #endif
     // using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;
 }

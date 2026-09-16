@@ -1,5 +1,6 @@
 #pragma once
 #include <Hermes/Config.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/TransferOperStatus.hpp>
 #if HERMES_ENABLE_NATIVE_SCHEDULER
 
 #include <Hermes/_base/OsApi/OsApi.hpp>
@@ -9,25 +10,6 @@
 
 namespace Hermes {
     enum class ConnectionErrorEnum;
-}
-
-namespace Hermes {
-
-#ifdef _WIN32
-    struct TransferOperStatus : WSAOVERLAPPED {
-        using Operation = void(void* context, LongIoCount transferedBytes, bool success);
-
-        void* context{};
-        Operation* callback{};
-    };
-#else
-    struct TransferOperStatus {
-        using Operation = void(void* context, size_t transferedBytes, bool success);
-
-        void* context{};
-        Operation* callback{};
-    };
-#endif
 
     class FastIoLoop;
     struct FastIoScheduler;
