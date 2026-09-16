@@ -15,6 +15,7 @@ var namespace_hermes =
     [ "ServerSocket", "struct_hermes_1_1_server_socket.html", "struct_hermes_1_1_server_socket" ],
     [ "TlsSocketData", "struct_hermes_1_1_tls_socket_data.html", "struct_hermes_1_1_tls_socket_data" ],
     [ "TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ],
+    [ "TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", "struct_hermes_1_1_transfer_oper_status" ],
     [ "AcceptPolicyConcept", "concept_hermes_1_1_accept_policy_concept.html", null ],
     [ "ByteLike", "concept_hermes_1_1_byte_like.html", null ],
     [ "ClientSocketConcept", "concept_hermes_1_1_client_socket_concept.html", null ],

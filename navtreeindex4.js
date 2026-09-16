@@ -1,5 +1,7 @@
 var NAVTREEINDEX4 =
 {
+"struct_hermes_1_1_client_socket.html#abafe3429f54b8a116174067af9593db5":[4,2,0,0,1,16],
+"struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09":[4,0,0,0,1,11],
 "struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09":[4,2,0,0,1,11],
 "struct_hermes_1_1_client_socket.html#ad7691207ce50e40e737f371e3ca84529":[4,0,0,0,1,17],
 "struct_hermes_1_1_client_socket.html#ad7691207ce50e40e737f371e3ca84529":[4,2,0,0,1,17],
@@ -199,12 +201,12 @@ var NAVTREEINDEX4 =
 "struct_hermes_1_1_ip_endpoint.html#acf233a72d64c74d0e5879cb621322c9f":[4,2,0,0,8,5],
 "struct_hermes_1_1_ip_endpoint_params.html":[4,0,0,0,9],
 "struct_hermes_1_1_ip_endpoint_params.html":[4,2,0,0,9],
-"struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71":[4,0,0,0,9,1],
 "struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71":[4,2,0,0,9,1],
-"struct_hermes_1_1_ip_endpoint_params.html#a2aab6cabe1d61257712e500a4b89ffbe":[4,0,0,0,9,0],
+"struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71":[4,0,0,0,9,1],
 "struct_hermes_1_1_ip_endpoint_params.html#a2aab6cabe1d61257712e500a4b89ffbe":[4,2,0,0,9,0],
-"struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e":[4,0,0,0,9,2],
+"struct_hermes_1_1_ip_endpoint_params.html#a2aab6cabe1d61257712e500a4b89ffbe":[4,0,0,0,9,0],
 "struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e":[4,2,0,0,9,2],
+"struct_hermes_1_1_ip_endpoint_params.html#af6eef4b4a8048cc887c95e5970af800e":[4,0,0,0,9,2],
 "struct_hermes_1_1_listener_socket.html":[4,0,0,0,10],
 "struct_hermes_1_1_listener_socket.html":[4,2,0,0,10],
 "struct_hermes_1_1_listener_socket.html#a00fe4232ab8bce9e912ea317ba96737e":[4,0,0,0,10,16],
@@ -247,7 +249,5 @@ var NAVTREEINDEX4 =
 "struct_hermes_1_1_listener_socket.html#afac873ca8b33b9a6955d591e0104c302":[4,2,0,0,10,11],
 "struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f":[4,0,0,0,10,9],
 "struct_hermes_1_1_listener_socket.html#afadee9467fada0be2dea9497f55d5c4f":[4,2,0,0,10,9],
-"struct_hermes_1_1_network.html":[4,0,0,0,11],
-"struct_hermes_1_1_network.html":[4,2,0,0,11],
-"struct_hermes_1_1_network.html#acddc5b7d9ed49d98eef7bb416baeea88":[4,0,0,0,11,0]
+"struct_hermes_1_1_network.html":[4,0,0,0,11]
 };

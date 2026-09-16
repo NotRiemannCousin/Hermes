@@ -13,6 +13,7 @@ var searchData=
   ['tlstransferstatemachine_2ehpp_10',['TlsTransferStateMachine.hpp',['../_tls_transfer_state_machine_8hpp.html',1,'']]],
   ['tobytes_2ehpp_11',['ToBytes.hpp',['../_to_bytes_8hpp.html',1,'']]],
   ['transferio_2ehpp_12',['TransferIo.hpp',['../_transfer_io_8hpp.html',1,'']]],
-  ['tricks_2emd_13',['tricks.md',['../tricks_8md.html',1,'']]],
-  ['types_2ehpp_14',['Types.hpp',['../_types_8hpp.html',1,'']]]
+  ['transferoperstatus_2ehpp_13',['TransferOperStatus.hpp',['../_transfer_oper_status_8hpp.html',1,'']]],
+  ['tricks_2emd_14',['tricks.md',['../tricks_8md.html',1,'']]],
+  ['types_2ehpp_15',['Types.hpp',['../_types_8hpp.html',1,'']]]
 ];

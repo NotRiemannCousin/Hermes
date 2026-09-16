@@ -35,6 +35,7 @@ var hierarchy =
     [ "Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State", "struct_hermes_1_1_tls_socket_data_1_1_state.html", null ],
     [ "Hermes::TlsSocketData&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_tls_socket_data.html", null ],
     [ "Hermes::TransferError", "struct_hermes_1_1_transfer_error.html", null ],
+    [ "Hermes::TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", null ],
     [ "Ts...", null, [
       [ "Hermes::Utils::Overloaded< Ts >", "struct_hermes_1_1_utils_1_1_overloaded.html", null ]
     ] ],

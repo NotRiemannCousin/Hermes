@@ -21,6 +21,7 @@ var annotated_dup =
       [ "Network", "struct_hermes_1_1_network.html", "struct_hermes_1_1_network" ],
       [ "ServerSocket", "struct_hermes_1_1_server_socket.html", "struct_hermes_1_1_server_socket" ],
       [ "TlsSocketData", "struct_hermes_1_1_tls_socket_data.html", "struct_hermes_1_1_tls_socket_data" ],
-      [ "TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ]
+      [ "TransferError", "struct_hermes_1_1_transfer_error.html", "struct_hermes_1_1_transfer_error" ],
+      [ "TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", "struct_hermes_1_1_transfer_oper_status" ]
     ] ]
 ];
