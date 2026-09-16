@@ -6,11 +6,14 @@
 #include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
-
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     template<
         SocketDataConcept SocketData = DefaultSocketData<>,
         class AcceptPolicy           = DefaultAsyncAcceptPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
+#else
+    template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
+#endif
     requires AsyncAcceptPolicyConcept<AcceptPolicy, SocketData> && AsyncTransferPolicyConcept<TransferPolicy, SocketData>
     struct AsyncListenerSocket {
     public:

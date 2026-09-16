@@ -12,10 +12,14 @@
 #include <exec/task.hpp>
 
 namespace Hermes {
+#if HERMES_ENABLE_NATIVE_SCHEDULER
     template<
         SocketDataConcept SocketData = DefaultSocketData<>,
         class ConnectionPolicy       = DefaultAsyncConnectPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
+#else
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+#endif
         requires AsyncClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
     struct AsyncClientSocket {
         using EndpointType = typename SocketData::EndpointType;
