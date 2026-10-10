@@ -34,7 +34,7 @@ namespace std {
         //! @note If 'f' is specified, IPv6 will be formatted in the full format.
         //! @note If 'b' is specified, IPv6 will be formatted between '[' and ']'.
         //! @note The order of the args matters, 'f' needs to be before 'b'.
-        constexpr auto parse(auto &ctx) {
+        constexpr auto parse(auto& ctx) {
             auto&& it{ ctx.begin() };
             while (it != ctx.end() && *it != '}') {
                 if (*it == 'f') m_ipv6Reduced = false;

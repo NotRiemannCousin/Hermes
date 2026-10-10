@@ -13,7 +13,7 @@ namespace std {
     struct formatter<Hermes::ConnectionErrorEnum> {
         bool isVerbose{};
 
-        constexpr auto parse(const std::format_parse_context& ctx) {
+        constexpr auto parse(auto& ctx) {
             auto it{ ctx.begin() };
             if (it != ctx.end() && *it == 'v') {
                 isVerbose = true;
@@ -154,7 +154,7 @@ namespace std {
 
     template <>
     struct formatter<Hermes::StreamByteOper> {
-        static constexpr auto parse(const std::format_parse_context& ctx) { return ctx.begin(); }
+        static constexpr auto parse(auto& ctx) { return ctx.begin(); }
 
         template<class FormatContext>
         auto format(const Hermes::StreamByteOper oper, FormatContext &ctx) const {
@@ -167,7 +167,7 @@ namespace std {
 
     template <>
     struct formatter<Hermes::TransferError> {
-        static constexpr auto parse(const std::format_parse_context& ctx) { return ctx.begin(); }
+        static constexpr auto parse(auto& ctx) { return ctx.begin(); }
 
         template<class FormatContext>
         auto format(const Hermes::TransferError error, FormatContext &ctx) const {
