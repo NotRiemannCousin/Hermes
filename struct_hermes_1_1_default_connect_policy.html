@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>Plain TCP connect policy for blocking sockets.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_default_connect_policy_8hpp_source.html">DefaultConnectPolicy.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -180,7 +183,11 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a806f6327878aad6796f7b79a6fa5c259" id="r_a806f6327878aad6796f7b79a6fa5c259"><td class="memItemLeft">static constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a806f6327878aad6796f7b79a6fa5c259">Family</a> { SocketFamily }</td></tr>
 <tr class="memitem:aa9967e6981f6e2582c355595fdd46e4f" id="r_aa9967e6981f6e2582c355595fdd46e4f"><td class="memItemLeft">static constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#aa9967e6981f6e2582c355595fdd46e4f">Type</a> { SocketType }</td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt;<br />
+struct Hermes::DefaultConnectPolicy&lt; Endpoint, SocketType, SocketFamily &gt;</div><p>Plain TCP connect policy for blocking sockets. </p>
+<p><a class="el" href="struct_hermes_1_1_default_connect_policy_1_1_options.html#a3fff221009b77591d08b971651cbd14e" title="0 = blocking connect, &gt;0 = bounded non-blocking connect.">Options::connectionTimeout</a> selects the connect strategy: 0 (default) uses the OS blocking connect() as it is, a non-zero duration temporarily switches the socket to non-blocking and waits on poll()/WSAPoll. Timeout expiry is reported as <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaaaf98071f760be899f4fcf1d53a29ba17">ConnectionErrorEnum::ConnectionFailed</a> (no dedicated timeout code). </p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="acbdc5a7434e8dd6771ae0d9a13c6aefe" name="acbdc5a7434e8dd6771ae0d9a13c6aefe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#acbdc5a7434e8dd6771ae0d9a13c6aefe">&#9670;&#160;</a></span>EndpointType</h2>
 

@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['iocount_0',['IoCount',['../namespace_hermes.html#aa14d29e8f9d418585c54877eefb50022',1,'Hermes']]],
-  ['ipv4type_1',['Ipv4Type',['../struct_hermes_1_1_ip_address.html#aefe5326efab5667e5889747402dab8a8',1,'Hermes::IpAddress']]],
-  ['ipv6type_2',['Ipv6Type',['../struct_hermes_1_1_ip_address.html#a16fdeda2bd4196b377dfd254c7966ad9',1,'Hermes::IpAddress']]],
-  ['ipvariant_3',['IpVariant',['../struct_hermes_1_1_ip_address.html#a47a1f540880da34497fd5f9c2df9cae9',1,'Hermes::IpAddress']]]
+  ['endpointtype_0',['EndpointType',['../struct_hermes_1_1_default_socket_data.html#a978509aa104f60a05579d2396e3ecf7f',1,'Hermes::DefaultSocketData::EndpointType'],['../struct_hermes_1_1_tls_socket_data.html#add7669ffab4e19721cf8a1d61ba0711f',1,'Hermes::TlsSocketData::EndpointType'],['../struct_hermes_1_1_default_accept_policy.html#a734240f0ffc1e802ef5d39394c43be58',1,'Hermes::DefaultAcceptPolicy::EndpointType'],['../struct_hermes_1_1_default_connect_policy.html#acbdc5a7434e8dd6771ae0d9a13c6aefe',1,'Hermes::DefaultConnectPolicy::EndpointType'],['../struct_hermes_1_1_client_socket.html#a4ff5ca07dd416a5f7503061c7de919e4',1,'Hermes::ClientSocket::EndpointType'],['../struct_hermes_1_1_listener_socket.html#a16f4b36412e25ce6073b83fa3d4fa475',1,'Hermes::ListenerSocket::EndpointType'],['../struct_hermes_1_1_server_socket.html#af1bca639070d2711368679f598fcf2ff',1,'Hermes::ServerSocket::EndpointType']]]
 ];

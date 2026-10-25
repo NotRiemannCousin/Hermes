@@ -159,20 +159,16 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_con
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#include &lt;Hermes/Config.hpp&gt;</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#if HERMES_ENABLE_ASYNC &amp;&amp; HERMES_ENABLE_TLS</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_socket_data_8hpp.html">Hermes/Socket/Data/TlsSocketData.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;<a class="code" href="_fast_io_execution_context_8hpp.html">Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;<a class="code" href="_default_async_connect_policy_8hpp.html">Hermes/Socket/Async/_base/Connection/DefaultAsyncConnectPolicy.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_connect_policy_8hpp.html">Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base.hpp</a>&gt;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;<a class="code" href="_fast_io_execution_context_8hpp.html">Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_socket_data_8hpp.html">Hermes/Socket/Data/TlsSocketData.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;<a class="code" href="_tls_connect_policy_8hpp.html">Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp</a>&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;<a class="code" href="__base_8hpp.html">Hermes/Socket/_base.hpp</a>&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData&lt;&gt;&gt;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#else</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext, SocketDataConcept Data = TlsSocketData&lt;&gt;&gt;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">struct </span>TlsAsyncConnectPolicy {</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext, SocketDataConcept Data&gt;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_hermes_1_1_tls_async_connect_policy.html">TlsAsyncConnectPolicy</a> {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Family{ Data::Family };</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Type  { Data::Type   };</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">using </span>EndpointType = <span class="keyword">typename</span> Data::EndpointType;</div>
@@ -214,6 +210,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_con
 <div class="ttc" id="a_tls_connect_policy_8hpp_html"><div class="ttname"><a href="_tls_connect_policy_8hpp.html">TlsConnectPolicy.hpp</a></div></div>
 <div class="ttc" id="a_tls_socket_data_8hpp_html"><div class="ttname"><a href="_tls_socket_data_8hpp.html">TlsSocketData.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
+<div class="ttc" id="astruct_hermes_1_1_tls_async_connect_policy_html"><div class="ttname"><a href="struct_hermes_1_1_tls_async_connect_policy.html">Hermes::TlsAsyncConnectPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:117</div></div>
 <div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

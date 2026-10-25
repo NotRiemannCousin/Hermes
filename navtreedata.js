@@ -80,11 +80,11 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "@ref example-tcp-server",
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba60e029055d0b5451cc5a2fa9acffbd8a",
-"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a3513165a506c6057d7812e71b00932b4",
-"namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a5639d3df5aea3d9e78027b843ee3cbb2",
-"struct_hermes_1_1_client_socket.html#abafe3429f54b8a116174067af9593db5",
-"struct_hermes_1_1_network.html"
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba32d2972736a37036a59009e2369b8e86",
+"namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a33362cc11fe51de3f89bb441df2e16b7",
+"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af7e68e5021e964fbe01bceb285896e8f",
+"struct_hermes_1_1_client_socket.html#a6c579c47c88ed110ffac72706b3485b3",
+"struct_hermes_1_1_listener_socket.html#a3df11f99a3411d21ace9b9517f5c9ce0"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

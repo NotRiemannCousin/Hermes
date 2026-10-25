@@ -156,6 +156,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div><!--header-->
 <div class="contents">
 
+<p>Plain TCP listen/accept policy for blocking sockets.  
+ <a href="#details">More...</a></p>
+
 <p><code>#include &lt;<a class="el" href="_default_accept_policy_8hpp_source.html">DefaultAcceptPolicy.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
@@ -171,10 +174,10 @@ Public Types</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a31017e91c815f46e8ffd6226b86178d5" id="r_a31017e91c815f46e8ffd6226b86178d5"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
 <tr class="memitem:a31017e91c815f46e8ffd6226b86178d5 template"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a31017e91c815f46e8ffd6226b86178d5">Listen</a> (Data &amp;data, int backlog, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_listen_options.html">ListenOptions</a> options) noexcept</td></tr>
-<tr class="memdesc:a31017e91c815f46e8ffd6226b86178d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listening socket handle.  <br /></td></tr>
+<tr class="memdesc:a31017e91c815f46e8ffd6226b86178d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates the listening socket: socket() + bind() + listen().  <br /></td></tr>
 <tr class="memitem:a512190b044769700f41aa860f5177d15" id="r_a512190b044769700f41aa860f5177d15"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
 <tr class="memitem:a512190b044769700f41aa860f5177d15 template"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a512190b044769700f41aa860f5177d15">Accept</a> (Data &amp;listenData, Data &amp;outData, <a class="el" href="struct_hermes_1_1_default_accept_policy_1_1_accept_options.html">AcceptOptions</a> options) noexcept</td></tr>
-<tr class="memdesc:a512190b044769700f41aa860f5177d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts one incoming connection into outData. Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address.  <br /></td></tr>
+<tr class="memdesc:a512190b044769700f41aa860f5177d15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Accepts one incoming connection into outData.  <br /></td></tr>
 <tr class="memitem:a4fdef2357b0f624b1de537f2d98e3aca" id="r_a4fdef2357b0f624b1de537f2d98e3aca"><td class="memTemplParams" colspan="2">template&lt;SocketDataConcept Data&gt; </td></tr>
 <tr class="memitem:a4fdef2357b0f624b1de537f2d98e3aca template"><td class="memItemLeft">static void&#160;</td><td class="memItemRight"><a class="el" href="#a4fdef2357b0f624b1de537f2d98e3aca">Close</a> (Data &amp;data) noexcept</td></tr>
 <tr class="memdesc:a4fdef2357b0f624b1de537f2d98e3aca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes an accepted connection with a proper TCP shutdown.  <br /></td></tr>
@@ -187,7 +190,11 @@ Static Public Attributes</h2></td></tr>
 <tr class="memitem:a08bb744353cabfc9ed08e357b3387323" id="r_a08bb744353cabfc9ed08e357b3387323"><td class="memItemLeft">static constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#a08bb744353cabfc9ed08e357b3387323">Family</a> { SocketFamily }</td></tr>
 <tr class="memitem:ac80f1d7197089b5254958ee101459725" id="r_ac80f1d7197089b5254958ee101459725"><td class="memItemLeft">static constexpr auto&#160;</td><td class="memItemRight"><a class="el" href="#ac80f1d7197089b5254958ee101459725">Type</a> { SocketType }</td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt;<br />
+struct Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt;</div><p>Plain TCP listen/accept policy for blocking sockets. </p>
+<p>Size and flag options follow the "0/false = leave OS default" convention. <a class="el" href="#a4fdef2357b0f624b1de537f2d98e3aca" title="Closes an accepted connection with a proper TCP shutdown.">Close()</a> performs shutdown(Send) + close, <a class="el" href="#a3f02f413c6d941594af097531a4df996" title="Closes the listening socket. No protocol-level shutdown required.">Abort()</a> sets SO_LINGER(1,0) and closes immediately (RST). </p>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
 <a id="a734240f0ffc1e802ef5d39394c43be58" name="a734240f0ffc1e802ef5d39394c43be58"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a734240f0ffc1e802ef5d39394c43be58">&#9670;&#160;</a></span>EndpointType</h2>
 
@@ -272,7 +279,8 @@ template&lt;SocketDataConcept Data&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Accepts one incoming connection into outData. Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address. </p>
+<p>Accepts one incoming connection into outData. </p>
+<p>Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address. </p>
 
 </div>
 </div>
@@ -343,7 +351,8 @@ template&lt;SocketDataConcept Data&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Creates the listening socket: socket() + bind() + listen(). On success, data.socket holds the listening socket handle. </p>
+<p>Creates the listening socket: socket() + bind() + listen(). </p>
+<p>On success, data.socket holds the listening socket handle. </p>
 
 </div>
 </div>

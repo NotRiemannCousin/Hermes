@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Hermes::ClientSocket&lt; SocketData, ConnectionPolicy, TransferPolicy &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::ClientSocket&lt; SocketData, ConnectionPolicy, TransferPolicy &gt; Struct Template Reference<span class="mlabels"><span class="mlabel final">final</span></span></div></div>
 </div><!--header-->
 <div class="contents">
 
@@ -163,52 +163,66 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
+<tr class="memitem:ace70c8836c469abdb8e5b76f8a9a3c59" id="r_ace70c8836c469abdb8e5b76f8a9a3c59"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59">ClientSocketResult</a> = <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;<a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a>&gt;</td></tr>
+<tr class="memdesc:ace70c8836c469abdb8e5b76f8a9a3c59"><td class="mdescLeft">&#160;</td><td class="mdescRight">The result type returned when creating the client.  <br /></td></tr>
+<tr class="memitem:a5e4c2455c6f500774beefb06fa8fb4ab" id="r_a5e4c2455c6f500774beefb06fa8fb4ab"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a5e4c2455c6f500774beefb06fa8fb4ab">DataType</a> = SocketData</td></tr>
+<tr class="memdesc:a5e4c2455c6f500774beefb06fa8fb4ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">The data policy used by this socket. Stores the info used by other policies.  <br /></td></tr>
+<tr class="memitem:aed436a51a8d41616383ae207c483f93c" id="r_aed436a51a8d41616383ae207c483f93c"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aed436a51a8d41616383ae207c483f93c">ConnectionPolicyType</a> = ConnectionPolicy</td></tr>
+<tr class="memdesc:aed436a51a8d41616383ae207c483f93c"><td class="mdescLeft">&#160;</td><td class="mdescRight">The connection policy used by this socket. Used to open/close the socket.  <br /></td></tr>
+<tr class="memitem:a1c68aa73fe6e9bb5f61e1167e0f48e82" id="r_a1c68aa73fe6e9bb5f61e1167e0f48e82"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a1c68aa73fe6e9bb5f61e1167e0f48e82">TransferPolicyType</a> = TransferPolicy</td></tr>
+<tr class="memdesc:a1c68aa73fe6e9bb5f61e1167e0f48e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer policy used by this socket. Used when transferring data.  <br /></td></tr>
 <tr class="memitem:a4ff5ca07dd416a5f7503061c7de919e4" id="r_a4ff5ca07dd416a5f7503061c7de919e4"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a4ff5ca07dd416a5f7503061c7de919e4">EndpointType</a> = SocketData::EndpointType</td></tr>
 <tr class="memdesc:a4ff5ca07dd416a5f7503061c7de919e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">The endpoint type used by SocketData.  <br /></td></tr>
-<tr class="memitem:a1c68aa73fe6e9bb5f61e1167e0f48e82" id="r_a1c68aa73fe6e9bb5f61e1167e0f48e82"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a1c68aa73fe6e9bb5f61e1167e0f48e82">TransferPolicyType</a> = TransferPolicy</td></tr>
-<tr class="memdesc:a1c68aa73fe6e9bb5f61e1167e0f48e82"><td class="mdescLeft">&#160;</td><td class="mdescRight">The transfer policy used by this socket.  <br /></td></tr>
-<tr class="memitem:a5a57c9e8daf4908d8ddbae0e03be6bff" id="r_a5a57c9e8daf4908d8ddbae0e03be6bff"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a5a57c9e8daf4908d8ddbae0e03be6bff">ConnOptions</a> = typename ConnectionPolicy::Options</td></tr>
-<tr class="memdesc:a5a57c9e8daf4908d8ddbae0e03be6bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by connect operations.  <br /></td></tr>
-<tr class="memitem:ab694d91fcf57206cdf45b20658affeeb" id="r_ab694d91fcf57206cdf45b20658affeeb"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a> = typename TransferPolicy::RecvOptions</td></tr>
-<tr class="memdesc:ab694d91fcf57206cdf45b20658affeeb"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by receive operations.  <br /></td></tr>
-<tr class="memitem:a2cd2631c186f353320c4e0d5da161e3d" id="r_a2cd2631c186f353320c4e0d5da161e3d"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a> = typename TransferPolicy::SendOptions</td></tr>
-<tr class="memdesc:a2cd2631c186f353320c4e0d5da161e3d"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by send operations.  <br /></td></tr>
+<tr class="memitem:a48d73125cf2b18cec740a835f45ff2b0" id="r_a48d73125cf2b18cec740a835f45ff2b0"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a48d73125cf2b18cec740a835f45ff2b0">ConnOptions</a> = ConnectionPolicy::Options</td></tr>
+<tr class="memdesc:a48d73125cf2b18cec740a835f45ff2b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by connect operations.  <br /></td></tr>
+<tr class="memitem:af6f0feaffd975dabb8c2d24e85ba1a54" id="r_af6f0feaffd975dabb8c2d24e85ba1a54"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a> = TransferPolicy::RecvOptions</td></tr>
+<tr class="memdesc:af6f0feaffd975dabb8c2d24e85ba1a54"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by receive operations.  <br /></td></tr>
+<tr class="memitem:a9dd289b9cd32c5bba679898338cc80dd" id="r_a9dd289b9cd32c5bba679898338cc80dd"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a> = TransferPolicy::SendOptions</td></tr>
+<tr class="memdesc:a9dd289b9cd32c5bba679898338cc80dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">The options accepted by send operations.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a72b200041e3fbaace8e9332bd4c6991c" id="r_a72b200041e3fbaace8e9332bd4c6991c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> (ClientSocket &amp;&amp;) noexcept</td></tr>
 <tr class="memitem:ae717dcc195469839fca75fb4ed5698ce" id="r_ae717dcc195469839fca75fb4ed5698ce"><td class="memItemLeft"><a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#ae717dcc195469839fca75fb4ed5698ce">operator=</a> (<a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &amp;&amp;) noexcept</td></tr>
 <tr class="memitem:a70279b500acb483b2d7671c7e8ef8131" id="r_a70279b500acb483b2d7671c7e8ef8131"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a70279b500acb483b2d7671c7e8ef8131">~ClientSocket</a> ()</td></tr>
+<tr class="memitem:a6c579c47c88ed110ffac72706b3485b3" id="r_a6c579c47c88ed110ffac72706b3485b3"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a6c579c47c88ed110ffac72706b3485b3">GetEndpoint</a> () noexcept -&gt; <a class="el" href="#a4ff5ca07dd416a5f7503061c7de919e4">EndpointType</a> &amp;</td></tr>
+<tr class="memdesc:a6c579c47c88ed110ffac72706b3485b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the underlying endpoint (unsafe).  <br /></td></tr>
+<tr class="memitem:a372850f20dcfdca814c1db36869b1f3b" id="r_a372850f20dcfdca814c1db36869b1f3b"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a372850f20dcfdca814c1db36869b1f3b">GetEndpoint</a> () const noexcept -&gt; const <a class="el" href="#a4ff5ca07dd416a5f7503061c7de919e4">EndpointType</a> &amp;</td></tr>
+<tr class="memdesc:a372850f20dcfdca814c1db36869b1f3b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a const reference to the underlying endpoint.  <br /></td></tr>
+<tr class="memitem:ab19dfb4aeeba4585e1925a1752c0e7f6" id="r_ab19dfb4aeeba4585e1925a1752c0e7f6"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ab19dfb4aeeba4585e1925a1752c0e7f6">GetSocketData</a> () noexcept -&gt; SocketData &amp;</td></tr>
+<tr class="memdesc:ab19dfb4aeeba4585e1925a1752c0e7f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a reference to the underlying SocketData (unsafe).  <br /></td></tr>
+<tr class="memitem:ab839a5caebe428bcec0690a5dc63ceb8" id="r_ab839a5caebe428bcec0690a5dc63ceb8"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ab839a5caebe428bcec0690a5dc63ceb8">GetSocketData</a> () const noexcept -&gt; const SocketData &amp;</td></tr>
+<tr class="memdesc:ab839a5caebe428bcec0690a5dc63ceb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a const reference to the underlying SocketData.  <br /></td></tr>
 <tr class="memitem:ad7691207ce50e40e737f371e3ca84529" id="r_ad7691207ce50e40e737f371e3ca84529"><td class="memTemplParams" colspan="2">template&lt;ContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a>&gt;</td></tr>
+requires std::default_initializable&lt;<a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a>&gt;</td></tr>
 <tr class="memitem:ad7691207ce50e40e737f371e3ca84529 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad7691207ce50e40e737f371e3ca84529">Send</a> (R &amp;&amp;data) noexcept</td></tr>
 <tr class="memdesc:ad7691207ce50e40e737f371e3ca84529"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using the transfer policy.  <br /></td></tr>
 <tr class="memitem:a9ad98ae67d03cc7987b89d4debbfab37" id="r_a9ad98ae67d03cc7987b89d4debbfab37"><td class="memTemplParams" colspan="2">template&lt;ContiguousByteRange R&gt; </td></tr>
-<tr class="memitem:a9ad98ae67d03cc7987b89d4debbfab37 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9ad98ae67d03cc7987b89d4debbfab37">Send</a> (R &amp;&amp;data, <a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a> options) noexcept</td></tr>
+<tr class="memitem:a9ad98ae67d03cc7987b89d4debbfab37 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a9ad98ae67d03cc7987b89d4debbfab37">Send</a> (R &amp;&amp;data, <a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:a9ad98ae67d03cc7987b89d4debbfab37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data using explicit transfer options.  <br /></td></tr>
 <tr class="memitem:ad3fa1a6158095c1a047cc68745ca9d09" id="r_ad3fa1a6158095c1a047cc68745ca9d09"><td class="memTemplParams" colspan="2">template&lt;WritableContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</td></tr>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</td></tr>
 <tr class="memitem:ad3fa1a6158095c1a047cc68745ca9d09 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#ad3fa1a6158095c1a047cc68745ca9d09">Recv</a> (R &amp;&amp;data, <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> mode=<a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338ab1c94ca2fbc3e78fc30069c8d0f01680">RecvModeEnum::All</a>) noexcept</td></tr>
 <tr class="memdesc:ad3fa1a6158095c1a047cc68745ca9d09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using the selected receive mode.  <br /></td></tr>
 <tr class="memitem:a818de786bc05d09b482e2375f65ac40d" id="r_a818de786bc05d09b482e2375f65ac40d"><td class="memTemplParams" colspan="2">template&lt;WritableContiguousByteRange R&gt; </td></tr>
-<tr class="memitem:a818de786bc05d09b482e2375f65ac40d template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a818de786bc05d09b482e2375f65ac40d">Recv</a> (R &amp;&amp;data, <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> mode, <a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a> options) noexcept</td></tr>
+<tr class="memitem:a818de786bc05d09b482e2375f65ac40d template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a818de786bc05d09b482e2375f65ac40d">Recv</a> (R &amp;&amp;data, <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338">RecvModeEnum</a> mode, <a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:a818de786bc05d09b482e2375f65ac40d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives data using explicit receive options.  <br /></td></tr>
 <tr class="memitem:a793a52cbafb76115e273393c2588dca2" id="r_a793a52cbafb76115e273393c2588dca2"><td class="memTemplParams" colspan="2">template&lt;WritableContiguousByteRange R&gt; </td></tr>
-<tr class="memitem:a793a52cbafb76115e273393c2588dca2 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a793a52cbafb76115e273393c2588dca2">Recv</a> (R &amp;&amp;data, <a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a> options) noexcept</td></tr>
+<tr class="memitem:a793a52cbafb76115e273393c2588dca2 template"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a>&#160;</td><td class="memItemRight"><a class="el" href="#a793a52cbafb76115e273393c2588dca2">Recv</a> (R &amp;&amp;data, <a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:a793a52cbafb76115e273393c2588dca2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receives a complete range using explicit receive options.  <br /></td></tr>
 <tr class="memitem:a7260826b0a413d1ba510b8595d4bb0e3" id="r_a7260826b0a413d1ba510b8595d4bb0e3"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</td></tr>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</td></tr>
 <tr class="memitem:a7260826b0a413d1ba510b8595d4bb0e3 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a7260826b0a413d1ba510b8595d4bb0e3">RecvStream</a> () noexcept</td></tr>
 <tr class="memdesc:a7260826b0a413d1ba510b8595d4bb0e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lazy input range over the bytes received by the socket.  <br /></td></tr>
 <tr class="memitem:abafe3429f54b8a116174067af9593db5" id="r_abafe3429f54b8a116174067af9593db5"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; </td></tr>
-<tr class="memitem:abafe3429f54b8a116174067af9593db5 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#abafe3429f54b8a116174067af9593db5">RecvStream</a> (<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a> options) noexcept</td></tr>
+<tr class="memitem:abafe3429f54b8a116174067af9593db5 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#abafe3429f54b8a116174067af9593db5">RecvStream</a> (<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:abafe3429f54b8a116174067af9593db5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lazy input range bounded by one absolute receive deadline.  <br /></td></tr>
 <tr class="memitem:a4185984353f8a41affd36014695378a0" id="r_a4185984353f8a41affd36014695378a0"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</td></tr>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</td></tr>
 <tr class="memitem:a4185984353f8a41affd36014695378a0 template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#a4185984353f8a41affd36014695378a0">RecvRange</a> () noexcept</td></tr>
 <tr class="memdesc:a4185984353f8a41affd36014695378a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lazy input range with conventional increment semantics.  <br /></td></tr>
 <tr class="memitem:ae45fddf1bf8ad5916f7ee42ad9925e0c" id="r_ae45fddf1bf8ad5916f7ee42ad9925e0c"><td class="memTemplParams" colspan="2">template&lt;ByteLike Byte = std::byte&gt; </td></tr>
-<tr class="memitem:ae45fddf1bf8ad5916f7ee42ad9925e0c template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ae45fddf1bf8ad5916f7ee42ad9925e0c">RecvRange</a> (<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a> options) noexcept</td></tr>
+<tr class="memitem:ae45fddf1bf8ad5916f7ee42ad9925e0c template"><td class="memItemLeft">auto&#160;</td><td class="memItemRight"><a class="el" href="#ae45fddf1bf8ad5916f7ee42ad9925e0c">RecvRange</a> (<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:ae45fddf1bf8ad5916f7ee42ad9925e0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns a lazy input range with explicit receive options.  <br /></td></tr>
 <tr class="memitem:a4707e9a497ddeb6497a7e95413fd50e3" id="r_a4707e9a497ddeb6497a7e95413fd50e3"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#a4707e9a497ddeb6497a7e95413fd50e3">Close</a> () noexcept</td></tr>
 <tr class="memdesc:a4707e9a497ddeb6497a7e95413fd50e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Performs the protocol-level graceful shutdown and closes the socket.  <br /></td></tr>
@@ -217,28 +231,29 @@ requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf4
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a52d3f96f36a1a11c9dd44d2902564fab" id="r_a52d3f96f36a1a11c9dd44d2902564fab"><td class="memTemplParams" colspan="2">template&lt;class = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a5a57c9e8daf4908d8ddbae0e03be6bff">ConnOptions</a>&gt;</td></tr>
-<tr class="memitem:a52d3f96f36a1a11c9dd44d2902564fab template"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a52d3f96f36a1a11c9dd44d2902564fab">Connect</a> (SocketData &amp;&amp;data) noexcept</td></tr>
-<tr class="memdesc:a52d3f96f36a1a11c9dd44d2902564fab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and connects a client socket.  <br /></td></tr>
-<tr class="memitem:ac6526063fc248f9659f8bbf5757ae1dd" id="r_ac6526063fc248f9659f8bbf5757ae1dd"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ac6526063fc248f9659f8bbf5757ae1dd">Connect</a> (SocketData &amp;&amp;data, <a class="el" href="#a5a57c9e8daf4908d8ddbae0e03be6bff">ConnOptions</a> opt) noexcept</td></tr>
-<tr class="memdesc:ac6526063fc248f9659f8bbf5757ae1dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and connects a client socket using explicit connection options.  <br /></td></tr>
+<tr class="memitem:af671a966dd9ec21fc0fe6d56daa4c278" id="r_af671a966dd9ec21fc0fe6d56daa4c278"><td class="memTemplParams" colspan="2">template&lt;class = void&gt; <br />
+requires std::default_initializable&lt;<a class="el" href="#a48d73125cf2b18cec740a835f45ff2b0">ConnOptions</a>&gt;</td></tr>
+<tr class="memitem:af671a966dd9ec21fc0fe6d56daa4c278 template"><td class="memItemLeft">static auto&#160;</td><td class="memItemRight"><a class="el" href="#af671a966dd9ec21fc0fe6d56daa4c278">Connect</a> (SocketData &amp;&amp;data) noexcept -&gt; <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59">ClientSocketResult</a></td></tr>
+<tr class="memdesc:af671a966dd9ec21fc0fe6d56daa4c278"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and connects a client socket.  <br /></td></tr>
+<tr class="memitem:abec15994caa06edbfd09dcfcd21500ab" id="r_abec15994caa06edbfd09dcfcd21500ab"><td class="memItemLeft">static auto&#160;</td><td class="memItemRight"><a class="el" href="#abec15994caa06edbfd09dcfcd21500ab">Connect</a> (SocketData &amp;&amp;data, <a class="el" href="#a48d73125cf2b18cec740a835f45ff2b0">ConnOptions</a> opt) noexcept -&gt; <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59">ClientSocketResult</a></td></tr>
+<tr class="memdesc:abec15994caa06edbfd09dcfcd21500ab"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and connects a client socket using explicit connection options.  <br /></td></tr>
 <tr class="memitem:a4b96e7ca8ac26fb8d4fed6dad7d704fc" id="r_a4b96e7ca8ac26fb8d4fed6dad7d704fc"><td class="memTemplParams" colspan="2">template&lt;ContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a>&gt;</td></tr>
+requires std::default_initializable&lt;<a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a>&gt;</td></tr>
 <tr class="memitem:a4b96e7ca8ac26fb8d4fed6dad7d704fc template"><td class="memItemLeft">static auto&#160;</td><td class="memItemRight"><a class="el" href="#a4b96e7ca8ac26fb8d4fed6dad7d704fc">SendAndLift</a> (R &amp;&amp;data) noexcept</td></tr>
 <tr class="memdesc:a4b96e7ca8ac26fb8d4fed6dad7d704fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data and returns the socket on success, all-or-nothing.  <br /></td></tr>
 <tr class="memitem:ad95d8fe7fd8520abadcebdac42899788" id="r_ad95d8fe7fd8520abadcebdac42899788"><td class="memTemplParams" colspan="2">template&lt;ContiguousByteRange R&gt; </td></tr>
-<tr class="memitem:ad95d8fe7fd8520abadcebdac42899788 template"><td class="memItemLeft">static auto&#160;</td><td class="memItemRight"><a class="el" href="#ad95d8fe7fd8520abadcebdac42899788">SendAndLift</a> (R &amp;&amp;data, <a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a> options) noexcept</td></tr>
+<tr class="memitem:ad95d8fe7fd8520abadcebdac42899788 template"><td class="memItemLeft">static auto&#160;</td><td class="memItemRight"><a class="el" href="#ad95d8fe7fd8520abadcebdac42899788">SendAndLift</a> (R &amp;&amp;data, <a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a> options) noexcept</td></tr>
 <tr class="memdesc:ad95d8fe7fd8520abadcebdac42899788"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sends data and returns the socket on success, all-or-nothing.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt;<br />
-requires ClientSocketConcept&lt;SocketData, ConnectionPolicy, TransferPolicy&gt;<br />
+requires ClientSocketPoliciesConcept&lt;SocketData, ConnectionPolicy, TransferPolicy&gt;<br />
 struct Hermes::ClientSocket&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;</div><p>A blocking client socket that establishes an outgoing connection. </p>
-<p><a class="el" href="struct_hermes_1_1_client_socket.html" title="A blocking client socket that establishes an outgoing connection.">ClientSocket</a> owns the connected SocketData and delegates connection establishment to ConnectionPolicy and data transfer to TransferPolicy. The policy types determine the protocol-specific behavior; for example, the default policies provide TCP support and the TLS policies provide the TLS handshake and encrypted transfer. </p>
+<p><a class="el" href="struct_hermes_1_1_client_socket.html" title="A blocking client socket that establishes an outgoing connection.">ClientSocket</a> owns the connected SocketData and delegates connection establishment to ConnectionPolicy and data transfer to TransferPolicy.</p>
+<p>The policy types determine the protocol-specific behavior. For example, the default policies provide TCP support and the TLS policies provide the TLS handshake and encrypted transfer. </p>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
-<a id="a5a57c9e8daf4908d8ddbae0e03be6bff" name="a5a57c9e8daf4908d8ddbae0e03be6bff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5a57c9e8daf4908d8ddbae0e03be6bff">&#9670;&#160;</a></span>ConnOptions</h2>
+<a id="ace70c8836c469abdb8e5b76f8a9a3c59" name="ace70c8836c469abdb8e5b76f8a9a3c59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace70c8836c469abdb8e5b76f8a9a3c59">&#9670;&#160;</a></span>ClientSocketResult</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -246,12 +261,66 @@ struct Hermes::ClientSocket&lt; SocketData, ConnectionPolicy, TransferPolicy &gt
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::ConnOptions = typename ConnectionPolicy::Options</td>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::ClientSocketResult = <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;<a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The result type returned when creating the client. </p>
+
+</div>
+</div>
+<a id="aed436a51a8d41616383ae207c483f93c" name="aed436a51a8d41616383ae207c483f93c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed436a51a8d41616383ae207c483f93c">&#9670;&#160;</a></span>ConnectionPolicyType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::ConnectionPolicyType = ConnectionPolicy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The connection policy used by this socket. Used to open/close the socket. </p>
+
+</div>
+</div>
+<a id="a48d73125cf2b18cec740a835f45ff2b0" name="a48d73125cf2b18cec740a835f45ff2b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48d73125cf2b18cec740a835f45ff2b0">&#9670;&#160;</a></span>ConnOptions</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::ConnOptions = ConnectionPolicy::Options</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>The options accepted by connect operations. </p>
+
+</div>
+</div>
+<a id="a5e4c2455c6f500774beefb06fa8fb4ab" name="a5e4c2455c6f500774beefb06fa8fb4ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e4c2455c6f500774beefb06fa8fb4ab">&#9670;&#160;</a></span>DataType</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::DataType = SocketData</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The data policy used by this socket. Stores the info used by other policies. </p>
 
 </div>
 </div>
@@ -273,8 +342,8 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 
 </div>
 </div>
-<a id="ab694d91fcf57206cdf45b20658affeeb" name="ab694d91fcf57206cdf45b20658affeeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab694d91fcf57206cdf45b20658affeeb">&#9670;&#160;</a></span>RecvOptions</h2>
+<a id="af6f0feaffd975dabb8c2d24e85ba1a54" name="af6f0feaffd975dabb8c2d24e85ba1a54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6f0feaffd975dabb8c2d24e85ba1a54">&#9670;&#160;</a></span>RecvOptions</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -282,7 +351,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::RecvOptions = typename TransferPolicy::RecvOptions</td>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::RecvOptions = TransferPolicy::RecvOptions</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -291,8 +360,8 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 
 </div>
 </div>
-<a id="a2cd2631c186f353320c4e0d5da161e3d" name="a2cd2631c186f353320c4e0d5da161e3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2cd2631c186f353320c4e0d5da161e3d">&#9670;&#160;</a></span>SendOptions</h2>
+<a id="a9dd289b9cd32c5bba679898338cc80dd" name="a9dd289b9cd32c5bba679898338cc80dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9dd289b9cd32c5bba679898338cc80dd">&#9670;&#160;</a></span>SendOptions</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -300,7 +369,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::SendOptions = typename TransferPolicy::SendOptions</td>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::SendOptions = TransferPolicy::SendOptions</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -323,7 +392,7 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
       </table>
 </div><div class="memdoc">
 
-<p>The transfer policy used by this socket. </p>
+<p>The transfer policy used by this socket. Used when transferring data. </p>
 
 </div>
 </div>
@@ -433,8 +502,8 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 
 </div>
 </div>
-<a id="a52d3f96f36a1a11c9dd44d2902564fab" name="a52d3f96f36a1a11c9dd44d2902564fab"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52d3f96f36a1a11c9dd44d2902564fab">&#9670;&#160;</a></span>Connect() <span class="overload">[1/2]</span></h2>
+<a id="af671a966dd9ec21fc0fe6d56daa4c278" name="af671a966dd9ec21fc0fe6d56daa4c278"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af671a966dd9ec21fc0fe6d56daa4c278">&#9670;&#160;</a></span>Connect() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -442,16 +511,16 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;class = void&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a5a57c9e8daf4908d8ddbae0e03be6bff">ConnOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#a48d73125cf2b18cec740a835f45ff2b0">ConnOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &gt; <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::Connect </td>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::Connect </td>
           <td>(</td>
           <td class="paramtype">SocketData &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span></td><td>)</td>
-          <td></td>
+          <td> -&gt;  <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59">ClientSocketResult</a></td>
         </tr>
       </table>
   </td>
@@ -472,8 +541,8 @@ requires std::default_initializable&lt;<a class="el" href="#a5a57c9e8daf4908d8dd
 
 </div>
 </div>
-<a id="ac6526063fc248f9659f8bbf5757ae1dd" name="ac6526063fc248f9659f8bbf5757ae1dd"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac6526063fc248f9659f8bbf5757ae1dd">&#9670;&#160;</a></span>Connect() <span class="overload">[2/2]</span></h2>
+<a id="abec15994caa06edbfd09dcfcd21500ab" name="abec15994caa06edbfd09dcfcd21500ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abec15994caa06edbfd09dcfcd21500ab">&#9670;&#160;</a></span>Connect() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -484,14 +553,14 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a> &gt; <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::Connect </td>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::Connect </td>
           <td>(</td>
           <td class="paramtype">SocketData &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a5a57c9e8daf4908d8ddbae0e03be6bff">ConnOptions</a></td>          <td class="paramname"><span class="paramname"><em>opt</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a48d73125cf2b18cec740a835f45ff2b0">ConnOptions</a></td>          <td class="paramname"><span class="paramname"><em>opt</em></span>&#160;) -&gt;  <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59">ClientSocketResult</a></td>
         </tr>
       </table>
   </td>
@@ -510,6 +579,122 @@ template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class Conn
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The connected socket on success, or the connection error on failure. </dd></dl>
+
+</div>
+</div>
+<a id="a372850f20dcfdca814c1db36869b1f3b" name="a372850f20dcfdca814c1db36869b1f3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a372850f20dcfdca814c1db36869b1f3b">&#9670;&#160;</a></span>GetEndpoint() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::GetEndpoint </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const -&gt;  const <a class="el" href="#a4ff5ca07dd416a5f7503061c7de919e4">EndpointType</a> &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a const reference to the underlying endpoint. </p>
+
+</div>
+</div>
+<a id="a6c579c47c88ed110ffac72706b3485b3" name="a6c579c47c88ed110ffac72706b3485b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c579c47c88ed110ffac72706b3485b3">&#9670;&#160;</a></span>GetEndpoint() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::GetEndpoint </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> -&gt;  <a class="el" href="#a4ff5ca07dd416a5f7503061c7de919e4">EndpointType</a> &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the underlying endpoint (unsafe). </p>
+
+</div>
+</div>
+<a id="ab839a5caebe428bcec0690a5dc63ceb8" name="ab839a5caebe428bcec0690a5dc63ceb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab839a5caebe428bcec0690a5dc63ceb8">&#9670;&#160;</a></span>GetSocketData() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::GetSocketData </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const -&gt;  const SocketData &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a const reference to the underlying SocketData. </p>
+
+</div>
+</div>
+<a id="ab19dfb4aeeba4585e1925a1752c0e7f6" name="ab19dfb4aeeba4585e1925a1752c0e7f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab19dfb4aeeba4585e1925a1752c0e7f6">&#9670;&#160;</a></span>GetSocketData() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::GetSocketData </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> -&gt;  SocketData &amp;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Returns a reference to the underlying SocketData (unsafe). </p>
 
 </div>
 </div>
@@ -566,12 +751,12 @@ template&lt;WritableContiguousByteRange R&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -581,11 +766,12 @@ template&lt;WritableContiguousByteRange R&gt; </div>
   <table class="params">
     <tr><td class="paramname">data</td><td>A writable contiguous range that receives the bytes. </td></tr>
     <tr><td class="paramname">mode</td><td>Whether the operation receives any available data or fills the range before completing. </td></tr>
-    <tr><td class="paramname">options</td><td>Receive options for this operation.</td></tr>
+    <tr><td class="paramname">options</td><td>Receive options for this operation. </td></tr>
   </table>
   </dd>
 </dl>
-<p>A provided deadline is absolute and applies to the complete receive operation, including all partial reads. </p><dl class="section return"><dt>Returns</dt><dd>The number of bytes received and an empty error result on success, or an error describing the failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes received and an empty error result on success, or an error describing the failure.</dd></dl>
+<p>A provided deadline is absolute and applies to the complete receive operation, including all partial reads. </p>
 
 </div>
 </div>
@@ -598,7 +784,7 @@ template&lt;WritableContiguousByteRange R&gt; </div>
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;WritableContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -616,7 +802,7 @@ requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf4
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -654,12 +840,12 @@ template&lt;WritableContiguousByteRange R&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -685,7 +871,7 @@ template&lt;WritableContiguousByteRange R&gt; </div>
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ByteLike Byte = std::byte&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -699,7 +885,7 @@ requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf4
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -726,13 +912,13 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
         <tr>
           <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::RecvRange </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -756,7 +942,7 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ByteLike Byte = std::byte&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -770,7 +956,7 @@ requires std::default_initializable&lt;<a class="el" href="#ab694d91fcf57206cdf4
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -796,13 +982,13 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
         <tr>
           <td class="memname">auto <a class="el" href="struct_hermes_1_1_client_socket.html">Hermes::ClientSocket</a>&lt; SocketData, ConnectionPolicy, TransferPolicy &gt;::RecvStream </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#ab694d91fcf57206cdf45b20658affeeb">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#af6f0feaffd975dabb8c2d24e85ba1a54">RecvOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -827,7 +1013,7 @@ template&lt;ByteLike Byte = std::byte&gt; </div>
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -841,7 +1027,7 @@ requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -878,12 +1064,12 @@ template&lt;ContiguousByteRange R&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
   <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel noexcept">noexcept</span></span>  </td>
+<span class="mlabels"><span class="mlabel nodiscard">nodiscard</span><span class="mlabel noexcept">noexcept</span></span>  </td>
   </tr>
 </table>
 </div><div class="memdoc">
@@ -892,11 +1078,11 @@ template&lt;ContiguousByteRange R&gt; </div>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">data</td><td>A contiguous range of bytes to send. </td></tr>
-    <tr><td class="paramname">options</td><td>Transfer options for this operation.</td></tr>
+    <tr><td class="paramname">options</td><td>Transfer options for this operation. When a deadline is provided, it is an absolute time point shared by every partial send belonging to this call. It is not restarted after a partial write. </td></tr>
   </table>
   </dd>
 </dl>
-<p>When a deadline is provided, it is an absolute time point shared by every partial send belonging to this call. It is not restarted after a partial write. </p><dl class="section return"><dt>Returns</dt><dd>The number of bytes sent and an empty error result on success, or an error describing the failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The number of bytes sent and an empty error result on success, or an error describing the failure. </dd></dl>
 
 </div>
 </div>
@@ -909,7 +1095,7 @@ template&lt;ContiguousByteRange R&gt; </div>
 template&lt;SocketDataConcept SocketData = DefaultSocketData&lt;&gt;, class ConnectionPolicy = DefaultConnectPolicy&lt;&gt;, class TransferPolicy = DefaultTransferPolicy&lt;&gt;&gt; </div>
 <div class="memtemplate">
 template&lt;ContiguousByteRange R&gt; <br />
-requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a>&gt;</div>
+requires std::default_initializable&lt;<a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a>&gt;</div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -935,7 +1121,7 @@ requires std::default_initializable&lt;<a class="el" href="#a2cd2631c186f353320c
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A lambda that receives a socket, try to send the data and re-trhow it on success, or the connection error on failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A lambda with the <span class="tt">(<a class="el" href="struct_hermes_1_1_client_socket.html" title="A blocking client socket that establishes an outgoing connection.">ClientSocket</a>&amp;&amp; self) -&gt; <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59" title="The result type returned when creating the client.">ClientSocketResult</a></span> signature that receives a socket. Tries to send the data and forward it on success, or send the connection error. error on failure. </dd></dl>
 
 </div>
 </div>
@@ -960,7 +1146,7 @@ template&lt;ContiguousByteRange R&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="#a2cd2631c186f353320c4e0d5da161e3d">SendOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
+          <td class="paramtype"><a class="el" href="#a9dd289b9cd32c5bba679898338cc80dd">SendOptions</a></td>          <td class="paramname"><span class="paramname"><em>options</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -978,7 +1164,7 @@ template&lt;ContiguousByteRange R&gt; </div>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A lambda that receives a socket, try to send the data and re-trhow it on success, or the connection error on failure. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A lambda with the <span class="tt">(<a class="el" href="struct_hermes_1_1_client_socket.html" title="A blocking client socket that establishes an outgoing connection.">ClientSocket</a>&amp;&amp; self) -&gt; <a class="el" href="#ace70c8836c469abdb8e5b76f8a9a3c59" title="The result type returned when creating the client.">ClientSocketResult</a></span> signature that receives a socket. Tries to send the data and forward it on success, or send the connection error. error on failure. </dd></dl>
 
 </div>
 </div>

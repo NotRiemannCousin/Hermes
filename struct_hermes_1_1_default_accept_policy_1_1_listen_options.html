@@ -166,10 +166,16 @@ Inheritance diagram for Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, So
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a5b3227867833c1f6e17bbd2e7415f422" id="r_a5b3227867833c1f6e17bbd2e7415f422"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a5b3227867833c1f6e17bbd2e7415f422">reuseAddress</a> { true }</td></tr>
+<tr class="memdesc:a5b3227867833c1f6e17bbd2e7415f422"><td class="mdescLeft">&#160;</td><td class="mdescRight">SO_REUSEADDR before bind (default: on).  <br /></td></tr>
 <tr class="memitem:a1f1ecd7f12e8140b272aaa57c8a19f93" id="r_a1f1ecd7f12e8140b272aaa57c8a19f93"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a1f1ecd7f12e8140b272aaa57c8a19f93">recvBufferSize</a> {}</td></tr>
+<tr class="memdesc:a1f1ecd7f12e8140b272aaa57c8a19f93"><td class="mdescLeft">&#160;</td><td class="mdescRight">SO_RCVBUF. 0 = OS default.  <br /></td></tr>
 <tr class="memitem:a901c5ae4addcaf2bac0ff7da72251e01" id="r_a901c5ae4addcaf2bac0ff7da72251e01"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a901c5ae4addcaf2bac0ff7da72251e01">sendBufferSize</a> {}</td></tr>
+<tr class="memdesc:a901c5ae4addcaf2bac0ff7da72251e01"><td class="mdescLeft">&#160;</td><td class="mdescRight">SO_SNDBUF. 0 = OS default.  <br /></td></tr>
 </table>
-<a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt;<br />
+struct Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt;::ListenOptions</div><dl class="section note"><dt>Note</dt><dd>onlyIpv6 (conditionally inherited base, Inet6 only) controls IPV6_V6ONLY. </dd></dl>
+</div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a1f1ecd7f12e8140b272aaa57c8a19f93" name="a1f1ecd7f12e8140b272aaa57c8a19f93"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f1ecd7f12e8140b272aaa57c8a19f93">&#9670;&#160;</a></span>recvBufferSize</h2>
 
@@ -183,6 +189,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>SO_RCVBUF. 0 = OS default. </p>
 
 </div>
 </div>
@@ -200,6 +208,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
       </table>
 </div><div class="memdoc">
 
+<p>SO_REUSEADDR before bind (default: on). </p>
+
 </div>
 </div>
 <a id="a901c5ae4addcaf2bac0ff7da72251e01" name="a901c5ae4addcaf2bac0ff7da72251e01"></a>
@@ -215,6 +225,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>SO_SNDBUF. 0 = OS default. </p>
 
 </div>
 </div>

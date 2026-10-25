@@ -1,13 +1,15 @@
 var searchData=
 [
-  ['generator_0',['Doxygen generator',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md57',1,'']]],
-  ['geterror_1',['GetError',['../namespace_hermes.html#a438f5d7b5e68a6b848484706bfefeadc',1,'Hermes']]],
-  ['getheadindex_2',['GetHeadIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#aa68447adba61fe4a4fa414c771d18398',1,'Hermes::Utils::UntilMatchView::Iterator']]],
-  ['getindex_3',['GetIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a4d076a7d99bf4d8a6175db7558306d8f',1,'Hermes::Utils::UntilMatchView::Iterator']]],
-  ['getip_4',['GetIp',['../struct_hermes_1_1_ip_address.html#a4d7a6f0e3d71e48df82a10ce3710d3fa',1,'Hermes::IpAddress::GetIp()'],['../struct_hermes_1_1_ip_endpoint.html#a42680fd27c3cf04c0361211761afec30',1,'Hermes::IpEndpoint::GetIp() const noexcept']]],
-  ['getport_5',['GetPort',['../struct_hermes_1_1_ip_endpoint.html#a01410515a442b5f7c12d4bc6467d95d1',1,'Hermes::IpEndpoint']]],
-  ['gettailindex_6',['GetTailIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a97ff1213928e9a864d4d6a03e2da6a5a',1,'Hermes::Utils::UntilMatchView::Iterator']]],
-  ['getting_20started_7',['Getting Started',['../getting-started.html',1,'Getting Started'],['../getting-started.html#autotoc_md78',1,'Getting Started']]],
-  ['getting_20started_2emd_8',['Getting Started.md',['../_getting_01_started_8md.html',1,'']]],
-  ['graphviz_9',['Diagrams with Graphviz',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#tricks-graphviz',1,'']]]
+  ['generator_0',['Doxygen generator',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md53',1,'']]],
+  ['getendpoint_1',['GetEndpoint',['../struct_hermes_1_1_client_socket.html#a6c579c47c88ed110ffac72706b3485b3',1,'Hermes::ClientSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_client_socket.html#a372850f20dcfdca814c1db36869b1f3b',1,'Hermes::ClientSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;'],['../struct_hermes_1_1_listener_socket.html#a445d5006e1764c05e575e0b8f86bfb17',1,'Hermes::ListenerSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_listener_socket.html#a885b9d5533dc294f62dd857a10798bc3',1,'Hermes::ListenerSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;'],['../struct_hermes_1_1_server_socket.html#aac45b19fba427fdf9215a4b3f7776032',1,'Hermes::ServerSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_server_socket.html#a25e10be7fbf270d27fabdaeb6aeedb1e',1,'Hermes::ServerSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;']]],
+  ['geterror_2',['GetError',['../namespace_hermes.html#a438f5d7b5e68a6b848484706bfefeadc',1,'Hermes']]],
+  ['getheadindex_3',['GetHeadIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#aa68447adba61fe4a4fa414c771d18398',1,'Hermes::Utils::UntilMatchView::Iterator']]],
+  ['getindex_4',['GetIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a4d076a7d99bf4d8a6175db7558306d8f',1,'Hermes::Utils::UntilMatchView::Iterator']]],
+  ['getip_5',['GetIp',['../struct_hermes_1_1_ip_address.html#a4d7a6f0e3d71e48df82a10ce3710d3fa',1,'Hermes::IpAddress::GetIp()'],['../struct_hermes_1_1_ip_endpoint.html#a42680fd27c3cf04c0361211761afec30',1,'Hermes::IpEndpoint::GetIp() const noexcept']]],
+  ['getport_6',['GetPort',['../struct_hermes_1_1_ip_endpoint.html#a01410515a442b5f7c12d4bc6467d95d1',1,'Hermes::IpEndpoint']]],
+  ['getsocketdata_7',['GetSocketData',['../struct_hermes_1_1_client_socket.html#ab19dfb4aeeba4585e1925a1752c0e7f6',1,'Hermes::ClientSocket::GetSocketData() noexcept -&gt; SocketData &amp;'],['../struct_hermes_1_1_client_socket.html#ab839a5caebe428bcec0690a5dc63ceb8',1,'Hermes::ClientSocket::GetSocketData() const noexcept -&gt; const SocketData &amp;'],['../struct_hermes_1_1_listener_socket.html#a981838563eb9eb98cec97ca189601702',1,'Hermes::ListenerSocket::GetSocketData() noexcept -&gt; SocketData &amp;'],['../struct_hermes_1_1_listener_socket.html#ad7a0d090a75c041121758ee28681e860',1,'Hermes::ListenerSocket::GetSocketData() const noexcept -&gt; const SocketData &amp;'],['../struct_hermes_1_1_server_socket.html#a456d2ac473681bfae180927371d5452d',1,'Hermes::ServerSocket::GetSocketData() noexcept -&gt; SocketData &amp;'],['../struct_hermes_1_1_server_socket.html#a2fcf2bbca9849b31d57efd65082b5b0e',1,'Hermes::ServerSocket::GetSocketData() const noexcept -&gt; const SocketData &amp;']]],
+  ['gettailindex_8',['GetTailIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#a97ff1213928e9a864d4d6a03e2da6a5a',1,'Hermes::Utils::UntilMatchView::Iterator']]],
+  ['getting_20started_9',['Getting Started',['../getting-started.html',1,'Getting Started'],['../getting-started.html#autotoc_md33',1,'Getting Started']]],
+  ['getting_20started_2emd_10',['Getting Started.md',['../_getting_01_started_8md.html',1,'']]],
+  ['graphviz_11',['Diagrams with Graphviz',['../md_docs_2doxygen_2docs_2theme-reference_2tricks.html#tricks-graphviz',1,'']]]
 ];

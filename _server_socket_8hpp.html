@@ -159,12 +159,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_server_socket
 <code>#include &lt;<a class="el" href="_default_transfer_policy_8hpp_source.html">Hermes/Socket/Sync/_base/Transfer/DefaultTransferPolicy.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_tls_accept_policy_8hpp_source.html">Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp</a>&gt;</code><br />
 <code>#include &lt;<a class="el" href="_tls_transfer_policy_8hpp_source.html">Hermes/Socket/Sync/_base/Transfer/TlsTransferPolicy.hpp</a>&gt;</code><br />
-<code>#include &lt;ranges&gt;</code><br />
 <code>#include &lt;Hermes/Socket/Sync/ServerSocket.tpp&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for ServerSocket.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_server_socket_8hpp__incl.svg" width="3331" height="696"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_server_socket_8hpp__incl.svg" width="3372" height="696"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -183,10 +182,21 @@ Classes</h2></td></tr>
 Namespaces</h2></td></tr>
 <tr class="memitem:Hermes" id="r_Hermes"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html">Hermes</a></td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:Hermes_3A_3AServerSocketConcept" id="r_Hermes_3A_3AServerSocketConcept"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concept_hermes_1_1_server_socket_concept.html">Hermes::ServerSocketConcept</a></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:a47cbf3461197b1b9f40eb4b71367d66b" id="r_a47cbf3461197b1b9f40eb4b71367d66b"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a47cbf3461197b1b9f40eb4b71367d66b">Hermes::RawTcpServer</a> = <a class="el" href="struct_hermes_1_1_server_socket.html">ServerSocket</a>&lt;&gt;</td></tr>
 <tr class="memdesc:a47cbf3461197b1b9f40eb4b71367d66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to the raw TCP server socket.  <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a3a68591c5c5649d200c254a2bc096a72" id="r_a3a68591c5c5649d200c254a2bc096a72"><td class="memTemplParams" colspan="2">template&lt;class T&gt; </td></tr>
+<tr class="memitem:a3a68591c5c5649d200c254a2bc096a72 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a3a68591c5c5649d200c254a2bc096a72">Hermes::IsServerSocket</a> { false }</td></tr>
+<tr class="memitem:ae3090adf7cf2f817ed27355b4ff87b31" id="r_ae3090adf7cf2f817ed27355b4ff87b31"><td class="memTemplParams" colspan="2">template&lt;class... T&gt; </td></tr>
+<tr class="memitem:ae3090adf7cf2f817ed27355b4ff87b31 template"><td class="memItemLeft">constexpr bool&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#ae3090adf7cf2f817ed27355b4ff87b31">Hermes::IsServerSocket&lt; ServerSocket&lt; T... &gt; &gt;</a> { true }</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

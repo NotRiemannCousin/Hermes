@@ -166,9 +166,13 @@ Inheritance diagram for Hermes::DefaultConnectPolicy&lt; Endpoint, SocketType, S
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a3fff221009b77591d08b971651cbd14e" id="r_a3fff221009b77591d08b971651cbd14e"><td class="memItemLeft">std::chrono::milliseconds&#160;</td><td class="memItemRight"><a class="el" href="#a3fff221009b77591d08b971651cbd14e">connectionTimeout</a> {}</td></tr>
+<tr class="memdesc:a3fff221009b77591d08b971651cbd14e"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = blocking connect, &gt;0 = bounded non-blocking connect.  <br /></td></tr>
 <tr class="memitem:a883ce6cf706185c44f37a74315f722e5" id="r_a883ce6cf706185c44f37a74315f722e5"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a883ce6cf706185c44f37a74315f722e5">keepAlive</a> {}</td></tr>
+<tr class="memdesc:a883ce6cf706185c44f37a74315f722e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">SO_KEEPALIVE.  <br /></td></tr>
 <tr class="memitem:a4cf2d24cf0122ac486e117638c4fc0dd" id="r_a4cf2d24cf0122ac486e117638c4fc0dd"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a4cf2d24cf0122ac486e117638c4fc0dd">recvBufferSize</a> {}</td></tr>
+<tr class="memdesc:a4cf2d24cf0122ac486e117638c4fc0dd"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = OS default.  <br /></td></tr>
 <tr class="memitem:a983b1f7f439830ab047586bbdb0b7a6d" id="r_a983b1f7f439830ab047586bbdb0b7a6d"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a983b1f7f439830ab047586bbdb0b7a6d">sendBufferSize</a> {}</td></tr>
+<tr class="memdesc:a983b1f7f439830ab047586bbdb0b7a6d"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = OS default.  <br /></td></tr>
 </table>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a3fff221009b77591d08b971651cbd14e" name="a3fff221009b77591d08b971651cbd14e"></a>
@@ -184,6 +188,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>0 = blocking connect, &gt;0 = bounded non-blocking connect. </p>
 
 </div>
 </div>
@@ -201,6 +207,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
       </table>
 </div><div class="memdoc">
 
+<p>SO_KEEPALIVE. </p>
+
 </div>
 </div>
 <a id="a4cf2d24cf0122ac486e117638c4fc0dd" name="a4cf2d24cf0122ac486e117638c4fc0dd"></a>
@@ -217,6 +225,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
       </table>
 </div><div class="memdoc">
 
+<p>0 = OS default. </p>
+
 </div>
 </div>
 <a id="a983b1f7f439830ab047586bbdb0b7a6d" name="a983b1f7f439830ab047586bbdb0b7a6d"></a>
@@ -232,6 +242,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>0 = OS default. </p>
 
 </div>
 </div>

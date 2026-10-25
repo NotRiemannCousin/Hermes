@@ -161,9 +161,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a74b23ffb0fd24ac5ebe4c0e8bc019398" id="r_a74b23ffb0fd24ac5ebe4c0e8bc019398"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a74b23ffb0fd24ac5ebe4c0e8bc019398">tcpNoDelay</a> { true }</td></tr>
+<tr class="memdesc:a74b23ffb0fd24ac5ebe4c0e8bc019398"><td class="mdescLeft">&#160;</td><td class="mdescRight">TCP_NODELAY on the accepted socket (Stream only).  <br /></td></tr>
 <tr class="memitem:a38282a930c0a7bada7c845511596408f" id="r_a38282a930c0a7bada7c845511596408f"><td class="memItemLeft">bool&#160;</td><td class="memItemRight"><a class="el" href="#a38282a930c0a7bada7c845511596408f">keepAlive</a> {}</td></tr>
+<tr class="memdesc:a38282a930c0a7bada7c845511596408f"><td class="mdescLeft">&#160;</td><td class="mdescRight">SO_KEEPALIVE on the accepted socket.  <br /></td></tr>
 <tr class="memitem:a338b785b683c81974fa542841dd906c6" id="r_a338b785b683c81974fa542841dd906c6"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#a338b785b683c81974fa542841dd906c6">recvBufferSize</a> {}</td></tr>
+<tr class="memdesc:a338b785b683c81974fa542841dd906c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = OS default.  <br /></td></tr>
 <tr class="memitem:abf70f5db675b4b77424a8cbe64f1e846" id="r_abf70f5db675b4b77424a8cbe64f1e846"><td class="memItemLeft">int&#160;</td><td class="memItemRight"><a class="el" href="#abf70f5db675b4b77424a8cbe64f1e846">sendBufferSize</a> {}</td></tr>
+<tr class="memdesc:abf70f5db675b4b77424a8cbe64f1e846"><td class="mdescLeft">&#160;</td><td class="mdescRight">0 = OS default.  <br /></td></tr>
 </table>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a38282a930c0a7bada7c845511596408f" name="a38282a930c0a7bada7c845511596408f"></a>
@@ -179,6 +183,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>SO_KEEPALIVE on the accepted socket. </p>
 
 </div>
 </div>
@@ -196,6 +202,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
       </table>
 </div><div class="memdoc">
 
+<p>0 = OS default. </p>
+
 </div>
 </div>
 <a id="abf70f5db675b4b77424a8cbe64f1e846" name="abf70f5db675b4b77424a8cbe64f1e846"></a>
@@ -212,6 +220,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
       </table>
 </div><div class="memdoc">
 
+<p>0 = OS default. </p>
+
 </div>
 </div>
 <a id="a74b23ffb0fd24ac5ebe4c0e8bc019398" name="a74b23ffb0fd24ac5ebe4c0e8bc019398"></a>
@@ -227,6 +237,8 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>TCP_NODELAY on the accepted socket (Stream only). </p>
 
 </div>
 </div>
