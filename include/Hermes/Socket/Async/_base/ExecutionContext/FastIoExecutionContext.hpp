@@ -86,6 +86,8 @@ namespace Hermes {
         connect(Receiver r) const noexcept;
     };
 
+#if DHERMES_ENABLE_TLS
+
     template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncAcceptPolicy;
     template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
@@ -93,6 +95,7 @@ namespace Hermes {
     template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncTransferPolicy;
 
+#endif
 
     template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultAsyncAcceptPolicy;
@@ -111,6 +114,8 @@ namespace Hermes {
 
 namespace Hermes {
 
+#if DHERMES_ENABLE_TLS
+
     template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncAcceptPolicy;
     template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
@@ -118,6 +123,7 @@ namespace Hermes {
     template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
     struct TlsAsyncTransferPolicy;
 
+#endif
 
     template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
     struct DefaultAsyncAcceptPolicy;

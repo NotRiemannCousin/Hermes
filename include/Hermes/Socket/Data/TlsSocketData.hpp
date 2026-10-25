@@ -1,4 +1,6 @@
 #pragma once
+#if DHERMES_ENABLE_TLS
+
 #include <Hermes/Endpoint/IpEndpoint/IpEndpoint.hpp>
 #include <Hermes/Socket/_base/TlsSession.hpp>
 #include <Hermes/Socket/_base.hpp>
@@ -72,3 +74,5 @@ namespace Hermes {
 }
 
 #include <Hermes/Socket/Data/TlsSocketData.tpp>
+
+#endif
