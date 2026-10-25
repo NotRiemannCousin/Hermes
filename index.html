@@ -162,7 +162,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('index.html',''
 <p><b>Status:</b> v0.6.1 — active development. Async sockets via <span class="tt">std::execution</span> are available. Linux is available. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md10"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md14"></a>
 Features</h1>
 <ul>
 <li><b>TCP</b> and <b>TCP over TLS</b> via SChannel on Windows and OpenSSL on Linux (with the <span class="tt">HERMES_ENABLE_TLS</span> option, default <span class="tt">ON</span>)</li>
@@ -177,19 +177,19 @@ Features</h1>
 <p>Note: The library relies heavily on C++26 features. The CMake configuration temporarily targets C++23 due to current MSVC flag compatibility, but a C++26-capable compiler is strictly required. </p>
 </blockquote>
 <hr  />
-<h1 class="doxsection"><a class="anchor" id="autotoc_md13"></a>
+<h1 class="doxsection"><a class="anchor" id="autotoc_md16"></a>
 Installation</h1>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md15"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
 pixi</h2>
 <blockquote class="doxtable">
 <p><em>Coming soon.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md17"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
 vcpkg</h2>
 <blockquote class="doxtable">
 <p><em>Maybe, someday, who knows.</em> </p>
 </blockquote>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md18"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md19"></a>
 Manual (CMake)</h2>
 <div class="fragment"><div class="line">include(CPM.cmake)</div>
 <div class="line"> </div>
@@ -235,7 +235,7 @@ Example</h1>
 <div class="line"><span class="preprocessor">#pragma region Lambdas</span></div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> makeSocket{ [&amp;](<span class="keyword">const</span> <a class="code hl_struct" href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a> endpoint) {</div>
-<div class="line">        <span class="keywordflow">return</span> Hermes::RawTlsClient::Connect(<a class="code hl_struct" href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData&lt;&gt;</a>{ endpoint, url.hostname });</div>
+<div class="line">        <span class="keywordflow">return</span> Hermes::RawTlsClient::Connect(Hermes::TlsSocketData&lt;&gt;{ endpoint, url.hostname });</div>
 <div class="line">    } };</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> makeRequest{ [&amp;](Hermes::RawTlsClient&amp;&amp; client) {</div>
@@ -338,7 +338,6 @@ Example</h1>
 <div class="ttc" id="anamespace_hermes_html_abcdc7039ff863f7958fab5478142dfba"><div class="ttname"><a href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">Hermes::ConnectionErrorEnum</a></div><div class="ttdeci">ConnectionErrorEnum</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:12</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a></div><div class="ttdef"><b>Definition</b> IpEndpoint.hpp:18</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html_a5d226f8b82d93f4516092cdbaa50df4a"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a">Hermes::IpEndpoint::TryResolve</a></div><div class="ttdeci">static ConnectionResult&lt; IpEndpoint &gt; TryResolve(const std::string &amp;url, const std::string &amp;service=&quot;&quot;, SocketTypeEnum socketType=SocketTypeEnum::Stream)</div><div class="ttdoc">Tries to resolve a hostname and service into an IP endpoint.</div></div>
-<div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --><hr  />
 <h1 class="doxsection"><a class="anchor" id="autotoc_md25"></a>
 Roadmap</h1>

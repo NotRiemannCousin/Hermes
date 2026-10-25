@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['encrypteddata_0',['encryptedData',['../struct_hermes_1_1_tls_socket_data_1_1_state.html#a37947f7c1d79c307d3133625ee10aeab',1,'Hermes::TlsSocketData::State']]],
-  ['endpoint_1',['endpoint',['../struct_hermes_1_1_default_socket_data.html#a34a8636230aa1f18a3baed7cc0438de7',1,'Hermes::DefaultSocketData::endpoint'],['../struct_hermes_1_1_tls_socket_data.html#ae4d5631d20226a94591d03929c079774',1,'Hermes::TlsSocketData::endpoint']]],
-  ['error_2',['error',['../struct_hermes_1_1_transfer_error.html#a86ec5b6600b87b1c907dabb5318d53c9',1,'Hermes::TransferError']]]
+  ['family_0',['Family',['../struct_hermes_1_1_default_socket_data.html#a3ae7516dc9aed2a5eabaa9711280c25f',1,'Hermes::DefaultSocketData::Family'],['../struct_hermes_1_1_default_accept_policy.html#a08bb744353cabfc9ed08e357b3387323',1,'Hermes::DefaultAcceptPolicy::Family'],['../struct_hermes_1_1_default_connect_policy.html#a806f6327878aad6796f7b79a6fa5c259',1,'Hermes::DefaultConnectPolicy::Family']]]
 ];

@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_con
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext, SocketDataConcept Data&gt;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_hermes_1_1_tls_async_connect_policy.html">TlsAsyncConnectPolicy</a> {</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">struct </span>TlsAsyncConnectPolicy {</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Family{ Data::Family };</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Type  { Data::Type   };</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">using </span>EndpointType = <span class="keyword">typename</span> Data::EndpointType;</div>
@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_con
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">static_assert</span>(AsyncConnectionPolicyConcept&lt;TlsAsyncConnectPolicy&lt;&gt;, <a class="code hl_struct" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData&lt;&gt;</a>&gt;);</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">static_assert</span>(AsyncConnectionPolicyConcept&lt;TlsAsyncConnectPolicy&lt;&gt;, TlsSocketData&lt;&gt;&gt;);</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
@@ -210,8 +210,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_con
 <div class="ttc" id="a_tls_connect_policy_8hpp_html"><div class="ttname"><a href="_tls_connect_policy_8hpp.html">TlsConnectPolicy.hpp</a></div></div>
 <div class="ttc" id="a_tls_socket_data_8hpp_html"><div class="ttname"><a href="_tls_socket_data_8hpp.html">TlsSocketData.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
-<div class="ttc" id="astruct_hermes_1_1_tls_async_connect_policy_html"><div class="ttname"><a href="struct_hermes_1_1_tls_async_connect_policy.html">Hermes::TlsAsyncConnectPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:117</div></div>
-<div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

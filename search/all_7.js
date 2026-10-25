@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['generator_0',['Doxygen generator',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md53',1,'']]],
+  ['generator_0',['Doxygen generator',['../md_docs_2doxygen_2docs_2theme-reference_2customization.html#autotoc_md72',1,'']]],
   ['getendpoint_1',['GetEndpoint',['../struct_hermes_1_1_client_socket.html#a6c579c47c88ed110ffac72706b3485b3',1,'Hermes::ClientSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_client_socket.html#a372850f20dcfdca814c1db36869b1f3b',1,'Hermes::ClientSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;'],['../struct_hermes_1_1_listener_socket.html#a445d5006e1764c05e575e0b8f86bfb17',1,'Hermes::ListenerSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_listener_socket.html#a885b9d5533dc294f62dd857a10798bc3',1,'Hermes::ListenerSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;'],['../struct_hermes_1_1_server_socket.html#aac45b19fba427fdf9215a4b3f7776032',1,'Hermes::ServerSocket::GetEndpoint() noexcept -&gt; EndpointType &amp;'],['../struct_hermes_1_1_server_socket.html#a25e10be7fbf270d27fabdaeb6aeedb1e',1,'Hermes::ServerSocket::GetEndpoint() const noexcept -&gt; const EndpointType &amp;']]],
   ['geterror_2',['GetError',['../namespace_hermes.html#a438f5d7b5e68a6b848484706bfefeadc',1,'Hermes']]],
   ['getheadindex_3',['GetHeadIndex',['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#aa68447adba61fe4a4fa414c771d18398',1,'Hermes::Utils::UntilMatchView::Iterator']]],

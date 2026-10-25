@@ -167,7 +167,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_accept_po
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#if HERMES_ENABLE_ASYNC</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext, SocketDataConcept Data&gt;</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">struct </span><a class="code hl_struct" href="struct_hermes_1_1_tls_async_accept_policy.html">TlsAsyncAcceptPolicy</a>;</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">struct </span>TlsAsyncAcceptPolicy;</div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">template</span>&lt;SocketDataConcept Data = TlsSocketData&lt;&gt;&gt;</div>
@@ -205,7 +205,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_accept_po
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#include &lt;Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.tpp&gt;</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">static_assert</span>(<a class="code hl_concept" href="concept_hermes_1_1_accept_policy_concept.html">AcceptPolicyConcept&lt;TlsAcceptPolicy&lt;&gt;</a>, <a class="code hl_struct" href="struct_hermes_1_1_tls_socket_data.html">TlsSocketData&lt;&gt;</a>&gt;);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">static_assert</span>(<a class="code hl_concept" href="concept_hermes_1_1_accept_policy_concept.html">AcceptPolicyConcept&lt;TlsAcceptPolicy&lt;&gt;</a>, TlsSocketData&lt;&gt;&gt;);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#endif</span></div>
@@ -217,8 +217,6 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_accept_po
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
 <div class="ttc" id="anamespace_hermes_html_a50ea894affae5e9b124fa614599016b2ac4408d335012a56ff58937d78050efad"><div class="ttname"><a href="namespace_hermes.html#a50ea894affae5e9b124fa614599016b2ac4408d335012a56ff58937d78050efad">Hermes::ConditionFunctionEnum::Accept</a></div><div class="ttdeci">@ Accept</div><div class="ttdef"><b>Definition</b> ConditionFunctionEnum.hpp:6</div></div>
 <div class="ttc" id="anamespace_hermes_html_a79d14e095855fb69409fa672244c08ba"><div class="ttname"><a href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">Hermes::ConnectionResultOper</a></div><div class="ttdeci">ConnectionResult&lt; void &gt; ConnectionResultOper</div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:68</div></div>
-<div class="ttc" id="astruct_hermes_1_1_tls_async_accept_policy_html"><div class="ttname"><a href="struct_hermes_1_1_tls_async_accept_policy.html">Hermes::TlsAsyncAcceptPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:115</div></div>
-<div class="ttc" id="astruct_hermes_1_1_tls_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_tls_socket_data.html">Hermes::TlsSocketData</a></div><div class="ttdef"><b>Definition</b> TlsSocketData.hpp:23</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

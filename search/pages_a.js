@@ -4,8 +4,8 @@ var searchData=
   ['learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md41',1,'']]],
   ['lego_2',['How the facade composes the lego',['../policy-architecture.html#autotoc_md89',1,'']]],
   ['library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md41',1,'']]],
-  ['lifting_20directly_4',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md45',1,'']]],
-  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_5',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md78',1,'']]],
+  ['lifting_20directly_4',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md58',1,'']]],
+  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_5',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md50',1,'']]],
   ['linking_6',['Paragraph Linking',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#extension-para',1,'']]],
   ['listen_20and_20accept_20options_7',['Listen and accept options',['../policy-options.html#autotoc_md31',1,'']]]
 ];

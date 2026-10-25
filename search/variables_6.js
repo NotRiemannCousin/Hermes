@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['host_0',['host',['../struct_hermes_1_1_tls_socket_data.html#a8820534d7e557669ca435b0b75f3b571',1,'Hermes::TlsSocketData']]]
+  ['keepalive_0',['keepAlive',['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a38282a930c0a7bada7c845511596408f',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::keepAlive'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a883ce6cf706185c44f37a74315f722e5',1,'Hermes::DefaultConnectPolicy::Options::keepAlive']]]
 ];

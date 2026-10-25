@@ -155,13 +155,13 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('policy-archite
   <div class="headertitle"><div class="title">Policy-based Architecture </div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md83"></a>
+<div class="textblock"><h1 class="doxsection"><a class="anchor" id="autotoc_md44"></a>
 Policy-based architecture</h1>
 <p><a class="el" href="namespace_hermes.html">Hermes</a> is modular because a socket operation is different thing as the state that stores a socket. The library keeps those concerns separate so that a transport can replace one part of the composition without forcing a new public programming model.</p>
 <p>The easiest way to read the design is to treat each type as a lego. <span class="tt"><a class="el" href="group___socket_data.html">SocketData</a></span> stores state. A connection policy creates an outgoing connection. An accept policy creates incoming connections. A transfer policy moves application data. The synchronous or asynchronous facade assembles those pieces and forwards the operations exposed by the selected policies.</p>
-<h2 class="doxsection"><a class="anchor" id="autotoc_md84"></a>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md46"></a>
 The four responsibilities</h2>
-<h3 class="doxsection"><a class="anchor" id="autotoc_md85"></a>
+<h3 class="doxsection"><a class="anchor" id="autotoc_md47"></a>
 Socket data: state and ownership</h3>
 <p>A socket data type owns the native handle and the state required by its transport. <span class="tt">DefaultSocketData</span> represents an ordinary TCP case, but <span class="tt">TlsSocketData</span> also stores information about the encryption process, like session state and decrypt buffers. Every socket needs to specify at least:</p><ul>
 <li>a <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d" title="Hermes::AddressFamilyEnum">AddressFamilyEnum</a> representing the family type (<span class="tt">SocketData::Family</span> constexpr variable);</li>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['keepalive_0',['keepAlive',['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a38282a930c0a7bada7c845511596408f',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::keepAlive'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a883ce6cf706185c44f37a74315f722e5',1,'Hermes::DefaultConnectPolicy::Options::keepAlive']]]
+  ['options_0',['options',['../struct_hermes_1_1_default_socket_data.html#aed4ebb68c610ead3b5e5ad99ea8d2a82',1,'Hermes::DefaultSocketData']]]
 ];

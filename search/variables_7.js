@@ -1,10 +1,8 @@
 var searchData=
 [
-  ['ip_0',['ip',['../struct_hermes_1_1_ip_endpoint_params.html#a145ee3688efa6b164ee6dc43ae0deb71',1,'Hermes::IpEndpointParams']]],
-  ['isclientsocket_1',['IsClientSocket',['../namespace_hermes.html#a6f1c6490713be37237c4eca297acd878',1,'Hermes']]],
-  ['isclientsocket_3c_20clientsocket_3c_20t_2e_2e_2e_20_3e_20_3e_2',['IsClientSocket&lt; ClientSocket&lt; T... &gt; &gt;',['../namespace_hermes.html#a22853ce1199c9b836f39638faddece66',1,'Hermes']]],
-  ['islistenersocket_3',['IsListenerSocket',['../namespace_hermes.html#aeb7b8ce1c39d98851a357c5ede4e9029',1,'Hermes']]],
-  ['islistenersocket_3c_20listenersocket_3c_20t_2e_2e_2e_20_3e_20_3e_4',['IsListenerSocket&lt; ListenerSocket&lt; T... &gt; &gt;',['../namespace_hermes.html#ac5fcd844441d99ab04f4d601c2bec68b',1,'Hermes']]],
-  ['isserversocket_5',['IsServerSocket',['../namespace_hermes.html#a3a68591c5c5649d200c254a2bc096a72',1,'Hermes']]],
-  ['isserversocket_3c_20serversocket_3c_20t_2e_2e_2e_20_3e_20_3e_6',['IsServerSocket&lt; ServerSocket&lt; T... &gt; &gt;',['../namespace_hermes.html#ae3090adf7cf2f817ed27355b4ff87b31',1,'Hermes']]]
+  ['m_5fview_0',['m_view',['../struct_hermes_1_1_utils_1_1_drop_last_view_1_1_iterator.html#acaf9e98a8627f8a606a5d6d66423b7aa',1,'Hermes::Utils::DropLastView::Iterator::m_view'],['../struct_hermes_1_1_utils_1_1_until_match_view_1_1_iterator.html#acfd7bc6b57fc41b7a77737fd424767c9',1,'Hermes::Utils::UntilMatchView::Iterator::m_view']]],
+  ['macroinvalid_5fsocket_1',['macroINVALID_SOCKET',['../_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5',1,'Macros.hpp']]],
+  ['macroso_5ftype_2',['macroSO_TYPE',['../_macros_8hpp.html#a363e448552df15b090a788e504401996',1,'Macros.hpp']]],
+  ['macrosocket_5ferror_3',['macroSOCKET_ERROR',['../_macros_8hpp.html#a7fbbff0d9f1cba84718c62e0573a03ea',1,'Macros.hpp']]],
+  ['macrosol_5fsocket_4',['macroSOL_SOCKET',['../_macros_8hpp.html#a89a20c922a5445760ce416b10c610d99',1,'Macros.hpp']]]
 ];
