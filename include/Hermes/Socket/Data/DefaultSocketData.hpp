@@ -38,7 +38,7 @@ namespace Hermes {
 
 
         Endpoint endpoint{};
-        SocketFd   socket{ macroINVALID_SOCKET };
+        SocketFd socket{ macroINVALID_SOCKET };
 
         std::unique_ptr<State> state{};
         SocketOptions options{};

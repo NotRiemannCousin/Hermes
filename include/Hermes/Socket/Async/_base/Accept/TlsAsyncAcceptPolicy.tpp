@@ -2,9 +2,9 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
-#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
+#include <stdexec/execution.hpp>
 
 namespace Hermes {
 
@@ -54,7 +54,7 @@ namespace Hermes {
 #else
                             auto* scheduler = m_options.scheduler;
                             if (!scheduler) {
-                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
                             scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
@@ -77,7 +77,7 @@ namespace Hermes {
 #else
                             auto* scheduler = m_options.scheduler;
                             if (!scheduler) {
-                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
                             scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {

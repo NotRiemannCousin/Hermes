@@ -7,6 +7,11 @@
 #include <array>
 
 namespace Hermes {
+    //! @brief Plain TCP transfer policy for blocking sockets.
+    //! @details Send() is all-or-nothing. It loops until the whole range is sent, the deadline expires or an error
+    //! occurs.
+    //! Recv() honors RecvModeEnum. One read buffer is shared per policy instance, Recv() first drains bytes left by a
+    //! RecvStream() view, so both consume from the same stream position (see @ref recv-stream-behavior).
     template<SocketTypeEnum SocketType = SocketTypeEnum::Stream>
     struct DefaultTransferPolicy {
         using Deadline = details_::TransferDeadline;

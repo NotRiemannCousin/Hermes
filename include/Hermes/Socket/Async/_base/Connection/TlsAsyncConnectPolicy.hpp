@@ -2,19 +2,19 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
-#include <Hermes/Socket/Data/TlsSocketData.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/Async/_base/Connection/DefaultAsyncConnectPolicy.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
 #include <Hermes/Socket/_base.hpp>
-#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 
 namespace Hermes {
 
-#if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
-#else
-    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
-#endif
+    //! @brief Client-side TLS policy returning stdexec senders.
+    //! @details Connect() chains the async TCP connect with the handshake driven through the ExecutionContext.
+    //! Renegotiate()/Shutdown() have no options parameter, they reuses the Options stored by the last Connect() call
+    //! on this policy instance.
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };

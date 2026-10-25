@@ -13,18 +13,25 @@ namespace Hermes {
     struct TlsAsyncAcceptPolicy;
 #endif
 
+    //! @brief Plain TCP accept (DefaultAcceptPolicy) followed by a blocking TLS server handshake on the accepted
+    //! connection.
+    //! @details Listen() is pure TCP (forwarded to DefaultAcceptPolicy). Close()/Abort() run the TLS
+    //! close-notify / abrupt teardown through the accept state machine when one exists, falling back to plain socket
+    //! close otherwise.
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAcceptPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
+
+
         struct ListenOptions : DefaultAcceptPolicy<EndpointType, SocketTypeEnum::Stream, Family>::ListenOptions {
-            bool requireValidClientCertificate{ true };
+            bool requireValidClientCertificate{ true }; //!< Reject clients without a valid certificate.
         };
         struct AcceptOptions : DefaultAcceptPolicy<EndpointType, SocketTypeEnum::Stream, Family>::AcceptOptions {
-            std::chrono::milliseconds handshakeTimeout{};
-            bool requestClientCertificate{};
+            std::chrono::milliseconds handshakeTimeout{}; //!< Budget time for the whole server handshake.
+            bool requestClientCertificate{};              //!< Ask for a client certificate (mutual TLS).
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options) noexcept;

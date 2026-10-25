@@ -2,19 +2,17 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC
 
+#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
 
-#include <stdexec/execution.hpp>
 #include <span>
 
 namespace Hermes {
 
-    #if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
-#else
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
-#endif
+    //! @brief Plain TCP transfer policy returning stdexec senders.
+    //! @details Bounded transfers are expressed with STDEXEC cancellation instead of deadlines.
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncTransferPolicy {
         static constexpr auto Type{ Data::Type };
 

@@ -2,8 +2,7 @@
 // ReSharper disable CppPassValueParameterByConstReference
 #pragma once
 #include <format>
-#include <iostream>
-
+#include <ostream>
 
 namespace std {
     template <>
@@ -25,8 +24,7 @@ namespace std {
             return it;
         }
 
-        template<class FormatContext>
-        auto format(const Hermes::ConnectionErrorEnum error, FormatContext &ctx) const {
+        auto format(const Hermes::ConnectionErrorEnum error, auto& ctx) const {
             if (isVerbose) {
                 switch (error) {
                     case Hermes::ConnectionErrorEnum::Unknown:
@@ -156,8 +154,7 @@ namespace std {
     struct formatter<Hermes::StreamByteOper> {
         static constexpr auto parse(auto& ctx) { return ctx.begin(); }
 
-        template<class FormatContext>
-        auto format(const Hermes::StreamByteOper oper, FormatContext &ctx) const {
+        auto format(const Hermes::StreamByteOper oper, auto& ctx) const {
             if (!oper.second)
                 return std::format_to(ctx.out(), "({} bytes transferred with no error)", oper.first);
             return std::format_to(ctx.out(), "({} bytes transferred, {})", oper.first, oper.second.error());
@@ -169,8 +166,7 @@ namespace std {
     struct formatter<Hermes::TransferError> {
         static constexpr auto parse(auto& ctx) { return ctx.begin(); }
 
-        template<class FormatContext>
-        auto format(const Hermes::TransferError error, FormatContext &ctx) const {
+        auto format(const Hermes::TransferError error, auto& ctx) const {
             return std::format_to(ctx.out(),
                 "Transfer error: {} ({} bytes transferred)", error.bytesTransferred, error.error);
         }

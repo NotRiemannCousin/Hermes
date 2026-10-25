@@ -96,7 +96,7 @@ TEST_F(SocketBridgeFixture, Recv_DeadlineCoversMultipleBlocks) {
     std::jthread sender{ [&] {
         ASSERT_TRUE(client->Send(first).second.has_value());
         std::this_thread::sleep_for(300ms);
-        client->Send(second);
+        ASSERT_TRUE(client->Send(second).second.has_value());
     }};
 
     std::array<std::byte, 2> buffer{};
@@ -118,7 +118,7 @@ TEST_F(SocketBridgeFixture, RecvStream_DeadlineCoversMultipleBlocks) {
     std::jthread sender{ [&] {
         ASSERT_TRUE(client->Send(first).second.has_value());
         std::this_thread::sleep_for(300ms);
-        client->Send(second);
+        ASSERT_TRUE(client->Send(second).second.has_value());
     }};
 
     auto stream{ server->RecvStream<char>({ .deadline = deadline }) };

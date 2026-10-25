@@ -2,19 +2,16 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC
 
-#include <Hermes/Socket/Data/DefaultSocketData.hpp>
-#include <Hermes/Socket/Sync/_base/Connection/TlsConnectPolicy.hpp>
-#include <Hermes/Socket/_base.hpp>
-#include <stdexec/execution.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
+#include <Hermes/Socket/Data/DefaultSocketData.hpp>
+#include <Hermes/Socket/_base.hpp>
 
 namespace Hermes {
 
-#if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
-#else
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
-#endif
+    //! @brief Plain TCP connect policy returning stdexec senders.
+    //! @details Options::scheduler is REQUIRED. if absent it fails the operation with ConnectionErrorEnum::NoScheduler.
+    //! Close()/Abort() are synchronous and never touch the scheduler.
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncConnectPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
@@ -27,7 +24,7 @@ namespace Hermes {
             int recvBufferSize{};
             int sendBufferSize{};
 
-            ExecutionContext* scheduler;
+            ExecutionContext* scheduler{};
         };
 
 

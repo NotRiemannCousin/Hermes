@@ -49,8 +49,7 @@ namespace std {
         //! @param ip The IpAddress object.
         //! @param ctx The format context.
         //! @return Iterator pointing to the end of the formatted output.
-        template<class FormatContext>
-        auto format(const IpAddress &ip, FormatContext &ctx) const {
+        auto format(const IpAddress &ip, auto& ctx) const {
 
 #pragma push_macro("FORMAT_IPV6")
 #define FORMAT_IPV6(fmt)                                  \

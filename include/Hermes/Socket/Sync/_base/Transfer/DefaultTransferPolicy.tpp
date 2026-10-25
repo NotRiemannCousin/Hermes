@@ -128,7 +128,7 @@ namespace Hermes {
         const RecvOptions& options
     ) {
         if (socket == macroINVALID_SOCKET)
-            return {0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
+            return { 0, std::unexpected{ ConnectionErrorEnum::SocketNotOpen } };
         size_t total{};
         details_::ScopedNonBlocking nonBlocking{ socket, options.deadline.has_value() };
         do {

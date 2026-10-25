@@ -2,19 +2,19 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
-#include <Hermes/Socket/Data/TlsSocketData.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/Async/_base/Accept/DefaultAsyncAcceptPolicy.hpp>
 #include <Hermes/Socket/Sync/_base/Accept/TlsAcceptPolicy.hpp>
-#include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
-#include <stdexec/execution.hpp>
 
 namespace Hermes {
-#if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
-#else
-    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
-#endif
+
+    //! @brief Server-side TLS policy returning stdexec senders.
+    //! @details Accept() chains the async TCP accept with the TLS server handshake and completes with the
+    //! handshake-completed SocketData. Renegotiate()/Shutdown() reuse stored options, same contract as the connect
+    //! policy.
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };

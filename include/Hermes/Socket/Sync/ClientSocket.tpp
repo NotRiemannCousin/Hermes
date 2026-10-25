@@ -7,17 +7,17 @@
 
 namespace Hermes {
 
-#pragma region Constructor
+#pragma region Initialization
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::ClientSocket(ClientSocket&& other) noexcept
         : m_socketData(std::move(other.m_socketData)),
           m_connectionPolicy(std::move(other.m_connectionPolicy)),
           m_transferPolicy(std::move(other.m_transferPolicy)) { }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>&
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::operator=(ClientSocket&& other) noexcept {
         if (this != &other) {
@@ -31,7 +31,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::~ClientSocket() {
         Close();
     }
@@ -39,22 +39,51 @@ namespace Hermes {
 #pragma endregion
 
 
-#pragma region Connect
+#pragma region Properties
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::GetEndpoint() noexcept -> EndpointType& {
+        return m_socketData.endpoint;
+    }
+
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::GetEndpoint() const noexcept -> const EndpointType& {
+        return m_socketData.endpoint;
+    }
+
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::GetSocketData() noexcept -> SocketData& {
+        return m_socketData;
+    }
+
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::GetSocketData() const noexcept -> const SocketData& {
+        return m_socketData;
+    }
+
+#pragma endregion
+
+
+#pragma region Connection Methods
+
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<class>
-    ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData &&data) noexcept
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData &&data) noexcept
+        -> ClientSocketResult
         requires std::default_initializable<ConnOptions> {
         return Connect(std::move(data), {});
     }
 
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
-    ConnectionResult<ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>>
-    ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data, ConnOptions opt) noexcept {
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Connect(SocketData&& data, ConnOptions opt) noexcept
+        -> ClientSocketResult {
         Network::Initialize();
 
         ClientSocket socket;
@@ -70,10 +99,10 @@ namespace Hermes {
 #pragma endregion
 
 
-#pragma region Transfer
+#pragma region Send Methods
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Send(R&& data) noexcept
         requires std::default_initializable<SendOptions> {
@@ -81,7 +110,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Send(
         R&& data, SendOptions options
@@ -91,19 +120,19 @@ namespace Hermes {
         return m_transferPolicy.Send(m_socketData, std::as_bytes(buffer), options);
     }
 
-    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy> requires ClientSocketConcept<
-        SocketData, ConnectionPolicy, TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::SendAndLift(R&& data) noexcept
         requires std::default_initializable<SendOptions> {
         return SendAndLift(std::forward<R>(data), {});
     }
 
-    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy> requires ClientSocketConcept<
-        SocketData, ConnectionPolicy, TransferPolicy>
+    template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ContiguousByteRange R>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::SendAndLift(R&& data, SendOptions options) noexcept {
-        return [options, fData{ std::forward<R>(data) }](ClientSocket&& self) mutable -> ConnectionResult<ClientSocket> {
+        return [options, fData{ std::forward<R>(data) }](ClientSocket&& self) mutable -> ClientSocketResult {
             auto val{ self.Send(std::move(fData), options) };
 
             auto movFromThis{ [client{ std::move(self) }](const auto...) mutable {
@@ -113,8 +142,13 @@ namespace Hermes {
         };
     }
 
+#pragma endregion
+
+
+#pragma region Recv Methods
+
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(R&& data, RecvModeEnum mode) noexcept
         requires std::default_initializable<RecvOptions> {
@@ -122,7 +156,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(
         R&& data, RecvModeEnum mode, RecvOptions options
@@ -133,7 +167,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<WritableContiguousByteRange R>
     StreamByteOper ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Recv(
         R&& data, RecvOptions options
@@ -142,7 +176,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-    requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvStream() noexcept
         requires std::default_initializable<RecvOptions> {
@@ -150,14 +184,14 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvStream(RecvOptions options) noexcept {
         return typename TransferPolicy::template RecvStream<Byte>{ m_socketData, m_transferPolicy, options };
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvRange() noexcept
         requires std::default_initializable<RecvOptions> {
@@ -165,7 +199,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     template<ByteLike Byte>
     auto ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::RecvRange(RecvOptions options) noexcept {
         return RecvStream<Byte>(options) | Utils::dropLast;
@@ -174,10 +208,10 @@ namespace Hermes {
 #pragma endregion
 
 
-#pragma region Close
+#pragma region Close Methods
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-        requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+        requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     void ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Close() noexcept {
         if (m_socketData.socket == macroINVALID_SOCKET) return;
 
@@ -185,7 +219,7 @@ namespace Hermes {
     }
 
     template<SocketDataConcept SocketData, class ConnectionPolicy, class TransferPolicy>
-    requires ClientSocketConcept<SocketData, ConnectionPolicy, TransferPolicy>
+    requires ClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
     void ClientSocket<SocketData, ConnectionPolicy, TransferPolicy>::Abort() noexcept {
         if (m_socketData.socket == macroINVALID_SOCKET) return;
 

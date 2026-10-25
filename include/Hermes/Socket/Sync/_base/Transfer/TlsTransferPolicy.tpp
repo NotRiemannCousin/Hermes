@@ -79,7 +79,7 @@ namespace Hermes {
         auto& state{ m_policy->m_streamState };
 
         while (state->index >= state->size && err) {
-            auto [newSize, errOp]{ m_policy->Recv(*m_data, std::span<std::byte>{state->buffer}, RecvModeEnum::Any, m_options) };
+            auto [newSize, errOp]{ m_policy->Recv(*m_data, std::span<std::byte>{ state->buffer }, RecvModeEnum::Any, m_options) };
             err = errOp;
 
             state->index -= state->size;

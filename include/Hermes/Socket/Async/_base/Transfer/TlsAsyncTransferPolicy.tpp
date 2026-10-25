@@ -5,6 +5,8 @@
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.hpp>
 
 namespace Hermes {
+    // TODO: Humm this is actually very bad, I should write this myself later.
+
 
     template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>

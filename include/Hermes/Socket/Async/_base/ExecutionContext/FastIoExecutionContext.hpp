@@ -3,6 +3,8 @@
 #include <Hermes/Socket/Async/_base/ExecutionContext/TransferOperStatus.hpp>
 #if HERMES_ENABLE_NATIVE_SCHEDULER
 
+#include <Hermes/Socket/Data/DefaultSocketData.hpp>
+#include <Hermes/Socket/Data/TlsSocketData.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
 #include <thread>
 #include <memory>
@@ -84,11 +86,46 @@ namespace Hermes {
         connect(Receiver r) const noexcept;
     };
 
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncAcceptPolicy;
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncConnectPolicy;
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncTransferPolicy;
+
+
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncAcceptPolicy;
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncConnectPolicy;
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncTransferPolicy;
+
     static_assert(stdexec::scheduler<FastIoScheduler>);
     static_assert(stdexec::sender<FastIoScheduleSender>);
     static_assert(std::same_as<stdexec::schedule_result_t<FastIoScheduler>, FastIoScheduleSender>);
 }
 
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.tpp>
+#else
+
+namespace Hermes {
+
+    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncAcceptPolicy;
+    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncConnectPolicy;
+    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    struct TlsAsyncTransferPolicy;
+
+
+    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncAcceptPolicy;
+    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncConnectPolicy;
+    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    struct DefaultAsyncTransferPolicy;
+
+}
 
 #endif

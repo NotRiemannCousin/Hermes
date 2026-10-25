@@ -25,16 +25,16 @@ namespace Hermes::details_ {
 namespace Hermes {
 #ifdef _WIN32
     struct FastIoLoop::Impl {
-        SocketHandle m_iocpHandle{nullptr};
+        SocketHandle m_iocpHandle{ nullptr };
         std::vector<std::jthread> m_workers;
-        std::atomic<bool> m_isRunning{false};
+        std::atomic<bool> m_isRunning{ false };
     };
 #else
     struct FastIoLoop::Impl {
         io_uring m_ring{};
         std::mutex m_ringMutex{};
         std::vector<std::jthread> m_workers;
-        std::atomic<bool> m_isRunning{false};
+        std::atomic<bool> m_isRunning{ false };
 
         struct WorkItem {
             void* context;
@@ -48,7 +48,7 @@ namespace Hermes {
     };
 #endif
 
-    inline FastIoLoop::FastIoLoop(const unsigned int threadCount) : m_impl(std::make_unique<Impl>()) {
+    inline FastIoLoop::FastIoLoop(const unsigned int threadCount) : m_impl{ std::make_unique<Impl>() } {
 #ifdef _WIN32
         m_impl->m_iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, threadCount);
         if (!m_impl->m_iocpHandle) {
@@ -232,7 +232,7 @@ namespace Hermes {
             };
 
             if (!overlapped) continue;
-            auto *status{static_cast<TransferOperStatus *>(overlapped)};
+            auto *status{ static_cast<TransferOperStatus *>(overlapped) };
             if (!status || !status->callback)
                 continue;
             try {

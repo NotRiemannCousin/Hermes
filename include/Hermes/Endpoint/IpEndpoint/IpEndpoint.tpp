@@ -28,8 +28,7 @@ namespace std {
             return it;
         }
 
-        template<class FormatContext>
-        auto format(const Endpoint &endpoint, FormatContext &ctx) const {
+        auto format(const Endpoint &endpoint, auto& ctx) const {
             if (m_ipv6Reduced)
                 return std::format_to(ctx.out(), "{:b}:{}", endpoint.m_ip, endpoint.m_port);
             return std::format_to(ctx.out(), "{:fb}:{}", endpoint.m_ip, endpoint.m_port);

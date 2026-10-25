@@ -7,7 +7,7 @@
 namespace Hermes {
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host,
-        const Credentials* credentials) : host{ std::move(host) }, endpoint{endpoint}, credentials { credentials } {}
+        const Credentials* credentials) : host{ std::move(host) }, endpoint{ endpoint }, credentials { credentials } {}
 
     template<EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<Endpoint, SocketType, SocketFamily>::~TlsSocketData() = default;

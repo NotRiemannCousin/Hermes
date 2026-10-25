@@ -237,11 +237,11 @@ namespace Hermes {
 #pragma region Socket
 
     template<class SocketData, class ConnectionPolicy, class TransferPolicy>
-    concept ClientSocketConcept = SocketDataConcept<SocketData> && ConnectionPolicyConcept<ConnectionPolicy, SocketData>
+    concept ClientSocketPoliciesConcept = ConnectionPolicyConcept<ConnectionPolicy, SocketData>
             && TransferPolicyConcept<TransferPolicy, SocketData>;
 
     template<class SocketData, class AcceptPolicy, class TransferPolicy>
-    concept ServerSocketConcept = SocketDataConcept<SocketData> && AcceptPolicyConcept<AcceptPolicy, SocketData>
+    concept ServerSocketPoliciesConcept = AcceptPolicyConcept<AcceptPolicy, SocketData>
             && TransferPolicyConcept<TransferPolicy, SocketData>;
 
 #pragma endregion
@@ -292,7 +292,7 @@ namespace Hermes {
     concept AsyncConnectionPolicyConcept = SocketDataConcept<SocketData>
         && Policy::Family == SocketData::Family
         && Policy::Type == SocketData::Type
-    
+
         && std::same_as<typename Policy::EndpointType, typename SocketData::EndpointType>
 
         && requires () { typename Policy::Options; }
@@ -402,11 +402,11 @@ namespace Hermes {
 #pragma region Async Socket
 
     template<class SocketData, class ConnectionPolicy, class TransferPolicy>
-    concept AsyncClientSocketConcept = SocketDataConcept<SocketData> && AsyncConnectionPolicyConcept<ConnectionPolicy, SocketData>
+    concept AsyncClientSocketPoliciesConcept = AsyncConnectionPolicyConcept<ConnectionPolicy, SocketData>
             && AsyncTransferPolicyConcept<TransferPolicy, SocketData>;
 
     template<class SocketData, class AcceptPolicy, class TransferPolicy>
-    concept AsyncServerSocketConcept = SocketDataConcept<SocketData> && AsyncAcceptPolicyConcept<AcceptPolicy, SocketData>
+    concept AsyncServerSocketPoliciesConcept = AsyncAcceptPolicyConcept<AcceptPolicy, SocketData>
             && AsyncTransferPolicyConcept<TransferPolicy, SocketData>;
 
 #pragma endregion

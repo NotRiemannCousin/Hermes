@@ -15,6 +15,9 @@ namespace Hermes {
     }
 
 
+    //! @brief Plain TCP listen/accept policy for blocking sockets.
+    //! @details Size and flag options follow the "0/false = leave OS default" convention.
+    //! Close() performs shutdown(Send) + close, Abort() sets SO_LINGER(1,0) and closes immediately (RST).
     template<
         EndpointConcept   Endpoint     = IpEndpoint,
         SocketTypeEnum    SocketType   = SocketTypeEnum::Stream,
@@ -24,29 +27,28 @@ namespace Hermes {
         static constexpr auto Type  { SocketType   };
         using EndpointType = Endpoint;
 
+        //! @note onlyIpv6 (conditionally inherited base, Inet6 only) controls IPV6_V6ONLY.
         struct ListenOptions : details_::AcceptOptionsIpv6Base<Family> {
-            bool reuseAddress{ true };
+            bool reuseAddress{ true };  //!< SO_REUSEADDR before bind (default: on).
 
-            int recvBufferSize{};
-            int sendBufferSize{};
+            int recvBufferSize{};       //!< SO_RCVBUF. 0 = OS default.
+            int sendBufferSize{};       //!< SO_SNDBUF. 0 = OS default.
         };
         struct AcceptOptions {
-            bool tcpNoDelay{ true };
-            bool keepAlive{};
+            bool tcpNoDelay{ true };    //!< TCP_NODELAY on the accepted socket (Stream only).
+            bool keepAlive{};           //!< SO_KEEPALIVE on the accepted socket.
 
-            int recvBufferSize{};
-            int sendBufferSize{};
+            int recvBufferSize{};       //!< 0 = OS default.
+            int sendBufferSize{};       //!< 0 = OS default.
         };
 
         //! @brief Creates the listening socket: socket() + bind() + listen().
-        //! On success, data.socket holds the listening socket handle.
-
+        //! @details On success, data.socket holds the listening socket handle.
         template<SocketDataConcept Data>
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options) noexcept;
 
         //! @brief Accepts one incoming connection into outData.
-        //! Fills outData.socket with the accepted handle and outData.endpoint
-        //! with the remote peer address.
+        //! @details Fills outData.socket with the accepted handle and outData.endpoint with the remote peer address.
         template<SocketDataConcept Data>
         static ConnectionResultOper Accept(Data& listenData, Data& outData, AcceptOptions options) noexcept;
 

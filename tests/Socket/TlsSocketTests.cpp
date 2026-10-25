@@ -315,7 +315,7 @@ TEST_F(TlsSocketBridgeFixture, Recv_DeadlineCoversMultipleRecords) {
         ASSERT_TRUE(client->Send(std::array{ std::byte{'a'} }).second.has_value());
         firstSent.set_value();
         releaseSecondFuture.wait();
-        client->Send(std::array{ std::byte{'b'} });
+        ASSERT_TRUE(client->Send(std::array{ std::byte{'b'} }).second.has_value());
     } };
 
     firstSentFuture.wait();

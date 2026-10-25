@@ -126,8 +126,8 @@ namespace Hermes::details_ {
 #pragma region InitializateContext
 
         auto outcome{ data.session.AdvanceHandshake(
-            std::span<std::byte>{data.state->decryptedData.data(), m_receivedBytes},
-            std::span<std::byte>{m_outBuffer}
+            std::span<std::byte>{ data.state->decryptedData.data(), m_receivedBytes },
+            std::span<std::byte>{ m_outBuffer }
         ) };
         m_status = outcome.status;
         m_outSize = outcome.produced;
@@ -323,7 +323,7 @@ namespace Hermes::details_ {
         if (!data.session.IsHandshakeComplete())
             NEXT(EndClose);
 
-        m_outSize = data.session.Shutdown(std::span<std::byte>{m_outBuffer});
+        m_outSize = data.session.Shutdown(std::span<std::byte>{ m_outBuffer });
         if (m_outSize > 0)
             NEXT(SendCloseNotify);
 

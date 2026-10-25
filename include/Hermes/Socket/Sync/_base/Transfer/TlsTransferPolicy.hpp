@@ -10,6 +10,10 @@
 #include <span>
 
 namespace Hermes {
+    //! @brief TLS transfer policy for blocking sockets.
+    //! @details Recv()/Send() drive the TLS transfer state machine, resuming automatically across mid-transfer
+    //! renegotiations. The decrypted stream buffer is shared between Recv() and RecvStream() views (see
+    //! @ref recv-stream-behavior).
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsTransferPolicy {
         using Deadline = details_::TransferDeadline;

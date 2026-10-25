@@ -23,7 +23,10 @@ namespace Hermes {
         };
     }
 
-
+    //! @brief Plain TCP connect policy for blocking sockets.
+    //! @details Options::connectionTimeout selects the connect strategy: 0 (default) uses the OS blocking connect() as
+    //! it is, a non-zero duration temporarily switches the socket to non-blocking and waits on poll()/WSAPoll. Timeout
+    //! expiry is reported as ConnectionErrorEnum::ConnectionFailed (no dedicated timeout code).
     template<
         EndpointConcept   Endpoint     = IpEndpoint,
         SocketTypeEnum    SocketType   = SocketTypeEnum::Stream,
@@ -34,12 +37,12 @@ namespace Hermes {
         using EndpointType = Endpoint;
 
         struct Options : details_::ConnectOptionsIpv6Base<SocketFamily>, details_::OptionsTcpNoDelayBase<SocketType> {
-            std::chrono::milliseconds connectionTimeout{};
+            std::chrono::milliseconds connectionTimeout{}; //!< 0 = blocking connect, >0 = bounded non-blocking connect.
 
-            bool keepAlive{};
+            bool keepAlive{};     //!< SO_KEEPALIVE.
 
-            int recvBufferSize{};
-            int sendBufferSize{};
+            int recvBufferSize{}; //!< 0 = OS default.
+            int sendBufferSize{}; //!< 0 = OS default.
         };
 
         template<SocketDataConcept Data>

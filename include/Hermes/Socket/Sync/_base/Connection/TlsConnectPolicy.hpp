@@ -13,6 +13,8 @@ namespace Hermes {
     struct TlsAsyncConnectPolicy;
 #endif
 
+    //! @brief Plain TCP connect followed by a blocking TLS client handshake.
+    //! @details Renegotiate() re-enters the handshake state machine on an open connection.
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
         static constexpr auto Family{ Data::Family };
@@ -24,10 +26,10 @@ namespace Hermes {
         using DataType = TlsSocketData<EndpointType, Type, Family>;
 
         struct Options : DefaultConnectPolicy<EndpointType, SocketTypeEnum::Stream, Family>::Options {
-            std::chrono::milliseconds handshakeTimeout{}; // std::chrono::seconds{ 10 }
+            std::chrono::milliseconds handshakeTimeout{};  //!< Budget time for the whole handshake.
 
-            bool ignoreCertificateErrors{};
-            bool requestMutualAuth{};
+            bool ignoreCertificateErrors{};                //!< Skip peer certificate validation (dev only).
+            bool requestMutualAuth{};                      //!< Request mutual TLS.
 
             // no ALPN/mTLS for now
             // std::span<const std::string_view> alpnProtocols{};

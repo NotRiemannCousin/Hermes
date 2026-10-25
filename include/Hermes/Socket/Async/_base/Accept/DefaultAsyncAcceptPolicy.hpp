@@ -6,7 +6,6 @@
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/_base.hpp>
-#include <stdexec/execution.hpp>
 #ifdef _WIN32
 #include <MSWSock.h>
 #else
@@ -16,22 +15,24 @@
 #include <mutex>
 
 namespace Hermes {
-#if HERMES_ENABLE_NATIVE_SCHEDULER
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
-#else
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
-#endif
+
+    //! @brief Plain TCP listen/accept policy returning stdexec senders.
+    //! @details Listen() is synchronous and registers the listening socket with Options::scheduler. Accept() completes
+    //! with the accepted SocketData in the value channel, socket and endpoint already filled.
+    //! @note listenerExtensions (Windows AcceptEx pointers) is an implementation detail that is required on Windows,
+    //! so it exposes it.
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy {
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
         using EndpointType = typename Data::EndpointType;
 
         struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {
-            ExecutionContext* scheduler;
+            ExecutionContext* scheduler{};
         };
 
         struct AcceptOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions {
-            ExecutionContext* scheduler;
+            ExecutionContext* scheduler{};
         };
 
         static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
@@ -48,8 +49,8 @@ namespace Hermes {
 
 #ifdef _WIN32
         struct ListenerExtensions {
-            LPFN_ACCEPTEX lpfnAcceptEx = nullptr;
-            LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs = nullptr;
+            LPFN_ACCEPTEX lpfnAcceptEx{ nullptr };
+            LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs{ nullptr };
         };
 #else
         struct ListenerExtensions {

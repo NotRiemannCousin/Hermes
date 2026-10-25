@@ -125,8 +125,8 @@ namespace Hermes::details_ {
 #pragma region AcceptContext
 
         auto outcome{ data.session.AdvanceHandshake(
-          std::span<std::byte>{data.state->decryptedData.data(), m_receivedBytes},
-          std::span<std::byte>{m_outBuffer}
+          std::span<std::byte>{ data.state->decryptedData.data(), m_receivedBytes },
+          std::span<std::byte>{ m_outBuffer }
         ) };
         m_status = outcome.status;
         m_outSize = outcome.produced;
