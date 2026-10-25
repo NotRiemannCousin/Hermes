@@ -7,5 +7,5 @@ var searchData=
   ['hashcombine_4',['HashCombine',['../namespace_hermes_1_1_utils.html#a862ab5e2ad7fe011225368bb285eaab5',1,'Hermes::Utils']]],
   ['hermes_5',['Hermes',['../namespace_hermes.html',1,'Hermes'],['../index.html',1,'Hermes']]],
   ['hermes_3a_3autils_6',['Utils',['../namespace_hermes_1_1_utils.html',1,'Hermes']]],
-  ['how_20the_20facade_20composes_20the_20lego_7',['How the facade composes the lego',['../policy-architecture.html#autotoc_md89',1,'']]]
+  ['how_20the_20facade_20composes_20the_20lego_7',['How the facade composes the lego',['../policy-architecture.html#autotoc_md39',1,'']]]
 ];

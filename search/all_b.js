@@ -1,12 +1,12 @@
 var searchData=
 [
   ['lazy_20range_20based_20receive_0',['Lazy Range-Based Receive',['../concept_hermes_1_1_transfer_policy_concept.html#autotoc_md6',1,'']]],
-  ['learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md41',1,'']]],
-  ['lego_2',['How the facade composes the lego',['../policy-architecture.html#autotoc_md89',1,'']]],
-  ['library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md41',1,'']]],
+  ['learning_20the_20library_1',['A useful order for learning the library',['../getting-started.html#autotoc_md60',1,'']]],
+  ['lego_2',['How the facade composes the lego',['../policy-architecture.html#autotoc_md39',1,'']]],
+  ['library_3',['A useful order for learning the library',['../getting-started.html#autotoc_md60',1,'']]],
   ['licensing_4',['Licensing',['../namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58a0b9c6eef4e3d3a222eb04e910d252339',1,'Hermes::Licensing'],['../namespace_hermes.html#af1bc721cdf539a4fa545c282663222ada0b9c6eef4e3d3a222eb04e910d252339',1,'Hermes::Licensing']]],
-  ['lifting_20directly_5',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md58',1,'']]],
-  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_6',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md50',1,'']]],
+  ['lifting_20directly_5',['Why a factory instead of calling Send and lifting directly',['../send-lift-pattern.html#autotoc_md83',1,'']]],
+  ['limiting_20reads_20for_20security_20std_3a_3aviews_3a_3atake_6',['Limiting Reads for Security (&lt;span class=&quot;tt&quot;&gt;std::views::take&lt;/span&gt;)',['../recv-stream-behavior.html#autotoc_md48',1,'']]],
   ['linking_7',['Paragraph Linking',['../md_docs_2doxygen_2docs_2theme-reference_2extensions.html#extension-para',1,'']]],
   ['listen_8',['Listen',['../struct_hermes_1_1_default_accept_policy.html#a31017e91c815f46e8ffd6226b86178d5',1,'Hermes::DefaultAcceptPolicy::Listen()'],['../struct_hermes_1_1_listener_socket.html#a832ff46878713a9518c6a53b92230aa8',1,'Hermes::ListenerSocket::Listen(SocketData &amp;&amp;data, int backlog=SOMAXCONN) noexcept -&gt; ListenerSocketResult'],['../struct_hermes_1_1_listener_socket.html#aad932f6c15ebd2a7dcd6216e4c8b7a50',1,'Hermes::ListenerSocket::Listen(SocketData &amp;&amp;data, ListenOptions opt, int backlog=SOMAXCONN) noexcept -&gt; ListenerSocketResult']]],
   ['listen_20and_20accept_20options_9',['Listen and accept options',['../policy-options.html#autotoc_md31',1,'']]],
