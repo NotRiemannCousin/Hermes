@@ -172,13 +172,9 @@ body, html{{
 
 int main() {
     if (const auto res{ RunServer() }; !res) {
-#ifdef m_WIN32
-        int err{ WSAGetLastError() };
-#else
-        int err{ errno };
-#endif
+        const auto err{ Hermes::GetError() };
         
-        std::println("\n\n{} : {}", res.error(), err);
+        std::println("\n\n{} : {}", res.error(), err.error());
     } else {
         std::println("\n\nServer finished successfully.");
     }

@@ -170,11 +170,15 @@ namespace Hermes {
             return listenerPolicy;
 
         auto* context{ data.executionContext };
-        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket)))
+        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket))) {
+            Close(data);
             return std::unexpected{ ConnectionErrorEnum::NoScheduler };
+        }
 
-        if (auto loaded{ LoadAcceptExtensions(data) }; !loaded)
+        if (auto loaded{ LoadAcceptExtensions(data) }; !loaded) {
+            Close(data);
             return loaded;
+        }
 
         return listenerPolicy;
     }

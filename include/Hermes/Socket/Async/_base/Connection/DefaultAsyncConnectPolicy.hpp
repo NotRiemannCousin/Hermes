@@ -3,8 +3,10 @@
 #if HERMES_ENABLE_ASYNC
 
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
+#include <Hermes/Socket/Sync/_base/Connection/DefaultConnectPolicy.hpp>
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/_base.hpp>
+
 
 namespace Hermes {
 

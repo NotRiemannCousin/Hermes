@@ -10,10 +10,11 @@
 namespace Hermes {
 
     //! @brief Plain TCP listen/accept policy returning stdexec senders.
-    //! @details Listen() is synchronous and registers the listening socket with Options::scheduler. Accept() completes
-    //! with the accepted SocketData in the value channel, socket and endpoint already filled.
-    //! @note listenerExtensions (Windows AcceptEx pointers) is an implementation detail that is required on Windows,
-    //! so it exposes it.
+    //! @details Listen() is synchronous: it creates, binds and listens through the sync policy and registers the
+    //! socket with the context carried by SocketData::executionContext. Accept() completes with the accepted
+    //! SocketData in the value channel, socket and endpoint already filled. The policy instance carries the
+    //! listener-scoped state (the Windows AcceptEx extensions), so the instance that ran Listen() must be the same
+    //! one driving every Accept() of that listener.
     template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy {
         static_assert(!std::same_as<ExecutionContext, std::monostate>,
@@ -44,10 +45,10 @@ namespace Hermes {
         void Close(Data& data) noexcept;
         void Abort(Data& data) noexcept;
 
-        //! @brief Resolves the platform accept extensions for @p data into SocketData::extensions.
-        //! @details Windows resolves the AcceptEx function pointers of the already-created socket; other platforms are
-        //! a no-op. Listen() calls it for every listener; TlsAsyncAcceptPolicy::Listen() calls it too because its
-        //! listen path bypasses this policy's Listen().
+        //! @brief Resolves the platform accept extensions of the @p data socket into this policy instance.
+        //! @details Windows resolves the AcceptEx function pointers of the already-created socket; other platforms
+        //! are a no-op. Listen() calls it for every listener; TlsAsyncAcceptPolicy::Listen() calls it on its embedded
+        //! default policy because its listen path bypasses this policy's Listen().
         ConnectionResultOper LoadAcceptExtensions(Data& data) noexcept;
 
         struct AcceptSender;

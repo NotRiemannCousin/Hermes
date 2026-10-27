@@ -49,7 +49,11 @@ if(HERMES_ENABLE_TLS)
     )
 endif()
 if(HERMES_ENABLE_NATIVE_SCHEDULER)
-    target_sources(HermesTests PRIVATE Socket/FastIoLoopTests.cpp)
+    target_sources(HermesTests PRIVATE
+            Socket/FastIoLoopTests.cpp
+            Socket/AsyncAcceptTests.cpp
+            Socket/MockExecutionContextTests.cpp
+    )
 endif()
 
 target_include_directories(

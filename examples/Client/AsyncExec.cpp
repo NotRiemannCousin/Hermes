@@ -45,11 +45,9 @@ extern ExpString MakeRequest() {
     } };
 
     const auto makeSocket{ [&](const Hermes::IpEndpoint& endpoint) {
-        return Hermes::RawTlsAsyncClient::Connect(Hermes::TlsSocketData<>{ endpoint, url.hostname },
-            {{
-                .recvBufferSize = 8192,
-                .scheduler = &ioLoop
-            }});
+        return Hermes::RawTlsAsyncClient::Connect(
+            { endpoint, url.hostname, nullptr, &ioLoop },
+            {{ .recvBufferSize = 8192 }});
     } };
 
     const auto makeRequest{ [&](Hermes::RawTlsAsyncClient& client) {

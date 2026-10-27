@@ -44,7 +44,8 @@ namespace Hermes {
         static constexpr AddressFamilyEnum Family{ SocketFamily };
 
         TlsSocketData() = default;
-        TlsSocketData(Endpoint endpoint, std::string host, const Credentials* credentials = nullptr);
+        TlsSocketData(Endpoint endpoint, std::string host, const Credentials* credentials = nullptr,
+            ExecutionContextType executionContext = {});
         ~TlsSocketData();
 
         TlsSocketData(TlsSocketData&& other) noexcept;

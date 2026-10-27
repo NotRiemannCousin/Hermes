@@ -7,7 +7,8 @@
 namespace Hermes {
     template<class ExecutionContext, EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<ExecutionContext, Endpoint, SocketType, SocketFamily>::TlsSocketData(Endpoint endpoint, std::string host,
-        const Credentials* credentials) : host{ std::move(host) }, credentials { credentials }, endpoint{ endpoint } {}
+        const Credentials* credentials, ExecutionContextType executionContext)
+        : host{ std::move(host) }, credentials { credentials }, endpoint{ endpoint }, executionContext { executionContext } {}
 
     template<class ExecutionContext, EndpointConcept Endpoint, SocketTypeEnum SocketType, AddressFamilyEnum SocketFamily>
     TlsSocketData<ExecutionContext, Endpoint, SocketType, SocketFamily>::~TlsSocketData() = default;

@@ -24,40 +24,42 @@ static std::uint16_t GetNextPort() {
     return port++;
 }
 
-struct SocketBridgeFixture : testing::Test {
-    std::optional<RawTcpListener> listener{};
-    std::optional<RawTcpClient> client{};
-    std::optional<RawTcpServer> server{};
-protected:
-    void SetUp() override {
-        const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
-        auto listenerResult{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };
-        ASSERT_TRUE(listenerResult.has_value());
-        listener = std::move(*listenerResult);
+namespace {
+    struct SocketBridgeFixture : testing::Test {
+        std::optional<RawTcpListener> listener{};
+        std::optional<RawTcpClient> client{};
+        std::optional<RawTcpServer> server{};
+    protected:
+        void SetUp() override {
+            const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
+            auto listenerResult{ RawTcpListener::Listen(DefaultSocketData<>{ endpoint }) };
+            ASSERT_TRUE(listenerResult.has_value());
+            listener = std::move(*listenerResult);
 
-        auto acceptLambda{ [&]() {
-            auto res{ listener->AcceptOne({ .recvBufferSize = 1024 }) };
-            if (res.has_value()) {
-                server = std::move(*res);
-            }
-        }};
+            auto acceptLambda{ [&]() {
+                auto res{ listener->AcceptOne({ .recvBufferSize = 1024 }) };
+                if (res.has_value()) {
+                    server = std::move(*res);
+                }
+            }};
 
-        std::jthread acceptThread{ acceptLambda };
+            std::jthread acceptThread{ acceptLambda };
 
-        auto clientResult{ RawTcpClient::Connect( DefaultSocketData<>{ endpoint }, { .sendBufferSize = 1024 }) };
-        ASSERT_TRUE(clientResult.has_value());
-        client = std::move(*clientResult);
+            auto clientResult{ RawTcpClient::Connect( DefaultSocketData<>{ endpoint }, { .sendBufferSize = 1024 }) };
+            ASSERT_TRUE(clientResult.has_value());
+            client = std::move(*clientResult);
 
-        acceptThread.join();
-        ASSERT_TRUE(server.has_value());
-    }
+            acceptThread.join();
+            ASSERT_TRUE(server.has_value());
+        }
 
-    void TearDown() override {
-        if (client) client->Close();
-        if (server) server->Close();
-        if (listener) listener->Close();
-    }
-};
+        void TearDown() override {
+            if (client) client->Close();
+            if (server) server->Close();
+            if (listener) listener->Close();
+        }
+    };
+}
 
 TEST_F(SocketBridgeFixture, PingPong_BidirectionalTransferSucceeds) {
     const std::vector<std::byte> pingPayload{ std::byte{'p'}, std::byte{'i'}, std::byte{'n'}, std::byte{'g'} };

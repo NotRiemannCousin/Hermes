@@ -59,9 +59,9 @@ std::expected<void, std::string> RunServer() {
 
 int main() {
     if (const auto res{ RunServer() }; !res) {
-        int err{ WSAGetLastError() };
+        const auto err{ Hermes::GetError() };
         
-        std::println("\n\n{} : {}", res.error(), err);
+        std::println("\n\n{} : {}", res.error(), err.error());
     } else {
         std::println("\n\nServer finished successfully.");
     }

@@ -122,9 +122,9 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
 }
 
 static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
-    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({127, 0, 0, 1}), 8080 };
+    const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({ 127, 0, 0, 1 }), 8080 };
 
-    static constexpr auto makeResponse = [](auto&& clientSocket) {
+    static constexpr auto makeResponse{ [](auto&& clientSocket) {
         std::println("Accepted from: {}", clientSocket.GetEndpoint());
         std::cout.flush();
 
@@ -132,24 +132,28 @@ static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
 
         exec::start_detached(
             HandleClientAsync(state)
-                    | stdexec::let_error([](auto&& err) { return stdexec::just(); })
+                    | stdexec::let_error([](auto&&) { return stdexec::just(); })
         );
 
         return stdexec::just();
-    };
+    } };
 
-    auto acceptConn = [&ioLoop](auto& listener) {
+    auto acceptConn{ [](auto& listener) {
         std::println("listening at: {}", listener.GetEndpoint());
         std::cout.flush();
 
         return stdexec::just()
-                | stdexec::let_value([&ioLoop, &listener]() {
-                      return listener.AsyncAcceptOne({ .scheduler = &ioLoop })
+                | stdexec::let_value([&listener]() {
+                      return listener.AsyncAcceptOne()
                                | stdexec::let_value(makeResponse);
                 })
                 | exec::repeat();
-    };
-    auto serve{ Hermes::RawTcpAsyncListener::Listen(Hermes::DefaultSocketData<>{endpoint}, { .scheduler = &ioLoop })
+    } };
+
+    Hermes::DefaultSocketData<Hermes::FastIoLoop> listenData{ endpoint };
+    listenData.executionContext = &ioLoop;
+
+    auto serve{ Hermes::RawTcpAsyncListener::Listen(std::move(listenData))
             | stdexec::let_value(acceptConn)
             | stdexec::upon_error([](auto err) {
                 return 3.1416;

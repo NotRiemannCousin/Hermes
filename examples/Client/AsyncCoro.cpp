@@ -29,9 +29,12 @@ extern exec::task<ExpString> MakeRequestAsync(Hermes::FastIoLoop& ioLoop) try {
 
     // 2. Establish the asynchronous connection.
     // The coroutine suspends here until the TCP handshake and TLS negotiation are complete.
+    // In default policies the execution context lives in the SocketData itself, every policy
+    // reads it from there and any socket created from this one inherits it via MakeChild().
+
     auto client{ co_await Hermes::RawTlsAsyncClient::Connect(
-        Hermes::TlsSocketData<>{ endpoint, url.hostname },
-        {{ .recvBufferSize = 8192, .scheduler = &ioLoop }}
+        { endpoint, url.hostname, nullptr, &ioLoop },
+        {{ .recvBufferSize = 8192 }}
     ) };
 
     // 3. Format and send the HTTP request.

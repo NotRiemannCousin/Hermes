@@ -194,10 +194,17 @@ namespace Hermes {
             return result;
 
         auto* context{ data.executionContext };
-        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket)))
+r        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket))) {
+            Close(data);
             return std::unexpected{ ConnectionErrorEnum::NoScheduler };
+        }
 
-        return m_tcp.LoadAcceptExtensions(data);
+        if (auto loaded{ m_tcp.LoadAcceptExtensions(data) }; !loaded) {
+            Close(data);
+            return loaded;
+        }
+
+        return {};
     }
 
     template<class ExecutionContext, SocketDataConcept Data>
