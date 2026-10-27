@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['recvbuffersize_0',['recvBufferSize',['../struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a1f1ecd7f12e8140b272aaa57c8a19f93',1,'Hermes::DefaultAcceptPolicy::ListenOptions::recvBufferSize'],['../struct_hermes_1_1_default_accept_policy_1_1_accept_options.html#a338b785b683c81974fa542841dd906c6',1,'Hermes::DefaultAcceptPolicy::AcceptOptions::recvBufferSize'],['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a4cf2d24cf0122ac486e117638c4fc0dd',1,'Hermes::DefaultConnectPolicy::Options::recvBufferSize']]],
-  ['recvtimeout_1',['recvTimeout',['../struct_hermes_1_1_default_socket_data_1_1_socket_options.html#a2cecfa5867070b78e27cb71259fb2040',1,'Hermes::DefaultSocketData::SocketOptions']]],
-  ['reuseaddress_2',['reuseAddress',['../struct_hermes_1_1_default_accept_policy_1_1_listen_options.html#a5b3227867833c1f6e17bbd2e7415f422',1,'Hermes::DefaultAcceptPolicy::ListenOptions']]]
+  ['operation_0',['operation',['../struct_hermes_1_1_io_request.html#abdfa53f4652c0c07f936a1bed1662fe6',1,'Hermes::IoRequest']]],
+  ['options_1',['options',['../struct_hermes_1_1_default_socket_data.html#a888a53c61cee9cf8c038bb4146024a73',1,'Hermes::DefaultSocketData']]]
 ];

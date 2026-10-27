@@ -274,9 +274,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_client_socket
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <a class="code hl_function" href="struct_hermes_1_1_client_socket.html#a72b200041e3fbaace8e9332bd4c6991c">ClientSocket</a>() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        SocketData       m_socketData{};</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        ConnectionPolicy m_connectionPolicy{};</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        TransferPolicy   m_transferPolicy{};</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        SocketData m_socketData{};</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        [[no_unique_address]] ConnectionPolicy m_connectionPolicy{};</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        [[no_unique_address]] TransferPolicy   m_transferPolicy{};</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    };</div>
 </div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
@@ -344,7 +344,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_client_socket
 <div class="ttc" id="astruct_hermes_1_1_client_socket_html_af671a966dd9ec21fc0fe6d56daa4c278"><div class="ttname"><a href="struct_hermes_1_1_client_socket.html#af671a966dd9ec21fc0fe6d56daa4c278">Hermes::ClientSocket::Connect</a></div><div class="ttdeci">static auto Connect(SocketData &amp;&amp;data) noexcept -&gt; ClientSocketResult</div><div class="ttdoc">Creates and connects a client socket.</div></div>
 <div class="ttc" id="astruct_hermes_1_1_client_socket_html_af6f0feaffd975dabb8c2d24e85ba1a54"><div class="ttname"><a href="struct_hermes_1_1_client_socket.html#af6f0feaffd975dabb8c2d24e85ba1a54">Hermes::ClientSocket::RecvOptions</a></div><div class="ttdeci">TransferPolicy::RecvOptions RecvOptions</div><div class="ttdoc">The options accepted by receive operations.</div><div class="ttdef"><b>Definition</b> ClientSocket.hpp:42</div></div>
 <div class="ttc" id="astruct_hermes_1_1_default_connect_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_connect_policy.html">Hermes::DefaultConnectPolicy</a></div><div class="ttdoc">Plain TCP connect policy for blocking sockets.</div><div class="ttdef"><b>Definition</b> DefaultConnectPolicy.hpp:34</div></div>
-<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
+<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdoc">A basic data class for general propourse sockets (sync and async).</div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:20</div></div>
 <div class="ttc" id="astruct_hermes_1_1_default_transfer_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a></div><div class="ttdoc">Plain TCP transfer policy for blocking sockets.</div><div class="ttdef"><b>Definition</b> DefaultTransferPolicy.hpp:16</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

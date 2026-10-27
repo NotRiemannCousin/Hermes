@@ -169,35 +169,56 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_async_tra
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> ExecutionContext, SocketDataConcept Data&gt;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">struct </span>TlsAsyncTransferPolicy {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Type{ Data::Type };</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt;</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keyword">auto</span> Recv(Data&amp; data, std::span&lt;Byte&gt; bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) <span class="keyword">noexcept</span>;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt;</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">auto</span> <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Send</a>(Data&amp; data, std::span&lt;const Byte&gt; bufferSend) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">static_assert</span>(<span class="keyword">requires</span> (<a class="code hl_enumvalue" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> data) {</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            { *data.transferStateMachine } -&gt; std::same_as&lt;details_::ITlsTransferStateMachine&lt;Data&gt;&amp;&gt;;</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        }, <span class="stringliteral">&quot;The socket data must have a valid TLS state machine to transfering data.&quot;</span>);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keyword">static_assert</span>(!std::same_as&lt;ExecutionContext, std::monostate&gt;,</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            <span class="stringliteral">&quot;Async policies require a real execution context, std::monostate is a fallback that generic SocketData &quot;</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            <span class="stringliteral">&quot;uses in sync sockets only.&quot;</span>);</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">enum class</span> ActionEnum : std::uint8_t { Recv, <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Send</a> };</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt; <span class="keyword">struct </span>TransferSender;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    };</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="keyword">static_assert</span>(<span class="keyword">requires</span> (<a class="code hl_enumvalue" href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Data</a> data) {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            { data.executionContext } -&gt; std::same_as&lt;ExecutionContext*&amp;&gt;;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        }, <span class="stringliteral">&quot;The socket data must carry this policy&#39;s execution context (SocketData::executionContext).&quot;</span>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keyword">static_assert</span>(ExecutionContextConcept&lt;ExecutionContext&gt;,</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="stringliteral">&quot;ExecutionContext must satisfy Hermes::ExecutionContextConcept (RegisterHandle, SubmitIo, PostWork, GetScheduler).&quot;</span>);</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.tpp&gt;</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">static_assert</span>(AsyncTransferPolicyConcept&lt;TlsAsyncTransferPolicy&lt;&gt;, TlsSocketData&lt;&gt;&gt;);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Family{ Data::Family };</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keyword">auto</span> Type  { Data::Type   };</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keyword">using </span>EndpointType = Data::EndpointType;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">auto</span> <a class="code hl_enumvalue" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Recv</a>(Data&amp; data, std::span&lt;Byte&gt; bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">auto</span> <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Send</a>(Data&amp; data, std::span&lt;const Byte&gt; bufferSend) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keyword">enum class</span> ActionEnum : std::uint8_t { <a class="code hl_enumvalue" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Recv</a>, <a class="code hl_enumvalue" href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Send</a> };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">template</span>&lt;ByteLike Byte&gt; <span class="keyword">struct </span>TransferSender;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    };</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="preprocessor">#include &lt;Hermes/Socket/Async/_base/Transfer/TlsAsyncTransferPolicy.tpp&gt;</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_hermes.html">Hermes</a> {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">static_assert</span>(AsyncTransferPolicyConcept&lt;TlsAsyncTransferPolicy&lt;&gt;, TlsSocketData&lt;FastIoLoop&gt;&gt;);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#endif</span></div>
 <div class="ttc" id="a__base_8hpp_html"><div class="ttname"><a href="__base_8hpp.html">_base.hpp</a></div></div>
 <div class="ttc" id="a_connection_error_enum_8hpp_html"><div class="ttname"><a href="_connection_error_enum_8hpp.html">ConnectionErrorEnum.hpp</a></div></div>
 <div class="ttc" id="a_fast_io_execution_context_8hpp_html"><div class="ttname"><a href="_fast_io_execution_context_8hpp.html">FastIoExecutionContext.hpp</a></div></div>
 <div class="ttc" id="a_tls_socket_data_8hpp_html"><div class="ttname"><a href="_tls_socket_data_8hpp.html">TlsSocketData.hpp</a></div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
+<div class="ttc" id="anamespace_hermes_html_a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530"><div class="ttname"><a href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Hermes::IoOperation::Recv</a></div><div class="ttdeci">@ Recv</div><div class="ttdef"><b>Definition</b> TransferOperStatus.hpp:47</div></div>
+<div class="ttc" id="anamespace_hermes_html_a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee"><div class="ttname"><a href="namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196af6068daa29dbb05a7ead1e3b5a48bbee">Hermes::SecurityBufferEnum::Data</a></div><div class="ttdeci">@ Data</div><div class="ttdef"><b>Definition</b> SecurityBufferEnum.hpp:7</div></div>
 <div class="ttc" id="anamespace_hermes_html_a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3"><div class="ttname"><a href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Hermes::SocketShutdownEnum::Send</a></div><div class="ttdeci">@ Send</div><div class="ttdef"><b>Definition</b> SocketShutdownEnum.hpp:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

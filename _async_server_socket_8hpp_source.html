@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span>&lt;</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_concept" href="concept_hermes_1_1_socket_data_concept.html">SocketDataConcept</a> SocketData = <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData&lt;&gt;</a>,</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <a class="code hl_concept" href="concept_hermes_1_1_socket_data_concept.html">SocketDataConcept</a> SocketData = <a class="code hl_struct" href="struct_hermes_1_1_default_socket_data.html">DefaultSocketData&lt;FastIoLoop&gt;</a>,</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keyword">class </span>AcceptPolicy           = <a class="code hl_struct" href="struct_hermes_1_1_default_async_accept_policy.html">DefaultAsyncAcceptPolicy&lt;&gt;</a>,</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keyword">class </span>TransferPolicy         = <a class="code hl_struct" href="struct_hermes_1_1_default_async_transfer_policy.html">DefaultAsyncTransferPolicy&lt;&gt;</a>&gt;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">requires</span> AsyncServerSocketPoliciesConcept&lt;SocketData, AcceptPolicy, TransferPolicy&gt;</div>
@@ -219,7 +219,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#pragma region Recv Methods</span></div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span></div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">template</span>&lt;WritableContiguousByteRange R&gt;</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        [[nodiscard]] <span class="keyword">auto</span> Recv(R&amp;&amp; data, RecvModeEnum mode = RecvModeEnum::All) <span class="keyword">noexcept</span>;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        [[nodiscard]] <span class="keyword">auto</span> <a class="code hl_enumvalue" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Recv</a>(R&amp;&amp; data, RecvModeEnum mode = RecvModeEnum::All) <span class="keyword">noexcept</span>;</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="preprocessor">#pragma endregion</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
@@ -237,9 +237,9 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keyword">private</span>:</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        AsyncServerSocket() = <span class="keywordflow">default</span>;</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        SocketData     m_socketData{};</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        AcceptPolicy   m_acceptPolicy{};</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        TransferPolicy m_transferPolicy{};</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        SocketData m_socketData{};</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        [[no_unique_address]] AcceptPolicy   m_acceptPolicy{};</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        [[no_unique_address]] TransferPolicy m_transferPolicy{};</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    };</div>
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
@@ -254,10 +254,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="preprocessor">#if HERMES_ENABLE_NATIVE_SCHEDULER</span></div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keyword">using </span>RawTcpAsyncServer = AsyncServerSocket&lt;&gt;;</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;DefaultSocketData&lt;&gt;, <a class="code hl_struct" href="struct_hermes_1_1_default_async_accept_policy.html">DefaultAsyncAcceptPolicy&lt;&gt;</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_async_transfer_policy.html">DefaultAsyncTransferPolicy&lt;&gt;</a>&gt;;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;DefaultSocketData&lt;FastIoLoop&gt;, <a class="code hl_struct" href="struct_hermes_1_1_default_async_accept_policy.html">DefaultAsyncAcceptPolicy&lt;&gt;</a>, <a class="code hl_struct" href="struct_hermes_1_1_default_async_transfer_policy.html">DefaultAsyncTransferPolicy&lt;&gt;</a>&gt;;</div>
 <div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="preprocessor">#if HERMES_ENABLE_TLS</span></div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keyword">using </span>RawTlsAsyncServer = AsyncServerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;TlsSocketData&lt;&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <span class="keyword">using </span>RawTlsAsyncServer = AsyncServerSocket&lt;TlsSocketData&lt;FastIoLoop&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">extern</span> <span class="keyword">template</span> <span class="keyword">struct </span>AsyncServerSocket&lt;TlsSocketData&lt;FastIoLoop&gt;, TlsAsyncAcceptPolicy&lt;&gt;, TlsAsyncTransferPolicy&lt;&gt;&gt;;</div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>}</div>
@@ -272,10 +272,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_async_server_
 <div class="ttc" id="a_tls_async_transfer_policy_8hpp_html"><div class="ttname"><a href="_tls_async_transfer_policy_8hpp.html">TlsAsyncTransferPolicy.hpp</a></div></div>
 <div class="ttc" id="aconcept_hermes_1_1_socket_data_concept_html"><div class="ttname"><a href="concept_hermes_1_1_socket_data_concept.html">Hermes::SocketDataConcept</a></div><div class="ttdoc">Concept for the context representing a socket&#39;s state and cross-policy coordination.</div><div class="ttdef"><b>Definition</b> _base.hpp:65</div></div>
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
+<div class="ttc" id="anamespace_hermes_html_a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530"><div class="ttname"><a href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Hermes::IoOperation::Recv</a></div><div class="ttdeci">@ Recv</div><div class="ttdef"><b>Definition</b> TransferOperStatus.hpp:47</div></div>
 <div class="ttc" id="anamespace_hermes_html_a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3"><div class="ttname"><a href="namespace_hermes.html#a70f3f20e9423957ca2e09906ba1fc8a1a94966d90747b97d1f0f206c98a8b1ac3">Hermes::SocketShutdownEnum::Send</a></div><div class="ttdeci">@ Send</div><div class="ttdef"><b>Definition</b> SocketShutdownEnum.hpp:19</div></div>
-<div class="ttc" id="astruct_hermes_1_1_default_async_accept_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_async_accept_policy.html">Hermes::DefaultAsyncAcceptPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:129</div></div>
-<div class="ttc" id="astruct_hermes_1_1_default_async_transfer_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_async_transfer_policy.html">Hermes::DefaultAsyncTransferPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:133</div></div>
-<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:12</div></div>
+<div class="ttc" id="astruct_hermes_1_1_default_async_accept_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_async_accept_policy.html">Hermes::DefaultAsyncAcceptPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:142</div></div>
+<div class="ttc" id="astruct_hermes_1_1_default_async_transfer_policy_html"><div class="ttname"><a href="struct_hermes_1_1_default_async_transfer_policy.html">Hermes::DefaultAsyncTransferPolicy</a></div><div class="ttdef"><b>Definition</b> FastIoExecutionContext.hpp:146</div></div>
+<div class="ttc" id="astruct_hermes_1_1_default_socket_data_html"><div class="ttname"><a href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a></div><div class="ttdoc">A basic data class for general propourse sockets (sync and async).</div><div class="ttdef"><b>Definition</b> DefaultSocketData.hpp:20</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 </div><!-- container -->

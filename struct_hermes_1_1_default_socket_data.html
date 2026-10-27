@@ -16,7 +16,7 @@
 <meta name="twitter:title" content="Hermes" />
 <meta name="twitter:description" content="A functional, expressive, asynchronous C++26 socket library" />
 <!-- END twitter metadata -->
-<title>Hermes: Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</title>
+<title>Hermes: Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -152,9 +152,12 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 </div>
 
 <div class="header">
-  <div class="headertitle"><div class="title">Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</div></div>
+  <div class="headertitle"><div class="title">Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>A basic data class for general propourse sockets (sync and async).  
+ <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_default_socket_data_8hpp_source.html">DefaultSocketData.hpp</a>&gt;</code></p>
 <table class="memberdecls">
@@ -165,60 +168,96 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a978509aa104f60a05579d2396e3ecf7f" id="r_a978509aa104f60a05579d2396e3ecf7f"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a978509aa104f60a05579d2396e3ecf7f">EndpointType</a> = Endpoint</td></tr>
+<tr class="memitem:a65b41163470c05977d2760e1a3f2536b" id="r_a65b41163470c05977d2760e1a3f2536b"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a65b41163470c05977d2760e1a3f2536b">EndpointType</a> = Endpoint</td></tr>
+<tr class="memitem:aadc6801dc36e0c2e64778d91889e0849" id="r_aadc6801dc36e0c2e64778d91889e0849"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aadc6801dc36e0c2e64778d91889e0849">ExecutionContextType</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a98cf0cf02065fe542467db7557c07f97" id="r_a98cf0cf02065fe542467db7557c07f97"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> ()=default</td></tr>
-<tr class="memitem:a46fbfb8b6a222d521baa6cde7c098b32" id="r_a46fbfb8b6a222d521baa6cde7c098b32"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a46fbfb8b6a222d521baa6cde7c098b32">DefaultSocketData</a> (Endpoint other)</td></tr>
-<tr class="memitem:a4d79b35573396b989fb57d09932e83f1" id="r_a4d79b35573396b989fb57d09932e83f1"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4d79b35573396b989fb57d09932e83f1">~DefaultSocketData</a> ()=default</td></tr>
-<tr class="memitem:af1cb358e84b8aca9323d5b4a5dc0fa4f" id="r_af1cb358e84b8aca9323d5b4a5dc0fa4f"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#af1cb358e84b8aca9323d5b4a5dc0fa4f">DefaultSocketData</a> (DefaultSocketData &amp;&amp;other) noexcept</td></tr>
-<tr class="memitem:a205f52b4ec26da132a3e0c606b88481f" id="r_a205f52b4ec26da132a3e0c606b88481f"><td class="memItemLeft"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a205f52b4ec26da132a3e0c606b88481f">operator=</a> (<a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> &amp;&amp;other) noexcept</td></tr>
-<tr class="memitem:a4dc0d7d23d9343754d0a80c0705bf4a2" id="r_a4dc0d7d23d9343754d0a80c0705bf4a2"><td class="memItemLeft"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a>&#160;</td><td class="memItemRight"><a class="el" href="#a4dc0d7d23d9343754d0a80c0705bf4a2">MakeChild</a> () const</td></tr>
+<tr class="memitem:adaba00a1e01659e8524cd10f3f0b2237" id="r_adaba00a1e01659e8524cd10f3f0b2237"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> ()=default</td></tr>
+<tr class="memitem:a9ebe48e4d69d001c669b4903913dcf05" id="r_a9ebe48e4d69d001c669b4903913dcf05"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a9ebe48e4d69d001c669b4903913dcf05">DefaultSocketData</a> (Endpoint other)</td></tr>
+<tr class="memitem:ac7e7c1eff18f092eb034380537506f11" id="r_ac7e7c1eff18f092eb034380537506f11"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#ac7e7c1eff18f092eb034380537506f11">~DefaultSocketData</a> ()=default</td></tr>
+<tr class="memitem:a38fb0bc0a2075a3d32fd01c6e4d7f478" id="r_a38fb0bc0a2075a3d32fd01c6e4d7f478"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a38fb0bc0a2075a3d32fd01c6e4d7f478">DefaultSocketData</a> (DefaultSocketData &amp;&amp;other) noexcept</td></tr>
+<tr class="memitem:a1e05a6ff92a4ba98b0d3607b18ba3382" id="r_a1e05a6ff92a4ba98b0d3607b18ba3382"><td class="memItemLeft"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#a1e05a6ff92a4ba98b0d3607b18ba3382">operator=</a> (<a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> &amp;&amp;other) noexcept</td></tr>
+<tr class="memitem:a5608aa664e986c0ae1826c739c9a87bd" id="r_a5608aa664e986c0ae1826c739c9a87bd"><td class="memItemLeft"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a>&#160;</td><td class="memItemRight"><a class="el" href="#a5608aa664e986c0ae1826c739c9a87bd">MakeChild</a> () const</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a34a8636230aa1f18a3baed7cc0438de7" id="r_a34a8636230aa1f18a3baed7cc0438de7"><td class="memItemLeft">Endpoint&#160;</td><td class="memItemRight"><a class="el" href="#a34a8636230aa1f18a3baed7cc0438de7">endpoint</a> {}</td></tr>
-<tr class="memitem:a58b7baaa6aad803b6d0e52dd1cfea6a7" id="r_a58b7baaa6aad803b6d0e52dd1cfea6a7"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a>&#160;</td><td class="memItemRight"><a class="el" href="#a58b7baaa6aad803b6d0e52dd1cfea6a7">socket</a> { <a class="el" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> }</td></tr>
-<tr class="memitem:a1dd2b158ed35f0a52ff4e367f30b942a" id="r_a1dd2b158ed35f0a52ff4e367f30b942a"><td class="memItemLeft">std::unique_ptr&lt; <a class="el" href="struct_hermes_1_1_default_socket_data_1_1_state.html">State</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a1dd2b158ed35f0a52ff4e367f30b942a">state</a> {}</td></tr>
-<tr class="memitem:aed4ebb68c610ead3b5e5ad99ea8d2a82" id="r_aed4ebb68c610ead3b5e5ad99ea8d2a82"><td class="memItemLeft"><a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html">SocketOptions</a>&#160;</td><td class="memItemRight"><a class="el" href="#aed4ebb68c610ead3b5e5ad99ea8d2a82">options</a> {}</td></tr>
+<tr class="memitem:a499bf312b10b4196dac2174d2352cd0e" id="r_a499bf312b10b4196dac2174d2352cd0e"><td class="memItemLeft">Endpoint&#160;</td><td class="memItemRight"><a class="el" href="#a499bf312b10b4196dac2174d2352cd0e">endpoint</a> {}</td></tr>
+<tr class="memitem:a6bdb010f85a11d7298ee5742d1aed0da" id="r_a6bdb010f85a11d7298ee5742d1aed0da"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6bdb010f85a11d7298ee5742d1aed0da">socket</a> { <a class="el" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> }</td></tr>
+<tr class="memitem:a36776bd776399deeadeed7827c140df1" id="r_a36776bd776399deeadeed7827c140df1"><td class="memItemLeft">std::unique_ptr&lt; <a class="el" href="struct_hermes_1_1_default_socket_data_1_1_state.html">State</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a36776bd776399deeadeed7827c140df1">state</a> {}</td></tr>
+<tr class="memdesc:a36776bd776399deeadeed7827c140df1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The member that stores the buffer of received elements.  <br /></td></tr>
+<tr class="memitem:a888a53c61cee9cf8c038bb4146024a73" id="r_a888a53c61cee9cf8c038bb4146024a73"><td class="memItemLeft"><a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html">SocketOptions</a>&#160;</td><td class="memItemRight"><a class="el" href="#a888a53c61cee9cf8c038bb4146024a73">options</a> {}</td></tr>
+<tr class="memdesc:a888a53c61cee9cf8c038bb4146024a73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Timeout options (send/recv timeout, not a deadline).  <br /></td></tr>
+<tr class="memitem:aa58cf787128b564e853a844d66198595" id="r_aa58cf787128b564e853a844d66198595"><td class="memItemLeft"><a class="el" href="#aadc6801dc36e0c2e64778d91889e0849">ExecutionContextType</a>&#160;</td><td class="memItemRight"><a class="el" href="#aa58cf787128b564e853a844d66198595">executionContext</a> {}</td></tr>
+<tr class="memdesc:aa58cf787128b564e853a844d66198595"><td class="mdescLeft">&#160;</td><td class="mdescRight">The execution context for async sockets.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-attribs" class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
-<tr class="memitem:a55ea98566f8b7036df7ea8d25b5ad01e" id="r_a55ea98566f8b7036df7ea8d25b5ad01e"><td class="memItemLeft">static constexpr <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a>&#160;</td><td class="memItemRight"><a class="el" href="#a55ea98566f8b7036df7ea8d25b5ad01e">Type</a> { SocketType }</td></tr>
-<tr class="memitem:a3ae7516dc9aed2a5eabaa9711280c25f" id="r_a3ae7516dc9aed2a5eabaa9711280c25f"><td class="memItemLeft">static constexpr <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a>&#160;</td><td class="memItemRight"><a class="el" href="#a3ae7516dc9aed2a5eabaa9711280c25f">Family</a> { SocketFamily }</td></tr>
+<tr class="memitem:a70ebba5ba9eb52072f4b35b2576320b6" id="r_a70ebba5ba9eb52072f4b35b2576320b6"><td class="memItemLeft">static constexpr <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a>&#160;</td><td class="memItemRight"><a class="el" href="#a70ebba5ba9eb52072f4b35b2576320b6">Type</a> { SocketType }</td></tr>
+<tr class="memitem:a56e164bda3a91faceafde2ce11548e14" id="r_a56e164bda3a91faceafde2ce11548e14"><td class="memItemLeft">static constexpr <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a>&#160;</td><td class="memItemRight"><a class="el" href="#a56e164bda3a91faceafde2ce11548e14">Family</a> { SocketFamily }</td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
-<a id="a978509aa104f60a05579d2396e3ecf7f" name="a978509aa104f60a05579d2396e3ecf7f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a978509aa104f60a05579d2396e3ecf7f">&#9670;&#160;</a></span>EndpointType</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt;<br />
+struct Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;</div><p>A basic data class for general propourse sockets (sync and async). </p>
+<p>It provides a generic class designed to serve as a data storage to simple socket types. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">ExecutionContext</td><td>The type of the execution context. <span class="tt">std::monostate</span> -&gt; no execution context. </td></tr>
+    <tr><td class="paramname">Endpoint</td><td>The type of the endpoint. </td></tr>
+    <tr><td class="paramname">SocketType</td><td>The type of the socket. </td></tr>
+    <tr><td class="paramname">SocketFamily</td><td>The type of the socket family. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section see"><dt>See also</dt><dd>TlsSocketData for safe TLS data. </dd></dl>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
+<a id="a65b41163470c05977d2760e1a3f2536b" name="a65b41163470c05977d2760e1a3f2536b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65b41163470c05977d2760e1a3f2536b">&#9670;&#160;</a></span>EndpointType</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::EndpointType = Endpoint</td>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::EndpointType = Endpoint</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a98cf0cf02065fe542467db7557c07f97" name="a98cf0cf02065fe542467db7557c07f97"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98cf0cf02065fe542467db7557c07f97">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[1/3]</span></h2>
+<a id="aadc6801dc36e0c2e64778d91889e0849" name="aadc6801dc36e0c2e64778d91889e0849"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadc6801dc36e0c2e64778d91889e0849">&#9670;&#160;</a></span>ExecutionContextType</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::ExecutionContextType</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">std::conditional_t&lt;</div>
+<div class="line">               std::same_as&lt;ExecutionContext, std::monostate&gt;, std::monostate, ExecutionContext*&gt;</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adaba00a1e01659e8524cd10f3f0b2237" name="adaba00a1e01659e8524cd10f3f0b2237"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaba00a1e01659e8524cd10f3f0b2237">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -233,19 +272,19 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 
 </div>
 </div>
-<a id="a46fbfb8b6a222d521baa6cde7c098b32" name="a46fbfb8b6a222d521baa6cde7c098b32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a46fbfb8b6a222d521baa6cde7c098b32">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[2/3]</span></h2>
+<a id="a9ebe48e4d69d001c669b4903913dcf05" name="a9ebe48e4d69d001c669b4903913dcf05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ebe48e4d69d001c669b4903913dcf05">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
           <td>(</td>
           <td class="paramtype">Endpoint</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
           <td></td>
@@ -260,19 +299,19 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 
 </div>
 </div>
-<a id="a4d79b35573396b989fb57d09932e83f1" name="a4d79b35573396b989fb57d09932e83f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d79b35573396b989fb57d09932e83f1">&#9670;&#160;</a></span>~DefaultSocketData()</h2>
+<a id="ac7e7c1eff18f092eb034380537506f11" name="ac7e7c1eff18f092eb034380537506f11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7e7c1eff18f092eb034380537506f11">&#9670;&#160;</a></span>~DefaultSocketData()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::~<a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::~<a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td></td>
@@ -287,21 +326,21 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 
 </div>
 </div>
-<a id="af1cb358e84b8aca9323d5b4a5dc0fa4f" name="af1cb358e84b8aca9323d5b4a5dc0fa4f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af1cb358e84b8aca9323d5b4a5dc0fa4f">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[3/3]</span></h2>
+<a id="a38fb0bc0a2075a3d32fd01c6e4d7f478" name="a38fb0bc0a2075a3d32fd01c6e4d7f478"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38fb0bc0a2075a3d32fd01c6e4d7f478">&#9670;&#160;</a></span>DefaultSocketData() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::DefaultSocketData </td>
           <td>(</td>
-          <td class="paramtype">DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td class="paramtype">DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -315,16 +354,16 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="a4dc0d7d23d9343754d0a80c0705bf4a2" name="a4dc0d7d23d9343754d0a80c0705bf4a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4dc0d7d23d9343754d0a80c0705bf4a2">&#9670;&#160;</a></span>MakeChild()</h2>
+<a id="a5608aa664e986c0ae1826c739c9a87bd" name="a5608aa664e986c0ae1826c739c9a87bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5608aa664e986c0ae1826c739c9a87bd">&#9670;&#160;</a></span>MakeChild()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::MakeChild </td>
+          <td class="memname"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::MakeChild </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -334,21 +373,21 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 
 </div>
 </div>
-<a id="a205f52b4ec26da132a3e0c606b88481f" name="a205f52b4ec26da132a3e0c606b88481f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a205f52b4ec26da132a3e0c606b88481f">&#9670;&#160;</a></span>operator=()</h2>
+<a id="a1e05a6ff92a4ba98b0d3607b18ba3382" name="a1e05a6ff92a4ba98b0d3607b18ba3382"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e05a6ff92a4ba98b0d3607b18ba3382">&#9670;&#160;</a></span>operator=()</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a> &amp; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::operator= </td>
+          <td class="memname"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a> &amp; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::operator= </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="#a98cf0cf02065fe542467db7557c07f97">DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="#adaba00a1e01659e8524cd10f3f0b2237">DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt; &amp;&amp;</td>          <td class="paramname"><span class="paramname"><em>other</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -362,35 +401,55 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
-<a id="a34a8636230aa1f18a3baed7cc0438de7" name="a34a8636230aa1f18a3baed7cc0438de7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a34a8636230aa1f18a3baed7cc0438de7">&#9670;&#160;</a></span>endpoint</h2>
+<a id="a499bf312b10b4196dac2174d2352cd0e" name="a499bf312b10b4196dac2174d2352cd0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a499bf312b10b4196dac2174d2352cd0e">&#9670;&#160;</a></span>endpoint</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">Endpoint <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::endpoint {}</td>
+          <td class="memname">Endpoint <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::endpoint {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a3ae7516dc9aed2a5eabaa9711280c25f" name="a3ae7516dc9aed2a5eabaa9711280c25f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ae7516dc9aed2a5eabaa9711280c25f">&#9670;&#160;</a></span>Family</h2>
+<a id="aa58cf787128b564e853a844d66198595" name="aa58cf787128b564e853a844d66198595"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa58cf787128b564e853a844d66198595">&#9670;&#160;</a></span>executionContext</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aadc6801dc36e0c2e64778d91889e0849">ExecutionContextType</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::executionContext {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The execution context for async sockets. </p>
+<p>In IO operations, ideally your execution context state is stored somewhere else with a longer lifetime than the sockets that uses it, so this data class stores a non-owning reference of this execution context. </p><dl class="section note"><dt>Note</dt><dd>This is a pointer unless ExecutionContext is a <span class="tt">std::monostate</span>. In that case, this member is a <span class="tt">std::monostate</span> with no unique address. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>It's a raw pointer so the value can be <span class="tt">nullptr</span>. This is the default value, your classes needs to deal with that. </dd></dl>
+
+</div>
+</div>
+<a id="a56e164bda3a91faceafde2ce11548e14" name="a56e164bda3a91faceafde2ce11548e14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56e164bda3a91faceafde2ce11548e14">&#9670;&#160;</a></span>Family</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::Family { SocketFamily }</td>
+          <td class="memname"><a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::Family { SocketFamily }</td>
         </tr>
       </table>
   </td>
@@ -402,67 +461,72 @@ template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace
 
 </div>
 </div>
-<a id="aed4ebb68c610ead3b5e5ad99ea8d2a82" name="aed4ebb68c610ead3b5e5ad99ea8d2a82"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed4ebb68c610ead3b5e5ad99ea8d2a82">&#9670;&#160;</a></span>options</h2>
+<a id="a888a53c61cee9cf8c038bb4146024a73" name="a888a53c61cee9cf8c038bb4146024a73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a888a53c61cee9cf8c038bb4146024a73">&#9670;&#160;</a></span>options</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html">SocketOptions</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::options {}</td>
+          <td class="memname"><a class="el" href="struct_hermes_1_1_default_socket_data_1_1_socket_options.html">SocketOptions</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::options {}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Timeout options (send/recv timeout, not a deadline). </p>
+
+</div>
+</div>
+<a id="a6bdb010f85a11d7298ee5742d1aed0da" name="a6bdb010f85a11d7298ee5742d1aed0da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6bdb010f85a11d7298ee5742d1aed0da">&#9670;&#160;</a></span>socket</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::socket { <a class="el" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> }</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 </div>
 </div>
-<a id="a58b7baaa6aad803b6d0e52dd1cfea6a7" name="a58b7baaa6aad803b6d0e52dd1cfea6a7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a58b7baaa6aad803b6d0e52dd1cfea6a7">&#9670;&#160;</a></span>socket</h2>
+<a id="a36776bd776399deeadeed7827c140df1" name="a36776bd776399deeadeed7827c140df1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a36776bd776399deeadeed7827c140df1">&#9670;&#160;</a></span>state</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">SocketFd</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::socket { <a class="el" href="_macros_8hpp.html#a243e6a2060225c58a9628c66754863e5">macroINVALID_SOCKET</a> }</td>
+          <td class="memname">std::unique_ptr&lt;<a class="el" href="struct_hermes_1_1_default_socket_data_1_1_state.html">State</a>&gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::state {}</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>The member that stores the buffer of received elements. </p>
+<p>It's a <span class="tt">std::unique_pointer</span>, so the class can stay thin and easy to move. </p><dl class="section note"><dt>Note</dt><dd>The state start's empty, your policies needs to check/fill when using it. </dd></dl>
+
 </div>
 </div>
-<a id="a1dd2b158ed35f0a52ff4e367f30b942a" name="a1dd2b158ed35f0a52ff4e367f30b942a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1dd2b158ed35f0a52ff4e367f30b942a">&#9670;&#160;</a></span>state</h2>
+<a id="a70ebba5ba9eb52072f4b35b2576320b6" name="a70ebba5ba9eb52072f4b35b2576320b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70ebba5ba9eb52072f4b35b2576320b6">&#9670;&#160;</a></span>Type</h2>
 
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
-      <table class="memname">
-        <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="struct_hermes_1_1_default_socket_data_1_1_state.html">State</a>&gt; <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::state {}</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a55ea98566f8b7036df7ea8d25b5ad01e" name="a55ea98566f8b7036df7ea8d25b5ad01e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a55ea98566f8b7036df7ea8d25b5ad01e">&#9670;&#160;</a></span>Type</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
+template&lt;class ExecutionContext = std::monostate, EndpointConcept Endpoint = IpEndpoint, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream, <a class="el" href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a> SocketFamily = AddressFamilyEnum::Inet6&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; Endpoint, SocketType, SocketFamily &gt;::Type { SocketType }</td>
+          <td class="memname"><a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> <a class="el" href="struct_hermes_1_1_default_socket_data.html">Hermes::DefaultSocketData</a>&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::Type { SocketType }</td>
         </tr>
       </table>
   </td>

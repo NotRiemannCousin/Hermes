@@ -156,15 +156,19 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_transfer_oper
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;<a class="el" href="_os_api_8hpp_source.html">Hermes/_base/OsApi/OsApi.hpp</a>&gt;</code><br />
+<code>#include &lt;concepts&gt;</code><br />
+<code>#include &lt;cstddef&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;sys/socket.h&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for TransferOperStatus.hpp:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_transfer_oper_status_8hpp__incl.svg" width="3336" height="330"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_transfer_oper_status_8hpp__incl.svg" width="3560" height="351"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_transfer_oper_status_8hpp__dep__incl.svg" width="236" height="168"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" loading="lazy" frameborder="0" src="_transfer_oper_status_8hpp__dep__incl.svg" width="235" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_transfer_oper_status_8hpp_source.html">Go to the source code of this file.</a></p>
@@ -172,10 +176,27 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:Hermes_3A_3ATransferOperStatus" id="r_Hermes_3A_3ATransferOperStatus"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_transfer_oper_status.html">Hermes::TransferOperStatus</a></td></tr>
+<tr class="memitem:Hermes_3A_3AAcceptExtensions" id="r_Hermes_3A_3AAcceptExtensions"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_accept_extensions.html">Hermes::AcceptExtensions</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform extension functions required to submit an Accept operation.  <a href="struct_hermes_1_1_accept_extensions.html#details">More...</a><br /></td></tr>
+<tr class="memitem:Hermes_3A_3AIoRequest" id="r_Hermes_3A_3AIoRequest"><td class="memItemLeft">struct &#160;</td><td class="memItemRight"><a class="el" href="struct_hermes_1_1_io_request.html">Hermes::IoRequest</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Platform-neutral description of one asynchronous I/O operation.  <a href="struct_hermes_1_1_io_request.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:Hermes" id="r_Hermes"><td class="memItemLeft">namespace &#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html">Hermes</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-concepts" class="groupheader"><a id="concepts" name="concepts"></a>
+Concepts</h2></td></tr>
+<tr class="memitem:Hermes_3A_3AExecutionContextConcept" id="r_Hermes_3A_3AExecutionContextConcept"><td class="memItemLeft">concept &#160;</td><td class="memItemRight"><a class="el" href="concept_hermes_1_1_execution_context_concept.html">Hermes::ExecutionContextConcept</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The contract every execution context used by the async policies must satisfy. <br /></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a20ae9a103406578268f5aae2cddf5b60" id="r_a20ae9a103406578268f5aae2cddf5b60"><td class="memItemLeft">enum class &#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60">Hermes::IoOperation</a> : std::uint8_t { <a class="el" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60ac4408d335012a56ff58937d78050efad">Hermes::Accept</a>
+, <a class="el" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60a49ab28040dfa07f53544970c6d147e1e">Hermes::Connect</a>
+, <a class="el" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60a94966d90747b97d1f0f206c98a8b1ac3">Hermes::Send</a>
+, <a class="el" href="namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530">Hermes::Recv</a>
+ }</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

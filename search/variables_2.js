@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['deadline_0',['deadline',['../struct_hermes_1_1_default_transfer_policy_1_1_recv_options.html#a73fc02a6ba77d96e70b8e92dd4671e1f',1,'Hermes::DefaultTransferPolicy::RecvOptions::deadline'],['../struct_hermes_1_1_default_transfer_policy_1_1_send_options.html#a2ef423b897cffeea4acbbfc0bc4bb4ed',1,'Hermes::DefaultTransferPolicy::SendOptions::deadline']]],
-  ['droplast_1',['dropLast',['../namespace_hermes_1_1_utils.html#a8d64941b828fa10f6eda66670a2c8a42',1,'Hermes::Utils']]]
+  ['callback_0',['callback',['../struct_hermes_1_1_transfer_oper_status.html#a338a784f425564d995983e69373c7df0',1,'Hermes::TransferOperStatus']]],
+  ['connectiontimeout_1',['connectionTimeout',['../struct_hermes_1_1_default_connect_policy_1_1_options.html#a3fff221009b77591d08b971651cbd14e',1,'Hermes::DefaultConnectPolicy::Options']]],
+  ['connecttimeout_2',['connectTimeout',['../struct_hermes_1_1_default_socket_data_1_1_socket_options.html#a638d644d86d3d93529f606cd1819c7db',1,'Hermes::DefaultSocketData::SocketOptions']]],
+  ['context_3',['context',['../struct_hermes_1_1_transfer_oper_status.html#a5e490ceb3c8f0832d4764523860a8a9c',1,'Hermes::TransferOperStatus']]]
 ];

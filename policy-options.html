@@ -171,7 +171,7 @@ Connection options</h2>
 <div class="fragment"><div class="line"><span class="keyword">const</span> Hermes::RawTlsClient::ConnOptions options{ .connectionTimeout = 3s, .handshakeTimeout  = 2s };</div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">auto</span> client{ Hermes::RawTlsClient::Connect({ endpoint, hostname }, options) };</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md90"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md31"></a>
 Listen and accept options</h2>
 <p>Accept policies split their configuration in two, because <span class="tt">Listen</span> and <span class="tt">Accept</span> configure different sockets at different times. <span class="tt">ListenOptions</span> applies once, to the listening socket itself, <span class="tt">reuseAddress</span> and the listening socket's buffer sizes live here. <span class="tt">AcceptOptions</span> applies to every connection the listener accepts from that point on, <span class="tt">tcpNoDelay</span>, <span class="tt">keepAlive</span>, and for <span class="tt">TlsAcceptPolicy</span>, <span class="tt">handshakeTimeout</span> and <span class="tt">requestClientCertificate</span>.</p>
 <div class="fragment"><div class="line"><span class="keyword">const</span> Hermes::RawTlsListener::ListenOptions listenOptions{ .reuseAddress = <span class="keyword">true</span> };</div>
@@ -181,7 +181,7 @@ Listen and accept options</h2>
 <div class="line"><span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp;&amp; result : listener-&gt;AcceptAll(acceptOptions)) {</div>
 <div class="line">    <span class="comment">// ...</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md91"></a>
+</div><!-- fragment --><h2 class="doxsection"><a class="anchor" id="autotoc_md32"></a>
 Send and receive options, and the deadline</h2>
 <p>Transfer operations use two separate options types, <span class="tt">SendOptions</span> and <span class="tt">RecvOptions</span>, even though today both only carry one field, <span class="tt">deadline</span>. They're kept separate because a field meaningful only for one direction, some framing or buffering hint that only makes sense while reading, for instance, would otherwise be silently accepted and ignored on the other call.</p>
 <p><span class="tt">deadline</span> is a <span class="tt">std::optional&lt;std::chrono::steady_clock::time_point&gt;</span>, an absolute point in time, not a duration. Leaving it unset preserves the policy's normal blocking behavior. Setting it bounds the whole call, not each underlying read or write inside it.</p>

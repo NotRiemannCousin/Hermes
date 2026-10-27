@@ -1,5 +1,6 @@
 var hierarchy =
 [
+    [ "Hermes::AcceptExtensions", "struct_hermes_1_1_accept_extensions.html", null ],
     [ "Hermes::DefaultAcceptPolicy&lt; Endpoint, SocketType, SocketFamily &gt;::AcceptOptions", "struct_hermes_1_1_default_accept_policy_1_1_accept_options.html", null ],
     [ "Hermes::details_::AcceptOptionsIpv6Base&lt; Family &gt;", null, [
       [ "Hermes::DefaultAcceptPolicy< Endpoint, SocketType, SocketFamily >::ListenOptions", "struct_hermes_1_1_default_accept_policy_1_1_listen_options.html", null ]
@@ -13,12 +14,13 @@ var hierarchy =
     [ "Hermes::DefaultAsyncConnectPolicy&lt; ExecutionContext, Data &gt;", "struct_hermes_1_1_default_async_connect_policy.html", null ],
     [ "Hermes::DefaultAsyncTransferPolicy&lt; ExecutionContext, Data &gt;", "struct_hermes_1_1_default_async_transfer_policy.html", null ],
     [ "Hermes::DefaultConnectPolicy&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_connect_policy.html", null ],
-    [ "Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_socket_data.html", null ],
+    [ "Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;", "struct_hermes_1_1_default_socket_data.html", null ],
     [ "Hermes::DefaultTransferPolicy&lt; SocketType &gt;", "struct_hermes_1_1_default_transfer_policy.html", null ],
     [ "Hermes::Utils::DropLastAdaptor", "struct_hermes_1_1_utils_1_1_drop_last_adaptor.html", null ],
     [ "std::error_category", null, [
       [ "Hermes::ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", null ]
     ] ],
+    [ "Hermes::IoRequest", "struct_hermes_1_1_io_request.html", null ],
     [ "Hermes::IpAddress", "struct_hermes_1_1_ip_address.html", null ],
     [ "Hermes::IpEndpoint", "struct_hermes_1_1_ip_endpoint.html", null ],
     [ "Hermes::IpEndpointParams", "struct_hermes_1_1_ip_endpoint_params.html", null ],
@@ -33,8 +35,8 @@ var hierarchy =
     [ "Hermes::DefaultTransferPolicy&lt; SocketType &gt;::RecvOptions", "struct_hermes_1_1_default_transfer_policy_1_1_recv_options.html", null ],
     [ "Hermes::DefaultTransferPolicy&lt; SocketType &gt;::SendOptions", "struct_hermes_1_1_default_transfer_policy_1_1_send_options.html", null ],
     [ "Hermes::ServerSocket&lt; SocketData, AcceptPolicy, TransferPolicy &gt;", "struct_hermes_1_1_server_socket.html", null ],
-    [ "Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::SocketOptions", "struct_hermes_1_1_default_socket_data_1_1_socket_options.html", null ],
-    [ "Hermes::DefaultSocketData&lt; Endpoint, SocketType, SocketFamily &gt;::State", "struct_hermes_1_1_default_socket_data_1_1_state.html", null ],
+    [ "Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::SocketOptions", "struct_hermes_1_1_default_socket_data_1_1_socket_options.html", null ],
+    [ "Hermes::DefaultSocketData&lt; ExecutionContext, Endpoint, SocketType, SocketFamily &gt;::State", "struct_hermes_1_1_default_socket_data_1_1_state.html", null ],
     [ "Hermes::TransferError", "struct_hermes_1_1_transfer_error.html", null ],
     [ "Hermes::TransferOperStatus", "struct_hermes_1_1_transfer_oper_status.html", null ],
     [ "Ts...", null, [

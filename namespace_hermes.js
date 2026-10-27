@@ -1,6 +1,7 @@
 var namespace_hermes =
 [
     [ "Utils", "namespace_hermes_1_1_utils.html", "namespace_hermes_1_1_utils" ],
+    [ "AcceptExtensions", "struct_hermes_1_1_accept_extensions.html", null ],
     [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
     [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
     [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
@@ -10,6 +11,7 @@ var namespace_hermes =
     [ "DefaultConnectPolicy", "struct_hermes_1_1_default_connect_policy.html", "struct_hermes_1_1_default_connect_policy" ],
     [ "DefaultSocketData", "struct_hermes_1_1_default_socket_data.html", "struct_hermes_1_1_default_socket_data" ],
     [ "DefaultTransferPolicy", "struct_hermes_1_1_default_transfer_policy.html", "struct_hermes_1_1_default_transfer_policy" ],
+    [ "IoRequest", "struct_hermes_1_1_io_request.html", "struct_hermes_1_1_io_request" ],
     [ "IpAddress", "struct_hermes_1_1_ip_address.html", "struct_hermes_1_1_ip_address" ],
     [ "IpEndpoint", "struct_hermes_1_1_ip_endpoint.html", "struct_hermes_1_1_ip_endpoint" ],
     [ "IpEndpointParams", "struct_hermes_1_1_ip_endpoint_params.html", "struct_hermes_1_1_ip_endpoint_params" ],
@@ -25,6 +27,7 @@ var namespace_hermes =
     [ "ConnectionPolicyConcept", "concept_hermes_1_1_connection_policy_concept.html", null ],
     [ "ContiguousByteRange", "concept_hermes_1_1_contiguous_byte_range.html", null ],
     [ "EndpointConcept", "concept_hermes_1_1_endpoint_concept.html", null ],
+    [ "ExecutionContextConcept", "concept_hermes_1_1_execution_context_concept.html", null ],
     [ "ListenerSocketConcept", "concept_hermes_1_1_listener_socket_concept.html", null ],
     [ "ServerSocketConcept", "concept_hermes_1_1_server_socket_concept.html", null ],
     [ "ServerSocketPoliciesConcept", "concept_hermes_1_1_server_socket_policies_concept.html", null ],
@@ -466,6 +469,12 @@ var namespace_hermes =
       [ "Messages", "namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea41de6d6cfb8953c021bbe4ba0701c8a1", null ],
       [ "DeferredCredValidation", "namespace_hermes.html#a54a7600cb23e795f60cc9023db2570fea3f5b0039305e0ff381734cc52625b648", null ],
       [ "NoPostHandshakeAuth", "namespace_hermes.html#a54a7600cb23e795f60cc9023db2570feab0bf538cf0f0995b3edfd0a41090f80d", null ]
+    ] ],
+    [ "IoOperation", "namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60", [
+      [ "Accept", "namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60ac4408d335012a56ff58937d78050efad", null ],
+      [ "Connect", "namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60a49ab28040dfa07f53544970c6d147e1e", null ],
+      [ "Send", "namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60a94966d90747b97d1f0f206c98a8b1ac3", null ],
+      [ "Recv", "namespace_hermes.html#a20ae9a103406578268f5aae2cddf5b60af847fa133f30ecb64731e5ddddc38530", null ]
     ] ],
     [ "NameInfoFlags", "namespace_hermes.html#ad728a1712e86887920de64baef9dab88", [
       [ "NoFqdn", "namespace_hermes.html#ad728a1712e86887920de64baef9dab88a771543f666982f1ae03aa3985ecbbbd4", null ],

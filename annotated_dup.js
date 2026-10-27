@@ -8,6 +8,7 @@ var annotated_dup =
         [ "UntilMatchAdaptor", "struct_hermes_1_1_utils_1_1_until_match_adaptor.html", "struct_hermes_1_1_utils_1_1_until_match_adaptor" ],
         [ "UntilMatchView", "struct_hermes_1_1_utils_1_1_until_match_view.html", "struct_hermes_1_1_utils_1_1_until_match_view" ]
       ] ],
+      [ "AcceptExtensions", "struct_hermes_1_1_accept_extensions.html", null ],
       [ "ClientSocket", "struct_hermes_1_1_client_socket.html", "struct_hermes_1_1_client_socket" ],
       [ "ConnectionErrorCategory", "struct_hermes_1_1_connection_error_category.html", "struct_hermes_1_1_connection_error_category" ],
       [ "DefaultAcceptPolicy", "struct_hermes_1_1_default_accept_policy.html", "struct_hermes_1_1_default_accept_policy" ],
@@ -17,6 +18,7 @@ var annotated_dup =
       [ "DefaultConnectPolicy", "struct_hermes_1_1_default_connect_policy.html", "struct_hermes_1_1_default_connect_policy" ],
       [ "DefaultSocketData", "struct_hermes_1_1_default_socket_data.html", "struct_hermes_1_1_default_socket_data" ],
       [ "DefaultTransferPolicy", "struct_hermes_1_1_default_transfer_policy.html", "struct_hermes_1_1_default_transfer_policy" ],
+      [ "IoRequest", "struct_hermes_1_1_io_request.html", "struct_hermes_1_1_io_request" ],
       [ "IpAddress", "struct_hermes_1_1_ip_address.html", "struct_hermes_1_1_ip_address" ],
       [ "IpEndpoint", "struct_hermes_1_1_ip_endpoint.html", "struct_hermes_1_1_ip_endpoint" ],
       [ "IpEndpointParams", "struct_hermes_1_1_ip_endpoint_params.html", "struct_hermes_1_1_ip_endpoint_params" ],

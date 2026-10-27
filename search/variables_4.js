@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['family_0',['Family',['../struct_hermes_1_1_default_socket_data.html#a3ae7516dc9aed2a5eabaa9711280c25f',1,'Hermes::DefaultSocketData::Family'],['../struct_hermes_1_1_default_accept_policy.html#a08bb744353cabfc9ed08e357b3387323',1,'Hermes::DefaultAcceptPolicy::Family'],['../struct_hermes_1_1_default_connect_policy.html#a806f6327878aad6796f7b79a6fa5c259',1,'Hermes::DefaultConnectPolicy::Family']]]
+  ['endpoint_0',['endpoint',['../struct_hermes_1_1_default_socket_data.html#a499bf312b10b4196dac2174d2352cd0e',1,'Hermes::DefaultSocketData']]],
+  ['error_1',['error',['../struct_hermes_1_1_transfer_error.html#a86ec5b6600b87b1c907dabb5318d53c9',1,'Hermes::TransferError']]],
+  ['executioncontext_2',['executionContext',['../struct_hermes_1_1_default_socket_data.html#aa58cf787128b564e853a844d66198595',1,'Hermes::DefaultSocketData']]]
 ];
