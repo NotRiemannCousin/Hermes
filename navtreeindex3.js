@@ -243,11 +243,11 @@ var NAVTREEINDEX3 =
 "struct_hermes_1_1_accept_extensions.html":[4,2,0,0,1],
 "struct_hermes_1_1_client_socket.html":[4,0,0,0,2],
 "struct_hermes_1_1_client_socket.html":[4,2,0,0,2],
-"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,0,0,0,2,7],
 "struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,2,0,0,2,7],
-"struct_hermes_1_1_client_socket.html#a372850f20dcfdca814c1db36869b1f3b":[4,0,0,0,2,12],
+"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,0,0,0,2,7],
 "struct_hermes_1_1_client_socket.html#a372850f20dcfdca814c1db36869b1f3b":[4,2,0,0,2,12],
-"struct_hermes_1_1_client_socket.html#a4185984353f8a41affd36014695378a0":[4,0,0,0,2,20],
+"struct_hermes_1_1_client_socket.html#a372850f20dcfdca814c1db36869b1f3b":[4,0,0,0,2,12],
 "struct_hermes_1_1_client_socket.html#a4185984353f8a41affd36014695378a0":[4,2,0,0,2,20],
-"struct_hermes_1_1_client_socket.html#a4707e9a497ddeb6497a7e95413fd50e3":[4,0,0,0,2,11]
+"struct_hermes_1_1_client_socket.html#a4185984353f8a41affd36014695378a0":[4,0,0,0,2,20],
+"struct_hermes_1_1_client_socket.html#a4707e9a497ddeb6497a7e95413fd50e3":[4,2,0,0,2,11]
 };
