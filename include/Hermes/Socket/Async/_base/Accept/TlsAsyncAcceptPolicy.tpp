@@ -194,7 +194,7 @@ namespace Hermes {
             return result;
 
         auto* context{ data.executionContext };
-r        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket))) {
+        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket))) {
             Close(data);
             return std::unexpected{ ConnectionErrorEnum::NoScheduler };
         }

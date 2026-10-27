@@ -35,6 +35,21 @@ namespace {
 
     constexpr int kListenBacklog{ 8 };
 
+#ifdef _WIN32
+    bool AsyncBackendAvailable() {
+        return true;
+    }
+#else
+    bool AsyncBackendAvailable() {
+        io_uring ring{};
+        const int result{ io_uring_queue_init(2, &ring, 0) };
+        if (result < 0)
+            return false;
+        io_uring_queue_exit(&ring);
+        return true;
+    }
+#endif
+
     //! Scriptable stand-in for FastIoLoop implementing Hermes::ExecutionContextConcept.
     //!
     //! The concept evaluates the whole surface on `const Context&` (TransferOperStatus.hpp),
@@ -213,6 +228,10 @@ TEST_F(MockListenerTest, Listen_FlakyContext_SecondListenerFailsOnRegisterHandle
 }
 
 TEST_F(MockListenerTest, Listen_RegisterHandleFails_ReleasesTheBoundPort) {
+    // Needs the REAL backend: the regression check re-binds the port through a real loop.
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "real async backend (IOCP/io_uring) is unavailable in this environment";
+
     const std::uint16_t port{ GetNextPort() };
 
     {
@@ -359,6 +378,10 @@ TEST_F(MockListenerTest, AcceptOne_AbortDuringPendingAccept_FailsDeterministical
 }
 
 TEST_F(MockListenerTest, MockSurface_PostWorkAndGetScheduler_CountCalls) {
+    // GetScheduler() lazily builds a real FastIoLoop to hand out a genuine scheduler.
+    if (!AsyncBackendAvailable())
+        GTEST_SKIP() << "real async backend (IOCP/io_uring) is unavailable in this environment";
+
     EXPECT_TRUE(mock.PostWork());
     EXPECT_TRUE(mock.PostWork(1, "x"));
     EXPECT_EQ(mock.postWorkCalls.load(), 2);

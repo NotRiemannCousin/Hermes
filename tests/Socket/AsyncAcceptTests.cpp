@@ -7,6 +7,7 @@
 
 #include <atomic>
 #include <cstdint>
+#include <optional>
 #include <thread>
 
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_NATIVE_SCHEDULER
@@ -53,7 +54,16 @@ namespace {
 }
 
 struct AsyncListenerTest : testing::Test {
-    FastIoLoop loop{ 2 };
+    // The loop is created in SetUp() AFTER the backend probe: FastIoLoop's constructor
+    // throws when io_uring is unavailable (Linux CI runners), and a throwing member would
+    // fail every test before the body's GTEST_SKIP() could ever run.
+    std::optional<FastIoLoop> loop;
+
+    void SetUp() override {
+        if (!AsyncBackendAvailable())
+            GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
+        loop.emplace(2);
+    }
 
     static void ConnectClientInBackground(const IpEndpoint& endpoint) {
         std::jthread clientThread{ [&] {
@@ -65,11 +75,8 @@ struct AsyncListenerTest : testing::Test {
 };
 
 TEST_F(AsyncListenerTest, Listen_CompletesWithUsableListener) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     AsyncSocketData listenData{ MakeLoopbackEndpoint(GetNextPort()) };
-    listenData.executionContext = &loop;
+    listenData.executionContext = &*loop;
 
     auto completed{ stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(listenData), kListenBacklog)) };
     ASSERT_TRUE(completed.has_value());
@@ -79,12 +86,9 @@ TEST_F(AsyncListenerTest, Listen_CompletesWithUsableListener) {
 }
 
 TEST_F(AsyncListenerTest, Listen_SecondListenerOnSamePort_WithoutReuse_Fails) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     const std::uint16_t port{ GetNextPort() };
     AsyncSocketData firstData{ MakeLoopbackEndpoint(port) };
-    firstData.executionContext = &loop;
+    firstData.executionContext = &*loop;
 
     auto first{ stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(firstData), kListenBacklog)) };
     ASSERT_TRUE(first.has_value());
@@ -92,7 +96,7 @@ TEST_F(AsyncListenerTest, Listen_SecondListenerOnSamePort_WithoutReuse_Fails) {
 
     EXPECT_ANY_THROW({
         AsyncSocketData secondData{ MakeLoopbackEndpoint(port) };
-        secondData.executionContext = &loop;
+        secondData.executionContext = &*loop;
 
         stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(secondData), AsyncListenOptions{ .reuseAddress = false }, kListenBacklog));
     });
@@ -101,9 +105,6 @@ TEST_F(AsyncListenerTest, Listen_SecondListenerOnSamePort_WithoutReuse_Fails) {
 }
 
 TEST_F(AsyncListenerTest, Listen_NoExecutionContext_Fails) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
 
     EXPECT_ANY_THROW({
@@ -112,12 +113,9 @@ TEST_F(AsyncListenerTest, Listen_NoExecutionContext_Fails) {
 }
 
 TEST_F(AsyncListenerTest, AcceptOne_ConnectedClient_CompletesAndPropagatesContext) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
     AsyncSocketData listenData{ endpoint };
-    listenData.executionContext = &loop;
+    listenData.executionContext = &*loop;
 
     auto completed{ stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(listenData), kListenBacklog)) };
     ASSERT_TRUE(completed.has_value());
@@ -129,19 +127,16 @@ TEST_F(AsyncListenerTest, AcceptOne_ConnectedClient_CompletesAndPropagatesContex
     ASSERT_TRUE(accepted.has_value());
     auto server{ std::move(std::get<0>(*accepted)) };
 
-    EXPECT_EQ(server.GetSocketData().executionContext, &loop);
+    EXPECT_EQ(server.GetSocketData().executionContext, &*loop);
 
     server.Close();
     listener.Close();
 }
 
 TEST_F(AsyncListenerTest, AcceptOne_AbortWhilePending_FailsTheAccept) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
     AsyncSocketData listenData{ endpoint };
-    listenData.executionContext = &loop;
+    listenData.executionContext = &*loop;
 
     auto completed{ stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(listenData), kListenBacklog)) };
     ASSERT_TRUE(completed.has_value());
@@ -157,12 +152,9 @@ TEST_F(AsyncListenerTest, AcceptOne_AbortWhilePending_FailsTheAccept) {
 }
 
 TEST_F(AsyncListenerTest, AcceptOne_SequentialClients_AllAccepted) {
-    if (!AsyncBackendAvailable())
-        GTEST_SKIP() << "native async backend (IOCP/io_uring) is unavailable in this environment";
-
     const IpEndpoint endpoint{ MakeLoopbackEndpoint(GetNextPort()) };
     AsyncSocketData listenData{ endpoint };
-    listenData.executionContext = &loop;
+    listenData.executionContext = &*loop;
 
     auto completed{ stdexec::sync_wait(RawTcpAsyncListener::Listen(std::move(listenData), kListenBacklog)) };
     ASSERT_TRUE(completed.has_value());
@@ -173,7 +165,7 @@ TEST_F(AsyncListenerTest, AcceptOne_SequentialClients_AllAccepted) {
         auto accepted{ stdexec::sync_wait(listener.AsyncAcceptOne()) };
         ASSERT_TRUE(accepted.has_value());
         auto server{ std::move(std::get<0>(*accepted)) };
-        EXPECT_EQ(server.GetSocketData().executionContext, &loop);
+        EXPECT_EQ(server.GetSocketData().executionContext, &*loop);
         server.Close();
     }
 
