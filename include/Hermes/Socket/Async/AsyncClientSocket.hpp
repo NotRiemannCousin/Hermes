@@ -13,7 +13,7 @@ namespace Hermes {
 
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     template<
-        SocketDataConcept SocketData = DefaultSocketData<>,
+        SocketDataConcept SocketData = DefaultSocketData<FastIoLoop>,
         class ConnectionPolicy       = DefaultAsyncConnectPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
         requires AsyncClientSocketPoliciesConcept<SocketData, ConnectionPolicy, TransferPolicy>
@@ -155,9 +155,9 @@ namespace Hermes {
     private:
         AsyncClientSocket() = default;
 
-        SocketData       m_socketData{};
-        ConnectionPolicy m_connectionPolicy{};
-        TransferPolicy   m_transferPolicy{};
+        SocketData m_socketData{};
+        [[no_unique_address]] ConnectionPolicy m_connectionPolicy{};
+        [[no_unique_address]] TransferPolicy   m_transferPolicy{};
     };
 
 
@@ -173,11 +173,11 @@ namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TCP client async socket.
     using RawTcpAsyncClient = AsyncClientSocket<>;
-    extern template struct AsyncClientSocket<DefaultSocketData<>, DefaultAsyncConnectPolicy<>, DefaultAsyncTransferPolicy<>>;
+    extern template struct AsyncClientSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncConnectPolicy<>, DefaultAsyncTransferPolicy<>>;
 #if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS client async socket.
-    using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
-    extern template struct AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+    using RawTlsAsyncClient = AsyncClientSocket<TlsSocketData<FastIoLoop>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+    extern template struct AsyncClientSocket<TlsSocketData<FastIoLoop>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
 #endif
 #endif
     // using RawUdpAsyncClient = AsyncClientSocket<DefaultSocketData<IpEndpoint, SocketTypeEnum::Dgram>>;

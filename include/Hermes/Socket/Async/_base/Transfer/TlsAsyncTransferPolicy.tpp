@@ -5,9 +5,6 @@
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.hpp>
 
 namespace Hermes {
-    // TODO: Humm this is actually very bad, I should write this myself later.
-
-
     template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
     struct TlsAsyncTransferPolicy<ExecutionContext, Data>::TransferSender {
@@ -36,60 +33,60 @@ namespace Hermes {
             TransferOperStatus m_status{};
             size_t m_accumulatedBytes{};
 
-            LongIoCount m_flags{};
         public:
             OperationState(TlsAsyncTransferPolicy* policy, Data* data, std::span<std::byte> recv, std::span<const std::byte> send, RecvModeEnum mode, ActionEnum action, Receiver receiver) :
                 m_policy{ policy }, m_data{ data }, m_recvBuffer{ recv }, m_sendBuffer{ send }, m_mode{ mode }, m_action{ action }, m_receiver{ std::move(receiver) } {}
 
             void Pump() noexcept {
-                m_flags = 0;
                 while (true) {
                     using TransferStateOpResult = details_::TransferStateOpResult;
                     switch (m_data->transferStateMachine->Advance(*m_data)) {
                         case TransferStateOpResult::Send: {
                             auto buf{ m_data->transferStateMachine->GetSendBuffer(*m_data) };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
-                            DWORD sendFlags{};
 
-                            if (WSASend(m_data->socket, &wsaBuf, 1, nullptr, sendFlags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
-                                }
-                            }
-#else
-                            auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
-                                stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
+                                stdexec::set_error(std::move(m_receiver),
+                                    TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::NoScheduler });
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+
+                            const IoRequest request{
+                                .operation = IoOperation::Send,
+                                .socket    = m_data->socket,
+                                .buffer    = const_cast<std::byte*>(buf.data()),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver),
+                                    TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                            }
                             return;
                         }
                         case TransferStateOpResult::Recv: {
                             auto buf{ m_data->transferStateMachine->GetRecvBuffer(*m_data) };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
-                            if (WSARecv(m_data->socket, &wsaBuf, 1, nullptr, &m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
-                                }
-                            }
-#else
-                            auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
-                            if (!loop) {
-                                stdexec::set_error(std::move(m_receiver), TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
+                                stdexec::set_error(std::move(m_receiver),
+                                    TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::NoScheduler });
                                 return;
                             }
-                            loop->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+
+                            const IoRequest request{
+                                .operation = IoOperation::Recv,
+                                .socket    = m_data->socket,
+                                .buffer    = buf.data(),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver),
+                                    TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                            }
                             return;
                         }
                         case TransferStateOpResult::Done:
@@ -117,6 +114,7 @@ namespace Hermes {
                                         m_data->acceptStateMachine->Advance(*m_data);
                                 } else {
                                     stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes, ConnectionErrorEnum::Unknown });
+                                    return;
                                 }
 
                                 const auto hsResult{ m_data->connectStateMachine ?
@@ -153,7 +151,7 @@ namespace Hermes {
             }
 
             void start() & noexcept {
-                m_status.context = this;
+                m_status.context  = this;
                 m_status.callback = IoCallback;
 
                 if (m_action == ActionEnum::Recv)

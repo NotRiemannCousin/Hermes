@@ -17,13 +17,17 @@ namespace Hermes {
     //! @details Renegotiate() re-enters the handshake state machine on an open connection.
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsConnectPolicy {
+        static_assert(requires (Data data) {
+            { *data.connectStateMachine } -> std::same_as<details_::ITlsConnectStateMachine<Data>&>;
+        }, "The socket data must have a valid TLS state machine to start connections.");
+
+
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
-        using EndpointType = typename Data::EndpointType;
 
         static constexpr bool IsServer{};
 
-        using DataType = TlsSocketData<EndpointType, Type, Family>;
+        using EndpointType = Data::EndpointType;
 
         struct Options : DefaultConnectPolicy<EndpointType, SocketTypeEnum::Stream, Family>::Options {
             std::chrono::milliseconds handshakeTimeout{};  //!< Budget time for the whole handshake.

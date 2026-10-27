@@ -297,8 +297,6 @@ namespace Hermes {
 
         && requires () { typename Policy::Options; }
         && requires (Policy policy, SocketData& data, typename Policy::Options opt) {
-            { opt.scheduler                 };
-
             { policy.Connect(data, opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
             { policy.Shutdown(data)     } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
             { policy.Close(data)        } -> std::same_as<void>;
@@ -388,8 +386,6 @@ namespace Hermes {
             { policy.Listen(data, backlog, opt) } -> std::same_as<ConnectionResultOper>;
         }
         && requires(Policy policy, SocketData& data, typename Policy::AcceptOptions opt) {
-            { opt.scheduler            };
-
             { policy.Accept(data, std::move(data), opt) } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
             { policy.Shutdown(data)                     } -> stdexec::sender;// -> AsyncConnectionResultOperConcept;
             { policy.Close(data)                        } -> std::same_as<void>;

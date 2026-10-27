@@ -16,9 +16,25 @@ namespace Hermes {
     //! on this policy instance.
     template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncConnectPolicy {
+        static_assert(requires (Data data) {
+            { *data.connectStateMachine } -> std::same_as<details_::ITlsConnectStateMachine<Data>&>;
+        }, "The socket data must have a valid TLS state machine to start connections.");
+
+        static_assert(!std::same_as<ExecutionContext, std::monostate>,
+            "Async policies require a real execution context, std::monostate is a fallback that generic SocketData "
+            "uses in sync sockets only.");
+
+        static_assert(requires (Data data) {
+            { data.executionContext } -> std::same_as<ExecutionContext*&>;
+        }, "The socket data must carry this policy's execution context (SocketData::executionContext).");
+
+        static_assert(ExecutionContextConcept<ExecutionContext>,
+            "ExecutionContext must satisfy Hermes::ExecutionContextConcept (RegisterHandle, SubmitIo, PostWork, GetScheduler).");
+
+
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
-        using EndpointType = typename Data::EndpointType;
+        using EndpointType = Data::EndpointType;
 
 
         struct Options : DefaultAsyncConnectPolicy<ExecutionContext, Data>::Options {
@@ -46,7 +62,7 @@ namespace Hermes {
 
 namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    static_assert(AsyncConnectionPolicyConcept<TlsAsyncConnectPolicy<>, TlsSocketData<>>);
+    static_assert(AsyncConnectionPolicyConcept<TlsAsyncConnectPolicy<>, TlsSocketData<FastIoLoop>>);
 #endif
 }
 

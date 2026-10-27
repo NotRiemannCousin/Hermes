@@ -2,7 +2,7 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
-#include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.tpp>
+#include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.hpp>
 #include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
 
@@ -42,53 +42,49 @@ namespace Hermes {
 
                 while (true) {
                     using ConnectStateOpResult = details_::ConnectStateOpResult;
-                    // ReSharper disable once CppDefaultCaseNotHandledInSwitchStatement
                     switch (m_data->connectStateMachine->Advance(*m_data)) {
                         case ConnectStateOpResult::Send: {
                             auto buf{ m_data->connectStateMachine->GetSendBuffer() };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
 
-                            if (WSASend(m_data->socket, &wsaBuf, 1, nullptr, m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
-                                }
-                            }
-#else
-                            auto* scheduler = m_options.scheduler;
-                            if (!scheduler) {
-                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
-                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+
+                            const IoRequest request{
+                                .operation = IoOperation::Send,
+                                .socket    = m_data->socket,
+                                .buffer    = const_cast<std::byte*>(buf.data()),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            }
                             return;
                         }
                         case ConnectStateOpResult::Recv: {
                             auto buf{ m_data->connectStateMachine->GetRecvBuffer(*m_data) };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
 
-                            if (WSARecv(m_data->socket, &wsaBuf, 1, nullptr, &m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    auto sla{ WSAGetLastError };
-                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
-                                }
-                            }
-#else
-                            auto* scheduler = m_options.scheduler;
-                            if (!scheduler) {
-                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
-                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
-                                io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+
+                            const IoRequest request{
+                                .operation = IoOperation::Recv,
+                                .socket    = m_data->socket,
+                                .buffer    = buf.data(),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            }
                             return;
                         }
                         case ConnectStateOpResult::Done:
@@ -107,7 +103,6 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
-                    // TODO: FUTURE: Map the error
                     stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::Unknown);
                     return;
                 }
@@ -141,9 +136,8 @@ namespace Hermes {
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, *reinterpret_cast<DefaultAsyncConnectPolicy<ExecutionContext, Data>::Options*>(&options))
-             |
-             stdexec::let_value(Utils::Overloaded{
+        return DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, options)
+             | stdexec::let_value(Utils::Overloaded{
                  [&data, options]() mutable { return ControlSender{ &data, options }; },
                  [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
              });

@@ -8,7 +8,7 @@
 namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     template<
-        SocketDataConcept SocketData = DefaultSocketData<>,
+        SocketDataConcept SocketData = DefaultSocketData<FastIoLoop>,
         class AcceptPolicy           = DefaultAsyncAcceptPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
         requires AsyncServerSocketPoliciesConcept<SocketData, AcceptPolicy, TransferPolicy>
@@ -155,8 +155,8 @@ namespace Hermes {
         //! steps. Returns the fully initialized listener on success or a ConnectionErrorEnum on failure.
         [[nodiscard]] static auto InternalCreateAndListen(SocketData&& data, ListenOptions opt, int backlog) noexcept -> ListenerSocketResult;
 
-        SocketData   m_socketData{};
-        AcceptPolicy m_acceptPolicy{};
+        SocketData m_socketData{};
+        [[no_unique_address]] AcceptPolicy m_acceptPolicy{};
     };
 
 
@@ -172,11 +172,11 @@ namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TCP listener async socket.
     using RawTcpAsyncListener = AsyncListenerSocket<>;
-    extern template struct AsyncListenerSocket<DefaultSocketData<>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
+    extern template struct AsyncListenerSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
 #if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS listener async socket.
-    using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
-    extern template struct AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    using RawTlsAsyncListener = AsyncListenerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    extern template struct AsyncListenerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 #endif
 #endif
 

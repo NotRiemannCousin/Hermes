@@ -44,48 +44,46 @@ namespace Hermes {
                     switch (m_data->acceptStateMachine->Advance(*m_data)) {
                         case AcceptStateOpResult::Send: {
                             auto buf{ m_data->acceptStateMachine->GetSendBuffer() };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(const_cast<std::byte*>(buf.data())) };
-                            if (WSASend(m_data->socket, &wsaBuf, 1, nullptr, m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
-                                }
-                            }
-#else
-                            auto* scheduler = m_options.scheduler;
-                            if (!scheduler) {
+
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
-                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_send(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
-                                 io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+                            const IoRequest request{
+                                .operation = IoOperation::Send,
+                                .socket    = m_data->socket,
+                                .buffer    = const_cast<std::byte*>(buf.data()),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            }
                             return;
                         }
                         case AcceptStateOpResult::Recv: {
                             auto buf{ m_data->acceptStateMachine->GetRecvBuffer(*m_data) };
-#ifdef _WIN32
-                            WSABUF wsaBuf{ static_cast<ULONG>(buf.size()), reinterpret_cast<char*>(buf.data()) };
-                            if (WSARecv(m_data->socket, &wsaBuf, 1, nullptr, &m_flags, &m_status, nullptr) == macroSOCKET_ERROR) {
-                                if (WSAGetLastError() != WSA_IO_PENDING) {
-                                    stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
-                                }
-                            }
-#else
-                            auto* scheduler = m_options.scheduler;
-                            if (!scheduler) {
+
+                            auto* context{ m_data->executionContext };
+                            if (!context) {
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
-                            scheduler->SubmitIo([this, buf](struct io_uring_sqe* sqe) {
-                                io_uring_prep_recv(sqe, static_cast<int>(m_data->socket), buf.data(), buf.size(), 0);
 
-                                 io_uring_sqe_set_data(sqe, &m_status);
-                            });
-#endif
+                            const IoRequest request{
+                                .operation = IoOperation::Recv,
+                                .socket    = m_data->socket,
+                                .buffer    = buf.data(),
+                                .length    = buf.size(),
+                                .status    = &m_status
+                            };
+
+                            if (!context->SubmitIo(request)) {
+                                stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                            }
                             return;
                         }
                         case AcceptStateOpResult::Done:
@@ -191,7 +189,15 @@ namespace Hermes {
 
     template<class ExecutionContext, SocketDataConcept Data>
     ConnectionResultOper TlsAsyncAcceptPolicy<ExecutionContext, Data>::Listen(Data& data, const int backlog, ListenOptions options) noexcept {
-        return TlsAcceptPolicy<Data>::Listen(data, backlog, options);
+        auto result{ TlsAcceptPolicy<Data>::Listen(data, backlog, options) };
+        if (!result)
+            return result;
+
+        auto* context{ data.executionContext };
+        if (!context || !context->RegisterHandle(reinterpret_cast<SocketHandle>(data.socket)))
+            return std::unexpected{ ConnectionErrorEnum::NoScheduler };
+
+        return m_tcp.LoadAcceptExtensions(data);
     }
 
     template<class ExecutionContext, SocketDataConcept Data>
@@ -200,9 +206,8 @@ namespace Hermes {
         m_options = options;
 
         static_assert(stdexec::sender<ControlSender>);
-        auto defaultOptions{ static_cast<DefaultAsyncAcceptPolicy<ExecutionContext, Data>::AcceptOptions>(options) };
 
-        return DefaultAsyncAcceptPolicy<ExecutionContext, Data>::Accept(listenData, std::move(clientData), defaultOptions)
+        return m_tcp.Accept(listenData, std::move(clientData), options)
              | stdexec::let_value([options](Data& data) {
                    return AcceptSender{ std::move(data), options };
                });

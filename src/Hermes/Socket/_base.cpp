@@ -21,14 +21,14 @@ namespace Hermes {
 #endif
 
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_NATIVE_SCHEDULER
-    template struct AsyncClientSocket<DefaultSocketData<>, DefaultAsyncConnectPolicy<>, DefaultAsyncTransferPolicy<>>;
-    template struct AsyncListenerSocket<DefaultSocketData<>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
-    template struct AsyncServerSocket<DefaultSocketData<>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
+    template struct AsyncClientSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncConnectPolicy<>, DefaultAsyncTransferPolicy<>>;
+    template struct AsyncListenerSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
+    template struct AsyncServerSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
 
 #if HERMES_ENABLE_TLS
-    template struct AsyncClientSocket<TlsSocketData<>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
-    template struct AsyncListenerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
-    template struct AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    template struct AsyncClientSocket<TlsSocketData<FastIoLoop>, TlsAsyncConnectPolicy<>, TlsAsyncTransferPolicy<>>;
+    template struct AsyncListenerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    template struct AsyncServerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 #endif
 #endif
 }

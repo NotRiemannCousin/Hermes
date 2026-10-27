@@ -181,9 +181,9 @@ namespace Hermes {
     private:
         ServerSocket() = default;
 
-        SocketData     m_socketData{};
-        AcceptPolicy   m_acceptPolicy{};
-        TransferPolicy m_transferPolicy{};
+        SocketData m_socketData{};
+        [[no_unique_address]] AcceptPolicy   m_acceptPolicy{};
+        [[no_unique_address]] TransferPolicy m_transferPolicy{};
     };
 
 

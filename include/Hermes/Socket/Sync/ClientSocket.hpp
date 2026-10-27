@@ -203,9 +203,9 @@ namespace Hermes {
     private:
         ClientSocket() = default;
 
-        SocketData       m_socketData{};
-        ConnectionPolicy m_connectionPolicy{};
-        TransferPolicy   m_transferPolicy{};
+        SocketData m_socketData{};
+        [[no_unique_address]] ConnectionPolicy m_connectionPolicy{};
+        [[no_unique_address]] TransferPolicy   m_transferPolicy{};
     };
 
 

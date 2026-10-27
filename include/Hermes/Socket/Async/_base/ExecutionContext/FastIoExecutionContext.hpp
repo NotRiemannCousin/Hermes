@@ -28,24 +28,36 @@ namespace Hermes {
         FastIoLoop(const FastIoLoop&) = delete;
         FastIoLoop& operator=(const FastIoLoop&) = delete;
 
+        //! @brief Associates a socket handle with this loop's I/O backend.
+        //! @details
+        //! | Windows | attaches the handle to this IOCP loop (required before any overlapped I/O is issued on the socket) |
+        //! | Linux   | io_uring binds the fd at SQE-preparation time, so this is a no-op kept for API symmetry            |
+        //!
+        //! Policies call it right after Connect/Accept on both platforms.
         bool RegisterHandle(SocketHandle handle) const noexcept;
+
         void Stop() noexcept;
 
         [[nodiscard]] FastIoScheduler GetScheduler() const noexcept;
 
+        //! @brief Enqueues a bare completion for @p status (drives the scheduler's schedule()).
         bool PostWork(TransferOperStatus* status) const noexcept;
 
-#ifndef _WIN32
-        static FastIoLoop* GetLoopForSocket(int fd) noexcept;
-        static void RegisterSocketLoop(int fd, FastIoLoop* loop) noexcept;
-        static void UnregisterSocketLoop(int fd) noexcept;
-
-        template <typename F>
-        void SubmitIo(F&& prep_fn, bool bypassRunningCheck = false) const noexcept;
-#endif
+        //! @brief Translates one platform-neutral @p request into the native backend and enqueues it.
+        //! @details The single submission path for every async policy on every platform; the context is obtained
+        //! from SocketData::executionContext, never from a registry. Thread-safe. Returns false only when nothing
+        //! will complete (loop stopped, ring full, immediate failure) and the caller must fail the operation
+        //! itself; when it returns true the request's completion callback fires exactly once, possibly inline
+        //! before this call returns.
+        [[nodiscard]] bool SubmitIo(const IoRequest& request) const noexcept;
 
     private:
         void WorkerLoop() const noexcept;
+
+#ifndef _WIN32
+        template <typename F>
+        bool SubmitSqe(F&& prep) const noexcept;
+#endif
     };
 
     struct FastIoScheduler {
@@ -88,22 +100,23 @@ namespace Hermes {
 
 #if HERMES_ENABLE_TLS
 
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<FastIoLoop>>
     struct TlsAsyncAcceptPolicy;
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<FastIoLoop>>
     struct TlsAsyncConnectPolicy;
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = TlsSocketData<FastIoLoop>>
     struct TlsAsyncTransferPolicy;
 
 #endif
 
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<FastIoLoop>>
     struct DefaultAsyncAcceptPolicy;
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<FastIoLoop>>
     struct DefaultAsyncConnectPolicy;
-    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext = FastIoLoop, SocketDataConcept Data = DefaultSocketData<FastIoLoop>>
     struct DefaultAsyncTransferPolicy;
 
+    static_assert(ExecutionContextConcept<FastIoLoop>);
     static_assert(stdexec::scheduler<FastIoScheduler>);
     static_assert(stdexec::sender<FastIoScheduleSender>);
     static_assert(std::same_as<stdexec::schedule_result_t<FastIoScheduler>, FastIoScheduleSender>);
@@ -116,20 +129,20 @@ namespace Hermes {
 
 #if HERMES_ENABLE_TLS
 
-    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncAcceptPolicy;
-    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncConnectPolicy;
-    template<class ExecutionContext, SocketDataConcept Data = TlsSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncTransferPolicy;
 
 #endif
 
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy;
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncConnectPolicy;
-    template<class ExecutionContext, SocketDataConcept Data = DefaultSocketData<>>
+    template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncTransferPolicy;
 
 }

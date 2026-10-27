@@ -18,7 +18,26 @@ namespace Hermes {
     //! TransferError with the partial count. Send() targets the whole range, while Recv() honors RecvModeEnum.
     template<class ExecutionContext, SocketDataConcept Data>
     struct TlsAsyncTransferPolicy {
-        static constexpr auto Type{ Data::Type };
+        static_assert(requires (Data data) {
+            { *data.transferStateMachine } -> std::same_as<details_::ITlsTransferStateMachine<Data>&>;
+        }, "The socket data must have a valid TLS state machine to transfering data.");
+
+        static_assert(!std::same_as<ExecutionContext, std::monostate>,
+            "Async policies require a real execution context, std::monostate is a fallback that generic SocketData "
+            "uses in sync sockets only.");
+
+        static_assert(requires (Data data) {
+            { data.executionContext } -> std::same_as<ExecutionContext*&>;
+        }, "The socket data must carry this policy's execution context (SocketData::executionContext).");
+
+        static_assert(ExecutionContextConcept<ExecutionContext>,
+            "ExecutionContext must satisfy Hermes::ExecutionContextConcept (RegisterHandle, SubmitIo, PostWork, GetScheduler).");
+
+
+        static constexpr auto Family{ Data::Family };
+        static constexpr auto Type  { Data::Type   };
+        using EndpointType = Data::EndpointType;
+
 
         template<ByteLike Byte>
         auto Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum recvMode = RecvModeEnum::All) noexcept;
@@ -27,8 +46,8 @@ namespace Hermes {
         auto Send(Data& data, std::span<const Byte> bufferSend) noexcept;
 
         enum class ActionEnum : std::uint8_t { Recv, Send };
-    private:
 
+    private:
         template<ByteLike Byte> struct TransferSender;
     };
 }
@@ -37,7 +56,7 @@ namespace Hermes {
 
 namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy<>, TlsSocketData<>>);
+    static_assert(AsyncTransferPolicyConcept<TlsAsyncTransferPolicy<>, TlsSocketData<FastIoLoop>>);
 #endif
 }
 

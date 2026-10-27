@@ -12,7 +12,7 @@ namespace Hermes {
 
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     template<
-        SocketDataConcept SocketData = DefaultSocketData<>,
+        SocketDataConcept SocketData = DefaultSocketData<FastIoLoop>,
         class AcceptPolicy           = DefaultAsyncAcceptPolicy<>,
         class TransferPolicy         = DefaultAsyncTransferPolicy<>>
         requires AsyncServerSocketPoliciesConcept<SocketData, AcceptPolicy, TransferPolicy>
@@ -133,9 +133,9 @@ namespace Hermes {
     private:
         AsyncServerSocket() = default;
 
-        SocketData     m_socketData{};
-        AcceptPolicy   m_acceptPolicy{};
-        TransferPolicy m_transferPolicy{};
+        SocketData m_socketData{};
+        [[no_unique_address]] AcceptPolicy   m_acceptPolicy{};
+        [[no_unique_address]] TransferPolicy m_transferPolicy{};
     };
 
 
@@ -151,11 +151,11 @@ namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
     //! @brief Alias to the raw TCP server async socket.
     using RawTcpAsyncServer = AsyncServerSocket<>;
-    extern template struct AsyncServerSocket<DefaultSocketData<>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
+    extern template struct AsyncServerSocket<DefaultSocketData<FastIoLoop>, DefaultAsyncAcceptPolicy<>, DefaultAsyncTransferPolicy<>>;
 #if HERMES_ENABLE_TLS
     //! @brief Alias to the raw TLS server async socket.
-    using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
-    extern template struct AsyncServerSocket<TlsSocketData<>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    using RawTlsAsyncServer = AsyncServerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
+    extern template struct AsyncServerSocket<TlsSocketData<FastIoLoop>, TlsAsyncAcceptPolicy<>, TlsAsyncTransferPolicy<>>;
 #endif
 #endif
 }

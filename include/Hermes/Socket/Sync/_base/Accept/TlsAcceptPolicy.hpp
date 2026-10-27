@@ -20,9 +20,14 @@ namespace Hermes {
     //! close otherwise.
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsAcceptPolicy {
+        static_assert(requires (Data data) {
+            { *data.acceptStateMachine } -> std::same_as<details_::ITlsAcceptStateMachine<Data>&>;
+        }, "The socket data must have a valid TLS state machine to accept requests.");
+
+
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
-        using EndpointType = typename Data::EndpointType;
+        using EndpointType = Data::EndpointType;
 
 
 

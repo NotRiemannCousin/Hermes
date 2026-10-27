@@ -7,19 +7,13 @@
 #include <print>
 #include <vector>
 #include <atomic>
+#include <algorithm>
 
 #ifndef _WIN32
 #include <liburing.h>
 #include <mutex>
-#include <unordered_map>
-#include <shared_mutex>
 #include <queue>
 #include <condition_variable>
-
-namespace Hermes::details_ {
-    inline std::unordered_map<int, FastIoLoop *> g_loopMap;
-    inline std::shared_mutex g_loopMapMutex;
-}
 #endif
 
 namespace Hermes {
@@ -49,16 +43,18 @@ namespace Hermes {
 #endif
 
     inline FastIoLoop::FastIoLoop(const unsigned int threadCount) : m_impl{ std::make_unique<Impl>() } {
+        const unsigned int workerCount{ std::max(1u, threadCount) };
+
 #ifdef _WIN32
-        m_impl->m_iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, threadCount);
+        m_impl->m_iocpHandle = CreateIoCompletionPort(INVALID_HANDLE_VALUE, nullptr, 0, workerCount);
         if (!m_impl->m_iocpHandle) {
             throw std::runtime_error(std::format("Not able to create IOCP. GetLastError: {}", GetLastError()));
         }
 
         m_impl->m_isRunning.store(true, std::memory_order_release);
 
-        m_impl->m_workers.reserve(threadCount);
-        for (unsigned int i{}; i < threadCount; ++i) {
+        m_impl->m_workers.reserve(workerCount);
+        for (unsigned int i{}; i < workerCount; ++i) {
             m_impl->m_workers.emplace_back([this] { this->WorkerLoop(); });
         }
 #else
@@ -68,9 +64,9 @@ namespace Hermes {
 
         m_impl->m_isRunning.store(true, std::memory_order_release);
 
-        m_impl->m_workers.reserve(threadCount);
+        m_impl->m_workers.reserve(workerCount);
 
-        m_impl->m_workers.emplace_back([this, threadCount] {
+        m_impl->m_workers.emplace_back([this, workerCount] {
             while (m_impl->m_isRunning.load(std::memory_order_relaxed)) {
                 struct io_uring_cqe* cqe;
                 const int ret{ io_uring_wait_cqe(&m_impl->m_ring, &cqe) };
@@ -84,7 +80,7 @@ namespace Hermes {
 
                 if (!status) continue;
 
-                if (threadCount > 1) {
+                if (workerCount > 1) {
                     {
                         std::lock_guard lock(m_impl->m_workMutex);
                         m_impl->m_workQueue.push({ status->context, status->callback, bytes, success });
@@ -104,7 +100,7 @@ namespace Hermes {
             }
         });
 
-        for (unsigned int i{ 1 }; i < threadCount; ++i) {
+        for (unsigned int i{ 1 }; i < workerCount; ++i) {
             m_impl->m_workers.emplace_back([this] { this->WorkerLoop(); });
         }
 #endif
@@ -115,27 +111,100 @@ namespace Hermes {
     }
 
 #ifndef _WIN32
-    template<typename F>
-    inline void FastIoLoop::SubmitIo(F&& prep_fn, const bool bypassRunningCheck) const noexcept {
-        std::lock_guard lock(const_cast<std::mutex&>(m_impl->m_ringMutex));
+    template <typename F>
+    inline bool FastIoLoop::SubmitSqe(F&& prep) const noexcept {
+        std::lock_guard lock(m_impl->m_ringMutex);
 
-        // Bail out if the loop has already been (or is being) torn down. Without this check,
-        // a SubmitIo() call racing with Stop() on another thread could read/write the io_uring
-        // instance concurrently with -- or strictly after -- io_uring_queue_exit() unmapping
-        // its internal buffers. Confirmed via AddressSanitizer as a SEGV (read of unmapped
-        // memory) inside liburing's io_uring_get_sqe() when this happened.
-        // bypassRunningCheck is set only by Stop()'s own internal wake-up NOP, which is
-        // intentionally submitted right after m_isRunning is cleared (that IS the shutdown
-        // signal to the completion-thread) -- still safe, because it and this check both run
-        // under m_ringMutex, so it can't race with the queue_exit() call further down in Stop().
-        if (!bypassRunningCheck && !m_impl->m_isRunning.load(std::memory_order_acquire))
-            return;
+        if (!m_impl->m_isRunning.load(std::memory_order_acquire))
+            return false;
 
-        struct io_uring_sqe *sqe = io_uring_get_sqe(const_cast<io_uring *>(&m_impl->m_ring));
-        if (sqe) {
-            prep_fn(sqe);
-            io_uring_submit(const_cast<io_uring *>(&m_impl->m_ring));
+        if (struct io_uring_sqe* sqe{ io_uring_get_sqe(&m_impl->m_ring) }) {
+            prep(sqe);
+            return io_uring_submit(&m_impl->m_ring) >= 0;
         }
+        return false;
+    }
+
+    inline bool FastIoLoop::SubmitIo(const IoRequest& request) const noexcept {
+        return SubmitSqe([&](struct io_uring_sqe* sqe) {
+            const int fd{ static_cast<int>(request.socket) };
+
+            switch (request.operation) {
+                case IoOperation::Accept:
+                    io_uring_prep_accept(sqe, fd, request.acceptAddress, request.acceptAddressLength, 0);
+                    break;
+                case IoOperation::Connect:
+                    io_uring_prep_connect(sqe, fd, request.destination, request.destinationLength);
+                    break;
+                case IoOperation::Send:
+                    io_uring_prep_send(sqe, fd, request.buffer, request.length, 0);
+                    break;
+                case IoOperation::Recv:
+                    io_uring_prep_recv(sqe, fd, request.buffer, request.length, 0);
+                    break;
+            }
+
+            io_uring_sqe_set_data(sqe, request.status);
+        });
+    }
+#else
+    inline bool FastIoLoop::SubmitIo(const IoRequest& request) const noexcept {
+        switch (request.operation) {
+            case IoOperation::Send: {
+                WSABUF buffer{ static_cast<ULONG>(request.length), reinterpret_cast<char*>(request.buffer) };
+                if (WSASend(request.socket, &buffer, 1, nullptr, 0, request.status, nullptr) == macroSOCKET_ERROR)
+                    return WSAGetLastError() == WSA_IO_PENDING;
+                return true;
+            }
+            case IoOperation::Recv: {
+                WSABUF buffer{ static_cast<ULONG>(request.length), reinterpret_cast<char*>(request.buffer) };
+                DWORD flags{};
+                if (WSARecv(request.socket, &buffer, 1, nullptr, &flags, request.status, nullptr) == macroSOCKET_ERROR)
+                    return WSAGetLastError() == WSA_IO_PENDING;
+                return true;
+            }
+            case IoOperation::Connect: {
+                if (::connect(request.socket, request.destination, request.destinationLength) == 0) {
+                    request.status->callback(request.status->context, 0, true);
+                    return true;
+                }
+
+                if (WSAGetLastError() != WSAEWOULDBLOCK)
+                    return false;
+
+                fd_set writeSet{};
+                fd_set errorSet{};
+                FD_ZERO(&writeSet);
+                FD_ZERO(&errorSet);
+                FD_SET(request.socket, &writeSet);
+                FD_SET(request.socket, &errorSet);
+
+                if (select(static_cast<int>(request.socket) + 1, nullptr, &writeSet, &errorSet, nullptr) <= 0) {
+                    request.status->callback(request.status->context, 0, false);
+                    return true;
+                }
+
+                int soError{};
+                int length{ sizeof(soError) };
+                getsockopt(request.socket, SOL_SOCKET, SO_ERROR, reinterpret_cast<char*>(&soError), &length);
+
+                request.status->callback(request.status->context, 0, soError == 0);
+                return true;
+            }
+            case IoOperation::Accept: {
+                if (!request.acceptExtensions || !request.acceptExtensions->lpfnAcceptEx)
+                    return false;
+
+                DWORD bytesReceived{};
+                if (!request.acceptExtensions->lpfnAcceptEx(request.socket, request.acceptedSocket, request.buffer, 0,
+                    sizeof(sockaddr_storage) + 16, sizeof(sockaddr_storage) + 16,
+                    &bytesReceived, request.status)
+                    && WSAGetLastError() != WSA_IO_PENDING)
+                    return false;
+                return true;
+            }
+        }
+        return false;
     }
 #endif
 
@@ -143,81 +212,55 @@ namespace Hermes {
 #ifdef _WIN32
         return CreateIoCompletionPort(handle, m_impl->m_iocpHandle, 0, 0) != nullptr;
 #else
-        int fd{ static_cast<int>(reinterpret_cast<intptr_t>(handle)) };
-        RegisterSocketLoop(fd, const_cast<FastIoLoop *>(this));
+        (void)handle;
         return true;
 #endif
     }
 
-    inline bool FastIoLoop::PostWork(TransferOperStatus *status) const noexcept {
+    inline bool FastIoLoop::PostWork(TransferOperStatus* status) const noexcept {
 #ifdef _WIN32
         return PostQueuedCompletionStatus(m_impl->m_iocpHandle, 0, 0, status);
 #else
-        SubmitIo([&](struct io_uring_sqe *sqe) {
+        return SubmitSqe([&](struct io_uring_sqe* sqe) {
             io_uring_prep_nop(sqe);
             io_uring_sqe_set_data(sqe, status);
         });
-        return true;
 #endif
     }
 
     inline void FastIoLoop::Stop() noexcept {
-        // Guard the ENTIRE teardown (not just the wake-up signals) behind the exchange, so
-        // Stop() is idempotent. Previously m_workers.clear() and io_uring_queue_exit()/
-        // CloseHandle() ran unconditionally on every call: since the destructor always calls
-        // Stop(), any code that also called loop.Stop() explicitly (a normal graceful-shutdown
-        // pattern) hit a second io_uring_queue_exit() on an already-torn-down ring -- confirmed
-        // via gdb as a SIGSEGV inside liburing's io_uring_queue_exit().
-        if (m_impl->m_isRunning.exchange(false, std::memory_order_acq_rel)) {
+        if (!m_impl->m_isRunning.exchange(false, std::memory_order_acq_rel))
+            return;
+
 #ifdef _WIN32
-            for (size_t i{}; i < m_impl->m_workers.size(); ++i) {
-                PostQueuedCompletionStatus(m_impl->m_iocpHandle, 0, 0, nullptr);
-            }
+        for (size_t i{}; i < m_impl->m_workers.size(); ++i)
+            PostQueuedCompletionStatus(m_impl->m_iocpHandle, 0, 0, nullptr);
+
+        m_impl->m_workers.clear();
+
+        if (m_impl->m_iocpHandle) {
+            CloseHandle(m_impl->m_iocpHandle);
+            m_impl->m_iocpHandle = nullptr;
+        }
 #else
-            SubmitIo([](struct io_uring_sqe *sqe) {
+        {
+            std::lock_guard lock(m_impl->m_ringMutex);
+            if (struct io_uring_sqe* sqe{ io_uring_get_sqe(&m_impl->m_ring) }) {
                 io_uring_prep_nop(sqe);
                 io_uring_sqe_set_data(sqe, nullptr);
-            }, true);
-            m_impl->m_workCv.notify_all();
-#endif
-
-            m_impl->m_workers.clear();
-
-#ifdef _WIN32
-            if (m_impl->m_iocpHandle) {
-                CloseHandle(m_impl->m_iocpHandle);
-                m_impl->m_iocpHandle = nullptr;
+                io_uring_submit(&m_impl->m_ring);
             }
-#else
-            // Also taken under m_ringMutex -- the same lock SubmitIo() holds while touching
-            // the ring -- so a submit that started just before m_isRunning flipped to false
-            // finishes (or safely no-ops) before the ring is torn down, instead of racing
-            // with it.
-            {
-                std::lock_guard lock(m_impl->m_ringMutex);
-                io_uring_queue_exit(&m_impl->m_ring);
-            }
-#endif
         }
-    }
 
-#ifndef _WIN32
-    inline FastIoLoop *FastIoLoop::GetLoopForSocket(int fd) noexcept {
-        std::shared_lock lock(details_::g_loopMapMutex);
-        auto it{ details_::g_loopMap.find(fd) };
-        return it != details_::g_loopMap.end() ? it->second : nullptr;
-    }
+        m_impl->m_workCv.notify_all();
+        m_impl->m_workers.clear();
 
-    inline void FastIoLoop::RegisterSocketLoop(int fd, FastIoLoop *loop) noexcept {
-        std::unique_lock lock(details_::g_loopMapMutex);
-        details_::g_loopMap[fd] = loop;
-    }
-
-    inline void FastIoLoop::UnregisterSocketLoop(int fd) noexcept {
-        std::unique_lock lock(details_::g_loopMapMutex);
-        details_::g_loopMap.erase(fd);
-    }
+        {
+            std::lock_guard lock(m_impl->m_ringMutex);
+            io_uring_queue_exit(&m_impl->m_ring);
+        }
 #endif
+    }
 
     inline void FastIoLoop::WorkerLoop() const noexcept {
         while (m_impl->m_isRunning.load(std::memory_order_relaxed)) {
@@ -292,9 +335,10 @@ namespace Hermes {
 
     template <class Receiver>
     void FastIoScheduleSender::OperationState<Receiver>::start() & noexcept {
-        m_status.context = this;
+        m_status.context  = this;
         m_status.callback = Callback;
-        m_loop->PostWork(&m_status);
+        if (!m_loop->PostWork(&m_status))
+            stdexec::set_stopped(std::move(m_receiver));
     }
 
     template <class Receiver>

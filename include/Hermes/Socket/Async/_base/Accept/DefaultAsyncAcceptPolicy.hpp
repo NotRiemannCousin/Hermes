@@ -6,13 +6,6 @@
 #include <Hermes/Socket/Sync/_base/Accept/DefaultAcceptPolicy.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 #include <Hermes/Socket/_base.hpp>
-#ifdef _WIN32
-#include <MSWSock.h>
-#else
-
-#endif
-#include <unordered_map>
-#include <mutex>
 
 namespace Hermes {
 
@@ -23,42 +16,44 @@ namespace Hermes {
     //! so it exposes it.
     template<class ExecutionContext, SocketDataConcept Data>
     struct DefaultAsyncAcceptPolicy {
+        static_assert(!std::same_as<ExecutionContext, std::monostate>,
+            "Async policies require a real execution context, std::monostate is a fallback that generic SocketData "
+            "uses in sync sockets only.");
+
+        static_assert(requires (Data data) {
+            { data.executionContext } -> std::same_as<ExecutionContext*&>;
+        }, "The socket data must carry this policy's execution context (SocketData::executionContext).");
+
+        static_assert(ExecutionContextConcept<ExecutionContext>,
+            "ExecutionContext must satisfy Hermes::ExecutionContextConcept (RegisterHandle, SubmitIo, PostWork, GetScheduler).");
+
+
         static constexpr auto Family{ Data::Family };
         static constexpr auto Type  { Data::Type   };
-        using EndpointType = typename Data::EndpointType;
+        using EndpointType = Data::EndpointType;
 
-        struct ListenOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions {
-            ExecutionContext* scheduler{};
-        };
+        using ListenOptions = DefaultAcceptPolicy<EndpointType, Type, Family>::ListenOptions;
+        using AcceptOptions = DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions;
 
-        struct AcceptOptions : DefaultAcceptPolicy<EndpointType, Type, Family>::AcceptOptions {
-            ExecutionContext* scheduler{};
-        };
 
-        static ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
-        static auto Accept(Data& listenData, Data&& clientData, AcceptOptions options);
-        static auto Accept(Data& listenData, AcceptOptions options);
-        static auto Shutdown(Data& data);
+        ConnectionResultOper Listen(Data& data, int backlog, ListenOptions options);
+        auto Accept(Data& listenData, Data&& clientData, AcceptOptions options);
+        auto Accept(Data& listenData, AcceptOptions options);
+        auto Shutdown(Data& data);
 
-        static void Close(Data& data) noexcept;
-        static void Abort(Data& data) noexcept;
+        void Close(Data& data) noexcept;
+        void Abort(Data& data) noexcept;
 
-    public:
+        //! @brief Resolves the platform accept extensions for @p data into SocketData::extensions.
+        //! @details Windows resolves the AcceptEx function pointers of the already-created socket; other platforms are
+        //! a no-op. Listen() calls it for every listener; TlsAsyncAcceptPolicy::Listen() calls it too because its
+        //! listen path bypasses this policy's Listen().
+        ConnectionResultOper LoadAcceptExtensions(Data& data) noexcept;
+
         struct AcceptSender;
         struct ShutdownSender;
 
-#ifdef _WIN32
-        struct ListenerExtensions {
-            LPFN_ACCEPTEX lpfnAcceptEx{ nullptr };
-            LPFN_GETACCEPTEXSOCKADDRS lpfnGetAcceptExSockaddrs{ nullptr };
-        };
-#else
-        struct ListenerExtensions {
-        };
-#endif
-
-        inline static std::mutex listenerExtensionsMutex;
-        inline static std::unordered_map<SocketFd, ListenerExtensions> listenerExtensions;
+        AcceptExtensions extensions{};
     };
 }
 
@@ -66,7 +61,7 @@ namespace Hermes {
 
 namespace Hermes {
 #if HERMES_ENABLE_NATIVE_SCHEDULER
-    static_assert(AsyncAcceptPolicyConcept<DefaultAsyncAcceptPolicy<>, DefaultSocketData<>>);
+    static_assert(AsyncAcceptPolicyConcept<DefaultAsyncAcceptPolicy<>, DefaultSocketData<FastIoLoop>>);
 #endif
 }
 

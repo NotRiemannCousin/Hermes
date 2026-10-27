@@ -16,6 +16,11 @@ namespace Hermes {
     //! @ref recv-stream-behavior).
     template<SocketDataConcept Data = TlsSocketData<>>
     struct TlsTransferPolicy {
+        static_assert(requires (Data data) {
+            { *data.transferStateMachine } -> std::same_as<details_::ITlsTransferStateMachine<Data>&>;
+        }, "The socket data must have a valid TLS state machine to transfering data.");
+
+
         using Deadline = details_::TransferDeadline;
         //! @brief Options for a bounded receive operation.
         //! @details `deadline` is absolute and is shared by every partial receive in the call.

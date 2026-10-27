@@ -40,46 +40,39 @@ namespace Hermes {
                     return;
                 }
 
-                self->m_total += bytesTransferred;
+                self->m_total += static_cast<size_t>(bytesTransferred);
                 if (self->m_mode == RecvModeEnum::Any || self->m_total >= self->m_buffer.size()) {
                     stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
 
-                // RecvModeEnum::All — still need more bytes, re-post
                 self->PostRecv();
             }
 
             void PostRecv() noexcept {
-                m_status          = {};
-                m_status.context  = this;
-                m_status.callback = IoCallback;
-
-#ifdef _WIN32
-                WSABUF wsaBuf{};
-                wsaBuf.buf = reinterpret_cast<char*>(m_buffer.data() + m_total);
-                wsaBuf.len = static_cast<ULONG>(m_buffer.size() - m_total);
-                DWORD flags{};
-                const int res{ WSARecv(m_data->socket, &wsaBuf, 1,
-                    nullptr, &flags,
-                    static_cast<LPWSAOVERLAPPED>(&m_status), nullptr) };
-                if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
-                    stdexec::set_error(std::move(m_receiver),
-                        TransferError{ m_total, ConnectionErrorEnum::ReceiveFailed });
-                }
-#else
-                auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
-                if (!loop) {
+                auto* context{ m_data->executionContext };
+                if (!context) {
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
-                loop->SubmitIo([this](struct io_uring_sqe* sqe) {
-                    io_uring_prep_recv(sqe, static_cast<int>(m_data->socket),
-                        m_buffer.data() + m_total, m_buffer.size() - m_total, 0);
-                    io_uring_sqe_set_data(sqe, &m_status);
-                });
-#endif
+
+                m_status          = {};
+                m_status.context  = this;
+                m_status.callback = IoCallback;
+
+                const IoRequest request{
+                    .operation = IoOperation::Recv,
+                    .socket    = m_data->socket,
+                    .buffer    = m_buffer.data() + m_total,
+                    .length    = m_buffer.size() - m_total,
+                    .status    = &m_status
+                };
+
+                if (!context->SubmitIo(request)) {
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::ReceiveFailed });
+                }
             }
 
             void start() & noexcept {
@@ -98,7 +91,6 @@ namespace Hermes {
             return { m_data, m_buffer, m_mode, std::move(r) };
         }
     };
-
 
     template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
@@ -129,47 +121,39 @@ namespace Hermes {
                     return;
                 }
 
-                self->m_total += bytesTransferred;
+                self->m_total += static_cast<size_t>(bytesTransferred);
                 if (self->m_total >= self->m_buffer.size()) {
                     stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
 
-                // Partial send — re-post the remainder
                 self->PostSend();
             }
 
             void PostSend() noexcept {
-                m_status          = {};
-                m_status.context  = this;
-                m_status.callback = IoCallback;
-
-#ifdef _WIN32
-                WSABUF wsaBuf{};
-                wsaBuf.buf = const_cast<char*>(
-                    reinterpret_cast<const char*>(m_buffer.data() + m_total));
-                wsaBuf.len = static_cast<ULONG>(m_buffer.size() - m_total);
-
-                const int res{ WSASend(m_data->socket, &wsaBuf, 1,
-                    nullptr, 0,
-                    static_cast<LPWSAOVERLAPPED>(&m_status), nullptr) };
-                if (res == macroSOCKET_ERROR && WSAGetLastError() != WSA_IO_PENDING) {
-                    stdexec::set_error(std::move(m_receiver),
-                        TransferError{ m_total, ConnectionErrorEnum::SendFailed });
-                }
-#else
-                auto* loop = ExecutionContext::GetLoopForSocket(static_cast<int>(m_data->socket));
-                if (!loop) {
+                auto* context{ m_data->executionContext };
+                if (!context) {
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
                     return;
                 }
-                loop->SubmitIo([this](struct io_uring_sqe* sqe) {
-                    io_uring_prep_send(sqe, static_cast<int>(m_data->socket),
-                        m_buffer.data() + m_total, m_buffer.size() - m_total, 0);
-                    io_uring_sqe_set_data(sqe, &m_status);
-                });
-#endif
+
+                m_status          = {};
+                m_status.context  = this;
+                m_status.callback = IoCallback;
+
+                const IoRequest request{
+                    .operation = IoOperation::Send,
+                    .socket    = m_data->socket,
+                    .buffer    = const_cast<std::byte*>(m_buffer.data() + m_total),
+                    .length    = m_buffer.size() - m_total,
+                    .status    = &m_status
+                };
+
+                if (!context->SubmitIo(request)) {
+                    stdexec::set_error(std::move(m_receiver),
+                        TransferError{ m_total, ConnectionErrorEnum::SendFailed });
+                }
             }
 
             void start() & noexcept {
@@ -189,10 +173,6 @@ namespace Hermes {
         }
     };
 
-
-    // =========================================================================
-    // Policy Methods
-    // =========================================================================
     template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
     auto DefaultAsyncTransferPolicy<ExecutionContext, Data>::Recv(Data& data, std::span<Byte> bufferRecv, RecvModeEnum mode) noexcept {
