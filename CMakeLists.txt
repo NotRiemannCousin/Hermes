@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.6.1
+        VERSION 0.6.4
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )
@@ -10,7 +10,7 @@ project(
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_DEBUG_POSTFIX "_d")
 
-set(PROJECT_VERSION_SUFFIX "-beta")
+# set(PROJECT_VERSION_SUFFIX "-beta")
 set(PROJECT_VERSION_FULL "${PROJECT_VERSION}${PROJECT_VERSION_SUFFIX}")
 
 set(CMAKE_CXX_STANDARD 23)
