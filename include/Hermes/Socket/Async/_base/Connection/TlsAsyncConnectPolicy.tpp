@@ -93,9 +93,13 @@ namespace Hermes {
                         case ConnectStateOpResult::Error:
                             stdexec::set_error(std::move(m_receiver), m_data->connectStateMachine->GetResult().error_or(ConnectionErrorEnum::Unknown));
                             return;
-                        case ConnectStateOpResult::Closed:
-                            stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                        case ConnectStateOpResult::Closed: {
+                            if (const auto result{ m_data->connectStateMachine->GetResult() })
+                                stdexec::set_value(std::move(m_receiver));
+                            else
+                                stdexec::set_error(std::move(m_receiver), result.error());
                             return;
+                        }
                     }
                 }
             }
@@ -115,6 +119,11 @@ namespace Hermes {
             void start() & noexcept {
                 m_status.context = this;
                 m_status.callback = IoCallback;
+
+                if (m_action == ControlAction::Shutdown && m_data->socket == macroINVALID_SOCKET) {
+                    stdexec::set_value(std::move(m_receiver));
+                    return;
+                }
 
                 if (m_action == ControlAction::Shutdown)
                     m_data->connectStateMachine->SetToClose();
@@ -136,11 +145,26 @@ namespace Hermes {
 
         static_assert(stdexec::sender<ControlSender>);
 
-        return DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, options)
-             | stdexec::let_value(Utils::Overloaded{
-                 [&data, options]() mutable { return ControlSender{ &data, options }; },
-                 [](ConnectionErrorEnum e)  { return stdexec::just_error(e); }
-             });
+        // TCP connect first, then drive the TLS handshake through the control sender. If ANYTHING along the chain
+        // fails, the socket handle must be released HERE, not left to the caller: after set_error no facade may
+        // exist to close it in its destructor (e.g. when this policy is used directly), which would leak a created
+        // and possibly connected socket. Close() is idempotent, so it is safe even when the TCP connect error
+        // paths already closed the handle, or when the facade destructor closes it again during unwinding.
+        //
+        // The let_error handler MUST be generic: let_value adds std::exception_ptr to the error channel whenever
+        // its function is potentially-throwing, so the channel here is {ConnectionErrorEnum, std::exception_ptr}
+        // and stdexec requires the handler to accept every error type (same rule as the mapErrorPipeline in the
+        // examples). The original error is forwarded unchanged; Close() runs for both error types.
+        auto connectSender{ DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, options)
+             | stdexec::let_value([&data, options]() { return ControlSender{ &data, options }; })
+             | stdexec::let_error([&data](auto&& error) {
+                   Close(data);
+                   return stdexec::just_error(std::forward<decltype(error)>(error));
+               }) };
+        static_assert(stdexec::sender_in<decltype(connectSender)>,
+            "TlsAsyncConnectPolicy::Connect must produce a well-formed sender: if the error channel changed, "
+            "the let_error handler above must accept every error type.");
+        return connectSender;
     }
 
     template<class ExecutionContext, SocketDataConcept Data>

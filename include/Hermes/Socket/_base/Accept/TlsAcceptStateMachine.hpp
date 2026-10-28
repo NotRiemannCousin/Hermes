@@ -13,7 +13,7 @@ namespace Hermes::details_ {
 
 #if HERMES_ENABLE_ASYNC
         static constexpr bool IsAsync() noexcept {
-            return AsyncConnectionPolicyConcept<AcceptPolicy, Data>;
+            return AsyncAcceptPolicyConcept<AcceptPolicy, Data>;
         }
 #else
         static constexpr bool IsAsync() { return false; }

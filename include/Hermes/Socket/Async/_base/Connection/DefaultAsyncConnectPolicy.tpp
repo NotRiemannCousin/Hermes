@@ -47,7 +47,7 @@ namespace Hermes {
 
                 auto [addr, addr_len, addrFamily]{ *addrRes };
                 m_data->socket = socket(static_cast<int>(addrFamily), static_cast<int>(Data::Type), 0);
-                if (m_data->socket < 0) {
+                if (m_data->socket == macroINVALID_SOCKET) {
                     m_data->socket = macroINVALID_SOCKET;
                     stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
                     return;

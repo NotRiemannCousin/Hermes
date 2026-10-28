@@ -137,7 +137,7 @@ namespace Hermes {
                     io_uring_prep_connect(sqe, fd, request.destination, request.destinationLength);
                     break;
                 case IoOperation::Send:
-                    io_uring_prep_send(sqe, fd, request.buffer, request.length, 0);
+                    io_uring_prep_send(sqe, fd, request.buffer, request.length, MSG_NOSIGNAL);
                     break;
                 case IoOperation::Recv:
                     io_uring_prep_recv(sqe, fd, request.buffer, request.length, 0);
@@ -257,6 +257,35 @@ namespace Hermes {
 
         {
             std::lock_guard lock(m_impl->m_ringMutex);
+
+            // Cancel every in-flight request before tearing the ring down: io_uring_queue_exit
+            // with live ops is undefined behaviour (the kernel may still touch the buffers and
+            // the ring memory being released). IORING_ASYNC_CANCEL_ANY (kernel 5.19+) cancels
+            // all pending requests; their -ECANCELED completions are reaped below and DROPPED,
+            // never dispatched - the senders that submitted them are long gone.
+            if (struct io_uring_sqe* sqe{ io_uring_get_sqe(&m_impl->m_ring) }) {
+                io_uring_prep_cancel(sqe, nullptr, IORING_ASYNC_CANCEL_ANY);
+                io_uring_sqe_set_data(sqe, nullptr);
+                io_uring_submit(&m_impl->m_ring);
+            }
+
+            // Drain what the kernel already completed. The cancel-any marker (user_data ==
+            // nullptr) bounds the wait: after it lands, all cancellations have been issued and
+            // whatever follows is just cancellation debris to discard.
+            struct io_uring_cqe* cqe{};
+            for (int i{}; i < 4096; ++i) {
+                if (io_uring_peek_cqe(&m_impl->m_ring, &cqe) != 0 || !cqe) {
+                    std::this_thread::yield();
+                    continue;
+                }
+                const bool wasCancelMarker{ io_uring_cqe_get_data(cqe) == nullptr };
+                io_uring_cqe_seen(&m_impl->m_ring, cqe);
+                if (wasCancelMarker) break;
+            }
+
+            // Best-effort sweep for the -ECANCELED completions that landed after the marker.
+            while (io_uring_peek_cqe(&m_impl->m_ring, &cqe) == 0 && cqe)
+                io_uring_cqe_seen(&m_impl->m_ring, cqe);
             io_uring_queue_exit(&m_impl->m_ring);
         }
 #endif

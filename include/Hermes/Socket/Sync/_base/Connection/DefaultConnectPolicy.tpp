@@ -21,7 +21,7 @@ namespace Hermes {
 
         data.socket = socket(static_cast<int>(addrFamily), static_cast<int>(SocketType), 0);
 
-        if (data.socket < 0)
+        if (data.socket == macroINVALID_SOCKET)
             return std::unexpected{ ConnectionErrorEnum::Unknown };
 
 #pragma region Settings

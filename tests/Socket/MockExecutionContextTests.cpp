@@ -2,6 +2,7 @@
 #include <stdexec/execution.hpp>
 
 #include <Hermes/Socket/Async/AsyncListenerSocket.hpp>
+#include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/FastIoExecutionContext.hpp>
 
 #include <atomic>
@@ -159,6 +160,19 @@ namespace {
 
     using RealSocketData = DefaultSocketData<FastIoLoop, IpEndpoint, SocketTypeEnum::Stream, AddressFamilyEnum::Inet6>;
     using RealListenOptions = Hermes::DefaultAcceptPolicy<IpEndpoint, SocketTypeEnum::Stream, AddressFamilyEnum::Inet6>::ListenOptions;
+
+#if HERMES_ENABLE_TLS
+    // TLS paths that fail before any real I/O happens still need client credentials to build
+    // the connect state machine (no certificate file required).
+    Hermes::Credentials* GetMockClientAuth() {
+        static auto auth{ Hermes::Credentials::Client(
+            Hermes::SChannelCredFlags::NoServernameCheck       |
+            Hermes::SChannelCredFlags::IgnoreNoRevocationCheck | Hermes::SChannelCredFlags::IgnoreRevocationOffline |
+            Hermes::SChannelCredFlags::NoDefaultCreds          | Hermes::SChannelCredFlags::ManualCredValidation    ) };
+        if (!auth.has_value()) std::abort();
+        return &*auth;
+    }
+#endif
 }
 
 struct MockListenerTest : testing::Test {
@@ -393,6 +407,49 @@ TEST_F(MockListenerTest, MockSurface_PostWorkAndGetScheduler_CountCalls) {
     EXPECT_EQ(mock.registerHandleCalls.load(), 0);
     EXPECT_EQ(mock.submitIoCalls.load(), 0);
 }
+
+#if HERMES_ENABLE_TLS
+TEST_F(MockListenerTest, TlsConnect_TcpSubmissionFails_ReleasesTheSocketHandle) {
+    // Exercises TlsAsyncConnectPolicy::Connect DIRECTLY (no facade): when the connect chain
+    // fails, the policy's let_error must release the socket handle, because no facade exists
+    // to close it in its destructor. Regression for the connected-but-unnegotiated socket leak.
+    Hermes::Network::Initialize();
+    using TlsData          = Hermes::TlsSocketData<MockExecutionContext>;
+    using TlsConnectPolicy = Hermes::TlsAsyncConnectPolicy<MockExecutionContext, TlsData>;
+
+    MockExecutionContext connectMock;
+    connectMock.completeSubmissionsWithError = true; // every SubmitIo completes with failure
+
+    TlsData connectData{ MakeLoopbackEndpoint(GetNextPort()), std::string{ "localhost" }, GetMockClientAuth(), &connectMock };
+
+    TlsConnectPolicy policy{};
+    // sync_wait requires every error type to be convertible to std::exception_ptr, but the connect
+    // chain carries both ConnectionErrorEnum and the std::exception_ptr that stdexec::let_value adds
+    // for potentially-throwing functions. Wrap both into a real exception object so the catch blocks
+    // below can observe them (same mapping approach as the examples' mapErrorPipeline).
+    auto connectSender{ policy.Connect(connectData, TlsConnectPolicy::Options{}) |
+        stdexec::let_error([]<typename T>(T&& error) {
+            using ErrorType = std::remove_cvref_t<T>;
+            std::exception_ptr wrapped;
+            if constexpr (std::same_as<ErrorType, std::exception_ptr>)
+                wrapped = std::forward<T>(error);
+            else
+                wrapped = std::make_exception_ptr(std::forward<T>(error));
+            return stdexec::just_error(std::move(wrapped));
+        }) };
+    try {
+        (void)stdexec::sync_wait(connectSender);
+        ADD_FAILURE() << "expected the TLS connect sender to complete with an error";
+    } catch (const Hermes::ConnectionErrorEnum& error) {
+        EXPECT_EQ(error, Hermes::ConnectionErrorEnum::ConnectionFailed);
+    } catch (...) {
+        ADD_FAILURE() << "unexpected error type propagated by the TLS connect sender";
+    }
+
+    EXPECT_EQ(connectData.socket, macroINVALID_SOCKET);
+    EXPECT_EQ(connectMock.registerHandleCalls.load(), 1);
+}
+#endif
 
 TEST_F(MockListenerTest, Teardown_CloseAndAbort_DoNotTouchTheContext) {
     MockData listenData{ MakeLoopbackEndpoint(GetNextPort()) };

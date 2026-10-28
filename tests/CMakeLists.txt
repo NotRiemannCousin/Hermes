@@ -53,6 +53,7 @@ if(HERMES_ENABLE_NATIVE_SCHEDULER)
             Socket/FastIoLoopTests.cpp
             Socket/AsyncAcceptTests.cpp
             Socket/MockExecutionContextTests.cpp
+            Socket/AsyncEndToEndTests.cpp
     )
 endif()
 

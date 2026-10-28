@@ -149,7 +149,10 @@ namespace Hermes {
         SocketData clientData{ clientDataPrototype.MakeChild() };
 
         const auto result{ m_acceptPolicy.Accept(m_socketData, clientData, opt) };
-        if (!result) return std::unexpected{ result.error() };
+        if (!result) {
+            m_acceptPolicy.Close(clientData);
+            return std::unexpected{ result.error() };
+        }
 
         return ServerSocketType::FromAccepted(std::move(clientData));
     }
