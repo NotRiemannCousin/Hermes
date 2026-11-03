@@ -16,8 +16,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
-            stdexec::set_error_t(ConnectionErrorEnum),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(ConnectionErrorEnum)
         >;
         DefaultAsyncAcceptPolicy* m_policy{};
         Data* m_listenData{};
@@ -221,8 +220,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_error_t(ConnectionErrorEnum),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(ConnectionErrorEnum)
         >;
         Data* m_data;
 

@@ -76,9 +76,10 @@ namespace Hermes {
         [[nodiscard]] TransferError Accumulate(TransferError other) const noexcept;
         [[nodiscard]] TransferError Substitute(ConnectionErrorEnum err) const noexcept;
     };
-    // using TransferResult = std::expected<size_t, TransferError>;
-    // // TODO: change all StreamByteOper occurrences to TransferResult
-    // ? ok i think maybe not
+
+    using TransferResult = std::expected<size_t, TransferError>;
+
+    [[nodiscard]] constexpr TransferResult ToResult(StreamByteOper op) noexcept;
 
 #pragma region Async Definitions
 

@@ -34,9 +34,8 @@ extern ExpString MakeRequest() {
     auto client{ std::move(*clientRes) };
 
     // 3. Prepare and send the HTTP request.
-    auto [bytesSent, sendErr]{ client.Send(url.FormatRequest()) };
-    if (!sendErr)
-        return std::unexpected{ std::format("{}", sendErr.error()) };
+    if (auto sent{ client.Send(url.FormatRequest()) }; !sent)
+        return std::unexpected{ std::format("{}", sent.error()) };
 
     // 4. Receive and process the response using Ranges procedurally.
     auto socketView{ client.RecvStream<char>() };

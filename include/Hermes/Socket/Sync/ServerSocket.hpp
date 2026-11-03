@@ -75,10 +75,11 @@ namespace Hermes {
 
         //! @brief Sends data using the transfer policy.
         //! @param data A contiguous range of bytes to send.
-        //! @return The number of bytes sent and an empty error result on success, or an error describing the failure.
+        //! @return The number of bytes sent on success, or a TransferError carrying the partial byte count and the
+        //! failure reason.
         //! @details A successful call may send fewer bytes than the range contains.
         template<ContiguousByteRange R>
-        StreamByteOper Send(R&& data) noexcept
+        [[nodiscard]] TransferResult Send(R&& data) noexcept
             requires std::default_initializable<SendOptions>;
 
         //! @brief Sends data using explicit transfer options.
@@ -86,9 +87,10 @@ namespace Hermes {
         //! @param options Transfer options for this operation.
         //! @details A provided deadline is absolute and is shared by every partial send belonging to this call; it is
         //! not restarted after a partial write.
-        //! @return The number of bytes sent and an empty error result on success, or an error describing the failure.
+        //! @return The number of bytes sent on success, or a TransferError carrying the partial byte count and the
+        //! failure reason.
         template<ContiguousByteRange R>
-        StreamByteOper Send(R&& data, SendOptions options) noexcept;
+        [[nodiscard]] TransferResult Send(R&& data, SendOptions options) noexcept;
 
         //! @brief Sends data and returns the socket on success, all-or-nothing.
         //! @param data A contiguous range of bytes to send.
@@ -114,29 +116,30 @@ namespace Hermes {
         //! @brief Receives data using the selected receive mode.
         //! @param data A writable contiguous range that receives the bytes.
         //! @param mode Whether the operation receives any available data or fills the range before completing.
-        //! @return The number of bytes received and an empty error result on success, or an error describing the
-        //! failure.
+        //! @return The number of bytes received on success, or a TransferError carrying the partial byte count and the
+        //! failure reason.
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
+        [[nodiscard]] TransferResult Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
             requires std::default_initializable<RecvOptions>;
 
         //! @brief Receives data using explicit receive options.
         //! @param data A writable contiguous range that receives the bytes.
         //! @param mode Whether the operation receives any available data or fills the range before completing.
         //! @param options Receive options for this operation.
-        //! @return The number of bytes received and an empty error result on success, or an error describing the
-        //! failure.
+        //! @return The number of bytes received on success, or a TransferError carrying the partial byte count and the
+        //! failure reason.
         //! @details A provided deadline is absolute and applies to the complete receive operation, including all
         //! partial reads.
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(R&& data, RecvModeEnum mode, RecvOptions options) noexcept;
+        [[nodiscard]] TransferResult Recv(R&& data, RecvModeEnum mode, RecvOptions options) noexcept;
 
         //! @brief Receives a complete range using explicit receive options.
         //! @param data A writable contiguous range that receives the bytes.
         //! @param options Receive options for this operation.
-        //! @return The number of bytes received and an empty error result on success,
+        //! @return The number of bytes received on success, or a TransferError carrying the partial byte count and
+        //! the failure reason.
         template<WritableContiguousByteRange R>
-        StreamByteOper Recv(R&& data, RecvOptions options) noexcept;
+        [[nodiscard]] TransferResult Recv(R&& data, RecvOptions options) noexcept;
 
         //! @brief Returns a lazy input range over the bytes received by the socket.
         //! @details Data is fetched by `operator*()` rather than by `operator++()`. This prevents advancing the range

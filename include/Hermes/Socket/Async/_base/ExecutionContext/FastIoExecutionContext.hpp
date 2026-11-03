@@ -75,7 +75,7 @@ namespace Hermes {
 
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(ConnectionErrorEnum)
         >;
 
         const FastIoLoop* m_loop;

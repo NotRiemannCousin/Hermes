@@ -153,7 +153,9 @@ body, html{{
                 body.size(), body) };
 
         index++;
-        return socket.Send(response).second;
+        auto sent{ socket.Send(response) };
+        if (!sent) return std::unexpected{ sent.error().error };
+        return {};
     } };
 
 

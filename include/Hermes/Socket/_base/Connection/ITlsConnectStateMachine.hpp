@@ -20,7 +20,6 @@ namespace Hermes::details_ {
         virtual void SetToClose() noexcept = 0;
         virtual void SetToAbort() noexcept = 0;
 
-        // Métodos adicionados para o Async
         virtual void SetIoResult(int bytes) noexcept = 0;
         virtual std::span<std::byte> GetRecvBuffer(Data& data) noexcept = 0;
         virtual std::span<const std::byte> GetSendBuffer() noexcept = 0;

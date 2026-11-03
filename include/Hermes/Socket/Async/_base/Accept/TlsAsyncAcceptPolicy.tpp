@@ -14,8 +14,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_error_t(ConnectionErrorEnum),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(ConnectionErrorEnum)
         >;
         Data* m_data;
         AcceptOptions m_options;
@@ -136,8 +135,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
-            stdexec::set_error_t(ConnectionErrorEnum),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(ConnectionErrorEnum)
         >;
         Data m_data;
         AcceptOptions m_options;
@@ -158,11 +156,6 @@ namespace Hermes {
                 void set_error(ConnectionErrorEnum e) && noexcept {
                     ReleaseAcceptedHandle();
                     stdexec::set_error(std::move(m_parent->m_receiver), e);
-                }
-
-                void set_stopped() && noexcept {
-                    ReleaseAcceptedHandle();
-                    stdexec::set_stopped(std::move(m_parent->m_receiver));
                 }
 
                 // The return type MUST be spelled out instead of `auto`: MSVC evaluates the

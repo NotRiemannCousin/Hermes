@@ -45,7 +45,9 @@ std::expected<void, std::string> RunServer() {
                 "{}",
                 body.size(), body) };
 
-        return socket.Send(response).second;
+        auto sent{ socket.Send(response) };
+        if (!sent) return std::unexpected{ sent.error().error };
+        return {};
     } };
 
 

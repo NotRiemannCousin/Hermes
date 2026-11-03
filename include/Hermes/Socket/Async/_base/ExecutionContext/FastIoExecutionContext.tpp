@@ -2,6 +2,7 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_NATIVE_SCHEDULER
 
+#include <Hermes/_base/ConnectionErrorEnum.hpp>
 #include <stdexcept>
 #include <format>
 #include <print>
@@ -359,7 +360,7 @@ namespace Hermes {
         if (success)
             stdexec::set_value(std::move(self->m_receiver));
         else
-            stdexec::set_stopped(std::move(self->m_receiver));
+            stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::NoScheduler);
     }
 
     template <class Receiver>
@@ -367,7 +368,7 @@ namespace Hermes {
         m_status.context  = this;
         m_status.callback = Callback;
         if (!m_loop->PostWork(&m_status))
-            stdexec::set_stopped(std::move(m_receiver));
+            stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
     }
 
     template <class Receiver>

@@ -4,6 +4,13 @@
 #include <format>
 #include <ostream>
 
+namespace Hermes {
+    constexpr TransferResult ToResult(StreamByteOper op) noexcept {
+        if (op.second) return op.first;
+        return std::unexpected{ TransferError{ op.first, op.second.error() } };
+    }
+}
+
 namespace std {
     template <>
     struct is_error_code_enum<Hermes::ConnectionErrorEnum> : true_type {};
@@ -173,6 +180,19 @@ namespace std {
     };
 
 
+    template <>
+    struct formatter<Hermes::TransferResult> {
+        static constexpr auto parse(auto& ctx) { return ctx.begin(); }
+
+        auto format(const Hermes::TransferResult result, auto& ctx) const {
+            if (result)
+                return std::format_to(ctx.out(), "({} bytes transferred with no error)", *result);
+            return std::format_to(ctx.out(), "({} bytes transferred, {})",
+                result.error().bytesTransferred, result.error().error);
+        }
+    };
+
+
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Hermes::ConnectionErrorEnum err) {
@@ -187,5 +207,10 @@ inline std::ostream& operator<<(std::ostream& os, const Hermes::TransferError er
 
 inline std::ostream& operator<<(std::ostream& os, const Hermes::StreamByteOper err) {
     std::format_to(std::ostreambuf_iterator{ os }, "{}", err);
+    return os;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Hermes::TransferResult res) {
+    std::format_to(std::ostreambuf_iterator{ os }, "{}", res);
     return os;
 }

@@ -64,14 +64,12 @@ namespace {
 TEST_F(SocketBridgeFixture, PingPong_BidirectionalTransferSucceeds) {
     const std::vector<std::byte> pingPayload{ std::byte{'p'}, std::byte{'i'}, std::byte{'n'}, std::byte{'g'} };
 
-    const auto [sent, sendErr]{ client->Send(pingPayload) };
-    EXPECT_TRUE(sendErr.has_value());
+    EXPECT_TRUE(client->Send(pingPayload).has_value());
 
     std::vector<std::byte> recvBuffer;
     recvBuffer.resize(4);
 
-    const auto [recvd, recvErr]{ server->Recv(recvBuffer) };
-    EXPECT_TRUE(recvErr.has_value());
+    EXPECT_TRUE(server->Recv(recvBuffer).has_value());
     EXPECT_EQ(recvBuffer, pingPayload);
 }
 
@@ -81,10 +79,10 @@ TEST_F(SocketBridgeFixture, ServerClose_ClientRecv_ReturnsConnectionClosed) {
     std::vector<std::byte> inBuf{};
     inBuf.resize(16);
 
-    const auto [recvd, recvErr]{ client->Recv(inBuf) };
-    ASSERT_FALSE(recvErr.has_value());
+    const auto received{ client->Recv(inBuf) };
+    ASSERT_FALSE(received.has_value());
 
-    EXPECT_EQ(recvErr.error(), Hermes::ConnectionErrorEnum::ConnectionClosed);
+    EXPECT_EQ(received.error().error, Hermes::ConnectionErrorEnum::ConnectionClosed);
 }
 
 
@@ -96,17 +94,17 @@ TEST_F(SocketBridgeFixture, Recv_DeadlineCoversMultipleBlocks) {
     const auto deadline{ std::chrono::steady_clock::now() + 150ms };
 
     std::jthread sender{ [&] {
-        ASSERT_TRUE(client->Send(first).second.has_value());
+        ASSERT_TRUE(client->Send(first).has_value());
         std::this_thread::sleep_for(300ms);
-        ASSERT_TRUE(client->Send(second).second.has_value());
+        ASSERT_TRUE(client->Send(second).has_value());
     }};
 
     std::array<std::byte, 2> buffer{};
-    const auto [received, err]{ server->Recv(buffer, Hermes::RecvModeEnum::All, { .deadline = deadline }) };
+    const auto received{ server->Recv(buffer, Hermes::RecvModeEnum::All, { .deadline = deadline }) };
 
-    EXPECT_EQ(received, 1);
-    ASSERT_FALSE(err.has_value());
-    EXPECT_EQ(err.error(), Hermes::ConnectionErrorEnum::ReceiveTimeout);
+    ASSERT_FALSE(received.has_value());
+    EXPECT_EQ(received.error().error, Hermes::ConnectionErrorEnum::ReceiveTimeout);
+    EXPECT_EQ(received.error().bytesTransferred, 1);
     EXPECT_EQ(buffer[0], first[0]);
 }
 
@@ -118,9 +116,9 @@ TEST_F(SocketBridgeFixture, RecvStream_DeadlineCoversMultipleBlocks) {
     const auto deadline{ std::chrono::steady_clock::now() + 150ms };
 
     std::jthread sender{ [&] {
-        ASSERT_TRUE(client->Send(first).second.has_value());
+        ASSERT_TRUE(client->Send(first).has_value());
         std::this_thread::sleep_for(300ms);
-        ASSERT_TRUE(client->Send(second).second.has_value());
+        ASSERT_TRUE(client->Send(second).has_value());
     }};
 
     auto stream{ server->RecvStream<char>({ .deadline = deadline }) };
@@ -138,9 +136,9 @@ TEST_F(SocketBridgeFixture, Send_ExpiredDeadlineReturnsTimeout) {
     static constexpr std::array payload{ std::byte{'x'} };
     const auto deadline{ std::chrono::steady_clock::now() };
 
-    const auto [sent, err]{ client->Send( payload, { .deadline = deadline } ) };
+    const auto sent{ client->Send( payload, { .deadline = deadline } ) };
 
-    EXPECT_EQ(sent, 0);
-    ASSERT_FALSE(err.has_value());
-    EXPECT_EQ(err.error(), Hermes::ConnectionErrorEnum::SendTimeout);
+    ASSERT_FALSE(sent.has_value());
+    EXPECT_EQ(sent.error().bytesTransferred, 0);
+    EXPECT_EQ(sent.error().error, Hermes::ConnectionErrorEnum::SendTimeout);
 }

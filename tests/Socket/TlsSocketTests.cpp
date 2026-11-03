@@ -201,9 +201,9 @@ TEST_F(TlsClientSocketTest, MoveConstruct_PreservesUsability) {
     ASSERT_TRUE(serverResult.has_value());
 
     constexpr std::string_view payload{ "ping" };
-    const auto [sent, sendErr]{ moved.Send(payload) };
-    EXPECT_TRUE(sendErr.has_value());
-    EXPECT_EQ(sent, payload.size());
+    const auto sent{ moved.Send(payload) };
+    ASSERT_TRUE(sent.has_value());
+    EXPECT_EQ(*sent, payload.size());
 }
 
 TEST_F(TlsClientSocketTest, Connect_ConnectionTimeout_AbortsTcpEarly) {
@@ -274,23 +274,19 @@ struct TlsSocketBridgeFixture : testing::Test {
 
 TEST_F(TlsSocketBridgeFixture, ClientSend_ServerRecv_SmallMessage) {
     constexpr std::string_view outBuf{ "hello" };
-    const auto [sent, sendErr]{ client->Send(outBuf) };
-    EXPECT_TRUE(sendErr.has_value());
+    EXPECT_TRUE(client->Send(outBuf).has_value());
 
     std::string inBuf(outBuf.size(), '\0');
-    const auto [recvd, recvErr]{ server->Recv(inBuf) };
-    EXPECT_TRUE(recvErr.has_value());
+    EXPECT_TRUE(server->Recv(inBuf).has_value());
     EXPECT_EQ(inBuf, "hello");
 }
 
 TEST_F(TlsSocketBridgeFixture, ServerSend_ClientRecv_SmallMessage) {
     constexpr std::string_view outBuf{ "world" };
-    const auto [sent, sendErr]{ server->Send(outBuf) };
-    EXPECT_TRUE(sendErr.has_value());
+    EXPECT_TRUE(server->Send(outBuf).has_value());
 
     std::string inBuf(outBuf.size(), '\0');
-    const auto [recvd, recvErr]{ client->Recv(inBuf) };
-    EXPECT_TRUE(recvErr.has_value());
+    EXPECT_TRUE(client->Recv(inBuf).has_value());
     EXPECT_EQ(inBuf, "world");
 }
 
@@ -298,11 +294,11 @@ TEST_F(TlsSocketBridgeFixture, Send_ExpiredDeadlineReturnsTimeout) {
     const std::array payload{ std::byte{ 'x' } };
     const auto deadline{ steady_clock::now() };
 
-    const auto [sent, err]{ client->Send(payload, { .deadline = deadline } ) };
+    const auto sent{ client->Send(payload, { .deadline = deadline } ) };
 
-    EXPECT_LE(sent, payload.size());
-    ASSERT_FALSE(err.has_value());
-    EXPECT_EQ(err.error(), ConnectionErrorEnum::SendTimeout);
+    ASSERT_FALSE(sent.has_value());
+    EXPECT_LE(sent.error().bytesTransferred, payload.size());
+    EXPECT_EQ(sent.error().error, ConnectionErrorEnum::SendTimeout);
 }
 
 TEST_F(TlsSocketBridgeFixture, Recv_DeadlineCoversMultipleRecords) {
@@ -312,24 +308,24 @@ TEST_F(TlsSocketBridgeFixture, Recv_DeadlineCoversMultipleRecords) {
     auto releaseSecondFuture{ releaseSecond.get_future() };
 
     std::jthread sender{ [&] {
-        ASSERT_TRUE(client->Send(std::array{ std::byte{'a'} }).second.has_value());
+        ASSERT_TRUE(client->Send(std::array{ std::byte{'a'} }).has_value());
         firstSent.set_value();
         releaseSecondFuture.wait();
-        ASSERT_TRUE(client->Send(std::array{ std::byte{'b'} }).second.has_value());
+        ASSERT_TRUE(client->Send(std::array{ std::byte{'b'} }).has_value());
     } };
 
     firstSentFuture.wait();
     std::array<std::byte, 2> buffer{};
-    const auto [received, err]{ server->Recv(
+    const auto received{ server->Recv(
         buffer,
         Hermes::RecvModeEnum::All,
         { .deadline = steady_clock::now() + 150ms }
     ) };
     releaseSecond.set_value();
 
-    EXPECT_EQ(received, 1);
-    ASSERT_FALSE(err.has_value());
-    EXPECT_EQ(err.error(), ConnectionErrorEnum::ReceiveTimeout);
+    ASSERT_FALSE(received.has_value());
+    EXPECT_EQ(received.error().error, ConnectionErrorEnum::ReceiveTimeout);
+    EXPECT_EQ(received.error().bytesTransferred, 1);
     EXPECT_EQ(buffer[0], std::byte{'a'});
 }
 
@@ -341,7 +337,7 @@ TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {
     for (std::size_t i{}; i < payloadSize; ++i)
         outBuf[i] = static_cast<std::byte>(i & 0xff);
 
-    std::jthread sender{[&] { EXPECT_TRUE(client->Send(outBuf).second.has_value()); }};
+    std::jthread sender{[&] { EXPECT_TRUE(client->Send(outBuf).has_value()); }};
 
     std::vector<std::byte> inBuf{};
     inBuf.resize(payloadSize);
@@ -349,9 +345,9 @@ TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {
     std::size_t totalRecvd{};
     while (totalRecvd < payloadSize) {
         std::span slice{ std::span{ inBuf }.subspan(totalRecvd) };
-        const auto [n, err]{ server->Recv(slice) };
-        ASSERT_TRUE(err.has_value());
-        totalRecvd += n;
+        auto received{ server->Recv(slice) };
+        ASSERT_TRUE(received.has_value());
+        totalRecvd += *received;
     }
 
     EXPECT_EQ(inBuf, outBuf);
@@ -359,7 +355,7 @@ TEST_F(TlsSocketBridgeFixture, Send_LargePayload_AllBytesReceived) {
 
 TEST_F(TlsSocketBridgeFixture, RecvRange_ClientSend_ServerIterates) {
     constexpr std::string_view message{ "stream test" };
-    EXPECT_TRUE(client->Send(message).second.has_value());
+    EXPECT_TRUE(client->Send(message).has_value());
     client->Close();
 
     std::string received{};
@@ -372,9 +368,9 @@ TEST_F(TlsSocketBridgeFixture, MultipleMessages_InSequence_AllReceived) {
     constexpr std::array messages{ "first"sv, "second"sv, "third"sv };
 
     for (auto msg : messages) {
-        EXPECT_TRUE(client->Send(msg).second.has_value());
+        EXPECT_TRUE(client->Send(msg).has_value());
         std::string inBuf(msg.size(), '\0');
-        EXPECT_TRUE(server->Recv(inBuf).second.has_value());
+        EXPECT_TRUE(server->Recv(inBuf).has_value());
         EXPECT_EQ(inBuf, msg);
     }
 }
@@ -384,8 +380,8 @@ TEST_F(TlsSocketBridgeFixture, ServerClose_ClientSend_ReturnsError) {
     std::this_thread::sleep_for(std::chrono::milliseconds{ 50 });
 
     constexpr std::string_view payload{ "after close" };
-    const auto [sent, sendErr]{ client->Send(payload) };
-    EXPECT_FALSE(sendErr.has_value());
+    const auto sent{ client->Send(payload) };
+    EXPECT_FALSE(sent.has_value());
 }
 
 TEST_F(TlsSocketBridgeFixture, ClientClose_ServerRecv_HandlesGracefully) {
@@ -394,12 +390,12 @@ TEST_F(TlsSocketBridgeFixture, ClientClose_ServerRecv_HandlesGracefully) {
 
     std::vector<std::byte> inBuf{};
     inBuf.resize(10);
-    const auto [recvd, recvErr]{ server->Recv(inBuf) };
+    const auto received{ server->Recv(inBuf) };
 
-    if (recvErr.has_value()) {
-        EXPECT_EQ(recvd, 0);
+    if (!received.has_value()) {
+        EXPECT_EQ(received.error().error, ConnectionErrorEnum::ConnectionClosed);
     } else {
-        EXPECT_EQ(recvErr.error(), ConnectionErrorEnum::ConnectionClosed);
+        EXPECT_EQ(*received, 0);
     }
 }
 

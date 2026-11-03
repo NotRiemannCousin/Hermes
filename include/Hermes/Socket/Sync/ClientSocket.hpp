@@ -89,7 +89,7 @@ namespace Hermes {
         //! @return The number of bytes sent and an empty error result on success, or an error describing the failure.
         //! A successful call may send fewer bytes than the range contains.
         template<ContiguousByteRange R>
-        [[nodiscard]] StreamByteOper Send(R&& data) noexcept
+        [[nodiscard]] TransferResult Send(R&& data) noexcept
             requires std::default_initializable<SendOptions>;
 
         //! @brief Sends data using explicit transfer options.
@@ -99,7 +99,7 @@ namespace Hermes {
         //! call. It is not restarted after a partial write.
         //! @return The number of bytes sent and an empty error result on success, or an error describing the failure.
         template<ContiguousByteRange R>
-        [[nodiscard]] StreamByteOper Send(R&& data, SendOptions options) noexcept;
+        [[nodiscard]] TransferResult Send(R&& data, SendOptions options) noexcept;
 
 
         //! @brief Sends data and returns the socket on success, all-or-nothing.
@@ -132,7 +132,7 @@ namespace Hermes {
         //! @return The number of bytes received and an empty error result on success,
         //! or an error describing the failure.
         template<WritableContiguousByteRange R>
-        [[nodiscard]] StreamByteOper Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
+        [[nodiscard]] TransferResult Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept
             requires std::default_initializable<RecvOptions>;
 
         //! @brief Receives data using explicit receive options.
@@ -145,7 +145,7 @@ namespace Hermes {
         //! @details A provided deadline is absolute and applies to the complete receive operation, including all
         //! partial reads.
         template<WritableContiguousByteRange R>
-        [[nodiscard]] StreamByteOper Recv(R&& data, RecvModeEnum mode, RecvOptions options) noexcept;
+        [[nodiscard]] TransferResult Recv(R&& data, RecvModeEnum mode, RecvOptions options) noexcept;
 
         //! @brief Receives a complete range using explicit receive options.
         //! @param data A writable contiguous range that receives the bytes.
@@ -153,7 +153,7 @@ namespace Hermes {
         //! @return The number of bytes received and an empty error result on success,
         //! or an error describing the failure.
         template<WritableContiguousByteRange R>
-        [[nodiscard]] StreamByteOper Recv(R&& data, RecvOptions options) noexcept;
+        [[nodiscard]] TransferResult Recv(R&& data, RecvOptions options) noexcept;
 
         //! @brief Returns a lazy input range over the bytes received by the socket.
         //!

@@ -9,8 +9,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
-            stdexec::set_error_t(TransferError),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(TransferError)
         >;
 
         Data* m_data;
@@ -98,8 +97,7 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
-            stdexec::set_error_t(TransferError),
-            stdexec::set_stopped_t()
+            stdexec::set_error_t(TransferError)
         >;
 
         Data* m_data;

@@ -317,11 +317,13 @@ namespace Hermes {
     //! ### Sender-Based Buffer I/O
     //! @code{.cpp} policy.Recv(data, bufferRecv) -> AsyncConnectionResultConcept @endcode
     //! Reads data from the socket into the provided `std::span<std::byte>` asynchronously.
-    //! Delivers `StreamByteOper` through the sender's value channel on completion.
+    //! Completes with `set_value(size_t)` carrying the byte count on success, or `set_error(TransferError)`
+    //! carrying the partial byte count on failure.
     //!
     //! @code{.cpp} policy.Send(data, bufferSend) -> AsyncConnectionResultConcept @endcode
     //! Writes data to the socket from the provided `std::span<const std::byte>` asynchronously.
-    //! Delivers `StreamByteOper` through the sender's value channel on completion.
+    //! Completes with `set_value(size_t)` carrying the byte count on success, or `set_error(TransferError)`
+    //! carrying the partial byte count on failure.
     template<class Policy, class SocketData>
     concept AsyncTransferPolicyConcept = SocketDataConcept<SocketData>
         && Policy::Type == SocketData::Type
