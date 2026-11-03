@@ -82,9 +82,9 @@ var NAVTREEINDEX =
 "@ref example-tcp-server",
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba32d2972736a37036a59009e2369b8e86",
 "namespace_hermes.html#a4e95007477c568d2cfec5fb0fa176919a2dd551bbaebf58a02352b6eeee415733",
-"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196acaefebe606e7abca64f4d93198e7132e",
-"struct_hermes_1_1_client_socket.html#a4707e9a497ddeb6497a7e95413fd50e3",
-"struct_hermes_1_1_ip_endpoint.html#a01410515a442b5f7c12d4bc6467d95d1"
+"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196ac41a31890959544c6523af684561abe5",
+"struct_hermes_1_1_client_socket.html#a2eb6b0fc47998ba221a8e49eee4c65d2",
+"struct_hermes_1_1_ip_endpoint.html"
 ];
 
 const SYNCONMSG = 'click to disable panel synchronization';

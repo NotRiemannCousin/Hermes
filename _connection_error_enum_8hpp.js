@@ -7,6 +7,7 @@ var _connection_error_enum_8hpp =
     [ "Hermes::ConnectionResult", "namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97", null ],
     [ "Hermes::ConnectionResultOper", "namespace_hermes.html#a79d14e095855fb69409fa672244c08ba", null ],
     [ "Hermes::StreamByteOper", "namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac", null ],
+    [ "Hermes::TransferResult", "namespace_hermes.html#ad5a4d3f4e073af4acff7ff0010db257a", null ],
     [ "Hermes::ConnectionErrorEnum", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba", [
       [ "Hermes::ConnectionErrorEnum::Unknown", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa88183b946cc5f0e8c96b2e66e1c74a7e", null ],
       [ "Hermes::ConnectionErrorEnum::InvalidRole", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa4a840550394ebdf200a4f4c090e6a03e", null ],
@@ -37,5 +38,6 @@ var _connection_error_enum_8hpp =
       [ "Hermes::ConnectionErrorEnum::RenegotiationRequired", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa6f6b2c5332411d08fd9084a3c848147e", null ],
       [ "Hermes::ConnectionErrorEnum::NoScheduler", "namespace_hermes.html#abcdc7039ff863f7958fab5478142dfbaa907f3dbaf51e1236bdb42f2c5972dcbc", null ]
     ] ],
-    [ "Hermes::make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ]
+    [ "Hermes::make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ],
+    [ "Hermes::ToResult", "namespace_hermes.html#a27f438d51bf21509130b1e14013874dd", null ]
 ];

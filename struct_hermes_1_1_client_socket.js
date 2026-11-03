@@ -17,13 +17,13 @@ var struct_hermes_1_1_client_socket =
     [ "GetSocketData", "struct_hermes_1_1_client_socket.html#ab839a5caebe428bcec0690a5dc63ceb8", null ],
     [ "GetSocketData", "struct_hermes_1_1_client_socket.html#ab19dfb4aeeba4585e1925a1752c0e7f6", null ],
     [ "operator=", "struct_hermes_1_1_client_socket.html#ae717dcc195469839fca75fb4ed5698ce", null ],
-    [ "Recv", "struct_hermes_1_1_client_socket.html#a818de786bc05d09b482e2375f65ac40d", null ],
-    [ "Recv", "struct_hermes_1_1_client_socket.html#ad3fa1a6158095c1a047cc68745ca9d09", null ],
-    [ "Recv", "struct_hermes_1_1_client_socket.html#a793a52cbafb76115e273393c2588dca2", null ],
+    [ "Recv", "struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae", null ],
+    [ "Recv", "struct_hermes_1_1_client_socket.html#a81e3de365eba34547199f9fc149a4905", null ],
+    [ "Recv", "struct_hermes_1_1_client_socket.html#a8af0fb95ffd9bb51618bee9f65f3f6ed", null ],
     [ "RecvRange", "struct_hermes_1_1_client_socket.html#a4185984353f8a41affd36014695378a0", null ],
     [ "RecvRange", "struct_hermes_1_1_client_socket.html#ae45fddf1bf8ad5916f7ee42ad9925e0c", null ],
     [ "RecvStream", "struct_hermes_1_1_client_socket.html#a7260826b0a413d1ba510b8595d4bb0e3", null ],
     [ "RecvStream", "struct_hermes_1_1_client_socket.html#abafe3429f54b8a116174067af9593db5", null ],
-    [ "Send", "struct_hermes_1_1_client_socket.html#ad7691207ce50e40e737f371e3ca84529", null ],
-    [ "Send", "struct_hermes_1_1_client_socket.html#a9ad98ae67d03cc7987b89d4debbfab37", null ]
+    [ "Send", "struct_hermes_1_1_client_socket.html#a7676140c0d3281f9eee7a8ad9d421b5c", null ],
+    [ "Send", "struct_hermes_1_1_client_socket.html#a2eb6b0fc47998ba221a8e49eee4c65d2", null ]
 ];

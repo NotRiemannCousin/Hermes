@@ -191,6 +191,7 @@ Typedefs</h2></td></tr>
 <tr class="memitem:acce89a5199fe55f63e86cfea1fe02e97 template"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">Hermes::ConnectionResult</a> = std::expected&lt;T, <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a>&gt;</td></tr>
 <tr class="memitem:a79d14e095855fb69409fa672244c08ba" id="r_a79d14e095855fb69409fa672244c08ba"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">Hermes::ConnectionResultOper</a> = <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;void&gt;</td></tr>
 <tr class="memitem:a682871a56b158ef823498bc68e94f0ac" id="r_a682871a56b158ef823498bc68e94f0ac"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">Hermes::StreamByteOper</a> = std::pair&lt;size_t, <a class="el" href="namespace_hermes.html#a79d14e095855fb69409fa672244c08ba">ConnectionResultOper</a>&gt;</td></tr>
+<tr class="memitem:ad5a4d3f4e073af4acff7ff0010db257a" id="r_ad5a4d3f4e073af4acff7ff0010db257a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#ad5a4d3f4e073af4acff7ff0010db257a">Hermes::TransferResult</a> = std::expected&lt;size_t, <a class="el" href="struct_hermes_1_1_transfer_error.html">TransferError</a>&gt;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -235,6 +236,7 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a971874a9c463483d2f3258b0f29f4640" id="r_a971874a9c463483d2f3258b0f29f4640"><td class="memItemLeft">std::error_code&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640">Hermes::make_error_code</a> (<a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a> e) noexcept</td></tr>
+<tr class="memitem:a27f438d51bf21509130b1e14013874dd" id="r_a27f438d51bf21509130b1e14013874dd"><td class="memItemLeft">constexpr <a class="el" href="namespace_hermes.html#ad5a4d3f4e073af4acff7ff0010db257a">TransferResult</a>&#160;</td><td class="memItemRight"><a class="el" href="namespace_hermes.html#a27f438d51bf21509130b1e14013874dd">Hermes::ToResult</a> (<a class="el" href="namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac">StreamByteOper</a> op) noexcept</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->

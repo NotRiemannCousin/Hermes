@@ -47,6 +47,7 @@ var namespace_hermes =
     [ "SocketHandle", "namespace_hermes.html#a4aedf62ac66bae21d2bb8a958eec8bb8", null ],
     [ "SocketInfoAddr", "namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e", null ],
     [ "StreamByteOper", "namespace_hermes.html#a682871a56b158ef823498bc68e94f0ac", null ],
+    [ "TransferResult", "namespace_hermes.html#ad5a4d3f4e073af4acff7ff0010db257a", null ],
     [ "AcceptSecurityContextFlags", "namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58", [
       [ "Delegate", "namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58a26545d7107c7489959a37bd671181fca", null ],
       [ "MutualAuth", "namespace_hermes.html#ad6ffd059e98df62e920c27cbfe127a58a76c10e0b6fd0372e7b7fc8a9deae022b", null ],
@@ -775,6 +776,7 @@ var namespace_hermes =
     [ "CloseSocket", "namespace_hermes.html#a84da6a9b983c4c8b18c94590db69132e", null ],
     [ "GetError", "namespace_hermes.html#a438f5d7b5e68a6b848484706bfefeadc", null ],
     [ "make_error_code", "namespace_hermes.html#a971874a9c463483d2f3258b0f29f4640", null ],
+    [ "ToResult", "namespace_hermes.html#a27f438d51bf21509130b1e14013874dd", null ],
     [ "IsClientSocket", "namespace_hermes.html#a6f1c6490713be37237c4eca297acd878", null ],
     [ "IsClientSocket< ClientSocket< T... > >", "namespace_hermes.html#a22853ce1199c9b836f39638faddece66", null ],
     [ "IsListenerSocket", "namespace_hermes.html#aeb7b8ce1c39d98851a357c5ede4e9029", null ],
