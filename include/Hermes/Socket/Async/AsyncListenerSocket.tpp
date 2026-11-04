@@ -175,7 +175,7 @@ template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         SocketData clientData{ clientDataPrototype.MakeChild() };
 
         return m_acceptPolicy.Accept(m_socketData, std::move(clientData), opt)
-                | stdexec::then([](SocketData data) {
+                | stdexec::then([](SocketData data) noexcept {
                       return ServerSocketType::FromAccepted(std::move(data));
                 });
     }

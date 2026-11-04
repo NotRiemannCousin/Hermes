@@ -27,8 +27,8 @@ namespace Hermes {
     //! AsyncServerSocket never establishes a connection with Connect(), the connection already exists when the object
     //! is created via FromAccepted().
     //!
-    //! Async sockets don't have Recv/Send options because the cancelation behavior is created using STDEXEC's
-    //! cancelation. They don't have SendAndLift either because it doesn't compose well with senders.
+    //! Async sockets don't have Recv/Send options. They don't have SendAndLift either because it doesn't compose well
+    //! with senders.
     template<SocketDataConcept SocketData, class AcceptPolicy, class TransferPolicy>
         requires AsyncServerSocketPoliciesConcept<SocketData, AcceptPolicy, TransferPolicy>
     struct AsyncServerSocket final {
@@ -81,9 +81,8 @@ namespace Hermes {
         //! bytes written. A successful call may send fewer bytes than the range contains, exactly as the underlying
         //! operating system delivers. To send the full range, invoke Send again with the remaining portion.
         //! @param data A contiguous range of bytes to send.
-        //! @return A sender whose value completion carries the number of bytes sent, whose error completion carries a
-        //! TransferError (containing the partial byte count and the underlying ConnectionErrorEnum), and whose stopped
-        //! completion signals cancellation.
+        //! @return A sender whose value completion carries the number of bytes sent, and whose error completion
+        //! carries a TransferError (containing the partial byte count and the underlying ConnectionErrorEnum).
         template<ContiguousByteRange R>
         [[nodiscard]] auto Send(R&& data) noexcept;
 
@@ -99,9 +98,8 @@ namespace Hermes {
         //! can hold, even in RecvModeEnum::All mode, if the peer closes the connection before the buffer is full.
         //! @param data A writable contiguous range that receives the bytes.
         //! @param mode Whether the operation receives any available data or fills the range before completing.
-        //! @return A sender whose value completion carries the number of bytes received, whose error completion
-        //! carries a TransferError (containing the partial byte count and the underlying ConnectionErrorEnum), and
-        //! whose stopped completion signals cancellation.
+        //! @return A sender whose value completion carries the number of bytes received, and whose error completion
+        //! carries a TransferError (containing the partial byte count and the underlying ConnectionErrorEnum).
         template<WritableContiguousByteRange R>
         [[nodiscard]] auto Recv(R&& data, RecvModeEnum mode = RecvModeEnum::All) noexcept;
 
@@ -114,8 +112,8 @@ namespace Hermes {
         //! @details The returned sender completes with no value on success or with a ConnectionErrorEnum if the
         //! shutdown fails. The underlying socket is not closed by this call. Use Close() afterwards to release the
         //! handle.
-        //! @return A sender whose value completion completes with no arguments, whose error completion carries a
-        //! ConnectionErrorEnum, and whose stopped completion signals cancellation.
+        //! @return A sender whose value completion completes with no arguments and whose error completion carries a
+        //! ConnectionErrorEnum.
         [[nodiscard]] auto Shutdown() noexcept;
 
         //! @brief Synchronously destroys the underlying handle and cancels pending I/O.

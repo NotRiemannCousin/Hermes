@@ -159,7 +159,7 @@ body, html{{
     } };
 
 
-    static constexpr auto loop{ [](auto value) -> Hermes::ConnectionResultOper {
+    static constexpr auto loop{ [](RawTcpListener&& value) -> Hermes::ConnectionResultOper {
         for (auto&& sla : value.AcceptAll()) {
             if (!sla) return std::unexpected{ sla.error() };
             auto _{ sendRequest(std::move(*sla)) };
@@ -167,9 +167,9 @@ body, html{{
         return {};
     } };
 
-    return RawTcpListener::ListenOne(Hermes::DefaultSocketData<>{ endpoint })
+    return RawTcpListener::ListenOne(Hermes::DefaultSocketData{ endpoint })
             .and_then(loop)
-            .transform_error([](auto err){ return std::format("{:v}", err); });
+            .transform_error([](const Hermes::ConnectionErrorEnum err){ return std::format("{:v}", err); });
 }
 
 int main() {

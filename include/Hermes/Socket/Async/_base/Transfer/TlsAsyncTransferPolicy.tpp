@@ -161,7 +161,7 @@ namespace Hermes {
             }
         };
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) const {
+        OperationState<Receiver> connect(Receiver r) const noexcept {
             return { m_policy, m_data, m_recvBuffer, m_sendBuffer, m_mode, m_action, std::move(r) };
         }
     };

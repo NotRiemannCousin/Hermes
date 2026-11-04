@@ -9,7 +9,7 @@
 namespace Hermes::details_ {
     enum class AcceptStateOpResult : std::uint8_t { Recv, Send, Close, Error, Done, Closed };
 
-    template<typename Data>
+    template<class Data>
     struct ITlsAcceptStateMachine {
         virtual ~ITlsAcceptStateMachine() = default;
         virtual bool IsFinished() const noexcept = 0;

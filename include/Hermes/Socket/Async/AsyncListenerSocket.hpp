@@ -107,8 +107,8 @@ namespace Hermes {
         //! @details The returned sender completes when a client has connected and any protocol handshake required by
         //! AcceptPolicy has finished. For each accepted connection a new SocketData is created from the listener's own
         //! SocketData via MakeChild(), then wrapped into an AsyncServerSocket.
-        //! @return A sender whose value completion carries an AsyncServerSocket, whose error completion
-        //! carries a ConnectionErrorEnum, and whose stopped completion signals cancellation.
+        //! @return A sender whose value completion carries an AsyncServerSocket and whose error completion
+        //! carries a ConnectionErrorEnum.
         template<class = void>
         [[nodiscard]] auto AsyncAcceptOne()
             requires std::default_initializable<AcceptOptions>;

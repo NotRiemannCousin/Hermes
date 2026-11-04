@@ -9,11 +9,11 @@
 #include <memory>
 
 namespace Hermes::details_ {
-    template<typename Data>
+    template<class Data>
     struct ITlsConnectStateMachine;
-    template<typename Data>
+    template<class Data>
     struct ITlsTransferStateMachine;
-    template<typename Data>
+    template<class Data>
     struct ITlsAcceptStateMachine;
 }
 

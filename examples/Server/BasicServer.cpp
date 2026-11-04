@@ -56,7 +56,7 @@ std::expected<void, std::string> RunServer() {
             .and_then(&RawTcpListener::AcceptOneConnection)
             .transform(log("Accepted"))
             .and_then(sendRequest)
-            .transform_error([](auto err){ return std::format("{:v}", err); });
+            .transform_error([](const Hermes::ConnectionErrorEnum err){ return std::format("{:v}", err); });
 }
 
 int main() {

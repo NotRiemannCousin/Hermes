@@ -4,7 +4,7 @@
 
 namespace Hermes::Utils {
     //! @brief Checks whether a type can be hashed into a size value.
-    template<typename T>
+    template<class T>
     concept Hashable = requires(T a) {
             { std::hash<T>{}(a) } -> std::convertible_to<std::size_t>;
     };

@@ -125,7 +125,7 @@ namespace Hermes {
             }
         };
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) const {
+        OperationState<Receiver> connect(Receiver r) const noexcept {
             return { m_data, m_options, std::move(r), m_action };
         }
     };
@@ -201,7 +201,7 @@ namespace Hermes {
         };
 
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) && {
+        OperationState<Receiver> connect(Receiver r) && noexcept {
             return { std::move(m_data), m_options, std::move(r) };
         }
     };
@@ -234,7 +234,7 @@ namespace Hermes {
         static_assert(stdexec::sender<ControlSender>);
 
         return m_tcp.Accept(listenData, std::move(clientData), options)
-             | stdexec::let_value([options](Data& data) {
+             | stdexec::let_value([options](Data& data) noexcept {
                    return AcceptSender{ std::move(data), options };
                });
     }

@@ -1,6 +1,5 @@
 // ReSharper disable CppPassValueParameterByConstReference
 #include <Hermes/Socket/Async/AsyncListenerSocket.hpp>
-#include <Hermes/Utils/UntilMatch.hpp>
 
 #include <exec/start_detached.hpp>
 #include <stdexec/execution.hpp>
@@ -10,14 +9,12 @@
 #include <string_view>
 #include <string>
 #include <array>
+#include <charconv>
 #include <print>
 #include <format>
 #include <iostream>
 #include <memory>
 #include <thread>
-
-namespace rg = std::ranges;
-namespace vs = std::views;
 
 struct ClientState {
     Hermes::RawTcpAsyncServer client;
@@ -30,18 +27,17 @@ struct ClientState {
 static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
     using namespace std::literals::string_view_literals;
 
-    auto onComplete = [state](const auto&...) {
+    auto onComplete{ [state](const size_t) noexcept {
         state->socketView.clear();
 
         return stdexec::just(!state->keepAlive);
-    };
+    } };
 
-    auto extractHeaders = [state] {
+    auto extractHeaders{ [state] noexcept {
         using VariantSender = exec::variant_sender<
             decltype(state->client.Recv(state->socketView
                     | std::views::drop(0), Hermes::RecvModeEnum::All)),
-            decltype(stdexec::just()),
-            decltype(stdexec::just_error(Hermes::ConnectionErrorEnum{}))
+            decltype(stdexec::just())
         >;
 
         constexpr std::string_view clKey{ "content-length: " };
@@ -77,13 +73,13 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
         if (lastSize - state->bodyIdx == contentLength)
             return VariantSender{ stdexec::just() };
         return VariantSender{ requestMore };
-    };
+    } };
 
-    auto requestMoreIfNeeded = [](auto...){
+    auto requestMoreIfNeeded{ [](auto...) noexcept {
         return stdexec::just();
-    };
+    } };
 
-    auto sendResponse = [state]{
+    auto sendResponse{ [state] noexcept {
 
         static auto response{ [] {
             constexpr auto body{ "<h1>Hello Monadic Async World!</h1>"sv };
@@ -99,16 +95,16 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
         };
 
         return state->client.Send(response);
-    };
+    } };
 
-    auto appendReadedBytes = [state](const size_t count) {
-        state->socketView.append_range(state->buffer | std::views::take(count));
+    auto appendReadedBytes{ [state](const size_t count) noexcept {
+        state->socketView.append(state->buffer.data(), count);
 
         return stdexec::just(state->socketView.contains("\r\n\r\n"));
-    };
+    } };
 
-    auto processOneRequest = stdexec::just()
-                | stdexec::let_value([state, appendReadedBytes]() {
+    auto processOneRequest{ stdexec::just()
+                | stdexec::let_value([state, appendReadedBytes]() noexcept {
                       return state->client.Recv(state->buffer, Hermes::RecvModeEnum::Any)
                            | stdexec::let_value(appendReadedBytes);
                   })
@@ -116,7 +112,7 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
                 | stdexec::let_value(extractHeaders)
                 | stdexec::let_value(requestMoreIfNeeded)
                 | stdexec::let_value(sendResponse)
-                | stdexec::let_value(onComplete);
+                | stdexec::let_value(onComplete) };
 
     return processOneRequest | exec::repeat_until();
 }
@@ -124,26 +120,31 @@ static auto HandleClientAsync(std::shared_ptr<ClientState> state) {
 static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     const Hermes::IpEndpoint endpoint{ Hermes::IpAddress::FromIpv4({ 127, 0, 0, 1 }), 8080 };
 
-    static constexpr auto makeResponse{ [](auto&& clientSocket) {
+    static constexpr auto makeResponse{ [](Hermes::RawTcpAsyncServer& clientSocket) noexcept {
         std::println("Accepted from: {}", clientSocket.GetEndpoint());
         std::cout.flush();
 
         auto state{ std::make_shared<ClientState>(ClientState{ std::move(clientSocket) }) };
 
+        // The error channel of the whole client handler carries a single type: TransferError from
+        // Recv/Send. Every callable in the graph is noexcept, so no std::exception_ptr ever reaches it;
+        // the handler just reports the concrete error (with the partial transfer info) and detaches.
         exec::start_detached(
             HandleClientAsync(state)
-                    | stdexec::let_error([](auto&&) { return stdexec::just(); })
-        );
+                    | stdexec::upon_error([](const Hermes::TransferError& err) noexcept {
+                          std::println("Client connection failed: {} ({} byte(s) transferred)",
+                                       err.error, err.bytesTransferred);
+                      }));
 
         return stdexec::just();
     } };
 
-    auto acceptConn{ [](auto& listener) {
+    auto acceptConn{ [](Hermes::RawTcpAsyncListener& listener) noexcept {
         std::println("listening at: {}", listener.GetEndpoint());
         std::cout.flush();
 
         return stdexec::just()
-                | stdexec::let_value([&listener]() {
+                | stdexec::let_value([&listener]() noexcept {
                       return listener.AsyncAcceptOne()
                                | stdexec::let_value(makeResponse);
                 })
@@ -153,14 +154,15 @@ static void RunServerAsync(Hermes::FastIoLoop& ioLoop) {
     Hermes::DefaultSocketData<Hermes::FastIoLoop> listenData{ endpoint };
     listenData.executionContext = &ioLoop;
 
+
     auto serve{ Hermes::RawTcpAsyncListener::Listen(std::move(listenData))
             | stdexec::let_value(acceptConn)
-            | stdexec::upon_error([](auto err) {
-                return 3.1416;
-            }) };
+            | stdexec::upon_error([](const Hermes::ConnectionErrorEnum err) noexcept {
+                  std::println("Listener terminated: {}", err);
+              }) };
 
     if (!stdexec::sync_wait(std::move(serve)))
-        std::println("Failed to initialize listener or handle client.");
+        std::println("Listener stopped.");
 }
 
 int main() {

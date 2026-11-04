@@ -1,6 +1,7 @@
 #pragma once
 #include <Hermes/Config.hpp>
 #include <Hermes/Socket/Async/_base/ExecutionContext/TransferOperStatus.hpp>
+#include <Hermes/Socket/_base.hpp>
 #if HERMES_ENABLE_NATIVE_SCHEDULER
 
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
@@ -55,7 +56,7 @@ namespace Hermes {
         void WorkerLoop() const noexcept;
 
 #ifndef _WIN32
-        template <typename F>
+        template <class F>
         bool SubmitSqe(F&& prep) const noexcept;
 #endif
     };

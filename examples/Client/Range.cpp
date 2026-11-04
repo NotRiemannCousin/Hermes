@@ -72,6 +72,6 @@
         return Hermes::IpEndpoint::TryResolve(url.hostname, url.scheme)
                 .and_then([&](const auto endpoint) { return Client::Connect({ endpoint, url.hostname }); })
                 .and_then(Client::SendAndLift(url.FormatRequest()))
-                .transform_error([](const auto e){ return std::format("{}", e); })
+                .transform_error([](const Hermes::ConnectionErrorEnum e){ return std::format("{}", e); })
                 .and_then(getResponse);
     }

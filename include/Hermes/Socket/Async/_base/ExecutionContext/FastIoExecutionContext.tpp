@@ -112,7 +112,7 @@ namespace Hermes {
     }
 
 #ifndef _WIN32
-    template <typename F>
+    template <class F>
     inline bool FastIoLoop::SubmitSqe(F&& prep) const noexcept {
         std::lock_guard lock(m_impl->m_ringMutex);
 

@@ -134,8 +134,8 @@ namespace Hermes {
         //! @details The returned sender completes with no value on success or with a ConnectionErrorEnum if the
         //! shutdown fails. The underlying socket is not closed by this call. Use Close() afterwards to release the
         //! handle.
-        //! @return A sender whose value completion completes with no arguments, whose error completion carries a
-        //! ConnectionErrorEnum, and whose stopped completion signals cancellation.
+        //! @return A sender whose value completion completes with no arguments and whose error completion carries a
+        //! ConnectionErrorEnum.
         [[nodiscard]] auto Shutdown() noexcept;
 
         //! @brief Synchronously destroys the underlying handle and cancels pending I/O.

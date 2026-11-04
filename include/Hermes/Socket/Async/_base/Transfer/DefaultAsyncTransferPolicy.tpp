@@ -86,7 +86,7 @@ namespace Hermes {
         };
 
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) const {
+        OperationState<Receiver> connect(Receiver r) const noexcept {
             return { m_data, m_buffer, m_mode, std::move(r) };
         }
     };
@@ -166,7 +166,7 @@ namespace Hermes {
         };
 
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) const {
+        OperationState<Receiver> connect(Receiver r) const noexcept {
             return { m_data, m_buffer, std::move(r) };
         }
     };

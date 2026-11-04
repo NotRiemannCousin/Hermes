@@ -94,11 +94,10 @@ extern exec::task<ExpString> MakeRequestAsync(Hermes::FastIoLoop& ioLoop) try {
 // Native try-catch blocks replace the `let_error` pipeline mapping, unwinding
 // stdexec errors into standard exception scopes.
 // (Yeah I really didn't like it but this is the default for stdexec).
-catch (const Hermes::ConnectionErrorEnum& e) { co_return std::unexpected{ std::format("{}", e) }; }
-catch (const Hermes::TransferError& e) { co_return std::unexpected{ std::format("{}", e) }; }
-catch (const std::string&           s) { co_return std::unexpected{ s }; }
-catch (const char*                  s) { co_return std::unexpected{ s }; }
-catch (const std::exception&        e) { co_return std::unexpected{ e.what() }; }
+catch (const Hermes::ConnectionErrorEnum   e) { co_return std::unexpected{ std::format("{}", e) }; }
+catch (const Hermes::TransferError&        e) { co_return std::unexpected{ std::format("{}", e) }; }
+catch (const std::string&                  s) { co_return std::unexpected{ s }; }
+catch (const std::exception&               e) { co_return std::unexpected{ e.what() }; }
 catch (...) { co_return std::unexpected{ "unknown exception" }; }
 
 

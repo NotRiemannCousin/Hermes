@@ -9,7 +9,7 @@
 namespace Hermes::details_ {
     enum class ConnectStateOpResult : std::uint8_t { Recv, Send, Close, Error, Done, Closed };
 
-    template<typename Data>
+    template<class Data>
     struct ITlsConnectStateMachine {
         virtual ~ITlsConnectStateMachine() = default;
         virtual bool IsFinished() const noexcept = 0;

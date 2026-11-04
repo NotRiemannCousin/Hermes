@@ -11,7 +11,7 @@
 namespace Hermes::details_ {
     enum class TransferStateOpResult : std::uint8_t { Recv, Send, Error, Done };
 
-    template<typename Data>
+    template<class Data>
     struct ITlsTransferStateMachine {
         virtual ~ITlsTransferStateMachine() = default;
 

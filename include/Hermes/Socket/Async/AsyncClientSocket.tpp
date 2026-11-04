@@ -5,6 +5,7 @@
 #include <utility>
 #include <exec/create.hpp>
 #include <ranges>
+#include <stdexec/execution.hpp>
 #include <Hermes/_base/ConnectionErrorEnum.hpp>
 
 namespace Hermes {
@@ -87,13 +88,13 @@ namespace Hermes {
 
         return stdexec::just(AsyncClientSocket{})
              | stdexec::let_value(
-                 [data = std::move(data), opt = std::move(opt)](AsyncClientSocket& socket) mutable {
+                 [data = std::move(data), opt = std::move(opt)](AsyncClientSocket& socket) mutable noexcept {
                      socket.m_socketData = std::move(data);
 
                      return socket.m_connectionPolicy.Connect(socket.m_socketData, opt)
                             | stdexec::let_value(Utils::Overloaded{
-                                [&socket]() mutable         { return stdexec::just(std::move(socket)); },
-                                [](ConnectionErrorEnum err) { return stdexec::just_error(err); }
+                                [&socket]() mutable noexcept { return stdexec::just(std::move(socket)); },
+                                [](ConnectionErrorEnum err) noexcept { return stdexec::just_error(err); }
                             });
                  }
              );

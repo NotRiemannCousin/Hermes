@@ -132,7 +132,7 @@ namespace Hermes {
             }
         };
         template<class Receiver>
-        OperationState<Receiver> connect(Receiver r) const {
+        OperationState<Receiver> connect(Receiver r) const noexcept {
             return { m_data, m_options, std::move(r), m_action };
         }
     };
@@ -150,17 +150,17 @@ namespace Hermes {
         // and possibly connected socket. Close() is idempotent, so it is safe even when the TCP connect error
         // paths already closed the handle, or when the facade destructor closes it again during unwinding.
         //
-        // The let_error handler MUST be generic: let_value adds std::exception_ptr to the error channel whenever
-        // its function is potentially-throwing, so the channel here is {ConnectionErrorEnum, std::exception_ptr}
-        // and stdexec requires the handler to accept every error type (same rule as the mapErrorPipeline in the
-        // examples). The original error is forwarded unchanged; Close() runs for both error types.
+        // Both handlers are noexcept on purpose: a potentially-throwing callable would add std::exception_ptr to
+        // the error channel, and the boundary contract is errors-as-values only. The let_error handler stays
+        // generic so it accepts whatever the upstream channel carries; the original error is forwarded unchanged
+        // and Close() runs for every error type.
         auto connectSender{ DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, options)
-             | stdexec::let_value([&data, options]() { return ControlSender{ &data, options }; })
-             | stdexec::let_error([&data](auto&& error) {
-                   Close(data);
-                   return stdexec::just_error(std::forward<decltype(error)>(error));
-               }) };
-        static_assert(stdexec::sender_in<decltype(connectSender)>,
+                | stdexec::let_value([&data, options]() noexcept { return ControlSender{ &data, options }; })
+                | stdexec::let_error([&data](const ConnectionErrorEnum error) noexcept {
+                    Close(data);
+                    return stdexec::just_error(error);
+                }) };
+        static_assert(stdexec::sender<decltype(connectSender)>,
             "TlsAsyncConnectPolicy::Connect must produce a well-formed sender: if the error channel changed, "
             "the let_error handler above must accept every error type.");
         return connectSender;
