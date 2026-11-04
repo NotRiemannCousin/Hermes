@@ -166,9 +166,9 @@
 </g>
 </g>
 <!-- Node9&#45;&gt;Node4 -->
-<g id="edge15_Node000009_Node000004" class="edge">
+<g id="edge16_Node000009_Node000004" class="edge">
 <title>Node9&#45;&gt;Node4</title>
-<g id="a_edge15_Node000009_Node000004"><a xlink:title=" ">
+<g id="a_edge16_Node000009_Node000004"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1614.49,-153.62C1397.3,-149.23 648.42,-132.13 545.38,-103 539.84,-101.44 534.24,-98.99 529.05,-96.28"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="530.84,-93.27 520.43,-91.31 527.35,-99.34 530.84,-93.27"/>
 </a>
@@ -283,31 +283,12 @@
 </a>
 </g>
 </g>
-<!-- Node16 -->
-<g id="Node000016" class="node">
-<title>Node16</title>
-<g id="a_Node000016"><a xlink:title=" ">
-<polygon fill="#e0e0e0" stroke="#999999" points="600.75,-90.25 554,-90.25 554,-69.5 600.75,-69.5 600.75,-90.25"/>
-<text xml:space="preserve" text-anchor="middle" x="577.38" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">cerrno</text>
-</a>
-</g>
-</g>
-<!-- Node9&#45;&gt;Node16 -->
-<g id="edge16_Node000009_Node000016" class="edge">
-<title>Node9&#45;&gt;Node16</title>
-<g id="a_edge16_Node000009_Node000016"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1614.52,-153.77C1405.25,-150.05 704.56,-135.26 609.38,-103 605.23,-101.59 601.13,-99.48 597.32,-97.11"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="599.5,-94.36 589.32,-91.42 595.44,-100.07 599.5,-94.36"/>
-</a>
-</g>
-</g>
 <!-- Node17 -->
 <g id="Node000017" class="node">
 <title>Node17</title>
-<g id="a_Node000017"><a xlink:href="_conversion_and_literals_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="1513.12,-96.62 1363.62,-96.62 1363.62,-63.12 1513.12,-63.12 1513.12,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="1371.62" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="1438.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/ConversionAndLiterals.hpp</text>
+<g id="a_Node000017"><a xlink:title=" ">
+<polygon fill="#e0e0e0" stroke="#999999" points="600.75,-90.25 554,-90.25 554,-69.5 600.75,-69.5 600.75,-90.25"/>
+<text xml:space="preserve" text-anchor="middle" x="577.38" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">cerrno</text>
 </a>
 </g>
 </g>
@@ -315,110 +296,129 @@
 <g id="edge17_Node000009_Node000017" class="edge">
 <title>Node9&#45;&gt;Node17</title>
 <g id="a_edge17_Node000009_Node000017"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1614.52,-153.77C1405.25,-150.05 704.56,-135.26 609.38,-103 605.23,-101.59 601.13,-99.48 597.32,-97.11"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="599.5,-94.36 589.32,-91.42 595.44,-100.07 599.5,-94.36"/>
+</a>
+</g>
+</g>
+<!-- Node18 -->
+<g id="Node000018" class="node">
+<title>Node18</title>
+<g id="a_Node000018"><a xlink:href="_conversion_and_literals_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="1513.12,-96.62 1363.62,-96.62 1363.62,-63.12 1513.12,-63.12 1513.12,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="1371.62" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="1438.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/ConversionAndLiterals.hpp</text>
+</a>
+</g>
+</g>
+<!-- Node9&#45;&gt;Node18 -->
+<g id="edge18_Node000009_Node000018" class="edge">
+<title>Node9&#45;&gt;Node18</title>
+<g id="a_edge18_Node000009_Node000018"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1621.8,-138.54C1586.14,-127.33 1538.5,-112.35 1500.71,-100.47"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1501.86,-97.16 1491.27,-97.5 1499.76,-103.84 1501.86,-97.16"/>
 </a>
 </g>
 </g>
-<!-- Node19 -->
-<g id="Node000019" class="node">
-<title>Node19</title>
-<g id="a_Node000019"><a xlink:href="_macros_8hpp.html" target="_top" xlink:title=" ">
+<!-- Node20 -->
+<g id="Node000020" class="node">
+<title>Node20</title>
+<g id="a_Node000020"><a xlink:href="_macros_8hpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1346,-96.62 1228.75,-96.62 1228.75,-63.12 1346,-63.12 1346,-96.62"/>
 <text xml:space="preserve" text-anchor="start" x="1236.75" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
 <text xml:space="preserve" text-anchor="middle" x="1287.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Macros.hpp</text>
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node19 -->
-<g id="edge19_Node000009_Node000019" class="edge">
-<title>Node9&#45;&gt;Node19</title>
-<g id="a_edge19_Node000009_Node000019"><a xlink:title=" ">
+<!-- Node9&#45;&gt;Node20 -->
+<g id="edge20_Node000009_Node000020" class="edge">
+<title>Node9&#45;&gt;Node20</title>
+<g id="a_edge20_Node000009_Node000020"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1614.31,-148.01C1549.86,-140 1443.89,-124.9 1354.38,-103 1351.03,-102.18 1347.62,-101.28 1344.18,-100.31"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1345.26,-96.98 1334.68,-97.51 1343.28,-103.7 1345.26,-96.98"/>
-</a>
-</g>
-</g>
-<!-- Node21 -->
-<g id="Node000021" class="node">
-<title>Node21</title>
-<g id="a_Node000021"><a xlink:href="_address_family_enum_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="1171.88,-96.62 996.88,-96.62 996.88,-63.12 1171.88,-63.12 1171.88,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="1004.88" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="1084.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/AddressFamilyEnum.hpp</text>
-</a>
-</g>
-</g>
-<!-- Node9&#45;&gt;Node21 -->
-<g id="edge22_Node000009_Node000021" class="edge">
-<title>Node9&#45;&gt;Node21</title>
-<g id="a_edge22_Node000009_Node000021"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1614.26,-150.53C1522.34,-143.52 1339.78,-127.71 1186.38,-103 1179.57,-101.9 1172.53,-100.64 1165.48,-99.29"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1166.39,-95.91 1155.9,-97.4 1165.04,-102.77 1166.39,-95.91"/>
 </a>
 </g>
 </g>
 <!-- Node22 -->
 <g id="Node000022" class="node">
 <title>Node22</title>
-<g id="a_Node000022"><a xlink:href="_protocol_base_type_enum_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="2462.38,-96.62 2272.38,-96.62 2272.38,-63.12 2462.38,-63.12 2462.38,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="2280.38" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="2367.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/ProtocolBaseTypeEnum.hpp</text>
+<g id="a_Node000022"><a xlink:href="_address_family_enum_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="1171.88,-96.62 996.88,-96.62 996.88,-63.12 1171.88,-63.12 1171.88,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="1004.88" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="1084.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/AddressFamilyEnum.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node9&#45;&gt;Node22 -->
-<g id="edge24_Node000009_Node000022" class="edge">
+<g id="edge23_Node000009_Node000022" class="edge">
 <title>Node9&#45;&gt;Node22</title>
-<g id="a_edge24_Node000009_Node000022"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1732.27,-151.97C1838.75,-146.42 2070.16,-131.92 2263.38,-103 2270.59,-101.92 2278.05,-100.65 2285.52,-99.27"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="2286.17,-102.7 2295.33,-97.38 2284.85,-95.83 2286.17,-102.7"/>
+<g id="a_edge23_Node000009_Node000022"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1614.26,-150.53C1522.34,-143.52 1339.78,-127.71 1186.38,-103 1179.57,-101.9 1172.53,-100.64 1165.48,-99.29"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1166.39,-95.91 1155.9,-97.4 1165.04,-102.77 1166.39,-95.91"/>
 </a>
 </g>
 </g>
 <!-- Node23 -->
 <g id="Node000023" class="node">
 <title>Node23</title>
-<g id="a_Node000023"><a xlink:href="_socket_shutdown_enum_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="802.38,-96.62 618.38,-96.62 618.38,-63.12 802.38,-63.12 802.38,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="626.38" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="710.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/SocketShutdownEnum.hpp</text>
+<g id="a_Node000023"><a xlink:href="_protocol_base_type_enum_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="2462.38,-96.62 2272.38,-96.62 2272.38,-63.12 2462.38,-63.12 2462.38,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="2280.38" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="2367.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/ProtocolBaseTypeEnum.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node9&#45;&gt;Node23 -->
-<g id="edge26_Node000009_Node000023" class="edge">
+<g id="edge25_Node000009_Node000023" class="edge">
 <title>Node9&#45;&gt;Node23</title>
-<g id="a_edge26_Node000009_Node000023"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1614.27,-154.36C1474.17,-152.76 1111.16,-144.58 811.38,-103 803.97,-101.97 796.3,-100.69 788.65,-99.27"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="789.45,-95.86 778.97,-97.39 788.11,-102.74 789.45,-95.86"/>
+<g id="a_edge25_Node000009_Node000023"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1732.27,-151.97C1838.75,-146.42 2070.16,-131.92 2263.38,-103 2270.59,-101.92 2278.05,-100.65 2285.52,-99.27"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="2286.17,-102.7 2295.33,-97.38 2284.85,-95.83 2286.17,-102.7"/>
 </a>
 </g>
 </g>
 <!-- Node24 -->
 <g id="Node000024" class="node">
 <title>Node24</title>
-<g id="a_Node000024"><a xlink:href="_socket_type_enum_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="978.62,-96.62 820.12,-96.62 820.12,-63.12 978.62,-63.12 978.62,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="828.12" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="899.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/SocketTypeEnum.hpp</text>
+<g id="a_Node000024"><a xlink:href="_socket_shutdown_enum_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="802.38,-96.62 618.38,-96.62 618.38,-63.12 802.38,-63.12 802.38,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="626.38" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="710.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/SocketShutdownEnum.hpp</text>
 </a>
 </g>
 </g>
 <!-- Node9&#45;&gt;Node24 -->
-<g id="edge28_Node000009_Node000024" class="edge">
+<g id="edge27_Node000009_Node000024" class="edge">
 <title>Node9&#45;&gt;Node24</title>
-<g id="a_edge28_Node000009_Node000024"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1614.34,-153.63C1495.25,-150.63 1217.98,-139.94 988.38,-103 982.13,-102 975.68,-100.77 969.24,-99.42"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="970.45,-96.1 959.93,-97.36 968.94,-102.93 970.45,-96.1"/>
+<g id="a_edge27_Node000009_Node000024"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1614.27,-154.36C1474.17,-152.76 1111.16,-144.58 811.38,-103 803.97,-101.97 796.3,-100.69 788.65,-99.27"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="789.45,-95.86 778.97,-97.39 788.11,-102.74 789.45,-95.86"/>
 </a>
 </g>
 </g>
 <!-- Node25 -->
 <g id="Node000025" class="node">
 <title>Node25</title>
-<g id="a_Node000025"><a xlink:href="_linux_2_encrypt_status_enum_8hpp.html" target="_top" xlink:title=" ">
+<g id="a_Node000025"><a xlink:href="_socket_type_enum_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="978.62,-96.62 820.12,-96.62 820.12,-63.12 978.62,-63.12 978.62,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="828.12" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="899.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/SocketTypeEnum.hpp</text>
+</a>
+</g>
+</g>
+<!-- Node9&#45;&gt;Node25 -->
+<g id="edge29_Node000009_Node000025" class="edge">
+<title>Node9&#45;&gt;Node25</title>
+<g id="a_edge29_Node000009_Node000025"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1614.34,-153.63C1495.25,-150.63 1217.98,-139.94 988.38,-103 982.13,-102 975.68,-100.77 969.24,-99.42"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="970.45,-96.1 959.93,-97.36 968.94,-102.93 970.45,-96.1"/>
+</a>
+</g>
+</g>
+<!-- Node26 -->
+<g id="Node000026" class="node">
+<title>Node26</title>
+<g id="a_Node000026"><a xlink:href="_linux_2_encrypt_status_enum_8hpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1702,-103 1530.75,-103 1530.75,-56.75 1702,-56.75 1702,-103"/>
 <text xml:space="preserve" text-anchor="start" x="1538.75" y="-89.5" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
 <text xml:space="preserve" text-anchor="start" x="1538.75" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">/Enums/_os/Linux/EncryptStatus</text>
@@ -426,38 +426,38 @@
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node25 -->
-<g id="edge30_Node000009_Node000025" class="edge">
-<title>Node9&#45;&gt;Node25</title>
-<g id="a_edge30_Node000009_Node000025"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1661.01,-138.72C1655.01,-130.95 1647.6,-121.35 1640.56,-112.21"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="1643.5,-110.3 1634.62,-104.52 1637.95,-114.57 1643.5,-110.3"/>
-</a>
-</g>
-</g>
-<!-- Node26 -->
-<g id="Node000026" class="node">
-<title>Node26</title>
-<g id="a_Node000026"><a xlink:href="_name_info_flags_8hpp.html" target="_top" xlink:title=" ">
-<polygon fill="white" stroke="#666666" points="2624.12,-96.62 2480.62,-96.62 2480.62,-63.12 2624.12,-63.12 2624.12,-96.62"/>
-<text xml:space="preserve" text-anchor="start" x="2488.62" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
-<text xml:space="preserve" text-anchor="middle" x="2552.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Flags/NameInfoFlags.hpp</text>
-</a>
-</g>
-</g>
 <!-- Node9&#45;&gt;Node26 -->
 <g id="edge31_Node000009_Node000026" class="edge">
 <title>Node9&#45;&gt;Node26</title>
 <g id="a_edge31_Node000009_Node000026"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M1732.41,-154.98C1865.33,-154.61 2197.86,-148.74 2471.38,-103 2476.89,-102.08 2482.58,-100.93 2488.26,-99.66"/>
-<polygon fill="#63b8ff" stroke="#63b8ff" points="2488.74,-103.14 2497.65,-97.41 2487.11,-96.33 2488.74,-103.14"/>
+<path fill="none" stroke="#63b8ff" d="M1661.01,-138.72C1655.01,-130.95 1647.6,-121.35 1640.56,-112.21"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="1643.5,-110.3 1634.62,-104.52 1637.95,-114.57 1643.5,-110.3"/>
 </a>
 </g>
 </g>
 <!-- Node27 -->
 <g id="Node000027" class="node">
 <title>Node27</title>
-<g id="a_Node000027"><a xlink:href="_linux_2_credential_flags_8hpp.html" target="_top" xlink:title=" ">
+<g id="a_Node000027"><a xlink:href="_name_info_flags_8hpp.html" target="_top" xlink:title=" ">
+<polygon fill="white" stroke="#666666" points="2624.12,-96.62 2480.62,-96.62 2480.62,-63.12 2624.12,-63.12 2624.12,-96.62"/>
+<text xml:space="preserve" text-anchor="start" x="2488.62" y="-83.12" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
+<text xml:space="preserve" text-anchor="middle" x="2552.38" y="-70.38" font-family="Helvetica,sans-Serif" font-size="10.00">/Flags/NameInfoFlags.hpp</text>
+</a>
+</g>
+</g>
+<!-- Node9&#45;&gt;Node27 -->
+<g id="edge32_Node000009_Node000027" class="edge">
+<title>Node9&#45;&gt;Node27</title>
+<g id="a_edge32_Node000009_Node000027"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M1732.41,-154.98C1865.33,-154.61 2197.86,-148.74 2471.38,-103 2476.89,-102.08 2482.58,-100.93 2488.26,-99.66"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="2488.74,-103.14 2497.65,-97.41 2487.11,-96.33 2488.74,-103.14"/>
+</a>
+</g>
+</g>
+<!-- Node28 -->
+<g id="Node000028" class="node">
+<title>Node28</title>
+<g id="a_Node000028"><a xlink:href="_linux_2_credential_flags_8hpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="1906,-103 1758.75,-103 1758.75,-56.75 1906,-56.75 1906,-103"/>
 <text xml:space="preserve" text-anchor="start" x="1766.75" y="-89.5" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
 <text xml:space="preserve" text-anchor="start" x="1766.75" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">/Flags/_os/Linux/Credential</text>
@@ -465,19 +465,19 @@
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node27 -->
-<g id="edge33_Node000009_Node000027" class="edge">
-<title>Node9&#45;&gt;Node27</title>
-<g id="a_edge33_Node000009_Node000027"><a xlink:title=" ">
+<!-- Node9&#45;&gt;Node28 -->
+<g id="edge34_Node000009_Node000028" class="edge">
+<title>Node9&#45;&gt;Node28</title>
+<g id="a_edge34_Node000009_Node000028"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1708.27,-138.54C1727.37,-129.66 1751.54,-118.43 1773.47,-108.24"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1774.73,-111.52 1782.32,-104.13 1771.78,-105.17 1774.73,-111.52"/>
 </a>
 </g>
 </g>
-<!-- Node28 -->
-<g id="Node000028" class="node">
-<title>Node28</title>
-<g id="a_Node000028"><a xlink:href="_linux_2_supported_protocols_flags_8hpp.html" target="_top" xlink:title=" ">
+<!-- Node29 -->
+<g id="Node000029" class="node">
+<title>Node29</title>
+<g id="a_Node000029"><a xlink:href="_linux_2_supported_protocols_flags_8hpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2070.62,-103 1924.12,-103 1924.12,-56.75 2070.62,-56.75 2070.62,-103"/>
 <text xml:space="preserve" text-anchor="start" x="1932.12" y="-89.5" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
 <text xml:space="preserve" text-anchor="start" x="1932.12" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">/Flags/_os/Linux/Supported</text>
@@ -485,19 +485,19 @@
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node28 -->
-<g id="edge34_Node000009_Node000028" class="edge">
-<title>Node9&#45;&gt;Node28</title>
-<g id="a_edge34_Node000009_Node000028"><a xlink:title=" ">
+<!-- Node9&#45;&gt;Node29 -->
+<g id="edge35_Node000009_Node000029" class="edge">
+<title>Node9&#45;&gt;Node29</title>
+<g id="a_edge35_Node000009_Node000029"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1732.25,-143.07C1778.79,-133.63 1845.64,-119.61 1912.5,-103.64"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1913.29,-107.06 1922.19,-101.31 1911.65,-100.25 1913.29,-107.06"/>
 </a>
 </g>
 </g>
-<!-- Node29 -->
-<g id="Node000029" class="node">
-<title>Node29</title>
-<g id="a_Node000029"><a xlink:href="_linux_2_s_channel_cred_flags_8hpp.html" target="_top" xlink:title=" ">
+<!-- Node30 -->
+<g id="Node000030" class="node">
+<title>Node30</title>
+<g id="a_Node000030"><a xlink:href="_linux_2_s_channel_cred_flags_8hpp.html" target="_top" xlink:title=" ">
 <polygon fill="white" stroke="#666666" points="2254,-103 2088.75,-103 2088.75,-56.75 2254,-56.75 2254,-103"/>
 <text xml:space="preserve" text-anchor="start" x="2096.75" y="-89.5" font-family="Helvetica,sans-Serif" font-size="10.00">Hermes/_base/OsApi</text>
 <text xml:space="preserve" text-anchor="start" x="2096.75" y="-76.75" font-family="Helvetica,sans-Serif" font-size="10.00">/Flags/_os/Linux/SChannelCred</text>
@@ -505,100 +505,118 @@
 </a>
 </g>
 </g>
-<!-- Node9&#45;&gt;Node29 -->
-<g id="edge35_Node000009_Node000029" class="edge">
-<title>Node9&#45;&gt;Node29</title>
-<g id="a_edge35_Node000009_Node000029"><a xlink:title=" ">
+<!-- Node9&#45;&gt;Node30 -->
+<g id="edge36_Node000009_Node000030" class="edge">
+<title>Node9&#45;&gt;Node30</title>
+<g id="a_edge36_Node000009_Node000030"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1732.18,-149.29C1809.18,-141.69 1948.54,-126.39 2077.47,-103.25"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="2078.01,-106.71 2087.22,-101.48 2076.76,-99.82 2078.01,-106.71"/>
 </a>
 </g>
 </g>
-<!-- Node18 -->
-<g id="Node000018" class="node">
-<title>Node18</title>
-<g id="a_Node000018"><a xlink:title=" ">
+<!-- Node16 -->
+<g id="Node000016" class="node">
+<title>Node16</title>
+<g id="a_Node000016"><a xlink:title=" ">
+<polygon fill="#e0e0e0" stroke="#999999" points="2934.12,-20.75 2862.62,-20.75 2862.62,0 2934.12,0 2934.12,-20.75"/>
+<text xml:space="preserve" text-anchor="middle" x="2898.38" y="-7.25" font-family="Helvetica,sans-Serif" font-size="10.00">sys/types.h</text>
+</a>
+</g>
+</g>
+<!-- Node15&#45;&gt;Node16 -->
+<g id="edge15_Node000015_Node000016" class="edge">
+<title>Node15&#45;&gt;Node16</title>
+<g id="a_edge15_Node000015_Node000016"><a xlink:title=" ">
+<path fill="none" stroke="#63b8ff" d="M2898.38,-62.88C2898.38,-53.78 2898.38,-42.27 2898.38,-32.44"/>
+<polygon fill="#63b8ff" stroke="#63b8ff" points="2901.88,-32.71 2898.38,-22.71 2894.88,-32.71 2901.88,-32.71"/>
+</a>
+</g>
+</g>
+<!-- Node19 -->
+<g id="Node000019" class="node">
+<title>Node19</title>
+<g id="a_Node000019"><a xlink:title=" ">
 <polygon fill="#e0e0e0" stroke="#999999" points="1462.88,-20.75 1413.88,-20.75 1413.88,0 1462.88,0 1462.88,-20.75"/>
 <text xml:space="preserve" text-anchor="middle" x="1438.38" y="-7.25" font-family="Helvetica,sans-Serif" font-size="10.00">cstdint</text>
 </a>
 </g>
 </g>
-<!-- Node17&#45;&gt;Node18 -->
-<g id="edge18_Node000017_Node000018" class="edge">
-<title>Node17&#45;&gt;Node18</title>
-<g id="a_edge18_Node000017_Node000018"><a xlink:title=" ">
+<!-- Node18&#45;&gt;Node19 -->
+<g id="edge19_Node000018_Node000019" class="edge">
+<title>Node18&#45;&gt;Node19</title>
+<g id="a_edge19_Node000018_Node000019"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1438.38,-62.88C1438.38,-53.78 1438.38,-42.27 1438.38,-32.44"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1441.88,-32.71 1438.38,-22.71 1434.88,-32.71 1441.88,-32.71"/>
 </a>
 </g>
 </g>
-<!-- Node19&#45;&gt;Node10 -->
-<g id="edge21_Node000019_Node000010" class="edge">
-<title>Node19&#45;&gt;Node10</title>
-<g id="a_edge21_Node000019_Node000010"><a xlink:title=" ">
+<!-- Node20&#45;&gt;Node10 -->
+<g id="edge22_Node000020_Node000010" class="edge">
+<title>Node20&#45;&gt;Node10</title>
+<g id="a_edge22_Node000020_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1238.75,-62.71C1203.87,-51.11 1157.43,-35.67 1124.62,-24.76"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1126.09,-21.56 1115.49,-21.72 1123.88,-28.2 1126.09,-21.56"/>
 </a>
 </g>
 </g>
-<!-- Node20 -->
-<g id="Node000020" class="node">
-<title>Node20</title>
-<g id="a_Node000020"><a xlink:title=" ">
+<!-- Node21 -->
+<g id="Node000021" class="node">
+<title>Node21</title>
+<g id="a_Node000021"><a xlink:title=" ">
 <polygon fill="#e0e0e0" stroke="#999999" points="1323.5,-20.75 1251.25,-20.75 1251.25,0 1323.5,0 1323.5,-20.75"/>
 <text xml:space="preserve" text-anchor="middle" x="1287.38" y="-7.25" font-family="Helvetica,sans-Serif" font-size="10.00">string_view</text>
 </a>
 </g>
 </g>
-<!-- Node19&#45;&gt;Node20 -->
-<g id="edge20_Node000019_Node000020" class="edge">
-<title>Node19&#45;&gt;Node20</title>
-<g id="a_edge20_Node000019_Node000020"><a xlink:title=" ">
+<!-- Node20&#45;&gt;Node21 -->
+<g id="edge21_Node000020_Node000021" class="edge">
+<title>Node20&#45;&gt;Node21</title>
+<g id="a_edge21_Node000020_Node000021"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1287.38,-62.88C1287.38,-53.78 1287.38,-42.27 1287.38,-32.44"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1290.88,-32.71 1287.38,-22.71 1283.88,-32.71 1290.88,-32.71"/>
 </a>
 </g>
 </g>
-<!-- Node21&#45;&gt;Node10 -->
-<g id="edge23_Node000021_Node000010" class="edge">
-<title>Node21&#45;&gt;Node10</title>
-<g id="a_edge23_Node000021_Node000010"><a xlink:title=" ">
+<!-- Node22&#45;&gt;Node10 -->
+<g id="edge24_Node000022_Node000010" class="edge">
+<title>Node22&#45;&gt;Node10</title>
+<g id="a_edge24_Node000022_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M1084.38,-62.88C1084.38,-53.78 1084.38,-42.27 1084.38,-32.44"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1087.88,-32.71 1084.38,-22.71 1080.88,-32.71 1087.88,-32.71"/>
 </a>
 </g>
 </g>
-<!-- Node22&#45;&gt;Node11 -->
-<g id="edge25_Node000022_Node000011" class="edge">
-<title>Node22&#45;&gt;Node11</title>
-<g id="a_edge25_Node000022_Node000011"><a xlink:title=" ">
+<!-- Node23&#45;&gt;Node11 -->
+<g id="edge26_Node000023_Node000011" class="edge">
+<title>Node23&#45;&gt;Node11</title>
+<g id="a_edge26_Node000023_Node000011"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M2291.27,-62.67C2281.87,-60.67 2272.4,-58.66 2263.38,-56.75 2205.65,-44.52 2139.19,-30.5 2095.63,-21.32"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="2096.51,-17.93 2086,-19.3 2095.06,-24.78 2096.51,-17.93"/>
 </a>
 </g>
 </g>
-<!-- Node23&#45;&gt;Node10 -->
-<g id="edge27_Node000023_Node000010" class="edge">
-<title>Node23&#45;&gt;Node10</title>
-<g id="a_edge27_Node000023_Node000010"><a xlink:title=" ">
+<!-- Node24&#45;&gt;Node10 -->
+<g id="edge28_Node000024_Node000010" class="edge">
+<title>Node24&#45;&gt;Node10</title>
+<g id="a_edge28_Node000024_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M782.28,-62.65C792.04,-60.59 801.94,-58.57 811.38,-56.75 889.34,-41.74 980.4,-27.2 1035.17,-18.78"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1035.43,-22.28 1044.79,-17.31 1034.37,-15.36 1035.43,-22.28"/>
 </a>
 </g>
 </g>
-<!-- Node24&#45;&gt;Node10 -->
-<g id="edge29_Node000024_Node000010" class="edge">
-<title>Node24&#45;&gt;Node10</title>
-<g id="a_edge29_Node000024_Node000010"><a xlink:title=" ">
+<!-- Node25&#45;&gt;Node10 -->
+<g id="edge30_Node000025_Node000010" class="edge">
+<title>Node25&#45;&gt;Node10</title>
+<g id="a_edge30_Node000025_Node000010"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M943.69,-62.71C975.06,-51.26 1016.7,-36.07 1046.52,-25.19"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="1047.71,-28.48 1055.9,-21.76 1045.31,-21.9 1047.71,-28.48"/>
 </a>
 </g>
 </g>
-<!-- Node26&#45;&gt;Node13 -->
-<g id="edge32_Node000026_Node000013" class="edge">
-<title>Node26&#45;&gt;Node13</title>
-<g id="a_edge32_Node000026_Node000013"><a xlink:title=" ">
+<!-- Node27&#45;&gt;Node13 -->
+<g id="edge33_Node000027_Node000013" class="edge">
+<title>Node27&#45;&gt;Node13</title>
+<g id="a_edge33_Node000027_Node000013"><a xlink:title=" ">
 <path fill="none" stroke="#63b8ff" d="M2574.41,-62.88C2589.04,-52.26 2608.19,-38.37 2622.9,-27.69"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="2624.58,-30.79 2630.62,-22.09 2620.47,-25.13 2624.58,-30.79"/>
 </a>

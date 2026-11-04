@@ -166,11 +166,11 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_socket_da
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">namespace </span>Hermes::details_ {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data&gt;</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Data&gt;</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">struct </span>ITlsConnectStateMachine;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data&gt;</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Data&gt;</div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">struct </span>ITlsTransferStateMachine;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">template</span>&lt;<span class="keyword">typename</span> Data&gt;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="keyword">template</span>&lt;<span class="keyword">class</span> Data&gt;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">struct </span>ITlsAcceptStateMachine;</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>}</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('_tls_socket_da
 <div class="ttc" id="anamespace_hermes_html"><div class="ttname"><a href="namespace_hermes.html">Hermes</a></div><div class="ttdef"><b>Definition</b> ConnectionErrorEnum.hpp:8</div></div>
 <div class="ttc" id="anamespace_hermes_html_a804025810e605be277a9c534e5790013"><div class="ttname"><a href="namespace_hermes.html#a804025810e605be277a9c534e5790013">Hermes::SocketTypeEnum</a></div><div class="ttdeci">SocketTypeEnum</div><div class="ttdef"><b>Definition</b> SocketTypeEnum.hpp:9</div></div>
 <div class="ttc" id="anamespace_hermes_html_a804025810e605be277a9c534e5790013aeae835e83c0494a376229f254f7d3392"><div class="ttname"><a href="namespace_hermes.html#a804025810e605be277a9c534e5790013aeae835e83c0494a376229f254f7d3392">Hermes::SocketTypeEnum::Stream</a></div><div class="ttdeci">@ Stream</div><div class="ttdef"><b>Definition</b> SocketTypeEnum.hpp:10</div></div>
-<div class="ttc" id="anamespace_hermes_html_ab0a8dd20db1e44bcc97b60bf041aa8f8"><div class="ttname"><a href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">Hermes::SocketFd</a></div><div class="ttdeci">int SocketFd</div><div class="ttdef"><b>Definition</b> Types.hpp:13</div></div>
+<div class="ttc" id="anamespace_hermes_html_ab0a8dd20db1e44bcc97b60bf041aa8f8"><div class="ttname"><a href="namespace_hermes.html#ab0a8dd20db1e44bcc97b60bf041aa8f8">Hermes::SocketFd</a></div><div class="ttdeci">int SocketFd</div><div class="ttdef"><b>Definition</b> Types.hpp:15</div></div>
 <div class="ttc" id="anamespace_hermes_html_afaea2e3839330149f067b0ba0206e77d"><div class="ttname"><a href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77d">Hermes::AddressFamilyEnum</a></div><div class="ttdeci">AddressFamilyEnum</div><div class="ttdef"><b>Definition</b> AddressFamilyEnum.hpp:23</div></div>
 <div class="ttc" id="anamespace_hermes_html_afaea2e3839330149f067b0ba0206e77da945c57568e98a3d82425172c57808330"><div class="ttname"><a href="namespace_hermes.html#afaea2e3839330149f067b0ba0206e77da945c57568e98a3d82425172c57808330">Hermes::AddressFamilyEnum::Inet6</a></div><div class="ttdeci">@ Inet6</div><div class="ttdef"><b>Definition</b> AddressFamilyEnum.hpp:35</div></div>
 <div class="ttc" id="astruct_hermes_1_1_ip_endpoint_html"><div class="ttname"><a href="struct_hermes_1_1_ip_endpoint.html">Hermes::IpEndpoint</a></div><div class="ttdef"><b>Definition</b> IpEndpoint.hpp:18</div></div>

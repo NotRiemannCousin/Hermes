@@ -1,27 +1,29 @@
 <map id="include/Hermes/Socket/_base.hpp" name="include/Hermes/Socket/_base.hpp">
-<area shape="rect" id="Node000001" title=" " alt="" coords="353,5,524,50"/>
-<area shape="rect" id="Node000002" href="$_default_socket_data_8hpp.html" title=" " alt="" coords="119,98,329,143"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="371,58,277,100,274,95,375,55"/>
-<area shape="rect" id="Node000003" href="$_default_accept_policy_8hpp.html" title=" " alt="" coords="5,191,248,252"/>
-<area shape="poly" id="edge10_Node000001_Node000003" title=" " alt="" coords="336,38,270,47,201,60,144,77,123,88,109,100,99,120,98,143,104,167,112,190,107,190,98,169,93,144,94,119,104,96,120,83,142,72,200,54,269,42,340,35"/>
-<area shape="rect" id="Node000006" href="$_default_connect_policy_8hpp.html" title=" " alt="" coords="486,191,677,252"/>
-<area shape="poly" id="edge11_Node000001_Node000006" title=" " alt="" coords="538,38,592,59,615,75,634,97,642,121,639,146,627,170,611,192,608,188,622,167,633,144,637,121,630,99,611,79,589,64,539,43"/>
-<area shape="rect" id="Node000008" href="$_default_transfer_policy_8hpp.html" title=" " alt="" coords="271,191,462,252"/>
-<area shape="poly" id="edge12_Node000001_Node000008" title=" " alt="" coords="414,60,394,99,380,146,372,191,367,189,375,145,389,97,410,64"/>
-<area shape="rect" id="Node000009" href="$_transfer_io_8hpp.html" title=" " alt="" coords="404,98,620,143"/>
-<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="466,60,497,98,492,98,465,65"/>
-<area shape="rect" id="Node000010" href="$_to_bytes_8hpp.html" title=" " alt="" coords="694,98,852,143"/>
-<area shape="poly" id="edge15_Node000001_Node000010" title=" " alt="" coords="533,52,697,97,692,99,533,57"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="191,156,158,192,154,189,194,152"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="316,145,488,193,483,195,317,150"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="268,149,325,189,320,191,267,154"/>
-<area shape="rect" id="Node000004" href="$_server_socket_8hpp.html" title=" " alt="" coords="169,300,342,345"/>
-<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="178,259,230,299,225,300,178,265"/>
-<area shape="rect" id="Node000005" href="$_listener_socket_8hpp.html" title=" " alt="" coords="164,393,348,438"/>
-<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="258,359,258,394,254,391,254,363"/>
-<area shape="rect" id="Node000007" href="$_client_socket_8hpp.html" title=" " alt="" coords="388,300,558,345"/>
-<area shape="poly" id="edge6_Node000006_Node000007" title=" " alt="" coords="539,262,498,302,495,298,535,264"/>
-<area shape="poly" id="edge9_Node000008_Node000004" title=" " alt="" coords="324,261,282,302,278,298,319,264"/>
-<area shape="poly" id="edge8_Node000008_Node000007" title=" " alt="" coords="411,261,453,300,447,300,410,266"/>
-<area shape="poly" id="edge14_Node000009_Node000008" title=" " alt="" coords="470,150,412,192,410,188,465,153"/>
+<area shape="rect" id="Node000001" title=" " alt="" coords="467,5,637,50"/>
+<area shape="rect" id="Node000002" href="$_fast_io_execution_context_8hpp.html" title=" " alt="" coords="5,98,230,160"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="450,54,231,104,229,100,454,50"/>
+<area shape="rect" id="Node000003" href="$_default_socket_data_8hpp.html" title=" " alt="" coords="304,106,515,151"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="506,61,442,108,439,104,511,58"/>
+<area shape="rect" id="Node000004" href="$_default_accept_policy_8hpp.html" title=" " alt="" coords="191,208,433,269"/>
+<area shape="poly" id="edge11_Node000001_Node000004" title=" " alt="" coords="449,44,356,68,318,82,294,100,283,125,283,153,289,181,299,208,294,207,284,183,277,153,278,123,290,96,315,78,354,62,454,41"/>
+<area shape="rect" id="Node000007" href="$_default_connect_policy_8hpp.html" title=" " alt="" coords="671,208,862,269"/>
+<area shape="poly" id="edge12_Node000001_Node000007" title=" " alt="" coords="652,40,753,62,794,77,819,96,827,110,830,125,826,154,813,184,795,210,791,205,808,181,821,153,825,125,822,112,816,100,791,82,751,67,653,45"/>
+<area shape="rect" id="Node000009" href="$_default_transfer_policy_8hpp.html" title=" " alt="" coords="457,208,647,269"/>
+<area shape="poly" id="edge13_Node000001_Node000009" title=" " alt="" coords="554,64,555,208,550,206,550,68"/>
+<area shape="rect" id="Node000010" href="$_transfer_io_8hpp.html" title=" " alt="" coords="590,106,805,151"/>
+<area shape="poly" id="edge14_Node000001_Node000010" title=" " alt="" coords="597,56,668,106,663,106,596,62"/>
+<area shape="rect" id="Node000011" href="$_to_bytes_8hpp.html" title=" " alt="" coords="880,106,1038,151"/>
+<area shape="poly" id="edge16_Node000001_Node000011" title=" " alt="" coords="652,47,862,95,893,106,887,106,861,101,653,52"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="382,161,341,209,338,205,378,165"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="496,153,673,208,668,209,496,159"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="451,158,515,207,509,207,450,164"/>
+<area shape="rect" id="Node000005" href="$_server_socket_8hpp.html" title=" " alt="" coords="355,317,528,362"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="364,276,416,317,411,317,363,282"/>
+<area shape="rect" id="Node000006" href="$_listener_socket_8hpp.html" title=" " alt="" coords="350,410,533,455"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="443,376,444,411,439,408,440,379"/>
+<area shape="rect" id="Node000008" href="$_client_socket_8hpp.html" title=" " alt="" coords="574,317,744,362"/>
+<area shape="poly" id="edge7_Node000007_Node000008" title=" " alt="" coords="725,279,684,319,681,315,720,281"/>
+<area shape="poly" id="edge10_Node000009_Node000005" title=" " alt="" coords="510,279,467,319,464,315,505,281"/>
+<area shape="poly" id="edge9_Node000009_Node000008" title=" " alt="" coords="597,278,638,317,633,316,595,283"/>
+<area shape="poly" id="edge15_Node000010_Node000009" title=" " alt="" coords="658,160,594,209,592,205,653,162"/>
 </map>
