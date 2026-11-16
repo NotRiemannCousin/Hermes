@@ -5,7 +5,7 @@ var searchData=
   ['tobytes_2',['ToBytes',['../namespace_hermes_1_1_utils.html#ab7f0af003b080130d1c9985872875e7f',1,'Hermes::Utils']]],
   ['toresult_3',['ToResult',['../namespace_hermes.html#a27f438d51bf21509130b1e14013874dd',1,'Hermes']]],
   ['tosockaddr_4',['ToSockAddr',['../struct_hermes_1_1_ip_endpoint.html#a5b4755d04904bd3a408375b68a749452',1,'Hermes::IpEndpoint']]],
-  ['tryparse_5',['TryParse',['../struct_hermes_1_1_ip_address.html#ab3efe79845ade5812e2b6b957e1d8223',1,'Hermes::IpAddress']]],
+  ['tryparse_5',['TryParse',['../struct_hermes_1_1_ip_address.html#ad4ed93f35796bb9b34ed61073fde6bfd',1,'Hermes::IpAddress::TryParse()'],['../struct_hermes_1_1_ip_endpoint.html#aebf291f86c08783309fd433c27d4eefe',1,'Hermes::IpEndpoint::TryParse(std::string_view str)']]],
   ['tryresolve_6',['TryResolve',['../struct_hermes_1_1_ip_endpoint.html#a5d226f8b82d93f4516092cdbaa50df4a',1,'Hermes::IpEndpoint']]],
   ['tul_7',['tul',['../_conversion_and_literals_8hpp.html#a4f61d4069d5befd63fd377fc6f8adabc',1,'ConversionAndLiterals.hpp']]],
   ['tull_8',['tull',['../_conversion_and_literals_8hpp.html#a84f742b42ae9c8b2ae51ce044a473fb0',1,'ConversionAndLiterals.hpp']]],

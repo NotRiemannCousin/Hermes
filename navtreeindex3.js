@@ -245,9 +245,9 @@ var NAVTREEINDEX3 =
 "struct_hermes_1_1_accept_extensions.html":[4,2,0,0,1],
 "struct_hermes_1_1_client_socket.html":[4,0,0,0,2],
 "struct_hermes_1_1_client_socket.html":[4,2,0,0,2],
-"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,0,0,0,2,7],
 "struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,2,0,0,2,7],
-"struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,0,0,0,2,17],
+"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,0,0,0,2,7],
 "struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,2,0,0,2,17],
-"struct_hermes_1_1_client_socket.html#a2eb6b0fc47998ba221a8e49eee4c65d2":[4,0,0,0,2,25]
+"struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,0,0,0,2,17],
+"struct_hermes_1_1_client_socket.html#a2eb6b0fc47998ba221a8e49eee4c65d2":[4,2,0,0,2,25]
 };

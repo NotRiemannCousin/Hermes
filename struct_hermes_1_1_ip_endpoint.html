@@ -162,8 +162,10 @@ document.addEventListener('DOMContentLoaded',() => { initNavTree('struct_hermes_
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a79234d6d38bda14867321fcd51e59046" id="r_a79234d6d38bda14867321fcd51e59046"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> (const IpEndpoint &amp;o) noexcept=default</td></tr>
 <tr class="memitem:acf233a72d64c74d0e5879cb621322c9f" id="r_acf233a72d64c74d0e5879cb621322c9f"><td class="memItemLeft"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &amp;&#160;</td><td class="memItemRight"><a class="el" href="#acf233a72d64c74d0e5879cb621322c9f">operator=</a> (const <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &amp;o) noexcept=default</td></tr>
-<tr class="memitem:a4333c8705ca6340cff137d88f535b4f6" id="r_a4333c8705ca6340cff137d88f535b4f6"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a4333c8705ca6340cff137d88f535b4f6">IpEndpoint</a> (<a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> ip={}, std::uint16_t port=0)</td></tr>
-<tr class="memdesc:a4333c8705ca6340cff137d88f535b4f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> with a port and IP.  <br /></td></tr>
+<tr class="memitem:a91261ef3658d3335b139876b2fcd473c" id="r_a91261ef3658d3335b139876b2fcd473c"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a91261ef3658d3335b139876b2fcd473c">IpEndpoint</a> (<a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> ip, std::uint16_t port)</td></tr>
+<tr class="memdesc:a91261ef3658d3335b139876b2fcd473c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> with a port and IP.  <br /></td></tr>
+<tr class="memitem:a3e150630f1a46a999d7600a4e02595fa" id="r_a3e150630f1a46a999d7600a4e02595fa"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#a3e150630f1a46a999d7600a4e02595fa">IpEndpoint</a> (<a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> ip)</td></tr>
+<tr class="memitem:aef3d8f7148383b0f8f34b767561774dc" id="r_aef3d8f7148383b0f8f34b767561774dc"><td class="memItemLeft">&#160;</td><td class="memItemRight"><a class="el" href="#aef3d8f7148383b0f8f34b767561774dc">IpEndpoint</a> ()=default</td></tr>
 <tr class="memitem:a5b4755d04904bd3a408375b68a749452" id="r_a5b4755d04904bd3a408375b68a749452"><td class="memItemLeft"><a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e">SocketInfoAddr</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a5b4755d04904bd3a408375b68a749452">ToSockAddr</a> () const</td></tr>
 <tr class="memdesc:a5b4755d04904bd3a408375b68a749452"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to construct low-level socket information from this endpoint.  <br /></td></tr>
 <tr class="memitem:a7ccdddc2106b9a273578e0becfa867dd" id="r_a7ccdddc2106b9a273578e0becfa867dd"><td class="memItemLeft">std::strong_ordering&#160;</td><td class="memItemRight"><a class="el" href="#a7ccdddc2106b9a273578e0becfa867dd">operator&lt;=&gt;</a> (const <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &amp;) const =default</td></tr>
@@ -174,6 +176,15 @@ Public Member Functions</h2></td></tr>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ab854121550e85fefbd701a508c9db4ad" id="r_ab854121550e85fefbd701a508c9db4ad"><td class="memItemLeft">static <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab854121550e85fefbd701a508c9db4ad">Build</a> (<a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a> params) noexcept</td></tr>
 <tr class="memdesc:ab854121550e85fefbd701a508c9db4ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> from <a class="el" href="struct_hermes_1_1_ip_endpoint_params.html">IpEndpointParams</a>.  <br /></td></tr>
+<tr class="memitem:afef25e39f9a000f4a17d5d845621860b" id="r_afef25e39f9a000f4a17d5d845621860b"><td class="memItemLeft">static <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#afef25e39f9a000f4a17d5d845621860b">LoopbackIpv4</a> (std::uint16_t port=0) noexcept</td></tr>
+<tr class="memdesc:afef25e39f9a000f4a17d5d845621860b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an IPv4 loopback endpoint (127.0.0.1:port).  <br /></td></tr>
+<tr class="memitem:ac5edd62714e0e20870dd83f7d40a6cf4" id="r_ac5edd62714e0e20870dd83f7d40a6cf4"><td class="memItemLeft">static <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#ac5edd62714e0e20870dd83f7d40a6cf4">LoopbackIpv6</a> (std::uint16_t port=0) noexcept</td></tr>
+<tr class="memdesc:ac5edd62714e0e20870dd83f7d40a6cf4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an IPv6 loopback endpoint ([::1]:port).  <br /></td></tr>
+<tr class="memitem:abb8664551ac51d8fe9b8f3d28fb70641" id="r_abb8664551ac51d8fe9b8f3d28fb70641"><td class="memItemLeft">static <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#abb8664551ac51d8fe9b8f3d28fb70641">AnyIpv4</a> (std::uint16_t port=0) noexcept</td></tr>
+<tr class="memdesc:abb8664551ac51d8fe9b8f3d28fb70641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an unspecified IPv4 endpoint (0.0.0.0:port).  <br /></td></tr>
+<tr class="memitem:ae8baa7b85c148d23b2b09000d3d97551" id="r_ae8baa7b85c148d23b2b09000d3d97551"><td class="memItemLeft">static <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae8baa7b85c148d23b2b09000d3d97551">AnyIpv6</a> (std::uint16_t port=0) noexcept</td></tr>
+<tr class="memdesc:ae8baa7b85c148d23b2b09000d3d97551"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an unspecified IPv6 endpoint ([::]:port).  <br /></td></tr>
+<tr class="memitem:aebf291f86c08783309fd433c27d4eefe" id="r_aebf291f86c08783309fd433c27d4eefe"><td class="memItemLeft">static std::optional&lt; <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#aebf291f86c08783309fd433c27d4eefe">TryParse</a> (std::string_view str)</td></tr>
 <tr class="memitem:a51d43d81922ffeefceabaa49e58fd67d" id="r_a51d43d81922ffeefceabaa49e58fd67d"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a51d43d81922ffeefceabaa49e58fd67d">FromSockAddr</a> (<a class="el" href="namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e">SocketInfoAddr</a> infoAddr)</td></tr>
 <tr class="memdesc:a51d43d81922ffeefceabaa49e58fd67d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Tries to construct an Endpoint from low-level socket information.  <br /></td></tr>
 <tr class="memitem:a5d226f8b82d93f4516092cdbaa50df4a" id="r_a5d226f8b82d93f4516092cdbaa50df4a"><td class="memItemLeft">static <a class="el" href="namespace_hermes.html#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt; <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#a5d226f8b82d93f4516092cdbaa50df4a">TryResolve</a> (const std::string &amp;url, const std::string &amp;service=&quot;&quot;, <a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> socketType=<a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013aeae835e83c0494a376229f254f7d3392">SocketTypeEnum::Stream</a>)</td></tr>
@@ -186,7 +197,7 @@ Friends</h2></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a79234d6d38bda14867321fcd51e59046" name="a79234d6d38bda14867321fcd51e59046"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a79234d6d38bda14867321fcd51e59046">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[1/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a79234d6d38bda14867321fcd51e59046">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[1/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,31 +221,23 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="a4333c8705ca6340cff137d88f535b4f6" name="a4333c8705ca6340cff137d88f535b4f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4333c8705ca6340cff137d88f535b4f6">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[2/2]</span></h2>
+<a id="a91261ef3658d3335b139876b2fcd473c" name="a91261ef3658d3335b139876b2fcd473c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91261ef3658d3335b139876b2fcd473c">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[2/4]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">Hermes::IpEndpoint::IpEndpoint </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a></td>          <td class="paramname"><span class="paramname"><em>ip</em></span><span class="paramdefsep"> = </span><span class="paramdefval">{}</span>, </td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a></td>          <td class="paramname"><span class="paramname"><em>ip</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span>&#160;)</td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
 <p>Construct an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> with a port and IP. </p>
@@ -248,7 +251,111 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a3e150630f1a46a999d7600a4e02595fa" name="a3e150630f1a46a999d7600a4e02595fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e150630f1a46a999d7600a4e02595fa">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::IpEndpoint::IpEndpoint </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a></td>          <td class="paramname"><span class="paramname"><em>ip</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel explicit">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aef3d8f7148383b0f8f34b767561774dc" name="aef3d8f7148383b0f8f34b767561774dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3d8f7148383b0f8f34b767561774dc">&#9670;&#160;</a></span>IpEndpoint() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hermes::IpEndpoint::IpEndpoint </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel default">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="abb8664551ac51d8fe9b8f3d28fb70641" name="abb8664551ac51d8fe9b8f3d28fb70641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb8664551ac51d8fe9b8f3d28fb70641">&#9670;&#160;</a></span>AnyIpv4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> Hermes::IpEndpoint::AnyIpv4 </td>
+          <td>(</td>
+          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an unspecified IPv4 endpoint (0.0.0.0:port). </p>
+
+</div>
+</div>
+<a id="ae8baa7b85c148d23b2b09000d3d97551" name="ae8baa7b85c148d23b2b09000d3d97551"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8baa7b85c148d23b2b09000d3d97551">&#9670;&#160;</a></span>AnyIpv6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> Hermes::IpEndpoint::AnyIpv6 </td>
+          <td>(</td>
+          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an unspecified IPv6 endpoint ([::]:port). </p>
+
+</div>
+</div>
 <a id="ab854121550e85fefbd701a508c9db4ad" name="ab854121550e85fefbd701a508c9db4ad"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab854121550e85fefbd701a508c9db4ad">&#9670;&#160;</a></span>Build()</h2>
 
@@ -360,6 +467,60 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="afef25e39f9a000f4a17d5d845621860b" name="afef25e39f9a000f4a17d5d845621860b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afef25e39f9a000f4a17d5d845621860b">&#9670;&#160;</a></span>LoopbackIpv4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> Hermes::IpEndpoint::LoopbackIpv4 </td>
+          <td>(</td>
+          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an IPv4 loopback endpoint (127.0.0.1:port). </p>
+
+</div>
+</div>
+<a id="ac5edd62714e0e20870dd83f7d40a6cf4" name="ac5edd62714e0e20870dd83f7d40a6cf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5edd62714e0e20870dd83f7d40a6cf4">&#9670;&#160;</a></span>LoopbackIpv6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> Hermes::IpEndpoint::LoopbackIpv6 </td>
+          <td>(</td>
+          <td class="paramtype">std::uint16_t</td>          <td class="paramname"><span class="paramname"><em>port</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an IPv6 loopback endpoint ([::1]:port). </p>
+
+</div>
+</div>
 <a id="a7ccdddc2106b9a273578e0becfa867dd" name="a7ccdddc2106b9a273578e0becfa867dd"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ccdddc2106b9a273578e0becfa867dd">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
@@ -427,6 +588,38 @@ Friends</h2></td></tr>
 
 <p>Tries to construct low-level socket information from this endpoint. </p>
 <dl class="section return"><dt>Returns</dt><dd>An <a class="el" href="namespace_hermes.html#aa3b6f3056c91f708a018df84ffab077e">SocketInfoAddr</a> on success, or an <a class="el" href="namespace_hermes.html#abcdc7039ff863f7958fab5478142dfba">ConnectionErrorEnum</a> on failure. </dd></dl>
+
+</div>
+</div>
+<a id="aebf291f86c08783309fd433c27d4eefe" name="aebf291f86c08783309fd433c27d4eefe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebf291f86c08783309fd433c27d4eefe">&#9670;&#160;</a></span>TryParse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; <a class="el" href="#a79234d6d38bda14867321fcd51e59046">IpEndpoint</a> &gt; Hermes::IpEndpoint::TryParse </td>
+          <td>(</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Try to parse an <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> from a string. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">str</td><td>A string_view representing an IPv4 or IPv6 endpoint. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding <a class="el" href="struct_hermes_1_1_ip_endpoint.html">IpEndpoint</a> instance or std::nullopt if parsing fails. </dd></dl>
 
 </div>
 </div>

@@ -189,9 +189,17 @@ Public Member Functions</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a81e8b75937e4e49d4a03811b3ac02127" id="r_a81e8b75937e4e49d4a03811b3ac02127"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#a81e8b75937e4e49d4a03811b3ac02127">LoopbackIpv4</a> () noexcept</td></tr>
+<tr class="memdesc:a81e8b75937e4e49d4a03811b3ac02127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an IPv4 loopback (<span class="tt">127.0.0.1</span>).  <br /></td></tr>
+<tr class="memitem:ab04f7730e7c3148090fcf91e2a62a4c8" id="r_ab04f7730e7c3148090fcf91e2a62a4c8"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab04f7730e7c3148090fcf91e2a62a4c8">LoopbackIpv6</a> () noexcept</td></tr>
+<tr class="memdesc:ab04f7730e7c3148090fcf91e2a62a4c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an IPv6 loopback (<span class="tt">::1</span>).  <br /></td></tr>
+<tr class="memitem:ae915cc21426384cb5eab4bc1a7fcc58f" id="r_ae915cc21426384cb5eab4bc1a7fcc58f"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#ae915cc21426384cb5eab4bc1a7fcc58f">AnyIpv4</a> () noexcept</td></tr>
+<tr class="memdesc:ae915cc21426384cb5eab4bc1a7fcc58f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an unspecified IPv4 (<span class="tt">0.0.0.0</span>).  <br /></td></tr>
+<tr class="memitem:a47b56faa6947b5be90804904a3dcea8e" id="r_a47b56faa6947b5be90804904a3dcea8e"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#a47b56faa6947b5be90804904a3dcea8e">AnyIpv6</a> () noexcept</td></tr>
+<tr class="memdesc:a47b56faa6947b5be90804904a3dcea8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates an unspecified IPv6 (<span class="tt">::</span>).  <br /></td></tr>
 <tr class="memitem:ab621b5f4de1300016fed7fe2b789099b" id="r_ab621b5f4de1300016fed7fe2b789099b"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#ab621b5f4de1300016fed7fe2b789099b">FromIpv4</a> (const <a class="el" href="#aefe5326efab5667e5889747402dab8a8">Ipv4Type</a> &amp;data)</td></tr>
 <tr class="memitem:a6cedb56af851e861e60a28fbeb5e28da" id="r_a6cedb56af851e861e60a28fbeb5e28da"><td class="memItemLeft">static <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a>&#160;</td><td class="memItemRight"><a class="el" href="#a6cedb56af851e861e60a28fbeb5e28da">FromIpv6</a> (const <a class="el" href="#a16fdeda2bd4196b377dfd254c7966ad9">Ipv6Type</a> &amp;data)</td></tr>
-<tr class="memitem:ab3efe79845ade5812e2b6b957e1d8223" id="r_ab3efe79845ade5812e2b6b957e1d8223"><td class="memItemLeft">static std::optional&lt; <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ab3efe79845ade5812e2b6b957e1d8223">TryParse</a> (const std::string &amp;str)</td></tr>
+<tr class="memitem:ad4ed93f35796bb9b34ed61073fde6bfd" id="r_ad4ed93f35796bb9b34ed61073fde6bfd"><td class="memItemLeft">static std::optional&lt; <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> &gt;&#160;</td><td class="memItemRight"><a class="el" href="#ad4ed93f35796bb9b34ed61073fde6bfd">TryParse</a> (std::string_view str)</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-friends" class="groupheader"><a id="friends" name="friends"></a>
 Friends</h2></td></tr>
@@ -324,6 +332,60 @@ Friends</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
+<a id="ae915cc21426384cb5eab4bc1a7fcc58f" name="ae915cc21426384cb5eab4bc1a7fcc58f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae915cc21426384cb5eab4bc1a7fcc58f">&#9670;&#160;</a></span>AnyIpv4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> Hermes::IpAddress::AnyIpv4 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an unspecified IPv4 (<span class="tt">0.0.0.0</span>). </p>
+
+</div>
+</div>
+<a id="a47b56faa6947b5be90804904a3dcea8e" name="a47b56faa6947b5be90804904a3dcea8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47b56faa6947b5be90804904a3dcea8e">&#9670;&#160;</a></span>AnyIpv6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> Hermes::IpAddress::AnyIpv6 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an unspecified IPv6 (<span class="tt">::</span>). </p>
+
+</div>
+</div>
 <a id="a7d96db1f12632b70a53040c0f2d93ac0" name="a7d96db1f12632b70a53040c0f2d93ac0"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7d96db1f12632b70a53040c0f2d93ac0">&#9670;&#160;</a></span>AsIpv6()</h2>
 
@@ -753,6 +815,60 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="a81e8b75937e4e49d4a03811b3ac02127" name="a81e8b75937e4e49d4a03811b3ac02127"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81e8b75937e4e49d4a03811b3ac02127">&#9670;&#160;</a></span>LoopbackIpv4()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> Hermes::IpAddress::LoopbackIpv4 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an IPv4 loopback (<span class="tt">127.0.0.1</span>). </p>
+
+</div>
+</div>
+<a id="ab04f7730e7c3148090fcf91e2a62a4c8" name="ab04f7730e7c3148090fcf91e2a62a4c8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab04f7730e7c3148090fcf91e2a62a4c8">&#9670;&#160;</a></span>LoopbackIpv6()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> Hermes::IpAddress::LoopbackIpv6 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel static">static</span><span class="mlabel noexcept">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Creates an IPv6 loopback (<span class="tt">::1</span>). </p>
+
+</div>
+</div>
 <a id="a3241a298ed5fbbc29a6988bec7335802" name="a3241a298ed5fbbc29a6988bec7335802"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3241a298ed5fbbc29a6988bec7335802">&#9670;&#160;</a></span>operator&lt;=&gt;()</h2>
 
@@ -803,8 +919,8 @@ Friends</h2></td></tr>
 
 </div>
 </div>
-<a id="ab3efe79845ade5812e2b6b957e1d8223" name="ab3efe79845ade5812e2b6b957e1d8223"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3efe79845ade5812e2b6b957e1d8223">&#9670;&#160;</a></span>TryParse()</h2>
+<a id="ad4ed93f35796bb9b34ed61073fde6bfd" name="ad4ed93f35796bb9b34ed61073fde6bfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad4ed93f35796bb9b34ed61073fde6bfd">&#9670;&#160;</a></span>TryParse()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -815,7 +931,7 @@ Friends</h2></td></tr>
         <tr>
           <td class="memname">std::optional&lt; <a class="el" href="#aa5ed8101e3ee925e4393b34e2f29d58b">IpAddress</a> &gt; Hermes::IpAddress::TryParse </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
+          <td class="paramtype">std::string_view</td>          <td class="paramname"><span class="paramname"><em>str</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>
@@ -827,11 +943,11 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 <p>Try to parse an <a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> from a string. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>A string representing an IPv4 or IPv6 address. </td></tr>
+    <tr><td class="paramname">str</td><td>A string_view representing an IPv4 or IPv6 address. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The corresponding <a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> instance or an empty <a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> if parsing fails. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>The corresponding <a class="el" href="struct_hermes_1_1_ip_address.html">IpAddress</a> instance or std::nullopt if parsing fails. </dd></dl>
 
 </div>
 </div>
