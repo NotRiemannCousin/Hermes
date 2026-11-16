@@ -22,10 +22,28 @@ namespace Hermes {
         //!  @brief Construct an IpEndpoint with a port and IP.
         //!  @param ip the IP of the endpoint.
         //!  @param port the port of the endpoint.
-        explicit IpEndpoint(IpAddress ip = {}, std::uint16_t port = 0);
+        IpEndpoint(IpAddress ip, std::uint16_t port);
+        explicit IpEndpoint(IpAddress ip);
+        IpEndpoint() = default;
 
         //! @brief Construct an IpEndpoint from IpEndpointParams.
         static IpEndpoint Build(IpEndpointParams params) noexcept;
+
+        //! @brief Creates an IPv4 loopback endpoint (127.0.0.1:port).
+        static IpEndpoint LoopbackIpv4(std::uint16_t port = 0) noexcept;
+        //! @brief Creates an IPv6 loopback endpoint ([::1]:port).
+        static IpEndpoint LoopbackIpv6(std::uint16_t port = 0) noexcept;
+        //! @brief Creates an unspecified IPv4 endpoint (0.0.0.0:port).
+        static IpEndpoint AnyIpv4(std::uint16_t port = 0) noexcept;
+        //! @brief Creates an unspecified IPv6 endpoint ([::]:port).
+        static IpEndpoint AnyIpv6(std::uint16_t port = 0) noexcept;
+
+
+        //! Try to parse an IpEndpoint from a string.
+        //! @param str A string_view representing an IPv4 or IPv6 endpoint.
+        //! @return The corresponding IpEndpoint instance or std::nullopt if parsing fails.
+        static std::optional<IpEndpoint> TryParse(std::string_view str);
+
 
         //! @brief Tries to construct an Endpoint from low-level socket information.
         //! @param infoAddr The socket information used to construct the endpoint.

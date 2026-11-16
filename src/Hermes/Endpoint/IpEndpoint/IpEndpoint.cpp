@@ -27,12 +27,68 @@ using std::string;
 
 using namespace Hermes;
 
+IpEndpoint::IpEndpoint(IpAddress ip) : m_ip { ip } {}
+
 IpEndpoint::IpEndpoint(const IpAddress ip, const std::uint16_t port)
     : m_ip{ ip }, m_port{ port } {}
 
 IpEndpoint IpEndpoint::Build(IpEndpointParams params) noexcept {
     return IpEndpoint{ params.ip, params.port };
 }
+
+
+IpEndpoint IpEndpoint::LoopbackIpv4(std::uint16_t port) noexcept {
+    return { IpAddress::LoopbackIpv4(), port };
+}
+IpEndpoint IpEndpoint::LoopbackIpv6(std::uint16_t port) noexcept {
+    return { IpAddress::LoopbackIpv6(), port };
+}
+IpEndpoint IpEndpoint::AnyIpv4(std::uint16_t port) noexcept {
+    return { IpAddress::AnyIpv4(), port };
+}
+IpEndpoint IpEndpoint::AnyIpv6(std::uint16_t port) noexcept {
+    return { IpAddress::AnyIpv6(), port };
+}
+
+std::optional<IpEndpoint> IpEndpoint::TryParse(std::string_view str) {
+    if (str.empty())
+        return std::nullopt;
+
+    std::string_view ipPart;
+    std::string_view portPart;
+    bool expectIpv6{};
+
+    if (str.front() == '[') { // IPv6: "[::1]:8080"
+        const auto closeBracket{ str.find("]:") };
+        if (closeBracket == std::string_view::npos)
+            return std::nullopt;
+
+        ipPart    = str.substr(1, closeBracket - 1);
+        portPart  = str.substr(closeBracket + 2);
+        expectIpv6 = true;
+    } else { // IPv4: "127.0.0.1:8080"
+        const auto colon{ str.find(':') };
+        if (colon == std::string_view::npos)
+            return std::nullopt;
+
+        ipPart   = str.substr(0, colon);
+        portPart = str.substr(colon + 1);
+    }
+
+    const auto ip{ IpAddress::TryParse(ipPart) };
+    if (!ip)
+        return std::nullopt;
+    if (expectIpv6 ? !ip->IsIpv6() : !ip->IsIpv4())
+        return std::nullopt;
+
+    std::uint16_t port{};
+    const auto [ptr, ec]{ std::from_chars(portPart.data(), portPart.data() + portPart.size(), port) };
+    if (ec != std::errc{} || ptr != portPart.data() + portPart.size())
+        return std::nullopt;
+
+    return IpEndpoint{ *ip, port };
+}
+
 
 ConnectionResult<IpEndpoint> IpEndpoint::FromSockAddr(SocketInfoAddr infoAddr) {
     auto [addr, _, type]{ infoAddr };

@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.29.1)
 project(
         Hermes
-        VERSION 0.6.6
+        VERSION 0.6.7
         DESCRIPTION "A simple functional-based socket wrapper library"
         LANGUAGES CXX
 )

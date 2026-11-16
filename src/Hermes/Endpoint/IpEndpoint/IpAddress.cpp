@@ -17,11 +17,26 @@ using Hermes::IpAddress;
 
 IpAddress::IpAddress(const IpVariant& d) : m_data(d) {}
 
+
 IpAddress IpAddress::FromIpv4(const Ipv4Type &data) { return IpAddress{ data }; }
 
-
-
 IpAddress IpAddress::FromIpv6(const Ipv6Type &data) { return IpAddress{ data }; }
+
+
+IpAddress IpAddress::LoopbackIpv4() noexcept {
+    return IpAddress(Ipv4Type{ 127, 0, 0, 1 });
+}
+IpAddress IpAddress::LoopbackIpv6() noexcept {
+    return IpAddress(Ipv6Type{ 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1 });
+}
+IpAddress IpAddress::AnyIpv4() noexcept {
+    return IpAddress(Ipv4Type{});
+}
+IpAddress IpAddress::AnyIpv6() noexcept {
+    return IpAddress(Ipv6Type{});
+}
+
+
 
 IpAddress::Ipv6Type IpAddress::AsIpv6() const {
     return std::visit(
@@ -38,17 +53,23 @@ IpAddress::Ipv6Type IpAddress::AsIpv6() const {
         } , m_data);
 }
 
-std::optional<IpAddress> IpAddress::TryParse(const string& str) {
+std::optional<IpAddress> IpAddress::TryParse(const std::string_view str) {
+    if (str.empty() || str.size() >= INET6_ADDRSTRLEN)
+        return std::nullopt;
+
     Network::Initialize();
+
+    std::array<char, INET6_ADDRSTRLEN> buffer{};
+    std::memcpy(buffer.data(), str.data(), str.size());
 
     // ReSharper disable once CppTooWideScopeInitStatement
     sockaddr_in6 sa6{};
-    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet6), str.c_str(), &sa6.sin6_addr) != 0)
+    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet6), buffer.data(), &sa6.sin6_addr) == 1)
         return FromIpv6(std::bit_cast<Ipv6Type>(sa6.sin6_addr));
 
     // ReSharper disable once CppTooWideScopeInitStatement
     sockaddr_in sa{};
-    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet), str.c_str(), &sa.sin_addr) != 0)
+    if (inet_pton(static_cast<int>(AddressFamilyEnum::Inet), buffer.data(), &sa.sin_addr) == 1)
         return FromIpv4(std::bit_cast<Ipv4Type>(sa.sin_addr));
 
     return std::nullopt;

@@ -21,6 +21,15 @@ namespace Hermes {
         //!  @param d Variant containing either IPv4 or IPv6 address data.
         explicit IpAddress(const IpVariant& d);
 
+        //! Creates an IPv4 loopback (`127.0.0.1`).
+        static IpAddress LoopbackIpv4() noexcept;
+        //! Creates an IPv6 loopback (`::1`).
+        static IpAddress LoopbackIpv6() noexcept;
+        //! Creates an unspecified IPv4 (`0.0.0.0`).
+        static IpAddress AnyIpv4() noexcept;
+        //! Creates an unspecified IPv6 (`::`).
+        static IpAddress AnyIpv6() noexcept;
+
 
         IpAddress(const IpAddress&) noexcept = default;
         IpAddress& operator=(const IpAddress&) noexcept = default;
@@ -40,9 +49,9 @@ namespace Hermes {
         [[nodiscard]] Ipv6Type AsIpv6() const;
 
         //! Try to parse an IpAddress from a string.
-        //! @param str A string representing an IPv4 or IPv6 address.
-        //! @return The corresponding IpAddress instance or an empty IpAddress if parsing fails.
-        static std::optional<IpAddress> TryParse(const std::string& str);
+        //! @param str A string_view representing an IPv4 or IPv6 address.
+        //! @return The corresponding IpAddress instance or std::nullopt if parsing fails.
+        static std::optional<IpAddress> TryParse(std::string_view str);
 
 
         //! Get the IpVariant value.
