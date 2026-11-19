@@ -3,6 +3,7 @@
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
 #include <Hermes/Socket/Async/_base/Connection/TlsAsyncConnectPolicy.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
 #include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
 
@@ -14,7 +15,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_error_t(ConnectionErrorEnum)
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
         >;
         Data* m_data;
         Options m_options;
@@ -30,6 +32,8 @@ namespace Hermes {
             ControlAction m_action;
 
             LongIoCount m_flags{};
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
         public:
 
             OperationState(Data* data, Options options, Receiver receiver, const ControlAction action = ControlAction::Connect) :
@@ -40,6 +44,12 @@ namespace Hermes {
                 m_flags = 0;
 
                 while (true) {
+                    if (m_stop.Cancelled()) {
+                        m_stop.Disarm();
+                        stdexec::set_stopped(std::move(m_receiver));
+                        return;
+                    }
+
                     using ConnectStateOpResult = details_::ConnectStateOpResult;
                     switch (m_data->connectStateMachine->Advance(*m_data)) {
                         case ConnectStateOpResult::Send: {
@@ -47,6 +57,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
@@ -60,8 +71,13 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case ConnectStateOpResult::Recv: {
@@ -69,6 +85,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
@@ -82,17 +99,25 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case ConnectStateOpResult::Done:
+                            m_stop.Disarm();
                             stdexec::set_value(std::move(m_receiver));
                             return;
                         case ConnectStateOpResult::Error:
+                            m_stop.Disarm();
                             stdexec::set_error(std::move(m_receiver), m_data->connectStateMachine->GetResult().error_or(ConnectionErrorEnum::Unknown));
                             return;
                         case ConnectStateOpResult::Closed: {
+                            m_stop.Disarm();
                             if (const auto result{ m_data->connectStateMachine->GetResult() })
                                 stdexec::set_value(std::move(m_receiver));
                             else
@@ -106,6 +131,13 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
+                    self->m_stop.Disarm();
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::Unknown);
                     return;
                 }
@@ -123,6 +155,9 @@ namespace Hermes {
                     stdexec::set_value(std::move(m_receiver));
                     return;
                 }
+
+                m_stop.Arm(m_data->executionContext, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
 
                 if (m_action == ControlAction::Shutdown)
                     m_data->connectStateMachine->SetToClose();
@@ -153,12 +188,16 @@ namespace Hermes {
         // Both handlers are noexcept on purpose: a potentially-throwing callable would add std::exception_ptr to
         // the error channel, and the boundary contract is errors-as-values only. The let_error handler stays
         // generic so it accepts whatever the upstream channel carries; the original error is forwarded unchanged
-        // and Close() runs for every error type.
+        // and Close() runs for every error type. The stop channel gets the same treatment through let_stopped.
         auto connectSender{ DefaultAsyncConnectPolicy<ExecutionContext, Data>::Connect(data, options)
                 | stdexec::let_value([&data, options]() noexcept { return ControlSender{ &data, options }; })
                 | stdexec::let_error([&data](const ConnectionErrorEnum error) noexcept {
                     Close(data);
                     return stdexec::just_error(error);
+                })
+                | stdexec::let_stopped([&data]() noexcept {
+                    Close(data);
+                    return stdexec::just_stopped();
                 }) };
         static_assert(stdexec::sender<decltype(connectSender)>,
             "TlsAsyncConnectPolicy::Connect must produce a well-formed sender: if the error channel changed, "

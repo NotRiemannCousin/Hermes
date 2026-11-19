@@ -209,6 +209,28 @@ namespace Hermes {
     }
 #endif
 
+    inline bool FastIoLoop::CancelIo(const SocketHandle handle, const TransferOperStatus* status) const noexcept {
+        if (status == nullptr)
+            return false;
+
+#ifdef _WIN32
+        if (reinterpret_cast<SocketFd>(handle) == macroINVALID_SOCKET)
+            return false;
+
+        if (CancelIoEx(handle, const_cast<TransferOperStatus*>(status)))
+            return true;
+
+        return GetLastError() == ERROR_NOT_FOUND;
+#else
+        static_cast<void>(handle);
+
+        return SubmitSqe([&](struct io_uring_sqe* sqe) {
+            io_uring_prep_cancel(sqe, const_cast<TransferOperStatus*>(status), 0);
+            io_uring_sqe_set_data(sqe, nullptr);
+        });
+#endif
+    }
+
     inline bool FastIoLoop::RegisterHandle(const SocketHandle handle) const noexcept {
 #ifdef _WIN32
         return CreateIoCompletionPort(handle, m_impl->m_iocpHandle, 0, 0) != nullptr;

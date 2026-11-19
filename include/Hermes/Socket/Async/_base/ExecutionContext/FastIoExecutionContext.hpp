@@ -52,6 +52,15 @@ namespace Hermes {
         //! before this call returns.
         [[nodiscard]] bool SubmitIo(const IoRequest& request) const noexcept;
 
+        //! @brief Enqueues a cancellation operation.
+        //! @details Asks the backend to abort the request with the given status — the pointer handed to SubmitIo
+        //! as IoRequest::status, which io_uring uses as user_data and IOCP as the overlapped. Returns true when
+        //! the cancellation was requested or nothing was pending to cancel; either way the operation's callback
+        //! fires exactly once more, with success=false when aborted, or with the original result if the operation
+        //! had already completed. Implementing it makes the context satisfy details_::CancelIoCapableContext and
+        //! enables stop-token cancellation (set_stopped) in the async policies. Thread-safe.
+        [[nodiscard]] bool CancelIo(SocketHandle handle, const TransferOperStatus* status) const noexcept;
+
     private:
         void WorkerLoop() const noexcept;
 

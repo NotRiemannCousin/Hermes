@@ -2,6 +2,11 @@
 #include <print>
 #include <cstring>
 
+#pragma push_macro("MSG_NOSIGNAL")
+#ifndef MSG_NOSIGNAL
+#define MSG_NOSIGNAL 0
+#endif
+
 namespace Hermes {
     template<SocketTypeEnum SocketType>
     template<ByteLike Byte>
@@ -167,7 +172,7 @@ namespace Hermes {
                 return { total, std::unexpected{ ConnectionErrorEnum::SendTimeout } };
             const IoCount sent{ send(data.socket,
                 reinterpret_cast<const char*>(bufferSend.data() + total),
-                static_cast<int>(bufferSend.size() - total), 0) };
+                static_cast<int>(bufferSend.size() - total), MSG_NOSIGNAL) };
             if (sent == macroSOCKET_ERROR)
                 return { total, std::unexpected{ ConnectionErrorEnum::SendFailed } };
             total += sent;
@@ -175,4 +180,6 @@ namespace Hermes {
         return { total, {} };
     }
 
+
+#pragma pop_macro("MSG_NOSIGNAL")
 }

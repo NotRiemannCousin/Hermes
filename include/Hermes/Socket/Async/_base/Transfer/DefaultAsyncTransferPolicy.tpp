@@ -2,6 +2,8 @@
 #include <Hermes/Config.hpp>
 #if HERMES_ENABLE_ASYNC
 
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
+
 namespace Hermes {
     template<class ExecutionContext, SocketDataConcept Data>
     template<ByteLike Byte>
@@ -9,7 +11,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
-            stdexec::set_error_t(TransferError)
+            stdexec::set_error_t(TransferError),
+            stdexec::set_stopped_t()
         >;
 
         Data* m_data;
@@ -24,16 +27,27 @@ namespace Hermes {
             Receiver           m_receiver;
             TransferOperStatus m_status{};
             size_t             m_total{};
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
+
                 if (!success) {
+                    self->m_stop.Disarm();
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver),
                         TransferError{ self->m_total, ConnectionErrorEnum::ReceiveFailed });
                     return;
                 }
 
                 if (bytesTransferred == 0) {
+                    self->m_stop.Disarm();
                     stdexec::set_error(std::move(self->m_receiver),
                         TransferError{ self->m_total, ConnectionErrorEnum::ConnectionClosed });
                     return;
@@ -41,6 +55,7 @@ namespace Hermes {
 
                 self->m_total += static_cast<size_t>(bytesTransferred);
                 if (self->m_mode == RecvModeEnum::Any || self->m_total >= self->m_buffer.size()) {
+                    self->m_stop.Disarm();
                     stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
@@ -51,8 +66,15 @@ namespace Hermes {
             void PostRecv() noexcept {
                 auto* context{ m_data->executionContext };
                 if (!context) {
+                    m_stop.Disarm();
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+
+                if (m_stop.Cancelled()) {
+                    m_stop.Disarm();
+                    stdexec::set_stopped(std::move(m_receiver));
                     return;
                 }
 
@@ -69,9 +91,14 @@ namespace Hermes {
                 };
 
                 if (!context->SubmitIo(request)) {
+                    m_stop.Disarm();
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::ReceiveFailed });
+                    return;
                 }
+
+                if (m_stop.Cancelled())
+                    m_stop.CancelNow();
             }
 
             void start() & noexcept {
@@ -81,6 +108,8 @@ namespace Hermes {
                     return;
                 }
 
+                m_stop.Arm(m_data->executionContext, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
                 PostRecv();
             }
         };
@@ -97,7 +126,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
-            stdexec::set_error_t(TransferError)
+            stdexec::set_error_t(TransferError),
+            stdexec::set_stopped_t()
         >;
 
         Data* m_data;
@@ -110,10 +140,20 @@ namespace Hermes {
             Receiver               m_receiver;
             TransferOperStatus     m_status{};
             size_t                 m_total{};
+            using StopToken        = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
 
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
+
                 if (!success) {
+                    self->m_stop.Disarm();
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver),
                         TransferError{ self->m_total, ConnectionErrorEnum::SendFailed });
                     return;
@@ -121,6 +161,7 @@ namespace Hermes {
 
                 self->m_total += static_cast<size_t>(bytesTransferred);
                 if (self->m_total >= self->m_buffer.size()) {
+                    self->m_stop.Disarm();
                     stdexec::set_value(std::move(self->m_receiver), self->m_total);
                     return;
                 }
@@ -131,8 +172,15 @@ namespace Hermes {
             void PostSend() noexcept {
                 auto* context{ m_data->executionContext };
                 if (!context) {
+                    m_stop.Disarm();
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SocketNotOpen });
+                    return;
+                }
+
+                if (m_stop.Cancelled()) {
+                    m_stop.Disarm();
+                    stdexec::set_stopped(std::move(m_receiver));
                     return;
                 }
 
@@ -149,9 +197,14 @@ namespace Hermes {
                 };
 
                 if (!context->SubmitIo(request)) {
+                    m_stop.Disarm();
                     stdexec::set_error(std::move(m_receiver),
                         TransferError{ m_total, ConnectionErrorEnum::SendFailed });
+                    return;
                 }
+
+                if (m_stop.Cancelled())
+                    m_stop.CancelNow();
             }
 
             void start() & noexcept {
@@ -161,6 +214,8 @@ namespace Hermes {
                     return;
                 }
 
+                m_stop.Arm(m_data->executionContext, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
                 PostSend();
             }
         };

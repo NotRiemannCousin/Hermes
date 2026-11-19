@@ -3,6 +3,7 @@
 #if HERMES_ENABLE_ASYNC
 
 #include <Hermes/_base/Network.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
 
 #include <cstring>
 
@@ -12,7 +13,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_error_t(ConnectionErrorEnum)
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
         >;
 
         Data* m_data;
@@ -26,11 +28,22 @@ namespace Hermes {
             TransferOperStatus m_status{};
             sockaddr_storage m_addr{};
             socklen_t m_addrLen{};
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
 
             static void IoCallback(void* context, LongIoCount /*bytesTransferred*/, bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
+
+                self->m_stop.Disarm();
+
                 if (!success) {
                     DefaultAsyncConnectPolicy::Close(*self->m_data);
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::ConnectionFailed);
                     return;
                 }
@@ -88,6 +101,15 @@ namespace Hermes {
                 m_status.context  = this;
                 m_status.callback = IoCallback;
 
+                m_stop.Arm(context, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
+                if (m_stop.Cancelled()) {
+                    m_stop.Disarm();
+                    DefaultAsyncConnectPolicy::Close(*m_data);
+                    stdexec::set_stopped(std::move(m_receiver));
+                    return;
+                }
+
                 const IoRequest request{
                     .operation         = IoOperation::Connect,
                     .socket            = m_data->socket,
@@ -97,9 +119,14 @@ namespace Hermes {
                 };
 
                 if (!context->SubmitIo(request)) {
+                    m_stop.Disarm();
                     DefaultAsyncConnectPolicy::Close(*m_data);
                     stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::ConnectionFailed);
+                    return;
                 }
+
+                if (m_stop.Cancelled())
+                    m_stop.CancelNow();
             }
         };
 

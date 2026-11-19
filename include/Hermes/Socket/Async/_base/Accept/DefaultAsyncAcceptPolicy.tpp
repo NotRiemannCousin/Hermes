@@ -3,6 +3,7 @@
 #if HERMES_ENABLE_ASYNC
 
 #include <Hermes/_base/Network.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
 #include <print>
 #ifdef _WIN32
 #include <MSWSock.h>
@@ -16,7 +17,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
-            stdexec::set_error_t(ConnectionErrorEnum)
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
         >;
         DefaultAsyncAcceptPolicy* m_policy{};
         Data* m_listenData{};
@@ -33,6 +35,8 @@ namespace Hermes {
             TransferOperStatus m_status{};
             std::byte m_buffer[2 * (sizeof(sockaddr_storage) + 16)]{};
             socklen_t m_addrLen{ sizeof(sockaddr_storage) };
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
 
             OperationState(DefaultAsyncAcceptPolicy* policy, Data* listenData, Data&& serverData, AcceptOptions options, Receiver receiver) :
                 m_policy{ policy }, m_listenData{ listenData }, m_serverData{ std::move(serverData) },
@@ -41,8 +45,16 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self{ static_cast<OperationState*>(context) };
 
+                self->m_stop.Disarm();
+
                 if (!success) {
                     self->m_policy->Close(self->m_serverData);
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::ConnectionFailed);
                     return;
                 }
@@ -139,6 +151,17 @@ namespace Hermes {
                 m_status.context  = this;
                 m_status.callback = IoCallback;
 
+                m_stop.Arm(context, reinterpret_cast<SocketHandle>(m_listenData->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
+                if (m_stop.Cancelled()) {
+                    m_stop.Disarm();
+#ifdef _WIN32
+                    m_policy->Close(m_serverData); // the pre-created accept socket would leak otherwise
+#endif
+                    stdexec::set_stopped(std::move(m_receiver));
+                    return;
+                }
+
                 const IoRequest request{
                     .operation           = IoOperation::Accept,
                     .socket              = m_listenData->socket,
@@ -151,9 +174,14 @@ namespace Hermes {
                 };
 
                 if (!context->SubmitIo(request)) {
+                    m_stop.Disarm();
                     m_policy->Close(m_serverData);
                     stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::ConnectionFailed);
+                    return;
                 }
+
+                if (m_stop.Cancelled())
+                    m_stop.CancelNow();
             }
         };
         template<class Receiver>

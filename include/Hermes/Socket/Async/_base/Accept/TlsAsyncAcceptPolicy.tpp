@@ -4,6 +4,7 @@
 
 #include <Hermes/_base/OsApi/Macros.hpp>
 #include <Hermes/_base/Network.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
 #include <stdexec/execution.hpp>
 
 namespace Hermes {
@@ -14,7 +15,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(),
-            stdexec::set_error_t(ConnectionErrorEnum)
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
         >;
         Data* m_data;
         AcceptOptions m_options;
@@ -30,6 +32,8 @@ namespace Hermes {
             AcceptControlAction m_action;
 
             LongIoCount m_flags{};
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
         public:
             OperationState(Data* data, AcceptOptions options, Receiver receiver, const AcceptControlAction action = AcceptControlAction::Accept) :
                 m_data{ data }, m_options{ options }, m_receiver{ std::move(receiver) },
@@ -39,6 +43,12 @@ namespace Hermes {
                 m_flags = 0;
 
                 while (true) {
+                    if (m_stop.Cancelled()) {
+                        m_stop.Disarm();
+                        stdexec::set_stopped(std::move(m_receiver));
+                        return;
+                    }
+
                     using AcceptStateOpResult = details_::AcceptStateOpResult;
                     switch (m_data->acceptStateMachine->Advance(*m_data)) {
                         case AcceptStateOpResult::Send: {
@@ -46,6 +56,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
@@ -59,8 +70,13 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case AcceptStateOpResult::Recv: {
@@ -68,6 +84,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::NoScheduler);
                                 return;
                             }
@@ -81,17 +98,25 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver), ConnectionErrorEnum::Unknown);
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case AcceptStateOpResult::Done:
+                            m_stop.Disarm();
                             stdexec::set_value(std::move(m_receiver));
                             return;
                         case AcceptStateOpResult::Error:
+                            m_stop.Disarm();
                             stdexec::set_error(std::move(m_receiver), m_data->acceptStateMachine->GetResult().error_or(ConnectionErrorEnum::Unknown));
                             return;
                         case AcceptStateOpResult::Closed: {
+                            m_stop.Disarm();
                             if (const auto result{ m_data->acceptStateMachine->GetResult() })
                                 stdexec::set_value(std::move(m_receiver));
                             else
@@ -105,6 +130,13 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, const bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
+                    self->m_stop.Disarm();
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver), ConnectionErrorEnum::Unknown);
                     return;
                 }
@@ -116,6 +148,9 @@ namespace Hermes {
             void start() & noexcept {
                 m_status.context = this;
                 m_status.callback = IoCallback;
+
+                m_stop.Arm(m_data->executionContext, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
 
                 if (m_action == AcceptControlAction::Shutdown)
                     m_data->acceptStateMachine->SetToClose();
@@ -135,7 +170,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(Data),
-            stdexec::set_error_t(ConnectionErrorEnum)
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
         >;
         Data m_data;
         AcceptOptions m_options;
@@ -156,6 +192,11 @@ namespace Hermes {
                 void set_error(ConnectionErrorEnum e) && noexcept {
                     ReleaseAcceptedHandle();
                     stdexec::set_error(std::move(m_parent->m_receiver), e);
+                }
+
+                void set_stopped() && noexcept {
+                    ReleaseAcceptedHandle();
+                    stdexec::set_stopped(std::move(m_parent->m_receiver));
                 }
 
                 // The return type MUST be spelled out instead of `auto`: MSVC evaluates the

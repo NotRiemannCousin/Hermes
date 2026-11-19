@@ -3,6 +3,7 @@
 #if HERMES_ENABLE_ASYNC && HERMES_ENABLE_TLS
 
 #include <Hermes/Socket/_base/Transfer/TlsTransferStateMachine.hpp>
+#include <Hermes/Socket/Async/_base/ExecutionContext/StopGuard.hpp>
 
 namespace Hermes {
     template<class ExecutionContext, SocketDataConcept Data>
@@ -11,7 +12,8 @@ namespace Hermes {
         using sender_concept = stdexec::sender_t;
         using completion_signatures = stdexec::completion_signatures<
             stdexec::set_value_t(size_t),
-            stdexec::set_error_t(TransferError)
+            stdexec::set_error_t(TransferError),
+            stdexec::set_stopped_t()
         >;
         TlsAsyncTransferPolicy* m_policy;
         Data* m_data;
@@ -31,6 +33,8 @@ namespace Hermes {
             Receiver m_receiver;
             TransferOperStatus m_status{};
             size_t m_accumulatedBytes{};
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver>>;
+            details_::StopGuard<StopToken> m_stop{};
 
         public:
             OperationState(TlsAsyncTransferPolicy* policy, Data* data, std::span<std::byte> recv, std::span<const std::byte> send, RecvModeEnum mode, ActionEnum action, Receiver receiver) :
@@ -38,6 +42,12 @@ namespace Hermes {
 
             void Pump() noexcept {
                 while (true) {
+                    if (m_stop.Cancelled()) {
+                        m_stop.Disarm();
+                        stdexec::set_stopped(std::move(m_receiver));
+                        return;
+                    }
+
                     using TransferStateOpResult = details_::TransferStateOpResult;
                     switch (m_data->transferStateMachine->Advance(*m_data)) {
                         case TransferStateOpResult::Send: {
@@ -45,6 +55,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver),
                                     TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::NoScheduler });
                                 return;
@@ -59,9 +70,14 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver),
                                     TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case TransferStateOpResult::Recv: {
@@ -69,6 +85,7 @@ namespace Hermes {
 
                             auto* context{ m_data->executionContext };
                             if (!context) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver),
                                     TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::NoScheduler });
                                 return;
@@ -83,15 +100,21 @@ namespace Hermes {
                             };
 
                             if (!context->SubmitIo(request)) {
+                                m_stop.Disarm();
                                 stdexec::set_error(std::move(m_receiver),
                                     TransferError{ m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
+                                return;
                             }
+
+                            if (m_stop.Cancelled())
+                                m_stop.CancelNow();
                             return;
                         }
                         case TransferStateOpResult::Done:
                         case TransferStateOpResult::Error: {
                             auto [bytes, oper]{ m_data->transferStateMachine->GetResult() };
                             if (oper) {
+                                m_stop.Disarm();
                                 stdexec::set_value(std::move(m_receiver), m_accumulatedBytes + bytes);
                                 return;
                             }
@@ -112,6 +135,7 @@ namespace Hermes {
                                     if (!m_data->acceptStateMachine->IsFinished())
                                         m_data->acceptStateMachine->Advance(*m_data);
                                 } else {
+                                    m_stop.Disarm();
                                     stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes, ConnectionErrorEnum::Unknown });
                                     return;
                                 }
@@ -120,6 +144,7 @@ namespace Hermes {
                                     m_data->connectStateMachine->GetResult() : m_data->acceptStateMachine->GetResult() };
 
                                 if (!hsResult) {
+                                    m_stop.Disarm();
                                     stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes, hsResult.error() });
                                     return;
                                 }
@@ -131,6 +156,7 @@ namespace Hermes {
                                 continue;
                             }
 
+                            m_stop.Disarm();
                             stdexec::set_error(std::move(m_receiver), TransferError{ m_accumulatedBytes + bytes, oper.error() });
                             return;
                         }
@@ -141,6 +167,13 @@ namespace Hermes {
             static void IoCallback(void* context, LongIoCount bytesTransferred, bool success) noexcept {
                 auto* self = static_cast<OperationState*>(context);
                 if (!success) {
+                    self->m_stop.Disarm();
+
+                    if (self->m_stop.Cancelled()) {
+                        stdexec::set_stopped(std::move(self->m_receiver));
+                        return;
+                    }
+
                     stdexec::set_error(std::move(self->m_receiver), TransferError{ self->m_data->transferStateMachine->GetResult().first, ConnectionErrorEnum::Unknown });
                     return;
                 }
@@ -152,6 +185,9 @@ namespace Hermes {
             void start() & noexcept {
                 m_status.context  = this;
                 m_status.callback = IoCallback;
+
+                m_stop.Arm(m_data->executionContext, reinterpret_cast<SocketHandle>(m_data->socket), &m_status,
+                           stdexec::get_stop_token(stdexec::get_env(m_receiver)));
 
                 if (m_action == ActionEnum::Recv)
                     m_data->transferStateMachine->StartToRecv(m_recvBuffer, m_mode);
