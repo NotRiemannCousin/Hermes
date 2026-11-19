@@ -1,5 +1,7 @@
 var NAVTREEINDEX3 =
 {
+"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196abae7515eaf75aeb8ee69c6bba4377d5f":[4,0,0,0,66,6],
+"namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196ac0ed92167701217f02e828686a59740e":[4,0,0,0,66,7],
 "namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196ac41a31890959544c6523af684561abe5":[4,0,0,0,66,13],
 "namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196acaefebe606e7abca64f4d93198e7132e":[4,0,0,0,66,26],
 "namespace_hermes.html#a56e76e2d4c1179fab9e5ab1a58910196ace2c8aed9c2fa0cfbed56cbda4d8bf07":[4,0,0,0,66,0],
@@ -245,9 +247,7 @@ var NAVTREEINDEX3 =
 "struct_hermes_1_1_accept_extensions.html":[4,2,0,0,1],
 "struct_hermes_1_1_client_socket.html":[4,0,0,0,2],
 "struct_hermes_1_1_client_socket.html":[4,2,0,0,2],
-"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,2,0,0,2,7],
 "struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,0,0,0,2,7],
-"struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,2,0,0,2,17],
-"struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,0,0,0,2,17],
-"struct_hermes_1_1_client_socket.html#a2eb6b0fc47998ba221a8e49eee4c65d2":[4,2,0,0,2,25]
+"struct_hermes_1_1_client_socket.html#a1c68aa73fe6e9bb5f61e1167e0f48e82":[4,2,0,0,2,7],
+"struct_hermes_1_1_client_socket.html#a2a6f12dcd0917352b823560bbe07c8ae":[4,0,0,0,2,17]
 };

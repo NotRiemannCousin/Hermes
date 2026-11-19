@@ -7,5 +7,6 @@ var searchData=
   ['serversocket_2ehpp_4',['ServerSocket.hpp',['../_server_socket_8hpp.html',1,'']]],
   ['socketshutdownenum_2ehpp_5',['SocketShutdownEnum.hpp',['../_socket_shutdown_enum_8hpp.html',1,'']]],
   ['sockettypeenum_2ehpp_6',['SocketTypeEnum.hpp',['../_socket_type_enum_8hpp.html',1,'']]],
-  ['supportedprotocolsflags_2ehpp_7',['SupportedProtocolsFlags.hpp',['../_linux_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)'],['../_windows_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)']]]
+  ['stopguard_2ehpp_7',['StopGuard.hpp',['../_stop_guard_8hpp.html',1,'']]],
+  ['supportedprotocolsflags_2ehpp_8',['SupportedProtocolsFlags.hpp',['../_linux_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)'],['../_windows_2_supported_protocols_flags_8hpp.html',1,'(Global Namespace)']]]
 ];

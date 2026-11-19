@@ -106,6 +106,8 @@ var NAVTREEINDEX0 =
 "_socket_shutdown_enum_8hpp_source.html":[4,3,0,1,0,0,0,0,3],
 "_socket_type_enum_8hpp.html":[4,3,0,1,0,0,0,0,4],
 "_socket_type_enum_8hpp_source.html":[4,3,0,1,0,0,0,0,4],
+"_stop_guard_8hpp.html":[4,3,0,1,0,2,1,0,2,1],
+"_stop_guard_8hpp_source.html":[4,3,0,1,0,2,1,0,2,1],
 "_tls_accept_policy_8hpp.html":[4,3,0,1,0,2,3,0,0,1],
 "_tls_accept_policy_8hpp_source.html":[4,3,0,1,0,2,3,0,0,1],
 "_tls_accept_state_machine_8hpp.html":[4,3,0,1,0,2,0,0,1],
@@ -132,8 +134,8 @@ var NAVTREEINDEX0 =
 "_to_bytes_8hpp_source.html":[4,3,0,1,0,3,3],
 "_transfer_io_8hpp.html":[4,3,0,1,0,2,0,2,2],
 "_transfer_io_8hpp_source.html":[4,3,0,1,0,2,0,2,2],
-"_transfer_oper_status_8hpp.html":[4,3,0,1,0,2,1,0,2,1],
-"_transfer_oper_status_8hpp_source.html":[4,3,0,1,0,2,1,0,2,1],
+"_transfer_oper_status_8hpp.html":[4,3,0,1,0,2,1,0,2,2],
+"_transfer_oper_status_8hpp_source.html":[4,3,0,1,0,2,1,0,2,2],
 "_types_8hpp.html":[4,3,0,1,0,0,0,5],
 "_types_8hpp_source.html":[4,3,0,1,0,0,0,5],
 "_until_match_8hpp.html":[4,3,0,1,0,3,4],
@@ -247,7 +249,5 @@ var NAVTREEINDEX0 =
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330b":[4,0,0,0,63],
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,63,2],
 "namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,63,23],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2105e14c7058cc1f563f334aba975c31":[4,0,0,0,63,34],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2d5a07686a9a4b99fd5a9b09cfe71f95":[4,0,0,0,63,4],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2d5a07686a9a4b99fd5a9b09cfe71f95":[4,0,0,0,63,26]
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2105e14c7058cc1f563f334aba975c31":[4,0,0,0,63,34]
 };
