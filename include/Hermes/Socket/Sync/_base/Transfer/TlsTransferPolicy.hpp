@@ -21,7 +21,7 @@ namespace Hermes {
         }, "The socket data must have a valid TLS state machine to transfering data.");
 
 
-        using Deadline = details_::TransferDeadline;
+        using Deadline = DeadlineTimepoint;
         //! @brief Options for a bounded receive operation.
         //! @details `deadline` is absolute and is shared by every partial receive in the call.
         struct RecvOptions {

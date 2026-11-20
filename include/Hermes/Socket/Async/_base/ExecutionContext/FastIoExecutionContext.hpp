@@ -6,10 +6,12 @@
 
 #include <Hermes/Socket/Data/DefaultSocketData.hpp>
 #include <Hermes/Socket/Data/TlsSocketData.hpp>
-#include <Hermes/_base/OsApi/OsApi.hpp>
+#include <Hermes/Socket/_base/Transfer/TransferIo.hpp>
+#include <chrono>
 #include <thread>
 #include <memory>
 #include <stdexec/execution.hpp>
+#include <exec/timed_scheduler.hpp>
 
 namespace Hermes {
     enum class ConnectionErrorEnum;
@@ -17,6 +19,7 @@ namespace Hermes {
     class FastIoLoop;
     struct FastIoScheduler;
     struct FastIoScheduleSender;
+    struct FastIoScheduleAfterSender;
 
     class FastIoLoop {
         struct Impl;
@@ -61,23 +64,50 @@ namespace Hermes {
         //! enables stop-token cancellation (set_stopped) in the async policies. Thread-safe.
         [[nodiscard]] bool CancelIo(SocketHandle handle, const TransferOperStatus* status) const noexcept;
 
+        //! @brief Arms one timed completion for @p status to fire at the absolute @p deadline.
+        //! @details Schedules `status` with a fixed time. Uses IORING_OP_TIMEOUT SQE on linux and a custom min-heap on
+        //! Windows (IOCP doesn't have timed events, libuv and ASIO does that).
+        [[nodiscard]] bool ScheduleTimedOp(TransferOperStatus* status, DeadlineTimepoint deadline) const noexcept;
+
+        //! @brief Cancels the entry of @p status.
+        [[nodiscard]] bool CancelTimedOp(TransferOperStatus* status) const noexcept;
+
     private:
         void WorkerLoop() const noexcept;
 
 #ifndef _WIN32
         template <class F>
         bool SubmitSqe(F&& prep) const noexcept;
+#else
+        void ProcessExpiredTimers() const noexcept;
 #endif
     };
 
     struct FastIoScheduler {
         using scheduler_concept = stdexec::scheduler_t;
 
+        using time_point = DeadlineTimepoint;
+        using duration   = DeadlineDuration;
+
         const FastIoLoop* m_loop;
 
         bool operator==(const FastIoScheduler& other) const noexcept = default;
 
         [[nodiscard]] FastIoScheduleSender schedule() const noexcept;
+
+        [[nodiscard]] time_point now() const noexcept;
+
+        [[nodiscard]] FastIoScheduleAfterSender schedule_after(duration d) const noexcept;
+
+        template <class Clock, class Duration>
+        [[nodiscard]] FastIoScheduleAfterSender
+        schedule_at(const std::chrono::time_point<Clock, Duration>& when) const noexcept;
+    };
+
+    struct FastIoScheduleEnv {
+        [[nodiscard]] FastIoScheduler query(stdexec::get_completion_scheduler_t<stdexec::set_value_t>) const noexcept;
+
+        FastIoScheduler m_scheduler;
     };
 
     struct FastIoScheduleSender {
@@ -89,6 +119,8 @@ namespace Hermes {
         >;
 
         const FastIoLoop* m_loop;
+
+        [[nodiscard]] FastIoScheduleEnv get_env() const noexcept;
 
         template <class Receiver>
         struct OperationState {
@@ -104,8 +136,54 @@ namespace Hermes {
         };
 
         template <class Receiver>
-        OperationState<Receiver>
-        connect(Receiver r) const noexcept;
+        OperationState<Receiver> connect(Receiver r) const noexcept;
+    };
+
+    struct FastIoScheduleAfterSender {
+        using sender_concept = stdexec::sender_t;
+
+        using completion_signatures = stdexec::completion_signatures<
+            stdexec::set_value_t(),
+            stdexec::set_error_t(ConnectionErrorEnum),
+            stdexec::set_stopped_t()
+        >;
+
+        const FastIoLoop* m_loop;
+        std::chrono::steady_clock::duration m_duration;
+
+        [[nodiscard]] FastIoScheduleEnv get_env() const noexcept;
+
+
+        template <class Receiver>
+        struct OperationState {
+            using StopToken = stdexec::stop_token_of_t<stdexec::env_of_t<Receiver&>>;
+
+            struct CancelHandler {
+                OperationState* m_self;
+
+                void operator()() const noexcept { m_self->CancelPath(); }
+            };
+
+            using StopCallback = stdexec::stop_callback_for_t<StopToken, CancelHandler>;
+
+            const FastIoLoop* m_loop;
+            Receiver m_receiver;
+            TransferOperStatus m_status{};
+            DeadlineTimepoint m_deadline{};
+            std::atomic<bool> m_cancelRequested{ false };
+            std::optional<StopCallback> m_stopCb{};
+
+            OperationState(const FastIoLoop* loop, std::chrono::steady_clock::duration duration, Receiver r);
+
+            void start() & noexcept;
+
+            void CancelPath() noexcept;
+
+            static void Callback(void* context, LongIoCount bytesTransferred, bool success);
+        };
+
+        template <class Receiver>
+        OperationState<Receiver> connect(Receiver r) const noexcept;
     };
 
 #if HERMES_ENABLE_TLS
@@ -127,8 +205,9 @@ namespace Hermes {
     struct DefaultAsyncTransferPolicy;
 
     static_assert(ExecutionContextConcept<FastIoLoop>);
-    static_assert(stdexec::scheduler<FastIoScheduler>);
+    static_assert(exec::timed_scheduler<FastIoScheduler, DeadlineClock>);
     static_assert(stdexec::sender<FastIoScheduleSender>);
+    static_assert(stdexec::sender<FastIoScheduleAfterSender>);
     static_assert(std::same_as<stdexec::schedule_result_t<FastIoScheduler>, FastIoScheduleSender>);
 }
 

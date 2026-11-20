@@ -34,11 +34,11 @@ namespace Hermes::details_ {
         void StartToRecv(
             std::span<std::byte> buffer,
             RecvModeEnum mode,
-            std::optional<TransferDeadline> deadline
+            std::optional<DeadlineTimepoint> deadline
         ) noexcept override;
         void StartToSend(
             std::span<const std::byte> buffer,
-            std::optional<TransferDeadline> deadline
+            std::optional<DeadlineTimepoint> deadline
         ) noexcept override;
 
         void SetToRecv() noexcept override;
@@ -68,7 +68,7 @@ namespace Hermes::details_ {
         size_t m_chunkSize{};
         size_t m_encryptedSize{};
         size_t m_sentBytes{};
-        std::optional<TransferDeadline> m_deadline{};
+        std::optional<DeadlineTimepoint> m_deadline{};
 
         EncryptStatusEnum m_status{};
 

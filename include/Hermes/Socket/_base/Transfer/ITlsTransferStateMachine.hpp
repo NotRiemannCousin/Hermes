@@ -18,11 +18,11 @@ namespace Hermes::details_ {
         virtual void StartToRecv(
             std::span<std::byte> buffer,
             RecvModeEnum mode,
-            std::optional<TransferDeadline> deadline = {}
+            std::optional<DeadlineTimepoint> deadline = {}
         ) noexcept = 0;
         virtual void StartToSend(
             std::span<const std::byte> buffer,
-            std::optional<TransferDeadline> deadline = {}
+            std::optional<DeadlineTimepoint> deadline = {}
         ) noexcept = 0;
 
         virtual void SetToRecv() noexcept = 0;

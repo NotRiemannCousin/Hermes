@@ -45,7 +45,7 @@ namespace Hermes::details_ {
     void TlsTransferStateMachine<Data, TransferPolicy>::StartToRecv(
         std::span<std::byte> buffer,
         RecvModeEnum mode,
-        std::optional<TransferDeadline> deadline
+        std::optional<DeadlineTimepoint> deadline
     ) noexcept {
         m_userRecvBuffer   = buffer;
         m_recvMode         = mode;
@@ -58,7 +58,7 @@ namespace Hermes::details_ {
     template<SocketDataConcept Data, class TransferPolicy>
     void TlsTransferStateMachine<Data, TransferPolicy>::StartToSend(
         std::span<const std::byte> buffer,
-        std::optional<TransferDeadline> deadline
+        std::optional<DeadlineTimepoint> deadline
     ) noexcept {
         m_userSendBuffer   = buffer;
         m_deadline         = deadline;

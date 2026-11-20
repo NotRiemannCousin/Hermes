@@ -12,8 +12,13 @@
 #include <poll.h>
 #endif
 
+namespace Hermes {
+    using DeadlineClock     = std::chrono::steady_clock;
+    using DeadlineTimepoint = DeadlineClock::time_point;
+    using DeadlineDuration  = DeadlineClock::duration;
+}
+
 namespace Hermes::details_ {
-    using TransferDeadline = std::chrono::steady_clock::time_point;
 
     class ScopedNonBlocking {
     public:
@@ -56,7 +61,7 @@ namespace Hermes::details_ {
     inline bool WaitForSocket(
         const SocketFd socket,
         const bool readable,
-        const std::optional<TransferDeadline>& deadline
+        const std::optional<DeadlineTimepoint>& deadline
     ) noexcept {
         if (!deadline.has_value())
             return true;

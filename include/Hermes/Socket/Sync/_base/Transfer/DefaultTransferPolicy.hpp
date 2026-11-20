@@ -14,7 +14,7 @@ namespace Hermes {
     //! RecvStream() view, so both consume from the same stream position (see @ref recv-stream-behavior).
     template<SocketTypeEnum SocketType = SocketTypeEnum::Stream>
     struct DefaultTransferPolicy {
-        using Deadline = details_::TransferDeadline;
+        using Deadline = DeadlineTimepoint;
         //! @brief Options for a bounded receive operation.
         //! @details `deadline` is absolute and is shared by every partial receive in the call.
         struct RecvOptions {
