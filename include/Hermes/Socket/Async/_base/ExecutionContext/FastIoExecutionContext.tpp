@@ -241,7 +241,7 @@ namespace Hermes {
         secs      = std::max(secs, std::chrono::seconds{ 0 });
         remaining = std::clamp(remaining, std::chrono::nanoseconds{ 0 }, std::chrono::nanoseconds{ 999'999'999 });
 
-        const struct __kernel_timespec dueTime{ secs.count(), remaining.count() };
+        struct __kernel_timespec dueTime{ secs.count(), remaining.count() };
 
         return SubmitSqe([&](struct io_uring_sqe* sqe) {
             io_uring_prep_timeout(sqe, &dueTime, 0, 0);
