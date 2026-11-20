@@ -248,6 +248,6 @@ var NAVTREEINDEX3 =
 "send-lift-pattern.html":[0,4],
 "struct_hermes_1_1_accept_extensions.html":[4,0,0,0,1],
 "struct_hermes_1_1_accept_extensions.html":[4,2,0,0,1],
-"struct_hermes_1_1_client_socket.html":[4,0,0,0,2],
-"struct_hermes_1_1_client_socket.html":[4,2,0,0,2]
+"struct_hermes_1_1_client_socket.html":[4,2,0,0,2],
+"struct_hermes_1_1_client_socket.html":[4,0,0,0,2]
 };
