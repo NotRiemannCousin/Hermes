@@ -22,6 +22,10 @@ namespace Hermes {
         Options m_options;
         ControlAction m_action;
 
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
         private:

@@ -22,6 +22,10 @@ namespace Hermes {
         AcceptOptions m_options;
         AcceptControlAction m_action;
 
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
         private:
@@ -175,6 +179,14 @@ namespace Hermes {
         >;
         Data m_data;
         AcceptOptions m_options;
+
+        //! @brief Advertises the accepted socket's execution context scheduler as the value completion scheduler.
+        //! @details The accepted Data arrives from the TCP accept stage with the listener's context inherited
+        //! through MakeChild(), and this sender's completion propagates inline from the ControlSender's async
+        //! completion - i.e. on the context's agents.
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data.executionContext);
+        }
 
         template<class Receiver>
         struct OperationState {

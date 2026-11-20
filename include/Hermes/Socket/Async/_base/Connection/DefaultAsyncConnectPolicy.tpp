@@ -20,6 +20,10 @@ namespace Hermes {
         Data* m_data;
         Options m_options;
 
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
             Data* m_data;

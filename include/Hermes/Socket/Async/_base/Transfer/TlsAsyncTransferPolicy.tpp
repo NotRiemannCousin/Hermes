@@ -21,6 +21,11 @@ namespace Hermes {
         std::span<const std::byte> m_sendBuffer;
         RecvModeEnum m_mode;
         ActionEnum m_action;
+
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
         private:

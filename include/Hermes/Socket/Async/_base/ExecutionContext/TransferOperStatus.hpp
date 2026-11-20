@@ -1,9 +1,14 @@
 #pragma once
+#include <Hermes/Config.hpp>
 #include <Hermes/_base/OsApi/OsApi.hpp>
 
 #include <concepts>
 #include <cstddef>
 #include <cstdint>
+
+#if HERMES_ENABLE_ASYNC
+#include <stdexec/execution.hpp>
+#endif
 
 #ifdef _WIN32
 #include <MSWSock.h>
@@ -84,4 +89,16 @@ namespace Hermes {
         { ctx.PostWork(status) } -> std::convertible_to<bool>;
         { ctx.GetScheduler() };
     };
+
+#if HERMES_ENABLE_ASYNC
+    namespace details_ {
+        template<class ExecutionContextT>
+        [[nodiscard]] auto CompletionEnv(const ExecutionContextT* context) noexcept {
+            return stdexec::prop{
+                stdexec::get_completion_scheduler<stdexec::set_value_t>,
+                context->GetScheduler()
+            };
+        }
+    }
+#endif
 }

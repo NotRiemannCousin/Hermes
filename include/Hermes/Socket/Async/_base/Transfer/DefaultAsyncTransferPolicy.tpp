@@ -19,6 +19,10 @@ namespace Hermes {
         std::span<Byte> m_buffer;
         RecvModeEnum m_mode;
 
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
             Data* m_data;
@@ -132,6 +136,11 @@ namespace Hermes {
 
         Data* m_data;
         std::span<const Byte> m_buffer;
+
+        //! @brief Advertises the bound execution context's scheduler as the value completion scheduler.
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_data->executionContext);
+        }
 
         template<class Receiver>
         struct OperationState {

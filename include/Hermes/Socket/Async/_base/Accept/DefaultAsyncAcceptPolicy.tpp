@@ -25,6 +25,10 @@ namespace Hermes {
         Data m_serverData{};
         AcceptOptions m_options{};
 
+        [[nodiscard]] auto get_env() const noexcept {
+            return details_::CompletionEnv(m_listenData->executionContext);
+        }
+
         template<class Receiver>
         struct OperationState {
             DefaultAsyncAcceptPolicy* m_policy;
