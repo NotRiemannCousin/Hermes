@@ -227,6 +227,9 @@ Typedefs</h2></td></tr>
 <tr class="memitem:a69f852ca6753d1c7a01c7aa4eb3b43a5" id="r_a69f852ca6753d1c7a01c7aa4eb3b43a5"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a69f852ca6753d1c7a01c7aa4eb3b43a5">LongIoCount</a> = unsigned long</td></tr>
 <tr class="memitem:a4aedf62ac66bae21d2bb8a958eec8bb8" id="r_a4aedf62ac66bae21d2bb8a958eec8bb8"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a4aedf62ac66bae21d2bb8a958eec8bb8">SocketHandle</a> = int*</td></tr>
 <tr class="memitem:aa3b6f3056c91f708a018df84ffab077e" id="r_aa3b6f3056c91f708a018df84ffab077e"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#aa3b6f3056c91f708a018df84ffab077e">SocketInfoAddr</a> = std::tuple&lt;sockaddr_storage, size_t, <a class="el" href="#afaea2e3839330149f067b0ba0206e77d">AddressFamilyEnum</a>&gt;</td></tr>
+<tr class="memitem:a965ac7d5b9f8f858a95d8e4921465a69" id="r_a965ac7d5b9f8f858a95d8e4921465a69"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a965ac7d5b9f8f858a95d8e4921465a69">DeadlineClock</a> = std::chrono::steady_clock</td></tr>
+<tr class="memitem:a7d7a0e3d0bd95d4b1d706f13764d8de5" id="r_a7d7a0e3d0bd95d4b1d706f13764d8de5"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a7d7a0e3d0bd95d4b1d706f13764d8de5">DeadlineTimepoint</a> = DeadlineClock::time_point</td></tr>
+<tr class="memitem:a10e64ef184edd12a3faba1c55c5aa60c" id="r_a10e64ef184edd12a3faba1c55c5aa60c"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a10e64ef184edd12a3faba1c55c5aa60c">DeadlineDuration</a> = DeadlineClock::duration</td></tr>
 <tr class="memitem:a05352a65fe09716dd93d912ef12bdb6a" id="r_a05352a65fe09716dd93d912ef12bdb6a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a05352a65fe09716dd93d912ef12bdb6a">RawTcpClient</a> = <a class="el" href="struct_hermes_1_1_client_socket.html">ClientSocket</a>&lt;&gt;</td></tr>
 <tr class="memdesc:a05352a65fe09716dd93d912ef12bdb6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Alias to the raw TCP client socket.  <br /></td></tr>
 <tr class="memitem:a978167d01a4fcd4ce77986d23214f0ee" id="r_a978167d01a4fcd4ce77986d23214f0ee"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a978167d01a4fcd4ce77986d23214f0ee">RawTcpListener</a> = <a class="el" href="struct_hermes_1_1_listener_socket.html">ListenerSocket</a>&lt;&gt;</td></tr>
@@ -1208,6 +1211,48 @@ template&lt;class T&gt; </div>
       <table class="memname">
         <tr>
           <td class="memname">using <a class="el" href="#a79d14e095855fb69409fa672244c08ba">Hermes::ConnectionResultOper</a> = <a class="el" href="#acce89a5199fe55f63e86cfea1fe02e97">ConnectionResult</a>&lt;void&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a965ac7d5b9f8f858a95d8e4921465a69" name="a965ac7d5b9f8f858a95d8e4921465a69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a965ac7d5b9f8f858a95d8e4921465a69">&#9670;&#160;</a></span>DeadlineClock</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a965ac7d5b9f8f858a95d8e4921465a69">Hermes::DeadlineClock</a> = std::chrono::steady_clock</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a10e64ef184edd12a3faba1c55c5aa60c" name="a10e64ef184edd12a3faba1c55c5aa60c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10e64ef184edd12a3faba1c55c5aa60c">&#9670;&#160;</a></span>DeadlineDuration</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a10e64ef184edd12a3faba1c55c5aa60c">Hermes::DeadlineDuration</a> = DeadlineClock::duration</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7d7a0e3d0bd95d4b1d706f13764d8de5" name="a7d7a0e3d0bd95d4b1d706f13764d8de5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d7a0e3d0bd95d4b1d706f13764d8de5">&#9670;&#160;</a></span>DeadlineTimepoint</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a7d7a0e3d0bd95d4b1d706f13764d8de5">Hermes::DeadlineTimepoint</a> = DeadlineClock::time_point</td>
         </tr>
       </table>
 </div><div class="memdoc">

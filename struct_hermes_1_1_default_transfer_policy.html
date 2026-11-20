@@ -171,7 +171,7 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a4e5523afa2198d4f7f6f17386f0fed0a" id="r_a4e5523afa2198d4f7f6f17386f0fed0a"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a4e5523afa2198d4f7f6f17386f0fed0a">Deadline</a> = details_::TransferDeadline</td></tr>
+<tr class="memitem:a31fab8faff53594b003594a9971b7c33" id="r_a31fab8faff53594b003594a9971b7c33"><td class="memItemLeft">using&#160;</td><td class="memItemRight"><a class="el" href="#a31fab8faff53594b003594a9971b7c33">Deadline</a> = <a class="el" href="namespace_hermes.html#a7d7a0e3d0bd95d4b1d706f13764d8de5">DeadlineTimepoint</a></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -192,8 +192,8 @@ Static Public Attributes</h2></td></tr>
 struct Hermes::DefaultTransferPolicy&lt; SocketType &gt;</div><p>Plain TCP transfer policy for blocking sockets. </p>
 <p><a class="el" href="#a68c03939c4f15a3097a7b35548dc231c">Send()</a> is all-or-nothing. It loops until the whole range is sent, the deadline expires or an error occurs. <a class="el" href="#ad332c06d5d2bc95de8c9bc58452dfe0b">Recv()</a> honors <a class="el" href="namespace_hermes.html#a3a2d0c44eefa9602c58fc10569c84338" title="With All, the entire span will be filled, with Any the function will stop at the block received.">RecvModeEnum</a>. One read buffer is shared per policy instance, <a class="el" href="#ad332c06d5d2bc95de8c9bc58452dfe0b">Recv()</a> first drains bytes left by a RecvStream() view, so both consume from the same stream position (see <a class="el" href="recv-stream-behavior.html" title="RecvStream vs RecvRange Behavior">RecvStream vs RecvRange Behavior</a>). </p>
 </div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Member Typedef Documentation</h2>
-<a id="a4e5523afa2198d4f7f6f17386f0fed0a" name="a4e5523afa2198d4f7f6f17386f0fed0a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e5523afa2198d4f7f6f17386f0fed0a">&#9670;&#160;</a></span>Deadline</h2>
+<a id="a31fab8faff53594b003594a9971b7c33" name="a31fab8faff53594b003594a9971b7c33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31fab8faff53594b003594a9971b7c33">&#9670;&#160;</a></span>Deadline</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -201,7 +201,7 @@ struct Hermes::DefaultTransferPolicy&lt; SocketType &gt;</div><p>Plain TCP trans
 template&lt;<a class="el" href="namespace_hermes.html#a804025810e605be277a9c534e5790013">SocketTypeEnum</a> SocketType = SocketTypeEnum::Stream&gt; </div>
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; SocketType &gt;::Deadline = details_::TransferDeadline</td>
+          <td class="memname">using <a class="el" href="struct_hermes_1_1_default_transfer_policy.html">Hermes::DefaultTransferPolicy</a>&lt; SocketType &gt;::Deadline = <a class="el" href="namespace_hermes.html#a7d7a0e3d0bd95d4b1d706f13764d8de5">DeadlineTimepoint</a></td>
         </tr>
       </table>
 </div><div class="memdoc">

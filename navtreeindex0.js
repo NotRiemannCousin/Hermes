@@ -246,8 +246,8 @@ var NAVTREEINDEX0 =
 "hierarchy.html":[4,2,2],
 "index.html":[],
 "namespace_hermes.html":[4,0,0,0],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330b":[4,0,0,0,63],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,63,2],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,63,23],
-"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2105e14c7058cc1f563f334aba975c31":[4,0,0,0,63,34]
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330b":[4,0,0,0,66],
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,66,2],
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba0ebbd2ab36ddf1ee926d2b7fc354a45b":[4,0,0,0,66,23],
+"namespace_hermes.html#a04f400147c1cd3bc6f710713c7ee330ba2105e14c7058cc1f563f334aba975c31":[4,0,0,0,66,34]
 };
